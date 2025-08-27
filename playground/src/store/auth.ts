@@ -3,7 +3,7 @@ import type { Recordable, UserInfo } from '@igourd/types';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { LOGIN_PATH, APP_CONFIG } from '@igourd/constants';
+import { APP_CONFIG, LOGIN_PATH } from '@igourd/constants';
 import { preferences } from '@igourd/preferences';
 import { resetAllStores, useAccessStore, useUserStore } from '@igourd/stores';
 
@@ -41,7 +41,7 @@ export const useAuthStore = defineStore('auth', () => {
         login_account: params.username || params.login_account,
         password: params.password,
         type: APP_CONFIG.DEFAULT_APP.type,
-        ...params
+        ...params,
       };
 
       const loginResult = await loginApi(loginParams);
@@ -53,7 +53,10 @@ export const useAuthStore = defineStore('auth', () => {
 
         // 保存function_trees到localStorage，供access.ts使用
         if (loginResult.function_trees) {
-          localStorage.setItem('functionTrees', JSON.stringify(loginResult.function_trees));
+          localStorage.setItem(
+            'functionTrees',
+            JSON.stringify(loginResult.function_trees),
+          );
         }
 
         // 获取用户信息并存储到 accessStore 中
