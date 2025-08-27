@@ -1,0 +1,44 @@
+{
+  "name": "@igourd-core/typings",
+  "version": "5.5.9",
+  "homepage": "https://github.com/igourdjs/vue-igourd-admin",
+  "bugs": "https://github.com/igourdjs/vue-igourd-admin/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igourdjs/vue-igourd-admin.git",
+    "directory": "packages/@igourd-core/base/typings"
+  },
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "pnpm unbuild"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "development": "./src/index.ts",
+      "default": "./dist/index.mjs"
+    },
+    "./vue-router": {
+      "types": "./vue-router.d.ts"
+    }
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    }
+  },
+  "dependencies": {
+    "vue": "catalog:",
+    "vue-router": "catalog:"
+  }
+}

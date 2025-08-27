@@ -1,0 +1,35 @@
+{
+  "name": "@igourd/docs",
+  "version": "5.5.9",
+  "private": true,
+  "scripts": {
+    "build": "vitepress build",
+    "dev": "vitepress dev",
+    "docs:preview": "vitepress preview"
+  },
+  "imports": {
+    "#/*": {
+      "node": "./src/_env/node/*",
+      "default": "./src/_env/*"
+    }
+  },
+  "dependencies": {
+    "@igourd-core/shadcn-ui": "workspace:*",
+    "@igourd/common-ui": "workspace:*",
+    "@igourd/locales": "workspace:*",
+    "@igourd/plugins": "workspace:*",
+    "@igourd/styles": "workspace:*",
+    "ant-design-vue": "catalog:",
+    "lucide-vue-next": "catalog:",
+    "medium-zoom": "catalog:",
+    "radix-vue": "catalog:",
+    "vitepress-plugin-group-icons": "catalog:"
+  },
+  "devDependencies": {
+    "@nolebase/vitepress-plugin-git-changelog": "catalog:",
+    "@igourd/vite-config": "workspace:*",
+    "@vite-pwa/vitepress": "catalog:",
+    "vitepress": "catalog:",
+    "vue": "catalog:"
+  }
+}

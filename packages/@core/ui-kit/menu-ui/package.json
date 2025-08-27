@@ -1,0 +1,48 @@
+{
+  "name": "@igourd-core/menu-ui",
+  "version": "5.5.9",
+  "homepage": "https://github.com/igourdjs/vue-igourd-admin",
+  "bugs": "https://github.com/igourdjs/vue-igourd-admin/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igourdjs/vue-igourd-admin.git",
+    "directory": "packages/@igourd-core/uikit/menu-ui"
+  },
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "pnpm unbuild",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "development": "./src/index.ts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "default": "./dist/index.mjs"
+      }
+    }
+  },
+  "dependencies": {
+    "@igourd-core/composables": "workspace:*",
+    "@igourd-core/icons": "workspace:*",
+    "@igourd-core/shadcn-ui": "workspace:*",
+    "@igourd-core/shared": "workspace:*",
+    "@igourd-core/typings": "workspace:*",
+    "@vueuse/core": "catalog:",
+    "vue": "catalog:"
+  }
+}

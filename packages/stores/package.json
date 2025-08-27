@@ -1,0 +1,25 @@
+{
+  "name": "@igourd/stores",
+  "version": "5.5.9",
+  "license": "UNLICENSED",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@igourd-core/preferences": "workspace:*",
+    "@igourd-core/shared": "workspace:*",
+    "@igourd-core/typings": "workspace:*",
+    "pinia": "catalog:",
+    "pinia-plugin-persistedstate": "catalog:",
+    "secure-ls": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:"
+  }
+}

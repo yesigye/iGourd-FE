@@ -1,0 +1,118 @@
+{
+  "name": "igourd-admin-monorepo",
+  "version": "5.5.9",
+  "private": true,
+  "keywords": [
+    "monorepo",
+    "turbo",
+    "igourd",
+    "igourd admin",
+    "igourd pro",
+    "vue",
+    "vue admin",
+    "vue igourd admin",
+    "vue igourd admin pro",
+    "vue3"
+  ],
+  "license": "UNLICENSED",
+  "author": {
+    "name": "igourd",
+    "email": "ann.igourd@gmail.com",
+    "url": "https://github.com/anncwb"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 turbo build",
+    "build:analyze": "turbo build:analyze",
+    "build:antd": "pnpm run build --filter=@igourd/web-antd",
+    "build:docker": "./scripts/deploy/build-local-docker-image.sh",
+    "build:docs": "pnpm run build --filter=@igourd/docs",
+    "build:ele": "pnpm run build --filter=@igourd/web-ele",
+    "build:naive": "pnpm run build --filter=@igourd/web-naive",
+    "build:play": "pnpm run build --filter=@igourd/playground",
+    "changeset": "pnpm exec changeset",
+    "check": "pnpm run check:circular && pnpm run check:dep && pnpm run check:type && pnpm check:cspell",
+    "check:circular": "vsh check-circular",
+    "check:cspell": "cspell lint **/*.ts **/README.md .changeset/*.md --no-progress",
+    "check:dep": "vsh check-dep",
+    "check:type": "turbo run typecheck",
+    "clean": "node ./scripts/clean.mjs",
+    "commit": "czg",
+    "dev": "turbo-run dev",
+    "dev:antd": "pnpm -F @igourd/web-antd run dev",
+    "dev:docs": "pnpm -F @igourd/docs run dev",
+    "dev:ele": "pnpm -F @igourd/web-ele run dev",
+    "dev:naive": "pnpm -F @igourd/web-naive run dev",
+    "dev:play": "pnpm -F @igourd/playground run dev",
+    "format": "vsh lint --format",
+    "lint": "vsh lint",
+    "postinstall": "pnpm -r run stub --if-present",
+    "preinstall": "npx only-allow pnpm",
+    "preview": "turbo-run preview",
+    "publint": "vsh publint",
+    "reinstall": "pnpm clean --del-lock && pnpm install",
+    "test:unit": "vitest run --dom",
+    "test:e2e": "turbo run test:e2e",
+    "update:deps": "npx taze -r -w",
+    "version": "pnpm exec changeset version && pnpm install --no-frozen-lockfile",
+    "catalog": "pnpx codemod pnpm/catalog"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "catalog:",
+    "@changesets/cli": "catalog:",
+    "@playwright/test": "catalog:",
+    "@types/node": "catalog:",
+    "@igourd/commitlint-config": "workspace:*",
+    "@igourd/eslint-config": "workspace:*",
+    "@igourd/prettier-config": "workspace:*",
+    "@igourd/stylelint-config": "workspace:*",
+    "@igourd/tailwind-config": "workspace:*",
+    "@igourd/tsconfig": "workspace:*",
+    "@igourd/turbo-run": "workspace:*",
+    "@igourd/vite-config": "workspace:*",
+    "@igourd/vsh": "workspace:*",
+    "@vitejs/plugin-vue": "catalog:",
+    "@vitejs/plugin-vue-jsx": "catalog:",
+    "@vue/test-utils": "catalog:",
+    "autoprefixer": "catalog:",
+    "cross-env": "catalog:",
+    "cspell": "catalog:",
+    "happy-dom": "catalog:",
+    "is-ci": "catalog:",
+    "lefthook": "catalog:",
+    "playwright": "catalog:",
+    "rimraf": "catalog:",
+    "tailwindcss": "catalog:",
+    "turbo": "catalog:",
+    "typescript": "catalog:",
+    "unbuild": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:",
+    "vue": "catalog:",
+    "vue-tsc": "catalog:"
+  },
+  "engines": {
+    "node": ">=20.10.0",
+    "pnpm": ">=9.12.0"
+  },
+  "packageManager": "pnpm@10.14.0",
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "eslint": "*"
+      }
+    },
+    "overrides": {
+      "@ast-grep/napi": "catalog:",
+      "@ctrl/tinycolor": "catalog:",
+      "clsx": "catalog:",
+      "esbuild": "0.25.3",
+      "pinia": "catalog:",
+      "vue": "catalog:"
+    },
+    "neverBuiltDependencies": [
+      "canvas",
+      "node-gyp"
+    ]
+  }
+}

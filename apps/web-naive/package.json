@@ -1,0 +1,49 @@
+{
+  "name": "@igourd/web-naive",
+  "version": "5.5.9",
+  "homepage": "https://igourd.pro",
+  "bugs": "https://github.com/igourdjs/vue-igourd-admin/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igourdjs/vue-igourd-admin.git",
+    "directory": "apps/web-naive"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "igourd",
+    "email": "ann.igourd@gmail.com",
+    "url": "https://github.com/anncwb"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "pnpm vite build --mode production",
+    "build:analyze": "pnpm vite build --mode analyze",
+    "dev": "pnpm vite --mode development",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit --skipLibCheck"
+  },
+  "imports": {
+    "#/*": "./src/*"
+  },
+  "dependencies": {
+    "@igourd/access": "workspace:*",
+    "@igourd/common-ui": "workspace:*",
+    "@igourd/constants": "workspace:*",
+    "@igourd/hooks": "workspace:*",
+    "@igourd/icons": "workspace:*",
+    "@igourd/layouts": "workspace:*",
+    "@igourd/locales": "workspace:*",
+    "@igourd/plugins": "workspace:*",
+    "@igourd/preferences": "workspace:*",
+    "@igourd/request": "workspace:*",
+    "@igourd/stores": "workspace:*",
+    "@igourd/styles": "workspace:*",
+    "@igourd/types": "workspace:*",
+    "@igourd/utils": "workspace:*",
+    "@vueuse/core": "catalog:",
+    "naive-ui": "catalog:",
+    "pinia": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:"
+  }
+}

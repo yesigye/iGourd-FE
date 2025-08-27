@@ -1,0 +1,18 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "igourdjs/vue-igourd-admin" }
+  ],
+  "commit": false,
+  "fixed": [["@igourd-core/*", "@igourd/*"]],
+  "snapshot": {
+    "prereleaseTemplate": "{tag}-{datetime}"
+  },
+  "privatePackages": { "version": true, "tag": true },
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}

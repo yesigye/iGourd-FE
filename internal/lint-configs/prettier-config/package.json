@@ -1,0 +1,28 @@
+{
+  "name": "@igourd/prettier-config",
+  "version": "5.0.0",
+  "private": true,
+  "homepage": "https://github.com/igourdjs/vue-igourd-admin",
+  "bugs": "https://github.com/igourdjs/vue-igourd-admin/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igourdjs/vue-igourd-admin.git",
+    "directory": "internal/lint-configs/prettier-config"
+  },
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./index.mjs",
+  "module": "./index.mjs",
+  "exports": {
+    ".": {
+      "default": "./index.mjs"
+    }
+  },
+  "dependencies": {
+    "prettier": "catalog:",
+    "prettier-plugin-tailwindcss": "catalog:"
+  }
+}

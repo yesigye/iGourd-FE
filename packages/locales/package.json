@@ -1,0 +1,28 @@
+{
+  "name": "@igourd/locales",
+  "version": "5.5.9",
+  "homepage": "https://github.com/igourdjs/vue-igourd-admin",
+  "bugs": "https://github.com/igourdjs/vue-igourd-admin/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igourdjs/vue-igourd-admin.git",
+    "directory": "packages/locales"
+  },
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@intlify/core-base": "catalog:",
+    "@igourd-core/composables": "workspace:*",
+    "vue": "catalog:",
+    "vue-i18n": "catalog:"
+  }
+}

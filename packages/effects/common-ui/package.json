@@ -1,0 +1,54 @@
+{
+  "name": "@igourd/common-ui",
+  "version": "5.5.9",
+  "homepage": "https://github.com/igourdjs/vue-igourd-admin",
+  "bugs": "https://github.com/igourdjs/vue-igourd-admin/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igourdjs/vue-igourd-admin.git",
+    "directory": "packages/effects/common-ui"
+  },
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./es/tippy": {
+      "types": "./src/components/tippy/index.ts",
+      "default": "./src/components/tippy/index.ts"
+    },
+    "./es/loading": {
+      "types": "./src/components/loading/index.ts",
+      "default": "./src/components/loading/index.ts"
+    }
+  },
+  "dependencies": {
+    "@igourd-core/form-ui": "workspace:*",
+    "@igourd-core/popup-ui": "workspace:*",
+    "@igourd-core/preferences": "workspace:*",
+    "@igourd-core/shadcn-ui": "workspace:*",
+    "@igourd-core/shared": "workspace:*",
+    "@igourd/constants": "workspace:*",
+    "@igourd/hooks": "workspace:*",
+    "@igourd/icons": "workspace:*",
+    "@igourd/locales": "workspace:*",
+    "@igourd/types": "workspace:*",
+    "@vueuse/core": "catalog:",
+    "@vueuse/integrations": "catalog:",
+    "json-bigint": "catalog:",
+    "qrcode": "catalog:",
+    "tippy.js": "catalog:",
+    "vue": "catalog:",
+    "vue-json-viewer": "catalog:",
+    "vue-router": "catalog:",
+    "vue-tippy": "catalog:"
+  },
+  "devDependencies": {
+    "@types/qrcode": "catalog:"
+  }
+}
