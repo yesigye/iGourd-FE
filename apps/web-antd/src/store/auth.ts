@@ -3,7 +3,7 @@ import type { Recordable, UserInfo } from '@igourd/types';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { LOGIN_PATH } from '@igourd/constants';
+import { LOGIN_PATH, APP_CONFIG } from '@igourd/constants';
 import { preferences } from '@igourd/preferences';
 import { resetAllStores, useAccessStore, useUserStore } from '@igourd/stores';
 
@@ -33,39 +33,54 @@ export const useAuthStore = defineStore('auth', () => {
     let userInfo: null | UserInfo = null;
     try {
       loginLoading.value = true;
-      const { accessToken } = await loginApi(params);
 
-      // 如果成功获取到 accessToken
-      if (accessToken) {
-        accessStore.setAccessToken(accessToken);
+      // 构建新的登录参数
+      const loginParams = {
+        app_key: APP_CONFIG.DEFAULT_APP.app_key,
+        login_account: params.username || params.login_account,
+        password: params.password,
+        type: APP_CONFIG.DEFAULT_APP.type,
+        ...params
+      };
 
-        // 获取用户信息并存储到 accessStore 中
-        const [fetchUserInfoResult, accessCodes] = await Promise.all([
-          fetchUserInfo(),
-          getAccessCodesApi(),
-        ]);
+      const loginResult = await loginApi(loginParams);
 
-        userInfo = fetchUserInfoResult;
+      // 如果成功获取到登录结果
+      if (loginResult.jwt_token?.jwt_token) {
+        const accessToken = loginResult.jwt_token.jwt_token;
 
-        userStore.setUserInfo(userInfo);
-        accessStore.setAccessCodes(accessCodes);
+        // 如果成功获取到 accessToken
+        if (accessToken) {
+          accessStore.setAccessToken(accessToken);
 
-        if (accessStore.loginExpired) {
-          accessStore.setLoginExpired(false);
-        } else {
-          onSuccess
-            ? await onSuccess?.()
-            : await router.push(
-                userInfo.homePath || preferences.app.defaultHomePath,
-              );
-        }
+          // 获取用户信息并存储到 accessStore 中
+          const [fetchUserInfoResult, accessCodes] = await Promise.all([
+            fetchUserInfo(),
+            getAccessCodesApi(),
+          ]);
 
-        if (userInfo?.realName) {
-          notification.success({
-            description: `${$t('authentication.loginSuccessDesc')}:${userInfo?.realName}`,
-            duration: 3,
-            message: $t('authentication.loginSuccess'),
-          });
+          userInfo = fetchUserInfoResult;
+
+          userStore.setUserInfo(userInfo);
+          accessStore.setAccessCodes(accessCodes);
+
+          if (accessStore.loginExpired) {
+            accessStore.setLoginExpired(false);
+          } else {
+            onSuccess
+              ? await onSuccess?.()
+              : await router.push(
+                  userInfo.homePath || preferences.app.defaultHomePath,
+                );
+          }
+
+          if (userInfo?.realName) {
+            notification.success({
+              description: `${$t('authentication.loginSuccessDesc')}:${userInfo?.realName}`,
+              duration: 3,
+              message: $t('authentication.loginSuccess'),
+            });
+          }
         }
       }
     } finally {

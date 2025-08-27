@@ -5,15 +5,61 @@ export interface UserInfo {
   roles: string[];
   username: string;
   homePath?: string;
+  email?: string;
+  phoneNumber?: string;
+  status: string;
+}
+
+// 新增：功能权限树结构
+export interface FunctionTree {
+  id: number;
+  name: string;
+  key: string;
+  children?: FunctionTree[];
+}
+
+// 新增：用户应用关系
+export interface UserApp {
+  id: number;
+  owner_id: number;
+  owner_type: string;
+  app_key: string;
+}
+
+// 新增：JWT Token结构
+export interface JwtToken {
+  jwt_token: string;
+  token_id: string;
+  token_type: string;
+  expires_in: number;
+}
+
+// 新增：登录响应结构
+export interface LoginResponse {
+  jwt_token: JwtToken;
+  user_model: {
+    id: number;
+    real_name: string;
+    login_id: string;
+    email?: string;
+    phone_number?: string;
+    status: string;
+  };
+  function_trees: FunctionTree[];
+  user_apps: UserApp[];
+  current_login_user_app: UserApp;
 }
 
 export const MOCK_USERS: UserInfo[] = [
   {
     id: 0,
     password: '123456',
-          realName: 'Igourd',
+    realName: 'Igourd',
     roles: ['super'],
     username: 'igourd',
+    email: 'igourd@example.com',
+    phoneNumber: '13800138000',
+    status: 'ACTIVE',
   },
   {
     id: 1,
@@ -22,6 +68,9 @@ export const MOCK_USERS: UserInfo[] = [
     roles: ['admin'],
     username: 'admin',
     homePath: '/workspace',
+    email: 'admin@example.com',
+    phoneNumber: '13800138001',
+    status: 'ACTIVE',
   },
   {
     id: 2,
@@ -30,8 +79,130 @@ export const MOCK_USERS: UserInfo[] = [
     roles: ['user'],
     username: 'jack',
     homePath: '/analytics',
+    email: 'jack@example.com',
+    phoneNumber: '13800138002',
+    status: 'ACTIVE',
   },
 ];
+
+// 新增：功能权限树数据
+export const MOCK_FUNCTION_TREES: Record<string, FunctionTree[]> = {
+  igourd: [
+    {
+      id: 1,
+      name: 'Dashboard',
+      key: 'dashboard',
+      children: [
+        {
+          id: 11,
+          name: 'Analytics',
+          key: 'dashboard:analytics',
+        },
+        {
+          id: 12,
+          name: 'Workspace',
+          key: 'dashboard:workspace',
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: 'System',
+      key: 'system',
+      children: [
+        {
+          id: 21,
+          name: 'Menu',
+          key: 'system:menu',
+        },
+        {
+          id: 22,
+          name: 'Dept',
+          key: 'system:dept',
+        },
+      ],
+    },
+  ],
+  admin: [
+    {
+      id: 1,
+      name: 'Dashboard',
+      key: 'dashboard',
+      children: [
+        {
+          id: 11,
+          name: 'Analytics',
+          key: 'dashboard:analytics',
+        },
+        {
+          id: 12,
+          name: 'Workspace',
+          key: 'dashboard:workspace',
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: 'System',
+      key: 'system',
+      children: [
+        {
+          id: 21,
+          name: 'Menu',
+          key: 'system:menu',
+        },
+      ],
+    },
+  ],
+  jack: [
+    {
+      id: 1,
+      name: 'Dashboard',
+      key: 'dashboard',
+      children: [
+        {
+          id: 11,
+          name: 'Analytics',
+          key: 'dashboard:analytics',
+        },
+      ],
+    },
+  ],
+};
+
+// 新增：用户应用关系数据
+export const MOCK_USER_APPS: Record<string, UserApp[]> = {
+  igourd: [
+    {
+      id: 1,
+      owner_id: 1001,
+      owner_type: 'BOSS',
+      app_key: 'BOSS_MANAGE_WEB_PC',
+    },
+    {
+      id: 2,
+      owner_id: 1002,
+      owner_type: 'MERCHANT',
+      app_key: 'MERCHANT_MANAGE_WEB_PC',
+    },
+  ],
+  admin: [
+    {
+      id: 3,
+      owner_id: 1002,
+      owner_type: 'MERCHANT',
+      app_key: 'MERCHANT_MANAGE_WEB_PC',
+    },
+  ],
+  jack: [
+    {
+      id: 4,
+      owner_id: 1002,
+      owner_type: 'MERCHANT',
+      app_key: 'MERCHANT_MANAGE_WEB_PC',
+    },
+  ],
+};
 
 export const MOCK_CODES = [
   // super

@@ -3,7 +3,7 @@ import type { Recordable, UserInfo } from '@igourd/types';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { LOGIN_PATH } from '@igourd/constants';
+import { LOGIN_PATH, APP_CONFIG } from '@igourd/constants';
 import { preferences } from '@igourd/preferences';
 import { resetAllStores, useAccessStore, useUserStore } from '@igourd/stores';
 
@@ -33,10 +33,22 @@ export const useAuthStore = defineStore('auth', () => {
     let userInfo: null | UserInfo = null;
     try {
       loginLoading.value = true;
-      const { accessToken } = await loginApi(params);
 
-      // 如果成功获取到 accessToken
-      if (accessToken) {
+      // 构建新的登录参数
+      const loginParams = {
+        app_key: APP_CONFIG.DEFAULT_APP.app_key,
+        login_account: params.username || params.login_account,
+        password: params.password,
+        type: APP_CONFIG.DEFAULT_APP.type,
+        ...params
+      };
+
+      const loginResult = await loginApi(loginParams);
+
+      // 如果成功获取到登录结果
+      if (loginResult.jwt_token?.jwt_token) {
+        const accessToken = loginResult.jwt_token.jwt_token;
+
         // 将 accessToken 存储到 accessStore 中
         accessStore.setAccessToken(accessToken);
 

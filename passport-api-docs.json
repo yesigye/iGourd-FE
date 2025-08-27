@@ -1,0 +1,5224 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "igourd - 二方库",
+    "description": "信任、包容、开放、互助",
+    "contact": {
+      "name": "igourd",
+      "url": "https://www.igourd.com/",
+      "email": "mail@igourd.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://test-swagger.seller100.com:80",
+      "description": "Inferred Url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "功能管理接口服务接口",
+      "description": "Function Lifecycle Controller"
+    },
+    {
+      "name": "国际化国家基础相关信息服务接口",
+      "description": "Country Basics Controller"
+    },
+    {
+      "name": "应用相关信息服务接口",
+      "description": "App Lifecycle Controller"
+    },
+    {
+      "name": "操作管理接口服务接口",
+      "description": "Action Lifecycle Controller"
+    },
+    { "name": "消息发送api管理", "description": "Message Sending Controller" },
+    {
+      "name": "用户生命周期服务接口",
+      "description": "User Lifecycle Controller"
+    },
+    {
+      "name": "登录生命周期服务接口（登录、登出、忘记密码）",
+      "description": "Login Lifecycle Controller"
+    },
+    {
+      "name": "菜单管理接口服务接口",
+      "description": "Menu Lifecycle Controller"
+    },
+    {
+      "name": "角色管理接口服务接口",
+      "description": "Role Lifecycle Controller"
+    }
+  ],
+  "paths": {
+    "/v{version}/passport/action/action-key/exists": {
+      "post": {
+        "tags": ["操作管理接口服务接口"],
+        "summary": "验证actionKey是否存在",
+        "operationId": "actionKeyExistsUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ActionKey查询请求VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«boolean»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/action/create": {
+      "post": {
+        "tags": ["操作管理接口服务接口"],
+        "summary": "Action信息创建",
+        "operationId": "createUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/操作创建请求参数VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«ActionModel, 权限最小单元,Action»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/action/deatil": {
+      "post": {
+        "tags": ["操作管理接口服务接口"],
+        "summary": "Action信息详情",
+        "operationId": "detailUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/操作详情查询请求参数" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«ActionModel, 权限最小单元,Action»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/action/modify": {
+      "post": {
+        "tags": ["操作管理接口服务接口"],
+        "summary": "Action信息修改",
+        "operationId": "modifyUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/操作修改请求参数VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«ActionModel, 权限最小单元,Action»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/action/remove": {
+      "post": {
+        "tags": ["操作管理接口服务接口"],
+        "summary": "Action信息删除",
+        "operationId": "removeUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/操作删除请求参数VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«boolean»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/basics/app/list": {
+      "get": {
+        "tags": ["应用相关信息服务接口"],
+        "summary": "应用信息集合查询接口",
+        "operationId": "appListUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«List«应用信息Model»»"
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/basics/country/areas/list": {
+      "get": {
+        "tags": ["国际化国家基础相关信息服务接口"],
+        "summary": "国家区号信息查询",
+        "operationId": "countryAreasListUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«List«国家信息Model»»"
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/basics/country/language/list": {
+      "get": {
+        "tags": ["国际化国家基础相关信息服务接口"],
+        "summary": "国家语言信息列表查询",
+        "operationId": "countryLanguagesListUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«List«国家语言信息模型»»"
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/basics/country/timezone/find": {
+      "post": {
+        "tags": ["国际化国家基础相关信息服务接口"],
+        "summary": "基于时区ID查询国家时区信息查询",
+        "operationId": "findCountryTimeZoneByIdUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/国家时区查询请求参数VO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«国家时区信息Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/basics/country/timezone/list": {
+      "get": {
+        "tags": ["国际化国家基础相关信息服务接口"],
+        "summary": "国家时区信息查询",
+        "operationId": "countryTimeZoneListUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«List«国家时区信息Model»»"
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/function/create": {
+      "post": {
+        "tags": ["功能管理接口服务接口"],
+        "summary": "功能信息创建",
+        "operationId": "createUsingPOST_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/功能创建请求参数VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«功能权限Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/function/deatil": {
+      "post": {
+        "tags": ["功能管理接口服务接口"],
+        "summary": "功能信息详情",
+        "operationId": "detailUsingPOST_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/功能详情查询请求参数" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«功能权限Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/function/function-key/exists": {
+      "post": {
+        "tags": ["功能管理接口服务接口"],
+        "summary": "验证FunctionKey是否存在",
+        "operationId": "functionKeyExistsUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/FunctionKey查询请求VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«boolean»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/function/modify": {
+      "post": {
+        "tags": ["功能管理接口服务接口"],
+        "summary": "功能信息修改",
+        "operationId": "modifyUsingPOST_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/功能修改请求参数VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«功能权限Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/function/remove": {
+      "post": {
+        "tags": ["功能管理接口服务接口"],
+        "summary": "功能信息删除",
+        "operationId": "removeUsingPOST_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/功能删除请求参数VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«boolean»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/function/tree-list": {
+      "post": {
+        "tags": ["功能管理接口服务接口"],
+        "summary": "功能树列表查询(Function/Action综合列表)",
+        "operationId": "listTreeUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/功能树列表查询条件VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«List«功能权限树形结构Model»»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/forget/password": {
+      "post": {
+        "tags": ["登录生命周期服务接口（登录、登出、忘记密码）"],
+        "summary": "忘记密码",
+        "operationId": "forgetPasswordUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/忘记密码请求参数" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«boolean»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/login": {
+      "post": {
+        "tags": ["登录生命周期服务接口（登录、登出、忘记密码）"],
+        "summary": "登录,验证用户密码的有效性",
+        "operationId": "loginUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/登录入参" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/登录ModelFullView" }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/logout": {
+      "get": {
+        "tags": ["登录生命周期服务接口（登录、登出、忘记密码）"],
+        "summary": "退出登录",
+        "operationId": "logoutUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«boolean»"
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/owner/selection": {
+      "post": {
+        "tags": ["登录生命周期服务接口（登录、登出、忘记密码）"],
+        "summary": "登录后,选择一个Owner切换",
+        "operationId": "ownerSelectionUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/登录后，选择一个Owner切换请求入参"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/登录ModelFullView" }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/token-id/refresh": {
+      "post": {
+        "tags": ["登录生命周期服务接口（登录、登出、忘记密码）"],
+        "summary": "刷新token id",
+        "operationId": "tokenIdRefreshUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenID到期刷新请求参数"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«TokenId刷新返回的结果集Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/verification-code": {
+      "post": {
+        "tags": ["登录生命周期服务接口（登录、登出、忘记密码）"],
+        "summary": "获取验证码(短信、邮箱)",
+        "operationId": "getVerificationCodeUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/验证码请求入参(短信、邮箱验证码)"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«验证码返回结果集Model(短信、邮箱验证码)»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/verification-code/validate": {
+      "post": {
+        "tags": ["登录生命周期服务接口（登录、登出、忘记密码）"],
+        "summary": "验证码(短信、邮箱)校验",
+        "operationId": "validateVerificationCodeUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/验证码校验接收参数" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«object»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/menu/create": {
+      "post": {
+        "tags": ["菜单管理接口服务接口"],
+        "summary": "菜单信息创建",
+        "operationId": "createUsingPOST_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/菜单创建请求参数VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«菜单Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/menu/deatil": {
+      "post": {
+        "tags": ["菜单管理接口服务接口"],
+        "summary": "菜单信息详情",
+        "operationId": "detailUsingPOST_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/菜单详情查询请求参数" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«菜单Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/menu/language/list": {
+      "post": {
+        "tags": ["菜单管理接口服务接口"],
+        "summary": "菜单国际化语言查询列表",
+        "operationId": "listLanguateUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/菜单国际化语言查询列表条件VO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«Map«string,Map«string,Map«string,string»»»»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/menu/menu-key/exists": {
+      "post": {
+        "tags": ["菜单管理接口服务接口"],
+        "summary": "验证MenuKey是否存在",
+        "operationId": "menuKeyExistsUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/MenuKey查询请求VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«boolean»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/menu/modify": {
+      "post": {
+        "tags": ["菜单管理接口服务接口"],
+        "summary": "菜单信息修改",
+        "operationId": "modifyUsingPOST_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/菜单修改请求参数VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«菜单Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/menu/remove": {
+      "post": {
+        "tags": ["菜单管理接口服务接口"],
+        "summary": "菜单信息删除",
+        "operationId": "removeUsingPOST_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/菜单删除请求参数VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«boolean»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/menu/tree-list": {
+      "post": {
+        "tags": ["菜单管理接口服务接口"],
+        "summary": "菜单树列表查询",
+        "operationId": "listTreeUsingPOST_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/菜单树列表查询条件VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«List«菜单树结构Model»»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/message/send": {
+      "post": {
+        "tags": ["消息发送api管理"],
+        "summary": "发送消息",
+        "operationId": "messageSendUsingPOST",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "description": "version",
+            "required": true,
+            "style": "simple",
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/消息发送接收参数" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/BaseAPIResult«Void»" }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/role/batch/remove": {
+      "post": {
+        "tags": ["角色管理接口服务接口"],
+        "summary": "角色信息删除",
+        "operationId": "removeUsingPOST_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/角色批量删除请求参数" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«boolean»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/role/create": {
+      "post": {
+        "tags": ["角色管理接口服务接口"],
+        "summary": "角色信息创建",
+        "operationId": "createUsingPOST_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/用户角色创建请求参数VO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«角色Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/role/function/detail": {
+      "post": {
+        "tags": ["角色管理接口服务接口"],
+        "summary": "查询Owner下指定角色功能权限信息.角色查询页面，权限详情页(详情和修改前查询)",
+        "operationId": "listFunctionByRoleUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/查询Owner下指定角色功能权限信息请求参数"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«角色和功能信息组合Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/role/function/list-all": {
+      "post": {
+        "tags": ["角色管理接口服务接口"],
+        "summary": "查询当前用户下所有功能权限信息（当前用户拥有的角色）添加角色角色使用，查询全部权限",
+        "operationId": "listFunctionByAllRoleUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/角色和功能权限的全量查询请求参数(查询当前用户下所有功能权限信息)"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«角色和功能信息组合Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/role/function/owner/detail": {
+      "post": {
+        "tags": ["角色管理接口服务接口"],
+        "summary": "基于ownerID查询Owner下指定角色功能权限信息，登录owner和本身ownerId不一致的情况下使用",
+        "operationId": "listFunctionByRoleAndOwnerIdUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/基于ownerId查询Owner下指定角色功能权限信息请求参数"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«角色和功能信息组合Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/role/function/owner/list-all": {
+      "post": {
+        "tags": ["角色管理接口服务接口"],
+        "summary": "查询指定Owner的当前用户下所有功能权限信息，登录owner和本身ownerId不一致的情况下使用",
+        "operationId": "listFunctionByAllRoleAndOwnerIdUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/查询指定Owner的当前用户下所有功能权限信息，登录owner和本身ownerId不一致的情况下使用"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«角色和功能信息组合Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/role/list": {
+      "get": {
+        "tags": ["角色管理接口服务接口"],
+        "summary": "查询当前Owner和当前登录用户帐号拥有的角色信息,不包括超级管理员角色(不分页)",
+        "operationId": "listUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«List«角色Model»»"
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/role/modify": {
+      "post": {
+        "tags": ["角色管理接口服务接口"],
+        "summary": "角色信息修改",
+        "operationId": "modifyUsingPOST_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/角色修改请求参数VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«角色Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/role/modify-batch": {
+      "post": {
+        "tags": ["角色管理接口服务接口"],
+        "summary": "基于Owner的角色信息修改，登录owner和本身ownerId不一致的情况下使用（权限批量分配给用户）",
+        "operationId": "modifySystemByOwnerBatchUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/基于OwnerId的角色批量修改请求参数VO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«List«批量分配权限返回模型»»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/role/modify-by-owner": {
+      "post": {
+        "tags": ["角色管理接口服务接口"],
+        "summary": "基于Owner的角色信息修改，登录owner和本身ownerId不一致的情况下使用",
+        "operationId": "modifySystemByOwnerUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/基于OwnerId的角色修改请求参数VO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«角色Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/role/page-list": {
+      "post": {
+        "tags": ["角色管理接口服务接口"],
+        "summary": "角色分页列表查询，多条件支持模糊查询",
+        "operationId": "listPageByMultiLikeUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/角色管理查询条件VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«分页返回结果集结构«角色Model»»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/role/system/owner": {
+      "post": {
+        "tags": ["角色管理接口服务接口"],
+        "summary": "查询指定owner的系统角色信息，登录owner和本身ownerId不一致的情况下使用",
+        "operationId": "findSystemRoleByOwnerUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/门店系统角色查询请求接收参数VO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«角色Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/user/normal/create": {
+      "post": {
+        "tags": ["用户生命周期服务接口"],
+        "summary": "普通用户帐号创建",
+        "operationId": "createNormalUserUsingPOST",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "description": "普通用户帐号创建对象",
+            "required": true,
+            "style": "simple",
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/普通用户创建请求参数" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«用户Model,基础数据型Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/user/normal/find/{userId}": {
+      "get": {
+        "tags": ["用户生命周期服务接口"],
+        "summary": "普通用户详情查询",
+        "operationId": "findByUserIdUsingGET",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "普通用户帐号查询对象",
+            "required": true,
+            "style": "simple",
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«用户Model,基础数据型Model»"
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/user/normal/froze": {
+      "post": {
+        "tags": ["用户生命周期服务接口"],
+        "summary": "普通用户帐号冻结",
+        "operationId": "normalUserFrozeUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/普通用户冻结请求参数" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«boolean»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/user/normal/modify": {
+      "post": {
+        "tags": ["用户生命周期服务接口"],
+        "summary": "普通用户帐号信息修改",
+        "operationId": "modifyNormalUserUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/普通用户修改请求参数VO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«用户Model,基础数据型Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/user/normal/page-list": {
+      "post": {
+        "tags": ["用户生命周期服务接口"],
+        "summary": "普通用户列表查询，多条件支持模糊查询",
+        "operationId": "listPageByNormalUserUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/用户管理查询条件VO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«分页返回结果集结构«用户Model,基础数据型Model»»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/user/normal/remove": {
+      "post": {
+        "tags": ["用户生命周期服务接口"],
+        "summary": "普通用户帐号信息删除",
+        "operationId": "removeNormalUserUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/普通用户批量删除请求参数"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«boolean»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/user/normal/staff-quantity/statistics": {
+      "post": {
+        "tags": ["用户生命周期服务接口"],
+        "summary": "普通员工数量统计",
+        "operationId": "mapByOwnerStaffQuantityUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/用户员工数量统计查询条件VO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«Map«long,int»»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/user/normal/unfroze": {
+      "post": {
+        "tags": ["用户生命周期服务接口"],
+        "summary": "普通用户帐号解冻",
+        "operationId": "normalUserUnfrozeUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/普通用户解冻请求参数" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«boolean»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/user/password/modify": {
+      "post": {
+        "tags": ["用户生命周期服务接口"],
+        "summary": "用户密码修改",
+        "operationId": "modifyPasswordByUserIdUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/用户信息密码修改请求接收参数"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/BaseAPIResult«Void»" }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/user/password/reset": {
+      "post": {
+        "tags": ["用户生命周期服务接口"],
+        "summary": "员工用户密码重置",
+        "operationId": "resetUserPasswordUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/用户密码重置请求接收参数"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«object»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/user/password/verification": {
+      "post": {
+        "tags": ["用户生命周期服务接口"],
+        "summary": "用户密码校验",
+        "operationId": "verificationUserPasswordUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/用户密码校验请求接收参数"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«boolean»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/user/profile/modify": {
+      "post": {
+        "tags": ["用户生命周期服务接口"],
+        "summary": "用户个人资料信息修改",
+        "operationId": "modifyUserProfileUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/用户个人资料修改接收参数"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/BaseAPIResult«Void»" }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/v{version}/passport/user/sub-merchant/super-admin/modify": {
+      "post": {
+        "tags": ["用户生命周期服务接口"],
+        "summary": "子商户超级管理员用户权限分配修改(内部调用)",
+        "operationId": "modifySubMerchantSuperAdminUserUsingPOST",
+        "parameters": [
+          {
+            "name": "headerMap",
+            "in": "header",
+            "description": "子商户超级管理员用户权限分配修改",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "description": "version",
+            "required": true,
+            "style": "simple",
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/子商户超级管理员用户修改请求参数VO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseAPIResult«用户Model,基础数据型Model»"
+                }
+              }
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActionKey查询请求VO": {
+        "title": "ActionKey查询请求VO",
+        "required": ["action_key", "app_key"],
+        "type": "object",
+        "properties": {
+          "action_key": { "type": "string", "description": "操作Key(唯一)" },
+          "app_key": {
+            "type": "string",
+            "description": "应用KEY（必填）",
+            "enum": [
+              "BOSS_MANAGE_WEB_PC:BOSS管理后台WEB PC",
+              "CUSTOMER_APP:客户APP(Android/IOS)",
+              "CUSTOMER_WEB_PC:客户平台WEB PC",
+              "MERCHANT_MANAGE_APP:商家管理APP(Android/IOS)",
+              "MERCHANT_MANAGE_WEB_PC:商家管理后台WEB PC",
+              "MERCHANT_POS_PC:商家POS PC(Windows/Android)"
+            ]
+          }
+        }
+      },
+      "ActionModel, 权限最小单元,Action": {
+        "title": "ActionModel, 权限最小单元,Action",
+        "type": "object",
+        "properties": {
+          "action_key": { "type": "string", "description": "操作Key(唯一)" },
+          "action_names": {
+            "type": "array",
+            "description": "操作名(多语言对应的名称)",
+            "items": { "$ref": "#/components/schemas/权限名称Model" }
+          },
+          "app_id": {
+            "type": "integer",
+            "description": "应用ID",
+            "format": "int64"
+          },
+          "create_time": {
+            "type": "string",
+            "description": " 创建时间",
+            "format": "date-time"
+          },
+          "creator_id": {
+            "type": "integer",
+            "description": "创建者ID,user_id",
+            "format": "int64"
+          },
+          "function_id": {
+            "type": "integer",
+            "description": "对应的功能编号",
+            "format": "int64"
+          },
+          "id": { "type": "integer", "description": "ID", "format": "int64" },
+          "is_displayed": {
+            "type": "boolean",
+            "description": "操作是否需要展示在前端页面(1:是,0:否)",
+            "example": false
+          },
+          "modify_time": {
+            "type": "string",
+            "description": "更新时间",
+            "format": "date-time"
+          },
+          "name": { "type": "string", "description": "操作名称" },
+          "remark": { "type": "string", "description": "备注" },
+          "shortcuts": { "type": "string", "description": "快捷键" },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["ACTIVE", "FROZEN"]
+          },
+          "time_zone": {
+            "type": "string",
+            "description": " 时区（当前数据的时区,zone_id）"
+          },
+          "url": { "type": "string", "description": "操作对应的url" },
+          "version": { "type": "string", "description": "时间戳" }
+        },
+        "description": "登录返回的Action信息"
+      },
+      "ActionModel, 权限最小单元,ActionFullView": {
+        "title": "ActionModel, 权限最小单元,ActionFullView",
+        "type": "object",
+        "properties": {
+          "action_key": { "type": "string", "description": "操作Key(唯一)" },
+          "function_id": {
+            "type": "integer",
+            "description": "对应的功能编号",
+            "format": "int64"
+          },
+          "name": { "type": "string", "description": "操作名称" },
+          "url": { "type": "string", "description": "操作对应的url" }
+        },
+        "description": "登录返回的Action信息"
+      },
+      "BaseAPIResultCommonInfo": {
+        "title": "BaseAPIResultCommonInfo",
+        "type": "object",
+        "properties": {
+          "cli_time": { "type": "integer", "format": "int64" },
+          "request_id": { "type": "string" },
+          "ser_time": { "type": "integer", "format": "int64" },
+          "timestamp": { "type": "integer", "format": "int64" }
+        }
+      },
+      "BaseAPIResult«ActionModel, 权限最小单元,Action»": {
+        "title": "BaseAPIResult«ActionModel, 权限最小单元,Action»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ActionModel, 权限最小单元,Action"
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«List«功能权限树形结构Model»»": {
+        "title": "BaseAPIResult«List«功能权限树形结构Model»»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/功能权限树形结构Model" }
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«List«国家信息Model»»": {
+        "title": "BaseAPIResult«List«国家信息Model»»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/国家信息Model" }
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«List«国家时区信息Model»»": {
+        "title": "BaseAPIResult«List«国家时区信息Model»»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/国家时区信息Model" }
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«List«国家语言信息模型»»": {
+        "title": "BaseAPIResult«List«国家语言信息模型»»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/国家语言信息模型" }
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«List«应用信息Model»»": {
+        "title": "BaseAPIResult«List«应用信息Model»»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/应用信息Model" }
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«List«批量分配权限返回模型»»": {
+        "title": "BaseAPIResult«List«批量分配权限返回模型»»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/批量分配权限返回模型" }
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«List«用户Model,基础数据型Model»»": {
+        "title": "BaseAPIResult«List«用户Model,基础数据型Model»»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/用户Model,基础数据型Model"
+            }
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«List«菜单树结构Model»»": {
+        "title": "BaseAPIResult«List«菜单树结构Model»»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/菜单树结构Model" }
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«List«角色Model»»": {
+        "title": "BaseAPIResult«List«角色Model»»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/角色Model" }
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«Map«long,int»»": {
+        "title": "BaseAPIResult«Map«long,int»»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": { "type": "integer", "format": "int32" }
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«Map«string,Map«string,Map«string,string»»»»": {
+        "title": "BaseAPIResult«Map«string,Map«string,Map«string,string»»»»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": { "type": "object" }
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«TokenId刷新返回的结果集Model»": {
+        "title": "BaseAPIResult«TokenId刷新返回的结果集Model»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "$ref": "#/components/schemas/TokenId刷新返回的结果集Model"
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«Token信息返回结果集Model»": {
+        "title": "BaseAPIResult«Token信息返回结果集Model»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": { "$ref": "#/components/schemas/Token信息返回结果集Model" },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«Void»": {
+        "title": "BaseAPIResult«Void»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«boolean»": {
+        "title": "BaseAPIResult«boolean»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": { "type": "boolean" },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«object»": {
+        "title": "BaseAPIResult«object»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": { "type": "object" },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«分页返回结果集结构«用户Model,基础数据型Model»»": {
+        "title": "BaseAPIResult«分页返回结果集结构«用户Model,基础数据型Model»»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "$ref": "#/components/schemas/分页返回结果集结构«用户Model,基础数据型Model»"
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«分页返回结果集结构«角色Model»»": {
+        "title": "BaseAPIResult«分页返回结果集结构«角色Model»»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "$ref": "#/components/schemas/分页返回结果集结构«角色Model»"
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«功能权限Model»": {
+        "title": "BaseAPIResult«功能权限Model»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": { "$ref": "#/components/schemas/功能权限Model" },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«国家信息Model»": {
+        "title": "BaseAPIResult«国家信息Model»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": { "$ref": "#/components/schemas/国家信息Model" },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«国家时区信息Model»": {
+        "title": "BaseAPIResult«国家时区信息Model»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": { "$ref": "#/components/schemas/国家时区信息Model" },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«用户Model,基础数据型Model»": {
+        "title": "BaseAPIResult«用户Model,基础数据型Model»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": { "$ref": "#/components/schemas/用户Model,基础数据型Model" },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«用户和应用的关联关系Model»": {
+        "title": "BaseAPIResult«用户和应用的关联关系Model»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": { "$ref": "#/components/schemas/用户和应用的关联关系Model" },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«用户身份及权限验证返回的结果集Model»": {
+        "title": "BaseAPIResult«用户身份及权限验证返回的结果集Model»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "$ref": "#/components/schemas/用户身份及权限验证返回的结果集Model"
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«菜单Model»": {
+        "title": "BaseAPIResult«菜单Model»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": { "$ref": "#/components/schemas/菜单Model" },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«角色Model»": {
+        "title": "BaseAPIResult«角色Model»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": { "$ref": "#/components/schemas/角色Model" },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«角色和功能信息组合Model»": {
+        "title": "BaseAPIResult«角色和功能信息组合Model»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": { "$ref": "#/components/schemas/角色和功能信息组合Model" },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "BaseAPIResult«验证码返回结果集Model(短信、邮箱验证码)»": {
+        "title": "BaseAPIResult«验证码返回结果集Model(短信、邮箱验证码)»",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "common_info": {
+            "$ref": "#/components/schemas/BaseAPIResultCommonInfo"
+          },
+          "data": {
+            "$ref": "#/components/schemas/验证码返回结果集Model(短信、邮箱验证码)"
+          },
+          "message": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      },
+      "FunctionKey查询请求VO": {
+        "title": "FunctionKey查询请求VO",
+        "required": ["app_key", "function_key"],
+        "type": "object",
+        "properties": {
+          "app_key": {
+            "type": "string",
+            "description": "应用KEY（必填）",
+            "enum": [
+              "BOSS_MANAGE_WEB_PC:BOSS管理后台WEB PC",
+              "CUSTOMER_APP:客户APP(Android/IOS)",
+              "CUSTOMER_WEB_PC:客户平台WEB PC",
+              "MERCHANT_MANAGE_APP:商家管理APP(Android/IOS)",
+              "MERCHANT_MANAGE_WEB_PC:商家管理后台WEB PC",
+              "MERCHANT_POS_PC:商家POS PC(Windows/Android)"
+            ]
+          },
+          "function_key": {
+            "type": "string",
+            "description": "FunctionKey(唯一)"
+          }
+        }
+      },
+      "JwtFullContent": {
+        "title": "JwtFullContent",
+        "type": "object",
+        "properties": {
+          "jwt_header": {
+            "description": "jwtHeader",
+            "$ref": "#/components/schemas/JwtHeader"
+          },
+          "jwt_pay_load": {
+            "description": "jwt Payload",
+            "$ref": "#/components/schemas/JwtPayload"
+          }
+        }
+      },
+      "JwtHeader": {
+        "title": "JwtHeader",
+        "type": "object",
+        "properties": { "time_zone_server": { "type": "string" } }
+      },
+      "JwtPayload": {
+        "title": "JwtPayload",
+        "type": "object",
+        "properties": {
+          "custom_info": { "type": "object" },
+          "expiration": { "type": "string", "format": "date-time" },
+          "iss_uer": { "type": "string" },
+          "issued_at": { "type": "string", "format": "date-time" },
+          "jti": { "type": "string" },
+          "subject": { "type": "string" }
+        }
+      },
+      "JwtToken": {
+        "title": "JwtToken",
+        "type": "object",
+        "properties": {
+          "expires_in": { "type": "integer", "format": "int32" },
+          "jwt_token": { "type": "string" },
+          "token_id": { "type": "string" },
+          "token_type": { "type": "string" }
+        }
+      },
+      "JwtTokenFullView": { "title": "JwtTokenFullView", "type": "object" },
+      "MenuKey查询请求VO": {
+        "title": "MenuKey查询请求VO",
+        "required": ["app_key", "menu_key"],
+        "type": "object",
+        "properties": {
+          "app_key": {
+            "type": "string",
+            "description": "应用KEY（必填）",
+            "enum": [
+              "BOSS_MANAGE_WEB_PC:BOSS管理后台WEB PC",
+              "CUSTOMER_APP:客户APP(Android/IOS)",
+              "CUSTOMER_WEB_PC:客户平台WEB PC",
+              "MERCHANT_MANAGE_APP:商家管理APP(Android/IOS)",
+              "MERCHANT_MANAGE_WEB_PC:商家管理后台WEB PC",
+              "MERCHANT_POS_PC:商家POS PC(Windows/Android)"
+            ]
+          },
+          "menu_key": { "type": "string", "description": "MenuKey(唯一)" }
+        }
+      },
+      "TokenID到期刷新请求参数": {
+        "title": "TokenID到期刷新请求参数",
+        "required": ["owner_id", "owner_type", "token_id"],
+        "type": "object",
+        "properties": {
+          "owner_id": {
+            "type": "integer",
+            "description": "拥有者编号",
+            "format": "int64"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "拥有者类型",
+            "enum": [
+              "BOSS: 商户运营后台",
+              "CUSTOMER:客户",
+              "MERCHANT: 商户",
+              "PARTNER: 服务商"
+            ]
+          },
+          "token_id": { "type": "string", "description": "Token Id" }
+        }
+      },
+      "TokenId刷新返回的结果集Model": {
+        "title": "TokenId刷新返回的结果集Model",
+        "type": "object",
+        "properties": {
+          "jwt_token": {
+            "description": "jwtToken信息",
+            "$ref": "#/components/schemas/JwtToken"
+          }
+        }
+      },
+      "Token信息返回结果集Model": {
+        "title": "Token信息返回结果集Model",
+        "type": "object",
+        "properties": {
+          "app_id": {
+            "type": "integer",
+            "description": "所属应用ID(关联)",
+            "format": "int64"
+          },
+          "app_key": {
+            "type": "string",
+            "description": "所属应用Key(冗余字段)"
+          },
+          "is_session_valid": {
+            "type": "boolean",
+            "description": "login session是否有效(1:是,0:否)",
+            "example": false
+          },
+          "is_success": {
+            "type": "boolean",
+            "description": "是否登录成功(1:是,0:否)",
+            "example": false
+          },
+          "jwt_full_content": {
+            "description": "Jwt Token中的全部内容。包括Header和Body（payload）",
+            "$ref": "#/components/schemas/JwtFullContent"
+          },
+          "login_id": {
+            "type": "string",
+            "description": "登录ID(冗余字段)只存自动生成的login_id,避免在存储国家区号和登录type"
+          },
+          "login_ip": { "type": "string", "description": "登录IP" },
+          "login_time": {
+            "type": "string",
+            "description": "登陆时间",
+            "format": "date-time"
+          },
+          "refresh_token_count": {
+            "type": "integer",
+            "description": "refresh token次数",
+            "format": "int32"
+          },
+          "refresh_token_time": {
+            "type": "string",
+            "description": "refresh token时间",
+            "format": "date-time"
+          },
+          "session_longest_expiration_time": {
+            "type": "string",
+            "description": "session会话最长有效时间(is_session_valid为0时该值失效)",
+            "format": "date-time"
+          },
+          "token_id": {
+            "type": "string",
+            "description": "session会话标识,token_id"
+          },
+          "token_value": {
+            "type": "string",
+            "description": "session会话信息值, JWT Token具体值"
+          },
+          "user_id": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int64"
+          }
+        }
+      },
+      "分页返回结果集结构«用户Model,基础数据型Model»": {
+        "title": "分页返回结果集结构«用户Model,基础数据型Model»",
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "array",
+            "description": "分页数据 ",
+            "items": {
+              "$ref": "#/components/schemas/用户Model,基础数据型Model"
+            }
+          },
+          "page_num": {
+            "type": "integer",
+            "description": "当前页码",
+            "format": "int64"
+          },
+          "page_size": {
+            "type": "integer",
+            "description": "每页条数",
+            "format": "int64"
+          },
+          "pages": {
+            "type": "integer",
+            "description": "总页数",
+            "format": "int64"
+          },
+          "total": {
+            "type": "integer",
+            "description": "数据总条数",
+            "format": "int64"
+          }
+        }
+      },
+      "分页返回结果集结构«角色Model»": {
+        "title": "分页返回结果集结构«角色Model»",
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "array",
+            "description": "分页数据 ",
+            "items": { "$ref": "#/components/schemas/角色Model" }
+          },
+          "page_num": {
+            "type": "integer",
+            "description": "当前页码",
+            "format": "int64"
+          },
+          "page_size": {
+            "type": "integer",
+            "description": "每页条数",
+            "format": "int64"
+          },
+          "pages": {
+            "type": "integer",
+            "description": "总页数",
+            "format": "int64"
+          },
+          "total": {
+            "type": "integer",
+            "description": "数据总条数",
+            "format": "int64"
+          }
+        }
+      },
+      "功能修改请求参数VO": {
+        "title": "功能修改请求参数VO",
+        "required": ["function_names", "id"],
+        "type": "object",
+        "properties": {
+          "function_names": {
+            "type": "array",
+            "description": "功能名(多语言对应的名称)",
+            "items": { "$ref": "#/components/schemas/权限国家语言请求参数VO" }
+          },
+          "id": {
+            "type": "integer",
+            "description": "功能ID",
+            "format": "int64"
+          },
+          "is_default": {
+            "type": "boolean",
+            "description": "是否默认(1:是,0:否)",
+            "example": false
+          },
+          "remark": { "type": "string", "description": "备注" },
+          "status": {
+            "type": "string",
+            "description": "FunctionInfoStatusEnum:状态(ACTIVE:有效,FROZEN:冻结)",
+            "enum": ["ACTIVE", "FROZEN"]
+          },
+          "style_class": { "type": "string", "description": "功能样式" },
+          "type": {
+            "type": "string",
+            "description": "FunctionInfoTypeEnum:功能类型(PUBLIC_TO_ALL:对所有公开,ADMIN_PRIVATE:管理员私有(只有管理员拥有),NORMAL:普通(分配权限即拥有)",
+            "enum": ["ADMIN_PRIVATE", "NORMAL", "PUBLIC_TO_ALL"]
+          }
+        }
+      },
+      "功能创建请求参数VO": {
+        "title": "功能创建请求参数VO",
+        "required": [
+          "app_key",
+          "associated_role_type",
+          "function_key",
+          "function_names",
+          "menu_id",
+          "parent_id",
+          "status",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "app_key": {
+            "type": "string",
+            "description": "应用KEY（必填）",
+            "enum": [
+              "BOSS_MANAGE_WEB_PC:BOSS管理后台WEB PC",
+              "CUSTOMER_APP:客户APP(Android/IOS)",
+              "CUSTOMER_WEB_PC:客户平台WEB PC",
+              "MERCHANT_MANAGE_APP:商家管理APP(Android/IOS)",
+              "MERCHANT_MANAGE_WEB_PC:商家管理后台WEB PC",
+              "MERCHANT_POS_PC:商家POS PC(Windows/Android)"
+            ]
+          },
+          "associated_role_type": {
+            "type": "string",
+            "description": "FunctionAssociatedRoleTypeEnum:功能关联角色类型(DEFAULT_ROLE:默认角色,FIRST_LEVEL_ROLE:一级角色(如,一级商户类型)",
+            "enum": ["DEFAULT_ROLE", "FIRST_LEVEL_ROLE"]
+          },
+          "function_key": { "type": "string", "description": "功能Key(唯一)" },
+          "function_names": {
+            "type": "array",
+            "description": "功能名(多语言对应的名称)",
+            "items": { "$ref": "#/components/schemas/权限国家语言请求参数VO" }
+          },
+          "generate_type": {
+            "type": "string",
+            "description": "FunctionGenerateTypeEnum: 功能生成类型(SYSTEM:默认系统生成, CUSTOM:自定义生成)    默认为: SYSTEM",
+            "enum": ["CUSTOM", "SYSTEM"]
+          },
+          "is_default": {
+            "type": "boolean",
+            "description": "是否默认(1:是,0:否)",
+            "example": false
+          },
+          "menu_id": {
+            "type": "integer",
+            "description": "所属菜单编号",
+            "format": "int64"
+          },
+          "parent_id": {
+            "type": "integer",
+            "description": "父功能ID",
+            "format": "int64"
+          },
+          "remark": { "type": "string", "description": "备注" },
+          "source_type": {
+            "type": "string",
+            "description": "FunctionSourceTypeEnum:功能来源类型(MENU:来自菜单入口,FUNCTION:来自功能入口(只有菜单为PAGE类型且为子功能))",
+            "enum": ["FUNCTION", "MENU"]
+          },
+          "status": {
+            "type": "string",
+            "description": "FunctionInfoStatusEnum:状态(ACTIVE:有效,FROZEN:冻结)",
+            "enum": ["ACTIVE", "FROZEN"]
+          },
+          "style_class": { "type": "string", "description": "功能样式" },
+          "sub_functions": {
+            "type": "array",
+            "description": "子Function集合",
+            "items": { "$ref": "#/components/schemas/功能创建请求参数VO" }
+          },
+          "type": {
+            "type": "string",
+            "description": "FunctionInfoTypeEnum:功能类型(PUBLIC_TO_ALL:对所有公开,ADMIN_PRIVATE:管理员私有(只有管理员拥有),NORMAL:普通(分配权限即拥有)",
+            "enum": ["ADMIN_PRIVATE", "NORMAL", "PUBLIC_TO_ALL"]
+          }
+        }
+      },
+      "功能删除请求参数VO": {
+        "title": "功能删除请求参数VO",
+        "type": "object",
+        "properties": {
+          "function_id": {
+            "type": "integer",
+            "description": "功能ID",
+            "format": "int64"
+          }
+        }
+      },
+      "功能权限Model": {
+        "title": "功能权限Model",
+        "type": "object",
+        "properties": {
+          "actions": {
+            "type": "array",
+            "description": "Action操作集合",
+            "items": {
+              "$ref": "#/components/schemas/ActionModel, 权限最小单元,Action"
+            }
+          },
+          "app_id": {
+            "type": "integer",
+            "description": "应用Id",
+            "format": "int64"
+          },
+          "app_info": {
+            "description": "所属应用信息",
+            "$ref": "#/components/schemas/应用信息Model"
+          },
+          "associated_role_type": {
+            "type": "string",
+            "description": "FunctionAssociatedRoleTypeEnum:功能关联角色类型(DEFAULT_ROLE:默认角色,FIRST_LEVEL_ROLE:一级角色(如,一级商户类型)",
+            "enum": ["DEFAULT_ROLE", "FIRST_LEVEL_ROLE"]
+          },
+          "creator_id": {
+            "type": "integer",
+            "description": "创建者ID,user_id",
+            "format": "int64"
+          },
+          "function_id": {
+            "type": "integer",
+            "description": "功能ID",
+            "format": "int64"
+          },
+          "function_key": { "type": "string", "description": "功能Key(唯一)" },
+          "function_names": {
+            "type": "array",
+            "description": "功能名(多语言对应的名称)",
+            "items": { "$ref": "#/components/schemas/权限名称Model" }
+          },
+          "generate_type": {
+            "type": "string",
+            "description": "FunctionGenerateTypeEnum: 功能生成类型(SYSTEM:默认系统生成, CUSTOM:自定义生成)    默认为: SYSTEM",
+            "enum": ["CUSTOM", "SYSTEM"]
+          },
+          "id": {
+            "type": "integer",
+            "description": "功能ID",
+            "format": "int64"
+          },
+          "is_default": {
+            "type": "boolean",
+            "description": "是否默认(1:是,0:否)",
+            "example": false
+          },
+          "menu": {
+            "description": "菜单信息",
+            "$ref": "#/components/schemas/菜单Model"
+          },
+          "menu_id": {
+            "type": "integer",
+            "description": "所属菜单编号",
+            "format": "int64"
+          },
+          "name": { "type": "string", "description": "功能名" },
+          "parent_id": {
+            "type": "integer",
+            "description": "父功能ID",
+            "format": "int64"
+          },
+          "remark": { "type": "string", "description": "备注，描述" },
+          "source_type": {
+            "type": "string",
+            "description": "FunctionSourceTypeEnum:功能来源类型(MENU:来自菜单入口,FUNCTION:来自功能入口(只有菜单为PAGE类型且为子功能))",
+            "enum": ["FUNCTION", "MENU"]
+          },
+          "status": {
+            "type": "string",
+            "description": "状态(ACTIVE:有效,FROZEN:冻结)",
+            "enum": ["ACTIVE", "FROZEN"]
+          },
+          "style_class": { "type": "string", "description": "功能样式" },
+          "type": {
+            "type": "string",
+            "description": "功能类型(PUBLIC_TO_ALL:对所有公开,ADMIN_PRIVATE(管理员私有(只有管理员拥有),NORMAL:普通)",
+            "enum": ["ADMIN_PRIVATE", "NORMAL", "PUBLIC_TO_ALL"]
+          }
+        },
+        "description": "功能权限信息"
+      },
+      "功能权限ModelFullView": {
+        "title": "功能权限ModelFullView",
+        "type": "object",
+        "properties": {
+          "actions": {
+            "type": "array",
+            "description": "Action操作集合",
+            "items": {
+              "$ref": "#/components/schemas/ActionModel, 权限最小单元,ActionFullView"
+            }
+          },
+          "app_id": {
+            "type": "integer",
+            "description": "应用Id",
+            "format": "int64"
+          },
+          "function_id": {
+            "type": "integer",
+            "description": "功能ID",
+            "format": "int64"
+          },
+          "function_key": { "type": "string", "description": "功能Key(唯一)" },
+          "menu": {
+            "description": "菜单信息",
+            "$ref": "#/components/schemas/菜单ModelFullView"
+          },
+          "menu_id": {
+            "type": "integer",
+            "description": "所属菜单编号",
+            "format": "int64"
+          },
+          "name": { "type": "string", "description": "功能名" },
+          "parent_id": {
+            "type": "integer",
+            "description": "父功能ID",
+            "format": "int64"
+          },
+          "style_class": { "type": "string", "description": "功能样式" }
+        },
+        "description": "功能权限信息"
+      },
+      "功能权限树形结构Model": {
+        "title": "功能权限树形结构Model",
+        "type": "object",
+        "properties": {
+          "function": {
+            "description": "功能权限",
+            "$ref": "#/components/schemas/功能权限Model"
+          },
+          "sub_function_trees": {
+            "type": "array",
+            "description": "子功能权限树",
+            "items": { "$ref": "#/components/schemas/功能权限树形结构Model" }
+          }
+        },
+        "description": "功能权限树形结构Model信息"
+      },
+      "功能权限树形结构ModelFullView": {
+        "title": "功能权限树形结构ModelFullView",
+        "type": "object",
+        "properties": {
+          "function": {
+            "description": "功能权限",
+            "$ref": "#/components/schemas/功能权限ModelFullView"
+          },
+          "sub_function_trees": {
+            "type": "array",
+            "description": "子功能权限树",
+            "items": {
+              "$ref": "#/components/schemas/功能权限树形结构ModelFullView"
+            }
+          }
+        },
+        "description": "功能权限树形结构Model信息"
+      },
+      "功能树列表查询条件VO": {
+        "title": "功能树列表查询条件VO",
+        "required": ["app_key"],
+        "type": "object",
+        "properties": {
+          "app_key": {
+            "type": "string",
+            "description": "应用KEY（必填）",
+            "enum": [
+              "BOSS_MANAGE_WEB_PC:BOSS管理后台WEB PC",
+              "CUSTOMER_APP:客户APP(Android/IOS)",
+              "CUSTOMER_WEB_PC:客户平台WEB PC",
+              "MERCHANT_MANAGE_APP:商家管理APP(Android/IOS)",
+              "MERCHANT_MANAGE_WEB_PC:商家管理后台WEB PC",
+              "MERCHANT_POS_PC:商家POS PC(Windows/Android)"
+            ]
+          }
+        },
+        "description": "功能树查询条件VO,API入参"
+      },
+      "功能详情查询请求参数": {
+        "title": "功能详情查询请求参数",
+        "type": "object",
+        "properties": {
+          "function_id": {
+            "type": "integer",
+            "description": "功能ID",
+            "format": "int64"
+          }
+        }
+      },
+      "国家信息Model": {
+        "title": "国家信息Model",
+        "type": "object",
+        "properties": {
+          "abbr_name_en": {
+            "type": "string",
+            "description": "国家英文简称,缩写abbr"
+          },
+          "area_code": { "type": "string", "description": "国家区号(如:+86)" },
+          "code": { "type": "string", "description": "国家代码(如:CHN)" },
+          "continent": {
+            "type": "string",
+            "description": "CountryInfoContinentEnum:国家归属的大洲,枚举(亚洲:AS:(Asia),非洲:AF(Africa),北美洲:NA(North America),南美洲:SA(South America),南极洲:AN(Antarctica),欧洲:EU(Europe),大洋洲:OA(Oceania)",
+            "enum": ["AF", "AN", "AS", "EU", "NA", "OA", "SA"]
+          },
+          "country_id": {
+            "type": "integer",
+            "description": "国家信息ID",
+            "format": "int64"
+          },
+          "create_time": {
+            "type": "string",
+            "description": " 创建时间",
+            "format": "date-time"
+          },
+          "creator_id": {
+            "type": "integer",
+            "description": "创建者ID,user_id",
+            "format": "int64"
+          },
+          "date_pattern": {
+            "type": "string",
+            "description": "国家日期格式(如:yyyyMMdd)"
+          },
+          "datetime_pattern": {
+            "type": "string",
+            "description": "国家日期时间格式(如:yyyyMMddHHmmss)"
+          },
+          "domain_name": {
+            "type": "string",
+            "description": "国家域名后缀名字,如: .cn,.tw,.hk"
+          },
+          "id": { "type": "integer", "description": "ID", "format": "int64" },
+          "modify_time": {
+            "type": "string",
+            "description": "更新时间",
+            "format": "date-time"
+          },
+          "name": { "type": "string", "description": "国家全称(当地语言名称)" },
+          "name_cn": { "type": "string", "description": "国家中文全称" },
+          "name_en": { "type": "string", "description": "国家英文全称" },
+          "remark": { "type": "string", "description": "备注，描述" },
+          "time_pattern": {
+            "type": "string",
+            "description": "国家时间格式(如:HHmmss)"
+          },
+          "time_zone": {
+            "type": "string",
+            "description": " 时区（当前数据的时区,zone_id）"
+          },
+          "version": { "type": "string", "description": "时间戳" }
+        },
+        "description": "国家信息返回信息"
+      },
+      "国家时区信息Model": {
+        "title": "国家时区信息Model",
+        "type": "object",
+        "properties": {
+          "country_id": {
+            "type": "integer",
+            "description": "国家信息表ID",
+            "format": "int64"
+          },
+          "create_time": {
+            "type": "string",
+            "description": " 创建时间",
+            "format": "date-time"
+          },
+          "creator_id": {
+            "type": "integer",
+            "description": "创建者ID,user_id",
+            "format": "int64"
+          },
+          "id": { "type": "integer", "description": "ID", "format": "int64" },
+          "modify_time": {
+            "type": "string",
+            "description": "更新时间",
+            "format": "date-time"
+          },
+          "remark": { "type": "string", "description": "备注" },
+          "time_zone": {
+            "type": "string",
+            "description": " 时区（当前数据的时区,zone_id）"
+          },
+          "version": { "type": "string", "description": "时间戳" },
+          "zone_id": {
+            "type": "string",
+            "description": "时区的区域ID.如：Europe/Paris"
+          },
+          "zone_id_name_cn": {
+            "type": "string",
+            "description": "时区区域ID，中文名称"
+          },
+          "zone_id_name_local": {
+            "type": "string",
+            "description": "时区区域ID，本地语言名称"
+          },
+          "zone_offset_hour": {
+            "type": "integer",
+            "description": "区域偏移量-小时数",
+            "format": "int32"
+          },
+          "zone_offset_minute": {
+            "type": "integer",
+            "description": "区域偏移量-分钟数",
+            "format": "int32"
+          }
+        },
+        "description": "国家时区信息返回信息"
+      },
+      "国家时区查询请求参数VO": {
+        "title": "国家时区查询请求参数VO",
+        "type": "object",
+        "properties": {
+          "zone_id": { "type": "string", "description": "时区的区域ID" }
+        }
+      },
+      "国家语言信息模型": {
+        "title": "国家语言信息模型",
+        "type": "object",
+        "properties": {
+          "country_id": {
+            "type": "integer",
+            "description": "国家信息ID(关联)",
+            "format": "int64"
+          },
+          "create_time": {
+            "type": "string",
+            "description": " 创建时间",
+            "format": "date-time"
+          },
+          "creator_id": {
+            "type": "integer",
+            "description": "创建者ID,user_id",
+            "format": "int64"
+          },
+          "id": { "type": "integer", "description": "ID", "format": "int64" },
+          "lang_code": {
+            "type": "string",
+            "description": "国家语言代码.如:zh_CN"
+          },
+          "lang_name_cn": {
+            "type": "string",
+            "description": "国家语言名称,中文名称展示"
+          },
+          "lang_name_en": {
+            "type": "string",
+            "description": "国家语言名称,英文名称展示"
+          },
+          "lang_name_local": {
+            "type": "string",
+            "description": "国家语言名称,用本地语言名称"
+          },
+          "modify_time": {
+            "type": "string",
+            "description": "更新时间",
+            "format": "date-time"
+          },
+          "remark": { "type": "string", "description": "备注" },
+          "time_zone": {
+            "type": "string",
+            "description": " 时区（当前数据的时区,zone_id）"
+          },
+          "version": { "type": "string", "description": "时间戳" }
+        },
+        "description": "国家语言模型返回信息"
+      },
+      "基于OwnerId的角色修改请求参数VO": {
+        "title": "基于OwnerId的角色修改请求参数VO",
+        "required": [
+          "owner_id",
+          "owner_type",
+          "role_functions",
+          "role_id",
+          "role_name"
+        ],
+        "type": "object",
+        "properties": {
+          "owner_id": {
+            "type": "integer",
+            "description": "拥有者编号",
+            "format": "int64"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "拥有者类型",
+            "enum": [
+              "BOSS: 商户运营后台",
+              "CUSTOMER:客户",
+              "MERCHANT: 商户",
+              "PARTNER: 服务商"
+            ]
+          },
+          "remark": { "type": "string", "description": "备注，描述" },
+          "role_functions": {
+            "type": "array",
+            "description": "用户选择的功能和Action权限集合",
+            "items": {
+              "$ref": "#/components/schemas/角色对应的功能信息请求参数VO"
+            }
+          },
+          "role_id": {
+            "type": "integer",
+            "description": "角色ID",
+            "format": "int64"
+          },
+          "role_name": { "type": "string", "description": "角色名称" }
+        },
+        "description": "基于OwnerId的角色修改请求参数VO,API入参"
+      },
+      "基于OwnerId的角色批量修改请求参数VO": {
+        "title": "基于OwnerId的角色批量修改请求参数VO",
+        "required": [
+          "operate_type",
+          "owner_id_list",
+          "owner_type",
+          "role_functions"
+        ],
+        "type": "object",
+        "properties": {
+          "operate_type": {
+            "type": "string",
+            "description": "选项类型",
+            "enum": ["ADD", "DELETE"]
+          },
+          "owner_id_list": {
+            "type": "array",
+            "description": "拥有者编号",
+            "items": { "type": "integer", "format": "int64" }
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "拥有者类型",
+            "enum": [
+              "BOSS: 商户运营后台",
+              "CUSTOMER:客户",
+              "MERCHANT: 商户",
+              "PARTNER: 服务商"
+            ]
+          },
+          "role_functions": {
+            "type": "array",
+            "description": "用户选择的功能和Action权限集合",
+            "items": {
+              "$ref": "#/components/schemas/角色对应的功能信息请求参数VO"
+            }
+          }
+        },
+        "description": "基于OwnerId的角色修改请求参数VO,API入参"
+      },
+      "基于ownerId查询Owner下指定角色功能权限信息请求参数": {
+        "title": "基于ownerId查询Owner下指定角色功能权限信息请求参数",
+        "required": ["owner_id", "owner_type", "role_id"],
+        "type": "object",
+        "properties": {
+          "owner_id": {
+            "type": "integer",
+            "description": "拥有者编号",
+            "format": "int64"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "拥有者类型",
+            "enum": [
+              "BOSS: 商户运营后台",
+              "CUSTOMER:客户",
+              "MERCHANT: 商户",
+              "PARTNER: 服务商"
+            ]
+          },
+          "role_id": {
+            "type": "integer",
+            "description": "角色Id",
+            "format": "int64"
+          }
+        },
+        "description": "基于ownerId查询Owner下指定角色功能权限信息请求参数"
+      },
+      "子商户超级管理员用户修改请求参数VO": {
+        "title": "子商户超级管理员用户修改请求参数VO",
+        "required": [
+          "first_level_merchant_id",
+          "function_id_map",
+          "sub_merchant_id",
+          "sub_merchant_name"
+        ],
+        "type": "object",
+        "properties": {
+          "first_level_merchant_id": {
+            "type": "integer",
+            "description": "一级商户ID",
+            "format": "int64"
+          },
+          "function_id_map": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": { "type": "integer", "format": "int64" }
+            },
+            "description": "套餐功能模块对应的各应用(appId)对应的功能id集合,key:appId,value functionIds"
+          },
+          "sub_merchant_id": {
+            "type": "integer",
+            "description": "子商户ID",
+            "format": "int64"
+          },
+          "sub_merchant_name": { "type": "string", "description": "子商户简称" }
+        },
+        "description": "子商户用户修改请求参数VO信息"
+      },
+      "子商户超级管理员用户创建请求参数VO": {
+        "title": "子商户超级管理员用户创建请求参数VO",
+        "required": [
+          "first_level_merchant_id",
+          "function_id_map",
+          "sub_merchant_id",
+          "sub_merchant_name"
+        ],
+        "type": "object",
+        "properties": {
+          "first_level_merchant_id": {
+            "type": "integer",
+            "description": "一级商户ID",
+            "format": "int64"
+          },
+          "function_id_map": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": { "type": "integer", "format": "int64" }
+            },
+            "description": "套餐功能模块对应的各应用(appId)对应的功能id集合,key:appId,value functionIds"
+          },
+          "sub_merchant_id": {
+            "type": "integer",
+            "description": "子商户ID",
+            "format": "int64"
+          },
+          "sub_merchant_name": { "type": "string", "description": "子商户简称" }
+        },
+        "description": "子商户用户创建请求参数VO信息"
+      },
+      "平台角色名称修改": {
+        "title": "平台角色名称修改",
+        "type": "object",
+        "properties": {
+          "owner_id": {
+            "type": "integer",
+            "description": "平台身份，所对应的ID",
+            "format": "int64"
+          },
+          "owner_name": {
+            "type": "string",
+            "description": "要修改的拥有者名称简称（对外展示使用）"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "当前用户所归属的Owner身份",
+            "enum": ["BOSS", "CUSTOMER", "MERCHANT", "PARTNER"]
+          }
+        },
+        "description": "平台角色名称修改,API入参"
+      },
+      "平台身份,拥有者类型的内容属性集合": {
+        "title": "平台身份,拥有者类型的内容属性集合",
+        "type": "object",
+        "properties": {
+          "owner_id": {
+            "type": "integer",
+            "description": " 平台身份，所对应的ID. 注：当用户拥有多少OwnerId时，需要传入一个OwnerID进行登录",
+            "format": "int64"
+          },
+          "owner_name": {
+            "type": "string",
+            "description": "ownerName,拥有者名称简称"
+          },
+          "owner_parent_id": {
+            "type": "integer",
+            "description": " 平台身份，所对应的父ID. 注：当用户拥有多少OwnerId时，需要传入一个OwnerID进行登录",
+            "format": "int64"
+          },
+          "owner_parent_name": {
+            "type": "string",
+            "description": "ownerParentName,拥有者名称父Owner简称"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "平台身份,拥有者类型,平台的多种身份角色类型",
+            "enum": [
+              "BOSS: 商户运营后台",
+              "CUSTOMER:客户",
+              "MERCHANT: 商户",
+              "PARTNER: 服务商"
+            ]
+          }
+        }
+      },
+      "应用信息Model": {
+        "title": "应用信息Model",
+        "type": "object",
+        "properties": {
+          "app_id": {
+            "type": "integer",
+            "description": "应用ID",
+            "format": "int64"
+          },
+          "app_key": {
+            "type": "string",
+            "description": "应用关键字(避开语法关键词)"
+          },
+          "creator_id": {
+            "type": "integer",
+            "description": "创建者ID,user_id",
+            "format": "int64"
+          },
+          "en_name": { "type": "string", "description": "应用英文名称" },
+          "is_support_sub_user": {
+            "type": "boolean",
+            "description": "是否支持子用户(1:表示支持,0:未支持)",
+            "example": false
+          },
+          "name": { "type": "string", "description": "应用名称" },
+          "owner_type": {
+            "type": "string",
+            "description": "OwnerTypeEnum:平台身份,拥有者类型(MERCHANT:商户,PARTNER:服务商,CUSTOMER:客户(买家),BOSS:公司运营人员)",
+            "enum": ["BOSS", "CUSTOMER", "MERCHANT", "PARTNER"]
+          },
+          "remark": { "type": "string", "description": "备注，描述" },
+          "type": {
+            "type": "string",
+            "description": "AppInfoTypeEnum:类型(INNER:对内,OUTER:对外)",
+            "enum": ["INNER", "OUTER"]
+          }
+        },
+        "description": "应用信息Model信息"
+      },
+      "忘记密码请求参数": {
+        "title": "忘记密码请求参数",
+        "required": ["password", "verification_code_type"],
+        "type": "object",
+        "properties": {
+          "country_area_code": {
+            "type": "string",
+            "description": "国家区号，如：86, 注:verificationCodeType为SMS_CODE时必填"
+          },
+          "country_id": {
+            "type": "integer",
+            "description": "国家区号ID, 注:verificationCodeType为SMS_CODE时必填",
+            "format": "int64"
+          },
+          "email": {
+            "type": "string",
+            "description": "用邮箱验证, 注:verificationCodeType为EMAIL_CODE时必填"
+          },
+          "email_verification_code": {
+            "type": "string",
+            "description": "邮箱验证码, 注:verificationCodeType为EMAIL_CODE时必填"
+          },
+          "password": { "type": "string", "description": "新密码" },
+          "phone_number": {
+            "type": "string",
+            "description": "用短信验证, 注:verificationCodeType为SMS_CODE时必填"
+          },
+          "sms_verification_code": {
+            "type": "string",
+            "description": "短信验证码, 注:verificationCodeType为SMS_CODE时必填"
+          },
+          "verification_code_type": {
+            "type": "string",
+            "description": "忘记密码验证码类型",
+            "enum": ["EMAIL_CODE: 邮箱验证码", "SMS_CODE: 短信验证码"]
+          }
+        }
+      },
+      "批量分配权限返回模型": {
+        "title": "批量分配权限返回模型",
+        "type": "object",
+        "properties": {
+          "error_message": { "type": "string", "description": "失败原因" },
+          "error_owner_id": {
+            "type": "integer",
+            "description": "失败分配的用户ID",
+            "format": "int64"
+          }
+        },
+        "description": "批量分配权限返回模型"
+      },
+      "操作修改请求参数VO": {
+        "title": "操作修改请求参数VO",
+        "required": ["action_names", "id"],
+        "type": "object",
+        "properties": {
+          "action_names": {
+            "type": "array",
+            "description": "操作名(多语言对应的名称)",
+            "items": { "$ref": "#/components/schemas/权限国家语言请求参数VO" }
+          },
+          "id": {
+            "type": "integer",
+            "description": "Action ID",
+            "format": "int64"
+          },
+          "is_displayed": {
+            "type": "boolean",
+            "description": "操作是否需要展示在前端页面(1:是,0:否)",
+            "example": false
+          },
+          "remark": { "type": "string", "description": "备注" },
+          "shortcuts": { "type": "string", "description": "快捷键" },
+          "status": {
+            "type": "string",
+            "description": "ActionInfoStatusEnum:状态(ACTIVE:有效,FROZEN:冻结)",
+            "enum": ["ACTIVE", "FROZEN"]
+          },
+          "url": { "type": "string", "description": "操作对应的url" }
+        }
+      },
+      "操作创建请求参数VO": {
+        "title": "操作创建请求参数VO",
+        "required": [
+          "action_key",
+          "action_names",
+          "app_key",
+          "function_id",
+          "is_displayed",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "action_key": { "type": "string", "description": "操作Key(唯一)" },
+          "action_names": {
+            "type": "array",
+            "description": "操作名(多语言对应的名称)",
+            "items": { "$ref": "#/components/schemas/权限国家语言请求参数VO" }
+          },
+          "app_key": {
+            "type": "string",
+            "description": "应用KEY（必填）",
+            "enum": [
+              "BOSS_MANAGE_WEB_PC:BOSS管理后台WEB PC",
+              "CUSTOMER_APP:客户APP(Android/IOS)",
+              "CUSTOMER_WEB_PC:客户平台WEB PC",
+              "MERCHANT_MANAGE_APP:商家管理APP(Android/IOS)",
+              "MERCHANT_MANAGE_WEB_PC:商家管理后台WEB PC",
+              "MERCHANT_POS_PC:商家POS PC(Windows/Android)"
+            ]
+          },
+          "function_id": {
+            "type": "integer",
+            "description": "对应的功能编号",
+            "format": "int64"
+          },
+          "is_displayed": {
+            "type": "boolean",
+            "description": "操作是否需要展示在前端页面(1:是,0:否)",
+            "example": false
+          },
+          "remark": { "type": "string", "description": "备注" },
+          "shortcuts": { "type": "string", "description": "快捷键" },
+          "status": {
+            "type": "string",
+            "description": "ActionInfoStatusEnum:状态(ACTIVE:有效,FROZEN:冻结)",
+            "enum": ["ACTIVE", "FROZEN"]
+          },
+          "url": { "type": "string", "description": "操作对应的url" }
+        }
+      },
+      "操作删除请求参数VO": {
+        "title": "操作删除请求参数VO",
+        "type": "object",
+        "properties": {
+          "action_id": {
+            "type": "integer",
+            "description": "ActionID",
+            "format": "int64"
+          }
+        }
+      },
+      "操作详情查询请求参数": {
+        "title": "操作详情查询请求参数",
+        "type": "object",
+        "properties": {
+          "action_id": {
+            "type": "integer",
+            "description": "ActionID",
+            "format": "int64"
+          }
+        }
+      },
+      "普通用户修改请求参数VO": {
+        "title": "普通用户修改请求参数VO",
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "用户名称" },
+          "old_role_id": {
+            "type": "integer",
+            "description": "旧的角色ID",
+            "format": "int64"
+          },
+          "role_id": {
+            "type": "integer",
+            "description": "新修改的角色ID",
+            "format": "int64"
+          },
+          "user_id": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int64"
+          }
+        }
+      },
+      "普通用户冻结请求参数": {
+        "title": "普通用户冻结请求参数",
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int64"
+          }
+        },
+        "description": "用户冻结请求参数,API入参"
+      },
+      "普通用户创建请求参数": {
+        "title": "普通用户创建请求参数",
+        "required": [
+          "add_user_source_type",
+          "name",
+          "password",
+          "role_id",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "add_user_source_type": {
+            "type": "string",
+            "description": "添加用户来源类型",
+            "enum": [
+              "PLATFORM_EXISTED_USER:添加平台已存在用户",
+              "PLATFORM_NEW_REGISTER_USER:添加平台新注册用户"
+            ]
+          },
+          "country_area_code": {
+            "type": "string",
+            "description": "国家区号，如：86, 注:type为PHONE_NUMBER时必填"
+          },
+          "country_id": {
+            "type": "integer",
+            "description": "国家区号ID, 注:type为PHONE_NUMBER时必填",
+            "format": "int64"
+          },
+          "email": {
+            "type": "string",
+            "description": "以邮箱创建帐号, 注:type为EMAIL时必填"
+          },
+          "email_verification_code": {
+            "type": "string",
+            "description": "邮箱验证码, 注:type为EMAIL时必填"
+          },
+          "login_id": {
+            "type": "string",
+            "description": "以用户名ID创建帐号, 注:type为LOGIN_ID时必填"
+          },
+          "name": { "type": "string", "description": "用户名称" },
+          "password": { "type": "string", "description": "密码" },
+          "phone_number": {
+            "type": "string",
+            "description": "手机号, 注:type为PHONE_NUMBER时必填"
+          },
+          "role_id": {
+            "type": "integer",
+            "description": "用户对应的角色ID",
+            "format": "int64"
+          },
+          "sms_verification_code": {
+            "type": "string",
+            "description": "短信验证码, 注:type为PHONE_NUMBER时必填"
+          },
+          "type": {
+            "type": "string",
+            "description": "创建用户账号方式类型",
+            "enum": ["EMAIL: 邮箱", "LOGIN_ID: 登录ID", "PHONE_NUMBER: 手机号"]
+          }
+        }
+      },
+      "普通用户批量删除请求参数": {
+        "title": "普通用户批量删除请求参数",
+        "type": "object",
+        "properties": {
+          "user_ids": {
+            "type": "array",
+            "description": "用户ID集合",
+            "items": { "type": "integer", "format": "int64" }
+          }
+        },
+        "description": "普通用户批量删除请求,API入参"
+      },
+      "普通用户解冻请求参数": {
+        "title": "普通用户解冻请求参数",
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int64"
+          }
+        },
+        "description": "用户解冻请求参数,API入参"
+      },
+      "权限名称Model": {
+        "title": "权限名称Model",
+        "type": "object",
+        "properties": {
+          "country_language_id": {
+            "type": "integer",
+            "description": "国家语言ID",
+            "format": "int64"
+          },
+          "country_language_lang_code": {
+            "type": "string",
+            "description": "国家语言代码"
+          },
+          "name": { "type": "string", "description": "语言对应的名称" }
+        },
+        "description": "权限名称返回信息"
+      },
+      "权限国家语言请求参数VO": {
+        "title": "权限国家语言请求参数VO",
+        "required": [
+          "country_language_id",
+          "country_language_lang_code",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "country_language_id": {
+            "type": "integer",
+            "description": "国家语言ID",
+            "format": "int64"
+          },
+          "country_language_lang_code": {
+            "type": "string",
+            "description": "国家语言代码"
+          },
+          "name": { "type": "string", "description": "语言对应的名称" }
+        }
+      },
+      "查询Owner下指定角色功能权限信息请求参数": {
+        "title": "查询Owner下指定角色功能权限信息请求参数",
+        "required": ["app_key", "role_id"],
+        "type": "object",
+        "properties": {
+          "app_key": {
+            "type": "string",
+            "description": "应用KEY（必填）",
+            "enum": [
+              "BOSS_MANAGE_WEB_PC:BOSS管理后台WEB PC",
+              "CUSTOMER_APP:客户APP(Android/IOS)",
+              "CUSTOMER_WEB_PC:客户平台WEB PC",
+              "MERCHANT_MANAGE_APP:商家管理APP(Android/IOS)",
+              "MERCHANT_MANAGE_WEB_PC:商家管理后台WEB PC",
+              "MERCHANT_POS_PC:商家POS PC(Windows/Android)"
+            ]
+          },
+          "role_id": {
+            "type": "integer",
+            "description": "角色Id",
+            "format": "int64"
+          }
+        },
+        "description": "查询Owner下指定角色功能权限信息请求参数"
+      },
+      "查询指定Owner的当前用户下所有功能权限信息，登录owner和本身ownerId不一致的情况下使用": {
+        "title": "查询指定Owner的当前用户下所有功能权限信息，登录owner和本身ownerId不一致的情况下使用",
+        "required": ["app_key", "owner_id", "owner_type", "role_id"],
+        "type": "object",
+        "properties": {
+          "app_key": {
+            "type": "string",
+            "description": "应用KEY（必填）",
+            "enum": [
+              "BOSS_MANAGE_WEB_PC:BOSS管理后台WEB PC",
+              "CUSTOMER_APP:客户APP(Android/IOS)",
+              "CUSTOMER_WEB_PC:客户平台WEB PC",
+              "MERCHANT_MANAGE_APP:商家管理APP(Android/IOS)",
+              "MERCHANT_MANAGE_WEB_PC:商家管理后台WEB PC",
+              "MERCHANT_POS_PC:商家POS PC(Windows/Android)"
+            ]
+          },
+          "owner_id": {
+            "type": "integer",
+            "description": "拥有者编号",
+            "format": "int64"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "拥有者类型",
+            "enum": [
+              "BOSS: 商户运营后台",
+              "CUSTOMER:客户",
+              "MERCHANT: 商户",
+              "PARTNER: 服务商"
+            ]
+          },
+          "role_id": {
+            "type": "integer",
+            "description": "角色Id",
+            "format": "int64"
+          }
+        },
+        "description": "查询指定Owner的当前用户下所有功能权限信息，登录owner和本身ownerId不一致的情况下使用VO信息"
+      },
+      "消息发送接收参数": {
+        "title": "消息发送接收参数",
+        "type": "object",
+        "properties": {
+          "business_type": {
+            "type": "string",
+            "description": "业务类型",
+            "enum": ["ADVERTISEMENT", "NOTIFICATION", "VERIFICATION"]
+          },
+          "message_type": {
+            "type": "string",
+            "description": "消息类型",
+            "enum": ["EMAIL", "SMS"]
+          },
+          "recipient": { "type": "string", "description": "接收账号" },
+          "template_params": { "type": "object", "description": "模板参数" }
+        }
+      },
+      "用户Model,基础数据型Model": {
+        "title": "用户Model,基础数据型Model",
+        "type": "object",
+        "properties": {
+          "country_area_code": {
+            "type": "string",
+            "description": "国家区号(如:+86),(冗余字段,方便查询)"
+          },
+          "country_id": {
+            "type": "integer",
+            "description": "国家信息表ID",
+            "format": "int64"
+          },
+          "create_time": {
+            "type": "string",
+            "description": " 创建时间",
+            "format": "date-time"
+          },
+          "creator_id": {
+            "type": "integer",
+            "description": "创建者ID",
+            "format": "int64"
+          },
+          "creator_name": { "type": "string", "description": "创建人名称" },
+          "department_id": {
+            "type": "integer",
+            "description": "所属部门ID",
+            "format": "int64"
+          },
+          "id": { "type": "integer", "description": "ID", "format": "int64" },
+          "last_login_success": {
+            "type": "string",
+            "description": "最后登陆成功时间",
+            "format": "date-time"
+          },
+          "login_id": { "type": "string", "description": "登录ID" },
+          "login_ids": {
+            "type": "array",
+            "description": "用户登陆账号方式Model",
+            "items": { "$ref": "#/components/schemas/用户登陆账号方式Model" }
+          },
+          "modify_time": {
+            "type": "string",
+            "description": "更新时间",
+            "format": "date-time"
+          },
+          "name": { "type": "string", "description": "用户名" },
+          "nick_name": { "type": "string", "description": "昵称" },
+          "profile_photo": { "type": "string", "description": "头像URL" },
+          "remark": { "type": "string", "description": "备注" },
+          "roles": {
+            "type": "array",
+            "description": "用户的角色列表。",
+            "items": { "$ref": "#/components/schemas/角色Model" }
+          },
+          "status": {
+            "type": "string",
+            "description": "状态(INIT:初始,ACTIVE:激活,FROZEN:冻结,CLOSED:关闭)",
+            "enum": ["ACTIVE", "CLOSED", "FROZEN", "INIT"]
+          },
+          "time_zone": {
+            "type": "string",
+            "description": " 时区（当前数据的时区,zone_id）"
+          },
+          "type": {
+            "type": "string",
+            "description": "类型(NORMAL:普通,SYS_ADMIN:管理员)",
+            "enum": ["NORMAL", "SYS_ADMIN"]
+          },
+          "user_apps": {
+            "type": "array",
+            "description": "用户和应用的关系列表,一个用户在一个应用中有可能会属于多个OwnerId",
+            "items": {
+              "$ref": "#/components/schemas/用户和应用的关联关系Model"
+            }
+          },
+          "user_id": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int64"
+          },
+          "version": { "type": "string", "description": "时间戳" }
+        },
+        "description": "登录返回的用户信息"
+      },
+      "用户Model,基础数据型ModelFullView": {
+        "title": "用户Model,基础数据型ModelFullView",
+        "type": "object",
+        "properties": {
+          "country_area_code": {
+            "type": "string",
+            "description": "国家区号(如:+86),(冗余字段,方便查询)"
+          },
+          "country_id": {
+            "type": "integer",
+            "description": "国家信息表ID",
+            "format": "int64"
+          },
+          "login_id": { "type": "string", "description": "登录ID" },
+          "login_ids": {
+            "type": "array",
+            "description": "用户登陆账号方式Model",
+            "items": {
+              "$ref": "#/components/schemas/用户登陆账号方式ModelFullView"
+            }
+          },
+          "name": { "type": "string", "description": "用户名" },
+          "nick_name": { "type": "string", "description": "昵称" },
+          "profile_photo": { "type": "string", "description": "头像URL" },
+          "roles": {
+            "type": "array",
+            "description": "用户的角色列表。",
+            "items": { "$ref": "#/components/schemas/角色ModelFullView" }
+          },
+          "type": {
+            "type": "string",
+            "description": "类型(NORMAL:普通,SYS_ADMIN:管理员)",
+            "enum": ["NORMAL", "SYS_ADMIN"]
+          },
+          "user_apps": {
+            "type": "array",
+            "description": "用户和应用的关系列表,一个用户在一个应用中有可能会属于多个OwnerId",
+            "items": {
+              "$ref": "#/components/schemas/用户和应用的关联关系ModelFullView"
+            }
+          },
+          "user_id": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int64"
+          }
+        },
+        "description": "登录返回的用户信息"
+      },
+      "用户个人资料修改接收参数": {
+        "title": "用户个人资料修改接收参数",
+        "type": "object",
+        "properties": {
+          "country_area_code": { "type": "string", "description": "国家区号" },
+          "email": { "type": "string", "description": "电子邮箱" },
+          "name": { "type": "string", "description": "用户名" },
+          "nick_name": { "type": "string", "description": "昵称" },
+          "phone_number": { "type": "string", "description": "手机号码" },
+          "profile_photo": {
+            "type": "string",
+            "description": "头像(存头像图片的URL)"
+          }
+        }
+      },
+      "用户信息密码修改请求接收参数": {
+        "title": "用户信息密码修改请求接收参数",
+        "type": "object",
+        "properties": {
+          "new_password": { "type": "string", "description": "新密码" },
+          "old_password": { "type": "string", "description": "旧密码" }
+        }
+      },
+      "用户员工数量统计查询条件VO": {
+        "title": "用户员工数量统计查询条件VO",
+        "required": ["owner_id_list", "owner_type"],
+        "type": "object",
+        "properties": {
+          "owner_id_list": {
+            "type": "array",
+            "description": "ownerId",
+            "items": { "type": "integer", "format": "int64" }
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "ownerType",
+            "enum": ["BOSS", "CUSTOMER", "MERCHANT", "PARTNER"]
+          }
+        },
+        "description": "用户员工数量统计查询条件VO,API入参"
+      },
+      "用户和应用的关联关系Model": {
+        "title": "用户和应用的关联关系Model",
+        "type": "object",
+        "properties": {
+          "app_id": {
+            "type": "integer",
+            "description": "所属应用id",
+            "format": "int64"
+          },
+          "app_key": { "type": "string", "description": "所属应用Key" },
+          "create_time": {
+            "type": "string",
+            "description": " 创建时间",
+            "format": "date-time"
+          },
+          "creator_id": {
+            "type": "integer",
+            "description": "创建者ID,user_id",
+            "format": "int64"
+          },
+          "id": { "type": "integer", "description": "ID", "format": "int64" },
+          "modify_time": {
+            "type": "string",
+            "description": "更新时间",
+            "format": "date-time"
+          },
+          "owner_id": {
+            "type": "integer",
+            "description": "拥有者编号",
+            "format": "int64"
+          },
+          "owner_name": {
+            "type": "string",
+            "description": "拥有者名称简称（对外展示使用），冗余字段方便展示使用，不在跨服务调用"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "拥有者类型,平台身份,拥有者类型(MERCHANT:商户,PARTNER:服务商,CUSTOMER:客户(买家),BOSS:公司运营人员)",
+            "enum": ["BOSS", "CUSTOMER", "MERCHANT", "PARTNER"]
+          },
+          "remark": { "type": "string", "description": "备注" },
+          "roles": {
+            "type": "array",
+            "description": "用户的角色列表",
+            "items": { "$ref": "#/components/schemas/角色Model" }
+          },
+          "time_zone": {
+            "type": "string",
+            "description": " 时区（当前数据的时区,zone_id）"
+          },
+          "user_app_id": {
+            "type": "integer",
+            "description": "userApp ID",
+            "format": "int64"
+          },
+          "user_id": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int64"
+          },
+          "version": { "type": "string", "description": "时间戳" }
+        },
+        "description": "用户和应用的关联关系信息"
+      },
+      "用户和应用的关联关系ModelFullView": {
+        "title": "用户和应用的关联关系ModelFullView",
+        "type": "object",
+        "properties": {
+          "app_id": {
+            "type": "integer",
+            "description": "所属应用id",
+            "format": "int64"
+          },
+          "app_key": { "type": "string", "description": "所属应用Key" },
+          "owner_id": {
+            "type": "integer",
+            "description": "拥有者编号",
+            "format": "int64"
+          },
+          "owner_name": {
+            "type": "string",
+            "description": "拥有者名称简称（对外展示使用），冗余字段方便展示使用，不在跨服务调用"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "拥有者类型,平台身份,拥有者类型(MERCHANT:商户,PARTNER:服务商,CUSTOMER:客户(买家),BOSS:公司运营人员)",
+            "enum": ["BOSS", "CUSTOMER", "MERCHANT", "PARTNER"]
+          },
+          "roles": {
+            "type": "array",
+            "description": "用户的角色列表",
+            "items": { "$ref": "#/components/schemas/角色ModelFullView" }
+          },
+          "user_app_id": {
+            "type": "integer",
+            "description": "userApp ID",
+            "format": "int64"
+          },
+          "user_id": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int64"
+          }
+        },
+        "description": "用户和应用的关联关系信息"
+      },
+      "用户密码校验请求接收参数": {
+        "title": "用户密码校验请求接收参数",
+        "required": ["password"],
+        "type": "object",
+        "properties": {
+          "password": { "type": "string", "description": "用户密码" }
+        }
+      },
+      "用户密码重置请求接收参数": {
+        "title": "用户密码重置请求接收参数",
+        "required": [
+          "normal_user_id",
+          "owner_id",
+          "owner_type",
+          "password",
+          "user_id"
+        ],
+        "type": "object",
+        "properties": {
+          "normal_user_id": {
+            "type": "integer",
+            "description": "员工Id",
+            "format": "int64"
+          },
+          "owner_id": {
+            "type": "integer",
+            "description": "平台身份，所对应的ID",
+            "format": "int64"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "当前用户所归属的Owner身份",
+            "enum": ["BOSS", "CUSTOMER", "MERCHANT", "PARTNER"]
+          },
+          "password": { "type": "string", "description": "操作人账户密码" },
+          "user_id": {
+            "type": "integer",
+            "description": "用户ID(老板|管理员)",
+            "format": "int64"
+          }
+        }
+      },
+      "用户查询条件VO": {
+        "title": "用户查询条件VO",
+        "required": ["user_ids"],
+        "type": "object",
+        "properties": {
+          "user_ids": {
+            "type": "array",
+            "description": "用户ID集合,可传入多个用户ID(user_id数量上限100.)，重复ID要去重",
+            "items": { "type": "integer", "format": "int64" }
+          }
+        },
+        "description": "用户查询条件VO,API入参"
+      },
+      "用户登陆账号方式Model": {
+        "title": "用户登陆账号方式Model",
+        "type": "object",
+        "properties": {
+          "country_area_code": {
+            "type": "string",
+            "description": "国家区号(如:86),(冗余字段,方便查询),type为PHONE_NUMBER时必填"
+          },
+          "create_time": {
+            "type": "string",
+            "description": " 创建时间",
+            "format": "date-time"
+          },
+          "creator_id": {
+            "type": "integer",
+            "description": "创建者ID,user_id",
+            "format": "int64"
+          },
+          "id": { "type": "integer", "description": "ID", "format": "int64" },
+          "login_account": { "type": "string", "description": "登录帐号" },
+          "modify_time": {
+            "type": "string",
+            "description": "更新时间",
+            "format": "date-time"
+          },
+          "remark": { "type": "string", "description": "备注" },
+          "source_type": {
+            "type": "string",
+            "description": "帐号数据来源类型(NORMAL:正常入网注册,WHATS_APP:WhatsApp授权,WECHAT:微信授权, )",
+            "enum": ["NORMAL", "WECHAT", "WHATS_APP"]
+          },
+          "time_zone": {
+            "type": "string",
+            "description": " 时区（当前数据的时区,zone_id）"
+          },
+          "type": {
+            "type": "string",
+            "description": "用户登录类型",
+            "enum": [
+              "EMAIL",
+              "LOGIN_ID",
+              "PHONE_NUMBER",
+              "WECHAT_OPENID",
+              "WHATS_APP_OPENID"
+            ]
+          },
+          "user_id": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int64"
+          },
+          "user_login_account_way_id": {
+            "type": "integer",
+            "description": "用户登陆账号方式ID",
+            "format": "int64"
+          },
+          "version": { "type": "string", "description": "时间戳" }
+        },
+        "description": "用户登陆账号方式信息"
+      },
+      "用户登陆账号方式ModelFullView": {
+        "title": "用户登陆账号方式ModelFullView",
+        "type": "object",
+        "properties": {
+          "country_area_code": {
+            "type": "string",
+            "description": "国家区号(如:86),(冗余字段,方便查询),type为PHONE_NUMBER时必填"
+          },
+          "login_account": { "type": "string", "description": "登录帐号" },
+          "type": {
+            "type": "string",
+            "description": "用户登录类型",
+            "enum": [
+              "EMAIL",
+              "LOGIN_ID",
+              "PHONE_NUMBER",
+              "WECHAT_OPENID",
+              "WHATS_APP_OPENID"
+            ]
+          },
+          "user_id": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int64"
+          },
+          "user_login_account_way_id": {
+            "type": "integer",
+            "description": "用户登陆账号方式ID",
+            "format": "int64"
+          }
+        },
+        "description": "用户登陆账号方式信息"
+      },
+      "用户管理查询条件VO": {
+        "title": "用户管理查询条件VO",
+        "type": "object",
+        "properties": {
+          "country_area_code": {
+            "type": "string",
+            "description": "国家区号，如：86, 注:type为PHONE_NUMBER时必填"
+          },
+          "create_time": {
+            "type": "string",
+            "description": "用户创建时间",
+            "format": "date-time"
+          },
+          "keywords": {
+            "type": "string",
+            "description": "全局搜索关键词搜索。"
+          },
+          "login_account": {
+            "type": "string",
+            "description": "用户帐号：phoneNumber,email,loginId"
+          },
+          "name": { "type": "string", "description": "用户名称" },
+          "page_num": {
+            "type": "integer",
+            "description": "当前页码",
+            "format": "int64"
+          },
+          "page_size": {
+            "type": "integer",
+            "description": "每页条数",
+            "format": "int64"
+          },
+          "role_name": { "type": "string", "description": "角色名称" },
+          "status": {
+            "type": "string",
+            "description": "用户状态(INIT:初始,ACTIVE:激活,FROZEN:冻结,CLOSED:关闭)",
+            "enum": ["ACTIVE:激活", "CLOSED:关闭", "FROZEN:冻结", "INIT:初始"]
+          }
+        },
+        "description": "用户管理查询条件VO,API入参"
+      },
+      "用户角色创建请求参数VO": {
+        "title": "用户角色创建请求参数VO",
+        "required": ["role_functions", "role_name"],
+        "type": "object",
+        "properties": {
+          "remark": { "type": "string", "description": "备注，描述" },
+          "role_functions": {
+            "type": "array",
+            "description": "用户选择的功能权限集合",
+            "items": {
+              "$ref": "#/components/schemas/角色对应的功能信息请求参数VO"
+            }
+          },
+          "role_name": { "type": "string", "description": "角色名称" }
+        },
+        "description": "用户角色创建请求参数VO信息"
+      },
+      "用户身份及权限验证返回的结果集Model": {
+        "title": "用户身份及权限验证返回的结果集Model",
+        "type": "object",
+        "properties": {
+          "app_id": {
+            "type": "integer",
+            "description": "所属应用ID(关联)",
+            "format": "int64"
+          },
+          "app_key": {
+            "type": "string",
+            "description": "所属应用Key(冗余字段)"
+          },
+          "is_action_permission": {
+            "type": "boolean",
+            "description": "是否有URL Path仿问权限",
+            "example": false
+          },
+          "is_login_permission": {
+            "type": "boolean",
+            "description": "是否有登录权限",
+            "example": false
+          },
+          "is_session_valid": {
+            "type": "boolean",
+            "description": "login session是否有效(1:是,0:否)",
+            "example": false
+          },
+          "jwt_full_content": {
+            "description": "Jwt Token中的全部内容。包括Header和Body（payload）",
+            "$ref": "#/components/schemas/JwtFullContent"
+          },
+          "login_ip": { "type": "string", "description": "登录IP" },
+          "owner_id": {
+            "type": "integer",
+            "description": "拥有者编号",
+            "format": "int64"
+          },
+          "owner_name": {
+            "type": "string",
+            "description": "拥有者名称简称（对外展示使用），冗余字段方便展示使用，不在跨服务调用"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "拥有者类型,平台身份,拥有者类型(MERCHANT:商户,PARTNER:服务商,CUSTOMER:客户(买家),BOSS:公司运营人员)",
+            "enum": ["BOSS", "CUSTOMER", "MERCHANT", "PARTNER"]
+          },
+          "refresh_token_count": {
+            "type": "integer",
+            "description": "refresh token次数",
+            "format": "int32"
+          },
+          "refresh_token_time": {
+            "type": "string",
+            "description": "refresh token时间"
+          },
+          "session_longest_expiration_time": {
+            "type": "string",
+            "description": "session会话最长有效时间(is_session_valid为0时该值失效)"
+          },
+          "token_id": {
+            "type": "string",
+            "description": "session会话标识,token_id"
+          },
+          "user_id": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int64"
+          }
+        }
+      },
+      "登录ModelFullView": {
+        "title": "登录ModelFullView",
+        "type": "object",
+        "properties": {
+          "chance_count": {
+            "type": "integer",
+            "description": "还有几次登录机会",
+            "format": "int32"
+          },
+          "country_area_code": {
+            "type": "string",
+            "description": "国家区号，如：86, Type为PHONE_NUMBER时必填"
+          },
+          "current_login_user_app": {
+            "description": "当前用户选择登录的OwnerId",
+            "$ref": "#/components/schemas/用户和应用的关联关系ModelFullView"
+          },
+          "fail_count": {
+            "type": "integer",
+            "description": "连续失败次数（当errorCode为PASSWORD_ERROR时有值）",
+            "format": "int32"
+          },
+          "function_trees": {
+            "type": "array",
+            "description": "树形功能权限信息列表",
+            "items": {
+              "$ref": "#/components/schemas/功能权限树形结构ModelFullView"
+            }
+          },
+          "jwt_token": {
+            "description": "jwtToken信息",
+            "$ref": "#/components/schemas/JwtTokenFullView"
+          },
+          "login_account": { "type": "string", "description": "登录帐号" },
+          "type": {
+            "type": "string",
+            "description": "用户账号方式类型",
+            "enum": [
+              "EMAIL",
+              "LOGIN_ID",
+              "PHONE_NUMBER",
+              "WECHAT_OPENID",
+              "WHATS_APP_OPENID"
+            ]
+          },
+          "user_apps": {
+            "type": "array",
+            "description": "用户和应用的关系列表",
+            "items": {
+              "$ref": "#/components/schemas/用户和应用的关联关系ModelFullView"
+            }
+          },
+          "user_model": {
+            "description": "用户信息",
+            "$ref": "#/components/schemas/用户Model,基础数据型ModelFullView"
+          }
+        },
+        "description": "登录返回信息"
+      },
+      "登录入参": {
+        "title": "登录入参",
+        "required": ["app_key", "login_account", "password", "type"],
+        "type": "object",
+        "properties": {
+          "app_key": {
+            "type": "string",
+            "description": "登录的应用KEY（必填）",
+            "enum": [
+              "BOSS_MANAGE_WEB_PC:BOSS管理后台WEB PC",
+              "CUSTOMER_APP:客户APP(Android/IOS)",
+              "CUSTOMER_WEB_PC:客户平台WEB PC",
+              "MERCHANT_MANAGE_APP:商家管理APP(Android/IOS)",
+              "MERCHANT_MANAGE_WEB_PC:商家管理后台WEB PC",
+              "MERCHANT_POS_PC:商家POS PC(Windows/Android)"
+            ]
+          },
+          "country_area_code": {
+            "type": "string",
+            "description": "国家区号，如：86, Type为PHONE_NUMBER时必填"
+          },
+          "country_id": {
+            "type": "integer",
+            "description": "国家区号ID，如：1815710140407562241. Type为PHONE_NUMBER时必填",
+            "format": "int64"
+          },
+          "login_account": {
+            "type": "string",
+            "description": "登录帐号 (必填) 根据Type，填写：phoneNumber,email,loginId"
+          },
+          "owner_id": {
+            "type": "integer",
+            "description": " 平台身份，所对应的ID. 注：当用户拥有多少OwnerId时，需要传入一个OwnerID进行登录",
+            "format": "int64"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "平台身份,拥有者类型,平台的多种身份角色类型",
+            "enum": ["BOSS", "CUSTOMER", "MERCHANT", "PARTNER"]
+          },
+          "password": { "type": "string", "description": "密码" },
+          "type": {
+            "type": "string",
+            "description": "创建用户账号方式类型",
+            "enum": [
+              "EMAIL",
+              "LOGIN_ID",
+              "PHONE_NUMBER",
+              "WECHAT_OPENID",
+              "WHATS_APP_OPENID"
+            ]
+          }
+        },
+        "description": "登录入参"
+      },
+      "登录后，选择一个Owner切换请求入参": {
+        "title": "登录后，选择一个Owner切换请求入参",
+        "required": ["owner_id", "owner_type"],
+        "type": "object",
+        "properties": {
+          "owner_id": {
+            "type": "integer",
+            "description": " 平台身份，所对应的ID. 注：当用户拥有多少OwnerId时，需要传入一个OwnerID进行登录",
+            "format": "int64"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "平台身份,拥有者类型,平台的多种身份角色类型",
+            "enum": [
+              "BOSS: 商户运营后台",
+              "CUSTOMER:客户",
+              "MERCHANT:商户",
+              "PARTNER: 服务商"
+            ]
+          }
+        }
+      },
+      "菜单Model": {
+        "title": "菜单Model",
+        "type": "object",
+        "properties": {
+          "app_id": {
+            "type": "integer",
+            "description": "所属应用",
+            "format": "int64"
+          },
+          "component_name": {
+            "type": "string",
+            "description": "组件名称,例如:SystemUser"
+          },
+          "component_paths": {
+            "type": "string",
+            "description": "组件路径,例如:system/user/index"
+          },
+          "creator_id": {
+            "type": "integer",
+            "description": "创建者ID,user_id",
+            "format": "int64"
+          },
+          "id": {
+            "type": "integer",
+            "description": "菜单编号",
+            "format": "int64"
+          },
+          "is_displayed": {
+            "type": "boolean",
+            "description": "菜单是否显示/隐藏(1:是,0:否,默认为显示),选择隐藏时,路由将不会出现在侧边栏,但仍然可以访问",
+            "example": false
+          },
+          "level": {
+            "type": "integer",
+            "description": "层级",
+            "format": "int32"
+          },
+          "menu_key": {
+            "type": "string",
+            "description": "菜单英文唯一Key(自定义)"
+          },
+          "menu_names": {
+            "type": "array",
+            "description": "菜单名(多语言对应的名称)",
+            "items": { "$ref": "#/components/schemas/权限名称Model" }
+          },
+          "name": { "type": "string", "description": "菜单名" },
+          "parent_id": {
+            "type": "integer",
+            "description": "父菜单编号",
+            "format": "int64"
+          },
+          "remark": { "type": "string", "description": "描述" },
+          "shortcuts": { "type": "string", "description": "快捷键" },
+          "sort_number": {
+            "type": "integer",
+            "description": "排序号",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "description": "菜单状态(ACTIVE:有效,FROZEN:冻结)",
+            "enum": ["ACTIVE", "FROZEN"]
+          },
+          "style_class": {
+            "type": "string",
+            "description": "菜单对应的class样式"
+          },
+          "type": {
+            "type": "string",
+            "description": "MenuInfoTypeEnum:菜单类型(DIRECTORY:目录,PAGE:页面)",
+            "enum": ["DIRECTORY", "PAGE"]
+          },
+          "url": { "type": "string", "description": "菜单对应的URL" }
+        },
+        "description": "登录返回的菜单信息"
+      },
+      "菜单ModelFullView": {
+        "title": "菜单ModelFullView",
+        "type": "object",
+        "properties": {
+          "app_id": {
+            "type": "integer",
+            "description": "所属应用",
+            "format": "int64"
+          },
+          "component_name": {
+            "type": "string",
+            "description": "组件名称,例如:SystemUser"
+          },
+          "component_paths": {
+            "type": "string",
+            "description": "组件路径,例如:system/user/index"
+          },
+          "id": {
+            "type": "integer",
+            "description": "菜单编号",
+            "format": "int64"
+          },
+          "is_displayed": {
+            "type": "boolean",
+            "description": "菜单是否显示/隐藏(1:是,0:否,默认为显示),选择隐藏时,路由将不会出现在侧边栏,但仍然可以访问",
+            "example": false
+          },
+          "level": {
+            "type": "integer",
+            "description": "层级",
+            "format": "int32"
+          },
+          "menu_key": {
+            "type": "string",
+            "description": "菜单英文唯一Key(自定义)"
+          },
+          "name": { "type": "string", "description": "菜单名" },
+          "parent_id": {
+            "type": "integer",
+            "description": "父菜单编号",
+            "format": "int64"
+          },
+          "shortcuts": { "type": "string", "description": "快捷键" },
+          "sort_number": {
+            "type": "integer",
+            "description": "排序号",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "description": "菜单状态(ACTIVE:有效,FROZEN:冻结)",
+            "enum": ["ACTIVE", "FROZEN"]
+          },
+          "style_class": {
+            "type": "string",
+            "description": "菜单对应的class样式"
+          },
+          "type": {
+            "type": "string",
+            "description": "MenuInfoTypeEnum:菜单类型(DIRECTORY:目录,PAGE:页面)",
+            "enum": ["DIRECTORY", "PAGE"]
+          },
+          "url": { "type": "string", "description": "菜单对应的URL" }
+        },
+        "description": "登录返回的菜单信息"
+      },
+      "菜单修改请求参数VO": {
+        "title": "菜单修改请求参数VO",
+        "required": [
+          "app_key",
+          "id",
+          "is_displayed",
+          "level",
+          "menu_names",
+          "sort_number",
+          "status",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "app_key": {
+            "type": "string",
+            "description": "应用KEY（必填）",
+            "enum": [
+              "BOSS_MANAGE_WEB_PC:BOSS管理后台WEB PC",
+              "CUSTOMER_APP:客户APP(Android/IOS)",
+              "CUSTOMER_WEB_PC:客户平台WEB PC",
+              "MERCHANT_MANAGE_APP:商家管理APP(Android/IOS)",
+              "MERCHANT_MANAGE_WEB_PC:商家管理后台WEB PC",
+              "MERCHANT_POS_PC:商家POS PC(Windows/Android)"
+            ]
+          },
+          "component_name": {
+            "type": "string",
+            "description": "组件名称,例如:SystemUser"
+          },
+          "component_paths": {
+            "type": "string",
+            "description": "组件路径,例如:system/user/index"
+          },
+          "id": {
+            "type": "integer",
+            "description": "菜单ID",
+            "format": "int64"
+          },
+          "is_displayed": {
+            "type": "boolean",
+            "description": "菜单是否显示/隐藏(1:是,0:否,默认为显示),选择隐藏时,路由将不会出现在侧边栏,但仍然可以访问",
+            "example": false
+          },
+          "level": {
+            "type": "integer",
+            "description": "级别",
+            "format": "int32"
+          },
+          "menu_names": {
+            "type": "array",
+            "description": "菜单名(多语言对应的名称)",
+            "items": { "$ref": "#/components/schemas/权限国家语言请求参数VO" }
+          },
+          "parent_id": {
+            "type": "integer",
+            "description": "父菜单编号",
+            "format": "int64"
+          },
+          "remark": { "type": "string", "description": "备注" },
+          "shortcuts": { "type": "string", "description": "快捷键" },
+          "sort_number": {
+            "type": "integer",
+            "description": "排序号",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "description": "MenuInfoStatusEnum:菜单状态(ACTIVE:有效,FROZEN:冻结)",
+            "enum": ["ACTIVE", "FROZEN"]
+          },
+          "style_class": { "type": "string", "description": "菜单样式" },
+          "type": {
+            "type": "string",
+            "description": "MenuInfoTypeEnum:菜单类型(DIRECTORY:目录,PAGE:页面)",
+            "enum": ["DIRECTORY", "PAGE"]
+          },
+          "url": { "type": "string", "description": "菜单对应的URL" }
+        }
+      },
+      "菜单创建请求参数VO": {
+        "title": "菜单创建请求参数VO",
+        "required": [
+          "app_key",
+          "associated_role_type",
+          "generate_type",
+          "is_displayed",
+          "level",
+          "menu_key",
+          "menu_names",
+          "sort_number",
+          "status",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "app_key": {
+            "type": "string",
+            "description": "应用KEY（必填）",
+            "enum": [
+              "BOSS_MANAGE_WEB_PC:BOSS管理后台WEB PC",
+              "CUSTOMER_APP:客户APP(Android/IOS)",
+              "CUSTOMER_WEB_PC:客户平台WEB PC",
+              "MERCHANT_MANAGE_APP:商家管理APP(Android/IOS)",
+              "MERCHANT_MANAGE_WEB_PC:商家管理后台WEB PC",
+              "MERCHANT_POS_PC:商家POS PC(Windows/Android)"
+            ]
+          },
+          "associated_role_type": {
+            "type": "string",
+            "description": "FunctionAssociatedRoleTypeEnum:功能关联角色类型(DEFAULT_ROLE:默认角色,FIRST_LEVEL_ROLE:一级角色(如,一级商户类型)",
+            "enum": ["DEFAULT_ROLE", "FIRST_LEVEL_ROLE"]
+          },
+          "component_name": {
+            "type": "string",
+            "description": "组件名称,例如:SystemUser"
+          },
+          "component_paths": {
+            "type": "string",
+            "description": "组件路径,例如:system/user/index"
+          },
+          "function_create": {
+            "description": "功能创建",
+            "$ref": "#/components/schemas/功能创建请求参数VO"
+          },
+          "generate_type": {
+            "type": "string",
+            "description": "FunctionGenerateTypeEnum: 功能生成类型(SYSTEM:默认系统生成, CUSTOM:自定义生成)    默认为: SYSTEM",
+            "enum": ["CUSTOM", "SYSTEM"]
+          },
+          "is_displayed": {
+            "type": "boolean",
+            "description": "菜单是否显示/隐藏(1:是,0:否,默认为显示),选择隐藏时,路由将不会出现在侧边栏,但仍然可以访问",
+            "example": false
+          },
+          "level": {
+            "type": "integer",
+            "description": "级别",
+            "format": "int32"
+          },
+          "menu_key": {
+            "type": "string",
+            "description": "菜单英文唯一Key(MenuKey组成规则: {AppKey}.{MenuKey})"
+          },
+          "menu_names": {
+            "type": "array",
+            "description": "菜单名(多语言对应的名称)",
+            "items": { "$ref": "#/components/schemas/权限国家语言请求参数VO" }
+          },
+          "parent_id": {
+            "type": "integer",
+            "description": "父菜单编号",
+            "format": "int64"
+          },
+          "remark": { "type": "string", "description": "备注" },
+          "shortcuts": { "type": "string", "description": "快捷键" },
+          "sort_number": {
+            "type": "integer",
+            "description": "排序号",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "description": "MenuInfoStatusEnum:菜单状态(ACTIVE:有效,FROZEN:冻结)",
+            "enum": ["ACTIVE", "FROZEN"]
+          },
+          "style_class": { "type": "string", "description": "菜单样式" },
+          "type": {
+            "type": "string",
+            "description": "MenuInfoTypeEnum:菜单类型(DIRECTORY:目录,PAGE:页面)",
+            "enum": ["DIRECTORY", "PAGE"]
+          },
+          "url": { "type": "string", "description": "菜单对应的URL" }
+        }
+      },
+      "菜单删除请求参数VO": {
+        "title": "菜单删除请求参数VO",
+        "type": "object",
+        "properties": {
+          "menu_id": {
+            "type": "integer",
+            "description": "菜单ID",
+            "format": "int64"
+          }
+        }
+      },
+      "菜单国际化语言查询列表条件VO": {
+        "title": "菜单国际化语言查询列表条件VO",
+        "required": ["app_key"],
+        "type": "object",
+        "properties": {
+          "app_key": {
+            "type": "string",
+            "description": "应用KEY（必填）",
+            "enum": [
+              "BOSS_MANAGE_WEB_PC:BOSS管理后台WEB PC",
+              "CUSTOMER_APP:客户APP(Android/IOS)",
+              "CUSTOMER_WEB_PC:客户平台WEB PC",
+              "MERCHANT_MANAGE_APP:商家管理APP(Android/IOS)",
+              "MERCHANT_MANAGE_WEB_PC:商家管理后台WEB PC",
+              "MERCHANT_POS_PC:商家POS PC(Windows/Android)"
+            ]
+          },
+          "owner_id": {
+            "type": "integer",
+            "description": " 平台身份，所对应的ID. 注：当用户拥有多少OwnerId时，需要传入一个OwnerID进行登录",
+            "format": "int64"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "平台身份,拥有者类型,平台的多种身份角色类型",
+            "enum": ["BOSS", "CUSTOMER", "MERCHANT", "PARTNER"]
+          },
+          "user_id": {
+            "type": "integer",
+            "description": " 用户Id，ID编号。",
+            "format": "int64"
+          }
+        },
+        "description": "菜单国际化语言查询列表条件API入参"
+      },
+      "菜单树列表查询条件VO": {
+        "title": "菜单树列表查询条件VO",
+        "required": ["app_key"],
+        "type": "object",
+        "properties": {
+          "app_key": {
+            "type": "string",
+            "description": "应用KEY（必填）",
+            "enum": [
+              "BOSS_MANAGE_WEB_PC:BOSS管理后台WEB PC",
+              "CUSTOMER_APP:客户APP(Android/IOS)",
+              "CUSTOMER_WEB_PC:客户平台WEB PC",
+              "MERCHANT_MANAGE_APP:商家管理APP(Android/IOS)",
+              "MERCHANT_MANAGE_WEB_PC:商家管理后台WEB PC",
+              "MERCHANT_POS_PC:商家POS PC(Windows/Android)"
+            ]
+          }
+        },
+        "description": "菜单树查询条件VO,API入参"
+      },
+      "菜单树结构Model": {
+        "title": "菜单树结构Model",
+        "type": "object",
+        "properties": {
+          "menu": {
+            "description": "菜单",
+            "$ref": "#/components/schemas/菜单Model"
+          },
+          "sub_menu_trees": {
+            "type": "array",
+            "description": "子菜单树",
+            "items": { "$ref": "#/components/schemas/菜单树结构Model" }
+          }
+        },
+        "description": "登录返回的菜单树信息"
+      },
+      "菜单详情查询请求参数": {
+        "title": "菜单详情查询请求参数",
+        "type": "object",
+        "properties": {
+          "menu_id": {
+            "type": "integer",
+            "description": "菜单ID",
+            "format": "int64"
+          }
+        }
+      },
+      "角色Model": {
+        "title": "角色Model",
+        "type": "object",
+        "properties": {
+          "app_id": {
+            "type": "integer",
+            "description": "应用ID",
+            "format": "int64"
+          },
+          "app_key": {
+            "type": "integer",
+            "description": "所属应用key",
+            "format": "int64"
+          },
+          "create_time": {
+            "type": "string",
+            "description": " 创建时间",
+            "format": "date-time"
+          },
+          "creator_id": {
+            "type": "integer",
+            "description": "创建者ID",
+            "format": "int64"
+          },
+          "creator_name": { "type": "string", "description": "创建人名称" },
+          "department_id": {
+            "type": "integer",
+            "description": "所属部门ID",
+            "format": "int64"
+          },
+          "id": { "type": "integer", "description": "ID", "format": "int64" },
+          "is_default": {
+            "type": "boolean",
+            "description": "是否默认角色(1:是,0:否)",
+            "example": false
+          },
+          "modify_time": {
+            "type": "string",
+            "description": "更新时间",
+            "format": "date-time"
+          },
+          "name": { "type": "string", "description": "角色名" },
+          "owner_id": {
+            "type": "integer",
+            "description": "拥有者编号",
+            "format": "int64"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "平台身份,拥有者类型(MERCHANT:商户,PARTNER:服务商,CUSTOMER:客户(买家),BOSS:公司运营人员)",
+            "enum": ["BOSS", "CUSTOMER", "MERCHANT", "PARTNER"]
+          },
+          "remark": { "type": "string", "description": "备注，描述" },
+          "role_id": {
+            "type": "integer",
+            "description": "Role ID",
+            "format": "int64"
+          },
+          "source_type": {
+            "type": "string",
+            "description": "角色数据来源类型(SYSTEM:系统默认,CUSTOM:用户自定义角色)",
+            "enum": ["CUSTOM", "SYSTEM"]
+          },
+          "status": {
+            "type": "string",
+            "description": "角色状态(ACTIVE:有效,FROZEN:冻结)",
+            "enum": ["ACTIVE", "FROZEN"]
+          },
+          "time_zone": {
+            "type": "string",
+            "description": " 时区（当前数据的时区,zone_id）"
+          },
+          "type": {
+            "type": "string",
+            "description": "角色类型(SYS_ADMIN:系统平台级别管理员，DEPARTMENT_ADMIN:部门管理员,NORMAL:普通,TEMP:临时)",
+            "enum": [
+              "DEPARTMENT_ADMIN",
+              "NORMAL",
+              "NORMAL_ADMIN",
+              "SUPER_ADMIN",
+              "TEMP"
+            ]
+          },
+          "version": { "type": "string", "description": "时间戳" }
+        },
+        "description": "角色返回的结果集信息"
+      },
+      "角色ModelFullView": {
+        "title": "角色ModelFullView",
+        "type": "object",
+        "properties": {
+          "app_id": {
+            "type": "integer",
+            "description": "应用ID",
+            "format": "int64"
+          },
+          "app_key": {
+            "type": "integer",
+            "description": "所属应用key",
+            "format": "int64"
+          },
+          "department_id": {
+            "type": "integer",
+            "description": "所属部门ID",
+            "format": "int64"
+          },
+          "is_default": {
+            "type": "boolean",
+            "description": "是否默认角色(1:是,0:否)",
+            "example": false
+          },
+          "name": { "type": "string", "description": "角色名" },
+          "owner_id": {
+            "type": "integer",
+            "description": "拥有者编号",
+            "format": "int64"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "平台身份,拥有者类型(MERCHANT:商户,PARTNER:服务商,CUSTOMER:客户(买家),BOSS:公司运营人员)",
+            "enum": ["BOSS", "CUSTOMER", "MERCHANT", "PARTNER"]
+          },
+          "remark": { "type": "string", "description": "备注，描述" },
+          "role_id": {
+            "type": "integer",
+            "description": "Role ID",
+            "format": "int64"
+          },
+          "source_type": {
+            "type": "string",
+            "description": "角色数据来源类型(SYSTEM:系统默认,CUSTOM:用户自定义角色)",
+            "enum": ["CUSTOM", "SYSTEM"]
+          },
+          "type": {
+            "type": "string",
+            "description": "角色类型(SYS_ADMIN:系统平台级别管理员，DEPARTMENT_ADMIN:部门管理员,NORMAL:普通,TEMP:临时)",
+            "enum": [
+              "DEPARTMENT_ADMIN",
+              "NORMAL",
+              "NORMAL_ADMIN",
+              "SUPER_ADMIN",
+              "TEMP"
+            ]
+          }
+        },
+        "description": "角色返回的结果集信息"
+      },
+      "角色修改请求参数VO": {
+        "title": "角色修改请求参数VO",
+        "required": ["role_functions", "role_id", "role_name"],
+        "type": "object",
+        "properties": {
+          "remark": { "type": "string", "description": "备注，描述" },
+          "role_functions": {
+            "type": "array",
+            "description": "用户选择的功能和Action权限集合",
+            "items": {
+              "$ref": "#/components/schemas/角色对应的功能信息请求参数VO"
+            }
+          },
+          "role_id": {
+            "type": "integer",
+            "description": "角色ID",
+            "format": "int64"
+          },
+          "role_name": { "type": "string", "description": "角色名称" }
+        },
+        "description": "角色修改请求参数VO,API入参"
+      },
+      "角色和功能信息组合Model": {
+        "title": "角色和功能信息组合Model",
+        "type": "object",
+        "properties": {
+          "function_trees": {
+            "type": "array",
+            "description": "树形功能权限信息列表",
+            "items": { "$ref": "#/components/schemas/功能权限树形结构Model" }
+          },
+          "role": {
+            "description": "角色信息",
+            "$ref": "#/components/schemas/角色Model"
+          }
+        },
+        "description": "角色和功能信息组合Model信息"
+      },
+      "角色和功能权限的全量查询请求参数(查询当前用户下所有功能权限信息)": {
+        "title": "角色和功能权限的全量查询请求参数(查询当前用户下所有功能权限信息)",
+        "required": ["app_key"],
+        "type": "object",
+        "properties": {
+          "app_key": {
+            "type": "string",
+            "description": "应用KEY（必填）",
+            "enum": [
+              "BOSS_MANAGE_WEB_PC:BOSS管理后台WEB PC",
+              "CUSTOMER_APP:客户APP(Android/IOS)",
+              "CUSTOMER_WEB_PC:客户平台WEB PC",
+              "MERCHANT_MANAGE_APP:商家管理APP(Android/IOS)",
+              "MERCHANT_MANAGE_WEB_PC:商家管理后台WEB PC",
+              "MERCHANT_POS_PC:商家POS PC(Windows/Android)"
+            ]
+          }
+        },
+        "description": "角色和功能权限的全量查询请求参数(查询当前用户下所有功能权限信息)VO信息"
+      },
+      "角色对应的功能信息请求参数VO": {
+        "title": "角色对应的功能信息请求参数VO",
+        "required": ["action_ids", "function_id", "parent_function_ids"],
+        "type": "object",
+        "properties": {
+          "action_ids": {
+            "type": "array",
+            "description": "用户选择的ActionId集合",
+            "items": { "type": "integer", "format": "int64" }
+          },
+          "function_id": {
+            "type": "integer",
+            "description": "用户选择的Action直接关联的功能权限Id",
+            "format": "int64"
+          },
+          "parent_function_ids": {
+            "type": "array",
+            "description": "用户选择的父功能及上级所有级联的父权限Id集合",
+            "items": { "type": "integer", "format": "int64" }
+          }
+        },
+        "description": "角色对应的功能信息请求参数VO信息"
+      },
+      "角色批量删除请求参数": {
+        "title": "角色批量删除请求参数",
+        "type": "object",
+        "properties": {
+          "role_ids": {
+            "type": "array",
+            "description": "角色ID集合",
+            "items": { "type": "integer", "format": "int64" }
+          }
+        },
+        "description": "角色批量删除请求参数,API入参"
+      },
+      "角色管理查询条件VO": {
+        "title": "角色管理查询条件VO",
+        "type": "object",
+        "properties": {
+          "create_time": {
+            "type": "string",
+            "description": "用户创建时间",
+            "format": "date-time"
+          },
+          "keywords": {
+            "type": "string",
+            "description": "全局搜索关键词搜索。"
+          },
+          "page_num": {
+            "type": "integer",
+            "description": "当前页码",
+            "format": "int64"
+          },
+          "page_size": {
+            "type": "integer",
+            "description": "每页条数",
+            "format": "int64"
+          },
+          "remark": { "type": "string", "description": "角色描述" },
+          "role_name": { "type": "string", "description": "角色名称" }
+        },
+        "description": "角色管理查询条件VO,API入参"
+      },
+      "超级管理员用户创建请求参数VO": {
+        "title": "超级管理员用户创建请求参数VO",
+        "required": ["name", "type"],
+        "type": "object",
+        "properties": {
+          "add_user_source_type": {
+            "type": "string",
+            "description": "添加用户来源类型，添加用户来源类型。创建普通用户时必填。",
+            "enum": ["PLATFORM_EXISTED_USER", "PLATFORM_NEW_REGISTER_USER"]
+          },
+          "country_area_code": {
+            "type": "string",
+            "description": "国家区号，如：86"
+          },
+          "country_id": { "type": "integer", "format": "int64" },
+          "email": { "type": "string", "description": "以邮箱创建帐号" },
+          "email_verification_code": {
+            "type": "string",
+            "description": "邮箱验证码。"
+          },
+          "login_id": { "type": "string" },
+          "merchant_level": { "type": "integer", "format": "int32" },
+          "name": { "type": "string", "description": "用户名称" },
+          "nick_name": { "type": "string", "description": "用户昵称" },
+          "owner_type_maps": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/平台身份,拥有者类型的内容属性集合"
+            }
+          },
+          "password": { "type": "string" },
+          "phone_number": { "type": "string", "description": "手机号" },
+          "role_id": {
+            "type": "integer",
+            "description": "用户对应的角色ID。创建普通用户时必填。",
+            "format": "int64"
+          },
+          "sms_verification_code": {
+            "type": "string",
+            "description": "短信验证码。"
+          },
+          "time_zone": {
+            "type": "string",
+            "description": " 用户注册选择的时区。"
+          },
+          "type": {
+            "type": "string",
+            "description": "创建用户账号方式类型",
+            "enum": [
+              "EMAIL",
+              "LOGIN_ID",
+              "PHONE_NUMBER",
+              "WECHAT_OPENID",
+              "WHATS_APP_OPENID"
+            ]
+          }
+        },
+        "description": "用户创建请求参数VO信息"
+      },
+      "门店系统角色查询请求接收参数VO": {
+        "title": "门店系统角色查询请求接收参数VO",
+        "required": ["owner_id", "owner_type"],
+        "type": "object",
+        "properties": {
+          "owner_id": {
+            "type": "integer",
+            "description": "拥有者编号",
+            "format": "int64"
+          },
+          "owner_type": {
+            "type": "string",
+            "description": "拥有者类型",
+            "enum": [
+              "BOSS: 商户运营后台",
+              "CUSTOMER:客户",
+              "MERCHANT: 商户",
+              "PARTNER: 服务商"
+            ]
+          }
+        }
+      },
+      "验证TokenID是否有效": {
+        "title": "验证TokenID是否有效",
+        "required": ["token_id"],
+        "type": "object",
+        "properties": {
+          "token_id": { "type": "string", "description": "Token Id" }
+        }
+      },
+      "验证码校验接收参数": {
+        "title": "验证码校验接收参数",
+        "required": ["verification_code", "verification_code_type"],
+        "type": "object",
+        "properties": {
+          "country_area_code": {
+            "type": "string",
+            "description": "国家区号，如：86, 注:verificationCodeType为SMS_CODE时必填"
+          },
+          "email": {
+            "type": "string",
+            "description": "用邮箱验证, 注:verificationCodeType为EMAIL_CODE时必填"
+          },
+          "phone_number": {
+            "type": "string",
+            "description": "用短信验证, 注:verificationCodeType为SMS_CODE时必填"
+          },
+          "verification_code": { "type": "string", "description": "验证码" },
+          "verification_code_type": {
+            "type": "string",
+            "description": "验证码类型",
+            "enum": ["EMAIL_CODE: 邮箱验证码", "SMS_CODE: 短信验证码"]
+          }
+        }
+      },
+      "验证码请求入参(短信、邮箱验证码)": {
+        "title": "验证码请求入参(短信、邮箱验证码)",
+        "required": ["verification_code_type"],
+        "type": "object",
+        "properties": {
+          "country_area_code": {
+            "type": "string",
+            "description": "国家区号，如：86, 注:verificationCodeType为SMS_CODE时必填"
+          },
+          "email": {
+            "type": "string",
+            "description": "用邮箱验证, 注:verificationCodeType为EMAIL_CODE时必填"
+          },
+          "phone_number": {
+            "type": "string",
+            "description": "用短信验证, 注:verificationCodeType为SMS_CODE时必填"
+          },
+          "verification_code_type": {
+            "type": "string",
+            "description": "验证码类型",
+            "enum": ["EMAIL_CODE: 邮箱验证码", "SMS_CODE: 短信验证码"]
+          }
+        }
+      },
+      "验证码返回结果集Model(短信、邮箱验证码)": {
+        "title": "验证码返回结果集Model(短信、邮箱验证码)",
+        "type": "object",
+        "properties": {
+          "code": { "type": "string", "description": "验证码" },
+          "verification_code_type": {
+            "type": "string",
+            "description": "验证码类型",
+            "enum": ["EMAIL_CODE: 邮箱验证码", "SMS_CODE: 短信验证码"]
+          }
+        }
+      }
+    }
+  }
+}

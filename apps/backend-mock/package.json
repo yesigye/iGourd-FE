@@ -7,15 +7,18 @@
   "author": "",
   "scripts": {
     "build": "nitro build",
-    "start": "nitro dev"
+    "start": "nitro dev --port 5320",
+    "dev": "nitro dev --port 5320"
   },
   "dependencies": {
     "@faker-js/faker": "catalog:",
     "jsonwebtoken": "catalog:",
-    "nitropack": "catalog:"
+    "nitropack": "catalog:",
+    "uuid": "catalog:"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "catalog:",
+    "@types/uuid": "catalog:",
     "h3": "catalog:"
   }
 }
