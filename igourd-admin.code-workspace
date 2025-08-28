@@ -1,7 +1,172 @@
 {
-    "folders": [
-        {
-            "path": "."
-        }
-    ]
+  "folders": [
+    {
+      "name": "@igourd/backend-mock",
+      "path": "apps/backend-mock",
+    },
+    {
+      "name": "@igourd/web-antd",
+      "path": "apps/web-antd",
+    },
+    {
+      "name": "@igourd/web-ele",
+      "path": "apps/web-ele",
+    },
+    {
+      "name": "@igourd/web-naive",
+      "path": "apps/web-naive",
+    },
+    {
+      "name": "@igourd/docs",
+      "path": "docs",
+    },
+    {
+      "name": "@igourd/commitlint-config",
+      "path": "internal/lint-configs/commitlint-config",
+    },
+    {
+      "name": "@igourd/eslint-config",
+      "path": "internal/lint-configs/eslint-config",
+    },
+    {
+      "name": "@igourd/prettier-config",
+      "path": "internal/lint-configs/prettier-config",
+    },
+    {
+      "name": "@igourd/stylelint-config",
+      "path": "internal/lint-configs/stylelint-config",
+    },
+    {
+      "name": "@igourd/node-utils",
+      "path": "internal/node-utils",
+    },
+    {
+      "name": "@igourd/tailwind-config",
+      "path": "internal/tailwind-config",
+    },
+    {
+      "name": "@igourd/tsconfig",
+      "path": "internal/tsconfig",
+    },
+    {
+      "name": "@igourd/vite-config",
+      "path": "internal/vite-config",
+    },
+    {
+      "name": "@igourd-core/design",
+      "path": "packages/@core/base/design",
+    },
+    {
+      "name": "@igourd-core/icons",
+      "path": "packages/@core/base/icons",
+    },
+    {
+      "name": "@igourd-core/shared",
+      "path": "packages/@core/base/shared",
+    },
+    {
+      "name": "@igourd-core/typings",
+      "path": "packages/@core/base/typings",
+    },
+    {
+      "name": "@igourd-core/composables",
+      "path": "packages/@core/composables",
+    },
+    {
+      "name": "@igourd-core/preferences",
+      "path": "packages/@core/preferences",
+    },
+    {
+      "name": "@igourd-core/form-ui",
+      "path": "packages/@core/ui-kit/form-ui",
+    },
+    {
+      "name": "@igourd-core/layout-ui",
+      "path": "packages/@core/ui-kit/layout-ui",
+    },
+    {
+      "name": "@igourd-core/menu-ui",
+      "path": "packages/@core/ui-kit/menu-ui",
+    },
+    {
+      "name": "@igourd-core/popup-ui",
+      "path": "packages/@core/ui-kit/popup-ui",
+    },
+    {
+      "name": "@igourd-core/shadcn-ui",
+      "path": "packages/@core/ui-kit/shadcn-ui",
+    },
+    {
+      "name": "@igourd-core/tabs-ui",
+      "path": "packages/@core/ui-kit/tabs-ui",
+    },
+    {
+      "name": "@igourd/constants",
+      "path": "packages/constants",
+    },
+    {
+      "name": "@igourd/access",
+      "path": "packages/effects/access",
+    },
+    {
+      "name": "@igourd/common-ui",
+      "path": "packages/effects/common-ui",
+    },
+    {
+      "name": "@igourd/hooks",
+      "path": "packages/effects/hooks",
+    },
+    {
+      "name": "@igourd/layouts",
+      "path": "packages/effects/layouts",
+    },
+    {
+      "name": "@igourd/plugins",
+      "path": "packages/effects/plugins",
+    },
+    {
+      "name": "@igourd/request",
+      "path": "packages/effects/request",
+    },
+    {
+      "name": "@igourd/icons",
+      "path": "packages/icons",
+    },
+    {
+      "name": "@igourd/locales",
+      "path": "packages/locales",
+    },
+    {
+      "name": "@igourd/preferences",
+      "path": "packages/preferences",
+    },
+    {
+      "name": "@igourd/stores",
+      "path": "packages/stores",
+    },
+    {
+      "name": "@igourd/styles",
+      "path": "packages/styles",
+    },
+    {
+      "name": "@igourd/types",
+      "path": "packages/types",
+    },
+    {
+      "name": "@igourd/utils",
+      "path": "packages/utils",
+    },
+    {
+      "name": "@igourd/playground",
+      "path": "playground",
+    },
+    {
+      "name": "@igourd/turbo-run",
+      "path": "scripts/turbo-run",
+    },
+    {
+      "name": "@igourd/vsh",
+      "path": "scripts/vsh",
+    },
+  ],
 }
