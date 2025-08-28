@@ -97,8 +97,7 @@ const routes: RouteRecordRaw[] = [
           {
             name: 'FormFormilyUsageExample',
             path: '/examples/form/formily-usage',
-            component: () =>
-              import('#/views/examples/form/formily-usage.vue'),
+            component: () => import('#/views/examples/form/formily-usage.vue'),
             meta: {
               title: $t('examples.form.formilyUsage'),
             },
