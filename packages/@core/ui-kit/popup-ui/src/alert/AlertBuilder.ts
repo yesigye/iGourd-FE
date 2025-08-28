@@ -7,7 +7,7 @@ import type { AlertProps, BeforeCloseScope, PromptProps } from './alert';
 import { h, nextTick, ref, render } from 'vue';
 
 import { useSimpleLocale } from '@igourd-core/composables';
-import { Input, IgourdRenderContent } from '@igourd-core/shadcn-ui';
+import { IgourdRenderContent, Input } from '@igourd-core/shadcn-ui';
 import { isFunction, isString } from '@igourd-core/shared/utils';
 
 import Alert from './alert.vue';
@@ -88,7 +88,7 @@ export function igourdAlert(
     render(vnode, container);
 
     // 保存组件实例引用
-    alertRef.instance = vnode.component?.proxy as Component;
+    alertRef.instance = vnode.component?.exposed as Component;
 
     // 将实例和容器添加到alerts数组中
     alerts.value.push(alertRef);

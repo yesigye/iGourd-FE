@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@formily/element-plus": "^1.1.0",
-    "@igourd-core/form-ui": "workspace:*",
+
     "@igourd-core/menu-ui": "workspace:*",
     "@igourd/access": "workspace:*",
     "@igourd/common-ui": "workspace:*",

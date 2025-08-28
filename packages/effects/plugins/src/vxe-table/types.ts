@@ -9,11 +9,11 @@ import type { Ref } from 'vue';
 
 import type { ClassType, DeepPartial } from '@igourd/types';
 
-import type { BaseFormComponentType, IgourdFormProps } from '@igourd-core/form-ui';
+// import type { BaseFormComponentType, IgourdFormProps } from '@igourd-core/form-ui';
 
 import type { VxeGridApi } from './api';
 
-import { useIgourdForm } from '@igourd-core/form-ui';
+// import { useIgourdForm } from '@igourd-core/form-ui';
 
 export interface VxePaginationInfo {
   currentPage: number;
@@ -38,7 +38,7 @@ export interface SeparatorOptions {
 
 export interface VxeGridProps<
   T extends Record<string, any> = any,
-  D extends BaseFormComponentType = BaseFormComponentType,
+  D extends any = any,
 > {
   /**
    * 标题
@@ -67,7 +67,7 @@ export interface VxeGridProps<
   /**
    * 表单配置
    */
-  formOptions?: IgourdFormProps<D>;
+  formOptions?: any;
   /**
    * 显示搜索表单
    */
@@ -80,7 +80,7 @@ export interface VxeGridProps<
 
 export type ExtendedVxeGridApi<
   D extends Record<string, any> = any,
-  F extends BaseFormComponentType = BaseFormComponentType,
+  F extends any = any,
 > = VxeGridApi<D> & {
   useStore: <T = NoInfer<VxeGridProps<D, F>>>(
     selector?: (state: NoInfer<VxeGridProps<any, any>>) => T,
@@ -89,5 +89,5 @@ export type ExtendedVxeGridApi<
 
 export interface SetupVxeTable {
   configVxeTable: (ui: VxeUIExport) => void;
-  useIgourdForm: typeof useIgourdForm;
+  // useIgourdForm: typeof useIgourdForm;
 }

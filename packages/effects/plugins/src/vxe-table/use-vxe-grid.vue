@@ -10,7 +10,7 @@ import type {
 
 import type { SetupContext } from 'vue';
 
-import type { IgourdFormProps } from '@igourd-core/form-ui';
+// import type { IgourdFormProps } from '@igourd-core/form-ui';
 
 import type { ExtendedVxeGridApi, VxeGridProps } from './types';
 

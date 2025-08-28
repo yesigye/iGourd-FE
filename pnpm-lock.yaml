@@ -129,9 +129,6 @@ catalogs:
     '@typescript-eslint/parser':
       specifier: ^8.35.1
       version: 8.35.1
-    '@vee-validate/zod':
-      specifier: ^4.15.1
-      version: 4.15.1
     '@vite-pwa/vitepress':
       specifier: ^1.0.0
       version: 1.0.0
@@ -522,12 +519,6 @@ catalogs:
     watermark-js-plus:
       specifier: ^1.6.2
       version: 1.6.2
-    zod:
-      specifier: ^3.25.67
-      version: 3.25.67
-    zod-defaults:
-      specifier: ^0.1.3
-      version: 0.1.3
 
 overrides:
   '@ast-grep/napi': ^0.37.0
@@ -1342,48 +1333,6 @@ importers:
         specifier: ^3.5.17
         version: 3.5.17(typescript@5.8.3)
 
-  packages/@core/ui-kit/form-ui:
-    dependencies:
-      '@formily/core':
-        specifier: ^2.3.0
-        version: 2.3.7
-      '@formily/vue':
-        specifier: ^2.3.0
-        version: 2.3.7(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3))
-      '@igourd-core/composables':
-        specifier: workspace:*
-        version: link:../../composables
-      '@igourd-core/icons':
-        specifier: workspace:*
-        version: link:../../base/icons
-      '@igourd-core/shadcn-ui':
-        specifier: workspace:*
-        version: link:../shadcn-ui
-      '@igourd-core/shared':
-        specifier: workspace:*
-        version: link:../../base/shared
-      '@igourd-core/typings':
-        specifier: workspace:*
-        version: link:../../base/typings
-      '@vee-validate/zod':
-        specifier: 'catalog:'
-        version: 4.15.1(vue@3.5.17(typescript@5.8.3))(zod@3.25.67)
-      '@vueuse/core':
-        specifier: 'catalog:'
-        version: 13.4.0(vue@3.5.17(typescript@5.8.3))
-      vee-validate:
-        specifier: 'catalog:'
-        version: 4.15.1(vue@3.5.17(typescript@5.8.3))
-      vue:
-        specifier: ^3.5.17
-        version: 3.5.17(typescript@5.8.3)
-      zod:
-        specifier: 'catalog:'
-        version: 3.25.67
-      zod-defaults:
-        specifier: 'catalog:'
-        version: 0.1.3(zod@3.25.67)
-
   packages/@core/ui-kit/layout-ui:
     dependencies:
       '@igourd-core/composables':
@@ -1536,9 +1485,6 @@ importers:
 
   packages/effects/common-ui:
     dependencies:
-      '@igourd-core/form-ui':
-        specifier: workspace:*
-        version: link:../../@core/ui-kit/form-ui
       '@igourd-core/popup-ui':
         specifier: workspace:*
         version: link:../../@core/ui-kit/popup-ui
@@ -1633,9 +1579,6 @@ importers:
       '@igourd-core/composables':
         specifier: workspace:*
         version: link:../../@core/composables
-      '@igourd-core/form-ui':
-        specifier: workspace:*
-        version: link:../../@core/ui-kit/form-ui
       '@igourd-core/layout-ui':
         specifier: workspace:*
         version: link:../../@core/ui-kit/layout-ui
@@ -1690,9 +1633,6 @@ importers:
 
   packages/effects/plugins:
     dependencies:
-      '@igourd-core/form-ui':
-        specifier: workspace:*
-        version: link:../../@core/ui-kit/form-ui
       '@igourd-core/shadcn-ui':
         specifier: workspace:*
         version: link:../../@core/ui-kit/shadcn-ui
@@ -1850,9 +1790,6 @@ importers:
       '@formily/element-plus':
         specifier: ^1.1.0
         version: 1.1.0(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3))
-      '@igourd-core/form-ui':
-        specifier: workspace:*
-        version: link:../packages/@core/ui-kit/form-ui
       '@igourd-core/menu-ui':
         specifier: workspace:*
         version: link:../packages/@core/ui-kit/menu-ui
@@ -5212,11 +5149,6 @@ packages:
     resolution: {integrity: sha512-ryoo+EB19lMxAd80ln9BVf8pdOAxLb97amrQ3SFN9OCRn/5M5wvwDgAe4i8ZjhpbiHoDeP8yavcTEnpKBo7lZg==}
     cpu: [x64]
     os: [win32]
-
-  '@vee-validate/zod@4.15.1':
-    resolution: {integrity: sha512-329Z4TDBE5Vx0FdbA8S4eR9iGCFFUNGbxjpQ20ff5b5wGueScjocUIx9JHPa79LTG06RnlUR4XogQsjN4tecKA==}
-    peerDependencies:
-      zod: ^3.24.0
 
   '@vercel/nft@0.29.4':
     resolution: {integrity: sha512-6lLqMNX3TuycBPABycx7A9F1bHQR7kiQln6abjFbPrf5C/05qHM9M5E4PeTE59c7z8g6vHnx1Ioihb2AQl7BTA==}
@@ -11845,16 +11777,8 @@ packages:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
     engines: {node: '>= 14'}
 
-  zod-defaults@0.1.3:
-    resolution: {integrity: sha512-Cp4UjuVfXqwaOx8A5LlM0IRBZs8B7AXgF+XOZWF8CjMDhsY/Jki+y7VS4adVtQj9NNSsAPwylUlJp9INuxPEnA==}
-    peerDependencies:
-      zod: ^3.23.8
-
   zod@3.24.3:
     resolution: {integrity: sha512-HhY1oqzWCQWuUqvBFnsyrtZRhyPeR7SUGv+C4+MsisMuVfSPx8HpwWqH8tRahSlt6M3PiFAcoeFhZAqIXTxoSg==}
-
-  zod@3.25.67:
-    resolution: {integrity: sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw==}
 
   zrender@5.6.1:
     resolution: {integrity: sha512-OFXkDJKcrlx5su2XbzJvj/34Q3m6PvyCZkVPHGYpcCJ52ek4U/ymZyfuV1nKE23AyBJ51E/6Yr0mhZ7xGTO4ag==}
@@ -15518,14 +15442,6 @@ snapshots:
 
   '@unrs/resolver-binding-win32-x64-msvc@1.9.2':
     optional: true
-
-  '@vee-validate/zod@4.15.1(vue@3.5.17(typescript@5.8.3))(zod@3.25.67)':
-    dependencies:
-      type-fest: 4.40.1
-      vee-validate: 4.15.1(vue@3.5.17(typescript@5.8.3))
-      zod: 3.25.67
-    transitivePeerDependencies:
-      - vue
 
   '@vercel/nft@0.29.4(encoding@0.1.13)(rollup@4.44.1)':
     dependencies:
@@ -23044,13 +22960,7 @@ snapshots:
       compress-commons: 6.0.2
       readable-stream: 4.7.0
 
-  zod-defaults@0.1.3(zod@3.25.67):
-    dependencies:
-      zod: 3.25.67
-
   zod@3.24.3: {}
-
-  zod@3.25.67: {}
 
   zrender@5.6.1:
     dependencies:

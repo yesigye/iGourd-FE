@@ -4,7 +4,7 @@ import { defineComponent, watch } from 'vue';
 
 import { usePreferences } from '@igourd/preferences';
 
-import { useIgourdForm } from '@igourd-core/form-ui';
+// import { useIgourdForm } from '@igourd-core/form-ui';
 
 import {
   VxeButton,

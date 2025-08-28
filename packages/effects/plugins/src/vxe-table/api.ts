@@ -1,6 +1,6 @@
 import type { VxeGridInstance } from 'vxe-table';
 
-import type { ExtendedFormApi } from '@igourd-core/form-ui';
+// import type { ExtendedFormApi } from '@igourd-core/form-ui';
 
 import type { VxeGridProps } from './types';
 
@@ -27,7 +27,7 @@ function getDefaultState(): VxeGridProps {
 }
 
 export class VxeGridApi<T extends Record<string, any> = any> {
-  public formApi = {} as ExtendedFormApi;
+  public formApi = {} as any;
 
   // private prevState: null | VxeGridProps = null;
   public grid = {} as VxeGridInstance<T>;
@@ -58,7 +58,7 @@ export class VxeGridApi<T extends Record<string, any> = any> {
     bindMethods(this);
   }
 
-  mount(instance: null | VxeGridInstance, formApi: ExtendedFormApi) {
+  mount(instance: null | VxeGridInstance, formApi: any) {
     if (!this.isMounted && instance) {
       this.grid = instance;
       this.formApi = formApi;

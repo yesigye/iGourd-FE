@@ -26,7 +26,7 @@
 ### 4. **依赖配置**
 
 - **文件**: `playground/package.json`
-- **添加**: `@igourd-core/form-ui: "workspace:*"`
+- **添加**: `@igourd-core/form-ui: "workspace:*"` (已移除)
 
 ## 🚀 Demo 功能特性
 
@@ -61,7 +61,7 @@
 ### 1. **组件导入**
 
 ```typescript
-import { IgourdUseFormFormily } from '@igourd-core/form-ui';
+// import { IgourdUseFormFormily } from '@igourd-core/form-ui';
 ```
 
 ### 2. **FormApi 创建**
@@ -153,8 +153,8 @@ const formilySchema = ref([
 
 ### 2. **依赖问题解决**
 
-- 添加了 `@igourd-core/form-ui` 依赖
-- 修复了 form-ui 包中的未使用导入问题
+- 添加了 `@igourd-core/form-ui` 依赖 (已移除)
+- 修复了 form-ui 包中的未使用导入问题 (已移除)
 - 确保了包的正确构建
 
 ### 3. **路由配置**

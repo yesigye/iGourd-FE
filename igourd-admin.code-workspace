@@ -77,8 +77,8 @@
       "path": "packages/@core/preferences",
     },
     {
-      "name": "@igourd-core/form-ui",
-      "path": "packages/@core/ui-kit/form-ui",
+              // "name": "@igourd-core/form-ui",
+        // "path": "packages/@core/ui-kit/form-ui",
     },
     {
       "name": "@igourd-core/layout-ui",

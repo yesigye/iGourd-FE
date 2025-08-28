@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import type { IgourdFormSchema } from '@igourd-core/form-ui';
+// import type { IgourdFormSchema } from '@igourd-core/form-ui';
 
 import { computed, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { $t } from '@igourd/locales';
 
-import { useIgourdForm } from '@igourd-core/form-ui';
+// import { useIgourdForm } from '@igourd-core/form-ui';
 import { IgourdButton } from '@igourd-core/shadcn-ui';
 
 import Title from './auth-title.vue';
 
 interface Props {
-  formSchema: IgourdFormSchema[];
+  formSchema: any[];
   /**
    * @zh_CN 是否处于加载处理状态
    */
@@ -51,16 +51,18 @@ const emit = defineEmits<{
   submit: [Record<string, any>];
 }>();
 
-const [Form, formApi] = useIgourdForm(
-  reactive({
-    commonConfig: {
-      hideLabel: true,
-      hideRequiredMark: true,
-    },
-    schema: computed(() => props.formSchema),
-    showDefaultActions: false,
-  }),
-);
+// const [Form, formApi] = useIgourdForm(
+//   reactive({
+//     commonConfig: {
+//       hideLabel: true,
+//       hideRequiredMark: true,
+//     },
+//     schema: computed(() => props.formSchema),
+//     showDefaultActions: false,
+//   }),
+// );
+const Form = null;
+const formApi = null;
 
 const router = useRouter();
 
@@ -93,7 +95,7 @@ defineExpose({
         </slot>
       </template>
     </Title>
-    <Form />
+    <!-- <Form /> -->
 
     <div>
       <IgourdButton

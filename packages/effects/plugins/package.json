@@ -28,7 +28,7 @@
     }
   },
   "dependencies": {
-    "@igourd-core/form-ui": "workspace:*",
+
     "@igourd-core/shadcn-ui": "workspace:*",
     "@igourd-core/shared": "workspace:*",
     "@igourd/hooks": "workspace:*",

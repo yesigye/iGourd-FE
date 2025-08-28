@@ -4,7 +4,8 @@ import type { Recordable } from '@igourd/types';
 
 import { computed, h, ref } from 'vue';
 
-import { AuthenticationRegister, z } from '@igourd/common-ui';
+import { AuthenticationRegister } from '@igourd/common-ui';
+// import { z } from '@igourd/common-ui';
 import { $t } from '@igourd/locales';
 
 defineOptions({ name: 'Register' });
@@ -20,7 +21,7 @@ const formSchema = computed((): IgourdFormSchema[] => {
       },
       fieldName: 'username',
       label: $t('authentication.username'),
-      rules: z.string().min(1, { message: $t('authentication.usernameTip') }),
+      // rules: z.string().min(1, { message: $t('authentication.usernameTip') }),
     },
     {
       component: 'IgourdInputPassword',
@@ -35,25 +36,25 @@ const formSchema = computed((): IgourdFormSchema[] => {
           strengthText: () => $t('authentication.passwordStrength'),
         };
       },
-      rules: z.string().min(1, { message: $t('authentication.passwordTip') }),
+      // rules: z.string().min(1, { message: $t('authentication.passwordTip') }),
     },
     {
       component: 'IgourdInputPassword',
       componentProps: {
         placeholder: $t('authentication.confirmPassword'),
       },
-      dependencies: {
-        rules(values) {
-          const { password } = values;
-          return z
-            .string({ required_error: $t('authentication.passwordTip') })
-            .min(1, { message: $t('authentication.passwordTip') })
-            .refine((value) => value === password, {
-              message: $t('authentication.confirmPasswordTip'),
-            });
-        },
-        triggerFields: ['password'],
-      },
+              // dependencies: {
+        //   rules(values) {
+        //     const { password } = values;
+        //     return z
+        //       .string({ required_error: $t('authentication.passwordTip') })
+        //       .min(1, { message: $t('authentication.passwordTip') })
+        //       .refine((value) => value === password, {
+        //         message: $t('authentication.confirmPasswordTip'),
+        //       });
+        //   },
+        //   triggerFields: ['password'],
+        // },
       fieldName: 'confirmPassword',
       label: $t('authentication.confirmPassword'),
     },
@@ -74,9 +75,9 @@ const formSchema = computed((): IgourdFormSchema[] => {
             ),
           ]),
       }),
-      rules: z.boolean().refine((value) => !!value, {
-        message: $t('authentication.agreeTip'),
-      }),
+      // rules: z.boolean().refine((value) => !!value, {
+      //   message: $t('authentication.agreeTip'),
+      // }),
     },
   ];
 });

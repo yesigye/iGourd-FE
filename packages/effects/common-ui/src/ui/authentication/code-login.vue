@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import type { Recordable } from '@igourd/types';
 
-import type { IgourdFormSchema } from '@igourd-core/form-ui';
+// import type { IgourdFormSchema } from '@igourd-core/form-ui';
 
 import { computed, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { $t } from '@igourd/locales';
 
-import { useIgourdForm } from '@igourd-core/form-ui';
+// import { useIgourdForm } from '@igourd-core/form-ui';
 import { IgourdButton } from '@igourd-core/shadcn-ui';
 
 import Title from './auth-title.vue';
 
 interface Props {
-  formSchema: IgourdFormSchema[];
+  formSchema: any[];
   /**
    * @zh_CN 是否处于加载处理状态
    */
@@ -55,16 +55,18 @@ const emit = defineEmits<{
 
 const router = useRouter();
 
-const [Form, formApi] = useIgourdForm(
-  reactive({
-    commonConfig: {
-      hideLabel: true,
-      hideRequiredMark: true,
-    },
-    schema: computed(() => props.formSchema),
-    showDefaultActions: false,
-  }),
-);
+// const [Form, formApi] = useIgourdForm(
+//   reactive({
+//     commonConfig: {
+//       hideLabel: true,
+//       hideRequiredMark: true,
+//     },
+//     schema: computed(() => props.formSchema),
+//     showDefaultActions: false,
+//   }),
+// );
+const Form = null;
+const formApi = null;
 
 async function handleSubmit() {
   const { valid } = await formApi.validate();
@@ -97,7 +99,7 @@ defineExpose({
         </span>
       </template>
     </Title>
-    <Form />
+    <!-- <Form /> -->
     <IgourdButton
       :class="{
         'cursor-wait': loading,

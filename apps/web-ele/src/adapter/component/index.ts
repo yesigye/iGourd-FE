@@ -133,15 +133,7 @@ const withDefaultPlaceholder = <T extends Component>(
         $t(`ui.placeholder.${type}`);
       // 透传组件暴露的方法
       const innerRef = ref();
-      expose(
-        new Proxy(
-          {},
-          {
-            get: (_target, key) => innerRef.value?.[key],
-            has: (_target, key) => key in (innerRef.value || {}),
-          },
-        ),
-      );
+      expose(innerRef);
       return () =>
         h(
           component,

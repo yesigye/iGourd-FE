@@ -3,13 +3,13 @@ import { Page, useIgourdModal } from '@igourd/common-ui';
 
 import { NButton, NCard, useMessage } from 'naive-ui';
 
-import { useIgourdForm } from '#/adapter/form';
+// import { useIgourdForm } from '#/adapter/form';
 import { getAllMenusApi } from '#/api';
 
 import modalDemo from './modal.vue';
 
 const message = useMessage();
-const [Form, formApi] = useIgourdForm({
+// const [Form, formApi] = useIgourdForm({
   commonConfig: {
     // 所有表单项
     componentProps: {
@@ -135,16 +135,16 @@ const [Form, formApi] = useIgourdForm({
     },
   ],
 });
-function setFormValues() {
-  formApi.setValues({
-    string: 'string',
-    number: 123,
-    radio: 'B',
-    radioButton: 'C',
-    checkbox: ['A', 'C'],
-    date: Date.now(),
-  });
-}
+// function setFormValues() {
+//   formApi.setValues({
+//     string: 'string',
+//     number: 123,
+//     radio: 'B',
+//     radioButton: 'C',
+//     checkbox: ['A', 'C'],
+//     date: Date.now(),
+//   });
+// }
 
 const [Modal, modalApi] = useIgourdModal({
   connectedComponent: modalDemo,
@@ -157,12 +157,12 @@ const [Modal, modalApi] = useIgourdModal({
   >
     <NCard title="基础表单">
       <template #header-extra>
-        <NButton type="primary" @click="setFormValues">设置表单值</NButton>
+        <NButton type="primary" @click="() => {}">设置表单值</NButton>
         <NButton type="primary" @click="modalApi.open()" class="ml-2">
           打开弹窗
         </NButton>
       </template>
-      <Form />
+      <!-- <Form /> -->
     </NCard>
     <Modal />
   </Page>

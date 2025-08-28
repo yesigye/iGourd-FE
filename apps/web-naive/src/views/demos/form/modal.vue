@@ -1,48 +1,48 @@
 <script lang="ts" setup>
 import { useIgourdModal } from '@igourd/common-ui';
 
-import { useIgourdForm } from '#/adapter/form';
+// import { useIgourdForm } from '#/adapter/form';
 
 defineOptions({
   name: 'FormModelDemo',
 });
 
-const [Form, formApi] = useIgourdForm({
-  schema: [
-    {
-      component: 'Input',
-      componentProps: {
-        placeholder: '请输入',
-      },
-      fieldName: 'field1',
-      label: '字段1',
-      rules: 'required',
-    },
-    {
-      component: 'Input',
-      componentProps: {
-        placeholder: '请输入',
-      },
-      fieldName: 'field2',
-      label: '字段2',
-      rules: 'required',
-    },
-    {
-      component: 'Select',
-      componentProps: {
-        options: [
-          { label: '选项1', value: '1' },
-          { label: '选项2', value: '2' },
-        ],
-        placeholder: '请输入',
-      },
-      fieldName: 'field3',
-      label: '字段3',
-      rules: 'required',
-    },
-  ],
-  showDefaultActions: false,
-});
+// const [Form, formApi] = useIgourdForm({
+//   schema: [
+//     {
+//       component: 'Input',
+//       componentProps: {
+//         placeholder: '请输入',
+//       },
+//       fieldName: 'field1',
+//       label: '字段1',
+//       rules: 'required',
+//     },
+//     {
+//       component: 'Input',
+//       componentProps: {
+//         placeholder: '请输入',
+//       },
+//       fieldName: 'field2',
+//       label: '字段2',
+//       rules: 'required',
+//     },
+//     {
+//       component: 'Select',
+//       componentProps: {
+//         options: [
+//           { label: '选项1', value: '1' },
+//           { label: '选项2', value: '2' },
+//         ],
+//         placeholder: '请输入',
+//       },
+//       fieldName: 'field3',
+//       label: '字段3',
+//       rules: 'required',
+//     },
+//   ],
+//   showDefaultActions: false,
+// });
 
 const [Modal, modalApi] = useIgourdModal({
   fullscreenButton: false,
@@ -50,14 +50,14 @@ const [Modal, modalApi] = useIgourdModal({
     modalApi.close();
   },
   onConfirm: async () => {
-    await formApi.validateAndSubmitForm();
+    // await formApi.validateAndSubmitForm();
     // modalApi.close();
   },
   onOpenChange(isOpen: boolean) {
     if (isOpen) {
       const { values } = modalApi.getData<Record<string, any>>();
       if (values) {
-        formApi.setValues(values);
+        // formApi.setValues(values);
       }
     }
   },
@@ -66,6 +66,6 @@ const [Modal, modalApi] = useIgourdModal({
 </script>
 <template>
   <Modal>
-    <Form />
+    <!-- <Form /> -->
   </Modal>
 </template>

@@ -9,7 +9,7 @@ export * from './loading';
 export * from './page';
 export * from './resize';
 export * from './tippy';
-export * from '@igourd-core/form-ui';
+// export * from '@igourd-core/form-ui';
 export * from '@igourd-core/popup-ui';
 
 // 给文档用

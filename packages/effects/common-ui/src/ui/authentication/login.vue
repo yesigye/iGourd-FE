@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Recordable } from '@igourd/types';
 
-import type { IgourdFormSchema } from '@igourd-core/form-ui';
+// import type { IgourdFormSchema } from '@igourd-core/form-ui';
 
 import type { AuthenticationProps } from './types';
 
@@ -10,14 +10,14 @@ import { useRouter } from 'vue-router';
 
 import { $t } from '@igourd/locales';
 
-import { useIgourdForm } from '@igourd-core/form-ui';
+// import { useIgourdForm } from '@igourd-core/form-ui';
 import { IgourdButton, IgourdCheckbox } from '@igourd-core/shadcn-ui';
 
 import Title from './auth-title.vue';
 import ThirdPartyLogin from './third-party-login.vue';
 
 interface Props extends AuthenticationProps {
-  formSchema?: IgourdFormSchema[];
+  formSchema?: any[];
 }
 
 defineOptions({
@@ -46,16 +46,18 @@ const emit = defineEmits<{
   submit: [Recordable<any>];
 }>();
 
-const [Form, formApi] = useIgourdForm(
-  reactive({
-    commonConfig: {
-      hideLabel: true,
-      hideRequiredMark: true,
-    },
-    schema: computed(() => props.formSchema),
-    showDefaultActions: false,
-  }),
-);
+// const [Form, formApi] = useIgourdForm(
+//   reactive({
+//     commonConfig: {
+//       hideLabel: true,
+//       hideRequiredMark: true,
+//     },
+//     schema: computed(() => props.formSchema),
+//     showDefaultActions: false,
+//   }),
+// );
+const Form = null;
+const formApi = null;
 const router = useRouter();
 
 const REMEMBER_ME_KEY = `REMEMBER_ME_USERNAME_${location.hostname}`;
@@ -108,7 +110,7 @@ defineExpose({
       </Title>
     </slot>
 
-    <Form />
+    <!-- <Form /> -->
 
     <div
       v-if="showRememberMe || showForgetPassword"
