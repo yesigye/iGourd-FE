@@ -5,7 +5,11 @@ import type {
 
 import type { ComponentType } from './component';
 
-import { setupIgourdForm, useIgourdForm as useForm, z } from '@igourd/common-ui';
+import {
+  setupIgourdForm,
+  useIgourdForm as useForm,
+  z,
+} from '@igourd/common-ui';
 import { $t } from '@igourd/locales';
 
 async function initSetupIgourdForm() {

@@ -20,6 +20,7 @@
     "api": "Api",
     "merge": "Merge Form",
     "scrollToError": "Scroll to Error Field",
+    "formilyUsage": "Formily Form",
     "upload-error": "Partial file upload failed",
     "upload-urls": "Urls after file upload",
     "file": "file",

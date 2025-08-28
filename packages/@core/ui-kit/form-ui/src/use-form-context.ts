@@ -7,7 +7,11 @@ import type { ExtendedFormApi, FormActions, IgourdFormProps } from './types';
 import { computed, unref, useSlots } from 'vue';
 
 import { createContext } from '@igourd-core/shadcn-ui';
-import { isString, mergeWithArrayOverride, set } from '@igourd-core/shared/utils';
+import {
+  isString,
+  mergeWithArrayOverride,
+  set,
+} from '@igourd-core/shared/utils';
 
 import { useForm } from 'vee-validate';
 import { object, ZodIntersection, ZodNumber, ZodObject, ZodString } from 'zod';

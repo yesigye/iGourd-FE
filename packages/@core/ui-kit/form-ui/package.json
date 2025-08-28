@@ -37,6 +37,8 @@
     }
   },
   "dependencies": {
+    "@formily/core": "^2.3.0",
+    "@formily/vue": "^2.3.0",
     "@igourd-core/composables": "workspace:*",
     "@igourd-core/icons": "workspace:*",
     "@igourd-core/shadcn-ui": "workspace:*",

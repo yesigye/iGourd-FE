@@ -11,7 +11,7 @@ export default defineConfig(async () => {
             changeOrigin: true,
             rewrite: (path) => path.replace(/^\/api/, ''),
             // mock代理目标地址
-            target: 'https://test-api.seller100.com',
+            target: 'http://localhost:5320/api',
             ws: true,
             // 忽略SSL证书验证，解决证书过期问题
             configure: (proxy, _options) => {

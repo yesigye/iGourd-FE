@@ -94,6 +94,15 @@ const routes: RouteRecordRaw[] = [
               title: $t('examples.form.scrollToError'),
             },
           },
+          {
+            name: 'FormFormilyUsageExample',
+            path: '/examples/form/formily-usage',
+            component: () =>
+              import('#/views/examples/form/formily-usage.vue'),
+            meta: {
+              title: $t('examples.form.formilyUsage'),
+            },
+          },
         ],
       },
       {

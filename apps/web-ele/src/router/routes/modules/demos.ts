@@ -29,6 +29,14 @@ const routes: RouteRecordRaw[] = [
         path: '/demos/form',
         component: () => import('#/views/demos/form/basic.vue'),
       },
+      {
+        meta: {
+          title: $t('demos.formily'),
+        },
+        name: 'FormilyForm',
+        path: '/demos/formily',
+        component: () => import('#/views/demos/form/formily-usage.vue'),
+      },
     ],
   },
 ];

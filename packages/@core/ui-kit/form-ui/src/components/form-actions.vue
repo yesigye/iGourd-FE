@@ -52,6 +52,7 @@ async function handleSubmit(e: Event) {
 }
 
 async function handleReset(e: Event) {
+  console.log(e)
   e?.preventDefault();
   e?.stopPropagation();
   const props = unref(rootProps);
