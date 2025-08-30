@@ -6,7 +6,10 @@ import { Languages } from '@igourd/icons';
 import { loadLocaleMessages } from '@igourd/locales';
 import { preferences, updatePreferences } from '@igourd/preferences';
 
-import { IgourdDropdownRadioMenu, IgourdIconButton } from '@igourd-core/shadcn-ui';
+import {
+  IgourdDropdownRadioMenu,
+  IgourdIconButton,
+} from '@igourd-core/shadcn-ui';
 
 defineOptions({
   name: 'LanguageToggle',

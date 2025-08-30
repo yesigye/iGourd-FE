@@ -1,97 +1,57 @@
-<script lang="ts" setup>
-import type { IgourdFormSchema } from '@igourd/common-ui';
-import type { BasicOption } from '@igourd/types';
-
-import { computed, markRaw } from 'vue';
-
-import { AuthenticationLogin, SliderCaptcha, z } from '@igourd/common-ui';
-import { $t } from '@igourd/locales';
+<script lang="tsx" setup>
+import { AuthenticationLogin } from '@igourd/common-ui';
 
 import { useAuthStore } from '#/store';
 
-defineOptions({ name: 'Login' });
+import '@formily/element-plus/lib/select/style.js';
+import '@formily/element-plus/lib/input/style.js';
+import '@formily/element-plus/lib/password/style.js';
 
 const authStore = useAuthStore();
 
-const MOCK_USER_OPTIONS: BasicOption[] = [
-  {
-    label: 'Super',
-    value: 'igourd',
-  },
-  {
-    label: 'Admin',
-    value: 'admin',
-  },
-  {
-    label: 'User',
-    value: 'jack',
-  },
-];
-
-const formSchema = computed((): IgourdFormSchema[] => {
-  return [
-    {
-      component: 'IgourdSelect',
-      componentProps: {
-        options: MOCK_USER_OPTIONS,
-        placeholder: $t('authentication.selectAccount'),
+const schema = {
+  type: 'object',
+  properties: {
+    layout: {
+      type: 'void',
+      'x-component': 'FormLayout',
+      'x-component-props': {
+        layout: 'Horizontal',
+        className: '',
       },
-      fieldName: 'selectAccount',
-      label: $t('authentication.selectAccount'),
-      rules: z
-        .string()
-        .min(1, { message: $t('authentication.selectAccount') })
-        .optional()
-        .default('igourd'),
-    },
-    {
-      component: 'IgourdInput',
-      componentProps: {
-        placeholder: $t('authentication.usernameTip'),
-      },
-      dependencies: {
-        trigger(values, form) {
-          if (values.selectAccount) {
-            const findUser = MOCK_USER_OPTIONS.find(
-              (item) => item.value === values.selectAccount,
-            );
-            if (findUser) {
-              form.setValues({
-                password: '123456',
-                username: findUser.value,
-              });
-            }
-          }
+      properties: {
+        username: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-class': 'w-full',
+          title: "{{ t('authentication.username') }}",
+          'x-validator': [
+            {
+              required: true,
+            },
+          ],
         },
-        triggerFields: ['selectAccount'],
+        password: {
+          type: 'string',
+          required: true,
+          'x-decorator': 'FormItem',
+          'x-component': 'Password',
+          title: "{{ t('page.dashboard.title') }}",
+          'x-validator': [
+            {
+              required: true,
+            },
+          ],
+        },
       },
-      fieldName: 'username',
-      label: $t('authentication.username'),
-      rules: z.string().min(1, { message: $t('authentication.usernameTip') }),
     },
-    {
-      component: 'IgourdInputPassword',
-      componentProps: {
-        placeholder: $t('authentication.password'),
-      },
-      fieldName: 'password',
-      label: $t('authentication.password'),
-      rules: z.string().min(1, { message: $t('authentication.passwordTip') }),
-    },
-    {
-      component: markRaw(SliderCaptcha),
-      fieldName: 'captcha',
-      rules: z.boolean().refine((value) => value, {
-        message: $t('authentication.verifyRequiredTip'),
-      }),
-    },
-  ];
-});
+  },
+};
 </script>
-
 <template>
   <AuthenticationLogin
-    :form-schema="formSchema"
+    :form-schema="schema as any"
     :loading="authStore.loginLoading"
     @submit="authStore.authLogin"
   />

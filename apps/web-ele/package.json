@@ -26,6 +26,9 @@
     "#/*": "./src/*"
   },
   "dependencies": {
+    "@formily/core": "^2.3.7",
+    "@formily/element-plus": "^1.1.0",
+    "@formily/vue": "^2.3.7",
     "@igourd/access": "workspace:*",
     "@igourd/common-ui": "workspace:*",
     "@igourd/constants": "workspace:*",
@@ -48,6 +51,7 @@
     "vue-router": "catalog:"
   },
   "devDependencies": {
-    "unplugin-element-plus": "catalog:"
+    "unplugin-element-plus": "catalog:",
+    "vite-plugin-imp": "^2.4.0"
   }
 }

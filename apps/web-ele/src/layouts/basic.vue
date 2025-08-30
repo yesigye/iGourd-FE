@@ -19,7 +19,7 @@ import { openWindow } from '@igourd/utils';
 
 import { $t } from '#/locales';
 import { useAuthStore } from '#/store';
-import LoginForm from '#/views/_core/authentication/login.vue';
+// import LoginForm from '#/views/_core/authentication/login.vue';
 
 const notifications = ref<NotificationItem[]>([
   {
@@ -63,7 +63,7 @@ const showDot = computed(() =>
 const menus = computed(() => [
   {
     handler: () => {
-              openWindow(IGOURD_DOC_URL, {
+      openWindow(IGOURD_DOC_URL, {
         target: '_blank',
       });
     },
@@ -72,7 +72,7 @@ const menus = computed(() => [
   },
   {
     handler: () => {
-              openWindow(IGOURD_GITHUB_URL, {
+      openWindow(IGOURD_GITHUB_URL, {
         target: '_blank',
       });
     },
@@ -81,7 +81,7 @@ const menus = computed(() => [
   },
   {
     handler: () => {
-              openWindow(`${IGOURD_GITHUB_URL}/issues`, {
+      openWindow(`${IGOURD_GITHUB_URL}/issues`, {
         target: '_blank',
       });
     },
@@ -147,7 +147,7 @@ watch(
         v-model:open="accessStore.loginExpired"
         :avatar
       >
-        <LoginForm />
+        <!-- <LoginForm /> -->
       </AuthenticationLoginExpiredModal>
     </template>
     <template #lock-screen>

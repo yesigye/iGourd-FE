@@ -2,7 +2,10 @@ import type { Language } from 'element-plus/es/locale';
 
 import type { App } from 'vue';
 
-import type { LocaleSetupOptions, SupportedLanguagesType } from '@igourd/locales';
+import type {
+  LocaleSetupOptions,
+  SupportedLanguagesType,
+} from '@igourd/locales';
 
 import { ref } from 'vue';
 

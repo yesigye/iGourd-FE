@@ -1,7 +1,7 @@
 /**
  * @zh_CN 登录页面 url 地址
  */
-export const LOGIN_PATH = '/auth/login';
+export const LOGIN_PATH = import.meta.env.VITE_APP_LOGIN_PATH;
 
 export interface LanguageOption {
   label: string;
@@ -18,7 +18,7 @@ export const SUPPORT_LANGUAGES: LanguageOption[] = [
   },
   {
     label: 'English',
-    value: 'zh-CN',
+    value: 'en-US',
   },
 ];
 
@@ -60,6 +60,9 @@ export const APP_CONFIG = {
   },
 } as const;
 
-export type AppKey = typeof APP_CONFIG.APP_KEYS[keyof typeof APP_CONFIG.APP_KEYS];
-export type AccountType = typeof APP_CONFIG.ACCOUNT_TYPES[keyof typeof APP_CONFIG.ACCOUNT_TYPES];
-export type OwnerType = typeof APP_CONFIG.OWNER_TYPES[keyof typeof APP_CONFIG.OWNER_TYPES];
+export type AppKey =
+  (typeof APP_CONFIG.APP_KEYS)[keyof typeof APP_CONFIG.APP_KEYS];
+export type AccountType =
+  (typeof APP_CONFIG.ACCOUNT_TYPES)[keyof typeof APP_CONFIG.ACCOUNT_TYPES];
+export type OwnerType =
+  (typeof APP_CONFIG.OWNER_TYPES)[keyof typeof APP_CONFIG.OWNER_TYPES];

@@ -1,0 +1,58 @@
+{
+  "name": "@igourd-core/form-ui",
+  "version": "5.5.9",
+  "type": "module",
+  "scripts": {
+    "build": "pnpm unbuild",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "development": "./src/index.ts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "default": "./dist/index.mjs"
+      }
+    }
+  },
+  "peerDependencies": {
+    "@formily/core": "^2.3.7",
+    "@formily/element-plus": "^1.1.0",
+    "@formily/vue": "^2.3.7",
+    "element-plus": "catalog:"
+  },
+  "dependencies": {
+    "@formily/element-plus": "^1.1.0",
+    "@igourd-core/composables": "workspace:*",
+    "@igourd-core/icons": "workspace:*",
+    "@igourd-core/shadcn-ui": "workspace:*",
+    "@igourd-core/shared": "workspace:*",
+    "@igourd-core/typings": "workspace:*",
+    "@vee-validate/zod": "catalog:",
+    "@vueuse/core": "catalog:",
+    "element-plus": "catalog:",
+    "vee-validate": "catalog:",
+    "vue": "catalog:",
+    "zod": "catalog:",
+    "zod-defaults": "catalog:"
+  },
+  "devDependencies": {
+    "@formily/core": "^2.3.7",
+    "@formily/element-plus": "^1.1.0",
+    "@formily/reactive": "^2.3.7",
+    "@formily/vue": "^2.3.7"
+  }
+}

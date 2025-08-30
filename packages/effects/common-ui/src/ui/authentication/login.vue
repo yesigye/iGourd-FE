@@ -2,23 +2,19 @@
 import type { Recordable } from '@igourd/types';
 
 // import type { IgourdFormSchema } from '@igourd-core/form-ui';
-
 import type { AuthenticationProps } from './types';
 
-import { computed, onMounted, reactive, ref } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { $t } from '@igourd/locales';
+import { useI18n } from '@igourd/locales';
 
+import { useIgourdForm } from '@igourd-core/form-ui';
 // import { useIgourdForm } from '@igourd-core/form-ui';
 import { IgourdButton, IgourdCheckbox } from '@igourd-core/shadcn-ui';
 
 import Title from './auth-title.vue';
 import ThirdPartyLogin from './third-party-login.vue';
-
-interface Props extends AuthenticationProps {
-  formSchema?: any[];
-}
 
 defineOptions({
   name: 'AuthenticationLogin',
@@ -46,6 +42,10 @@ const emit = defineEmits<{
   submit: [Recordable<any>];
 }>();
 
+interface Props extends AuthenticationProps {
+  formSchema?: any[];
+}
+
 // const [Form, formApi] = useIgourdForm(
 //   reactive({
 //     commonConfig: {
@@ -56,8 +56,14 @@ const emit = defineEmits<{
 //     showDefaultActions: false,
 //   }),
 // );
-const Form = null;
-const formApi = null;
+const { Form, formAPI } = useIgourdForm({
+  initialValues: {
+    username: '',
+    password: '',
+  },
+  useI18n,
+  schema: props.formSchema as any,
+});
 const router = useRouter();
 
 const REMEMBER_ME_KEY = `REMEMBER_ME_USERNAME_${location.hostname}`;
@@ -67,30 +73,19 @@ const localUsername = localStorage.getItem(REMEMBER_ME_KEY) || '';
 const rememberMe = ref(!!localUsername);
 
 async function handleSubmit() {
-  const { valid } = await formApi.validate();
-  const values = await formApi.getValues();
-  if (valid) {
-    localStorage.setItem(
-      REMEMBER_ME_KEY,
-      rememberMe.value ? values?.username : '',
-    );
-    emit('submit', values);
-  }
+  await formAPI.validate();
+  const values = formAPI.values;
+  localStorage.setItem(
+    REMEMBER_ME_KEY,
+    // @ts-ignore
+    rememberMe.value ? values?.username : '',
+  );
+  emit('submit', values);
 }
 
 function handleGo(path: string) {
   router.push(path);
 }
-
-onMounted(() => {
-  if (localUsername) {
-    formApi.setFieldValue('username', localUsername);
-  }
-});
-
-defineExpose({
-  getFormApi: () => formApi,
-});
 </script>
 
 <template>
@@ -110,7 +105,7 @@ defineExpose({
       </Title>
     </slot>
 
-    <!-- <Form /> -->
+    <Form />
 
     <div
       v-if="showRememberMe || showForgetPassword"

@@ -3,7 +3,7 @@ import type { Recordable, UserInfo } from '@igourd/types';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { LOGIN_PATH, APP_CONFIG } from '@igourd/constants';
+import { APP_CONFIG, LOGIN_PATH } from '@igourd/constants';
 import { preferences } from '@igourd/preferences';
 import { resetAllStores, useAccessStore, useUserStore } from '@igourd/stores';
 
@@ -40,7 +40,7 @@ export const useAuthStore = defineStore('auth', () => {
         login_account: params.username || params.login_account,
         password: params.password,
         type: APP_CONFIG.DEFAULT_APP.type,
-        ...params
+        ...params,
       };
 
       const loginResult = await loginApi(loginParams);
