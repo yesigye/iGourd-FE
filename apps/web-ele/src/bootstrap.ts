@@ -1,14 +1,13 @@
 import { createApp, watchEffect } from 'vue';
 
 import { registerAccessDirective } from '@igourd/access';
-import { registerLoadingDirective } from '@igourd/common-ui';
+import { ElLoading, registerLoadingDirective } from '@igourd/common-ui';
 import { preferences } from '@igourd/preferences';
 import { initStores } from '@igourd/stores';
 import '@igourd/styles';
 import '@igourd/styles/ele';
 
 import { useTitle } from '@vueuse/core';
-import { ElLoading } from 'element-plus';
 
 import { $t, setupI18n } from '#/locales';
 
@@ -16,8 +15,6 @@ import { initComponentAdapter } from './adapter/component';
 // import { initSetupIgourdForm } from './adapter/form';
 import App from './app.vue';
 import { router } from './router';
-
-// import 'element-plus/theme-chalk/src/base.scss';
 
 async function bootstrap(namespace: string) {
   // 初始化组件适配器

@@ -2,11 +2,13 @@ import type { VxeTableGridOptions } from '@igourd/plugins/vxe-table';
 
 import { h } from 'vue';
 
-import { setupIgourdVxeTable, useIgourdVxeGrid } from '@igourd/plugins/vxe-table';
+import { ElButton, ElImage } from '@igourd/common-ui';
+import {
+  setupIgourdVxeTable,
+  useIgourdVxeGrid,
+} from '@igourd/plugins/vxe-table';
 
-import { ElButton, ElImage } from 'element-plus';
-
-import { useIgourdForm } from './form';
+// import { useIgourdForm } from './form';
 
 setupIgourdVxeTable({
   configVxeTable: (vxeUI) => {
@@ -62,7 +64,7 @@ setupIgourdVxeTable({
     // 这里可以自行扩展 vxe-table 的全局配置，比如自定义格式化
     // vxeUI.formats.add
   },
-  useIgourdForm,
+  // useIgourdForm,
 });
 
 export { useIgourdVxeGrid };

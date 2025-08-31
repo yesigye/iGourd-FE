@@ -1,7 +1,6 @@
 <script lang="ts" setup>
+import { ElConfigProvider } from '@igourd/common-ui';
 import { useElementPlusDesignTokens } from '@igourd/hooks';
-
-import { ElConfigProvider } from 'element-plus';
 
 import { elementLocale } from '#/locales';
 

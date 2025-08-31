@@ -1,0 +1,11 @@
+// form-item/var.scss - Element Plus v2 兼容版本
+@use '../__builtins__/styles/common.scss' as *;
+
+// 如果全局（common.scss）已经定义了 $form-item-prefix，这里就不要重复定义；
+// 需要局部覆盖时，加 !default 避免重复赋值警告。
+$form-item-prefix: '#{$formily-prefix}-form-item' !default;
+
+// 如果需要覆盖全局变量，可以在这里重新定义
+// 例如：$--form-item-margin-bottom: 24px !default;
+
+// 注意：大部分变量已经在 common.scss 中定义，这里不需要重复定义

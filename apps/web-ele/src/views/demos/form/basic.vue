@@ -1,12 +1,7 @@
 <script lang="ts" setup>
-import { h } from 'vue';
-
-import { Page, useIgourdDrawer } from '@igourd/common-ui';
-
-import { ElButton, ElCard, ElCheckbox, ElMessage } from 'element-plus';
+import { ElButton, ElCard, Page, useIgourdDrawer } from '@igourd/common-ui';
 
 // import { useIgourdForm } from '#/adapter/form';
-import { getAllMenusApi } from '#/api';
 
 // const [Form, formApi] = useIgourdForm({
 //   commonConfig: {

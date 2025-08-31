@@ -1,0 +1,170 @@
+@use '../__builtins__/styles/common.scss' as *;
+
+.#{$formily-prefix}-input {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  font-size: var(--el-font-size-base);
+  line-height: var(--el-input-height, 32px);
+  color: var(--el-text-color-regular);
+  background-color: var(--el-input-bg-color, var(--el-color-white));
+  border: 1px solid var(--el-input-border-color, var(--el-border-color));
+  border-radius: var(--el-input-border-radius, var(--el-border-radius-base));
+  transition: var(--el-transition-all);
+  box-sizing: border-box;
+
+  &:hover {
+    border-color: var(--el-input-hover-border-color, var(--el-border-color-hover));
+  }
+
+  &:focus {
+    @include focus;
+  }
+
+  &__inner {
+    display: inline-block;
+    width: 100%;
+    height: var(--el-input-height, 32px);
+    line-height: var(--el-input-height, 32px);
+    padding: 0 var(--el-input-padding-horizontal, 11px);
+    font-size: var(--el-font-size-base);
+    color: var(--el-text-color-regular);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: var(--el-text-color-placeholder);
+    }
+
+    &:disabled {
+      background-color: var(--el-input-disabled-bg-color, var(--el-fill-color-light));
+      color: var(--el-text-color-placeholder);
+      cursor: not-allowed;
+    }
+  }
+
+  &__prefix,
+  &__suffix {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    color: var(--el-text-color-placeholder);
+    font-size: var(--el-font-size-base);
+    pointer-events: none;
+  }
+
+  &__prefix {
+    left: var(--el-input-padding-horizontal, 11px);
+  }
+
+  &__suffix {
+    right: var(--el-input-padding-horizontal, 11px);
+  }
+
+  &--large {
+    .#{$formily-prefix}-input__inner {
+      height: var(--el-input-height-large, 40px);
+      line-height: var(--el-input-height-large, 40px);
+      padding: 0 var(--el-input-padding-horizontal-large, 15px);
+      font-size: var(--el-font-size-medium);
+    }
+  }
+
+  &--small {
+    .#{$formily-prefix}-input__inner {
+      height: var(--el-input-height-small, 24px);
+      line-height: var(--el-input-height-small, 24px);
+      padding: 0 var(--el-input-padding-horizontal-small, 7px);
+      font-size: var(--el-font-size-small);
+    }
+  }
+
+  &--mini {
+    .#{$formily-prefix}-input__inner {
+      height: var(--el-input-height-mini, 20px);
+      line-height: var(--el-input-height-mini, 20px);
+      padding: 0 var(--el-input-padding-horizontal-mini, 5px);
+      font-size: var(--el-font-size-extra-small);
+    }
+  }
+
+  &--disabled {
+    background-color: var(--el-input-disabled-bg-color, var(--el-fill-color-light));
+    border-color: var(--el-input-disabled-border-color, var(--el-border-color-light));
+    color: var(--el-text-color-placeholder);
+    cursor: not-allowed;
+
+    .#{$formily-prefix}-input__inner {
+      background-color: transparent;
+      color: var(--el-text-color-placeholder);
+      cursor: not-allowed;
+    }
+  }
+
+  &--error {
+    border-color: var(--el-color-danger);
+
+    &:hover {
+      border-color: var(--el-color-danger);
+    }
+
+    &:focus {
+      border-color: var(--el-color-danger);
+      box-shadow: 0 0 0 2px var(--el-color-danger-light-9);
+    }
+  }
+
+  &--warning {
+    border-color: var(--el-color-warning);
+
+    &:hover {
+      border-color: var(--el-color-warning);
+    }
+
+    &:focus {
+      border-color: var(--el-color-warning);
+      box-shadow: 0 0 0 2px var(--el-color-warning-light-9);
+    }
+  }
+
+  &--success {
+    border-color: var(--el-color-success);
+
+    &:hover {
+      border-color: var(--el-color-success);
+    }
+
+    &:focus {
+      border-color: var(--el-color-success);
+      box-shadow: 0 0 0 2px var(--el-color-success-light-9);
+    }
+  }
+
+  &__count {
+    position: absolute;
+    right: var(--el-input-padding-horizontal, 11px);
+    bottom: 0;
+    font-size: var(--el-font-size-small);
+    color: var(--el-text-color-placeholder);
+    line-height: var(--el-input-height, 32px);
+  }
+
+  &__clear {
+    position: absolute;
+    right: var(--el-input-padding-horizontal, 11px);
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--el-text-color-placeholder);
+    font-size: var(--el-font-size-base);
+    transition: var(--el-transition-color);
+
+    &:hover {
+      color: var(--el-text-color-regular);
+    }
+  }
+}

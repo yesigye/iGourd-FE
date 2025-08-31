@@ -1,0 +1,90 @@
+// common.scss - Element Plus v2 兼容版本
+$formily-prefix: 'formily-element-plus' !default;
+$namespace: 'el' !default;
+
+// 如果别处需要派生变量，放这里，且在 use 之前不要引用它们
+$form-item-prefix: '#{$formily-prefix}-form-item' !default;
+
+// 引入 Element Plus v2 的变量系统
+@use 'element-plus/theme-chalk/src/common/var.scss' as *;
+
+// 兼容性变量 - 基于 Element Plus v2 的 CSS 变量
+$--color-primary: var(--el-color-primary) !default;
+$--color-success: var(--el-color-success) !default;
+$--color-warning: var(--el-color-warning) !default;
+$--color-danger: var(--el-color-danger) !default;
+$--color-info: var(--el-color-info) !default;
+
+$--text-color-primary: var(--el-text-color-primary) !default;
+$--text-color-regular: var(--el-text-color-regular) !default;
+$--text-color-secondary: var(--el-text-color-secondary) !default;
+$--text-color-placeholder: var(--el-text-color-placeholder) !default;
+
+// 为了向后兼容，添加别名
+$--color-text-primary: $--text-color-primary !default;
+$--color-text-regular: $--text-color-regular !default;
+$--color-text-secondary: $--text-color-secondary !default;
+$--color-text-placeholder: $--text-color-placeholder !default;
+
+$--border-color: var(--el-border-color) !default;
+$--border-color-light: var(--el-border-color-lighter) !default;
+$--border-color-hover: var(--el-border-color-hover) !default;
+$--border-width: var(--el-border-width, 1px) !default;
+$--border-width-base: var(--el-border-width, 1px) !default;
+$--border-base: 1px solid var(--el-border-color) !default;
+
+$--font-size-extra-small: var(--el-font-size-extra-small) !default;
+$--font-size-small: var(--el-font-size-small) !default;
+$--font-size-base: var(--el-font-size-base) !default;
+$--font-size-medium: var(--el-font-size-medium) !default;
+$--font-size-large: var(--el-font-size-large) !default;
+
+$--border-radius-base: var(--el-border-radius-base) !default;
+$--border-radius-small: var(--el-border-radius-small) !default;
+$--border-radius-round: var(--el-border-radius-round) !default;
+
+$--all-transition: var(--el-transition-all) !default;
+$--color-transition-base: var(--el-transition-color) !default;
+
+// mixins —— 使用 CSS 变量，避免 Sass 计算踩坑
+@mixin active {
+  border-color: var(--el-color-primary);
+  outline: 0;
+  border-right-width: var(--el-border-width, 1px) !important;
+}
+
+@mixin hover {
+  border-color: var(--el-border-color-hover);
+  outline: 0;
+  border-right-width: var(--el-border-width, 1px) !important;
+}
+
+@mixin focus {
+  border-color: var(--el-color-primary);
+  outline: 0;
+  box-shadow: 0 0 0 2px var(--el-color-primary-light-9);
+}
+
+// 响应式断点
+$--sm: 768px !default;
+$--md: 992px !default;
+$--lg: 1200px !default;
+$--xl: 1920px !default;
+
+// 阴影
+$--box-shadow-base: var(--el-box-shadow-base) !default;
+$--box-shadow-light: var(--el-box-shadow-light) !default;
+$--box-shadow-dark: var(--el-box-shadow-dark) !default;
+
+// Form-item 相关变量
+$--form-font-size: var(--el-font-size-base) !default;
+$--form-label-font-size: $--form-font-size !default;
+
+// 行高/间距
+$--form-item-large-line-height: 40px !default;
+$--form-item-medium-line-height: 32px !default;
+$--form-item-small-line-height: 24px !default;
+$--form-item-label-top-line-height: 40px !default;
+
+$--form-error-line-height: 22px !default;
+$--form-item-margin-bottom: $--form-error-line-height !default;

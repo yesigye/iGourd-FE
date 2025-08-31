@@ -3,11 +3,11 @@ import type { Recordable, UserInfo } from '@igourd/types';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+import { ElNotification } from '@igourd/common-ui';
 import { APP_CONFIG, LOGIN_PATH } from '@igourd/constants';
 import { preferences } from '@igourd/preferences';
 import { resetAllStores, useAccessStore, useUserStore } from '@igourd/stores';
 
-import { ElNotification } from 'element-plus';
 import { defineStore } from 'pinia';
 
 import { getAccessCodesApi, getUserInfoApi, loginApi, logoutApi } from '#/api';

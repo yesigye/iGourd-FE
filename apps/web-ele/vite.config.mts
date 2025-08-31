@@ -10,6 +10,16 @@ export default defineConfig(async () => {
         ElementPlus({
           format: 'esm',
         }),
+        // VitePluginImp({
+        //   libList: [
+        //     {
+        //       libName: '@igourd/common-ui',
+        //       style(name) {
+        //         return '@igourd/common-ui'
+        //       },
+        //     },
+        //   ],
+        // }),
       ],
       server: {
         proxy: {

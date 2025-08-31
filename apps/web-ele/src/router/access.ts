@@ -4,9 +4,8 @@ import type {
 } from '@igourd/types';
 
 import { generateAccessible } from '@igourd/access';
+import { ElMessage } from '@igourd/common-ui';
 import { preferences } from '@igourd/preferences';
-
-import { ElMessage } from 'element-plus';
 
 import { getAllMenusApi } from '#/api';
 import { BasicLayout, IFrameView } from '#/layouts';

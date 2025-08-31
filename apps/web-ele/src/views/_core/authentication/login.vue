@@ -3,10 +3,6 @@ import { AuthenticationLogin } from '@igourd/common-ui';
 
 import { useAuthStore } from '#/store';
 
-import '@formily/element-plus/lib/select/style.js';
-import '@formily/element-plus/lib/input/style.js';
-import '@formily/element-plus/lib/password/style.js';
-
 const authStore = useAuthStore();
 
 const schema = {

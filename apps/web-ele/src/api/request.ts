@@ -3,6 +3,7 @@
  */
 import type { RequestClientOptions } from '@igourd/request';
 
+import { ElMessage } from '@igourd/common-ui';
 import { useAppConfig } from '@igourd/hooks';
 import { preferences } from '@igourd/preferences';
 import {
@@ -12,8 +13,6 @@ import {
   RequestClient,
 } from '@igourd/request';
 import { useAccessStore } from '@igourd/stores';
-
-import { ElMessage } from 'element-plus';
 
 import { useAuthStore } from '#/store';
 

@@ -1,0 +1,72 @@
+@use '../__builtins__/styles/common.scss' as *;
+
+.#{$formily-prefix}-space {
+  display: inline-flex;
+  gap: var(--el-space-gutter, 8px);
+
+  &-vertical {
+    flex-direction: column;
+  }
+
+  &-align {
+    &-center {
+      align-items: center;
+    }
+    &-start {
+      align-items: flex-start;
+    }
+    &-end {
+      align-items: flex-end;
+    }
+    &-baseline {
+      align-items: baseline;
+    }
+    &-stretch {
+      align-items: stretch;
+    }
+  }
+
+  &-justify {
+    &-start {
+      justify-content: flex-start;
+    }
+    &-end {
+      justify-content: flex-end;
+    }
+    &-center {
+      justify-content: center;
+    }
+    &-between {
+      justify-content: space-between;
+    }
+    &-around {
+      justify-content: space-around;
+    }
+    &-evenly {
+      justify-content: space-evenly;
+    }
+  }
+
+  &-wrap {
+    flex-wrap: wrap;
+  }
+
+  &-fill {
+    width: 100%;
+  }
+
+  &-size {
+    &-mini {
+      gap: var(--el-space-gutter-mini, 4px);
+    }
+    &-small {
+      gap: var(--el-space-gutter-small, 8px);
+    }
+    &-medium {
+      gap: var(--el-space-gutter, 12px);
+    }
+    &-large {
+      gap: var(--el-space-gutter-large, 16px);
+    }
+  }
+}
