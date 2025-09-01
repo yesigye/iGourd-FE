@@ -1,6 +1,6 @@
 {
   "name": "@igourd-core/preferences",
-  "version": "5.5.9",
+  "version": "5.6.0",
   "type": "module",
   "scripts": {
     "#build": "pnpm unbuild",
@@ -33,7 +33,13 @@
       }
     }
   },
-  "dependencies": {
+  "peerDependencies": {
+    "@igourd-core/shared": "workspace:*",
+    "@igourd-core/typings": "workspace:*",
+    "@vueuse/core": "catalog:",
+    "vue": "catalog:"
+  },
+  "devDependencies": {
     "@igourd-core/shared": "workspace:*",
     "@igourd-core/typings": "workspace:*",
     "@vueuse/core": "catalog:",

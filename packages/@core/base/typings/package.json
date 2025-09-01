@@ -1,9 +1,10 @@
 {
   "name": "@igourd-core/typings",
-  "version": "5.5.9",
+  "version": "5.6.0",
   "type": "module",
   "scripts": {
-    "build": "pnpm unbuild"
+    "build": "pnpm unbuild",
+    "prepublish": "pnpm unbuild"
   },
   "files": [
     "dist"
@@ -31,7 +32,11 @@
       }
     }
   },
-  "dependencies": {
+  "peerDependencies": {
+    "vue": "catalog:",
+    "vue-router": "catalog:"
+  },
+  "devDependencies": {
     "vue": "catalog:",
     "vue-router": "catalog:"
   }

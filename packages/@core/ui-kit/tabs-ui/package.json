@@ -1,6 +1,6 @@
 {
   "name": "@igourd-core/tabs-ui",
-  "version": "5.5.9",
+  "version": "5.6.0",
   "type": "module",
   "scripts": {
     "build": "pnpm unbuild",

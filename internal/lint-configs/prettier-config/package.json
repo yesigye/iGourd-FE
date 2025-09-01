@@ -1,6 +1,6 @@
 {
   "name": "@igourd/prettier-config",
-  "version": "5.0.0",
+  "version": "5.6.0",
   "type": "module",
   "main": "./index.mjs",
   "module": "./index.mjs",
@@ -13,7 +13,11 @@
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
     "provenance": false
   },
-  "dependencies": {
+  "peerDependencies": {
+    "prettier": "catalog:",
+    "prettier-plugin-tailwindcss": "catalog:"
+  },
+  "devDependencies": {
     "prettier": "catalog:",
     "prettier-plugin-tailwindcss": "catalog:"
   }

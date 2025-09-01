@@ -1,6 +1,6 @@
 {
   "name": "@igourd/access",
-  "version": "5.5.9",
+  "version": "5.6.0",
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -15,7 +15,14 @@
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
     "provenance": false
   },
-  "dependencies": {
+  "peerDependencies": {
+    "@igourd/preferences": "workspace:*",
+    "@igourd/stores": "workspace:*",
+    "@igourd/types": "workspace:*",
+    "@igourd/utils": "workspace:*",
+    "vue": "catalog:"
+  },
+  "devDependencies": {
     "@igourd/preferences": "workspace:*",
     "@igourd/stores": "workspace:*",
     "@igourd/types": "workspace:*",

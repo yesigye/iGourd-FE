@@ -1,6 +1,6 @@
 {
   "name": "@igourd-core/shadcn-ui",
-  "version": "5.5.9",
+  "version": "5.6.0",
   "type": "module",
   "scripts": {
     "#build": "pnpm unbuild",
@@ -30,7 +30,8 @@
     "module": "./dist/index.mjs",
     "exports": {
       ".": {
-        "default": "./src/index.ts"
+        "default": "./dist/index.mjs",
+        "types": "./dist/index.d.ts"
       }
     }
   },

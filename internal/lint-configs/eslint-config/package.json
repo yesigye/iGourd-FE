@@ -1,6 +1,6 @@
 {
   "name": "@igourd/eslint-config",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "private": false,
   "type": "module",
   "scripts": {
@@ -24,7 +24,32 @@
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
     "provenance": false
   },
-  "dependencies": {
+  "peerDependencies": {
+    "@eslint/js": "catalog:",
+    "@types/eslint": "catalog:",
+    "@typescript-eslint/eslint-plugin": "catalog:",
+    "@typescript-eslint/parser": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-turbo": "catalog:",
+    "eslint-plugin-command": "catalog:",
+    "eslint-plugin-eslint-comments": "catalog:",
+    "eslint-plugin-import-x": "catalog:",
+    "eslint-plugin-jsdoc": "catalog:",
+    "eslint-plugin-jsonc": "catalog:",
+    "eslint-plugin-n": "catalog:",
+    "eslint-plugin-no-only-tests": "catalog:",
+    "eslint-plugin-perfectionist": "catalog:",
+    "eslint-plugin-prettier": "catalog:",
+    "eslint-plugin-regexp": "catalog:",
+    "eslint-plugin-unicorn": "catalog:",
+    "eslint-plugin-unused-imports": "catalog:",
+    "eslint-plugin-vitest": "catalog:",
+    "eslint-plugin-vue": "catalog:",
+    "globals": "catalog:",
+    "jsonc-eslint-parser": "catalog:",
+    "vue-eslint-parser": "catalog:"
+  },
+  "devDependencies": {
     "@eslint/js": "catalog:",
     "@types/eslint": "catalog:",
     "@typescript-eslint/eslint-plugin": "catalog:",

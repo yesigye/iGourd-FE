@@ -1,6 +1,6 @@
 {
   "name": "@igourd/tailwind-config",
-  "version": "5.5.9",
+  "version": "5.6.0",
   "type": "module",
   "scripts": {
     "stub": "pnpm unbuild --stub",
@@ -39,14 +39,28 @@
     "provenance": false
   },
   "peerDependencies": {
-    "tailwindcss": "^3.4.3"
-  },
-  "dependencies": {
     "@iconify/json": "catalog:",
     "@iconify/tailwind": "catalog:",
     "@manypkg/get-packages": "catalog:",
     "@tailwindcss/nesting": "catalog:",
     "@tailwindcss/typography": "catalog:",
+    "@types/postcss-import": "catalog:",
+    "autoprefixer": "catalog:",
+    "cssnano": "catalog:",
+    "postcss": "catalog:",
+    "postcss-antd-fixes": "catalog:",
+    "postcss-import": "catalog:",
+    "postcss-preset-env": "catalog:",
+    "tailwindcss": "^3.4.3",
+    "tailwindcss-animate": "catalog:"
+  },
+  "devDependencies": {
+    "@iconify/json": "catalog:",
+    "@iconify/tailwind": "catalog:",
+    "@manypkg/get-packages": "catalog:",
+    "@tailwindcss/nesting": "catalog:",
+    "@tailwindcss/typography": "catalog:",
+    "@types/postcss-import": "catalog:",
     "autoprefixer": "catalog:",
     "cssnano": "catalog:",
     "postcss": "catalog:",
@@ -55,8 +69,5 @@
     "postcss-preset-env": "catalog:",
     "tailwindcss": "catalog:",
     "tailwindcss-animate": "catalog:"
-  },
-  "devDependencies": {
-    "@types/postcss-import": "catalog:"
   }
 }

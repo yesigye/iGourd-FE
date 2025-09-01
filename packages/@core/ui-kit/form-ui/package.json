@@ -1,6 +1,6 @@
 {
   "name": "@igourd-core/form-ui",
-  "version": "5.5.9",
+  "version": "5.6.0",
   "type": "module",
   "scripts": {
     "build": "pnpm unbuild",
@@ -26,35 +26,31 @@
     "provenance": false,
     "exports": {
       ".": {
-        "default": "./dist/index.mjs"
+        "default": "./dist/index.mjs",
+        "types": "./dist/index.d.ts"
       }
     }
   },
   "peerDependencies": {
     "@formily/core": "^2.3.7",
-    "@formily/element-plus": "^1.1.0",
     "@formily/vue": "^2.3.7",
-    "element-plus": "catalog:"
-  },
-  "dependencies": {
-    "@formily/element-plus": "^1.1.0",
     "@igourd-core/composables": "workspace:*",
     "@igourd-core/icons": "workspace:*",
     "@igourd-core/shadcn-ui": "workspace:*",
     "@igourd-core/shared": "workspace:*",
     "@igourd-core/typings": "workspace:*",
-    "@vee-validate/zod": "catalog:",
-    "@vueuse/core": "catalog:",
     "element-plus": "catalog:",
-    "vee-validate": "catalog:",
-    "vue": "catalog:",
-    "zod": "catalog:",
-    "zod-defaults": "catalog:"
+    "vue": "catalog:"
   },
   "devDependencies": {
     "@formily/core": "^2.3.7",
-    "@formily/element-plus": "^1.1.0",
-    "@formily/reactive": "^2.3.7",
-    "@formily/vue": "^2.3.7"
+    "@formily/vue": "^2.3.7",
+    "@igourd-core/composables": "workspace:*",
+    "@igourd-core/icons": "workspace:*",
+    "@igourd-core/shadcn-ui": "workspace:*",
+    "@igourd-core/shared": "workspace:*",
+    "@igourd-core/typings": "workspace:*",
+    "element-plus": "catalog:",
+    "vue": "catalog:"
   }
 }

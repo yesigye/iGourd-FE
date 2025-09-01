@@ -1,6 +1,6 @@
 {
   "name": "@igourd/stores",
-  "version": "5.5.9",
+  "version": "5.6.0",
   "license": "UNLICENSED",
   "type": "module",
   "sideEffects": [
@@ -16,7 +16,17 @@
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
     "provenance": false
   },
-  "dependencies": {
+  "peerDependencies": {
+    "@igourd-core/preferences": "workspace:*",
+    "@igourd-core/shared": "workspace:*",
+    "@igourd-core/typings": "workspace:*",
+    "pinia": "catalog:",
+    "pinia-plugin-persistedstate": "catalog:",
+    "secure-ls": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:"
+  },
+  "devDependencies": {
     "@igourd-core/preferences": "workspace:*",
     "@igourd-core/shared": "workspace:*",
     "@igourd-core/typings": "workspace:*",

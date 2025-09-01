@@ -1,9 +1,10 @@
 {
   "name": "@igourd-core/shared",
-  "version": "5.5.9",
+  "version": "5.6.0",
   "type": "module",
   "scripts": {
     "build": "pnpm unbuild",
+    "prepublish": "pnpm unbuild",
     "stub": "pnpm unbuild --stub"
   },
   "files": [
@@ -72,9 +73,14 @@
       }
     }
   },
-  "dependencies": {
+  "peerDependencies": {
     "@ctrl/tinycolor": "catalog:",
     "@tanstack/vue-store": "catalog:",
+    "@types/lodash.clonedeep": "catalog:",
+    "@types/lodash.get": "catalog:",
+    "@types/lodash.isequal": "catalog:",
+    "@types/lodash.set": "catalog:",
+    "@types/nprogress": "catalog:",
     "@vue/shared": "catalog:",
     "clsx": "catalog:",
     "dayjs": "catalog:",
@@ -88,10 +94,23 @@
     "theme-colors": "catalog:"
   },
   "devDependencies": {
+    "@ctrl/tinycolor": "catalog:",
+    "@tanstack/vue-store": "catalog:",
     "@types/lodash.clonedeep": "catalog:",
     "@types/lodash.get": "catalog:",
     "@types/lodash.isequal": "catalog:",
     "@types/lodash.set": "catalog:",
-    "@types/nprogress": "catalog:"
+    "@types/nprogress": "catalog:",
+    "@vue/shared": "catalog:",
+    "clsx": "catalog:",
+    "dayjs": "catalog:",
+    "defu": "catalog:",
+    "lodash.clonedeep": "catalog:",
+    "lodash.get": "catalog:",
+    "lodash.isequal": "catalog:",
+    "lodash.set": "catalog:",
+    "nprogress": "catalog:",
+    "tailwind-merge": "catalog:",
+    "theme-colors": "catalog:"
   }
 }
