@@ -76,5 +76,6 @@ export {
   ElImage,
   ElLoading,
   ElMessage,
+  ElMessageBox,
   ElNotification,
 } from 'element-plus';

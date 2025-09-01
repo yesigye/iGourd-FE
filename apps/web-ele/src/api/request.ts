@@ -5,14 +5,16 @@ import type { RequestClientOptions } from '@igourd/request';
 
 import { ElMessage } from '@igourd/common-ui';
 import { useAppConfig } from '@igourd/hooks';
+import { i18n } from '@igourd/locales';
 import { preferences } from '@igourd/preferences';
 import {
   authenticateResponseInterceptor,
   defaultResponseInterceptor,
   errorMessageResponseInterceptor,
+  getSignatureSummary,
   RequestClient,
 } from '@igourd/request';
-import { useAccessStore } from '@igourd/stores';
+import { useAccessStore, useUserStore } from '@igourd/stores';
 
 import { useAuthStore } from '#/store';
 
@@ -26,12 +28,42 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
     baseURL,
   });
 
+  client.addRequestInterceptor({
+    fulfilled: async (config) => {
+      const { locale } = i18n.global;
+      const { tokenId, owner_id, owner_type } = useUserStore();
+      config.headers['X-cur_lang_client'] = locale.value || 'en';
+      config.headers['X-time_zone_client'] =
+        Intl.DateTimeFormat().resolvedOptions().timeZone;
+      config.headers['X-request_date_client'] = Date.now();
+      config.headers['X-app_key'] = 'MERCHANT_MANAGE_WEB_PC';
+      config.headers['X-token_id'] = tokenId;
+      config.headers['X-owner_id'] = owner_id;
+      config.headers['X-owner_type'] = owner_type;
+      return config;
+    },
+  });
+  client.addRequestInterceptor({
+    fulfilled: async (config) => {
+      config.headers['X-sign'] = getSignatureSummary(config, {
+        PRIVATE_KEY: import.meta.env.VITE_APP_PRIVATE_KEY,
+      });
+      return config;
+    },
+  });
+  // client.addRequestInterceptor({
+  //   fulfilled: async (config) => {
+  //     config.headers['X-time_zone_client'] = DateTime;
+  //   },
+  // });
+
   /**
    * 重新认证逻辑
    */
   async function doReAuthenticate() {
     console.warn('Access token or refresh token is invalid or expired. ');
     const accessStore = useAccessStore();
+
     const authStore = useAuthStore();
     accessStore.setAccessToken(null);
     if (
@@ -49,14 +81,17 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
    */
   async function doRefreshToken() {
     const accessStore = useAccessStore();
-    const resp = await refreshTokenApi();
-    const newToken = resp.data;
+    const useStore = useUserStore();
+    const { owner_id, owner_type, tokenId: token_id } = useStore;
+    const resp = await refreshTokenApi({ owner_id, owner_type, token_id });
+    const newToken = resp.jwt_token.token_id;
     accessStore.setAccessToken(newToken);
+    useStore.setTokenId(newToken);
     return newToken;
   }
 
   function formatToken(token: null | string) {
-    return token ? `Bearer ${token}` : null;
+    return token;
   }
 
   // 请求头处理
@@ -75,7 +110,7 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
     defaultResponseInterceptor({
       codeField: 'code',
       dataField: 'data',
-      successCode: 0,
+      successCode: 'SUCCESS',
     }),
   );
 

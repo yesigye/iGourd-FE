@@ -1,5 +1,6 @@
 import type { Router } from 'vue-router';
 
+import { useAccount } from '@igourd/access';
 import { LOGIN_PATH } from '@igourd/constants';
 import { preferences } from '@igourd/preferences';
 import { useAccessStore, useUserStore } from '@igourd/stores';
@@ -39,16 +40,19 @@ function setupCommonGuard(router: Router) {
     }
   });
 }
-
+// const { t } = useI18n();
 /**
  * 权限访问守卫配置
  * @param router
  */
 function setupAccessGuard(router: Router) {
   router.beforeEach(async (to, from) => {
+    const { redirectToLogin } = useAccount();
     const accessStore = useAccessStore();
     const userStore = useUserStore();
     const authStore = useAuthStore();
+    const { token_id, user_id, owner_id, owner_type, language, ...other } =
+      to.query;
 
     // 基本路由，这些路由不需要进入权限拦截
     if (coreRouteNames.includes(to.name as string)) {
@@ -61,9 +65,8 @@ function setupAccessGuard(router: Router) {
       }
       return true;
     }
-
     // accessToken 检查
-    if (!accessStore.accessToken) {
+    if (!accessStore.accessToken && !token_id) {
       // 明确声明忽略权限访问权限，则可以访问
       if (to.meta.ignoreAccess) {
         return true;
@@ -71,29 +74,23 @@ function setupAccessGuard(router: Router) {
 
       // 没有访问权限，跳转登录页面
       if (to.fullPath !== LOGIN_PATH) {
-        return {
-          path: LOGIN_PATH,
-          // 如不需要，直接删除 query
-          query:
-            to.fullPath === preferences.app.defaultHomePath
-              ? {}
-              : { redirect: encodeURIComponent(to.fullPath) },
-          // 携带当前跳转的页面，登录后重新跳转该页面
-          replace: true,
-        };
+        redirectToLogin();
       }
       return to;
     }
+    userStore.setTokenId(token_id as string);
+    userStore.setMerchantInfo({ owner_id, owner_type, user_id } as any);
+    // 生成路由表
+    // 当前登录用户拥有的角色标识列表
+    const userInfo = userStore.userInfo || (await authStore.fetchUserInfo());
+    const userRoles = userInfo.roles ?? [];
 
     // 是否已经生成过动态路由
     if (accessStore.isAccessChecked) {
       return true;
     }
-
-    // 生成路由表
-    // 当前登录用户拥有的角色标识列表
-    const userInfo = userStore.userInfo || (await authStore.fetchUserInfo());
-    const userRoles = userInfo.roles ?? [];
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
 
     // 生成菜单和路由
     const { accessibleMenus, accessibleRoutes } = await generateAccess({
@@ -102,7 +99,6 @@ function setupAccessGuard(router: Router) {
       // 则会在菜单中显示，但是访问会被重定向到403
       routes: accessRoutes,
     });
-
     // 保存菜单信息和路由信息
     accessStore.setAccessMenus(accessibleMenus);
     accessStore.setAccessRoutes(accessibleRoutes);

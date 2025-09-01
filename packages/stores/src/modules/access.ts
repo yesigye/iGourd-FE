@@ -5,7 +5,9 @@ import type { MenuRecordRaw } from '@igourd-core/typings';
 import { acceptHMRUpdate, defineStore } from 'pinia';
 
 type AccessToken = null | string;
-
+interface AnyObject {
+  [key: string]: any;
+}
 interface AccessState {
   /**
    * 权限码
@@ -23,6 +25,7 @@ interface AccessState {
    * 登录 accessToken
    */
   accessToken: AccessToken;
+  functionTrees?: AnyObject[];
   /**
    * 是否已经检查过权限
    */
@@ -76,11 +79,15 @@ export const useAccessStore = defineStore('core-access', {
     setAccessCodes(codes: string[]) {
       this.accessCodes = codes;
     },
+    setFunctionTrees(functionsTrees: AnyObject[]) {
+      this.functionTrees = functionsTrees;
+    },
     setAccessMenus(menus: MenuRecordRaw[]) {
       this.accessMenus = menus;
     },
     setAccessRoutes(routes: RouteRecordRaw[]) {
       this.accessRoutes = routes;
+      // this.setAccessMenus(transformMenu(routes));
     },
     setAccessToken(token: AccessToken) {
       this.accessToken = token;
@@ -102,6 +109,9 @@ export const useAccessStore = defineStore('core-access', {
   persist: {
     // 持久化
     pick: [
+      'functionTrees',
+      'accessRoutes',
+      'accessMenus',
       'accessToken',
       'refreshToken',
       'accessCodes',

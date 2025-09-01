@@ -4,7 +4,7 @@ export { default as AuthenticationColorToggle } from './color-toggle.vue';
 export * from './global-search';
 export { default as LanguageToggle } from './language-toggle.vue';
 export { default as AuthenticationLayoutToggle } from './layout-toggle.vue';
-export * from './lock-screen';
+// export * from './lock-screen';
 export * from './notification';
 export * from './preferences';
 export * from './theme-toggle';

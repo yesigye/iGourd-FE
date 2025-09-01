@@ -7,12 +7,7 @@ import { AuthenticationLoginExpiredModal } from '@igourd/common-ui';
 import { IGOURD_DOC_URL, IGOURD_GITHUB_URL } from '@igourd/constants';
 import { useWatermark } from '@igourd/hooks';
 import { BookOpenText, CircleHelp, MdiGithub } from '@igourd/icons';
-import {
-  BasicLayout,
-  LockScreen,
-  Notification,
-  UserDropdown,
-} from '@igourd/layouts';
+import { BasicLayout, Notification, UserDropdown } from '@igourd/layouts';
 import { preferences } from '@igourd/preferences';
 import { useAccessStore, useUserStore } from '@igourd/stores';
 import { openWindow } from '@igourd/utils';
@@ -149,9 +144,6 @@ watch(
       >
         <!-- <LoginForm /> -->
       </AuthenticationLoginExpiredModal>
-    </template>
-    <template #lock-screen>
-      <LockScreen :avatar @to-login="handleLogout" />
     </template>
   </BasicLayout>
 </template>

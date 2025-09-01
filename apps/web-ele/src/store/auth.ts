@@ -10,7 +10,7 @@ import { resetAllStores, useAccessStore, useUserStore } from '@igourd/stores';
 
 import { defineStore } from 'pinia';
 
-import { getAccessCodesApi, getUserInfoApi, loginApi, logoutApi } from '#/api';
+import { getAccessCodesApi, getUserInfoApi, loginApi } from '#/api';
 import { $t } from '#/locales';
 
 export const useAuthStore = defineStore('auth', () => {
@@ -46,9 +46,9 @@ export const useAuthStore = defineStore('auth', () => {
       const loginResult = await loginApi(loginParams);
 
       // 如果成功获取到登录结果
-      if (loginResult.jwt_token?.jwt_token) {
-        const accessToken = loginResult.jwt_token.jwt_token;
-
+      if (loginResult.jwt_token?.token_id) {
+        const accessToken = loginResult.jwt_token.token_id;
+        userStore.setTokenId(accessToken);
         // 将 accessToken 存储到 accessStore 中
         accessStore.setAccessToken(accessToken);
 
@@ -92,7 +92,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function logout(redirect: boolean = true) {
     try {
-      await logoutApi();
+      // await logoutApi();
     } catch {
       // 不做任何处理
     }
@@ -112,8 +112,23 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function fetchUserInfo() {
     let userInfo: null | UserInfo = null;
-    userInfo = await getUserInfoApi();
+    userInfo = await getUserInfoApi({
+      owner_id: userStore.owner_id,
+      owner_type: userStore.owner_type,
+    });
+    if (!userInfo) {
+      throw new TypeError('UserInfo is Null');
+    }
+
+    userStore.setTokenId(userInfo.jwt_token.token_id);
+    userStore.setUserModel(userInfo.useModel);
     userStore.setUserInfo(userInfo);
+    userStore.setCurrentLoginUserApp(userInfo.current_login_user_app);
+    userStore.setLoginAccount(userInfo.login_account || '');
+    userStore.setLoginType(userInfo.type || '');
+    // accessStore.set(userInfo.function_trees);
+    accessStore.setFunctionTrees(userInfo.function_trees);
+    accessStore.setAccessToken(userInfo.jwt_token.token_id);
     return userInfo;
   }
 

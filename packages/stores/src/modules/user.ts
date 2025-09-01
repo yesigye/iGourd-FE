@@ -6,18 +6,30 @@ interface BasicUserInfo {
    * 头像
    */
   avatar: string;
+  currentLoginUserApp?: unknown;
+  jwt_token: Record<string, any>;
+
+  loginAccount?: string;
+
   /**
    * 用户昵称
    */
   realName: string;
+
   /**
    * 用户角色
    */
   roles?: string[];
+
+  setLoginType?: string;
+
   /**
    * 用户id
    */
   userId: string;
+
+  userModel?: Record<string, any>;
+
   /**
    * 用户名
    */
@@ -25,10 +37,22 @@ interface BasicUserInfo {
 }
 
 interface AccessState {
+  currentLoginUserApp?: unknown;
+  jwt_token?: Record<string, any>;
+
+  login_account?: string;
+  login_type?: string;
+  owner_id: string;
+  owner_type: string;
+  tokenId: string;
+  user_id: string;
   /**
    * 用户信息
    */
   userInfo: BasicUserInfo | null;
+
+  userModel?: Record<string, any>;
+
   /**
    * 用户角色
    */
@@ -50,10 +74,36 @@ export const useUserStore = defineStore('core-user', {
     setUserRoles(roles: string[]) {
       this.userRoles = roles;
     },
+    setTokenId(tokenId: string) {
+      this.tokenId = tokenId;
+    },
+    setUserModel(useModel: Record<string, any>) {
+      this.userModel = useModel;
+    },
+    setMerchantInfo(
+      info: Pick<AccessState, 'owner_id' | 'owner_type' | 'user_id'>,
+    ) {
+      Object.assign(this, info);
+    },
+    setCurrentLoginUserApp(current_login_user_app: string) {
+      this.currentLoginUserApp = current_login_user_app;
+    },
+    setLoginAccount(login_account: string) {
+      this.login_account = login_account;
+    },
+    setLoginType(type: string) {
+      this.login_type = type;
+    },
+    logout() {},
   },
+  persist: true,
   state: (): AccessState => ({
     userInfo: null,
     userRoles: [],
+    tokenId: '',
+    owner_id: '',
+    owner_type: '',
+    user_id: '',
   }),
 });
 

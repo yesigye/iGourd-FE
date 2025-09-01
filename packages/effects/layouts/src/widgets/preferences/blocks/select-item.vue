@@ -6,12 +6,12 @@ import { useSlots } from 'vue';
 import { CircleHelp } from '@igourd/icons';
 
 import {
+  IgourdTooltip,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-  IgourdTooltip,
 } from '@igourd-core/shadcn-ui';
 
 defineOptions({

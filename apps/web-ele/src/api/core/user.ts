@@ -5,8 +5,11 @@ import { requestClient } from '#/api/request';
 /**
  * 获取用户信息
  */
-export async function getUserInfoApi() {
-  return requestClient.get<UserInfo>('/v1/passport/user/info');
+export async function getUserInfoApi(data: {
+  owner_id: string;
+  owner_type: string;
+}) {
+  return requestClient.post<UserInfo>(`/v1/passport/owner/selection`, data);
 }
 
 /**

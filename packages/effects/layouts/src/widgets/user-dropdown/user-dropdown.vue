@@ -28,7 +28,7 @@ import {
 
 import { useMagicKeys, whenever } from '@vueuse/core';
 
-import { LockScreenModal } from '../lock-screen';
+// import { LockScreenModal } from '../lock-screen';
 
 interface Props {
   /**
@@ -87,9 +87,9 @@ const emit = defineEmits<{ logout: [] }>();
 const { globalLockScreenShortcutKey, globalLogoutShortcutKey } =
   usePreferences();
 const accessStore = useAccessStore();
-const [LockModal, lockModalApi] = useIgourdModal({
-  connectedComponent: LockScreenModal,
-});
+// const [LockModal, lockModalApi] = useIgourdModal({
+//   connectedComponent: LockScreenModal,
+// });
 const [LogoutModal, logoutModalApi] = useIgourdModal({
   onConfirm() {
     handleSubmitLogout();
@@ -168,12 +168,12 @@ if (enableShortcutKey.value) {
 </script>
 
 <template>
-  <LockModal
+  <!-- <LockModal
     v-if="preferences.widget.lockScreen"
     :avatar="avatar"
     :text="text"
     @submit="handleSubmitLock"
-  />
+  /> -->
 
   <LogoutModal
     :cancel-text="$t('common.cancel')"

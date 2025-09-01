@@ -15,6 +15,16 @@ interface UserInfo extends BasicUserInfo {
    * accessToken
    */
   token: string;
+
+  jwt_token: Record<string, any>;
+
+  useModel: Record<string, any>;
+
+  current_login_user_app: string;
+  login_account?: string;
+  type?: string;
+  menu_trees: any;
+  function_trees: any;
 }
 
 export type { UserInfo };

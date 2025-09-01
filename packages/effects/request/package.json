@@ -23,6 +23,8 @@
     "@igourd/locales": "workspace:*",
     "@igourd/utils": "workspace:*",
     "axios": "catalog:",
+    "jsrsasign": "^11.1.0",
+    "md5": "^2.3.0",
     "qs": "catalog:"
   },
   "devDependencies": {

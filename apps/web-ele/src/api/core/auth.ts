@@ -6,7 +6,12 @@ export namespace AuthApi {
     app_key: string;
     login_account: string;
     password: string;
-    type: 'EMAIL' | 'LOGIN_ID' | 'PHONE_NUMBER' | 'WECHAT_OPENID' | 'WHATS_APP_OPENID';
+    type:
+      | 'EMAIL'
+      | 'LOGIN_ID'
+      | 'PHONE_NUMBER'
+      | 'WECHAT_OPENID'
+      | 'WHATS_APP_OPENID';
     country_area_code?: string;
     country_id?: number;
     owner_id?: number;
@@ -16,42 +21,43 @@ export namespace AuthApi {
   /** 登录接口返回值 */
   export interface LoginResult {
     jwt_token: {
+      expires_in: number;
       jwt_token: string;
       token_id: string;
       token_type: string;
-      expires_in: number;
     };
     user_model: {
-      id: number;
-      real_name: string;
-      login_id: string;
       email?: string;
+      id: number;
+      login_id: string;
       phone_number?: string;
+      real_name: string;
       status: string;
     };
     function_trees: Array<{
-      id: number;
-      name: string;
-      key: string;
       children?: any[];
+      id: number;
+      key: string;
+      name: string;
     }>;
     user_apps: Array<{
+      app_key: string;
       id: number;
       owner_id: number;
       owner_type: string;
-      app_key: string;
     }>;
     current_login_user_app: {
+      app_key: string;
       id: number;
       owner_id: number;
       owner_type: string;
-      app_key: string;
     };
   }
 
   export interface RefreshTokenResult {
-    data: string;
-    status: number;
+    jwt_token: {
+      token_id: string;
+    };
   }
 
   /** Token刷新请求参数 */
@@ -72,10 +78,14 @@ export async function loginApi(data: AuthApi.LoginParams) {
 /**
  * 刷新accessToken
  */
-export async function refreshTokenApi() {
-  return baseRequestClient.post<AuthApi.RefreshTokenResult>('/auth/refresh', {
-    withCredentials: true,
-  });
+export async function refreshTokenApi(data: any) {
+  return baseRequestClient.post<AuthApi.RefreshTokenResult>(
+    '/passport/token-id/refresh',
+    data,
+    {
+      withCredentials: true,
+    },
+  );
 }
 
 /**
@@ -95,6 +105,12 @@ export async function getAccessCodesApi() {
 /**
  * 选择Owner切换
  */
-export async function selectOwnerApi(data: { owner_id: number; owner_type: string }) {
-  return requestClient.post<AuthApi.LoginResult>('/v1/passport/owner/selection', data);
+export async function selectOwnerApi(data: {
+  owner_id: number;
+  owner_type: string;
+}) {
+  return requestClient.post<AuthApi.LoginResult>(
+    '/v1/passport/owner/selection',
+    data,
+  );
 }

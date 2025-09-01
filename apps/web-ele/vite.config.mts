@@ -25,11 +25,20 @@ export default defineConfig(async () => {
         proxy: {
           '/api': {
             changeOrigin: true,
+            secure: false,
             rewrite: (path) => path.replace(/^\/api/, ''),
             // mock代理目标地址
-            target: 'http://localhost:5320/api',
+            target: 'https://test-api.seller100.com',
             ws: true,
           },
+          // '/api/passport': {
+          //   changeOrigin: true,
+          //   secure: false,
+          //   rewrite: (path) => path.replace(/^\/api/, ''),
+          //   // mock代理目标地址
+          //   target: 'https://test-api.seller100.com',
+          //   ws: true,
+          // },
         },
       },
     },

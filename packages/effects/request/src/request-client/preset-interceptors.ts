@@ -74,7 +74,7 @@ export const authenticateResponseInterceptor = ({
       if (client.isRefreshing) {
         return new Promise((resolve) => {
           client.refreshTokenQueue.push((newToken: string) => {
-            config.headers.Authorization = formatToken(newToken);
+            config.headers['X-token_id'] = formatToken(newToken);
             resolve(client.request(config.url, { ...config }));
           });
         });

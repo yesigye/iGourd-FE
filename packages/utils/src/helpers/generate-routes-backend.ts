@@ -27,14 +27,63 @@ async function generateRoutesByBackend(
     for (const [key, value] of Object.entries(pageMap)) {
       normalizePageMap[normalizeViewPath(key)] = value;
     }
-
-    const routes = convertRoutes(menuRoutes, layoutMap, normalizePageMap);
-
+    const routeNodes = functionTreesToRouteNodes(menuRoutes);
+    const routes = convertRoutes(routeNodes, layoutMap, normalizePageMap);
     return routes;
   } catch (error) {
     console.error(error);
     throw error;
   }
+}
+
+function functionTreesToRouteNodes(
+  functionTrees: AnyObject[],
+): RouteRecordStringComponent[] {
+  const nodes: RouteRecordStringComponent[] = [];
+
+  functionTrees.forEach((tree) => {
+    const fn = tree.function;
+    if (!fn || !fn.menu) return;
+
+    const menu = fn.menu;
+    const menuUrl = menu.url || '';
+    const routeName = menuUrl.split('/').filter(Boolean).join('_') || 'Home';
+
+    const node: RouteRecordStringComponent = {
+      path: menuUrl,
+      name: routeName,
+      component: menu.component_paths || '', // 传 component_paths 给 convertRoutes
+      meta: {
+        hidden: menu.is_displayed === false,
+        entitle: menu.name,
+        title: menu.menu_key.replaceAll('.', '_'),
+        icon: menu.style_class,
+        affix: routeName.toLowerCase() === 'home',
+      },
+    };
+
+    if (tree.sub_function_trees && tree.sub_function_trees.length > 0) {
+      node.children = functionTreesToRouteNodes(tree.sub_function_trees);
+    } else if (!tree.sub_function_trees && menu.parent_id === '0') {
+      // 顶级无子节点也生成默认子路由
+      node.children = [
+        {
+          path: '',
+          name: `${routeName}_First`,
+          component: menu.component_paths || '',
+          meta: {
+            entitle: menu.name,
+            title: menu.menu_key.replaceAll('.', '_'),
+            icon: menu.style_class,
+          },
+        },
+      ];
+    }
+
+    nodes.push(node);
+  });
+
+  return nodes;
 }
 
 function convertRoutes(

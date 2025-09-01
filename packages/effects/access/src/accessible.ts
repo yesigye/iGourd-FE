@@ -23,16 +23,13 @@ async function generateAccessible(
   options: GenerateMenuAndRoutesOptions,
 ) {
   const { router } = options;
-
   options.routes = cloneDeep(options.routes);
   // 生成路由
   const accessibleRoutes = await generateRoutes(mode, options);
-
   const root = router.getRoutes().find((item) => item.path === '/');
 
   // 获取已有的路由名称列表
   const names = root?.children?.map((item) => item.name) ?? [];
-
   // 动态添加到router实例内
   accessibleRoutes.forEach((route) => {
     if (root && !route.meta?.noBasicLayout) {
@@ -101,7 +98,7 @@ async function generateRoutes(
         generateRoutesByFrontend(routes, roles || [], forbiddenComponent),
         generateRoutesByBackend(options),
       ]);
-
+      console.log(frontend_resultRoutes, backend_resultRoutes);
       resultRoutes = [...frontend_resultRoutes, ...backend_resultRoutes];
       break;
     }

@@ -1,19 +1,19 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type {
   ComponentRecordType,
   GenerateMenuAndRoutesOptions,
 } from '@igourd/types';
 
 import { generateAccessible } from '@igourd/access';
-import { ElMessage } from '@igourd/common-ui';
 import { preferences } from '@igourd/preferences';
+import { useAccessStore } from '@igourd/stores';
 
-import { getAllMenusApi } from '#/api';
 import { BasicLayout, IFrameView } from '#/layouts';
-import { $t } from '#/locales';
 
 const forbiddenComponent = () => import('#/views/_core/fallback/forbidden.vue');
 
 async function generateAccess(options: GenerateMenuAndRoutesOptions) {
+  const accessStore = useAccessStore();
   const pageMap: ComponentRecordType = import.meta.glob('../views/**/*.vue');
 
   const layoutMap: ComponentRecordType = {
@@ -23,12 +23,9 @@ async function generateAccess(options: GenerateMenuAndRoutesOptions) {
 
   return await generateAccessible(preferences.app.accessMode, {
     ...options,
-    fetchMenuListAsync: async () => {
-      ElMessage({
-        duration: 1500,
-        message: `${$t('common.loadingMenu')}...`,
-      });
-      return await getAllMenusApi();
+    // @ts-ignore
+    fetchMenuListAsync: () => {
+      return Promise.resolve(accessStore.functionTrees);
     },
     // 可以指定没有权限跳转403页面
     forbiddenComponent,
