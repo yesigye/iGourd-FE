@@ -1,14 +1,6 @@
 {
   "name": "@igourd-core/preferences",
   "version": "5.5.9",
-  "homepage": "https://github.com/igourdjs/vue-igourd-admin",
-  "bugs": "https://github.com/igourdjs/vue-igourd-admin/issues",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/igourdjs/vue-igourd-admin.git",
-    "directory": "packages/@core/preferences"
-  },
-  "license": "MIT",
   "type": "module",
   "scripts": {
     "#build": "pnpm unbuild"
@@ -20,12 +12,24 @@
   "sideEffects": [
     "**/*.css"
   ],
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
   "exports": {
     ".": {
       "types": "./src/index.ts",
       "development": "./src/index.ts",
       "default": "./src/index.ts",
       "#default": "./dist/index.mjs"
+    }
+  },
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
+    "provenance": false,
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
     }
   },
   "dependencies": {

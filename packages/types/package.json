@@ -12,6 +12,10 @@
       "types": "./global.d.ts"
     }
   },
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
+    "provenance": false
+  },
   "dependencies": {
     "@igourd-core/typings": "workspace:*",
     "vue": "catalog:",

@@ -24,7 +24,6 @@
   "scripts": {
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 turbo build",
     "build:analyze": "turbo build:analyze",
-    "build:antd": "pnpm run build --filter=@igourd/web-antd",
     "build:docker": "./scripts/deploy/build-local-docker-image.sh",
     "build:docs": "pnpm run build --filter=@igourd/docs",
     "build:ele": "pnpm run build --filter=@igourd/web-ele",
@@ -60,8 +59,6 @@
   "devDependencies": {
     "@changesets/changelog-github": "catalog:",
     "@changesets/cli": "catalog:",
-    "@playwright/test": "catalog:",
-    "@types/node": "catalog:",
     "@igourd/commitlint-config": "workspace:*",
     "@igourd/eslint-config": "workspace:*",
     "@igourd/prettier-config": "workspace:*",
@@ -71,6 +68,8 @@
     "@igourd/turbo-run": "workspace:*",
     "@igourd/vite-config": "workspace:*",
     "@igourd/vsh": "workspace:*",
+    "@playwright/test": "catalog:",
+    "@types/node": "catalog:",
     "@vitejs/plugin-vue": "catalog:",
     "@vitejs/plugin-vue-jsx": "catalog:",
     "@vue/test-utils": "catalog:",

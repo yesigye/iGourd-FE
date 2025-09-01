@@ -1,19 +1,8 @@
 {
   "name": "@igourd/commitlint-config",
   "version": "5.5.9",
-  "private": true,
-  "homepage": "https://github.com/igourdjs/vue-igourd-admin",
-  "bugs": "https://github.com/igourdjs/vue-igourd-admin/issues",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/igourdjs/vue-igourd-admin.git",
-    "directory": "internal/lint-configs/commitlint-config"
-  },
-  "license": "MIT",
+  "private": false,
   "type": "module",
-  "files": [
-    "dist"
-  ],
   "main": "./index.mjs",
   "module": "./index.mjs",
   "exports": {
@@ -21,6 +10,10 @@
       "import": "./index.mjs",
       "default": "./index.mjs"
     }
+  },
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
+    "provenance": false
   },
   "dependencies": {
     "@commitlint/cli": "catalog:",
