@@ -1,6 +1,6 @@
 {
   "name": "@igourd-core/preferences",
-  "version": "5.6.0",
+  "version": "5.6.0-beta.0",
   "type": "module",
   "scripts": {
     "#build": "pnpm unbuild",

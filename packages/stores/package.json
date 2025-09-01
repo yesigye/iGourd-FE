@@ -1,8 +1,12 @@
 {
   "name": "@igourd/stores",
-  "version": "5.6.0",
+  "version": "5.6.1-alpha",
   "license": "UNLICENSED",
   "type": "module",
+  "scripts": {
+    "build": "pnpm unbuild",
+    "prepublish": "pnpm unbuild"
+  },
   "sideEffects": [
     "**/*.css"
   ],
@@ -14,15 +18,19 @@
   },
   "publishConfig": {
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
-    "provenance": false
+    "provenance": false,
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    }
   },
   "peerDependencies": {
     "@igourd-core/preferences": "workspace:*",
     "@igourd-core/shared": "workspace:*",
     "@igourd-core/typings": "workspace:*",
     "pinia": "catalog:",
-    "pinia-plugin-persistedstate": "catalog:",
-    "secure-ls": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:"
   },
@@ -31,7 +39,6 @@
     "@igourd-core/shared": "workspace:*",
     "@igourd-core/typings": "workspace:*",
     "pinia": "catalog:",
-    "pinia-plugin-persistedstate": "catalog:",
     "secure-ls": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:"
