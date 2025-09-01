@@ -1,18 +1,10 @@
 {
   "name": "@igourd/vite-config",
   "version": "5.5.9",
-  "private": true,
-  "homepage": "https://github.com/igourdjs/vue-igourd-admin",
-  "bugs": "https://github.com/igourdjs/vue-igourd-admin/issues",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/igourdjs/vue-igourd-admin.git",
-    "directory": "internal/vite-config"
-  },
-  "license": "MIT",
   "type": "module",
   "scripts": {
-    "stub": "pnpm unbuild --stub"
+    "stub": "pnpm unbuild --stub",
+    "prepublish": "pnpm unbuild"
   },
   "files": [
     "dist"
@@ -26,27 +18,27 @@
       "default": "./dist/index.mjs"
     }
   },
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
+    "provenance": false
+  },
   "dependencies": {
+    "@igourd/node-utils": "workspace:*",
     "@intlify/unplugin-vue-i18n": "catalog:",
     "@jspm/generator": "catalog:",
+    "@pnpm/workspace.read-manifest": "catalog:",
+    "@types/archiver": "catalog:",
+    "@types/html-minifier-terser": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "@vitejs/plugin-vue-jsx": "catalog:",
     "archiver": "catalog:",
     "cheerio": "catalog:",
+    "dayjs": "catalog:",
+    "dotenv": "catalog:",
     "get-port": "catalog:",
     "html-minifier-terser": "catalog:",
     "nitropack": "catalog:",
     "resolve.exports": "catalog:",
-    "vite-plugin-pwa": "catalog:",
-    "vite-plugin-vue-devtools": "catalog:"
-  },
-  "devDependencies": {
-    "@pnpm/workspace.read-manifest": "catalog:",
-    "@types/archiver": "catalog:",
-    "@types/html-minifier-terser": "catalog:",
-    "@igourd/node-utils": "workspace:*",
-    "@vitejs/plugin-vue": "catalog:",
-    "@vitejs/plugin-vue-jsx": "catalog:",
-    "dayjs": "catalog:",
-    "dotenv": "catalog:",
     "rollup": "catalog:",
     "rollup-plugin-visualizer": "catalog:",
     "sass": "catalog:",
@@ -54,6 +46,8 @@
     "vite-plugin-compression": "catalog:",
     "vite-plugin-dts": "catalog:",
     "vite-plugin-html": "catalog:",
-    "vite-plugin-lazy-import": "catalog:"
+    "vite-plugin-lazy-import": "catalog:",
+    "vite-plugin-pwa": "catalog:",
+    "vite-plugin-vue-devtools": "catalog:"
   }
 }

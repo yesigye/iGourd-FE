@@ -1,18 +1,10 @@
 {
   "name": "@igourd/tailwind-config",
   "version": "5.5.9",
-  "private": true,
-  "homepage": "https://github.com/igourdjs/vue-igourd-admin",
-  "bugs": "https://github.com/igourdjs/vue-igourd-admin/issues",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/igourdjs/vue-igourd-admin.git",
-    "directory": "internal/tailwind-config"
-  },
-  "license": "MIT",
   "type": "module",
   "scripts": {
-    "stub": "pnpm unbuild --stub"
+    "stub": "pnpm unbuild --stub",
+    "prepublish": "pnpm unbuild"
   },
   "files": [
     "dist"
@@ -41,6 +33,10 @@
       "default": "./dist/postcss.config.mjs"
     },
     "./*": "./*"
+  },
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
+    "provenance": false
   },
   "peerDependencies": {
     "tailwindcss": "^3.4.3"
