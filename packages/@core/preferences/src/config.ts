@@ -20,7 +20,7 @@ const defaultPreferences: Preferences = {
     defaultHomePath: '/analytics',
     dynamicTitle: true,
     enableCheckUpdates: true,
-    enablePreferences: true,
+    enablePreferences: false,
     enableRefreshToken: false,
     isMobile: false,
     layout: 'sidebar-nav',
@@ -63,7 +63,8 @@ const defaultPreferences: Preferences = {
   logo: {
     enable: true,
     fit: 'contain',
-    source: 'https://unpkg.com/@igourdjs/static-source@0.1.7/source/logo-v1.webp',
+    source:
+      'https://unpkg.com/@igourdjs/static-source@0.1.7/source/logo-v1.webp',
   },
   navigation: {
     accordion: true,

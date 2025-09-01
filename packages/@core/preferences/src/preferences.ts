@@ -66,7 +66,7 @@ class PreferenceManager {
     // 初始化存储管理器
     this.cache = new StorageManager({ prefix: namespace });
     // 合并初始偏好设置
-    this.initialPreferences = merge({}, overrides, defaultPreferences);
+    this.initialPreferences = merge({}, defaultPreferences, overrides);
 
     // 加载并合并当前存储的偏好设置
     const mergedPreference = merge(
