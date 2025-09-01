@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "#build": "pnpm unbuild",
-    "#prepublishOnly": "npm run build"
+    "#prepublishOnly": "npm run build",
+    "prepublish": "pnpm unbuild"
   },
   "files": [
     "dist"
