@@ -88,7 +88,6 @@ const iconArrowStyle = computed(() => {
       :icon="icon"
       fallback
     />
-
     <div v-if="!hiddenTitle" :class="[e('title')]">
       <slot name="title"></slot>
     </div>

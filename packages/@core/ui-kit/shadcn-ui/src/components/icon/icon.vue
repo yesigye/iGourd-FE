@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { Component } from 'vue';
 
-import { computed } from 'vue';
+import { computed, onMounted, unref } from 'vue';
 
-import { IconDefault, IconifyIcon } from '@igourd-core/icons';
+import { IconFontIcon, IconDefault, IconifyIcon } from '@igourd-core/icons';
 import {
   isFunction,
   isHttpUrl,
@@ -21,6 +21,24 @@ const isRemoteIcon = computed(() => {
   return isString(props.icon) && isHttpUrl(props.icon);
 });
 
+const isIconFont = computed(() => {
+  if (unref(isRemoteIcon)) {
+    return false;
+  }
+  if (unref(isComponent)) {
+    return false;
+  }
+  if (isString(props.icon) && props.icon.includes('icon-icon_')) {
+    return true;
+  }
+  return false;
+});
+onMounted(() => {
+  if (props.icon) {
+    console.log(unref(props.icon), unref(isRemoteIcon), unref(isIconFont));
+  }
+});
+
 const isComponent = computed(() => {
   const { icon } = props;
   return !isString(icon) && (isObject(icon) || isFunction(icon));
@@ -30,6 +48,7 @@ const isComponent = computed(() => {
 <template>
   <component :is="icon as Component" v-if="isComponent" v-bind="$attrs" />
   <img v-else-if="isRemoteIcon" :src="icon as string" v-bind="$attrs" />
+  <IconFontIcon v-else-if="isIconFont" :icon="icon as string"></IconFontIcon>
   <IconifyIcon v-else-if="icon" v-bind="$attrs" :icon="icon as string" />
   <IconDefault v-else-if="fallback" v-bind="$attrs" />
 </template>

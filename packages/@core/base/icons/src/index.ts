@@ -1,5 +1,5 @@
 export * from './create-icon';
-
+export * from './icon-font';
 export * from './lucide';
 
 export type { IconifyIcon as IconifyIconStructure } from '@iconify/vue';

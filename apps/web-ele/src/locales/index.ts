@@ -12,13 +12,17 @@ import { ref } from 'vue';
 import {
   $t,
   setupI18n as coreSetup,
+  i18n,
   loadLocalesMapFromDir,
 } from '@igourd/locales';
 import { preferences } from '@igourd/preferences';
 
+// import { useAccessStore } from "@igourd/stores"
+
 import dayjs from 'dayjs';
 import enLocale from 'element-plus/es/locale/lang/en';
 import defaultLocale from 'element-plus/es/locale/lang/zh-cn';
+import { getLocaleApi } from '#/api';
 
 const elementLocale = ref<Language>(defaultLocale);
 
@@ -48,7 +52,28 @@ async function loadMessages(lang: SupportedLanguagesType) {
 async function loadThirdPartyMessage(lang: SupportedLanguagesType) {
   await Promise.all([loadElementLocale(lang), loadDayjsLocale(lang)]);
 }
+function resolveRemoteLocaleKey(key: string) {
+  const map = {
+    "zh_CN": "zh-CN",
+    "en": "en-US",
+    "fr": "fr"
+  }
+  //@ts-ignore
+  return map[key]
+}
+async function loadRemoteLocale(params: Record<string, any>) {
+  const data = await getLocaleApi(params)
+  console.log(i18n.global.locale.value)
+  Object.entries(data).forEach(([key, value]: [string, Record<string, Record<string, any>>]) => {
+    const messages = Object.values(value).reduce((pre, current) => {
+      return Object.assign(pre, current)
+    }, {} as Record<string, any>)
 
+    i18n.global.mergeLocaleMessage(resolveRemoteLocaleKey(key), messages)
+  })
+  console.log(i18n.global.getLocaleMessage(i18n.global.locale.value))
+  return data
+}
 /**
  * 加载dayjs的语言包
  * @param lang
@@ -102,4 +127,4 @@ async function setupI18n(app: App, options: LocaleSetupOptions = {}) {
   });
 }
 
-export { $t, elementLocale, setupI18n };
+export { $t, elementLocale, setupI18n, loadRemoteLocale };

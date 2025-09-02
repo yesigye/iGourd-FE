@@ -51,5 +51,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <EchartsUI ref="chartRef" />
+  <div class="bg-green w-full h-full"></div>
 </template>

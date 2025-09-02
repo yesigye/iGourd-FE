@@ -12,12 +12,6 @@ export async function getUserInfoApi(data: {
   return requestClient.post<UserInfo>(`/v1/passport/owner/selection`, data);
 }
 
-/**
- * 获取用户菜单权限
- */
-export async function getUserMenusApi() {
-  return requestClient.get('/v1/passport/menu/user/menus');
-}
 
 /**
  * 获取用户角色信息

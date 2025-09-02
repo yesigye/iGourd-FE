@@ -10,6 +10,7 @@ import { accessRoutes, coreRouteNames } from '#/router/routes';
 import { useAuthStore } from '#/store';
 
 import { generateAccess } from './access';
+import { loadRemoteLocale } from '#/locales';
 
 /**
  * 通用守卫配置
@@ -53,14 +54,14 @@ function setupAccessGuard(router: Router) {
     const authStore = useAuthStore();
     const { token_id, user_id, owner_id, owner_type, language, ...other } =
       to.query;
-
+    const loginAgain = !!token_id
     // 基本路由，这些路由不需要进入权限拦截
     if (coreRouteNames.includes(to.name as string)) {
       if (to.path === LOGIN_PATH && accessStore.accessToken) {
         return decodeURIComponent(
           (to.query?.redirect as string) ||
-            userStore.userInfo?.homePath ||
-            preferences.app.defaultHomePath,
+          userStore.userInfo?.homePath ||
+          preferences.app.defaultHomePath,
         );
       }
       return true;
@@ -78,13 +79,22 @@ function setupAccessGuard(router: Router) {
       }
       return to;
     }
-    userStore.setTokenId(token_id as string);
-    userStore.setMerchantInfo({ owner_id, owner_type, user_id } as any);
+    if (token_id) {
+      userStore.setTokenId(token_id as string);
+      userStore.setUserInfo({ current_login_user_app: { owner_id, owner_type, user_id }, jwt_token: { token_id } } as any)
+      userStore.setMerchantInfo({ owner_id, owner_type, user_id } as any);
+    }
+    if (loginAgain) {
+      await authStore.fetchUserInfo()
+    }
     // 生成路由表
     // 当前登录用户拥有的角色标识列表
-    const userInfo = userStore.userInfo || (await authStore.fetchUserInfo());
-    const userRoles = userInfo.roles ?? [];
+    if (!userStore.userInfo) {
+      await authStore.fetchUserInfo()
 
+    }
+    const userInfo = userStore.userInfo!
+    const userRoles = userInfo.roles ?? [];
     // 是否已经生成过动态路由
     if (accessStore.isAccessChecked) {
       return true;
@@ -103,6 +113,13 @@ function setupAccessGuard(router: Router) {
     accessStore.setAccessMenus(accessibleMenus);
     accessStore.setAccessRoutes(accessibleRoutes);
     accessStore.setIsAccessChecked(true);
+    const currentLoginUserApp = userStore.userInfo?.current_login_user_app as any
+    await loadRemoteLocale({
+      user_id: currentLoginUserApp.user_id,
+      owner_id: currentLoginUserApp.owner_id,
+      owner_type: currentLoginUserApp.owner_type,
+      app_key: import.meta.env.VITE_APP_APP_KEY,
+    })
     const redirectPath = (from.query.redirect ??
       (to.path === preferences.app.defaultHomePath
         ? userInfo.homePath || preferences.app.defaultHomePath

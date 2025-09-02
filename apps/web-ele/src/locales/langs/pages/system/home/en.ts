@@ -1,0 +1,16 @@
+export default {
+  salesAmount: 'Sales Report',
+  salesProductQuantity: 'Product Report',
+  shortcuts: 'Shortcuts',
+  myNews: 'My News',
+  markAllAsRead: 'Mark All as Read',
+  views: 'Views',
+  salesOrderQuantity: 'Sales Order Quantity',
+  stockAlert: 'Stock Alert',
+  stockTaking: 'Stock-taking',
+  purchaseOrder: 'Purchase Order',
+  goodsReceiptNote: 'Goods Receipt Note',
+  salesOrder: 'Sales Order',
+  dailySettlement: 'Daily Settlement',
+  stockTransfer: 'Stock Transfer',
+}

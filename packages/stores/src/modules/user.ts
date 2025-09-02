@@ -76,6 +76,9 @@ export const useUserStore = defineStore('core-user', {
     },
     setTokenId(tokenId: string) {
       this.tokenId = tokenId;
+      if (this.userInfo?.jwt_token) {
+        this.userInfo.jwt_token.token_id = tokenId;
+      }
     },
     setUserModel(useModel: Record<string, any>) {
       this.userModel = useModel;
@@ -96,7 +99,12 @@ export const useUserStore = defineStore('core-user', {
     },
     logout() {},
   },
-  persist: true,
+  persist: {
+    serializer: {
+      serialize: (state: any) => JSON.stringify(state),
+      deserialize: (str: string) => ({ ...JSON.parse(str) }),
+    },
+  },
   state: (): AccessState => ({
     userInfo: null,
     userRoles: [],

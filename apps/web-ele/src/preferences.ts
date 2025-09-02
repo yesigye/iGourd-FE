@@ -10,8 +10,10 @@ export const overridesPreferences = defineOverridesPreferences({
   app: {
     name: import.meta.env.VITE_APP_TITLE,
     accessMode: 'mixed',
-    enablePreferences: false,
+    enablePreferences: true,
+
   },
+
   breadcrumb: {
     showHome: true,
   },
@@ -28,6 +30,6 @@ export const overridesPreferences = defineOverridesPreferences({
     globalSearch: false,
     notification: false,
     sidebarToggle: false,
-    themeToggle: false,
+    themeToggle: true,
   },
 });

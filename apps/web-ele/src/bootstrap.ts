@@ -12,6 +12,7 @@ import { useTitle } from '@vueuse/core';
 import { $t, setupI18n } from '#/locales';
 
 import { initComponentAdapter } from './adapter/component';
+// import './assets/iconfont/iconfont.css';
 // import { initSetupIgourdForm } from './adapter/form';
 import App from './app.vue';
 import { router } from './router';

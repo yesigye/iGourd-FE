@@ -1,0 +1,16 @@
+export default {
+  salesAmount: 'Rapport de vente',
+  salesProductQuantity: 'Rapport de produit',
+  shortcuts: 'Raccourcis',
+  myNews: 'Mes nouvelles',
+  markAllAsRead: 'Tout marquer comme lu',
+  views: 'Vues',
+  salesOrderQuantity: 'Quantité de commandes',
+  stockAlert: 'Alerte de stock',
+  stockTaking: 'Inventaire',
+  purchaseOrder: 'Bon de commande',
+  goodsReceiptNote: 'Bon de réception',
+  salesOrder: 'Bon de commande client',
+  dailySettlement: 'Règlement quotidien',
+  stockTransfer: 'Transfert de stock',
+}

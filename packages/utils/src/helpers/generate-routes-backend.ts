@@ -55,8 +55,7 @@ function functionTreesToRouteNodes(
       component: menu.component_paths || '', // 传 component_paths 给 convertRoutes
       meta: {
         hidden: menu.is_displayed === false,
-        entitle: menu.name,
-        title: menu.menu_key.replaceAll('.', '_'),
+        title: menu.menu_key,
         icon: menu.style_class,
         affix: routeName.toLowerCase() === 'home',
       },
