@@ -1,6 +1,6 @@
 {
   "name": "@igourd/prettier-config",
-  "version": "5.6.0",
+  "version": "5.6.1-beta.0",
   "type": "module",
   "main": "./index.mjs",
   "module": "./index.mjs",

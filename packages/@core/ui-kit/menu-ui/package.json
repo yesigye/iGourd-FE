@@ -22,14 +22,14 @@
     }
   },
   "publishConfig": {
-    "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
-    "provenance": false,
     "exports": {
       ".": {
         "default": "./dist/index.mjs",
         "types": "./dist/index.d.ts"
       }
-    }
+    },
+    "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
+    "provenance": false
   },
   "peerDependencies": {
     "@igourd-core/composables": "workspace:^",

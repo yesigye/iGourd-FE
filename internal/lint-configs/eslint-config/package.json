@@ -1,6 +1,6 @@
 {
   "name": "@igourd/eslint-config",
-  "version": "6.0.0",
+  "version": "5.6.1-beta.0",
   "private": false,
   "type": "module",
   "scripts": {
