@@ -1,6 +1,6 @@
 {
   "name": "@igourd-core/preferences",
-  "version": "5.6.1-beta3",
+  "version": "5.6.1-beta.4",
   "type": "module",
   "private":"true",
   "scripts": {
