@@ -37,7 +37,7 @@ async function generateRoutesByBackend(
 }
 
 function functionTreesToRouteNodes(
-  functionTrees: AnyObject[],
+  functionTrees: Record<string,any>[],
 ): RouteRecordStringComponent[] {
   const nodes: RouteRecordStringComponent[] = [];
 
@@ -52,12 +52,12 @@ function functionTreesToRouteNodes(
     const node: RouteRecordStringComponent = {
       path: menuUrl,
       name: routeName,
-      component: menu.component_paths || '', // 传 component_paths 给 convertRoutes
+      component: menu.component_paths || `${menuUrl}/index.vue`, // 传 component_paths 给 convertRoutes
       meta: {
         hidden: menu.is_displayed === false,
         title: menu.menu_key,
         icon: menu.style_class,
-        affix: routeName.toLowerCase() === 'home',
+        affix: routeName.toLowerCase() === 'Home',
       },
     };
 
@@ -69,10 +69,10 @@ function functionTreesToRouteNodes(
         {
           path: '',
           name: `${routeName}_First`,
-          component: menu.component_paths || '',
+          component: menu.component_paths || `${menuUrl}/index.vue`,
           meta: {
             entitle: menu.name,
-            title: menu.menu_key.replaceAll('.', '_'),
+            title: menu.menu_key,
             icon: menu.style_class,
           },
         },

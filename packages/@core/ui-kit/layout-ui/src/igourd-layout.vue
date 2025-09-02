@@ -296,13 +296,15 @@ const tabbarStyle = computed((): CSSProperties => {
 const contentStyle = computed((): CSSProperties => {
   const fixed = headerFixed.value;
 
-  const { footerEnable, footerFixed, footerHeight } = props;
+  const { footerEnable, footerFixed, footerHeight, tabbarPostion } = props;
+  console.log('tabbarPostion', tabbarPostion);
   return {
     marginTop:
       fixed &&
       !isFullContent.value &&
       !headerIsHidden.value &&
-      (!isHeaderAutoMode.value || scrollY.value < headerWrapperHeight.value)
+      (!isHeaderAutoMode.value || scrollY.value < headerWrapperHeight.value) &&
+      tabbarPostion === 'default'
         ? `${headerWrapperHeight.value}px`
         : 0,
     paddingBottom: `${footerEnable && footerFixed ? footerHeight : 0}px`,
