@@ -59,6 +59,7 @@ const props = withDefaults(defineProps<Props>(), {
   sidebarWidth: 180,
   sideCollapseWidth: 60,
   tabbarEnable: true,
+  tabbarPostion: 'default',
   tabbarHeight: 40,
   zIndex: 200,
 });
@@ -566,7 +567,7 @@ const idMainContent = ELEMENT_ID_MAIN_CONTENT;
         </LayoutHeader>
 
         <LayoutTabbar
-          v-if="tabbarEnable"
+          v-if="tabbarEnable && tabbarPostion === 'default'"
           :height="tabbarHeight"
           :style="tabbarStyle"
         >

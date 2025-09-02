@@ -9,17 +9,21 @@ export const overridesPreferences = defineOverridesPreferences({
   // overrides
   app: {
     name: import.meta.env.VITE_APP_TITLE,
-    accessMode: 'mixed',
+    accessMode: 'backend',
     enablePreferences: true,
-
+    defaultHomePath: '/home',
   },
 
   breadcrumb: {
-    showHome: true,
+    enable: false,
   },
   sidebar: {
     collapsed: true,
     expandOnHover: false,
+    collapsedShowTitle: true,
+  },
+  tabbar: {
+    postion: 'breadcrumb',
   },
   theme: {
     builtinType: 'deep-green',
@@ -31,5 +35,11 @@ export const overridesPreferences = defineOverridesPreferences({
     notification: false,
     sidebarToggle: false,
     themeToggle: true,
+    refresh: false,
+  },
+  shortcutKeys: {
+    enable: false,
+    globalLogout: false,
+    globalSearch: false,
   },
 });

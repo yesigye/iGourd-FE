@@ -162,6 +162,11 @@ interface IgourdLayoutProps {
    */
   tabbarEnable?: boolean;
   /**
+   * 标签栏位置
+   * @default 'default'
+   */
+  tabbarPostion?: 'breadcrumb' | 'default';
+  /**
    * tab高度
    * @default 30
    */

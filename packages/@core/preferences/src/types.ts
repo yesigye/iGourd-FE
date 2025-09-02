@@ -192,6 +192,7 @@ interface ShortcutKeyPreferences {
 }
 
 interface TabbarPreferences {
+  postion: "breadcrumb" | "default";
   /** 是否开启多标签页拖拽 */
   draggable: boolean;
   /** 是否开启多标签页 */
