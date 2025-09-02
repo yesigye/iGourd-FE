@@ -1,6 +1,6 @@
 {
   "name": "@igourd/preferences",
-  "version": "5.6.0",
+  "version": "5.6.1-beta.0",
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -16,11 +16,11 @@
     "provenance": false
   },
   "peerDependencies": {
-    "@igourd-core/preferences": "workspace:*",
-    "@igourd-core/typings": "workspace:*"
+    "@igourd-core/preferences": "workspace:^",
+    "@igourd-core/typings": "workspace:^"
   },
   "devDependencies": {
-    "@igourd-core/preferences": "workspace:*",
-    "@igourd-core/typings": "workspace:*"
+    "@igourd-core/preferences": "workspace:^",
+    "@igourd-core/typings": "workspace:^"
   }
 }

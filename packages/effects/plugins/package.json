@@ -1,6 +1,6 @@
 {
   "name": "@igourd/plugins",
-  "version": "5.6.0",
+  "version": "5.6.1-beta.0",
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -24,14 +24,14 @@
     "provenance": false
   },
   "peerDependencies": {
-    "@igourd-core/shadcn-ui": "workspace:*",
-    "@igourd-core/shared": "workspace:*",
-    "@igourd/hooks": "workspace:*",
-    "@igourd/icons": "workspace:*",
-    "@igourd/locales": "workspace:*",
-    "@igourd/preferences": "workspace:*",
-    "@igourd/types": "workspace:*",
-    "@igourd/utils": "workspace:*",
+    "@igourd-core/shadcn-ui": "workspace:^",
+    "@igourd-core/shared": "workspace:^",
+    "@igourd/hooks": "workspace:^",
+    "@igourd/icons": "workspace:^",
+    "@igourd/locales": "workspace:^",
+    "@igourd/preferences": "workspace:^",
+    "@igourd/types": "workspace:^",
+    "@igourd/utils": "workspace:^",
     "@vueuse/core": "catalog:",
     "@vueuse/motion": "catalog:",
     "echarts": "catalog:",
@@ -40,14 +40,14 @@
     "vxe-table": "catalog:"
   },
   "devDependencies": {
-    "@igourd-core/shadcn-ui": "workspace:*",
-    "@igourd-core/shared": "workspace:*",
-    "@igourd/hooks": "workspace:*",
-    "@igourd/icons": "workspace:*",
-    "@igourd/locales": "workspace:*",
-    "@igourd/preferences": "workspace:*",
-    "@igourd/types": "workspace:*",
-    "@igourd/utils": "workspace:*",
+    "@igourd-core/shadcn-ui": "workspace:^",
+    "@igourd-core/shared": "workspace:^",
+    "@igourd/hooks": "workspace:^",
+    "@igourd/icons": "workspace:^",
+    "@igourd/locales": "workspace:^",
+    "@igourd/preferences": "workspace:^",
+    "@igourd/types": "workspace:^",
+    "@igourd/utils": "workspace:^",
     "@vueuse/core": "catalog:",
     "@vueuse/motion": "catalog:",
     "echarts": "catalog:",

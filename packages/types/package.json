@@ -1,6 +1,6 @@
 {
   "name": "@igourd/types",
-  "version": "5.6.0",
+  "version": "5.6.1-beta.0",
   "license": "UNLICENSED",
   "type": "module",
   "exports": {
@@ -17,12 +17,12 @@
     "provenance": false
   },
   "peerDependencies": {
-    "@igourd-core/typings": "workspace:*",
+    "@igourd-core/typings": "workspace:^",
     "vue": "catalog:",
     "vue-router": "catalog:"
   },
   "devDependencies": {
-    "@igourd-core/typings": "workspace:*",
+    "@igourd-core/typings": "workspace:^",
     "vue": "catalog:",
     "vue-router": "catalog:"
   }

@@ -1,6 +1,6 @@
 {
   "name": "@igourd/access",
-  "version": "5.6.0",
+  "version": "5.6.1-beta.0",
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -16,17 +16,17 @@
     "provenance": false
   },
   "peerDependencies": {
-    "@igourd/preferences": "workspace:*",
-    "@igourd/stores": "workspace:*",
-    "@igourd/types": "workspace:*",
-    "@igourd/utils": "workspace:*",
+    "@igourd/preferences": "workspace:^",
+    "@igourd/stores": "workspace:^",
+    "@igourd/types": "workspace:^",
+    "@igourd/utils": "workspace:^",
     "vue": "catalog:"
   },
   "devDependencies": {
-    "@igourd/preferences": "workspace:*",
-    "@igourd/stores": "workspace:*",
-    "@igourd/types": "workspace:*",
-    "@igourd/utils": "workspace:*",
+    "@igourd/preferences": "workspace:^",
+    "@igourd/stores": "workspace:^",
+    "@igourd/types": "workspace:^",
+    "@igourd/utils": "workspace:^",
     "vue": "catalog:"
   }
 }

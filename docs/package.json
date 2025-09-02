@@ -14,11 +14,11 @@
     }
   },
   "dependencies": {
-    "@igourd-core/shadcn-ui": "workspace:*",
-    "@igourd/common-ui": "workspace:*",
-    "@igourd/locales": "workspace:*",
-    "@igourd/plugins": "workspace:*",
-    "@igourd/styles": "workspace:*",
+    "@igourd-core/shadcn-ui": "workspace:^",
+    "@igourd/common-ui": "workspace:^",
+    "@igourd/locales": "workspace:^",
+    "@igourd/plugins": "workspace:^",
+    "@igourd/styles": "workspace:^",
     "ant-design-vue": "catalog:",
     "lucide-vue-next": "catalog:",
     "medium-zoom": "catalog:",
@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@nolebase/vitepress-plugin-git-changelog": "catalog:",
-    "@igourd/vite-config": "workspace:*",
+    "@igourd/vite-config": "workspace:^",
     "@vite-pwa/vitepress": "catalog:",
     "vitepress": "catalog:",
     "vue": "catalog:"

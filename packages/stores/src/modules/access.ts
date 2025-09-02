@@ -91,6 +91,7 @@ export const useAccessStore = defineStore('core-access', {
     },
     setAccessToken(token: AccessToken) {
       this.accessToken = token;
+
     },
     setIsAccessChecked(isAccessChecked: boolean) {
       this.isAccessChecked = isAccessChecked;

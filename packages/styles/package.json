@@ -1,6 +1,6 @@
 {
   "name": "@igourd/styles",
-  "version": "5.6.0",
+  "version": "5.6.1-beta.0",
   "license": "UNLICENSED",
   "type": "module",
   "exports": {
@@ -26,9 +26,9 @@
     "provenance": false
   },
   "peerDependencies": {
-    "@igourd-core/design": "workspace:*"
+    "@igourd-core/design": "workspace:^"
   },
   "devDependencies": {
-    "@igourd-core/design": "workspace:*"
+    "@igourd-core/design": "workspace:^"
   }
 }

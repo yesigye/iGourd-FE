@@ -1,6 +1,6 @@
 {
   "name": "@igourd/locales",
-  "version": "5.6.0",
+  "version": "5.6.1-beta.0",
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -16,13 +16,13 @@
     "provenance": false
   },
   "peerDependencies": {
-    "@igourd-core/composables": "workspace:*",
+    "@igourd-core/composables": "workspace:^",
     "@intlify/core-base": "catalog:",
     "vue": "catalog:",
     "vue-i18n": "catalog:"
   },
   "devDependencies": {
-    "@igourd-core/composables": "workspace:*",
+    "@igourd-core/composables": "workspace:^",
     "@intlify/core-base": "catalog:",
     "vue": "catalog:",
     "vue-i18n": "catalog:"

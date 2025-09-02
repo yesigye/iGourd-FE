@@ -1,6 +1,6 @@
 {
   "name": "@igourd/constants",
-  "version": "5.6.0",
+  "version": "5.6.1-beta.0",
   "license": "UNLICENSED",
   "type": "module",
   "sideEffects": [
@@ -17,9 +17,9 @@
     "provenance": false
   },
   "peerDependencies": {
-    "@igourd-core/shared": "workspace:*"
+    "@igourd-core/shared": "workspace:^"
   },
   "devDependencies": {
-    "@igourd-core/shared": "workspace:*"
+    "@igourd-core/shared": "workspace:^"
   }
 }

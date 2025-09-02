@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@clack/prompts": "catalog:",
-    "@igourd/node-utils": "workspace:*",
+    "@igourd/node-utils": "workspace:^",
     "cac": "catalog:"
   }
 }

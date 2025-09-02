@@ -1,6 +1,6 @@
 {
   "name": "@igourd/icons",
-  "version": "5.6.0",
+  "version": "5.6.1-beta.0",
   "license": "UNLICENSED",
   "type": "module",
   "exports": {
@@ -14,9 +14,9 @@
     "provenance": false
   },
   "peerDependencies": {
-    "@igourd-core/icons": "workspace:*"
+    "@igourd-core/icons": "workspace:^"
   },
   "devDependencies": {
-    "@igourd-core/icons": "workspace:*"
+    "@igourd-core/icons": "workspace:^"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@igourd-core/popup-ui",
-  "version": "5.6.0",
+  "version": "5.6.1-beta.0",
   "type": "module",
   "scripts": {
     "build": "pnpm unbuild",
@@ -32,11 +32,11 @@
     }
   },
   "dependencies": {
-    "@igourd-core/composables": "workspace:*",
-    "@igourd-core/icons": "workspace:*",
-    "@igourd-core/shadcn-ui": "workspace:*",
-    "@igourd-core/shared": "workspace:*",
-    "@igourd-core/typings": "workspace:*",
+    "@igourd-core/composables": "workspace:^",
+    "@igourd-core/icons": "workspace:^",
+    "@igourd-core/shadcn-ui": "workspace:^",
+    "@igourd-core/shared": "workspace:^",
+    "@igourd-core/typings": "workspace:^",
     "@vueuse/core": "catalog:",
     "vue": "catalog:"
   }

@@ -27,17 +27,17 @@
     }
   },
   "peerDependencies": {
-    "@igourd-core/preferences": "workspace:*",
-    "@igourd-core/shared": "workspace:*",
-    "@igourd-core/typings": "workspace:*",
+    "@igourd-core/preferences": "workspace:^",
+    "@igourd-core/shared": "workspace:^",
+    "@igourd-core/typings": "workspace:^",
     "pinia": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:"
   },
   "devDependencies": {
-    "@igourd-core/preferences": "workspace:*",
-    "@igourd-core/shared": "workspace:*",
-    "@igourd-core/typings": "workspace:*",
+    "@igourd-core/preferences": "workspace:^",
+    "@igourd-core/shared": "workspace:^",
+    "@igourd-core/typings": "workspace:^",
     "pinia": "catalog:",
     "secure-ls": "catalog:",
     "vue": "catalog:",

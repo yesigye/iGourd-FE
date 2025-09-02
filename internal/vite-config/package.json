@@ -23,7 +23,7 @@
     "provenance": false
   },
   "dependencies": {
-    "@igourd/node-utils": "workspace:*",
+    "@igourd/node-utils": "workspace:^",
     "@intlify/unplugin-vue-i18n": "catalog:",
     "@jspm/generator": "catalog:",
     "@pnpm/workspace.read-manifest": "catalog:",

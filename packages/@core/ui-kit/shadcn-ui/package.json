@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "#build": "pnpm unbuild",
+    "build": "pnpm unbuild",
     "#prepublishOnly": "npm run build",
     "prepublish": "pnpm unbuild"
   },
@@ -36,10 +37,10 @@
     }
   },
   "dependencies": {
-    "@igourd-core/composables": "workspace:*",
-    "@igourd-core/icons": "workspace:*",
-    "@igourd-core/shared": "workspace:*",
-    "@igourd-core/typings": "workspace:*",
+    "@igourd-core/composables": "workspace:^",
+    "@igourd-core/icons": "workspace:^",
+    "@igourd-core/shared": "workspace:^",
+    "@igourd-core/typings": "workspace:^",
     "@vueuse/core": "catalog:",
     "class-variance-authority": "catalog:",
     "lucide-vue-next": "catalog:",

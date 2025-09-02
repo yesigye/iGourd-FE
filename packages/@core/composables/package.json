@@ -1,6 +1,6 @@
 {
   "name": "@igourd-core/composables",
-  "version": "5.6.0",
+  "version": "5.6.1-beta.0",
   "type": "module",
   "scripts": {
     "build": "pnpm unbuild",
@@ -30,7 +30,7 @@
     }
   },
   "peerDependencies": {
-    "@igourd-core/shared": "workspace:*",
+    "@igourd-core/shared": "workspace:^",
     "@types/sortablejs": "catalog:",
     "@vueuse/core": "catalog:",
     "radix-vue": "catalog:",
@@ -38,7 +38,7 @@
     "vue": "catalog:"
   },
   "devDependencies": {
-    "@igourd-core/shared": "workspace:*",
+    "@igourd-core/shared": "workspace:^",
     "@types/sortablejs": "catalog:",
     "@vueuse/core": "catalog:",
     "radix-vue": "catalog:",
