@@ -1,6 +1,6 @@
 {
   "name": "@igourd-core/design",
-  "version": "5.6.1-beta.2",
+  "version": "5.6.1-beta3",
   "type": "module",
   "scripts": {
     "build": "pnpm vite build",
