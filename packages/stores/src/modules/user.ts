@@ -105,6 +105,13 @@ export const useUserStore = defineStore('core-user', {
       deserialize: (str: string) => ({ ...JSON.parse(str) }),
     },
   },
+  getters: {
+    currentLoginUserApp(state) {
+      if (state.userInfo?.current_login_user_app) {
+        return state.userInfo?.current_login_user_app;
+      }
+    },
+  },
   state: (): AccessState => ({
     userInfo: null,
     userRoles: [],

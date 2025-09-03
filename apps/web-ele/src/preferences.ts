@@ -35,6 +35,7 @@ export const overridesPreferences = defineOverridesPreferences({
     notification: false,
     sidebarToggle: false,
     themeToggle: true,
+    lockScreen: false,
     refresh: false,
   },
   shortcutKeys: {

@@ -1,105 +1,34 @@
 <script lang="ts" setup>
-import type { NotificationItem } from '@igourd/layouts';
+import { computed, watch } from 'vue';
 
-import { computed, ref, watch } from 'vue';
-
-import { AuthenticationLoginExpiredModal } from '@igourd/common-ui';
-import { IGOURD_DOC_URL, IGOURD_GITHUB_URL } from '@igourd/constants';
 import { useWatermark } from '@igourd/hooks';
-import { BookOpenText, CircleHelp, MdiGithub } from '@igourd/icons';
-import { BasicLayout, Notification, UserDropdown } from '@igourd/layouts';
+import { BasicLayout, UserDropdown } from '@igourd/layouts';
 import { preferences } from '@igourd/preferences';
-import { useAccessStore, useUserStore } from '@igourd/stores';
-import { openWindow } from '@igourd/utils';
+import { useUserStore } from '@igourd/stores';
 
-import { $t } from '#/locales';
 import { useAuthStore } from '#/store';
 // import LoginForm from '#/views/_core/authentication/login.vue';
 
-const notifications = ref<NotificationItem[]>([
-  {
-    avatar: 'https://avatar.vercel.sh/vercel.svg?text=VB',
-    date: '3小时前',
-    isRead: true,
-    message: '描述信息描述信息描述信息',
-    title: '收到了 14 份新周报',
-  },
-  {
-    avatar: 'https://avatar.vercel.sh/1',
-    date: '刚刚',
-    isRead: false,
-    message: '描述信息描述信息描述信息',
-    title: '朱偏右 回复了你',
-  },
-  {
-    avatar: 'https://avatar.vercel.sh/1',
-    date: '2024-01-01',
-    isRead: false,
-    message: '描述信息描述信息描述信息',
-    title: '曲丽丽 评论了你',
-  },
-  {
-    avatar: 'https://avatar.vercel.sh/satori',
-    date: '1天前',
-    isRead: false,
-    message: '描述信息描述信息描述信息',
-    title: '代办提醒',
-  },
-]);
-
 const userStore = useUserStore();
 const authStore = useAuthStore();
-const accessStore = useAccessStore();
 const { destroyWatermark, updateWatermark } = useWatermark();
-const showDot = computed(() =>
-  notifications.value.some((item) => !item.isRead),
-);
-
-const menus = computed(() => [
-  {
-    handler: () => {
-      openWindow(IGOURD_DOC_URL, {
-        target: '_blank',
-      });
-    },
-    icon: BookOpenText,
-    text: $t('ui.widgets.document'),
-  },
-  {
-    handler: () => {
-      openWindow(IGOURD_GITHUB_URL, {
-        target: '_blank',
-      });
-    },
-    icon: MdiGithub,
-    text: 'GitHub',
-  },
-  {
-    handler: () => {
-      openWindow(`${IGOURD_GITHUB_URL}/issues`, {
-        target: '_blank',
-      });
-    },
-    icon: CircleHelp,
-    text: $t('ui.widgets.qa'),
-  },
-]);
+const menus = computed(() => []);
 
 const avatar = computed(() => {
   return userStore.userInfo?.avatar ?? preferences.app.defaultAvatar;
 });
+const { currentLoginUserApp } = userStore;
 
 async function handleLogout() {
   await authStore.logout(false);
 }
-
-function handleNoticeClear() {
-  notifications.value = [];
-}
-
-function handleMakeAll() {
-  notifications.value.forEach((item) => (item.isRead = true));
-}
+const roleChar = computed(() => {
+  return currentLoginUserApp.roles
+    .map((item: any) => {
+      return item.name;
+    })
+    .join('/');
+});
 watch(
   () => preferences.app.watermark,
   async (enable) => {
@@ -123,27 +52,11 @@ watch(
       <UserDropdown
         :avatar
         :menus
-        :text="userStore.userInfo?.realName"
-        description="ann.igourd@gmail.com"
-        tag-text="Pro"
+        :text="userStore.userInfo?.login_account"
+        :description="roleChar"
+        :tag-text="currentLoginUserApp.owner_name"
         @logout="handleLogout"
       />
-    </template>
-    <template #notification>
-      <Notification
-        :dot="showDot"
-        :notifications="notifications"
-        @clear="handleNoticeClear"
-        @make-all="handleMakeAll"
-      />
-    </template>
-    <template #extra>
-      <AuthenticationLoginExpiredModal
-        v-model:open="accessStore.loginExpired"
-        :avatar
-      >
-        <!-- <LoginForm /> -->
-      </AuthenticationLoginExpiredModal>
     </template>
   </BasicLayout>
 </template>

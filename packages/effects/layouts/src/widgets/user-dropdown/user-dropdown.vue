@@ -6,10 +6,9 @@ import type { AnyFunction } from '@igourd/types';
 import { computed, useTemplateRef, watch } from 'vue';
 
 import { useHoverToggle } from '@igourd/hooks';
-import { LockKeyhole, LogOut } from '@igourd/icons';
+import { LogOut } from '@igourd/icons';
 import { $t } from '@igourd/locales';
 import { preferences, usePreferences } from '@igourd/preferences';
-import { useAccessStore } from '@igourd/stores';
 import { isWindowsOs } from '@igourd/utils';
 
 import { useIgourdModal } from '@igourd-core/popup-ui';
@@ -84,9 +83,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{ logout: [] }>();
 
-const { globalLockScreenShortcutKey, globalLogoutShortcutKey } =
-  usePreferences();
-const accessStore = useAccessStore();
+const { globalLogoutShortcutKey } = usePreferences();
 // const [LockModal, lockModalApi] = useIgourdModal({
 //   connectedComponent: LockScreenModal,
 // });
@@ -123,22 +120,9 @@ const enableLogoutShortcutKey = computed(() => {
   return props.enableShortcutKey && globalLogoutShortcutKey.value;
 });
 
-const enableLockScreenShortcutKey = computed(() => {
-  return props.enableShortcutKey && globalLockScreenShortcutKey.value;
-});
-
 const enableShortcutKey = computed(() => {
   return props.enableShortcutKey && preferences.shortcutKeys.enable;
 });
-
-function handleOpenLock() {
-  lockModalApi.open();
-}
-
-function handleSubmitLock(lockScreenPassword: string) {
-  lockModalApi.close();
-  accessStore.lockScreen(lockScreenPassword);
-}
 
 function handleLogout() {
   // emit
@@ -156,12 +140,6 @@ if (enableShortcutKey.value) {
   whenever(keys['Alt+KeyQ']!, () => {
     if (enableLogoutShortcutKey.value) {
       handleLogout();
-    }
-  });
-
-  whenever(keys['Alt+KeyL']!, () => {
-    if (enableLockScreenShortcutKey.value) {
-      handleOpenLock();
     }
   });
 }
@@ -234,17 +212,6 @@ if (enableShortcutKey.value) {
           {{ menu.text }}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          v-if="preferences.widget.lockScreen"
-          class="mx-1 flex cursor-pointer items-center rounded-sm py-1 leading-8"
-          @click="handleOpenLock"
-        >
-          <LockKeyhole class="mr-2 size-4" />
-          {{ $t('ui.widgets.lockScreen.title') }}
-          <DropdownMenuShortcut v-if="enableLockScreenShortcutKey">
-            {{ altView }} L
-          </DropdownMenuShortcut>
-        </DropdownMenuItem>
         <DropdownMenuSeparator v-if="preferences.widget.lockScreen" />
         <DropdownMenuItem
           class="mx-1 flex cursor-pointer items-center rounded-sm py-1 leading-8"
