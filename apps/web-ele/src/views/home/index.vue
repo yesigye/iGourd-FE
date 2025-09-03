@@ -2,6 +2,7 @@
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
 
 import { IgourdButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
 
 import { useIgourdVxeGrid } from '#/adapter/vxe-table';
 import { requestClient } from '#/api/request';
@@ -15,7 +16,7 @@ function getVendorPageListApi(data: any) {
 }
 
 // const [Drawer, drawerApi] = useIgourdDrawer();
-
+const { t } = useI18n();
 interface RowType {
   category: string;
   color: string;
@@ -45,7 +46,7 @@ const gridOptions: VxeGridProps<RowType> = {
     remote: true,
   },
   columns: [
-    { title: '序号', type: 'seq', width: 50 },
+    { title: t('common.search'), type: 'seq', width: 80 },
     { align: 'left', title: 'Name', type: 'checkbox', width: 100 },
     { field: 'category', title: 'Category' },
     {
@@ -80,8 +81,8 @@ const gridOptions: VxeGridProps<RowType> = {
 
   toolbarConfig: {
     custom: true,
-    export: true,
-    import: true,
+    export: false,
+    import: false,
     refresh: true,
     zoom: true,
   },
