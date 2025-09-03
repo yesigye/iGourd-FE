@@ -42,12 +42,11 @@ async function bootstrap(namespace: string) {
     loading: false, // Igourd提供的v-loading指令和Element Plus提供的v-loading指令二选一即可，此处false表示不注册Igourd提供的v-loading指令
     spinning: 'spinning',
   });
-
-  // 国际化 i18n 配置
-  await setupI18n(app);
-
+  // 先配置 Pinia，后续的请求语言依赖与 Pinia
   // 配置 pinia-tore
   await initStores(app, { namespace });
+  // 国际化 i18n 配置
+  await setupI18n(app);
 
   // 安装权限指令
   registerAccessDirective(app);

@@ -88,9 +88,6 @@ export const useUserStore = defineStore('core-user', {
     ) {
       Object.assign(this, info);
     },
-    setCurrentLoginUserApp(current_login_user_app: string) {
-      this.currentLoginUserApp = current_login_user_app;
-    },
     setLoginAccount(login_account: string) {
       this.login_account = login_account;
     },

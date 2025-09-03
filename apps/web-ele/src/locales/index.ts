@@ -14,10 +14,10 @@ import { ref } from 'vue';
 import {
   $t,
   setupI18n as coreSetup,
-  i18n,
   loadLocalesMapFromDir,
 } from '@igourd/locales';
 import { preferences } from '@igourd/preferences';
+import { useUserStore } from '@igourd/stores';
 
 // import { useAccessStore } from "@igourd/stores"
 import dayjs from 'dayjs';
@@ -45,7 +45,8 @@ async function loadMessages(lang: SupportedLanguagesType) {
     localesMap[lang]?.(),
     loadThirdPartyMessage(lang),
   ]);
-  return appLocaleMessages?.default;
+  const message = await loadRemoteLocale(lang);
+  return Object.assign(appLocaleMessages?.default || {}, message);
 }
 
 /**
@@ -57,28 +58,31 @@ async function loadThirdPartyMessage(lang: SupportedLanguagesType) {
 }
 function resolveRemoteLocaleKey(key: string) {
   const map = {
-    zh_CN: 'zh-CN',
-    en: 'en-US',
+    'zh-CN': 'zh_CN',
+    'en-US': 'en',
     fr: 'fr',
   };
   // @ts-ignore
   return map[key];
 }
-async function loadRemoteLocale(params: Record<string, any>) {
+async function loadRemoteLocale(lang: SupportedLanguagesType) {
+  const { currentLoginUserApp } = useUserStore();
+  const params = {
+    user_id: currentLoginUserApp.user_id,
+    owner_id: currentLoginUserApp.owner_id,
+    owner_type: currentLoginUserApp.owner_type,
+    app_key: import.meta.env.VITE_APP_APP_KEY,
+  };
   const data = await getLocaleApi(params);
-  Object.entries(data).forEach(
-    ([key, value]: [string, Record<string, Record<string, any>>]) => {
-      const messages = Object.values(value).reduce(
-        (pre, current) => {
-          return Object.assign(pre, current);
-        },
-        {} as Record<string, any>,
-      );
-
-      i18n.global.mergeLocaleMessage(resolveRemoteLocaleKey(key), messages);
+  const key = resolveRemoteLocaleKey(lang);
+  const value = data[key] as Record<string, Record<string, string>>;
+  const messages = Object.values(value).reduce(
+    (pre, current) => {
+      return Object.assign(pre, current);
     },
+    {} as Record<string, any>,
   );
-  return data;
+  return messages;
 }
 /**
  * 加载dayjs的语言包

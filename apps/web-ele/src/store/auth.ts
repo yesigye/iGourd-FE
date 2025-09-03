@@ -3,8 +3,9 @@ import type { Recordable, UserInfo } from '@igourd/types';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+import { useAccount } from '@igourd/access';
 import { ElNotification } from '@igourd/common-ui';
-import { APP_CONFIG, LOGIN_PATH } from '@igourd/constants';
+import { APP_CONFIG } from '@igourd/constants';
 import { preferences } from '@igourd/preferences';
 import { resetAllStores, useAccessStore, useUserStore } from '@igourd/stores';
 
@@ -17,7 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
   const accessStore = useAccessStore();
   const userStore = useUserStore();
   const router = useRouter();
-
+  const { redirectToLogin } = useAccount();
   const loginLoading = ref(false);
 
   /**
@@ -90,24 +91,11 @@ export const useAuthStore = defineStore('auth', () => {
     };
   }
 
-  async function logout(redirect: boolean = true) {
-    try {
-      // await logoutApi();
-    } catch {
-      // 不做任何处理
-    }
+  async function logout() {
     resetAllStores();
     accessStore.setLoginExpired(false);
 
-    // 回登录页带上当前路由地址
-    await router.replace({
-      path: LOGIN_PATH,
-      query: redirect
-        ? {
-            redirect: encodeURIComponent(router.currentRoute.value.fullPath),
-          }
-        : {},
-    });
+    redirectToLogin();
   }
 
   async function fetchUserInfo() {
@@ -123,7 +111,6 @@ export const useAuthStore = defineStore('auth', () => {
     userStore.setTokenId(userInfo.jwt_token.token_id);
     userStore.setUserModel(userInfo.useModel);
     userStore.setUserInfo(userInfo);
-    userStore.setCurrentLoginUserApp(userInfo.current_login_user_app);
     userStore.setLoginAccount(userInfo.login_account || '');
     userStore.setLoginType(userInfo.type || '');
     // accessStore.set(userInfo.function_trees);
