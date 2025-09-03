@@ -3,6 +3,7 @@ import type { VxeGridSlots, VxeGridSlotTypes } from 'vxe-table';
 import type { SlotsType } from 'vue';
 
 // import type { BaseFormComponentType } from '@igourd-core/form-ui';
+import type { IGourdFormProps } from '@igourd-core/form-ui';
 
 import type { ExtendedVxeGridApi, VxeGridProps } from './types';
 
@@ -21,7 +22,7 @@ type FilteredSlots<T> = {
 
 export function useIgourdVxeGrid<
   T extends Record<string, any> = any,
-  D extends BaseFormComponentType = BaseFormComponentType,
+  D extends IGourdFormProps<any> = IGourdFormProps<any>,
 >(options: VxeGridProps<T, D>) {
   // const IS_REACTIVE = isReactive(options);
   const api = new VxeGridApi(options);

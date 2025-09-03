@@ -1,8 +1,10 @@
+/* eslint-disable n/no-extraneous-import */
 import type { IFormProps } from '@formily/core';
+import type { ISchema } from '@formily/vue';
 
 import type { IGourdFormProps } from './types';
 
-import { computed, defineComponent, h, watch } from 'vue';
+import { computed, defineComponent, h, renderSlot, watch } from 'vue';
 
 import { registerValidateLocale } from '@formily/core';
 import { observable } from '@formily/reactive';
@@ -38,18 +40,22 @@ export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
   );
   const { SchemaField } = createSchemaField({
     components,
-    scope: { t: tReactive, $i18n },
+    scope: Object.assign({ t: tReactive, $i18n }, options.scope || {}),
   });
 
   const Form = defineComponent(
-    (props: Omit<IGourdFormProps<T>, 'i18n' | 'schema'>, { attrs }) => {
+    (
+      props: Omit<IGourdFormProps<T>, 'i18n' | 'schema' | 'scope'>,
+      { attrs, slots },
+    ) => {
       return () =>
-        h(FormProvider, { form: formAPI, ...props, ...attrs }, () =>
+        h(FormProvider, { form: formAPI, ...props, ...attrs }, () => [
           h(SchemaField, {
             schema: options.schema,
             key: `i18n:${$i18n.lang}`,
           }),
-        );
+          renderSlot(slots, 'default'),
+        ]);
     },
     {
       name: 'IgourdForm',
@@ -57,4 +63,71 @@ export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
     },
   );
   return { formAPI, Form };
+}
+
+export type { IFormProps, IGourdFormProps };
+
+export function useTableSearchForm<T extends object>(
+  options: Omit<IGourdFormProps<T>, 'schema'> & {
+    schema: ISchema['properties'];
+  },
+) {
+  const actions = {
+    type: 'void',
+    'x-decorator': 'FormItem', // 保持和其他字段对齐
+    'x-component': 'Space', // 或者 'FormButtonGroup'
+    properties: {
+      search: {
+        type: 'void',
+        'x-component': 'Submit',
+        'x-content': {
+          default: "{{ t('common.search') }}",
+        },
+        'x-component-props': {
+          type: 'primary',
+          onClick: () => {
+            if (options.handleSubmit) {
+              return options.handleSubmit();
+            }
+            throw new ReferenceError('unknown Submit Handler');
+          },
+        },
+      },
+      reset: {
+        type: 'void',
+        'x-component': 'Button',
+        'x-component-props': {
+          onClick: () => {
+            if (options.handleReset) {
+              return options.handleReset();
+            }
+            throw new ReferenceError('unknown Submit Handler');
+          },
+        },
+        'x-content': {
+          default: "{{ t('common.reset') }}",
+        },
+      },
+    },
+  };
+
+  const copySchema = Object.assign({}, options.schema, {
+    $actions: actions,
+  }) as Record<string, any>;
+
+  const schemaPolyfill = {
+    type: 'object',
+    properties: {
+      grid: {
+        type: 'void',
+        'x-component': 'FormGrid',
+        'x-component-props': {
+          minColumns: [4, 6, 10],
+        },
+        properties: { ...copySchema },
+      },
+    },
+  } as ISchema;
+
+  return useIgourdForm({ ...options, schema: schemaPolyfill });
 }

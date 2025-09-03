@@ -4,7 +4,7 @@ import { defineComponent, watch } from 'vue';
 
 import { usePreferences } from '@igourd/preferences';
 
-// import { useIgourdForm } from '@igourd-core/form-ui';
+import { useIgourdForm } from '@igourd-core/form-ui';
 import {
   VxeButton,
   VxeCheckbox,
@@ -33,9 +33,9 @@ import {
   // VxeSwitch,
   // VxeTextarea,
 } from 'vxe-pc-ui';
-import enUS from 'vxe-pc-ui/lib/language/en-US';
+import enUS from 'vxe-pc-ui/es/language/en-US';
 // 导入默认的语言
-import zhCN from 'vxe-pc-ui/lib/language/zh-CN';
+import zhCN from 'vxe-pc-ui/es/language/zh-CN';
 import {
   VxeColgroup,
   VxeColumn,
@@ -49,7 +49,7 @@ import { extendsDefaultFormatter } from './extends';
 // 是否加载过
 let isInit = false;
 
-// export let useTableForm: typeof useIgourdForm;
+export  { useIgourdForm as useTableForm  };
 
 // 部分组件，如果没注册，vxe-table 会报错，这里实际没用组件，只是为了不报错，同时可以减少打包体积
 const createVirtualComponent = (name = '') => {

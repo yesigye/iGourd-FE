@@ -34,7 +34,6 @@ function useMixedMenu() {
     }
     return enableSidebar;
   });
-  console.log(accessStore.accessCodes);
   const menus = computed(() => accessStore.accessMenus);
 
   /**

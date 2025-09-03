@@ -1259,6 +1259,9 @@ importers:
       '@igourd-core/typings':
         specifier: workspace:^
         version: link:../../base/typings
+      '@igourd/utils':
+        specifier: workspace:^
+        version: link:../../../utils
       element-plus:
         specifier: 'catalog:'
         version: 2.10.2(vue@3.5.17(typescript@5.8.3))
@@ -1599,6 +1602,9 @@ importers:
 
   packages/effects/plugins:
     devDependencies:
+      '@igourd-core/form-ui':
+        specifier: workspace:^
+        version: link:../../@core/ui-kit/form-ui
       '@igourd-core/shadcn-ui':
         specifier: workspace:^
         version: link:../../@core/ui-kit/shadcn-ui

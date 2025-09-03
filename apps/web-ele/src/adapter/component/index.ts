@@ -15,6 +15,7 @@ import {
   Cascader,
   Checkbox,
   DatePicker,
+  ElButton,
   ElNotification,
   Form,
   FormButtonGroup,
@@ -76,6 +77,7 @@ async function initComponentAdapter() {
     Transfer,
     Upload,
     ApiComponent,
+    Button: ElButton,
   };
 
   // 将组件注册到全局共享状态中

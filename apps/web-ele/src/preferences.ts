@@ -13,6 +13,7 @@ export const overridesPreferences = defineOverridesPreferences({
     enablePreferences: true,
     defaultHomePath: '/home',
   },
+
   breadcrumb: {
     enable: false,
   },

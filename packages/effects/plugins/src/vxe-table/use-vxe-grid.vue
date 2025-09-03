@@ -11,7 +11,6 @@ import type {
 import type { SetupContext } from 'vue';
 
 // import type { IgourdFormProps } from '@igourd-core/form-ui';
-
 import type { ExtendedVxeGridApi, VxeGridProps } from './types';
 
 import {
@@ -22,12 +21,11 @@ import {
   toRaw,
   useSlots,
   useTemplateRef,
-  watch,
 } from 'vue';
 
 import { usePriorityValues } from '@igourd/hooks';
 import { EmptyIcon } from '@igourd/icons';
-import { $t } from '@igourd/locales';
+import { $t, useI18n } from '@igourd/locales';
 import { usePreferences } from '@igourd/preferences';
 import {
   cloneDeep,
@@ -37,13 +35,13 @@ import {
   mergeWithArrayOverride,
 } from '@igourd/utils';
 
+import { useTableSearchForm } from '@igourd-core/form-ui';
 import { IgourdHelpTooltip, IgourdLoading } from '@igourd-core/shadcn-ui';
 
 import { VxeButton } from 'vxe-pc-ui';
 import { VxeGrid, VxeUI } from 'vxe-table';
 
 import { extendProxyOptions } from './extends';
-import { useTableForm } from './init';
 
 import 'vxe-table/styles/cssvar.scss';
 import 'vxe-pc-ui/styles/cssvar.scss';
@@ -55,7 +53,7 @@ interface Props extends VxeGridProps {
 
 const props = withDefaults(defineProps<Props>(), {});
 
-const FORM_SLOT_PREFIX = 'form-';
+// const FORM_SLOT_PREFIX = 'form-';
 
 const TOOLBAR_ACTIONS = 'toolbar-actions';
 const TOOLBAR_TOOLS = 'toolbar-tools';
@@ -100,35 +98,28 @@ const separatorBg = computed(() => {
 });
 const slots: SetupContext['slots'] = useSlots();
 
-const [Form, formApi] = useTableForm({
+const { Form, formAPI: formApi } = useTableSearchForm({
+  useI18n,
   compact: true,
+  schema: formOptions.value?.schema || {},
   handleSubmit: async () => {
-    const formValues = await formApi.getValues();
-    formApi.setLatestSubmissionValues(toRaw(formValues));
-    props.api.reload(formValues);
+    const formValues = formApi.values;
+    await props.api.reload(formValues);
   },
   handleReset: async () => {
-    const prevValues = await formApi.getValues();
-    await formApi.resetForm();
-    const formValues = await formApi.getValues();
-    formApi.setLatestSubmissionValues(formValues);
-    // 如果值发生了变化，submitOnChange会触发刷新。所以只在submitOnChange为false或者值没有发生变化时，手动刷新
+    const prevValues = formApi.values;
+    await formApi.reset();
+    const formValues = formApi.values;
     if (isEqual(prevValues, formValues) || !formOptions.value?.submitOnChange) {
-      props.api.reload(formValues);
+      await props.api.reload(formValues);
     }
   },
-  commonConfig: {
-    componentProps: {
-      class: 'w-full',
-    },
-  },
   showCollapseButton: true,
+  // @ts-ignore
   submitButtonOptions: {
     content: computed(() => $t('common.search')),
   },
-  wrapperClass: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
 });
-
 const showTableTitle = computed(() => {
   return !!slots[TABLE_TITLE]?.() || tableTitle.value;
 });
@@ -267,16 +258,16 @@ const delegatedSlots = computed(() => {
   return resultSlots;
 });
 
-const delegatedFormSlots = computed(() => {
-  const resultSlots: string[] = [];
+// const delegatedFormSlots = computed(() => {
+//   const resultSlots: string[] = [];
 
-  for (const key of Object.keys(slots)) {
-    if (key.startsWith(FORM_SLOT_PREFIX)) {
-      resultSlots.push(key);
-    }
-  }
-  return resultSlots.map((key) => key.replace(FORM_SLOT_PREFIX, ''));
-});
+//   for (const key of Object.keys(slots)) {
+//     if (key.startsWith(FORM_SLOT_PREFIX)) {
+//       resultSlots.push(key);
+//     }
+//   }
+//   return resultSlots.map((key) => key.replace(FORM_SLOT_PREFIX, ''));
+// });
 
 const showDefaultEmpty = computed(() => {
   // 检查是否有原生的 VXE Table 空状态配置
@@ -301,7 +292,7 @@ async function init() {
   if (enableProxyConfig && autoLoad) {
     props.api.grid.commitProxy?.(
       'query',
-      formOptions.value ? ((await formApi.getValues()) ?? {}) : {},
+      formOptions.value ? formApi.values : {},
     );
     // props.api.reload(formApi.form?.values ?? {});
   }
@@ -317,35 +308,34 @@ async function init() {
   }
   props.api?.setState?.({ gridOptions: defaultGridOptions });
   // form 由 igourd-form 代替，所以需要保证query相关事件可以拿到参数
-  extendProxyOptions(props.api, defaultGridOptions, () =>
-    formApi.getLatestSubmissionValues(),
-  );
+  extendProxyOptions(props.api, defaultGridOptions, () => formApi.values);
 }
 
-// formOptions支持响应式
-watch(
-  formOptions,
-  () => {
-    formApi.setState((prev) => {
-      const finalFormOptions: IgourdFormProps = mergeWithArrayOverride(
-        {},
-        formOptions.value,
-        prev,
-      );
-      return {
-        ...finalFormOptions,
-        collapseTriggerResize: !!finalFormOptions.showCollapseButton,
-      };
-    });
-  },
-  {
-    immediate: true,
-  },
-);
+// // formOptions支持响应式
+// watch(
+//   formOptions,
+//   () => {
+//     formApi.se
+//     formApi.setState((prev) => {
+//       const finalFormOptions: IgourdFormProps = mergeWithArrayOverride(
+//         {},
+//         formOptions.value,
+//         prev,
+//       );
+//       return {
+//         ...finalFormOptions,
+//         collapseTriggerResize: !!finalFormOptions.showCollapseButton,
+//       };
+//     });
+//   },
+//   {
+//     immediate: true,
+//   },
+// );
 
-const isCompactForm = computed(() => {
-  return formApi.getState()?.compact;
-});
+// const isCompactForm = computed(() => {
+//   return formApi.getState()?.compact;
+// });
 
 onMounted(() => {
   props.api?.mount?.(gridRef.value, formApi);
@@ -353,7 +343,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  formApi?.unmount?.();
+  // formApi?.unmount?.();
   props.api?.unmount?.();
 });
 </script>
@@ -413,44 +403,10 @@ onUnmounted(() => {
         <div
           v-if="formOptions"
           v-show="showSearchForm !== false"
-          :class="
-            cn(
-              'relative rounded py-3',
-              isCompactForm
-                ? isSeparator
-                  ? 'pb-8'
-                  : 'pb-4'
-                : isSeparator
-                  ? 'pb-4'
-                  : 'pb-0',
-            )
-          "
+          :class="cn('relative rounded py-1 pb-2')"
         >
           <slot name="form">
-            <Form>
-              <template
-                v-for="slotName in delegatedFormSlots"
-                :key="slotName"
-                #[slotName]="slotProps"
-              >
-                <slot
-                  :name="`${FORM_SLOT_PREFIX}${slotName}`"
-                  v-bind="slotProps"
-                ></slot>
-              </template>
-              <template #reset-before="slotProps">
-                <slot name="reset-before" v-bind="slotProps"></slot>
-              </template>
-              <template #submit-before="slotProps">
-                <slot name="submit-before" v-bind="slotProps"></slot>
-              </template>
-              <template #expand-before="slotProps">
-                <slot name="expand-before" v-bind="slotProps"></slot>
-              </template>
-              <template #expand-after="slotProps">
-                <slot name="expand-after" v-bind="slotProps"></slot>
-              </template>
-            </Form>
+            <Form :use-i18n="useI18n" :scope="props.formOptions?.scope || {}" />
           </slot>
           <div
             v-if="isSeparator"

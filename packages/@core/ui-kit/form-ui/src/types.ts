@@ -30,11 +30,11 @@ export type FieldMappingTime = [
 ][];
 
 export type HandleResetFn = (
-  values: Record<string, any>,
+  values?: Record<string, any>,
 ) => Promise<void> | void;
 
 export type HandleSubmitFn = (
-  values: Record<string, any>,
+  values?: Record<string, any>,
 ) => Promise<void> | void;
 
 export interface IGourdFormProps<T extends object> extends IFormProps<T> {
@@ -88,6 +88,8 @@ export interface IGourdFormProps<T extends object> extends IFormProps<T> {
 
   schema: ISchema;
 
+  scope: any;
+
   /**
    * 验证失败时是否自动滚动到第一个错误字段
    * @default false
@@ -116,6 +118,6 @@ export interface IGourdFormProps<T extends object> extends IFormProps<T> {
    * @default false
    */
   submitOnEnter?: boolean;
-
   useI18n: () => unknown;
 }
+export type { IFormProps };

@@ -16,20 +16,34 @@ setupIgourdVxeTable({
       grid: {
         align: 'center',
         border: false,
+        rowConfig: {
+          isCurrent: true,
+        },
         columnConfig: {
           resizable: true,
+          drag: true,
         },
         minHeight: 180,
         formConfig: {
           // 全局禁用vxe-table的表单配置，使用formOptions
           enabled: false,
         },
+        columnDragConfig: {
+          showIcon: true,
+          showDragTip: true,
+          animation: true,
+        },
+        rowDragConfig: {
+          showIcon: true,
+          showDragTip: true,
+          animation: true,
+        },
         proxyConfig: {
+          form: false,
           autoLoad: true,
           response: {
-            result: 'items',
+            result: 'list',
             total: 'total',
-            list: 'items',
           },
           showActiveMsg: true,
           showResponseMsg: false,

@@ -1,6 +1,6 @@
 {
   "name": "@igourd/plugins",
-  "version": "5.6.1-beta.12",
+  "version": "5.6.1-beta.13",
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -24,6 +24,7 @@
     "provenance": false
   },
   "peerDependencies": {
+    "@igourd-core/form-ui": "workspace:^",
     "@igourd-core/shadcn-ui": "workspace:^",
     "@igourd-core/shared": "workspace:^",
     "@igourd/hooks": "workspace:^",
@@ -40,6 +41,7 @@
     "vxe-table": "catalog:"
   },
   "devDependencies": {
+    "@igourd-core/form-ui": "workspace:^",
     "@igourd-core/shadcn-ui": "workspace:^",
     "@igourd-core/shared": "workspace:^",
     "@igourd/hooks": "workspace:^",
