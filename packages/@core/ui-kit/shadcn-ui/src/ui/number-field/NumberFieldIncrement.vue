@@ -5,7 +5,7 @@ import { computed } from 'vue';
 
 import { cn } from '@igourd-core/shared/utils';
 
-import { Plus } from 'lucide-vue-next';
+import { Plus } from '@igourd-core/icons';
 import { NumberFieldIncrement, useForwardProps } from 'radix-vue';
 
 const props = defineProps<NumberFieldIncrementProps & { class?: any }>();

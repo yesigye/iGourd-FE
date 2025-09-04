@@ -1,6 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@igourd/tsconfig/library.json",
+  "compilerOptions": {
+    "verbatimModuleSyntax": true
+  },
   "include": ["src"],
   "exclude": ["node_modules"]
 }

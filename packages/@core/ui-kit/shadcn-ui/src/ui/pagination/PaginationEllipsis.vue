@@ -5,7 +5,7 @@ import { computed } from 'vue';
 
 import { cn } from '@igourd-core/shared/utils';
 
-import { MoreHorizontal } from 'lucide-vue-next';
+import { MoreHorizontal } from '@igourd-core/icons';
 import { PaginationEllipsis } from 'radix-vue';
 
 const props = defineProps<PaginationEllipsisProps & { class?: any }>();

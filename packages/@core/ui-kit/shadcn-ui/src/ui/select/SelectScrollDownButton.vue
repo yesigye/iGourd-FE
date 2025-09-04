@@ -5,7 +5,7 @@ import { computed } from 'vue';
 
 import { cn } from '@igourd-core/shared/utils';
 
-import { ChevronDown } from 'lucide-vue-next';
+import { ChevronDown } from '@igourd-core/icons';
 import { SelectScrollDownButton, useForwardProps } from 'radix-vue';
 
 const props = defineProps<SelectScrollDownButtonProps & { class?: any }>();

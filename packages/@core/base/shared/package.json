@@ -3,87 +3,91 @@
   "version": "5.6.1-beta.34",
   "type": "module",
   "scripts": {
-    "build": "unbuild",
-    "stub": "unbuild --stub"
+    "build": "pnpm unbuild",
+    "stub": "pnpm unbuild --stub"
   },
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "exports": {
     "./constants": {
       "types": "./src/constants/index.ts",
       "development": "./src/constants/index.ts",
-      "default": "./src/constants/index.ts"
+      "default": "./dist/constants/index.mjs"
     },
     "./utils": {
       "types": "./src/utils/index.ts",
       "development": "./src/utils/index.ts",
-      "default": "./src/utils/index.ts"
+      "default": "./dist/utils/index.mjs"
     },
     "./color": {
       "types": "./src/color/index.ts",
       "development": "./src/color/index.ts",
-      "default": "./src/color/index.ts"
+      "default": "./dist/color/index.mjs"
     },
     "./cache": {
       "types": "./src/cache/index.ts",
       "development": "./src/cache/index.ts",
-      "default": "./src/cache/index.ts"
+      "default": "./dist/cache/index.mjs"
     },
     "./store": {
       "types": "./src/store.ts",
       "development": "./src/store.ts",
-      "default": "./src/store.ts"
+      "default": "./dist/store.mjs"
     },
     "./global-state": {
-      "types": "./src/global-state.ts",
+      "types": "./dist/global-state.ts",
       "development": "./src/global-state.ts",
-      "default": "./src/global-state.ts"
+      "default": "./dist/global-state.mjs"
     }
   },
   "publishConfig": {
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
-    "provenance": false
+    "provenance": false,
+    "exports": {
+      "./constants": {
+        "types": "./dist/constants/index.d.ts",
+        "default": "./dist/constants/index.mjs"
+      },
+      "./utils": {
+        "types": "./dist/utils/index.d.ts",
+        "default": "./dist/utils/index.mjs"
+      },
+      "./color": {
+        "types": "./dist/color/index.d.ts",
+        "default": "./dist/color/index.mjs"
+      },
+      "./cache": {
+        "types": "./dist/cache/index.d.ts",
+        "default": "./dist/cache/index.mjs"
+      },
+      "./store": {
+        "types": "./dist/store.d.ts",
+        "default": "./dist/store.mjs"
+      },
+      "./global-state": {
+        "types": "./dist/global-state.d.ts",
+        "default": "./dist/global-state.mjs"
+      }
+    }
   },
-  "peerDependencies": {
-    "@ctrl/tinycolor": "catalog:",
-    "@tanstack/store": "^0.7.4",
+  "dependencies": {
     "@tanstack/vue-store": "catalog:",
-    "@types/lodash.clonedeep": "catalog:",
-    "@types/lodash.get": "catalog:",
-    "@types/lodash.isequal": "catalog:",
-    "@types/lodash.set": "catalog:",
-    "@types/nprogress": "catalog:",
+    "@types/lodash-es": "catalog:",
     "@vue/shared": "catalog:",
-    "clsx": "catalog:",
     "dayjs": "catalog:",
-    "defu": "catalog:",
-    "lodash.clonedeep": "catalog:",
-    "lodash.get": "catalog:",
-    "lodash.isequal": "catalog:",
-    "lodash.set": "catalog:",
-    "nprogress": "catalog:",
-    "tailwind-merge": "catalog:",
-    "theme-colors": "catalog:",
-    "vue-demi": "^0.14.10"
+    "lodash-es": "catalog:"
   },
   "devDependencies": {
     "@ctrl/tinycolor": "catalog:",
-    "@tanstack/store": "^0.7.4",
-    "@tanstack/vue-store": "catalog:",
-    "@types/lodash.clonedeep": "catalog:",
-    "@types/lodash.get": "catalog:",
-    "@types/lodash.isequal": "catalog:",
-    "@types/lodash.set": "catalog:",
+    "@types/lodash-es": "catalog:",
     "@types/nprogress": "catalog:",
     "@vue/shared": "catalog:",
     "clsx": "catalog:",
     "defu": "catalog:",
-    "lodash.clonedeep": "catalog:",
-    "lodash.get": "catalog:",
-    "lodash.isequal": "catalog:",
-    "lodash.set": "catalog:",
     "nprogress": "catalog:",
     "tailwind-merge": "catalog:",
-    "theme-colors": "catalog:",
-    "vue-demi": "^0.14.10"
+    "theme-colors": "catalog:"
   }
 }

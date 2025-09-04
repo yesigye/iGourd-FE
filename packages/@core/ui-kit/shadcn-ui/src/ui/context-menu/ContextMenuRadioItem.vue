@@ -8,7 +8,7 @@ import { computed } from 'vue';
 
 import { cn } from '@igourd-core/shared/utils';
 
-import { Circle } from 'lucide-vue-next';
+import { Circle } from '@igourd-core/icons';
 import {
   ContextMenuItemIndicator,
   ContextMenuRadioItem,

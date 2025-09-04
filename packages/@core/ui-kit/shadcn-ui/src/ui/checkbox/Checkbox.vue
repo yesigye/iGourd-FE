@@ -5,7 +5,7 @@ import { computed } from 'vue';
 
 import { cn } from '@igourd-core/shared/utils';
 
-import { Check, Minus } from 'lucide-vue-next';
+import { Check, Minus } from '@igourd-core/icons';
 import {
   CheckboxIndicator,
   CheckboxRoot,

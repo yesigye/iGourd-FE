@@ -5,7 +5,7 @@ import { computed } from 'vue';
 
 import { cn } from '@igourd-core/shared/utils';
 
-import { Check } from 'lucide-vue-next';
+import { Check } from '@igourd-core/icons';
 import {
   SelectItem,
   SelectItemIndicator,

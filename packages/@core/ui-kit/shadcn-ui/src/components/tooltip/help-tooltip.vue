@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { cn } from '@igourd-core/shared/utils';
 
-import { CircleHelp } from 'lucide-vue-next';
+import { CircleHelp } from '@igourd-core/icons';
 
 import Tooltip from './tooltip.vue';
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { cn } from '@igourd-core/shared/utils';
 
-import { ChevronRight } from 'lucide-vue-next';
+import { ChevronRight } from '@igourd-core/icons';
 
 const props = defineProps<{
   class?: any;

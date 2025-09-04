@@ -5,7 +5,7 @@ import { computed } from 'vue';
 
 import { cn } from '@igourd-core/shared/utils';
 
-import { ChevronUp } from 'lucide-vue-next';
+import { ChevronUp } from '@igourd-core/icons';
 import { SelectScrollUpButton, useForwardProps } from 'radix-vue';
 
 const props = defineProps<SelectScrollUpButtonProps & { class?: any }>();

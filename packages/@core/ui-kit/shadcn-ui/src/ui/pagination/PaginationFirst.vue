@@ -5,7 +5,7 @@ import { computed } from 'vue';
 
 import { cn } from '@igourd-core/shared/utils';
 
-import { ChevronsLeft } from 'lucide-vue-next';
+import { ChevronsLeft } from '@igourd-core/icons';
 import { PaginationFirst } from 'radix-vue';
 
 import { Button } from '../button';

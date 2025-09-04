@@ -8,8 +8,8 @@
   "sideEffects": [
     "**/*.css"
   ],
-  "main": "./src/index.ts",
-  "module": "./src/index.ts",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
   "exports": {
     ".": {
       "types": "./src/index.ts",
@@ -18,17 +18,18 @@
     }
   },
   "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    },
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
     "provenance": false
   },
   "peerDependencies": {
     "@formily/core": "^2.3.7",
     "@formily/vue": "^2.3.7",
-    "@igourd-core/composables": "workspace:^",
-    "@igourd-core/icons": "workspace:^",
-    "@igourd-core/shadcn-ui": "workspace:^",
-    "@igourd-core/shared": "workspace:^",
-    "@igourd-core/typings": "workspace:^",
     "element-plus": "catalog:",
     "vue": "catalog:"
   },

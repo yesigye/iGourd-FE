@@ -3,19 +3,15 @@ import { defineBuildConfig } from 'unbuild';
 export default defineBuildConfig({
   clean: true,
   declaration: true,
+  sourcemap: true,
+  rollup: {
+    inlineDependencies: true,
+  },
   entries: [
     {
-      builder: 'mkdist',
-      input: './src',
-      loaders: ['vue', 'js'],
-      pattern: ['**/*.vue'],
-    },
-    {
-      builder: 'mkdist',
-      format: 'esm',
-      input: './src',
-      loaders: ['js'],
-      pattern: ['**/*.ts'],
+      builder: 'rollup',
+      input: './src/index.ts',
     },
   ],
+  externals: ['@formily/reactive', '@formily/core', 'vue', 'element-plus'],
 });

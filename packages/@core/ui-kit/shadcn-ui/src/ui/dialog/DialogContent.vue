@@ -7,7 +7,7 @@ import { computed, ref } from 'vue';
 
 import { cn } from '@igourd-core/shared/utils';
 
-import { X } from 'lucide-vue-next';
+import { X } from '@igourd-core/icons';
 import { DialogClose, DialogContent, useForwardPropsEmits } from 'radix-vue';
 
 import DialogOverlay from './DialogOverlay.vue';

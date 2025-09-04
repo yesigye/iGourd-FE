@@ -5,7 +5,7 @@ import { computed } from 'vue';
 
 import { cn } from '@igourd-core/shared/utils';
 
-import { ChevronRight } from 'lucide-vue-next';
+import { ChevronRight } from '@igourd-core/icons';
 import { DropdownMenuSubTrigger, useForwardProps } from 'radix-vue';
 
 const props = defineProps<DropdownMenuSubTriggerProps & { class?: any }>();
