@@ -1,21 +1,17 @@
 {
   "name": "@igourd/styles",
-  "version": "5.6.1-beta.13",
+  "version": "5.6.1-beta.21",
   "license": "UNLICENSED",
   "type": "module",
+  "main": "./src/index.mjs",
+  "module": "./src/index.mjs",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
-    },
-    "./antd": {
-      "default": "./src/antd/index.css"
+      "types": "./src/index.mjs",
+      "default": "./src/index.mjs"
     },
     "./ele": {
       "default": "./src/ele/index.css"
-    },
-    "./naive": {
-      "default": "./src/naive/index.css"
     },
     "./global": {
       "default": "./src/global/index.scss"

@@ -4,5 +4,6 @@ export default defineBuildConfig({
   clean: true,
   declaration: true,
   failOnWarn: false,
+
   entries: ['src/index'],
 });

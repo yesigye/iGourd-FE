@@ -43,11 +43,6 @@ export * from './tippy';
 export * from './transfer';
 export * from './upload';
 
-export * from '@igourd-core/form-ui';
-
-// export * from '@igourd-core/form-ui';
-export * from '@igourd-core/popup-ui';
-
 // 给文档用
 export {
   IgourdAvatar,

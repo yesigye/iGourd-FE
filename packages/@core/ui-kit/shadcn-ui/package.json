@@ -1,10 +1,10 @@
 {
   "name": "@igourd-core/shadcn-ui",
-  "version": "5.6.1-beta.13",
+  "version": "5.6.1-beta.21",
   "type": "module",
   "scripts": {
     "#build": "pnpm unbuild",
-    "build": "pnpm unbuild",
+    "build": "vite build",
     "#prepublishOnly": "npm run build",
     "prepublish": "pnpm unbuild"
   },
@@ -36,7 +36,19 @@
     "main": "./dist/index.mjs",
     "module": "./dist/index.mjs"
   },
-  "dependencies": {
+  "peerDependencies": {
+    "@igourd-core/composables": "workspace:^",
+    "@igourd-core/icons": "workspace:^",
+    "@igourd-core/shared": "workspace:^",
+    "@igourd-core/typings": "workspace:^",
+    "@vueuse/core": "catalog:",
+    "class-variance-authority": "catalog:",
+    "lucide-vue-next": "catalog:",
+    "radix-vue": "catalog:",
+    "vue": "catalog:"
+  },
+  "dependencies": {},
+  "devDependencies": {
     "@igourd-core/composables": "workspace:^",
     "@igourd-core/icons": "workspace:^",
     "@igourd-core/shared": "workspace:^",

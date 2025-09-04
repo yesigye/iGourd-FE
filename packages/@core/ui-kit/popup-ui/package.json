@@ -1,6 +1,6 @@
 {
   "name": "@igourd-core/popup-ui",
-  "version": "5.6.1-beta.13",
+  "version": "5.6.1-beta.21",
   "type": "module",
   "scripts": {
     "build": "pnpm unbuild",

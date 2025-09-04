@@ -1,9 +1,8 @@
 {
   "name": "@igourd/vite-config",
-  "version": "5.6.1-beta.13",
+  "version": "5.6.1-beta.21",
   "type": "module",
   "scripts": {
-    "stub": "pnpm unbuild --stub",
     "prepublish": "pnpm unbuild"
   },
   "files": [
@@ -14,13 +13,19 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.mjs"
     }
   },
   "publishConfig": {
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
-    "provenance": false
+    "provenance": false,
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    }
   },
   "dependencies": {
     "@igourd/node-utils": "workspace:^",

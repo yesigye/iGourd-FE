@@ -1,7 +1,7 @@
 {
   "name": "@igourd/playground",
   "version": "5.6.0",
-  "private":"true",
+  "private": "true",
   "homepage": "https://igourd.pro",
   "bugs": "https://github.com/igourdjs/vue-igourd-admin/issues",
   "repository": {
@@ -17,7 +17,6 @@
   },
   "type": "module",
   "scripts": {
-    "build": "pnpm vite build --mode production",
     "build:analyze": "pnpm vite build --mode analyze",
     "dev": "pnpm vite --mode development",
     "preview": "vite preview",
@@ -31,7 +30,6 @@
   },
   "dependencies": {
     "@formily/element-plus": "^1.1.0",
-
     "@igourd-core/menu-ui": "workspace:^",
     "@igourd/access": "workspace:^",
     "@igourd/common-ui": "workspace:^",

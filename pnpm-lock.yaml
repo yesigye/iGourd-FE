@@ -244,8 +244,8 @@ catalogs:
       specifier: ^5.6.0
       version: 5.6.0
     element-plus:
-      specifier: 2.10.2
-      version: 2.10.2
+      specifier: ^2.11.1
+      version: 2.11.1
     eslint:
       specifier: ^9.30.1
       version: 9.30.1
@@ -639,7 +639,7 @@ importers:
         version: 5.8.3
       unbuild:
         specifier: 'catalog:'
-        version: 3.6.1(sass@1.89.2)(typescript@5.8.3)(vue-tsc@2.2.10(typescript@5.8.3))(vue@3.5.17(typescript@5.8.3))
+        version: 3.6.1(sass@1.89.2)(typescript@5.8.3)(vue-sfc-transformer@0.1.16(@vue/compiler-core@3.5.17)(esbuild@0.25.3)(vue@3.5.17(typescript@5.8.3)))(vue-tsc@2.2.10(typescript@5.8.3))(vue@3.5.17(typescript@5.8.3))
       vite:
         specifier: 'catalog:'
         version: 7.1.2(@types/node@22.16.0)(jiti@2.5.1)(less@4.3.0)(sass@1.89.2)(terser@5.39.0)(yaml@2.8.0)
@@ -649,6 +649,9 @@ importers:
       vue:
         specifier: ^3.5.17
         version: 3.5.17(typescript@5.8.3)
+      vue-sfc-transformer:
+        specifier: ^0.1.16
+        version: 0.1.16(@vue/compiler-core@3.5.17)(esbuild@0.25.3)(vue@3.5.17(typescript@5.8.3))
       vue-tsc:
         specifier: 'catalog:'
         version: 2.2.10(typescript@5.8.3)
@@ -739,7 +742,7 @@ importers:
         version: 1.11.13
       element-plus:
         specifier: 'catalog:'
-        version: 2.10.2(vue@3.5.17(typescript@5.8.3))
+        version: 2.11.1(vue@3.5.17(typescript@5.8.3))
       pinia:
         specifier: ^3.0.3
         version: 3.0.3(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3))
@@ -957,7 +960,7 @@ importers:
         version: 6.12.1(stylelint@16.21.0(typescript@5.8.3))
 
   internal/node-utils:
-    devDependencies:
+    dependencies:
       '@changesets/git':
         specifier: 'catalog:'
         version: 3.0.4
@@ -1259,12 +1262,9 @@ importers:
       '@igourd-core/typings':
         specifier: workspace:^
         version: link:../../base/typings
-      '@igourd/utils':
-        specifier: workspace:^
-        version: link:../../../utils
       element-plus:
         specifier: 'catalog:'
-        version: 2.10.2(vue@3.5.17(typescript@5.8.3))
+        version: 2.11.1(vue@3.5.17(typescript@5.8.3))
       vue:
         specifier: ^3.5.17
         version: 3.5.17(typescript@5.8.3)
@@ -1418,9 +1418,6 @@ importers:
 
   packages/effects/common-ui:
     dependencies:
-      '@element-plus/icons-vue':
-        specifier: 'catalog:'
-        version: 2.3.2(vue@3.5.17(typescript@5.8.3))
       '@formily/core':
         specifier: 'catalog:'
         version: 2.3.7
@@ -1442,6 +1439,34 @@ importers:
       '@formily/vue':
         specifier: 'catalog:'
         version: 2.3.7(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3))
+      '@vueuse/integrations':
+        specifier: 'catalog:'
+        version: 13.4.0(async-validator@4.2.5)(axios@1.10.0)(focus-trap@7.6.4)(jwt-decode@4.0.0)(nprogress@0.2.0)(qrcode@1.5.4)(sortablejs@1.15.6)(vue@3.5.17(typescript@5.8.3))
+      json-bigint:
+        specifier: 'catalog:'
+        version: 1.0.0
+      qrcode:
+        specifier: 'catalog:'
+        version: 1.5.4
+      resize-observer-polyfill:
+        specifier: 'catalog:'
+        version: 1.5.1
+      tippy.js:
+        specifier: 'catalog:'
+        version: 6.3.7
+      vue-json-viewer:
+        specifier: 'catalog:'
+        version: 3.0.4(vue@3.5.17(typescript@5.8.3))
+      vue-tippy:
+        specifier: 'catalog:'
+        version: 6.7.1(vue@3.5.17(typescript@5.8.3))
+      vuedraggable:
+        specifier: 'catalog:'
+        version: 2.24.3
+    devDependencies:
+      '@element-plus/icons-vue':
+        specifier: 'catalog:'
+        version: 2.3.2(vue@3.5.17(typescript@5.8.3))
       '@igourd-core/form-ui':
         specifier: workspace:^
         version: link:../../@core/ui-kit/form-ui
@@ -1472,46 +1497,24 @@ importers:
       '@igourd/types':
         specifier: workspace:^
         version: link:../../types
-      '@vueuse/core':
-        specifier: 'catalog:'
-        version: 13.4.0(vue@3.5.17(typescript@5.8.3))
-      '@vueuse/integrations':
-        specifier: 'catalog:'
-        version: 13.4.0(async-validator@4.2.5)(axios@1.10.0)(focus-trap@7.6.4)(jwt-decode@4.0.0)(nprogress@0.2.0)(qrcode@1.5.4)(sortablejs@1.15.6)(vue@3.5.17(typescript@5.8.3))
-      element-plus:
-        specifier: 'catalog:'
-        version: 2.10.2(vue@3.5.17(typescript@5.8.3))
-      json-bigint:
-        specifier: 'catalog:'
-        version: 1.0.0
-      qrcode:
-        specifier: 'catalog:'
-        version: 1.5.4
-      resize-observer-polyfill:
-        specifier: 'catalog:'
-        version: 1.5.1
-      tippy.js:
-        specifier: 'catalog:'
-        version: 6.3.7
-      vue:
-        specifier: ^3.5.17
-        version: 3.5.17(typescript@5.8.3)
-      vue-json-viewer:
-        specifier: 'catalog:'
-        version: 3.0.4(vue@3.5.17(typescript@5.8.3))
-      vue-router:
-        specifier: 'catalog:'
-        version: 4.5.1(vue@3.5.17(typescript@5.8.3))
-      vue-tippy:
-        specifier: 'catalog:'
-        version: 6.7.1(vue@3.5.17(typescript@5.8.3))
-      vuedraggable:
-        specifier: 'catalog:'
-        version: 2.24.3
-    devDependencies:
       '@types/qrcode':
         specifier: 'catalog:'
         version: 1.5.5
+      '@vueuse/core':
+        specifier: 'catalog:'
+        version: 13.4.0(vue@3.5.17(typescript@5.8.3))
+      dayjs:
+        specifier: 'catalog:'
+        version: 1.11.13
+      element-plus:
+        specifier: 'catalog:'
+        version: 2.11.1(vue@3.5.17(typescript@5.8.3))
+      vue:
+        specifier: ^3.5.17
+        version: 3.5.17(typescript@5.8.3)
+      vue-router:
+        specifier: 'catalog:'
+        version: 4.5.1(vue@3.5.17(typescript@5.8.3))
 
   packages/effects/hooks:
     devDependencies:
@@ -1641,6 +1644,9 @@ importers:
       vue:
         specifier: ^3.5.17
         version: 3.5.17(typescript@5.8.3)
+      vue-sfc-transformer:
+        specifier: ^0.1.16
+        version: 0.1.16(@vue/compiler-core@3.5.17)(esbuild@0.25.3)(vue@3.5.17(typescript@5.8.3))
       vxe-pc-ui:
         specifier: 'catalog:'
         version: 4.7.16(vue@3.5.17(typescript@5.8.3))
@@ -1649,16 +1655,7 @@ importers:
         version: 4.14.4(vue@3.5.17(typescript@5.8.3))
 
   packages/effects/request:
-    devDependencies:
-      '@igourd/locales':
-        specifier: workspace:^
-        version: link:../../locales
-      '@igourd/utils':
-        specifier: workspace:^
-        version: link:../../utils
-      '@types/qs':
-        specifier: 'catalog:'
-        version: 6.14.0
+    dependencies:
       axios:
         specifier: 'catalog:'
         version: 1.10.0
@@ -1674,6 +1671,16 @@ importers:
       qs:
         specifier: 'catalog:'
         version: 6.14.0
+    devDependencies:
+      '@igourd/locales':
+        specifier: workspace:^
+        version: link:../../locales
+      '@igourd/utils':
+        specifier: workspace:^
+        version: link:../../utils
+      '@types/qs':
+        specifier: 'catalog:'
+        version: 6.14.0
 
   packages/icons:
     devDependencies:
@@ -1682,6 +1689,10 @@ importers:
         version: link:../@core/base/icons
 
   packages/locales:
+    dependencies:
+      vue-i18n:
+        specifier: 'catalog:'
+        version: 11.1.7(vue@3.5.17(typescript@5.8.3))
     devDependencies:
       '@igourd-core/composables':
         specifier: workspace:^
@@ -1692,9 +1703,6 @@ importers:
       vue:
         specifier: ^3.5.17
         version: 3.5.17(typescript@5.8.3)
-      vue-i18n:
-        specifier: 'catalog:'
-        version: 11.1.7(vue@3.5.17(typescript@5.8.3))
 
   packages/preferences:
     devDependencies:
@@ -1706,6 +1714,10 @@ importers:
         version: link:../@core/base/typings
 
   packages/stores:
+    dependencies:
+      pinia-plugin-persistedstate:
+        specifier: 'catalog:'
+        version: 4.5.0(@nuxt/kit@3.17.0(magicast@0.3.5))(pinia@3.0.3(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3)))
     devDependencies:
       '@igourd-core/preferences':
         specifier: workspace:^
@@ -1719,9 +1731,6 @@ importers:
       pinia:
         specifier: ^3.0.3
         version: 3.0.3(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3))
-      pinia-plugin-persistedstate:
-        specifier: 'catalog:'
-        version: 4.5.0(@nuxt/kit@3.17.0(magicast@0.3.5))(pinia@3.0.3(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3)))
       secure-ls:
         specifier: 'catalog:'
         version: 2.0.0
@@ -1826,7 +1835,7 @@ importers:
         version: 1.11.13
       element-plus:
         specifier: 'catalog:'
-        version: 2.10.2(vue@3.5.17(typescript@5.8.3))
+        version: 2.11.1(vue@3.5.17(typescript@5.8.3))
       json-bigint:
         specifier: 'catalog:'
         version: 1.0.0
@@ -6704,8 +6713,8 @@ packages:
   electron-to-chromium@1.5.178:
     resolution: {integrity: sha512-wObbz/ar3Bc6e4X5vf0iO8xTN8YAjN/tgiAOJLr7yjYFtP9wAjq8Mb5h0yn6kResir+VYx2DXBj9NNobs0ETSA==}
 
-  element-plus@2.10.2:
-    resolution: {integrity: sha512-p2KiAa0jEGXrzdlTAfpiS7HQFAhla4gvx6H7RuDf+OO0uC3DGpolxvdHjFR8gt7+vaWyxQNcHa1sAdBkmjqlgA==}
+  element-plus@2.11.1:
+    resolution: {integrity: sha512-weYFIniyNXTAe9vJZnmZpYzurh4TDbdKhBsJwhbzuo0SDZ8PLwHVll0qycJUxc6SLtH+7A9F7dvdDh5CnqeIVA==}
     peerDependencies:
       vue: ^3.5.17
 
@@ -11407,6 +11416,14 @@ packages:
     peerDependencies:
       vue: ^3.5.17
 
+  vue-sfc-transformer@0.1.16:
+    resolution: {integrity: sha512-pXx4pkHigOJCzGPXhGA9Rdou1oIuNiF9n4n5GQ7C4QehTXFEpKUjcpvc3PZ6LvC6ccUL021qor8j1153Y7/6Ig==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      '@vue/compiler-core': ^3.5.13
+      esbuild: 0.25.3
+      vue: ^3.5.17
+
   vue-slicksort@1.2.0:
     resolution: {integrity: sha512-k1324l+AnYy6MrpySN7PYL165z2EkvZmMe+BS7H/EugzS8IrZYRtoqa3QxSSWB34C7cplV1hj3c+7peKpxpYxg==}
     peerDependencies:
@@ -13856,7 +13873,7 @@ snapshots:
       '@formily/reactive-vue': 2.3.7(vue@3.5.17(typescript@5.8.3))
       '@formily/shared': 2.3.7
       '@formily/vue': 2.3.7(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3))
-      element-plus: 2.10.2(vue@3.5.17(typescript@5.8.3))
+      element-plus: 2.11.1(vue@3.5.17(typescript@5.8.3))
       resize-observer-polyfill: 1.5.1
       vue: 3.5.17(typescript@5.8.3)
       vue-slicksort: 1.2.0(vue@3.5.17(typescript@5.8.3))
@@ -17237,7 +17254,7 @@ snapshots:
 
   electron-to-chromium@1.5.178: {}
 
-  element-plus@2.10.2(vue@3.5.17(typescript@5.8.3)):
+  element-plus@2.11.1(vue@3.5.17(typescript@5.8.3)):
     dependencies:
       '@ctrl/tinycolor': 4.1.0
       '@element-plus/icons-vue': 2.3.2(vue@3.5.17(typescript@5.8.3))
@@ -19374,7 +19391,7 @@ snapshots:
 
   mkdirp@3.0.1: {}
 
-  mkdist@2.3.0(sass@1.89.2)(typescript@5.8.3)(vue-tsc@2.2.10(typescript@5.8.3))(vue@3.5.17(typescript@5.8.3)):
+  mkdist@2.3.0(sass@1.89.2)(typescript@5.8.3)(vue-sfc-transformer@0.1.16(@vue/compiler-core@3.5.17)(esbuild@0.25.3)(vue@3.5.17(typescript@5.8.3)))(vue-tsc@2.2.10(typescript@5.8.3))(vue@3.5.17(typescript@5.8.3)):
     dependencies:
       autoprefixer: 10.4.21(postcss@8.5.6)
       citty: 0.1.6
@@ -19393,6 +19410,7 @@ snapshots:
       sass: 1.89.2
       typescript: 5.8.3
       vue: 3.5.17(typescript@5.8.3)
+      vue-sfc-transformer: 0.1.16(@vue/compiler-core@3.5.17)(esbuild@0.25.3)(vue@3.5.17(typescript@5.8.3))
       vue-tsc: 2.2.10(typescript@5.8.3)
 
   mlly@1.7.4:
@@ -21827,7 +21845,7 @@ snapshots:
       has-symbols: 1.1.0
       which-boxed-primitive: 1.1.1
 
-  unbuild@3.6.1(sass@1.89.2)(typescript@5.8.3)(vue-tsc@2.2.10(typescript@5.8.3))(vue@3.5.17(typescript@5.8.3)):
+  unbuild@3.6.1(sass@1.89.2)(typescript@5.8.3)(vue-sfc-transformer@0.1.16(@vue/compiler-core@3.5.17)(esbuild@0.25.3)(vue@3.5.17(typescript@5.8.3)))(vue-tsc@2.2.10(typescript@5.8.3))(vue@3.5.17(typescript@5.8.3)):
     dependencies:
       '@rollup/plugin-alias': 5.1.1(rollup@4.46.2)
       '@rollup/plugin-commonjs': 28.0.6(rollup@4.46.2)
@@ -21843,7 +21861,7 @@ snapshots:
       hookable: 5.5.3
       jiti: 2.5.1
       magic-string: 0.30.17
-      mkdist: 2.3.0(sass@1.89.2)(typescript@5.8.3)(vue-tsc@2.2.10(typescript@5.8.3))(vue@3.5.17(typescript@5.8.3))
+      mkdist: 2.3.0(sass@1.89.2)(typescript@5.8.3)(vue-sfc-transformer@0.1.16(@vue/compiler-core@3.5.17)(esbuild@0.25.3)(vue@3.5.17(typescript@5.8.3)))(vue-tsc@2.2.10(typescript@5.8.3))(vue@3.5.17(typescript@5.8.3))
       mlly: 1.7.4
       pathe: 2.0.3
       pkg-types: 2.2.0
@@ -22451,6 +22469,13 @@ snapshots:
   vue-router@4.5.1(vue@3.5.17(typescript@5.8.3)):
     dependencies:
       '@vue/devtools-api': 6.6.4
+      vue: 3.5.17(typescript@5.8.3)
+
+  vue-sfc-transformer@0.1.16(@vue/compiler-core@3.5.17)(esbuild@0.25.3)(vue@3.5.17(typescript@5.8.3)):
+    dependencies:
+      '@babel/parser': 7.27.7
+      '@vue/compiler-core': 3.5.17
+      esbuild: 0.25.3
       vue: 3.5.17(typescript@5.8.3)
 
   vue-slicksort@1.2.0(vue@3.5.17(typescript@5.8.3)):

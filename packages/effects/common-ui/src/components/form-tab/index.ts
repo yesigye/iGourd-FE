@@ -1,10 +1,9 @@
-import type { SchemaKey } from '@formily/json-schema';
+import type { Schema, SchemaKey } from '@formily/json-schema';
 
 import type { PropType } from 'vue';
 
 import { computed, defineComponent, reactive } from 'vue';
 
-import { Schema } from '@formily/json-schema';
 import { model } from '@formily/reactive';
 import { observer } from '@formily/reactive-vue';
 import {

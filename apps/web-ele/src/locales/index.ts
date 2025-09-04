@@ -67,6 +67,7 @@ function resolveRemoteLocaleKey(key: string) {
 }
 async function loadRemoteLocale(lang: SupportedLanguagesType) {
   const { currentLoginUserApp } = useUserStore();
+  if (!currentLoginUserApp) return {};
   const params = {
     user_id: currentLoginUserApp.user_id,
     owner_id: currentLoginUserApp.owner_id,

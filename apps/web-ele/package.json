@@ -1,8 +1,8 @@
 {
   "name": "@igourd/web-ele",
-  "version": "5.6.1-beta.13",
-  "homepage": "https://igourd.pro",
+  "version": "5.6.1-beta.21",
   "private": "true",
+  "homepage": "https://igourd.pro",
   "bugs": "https://github.com/igourdjs/vue-igourd-admin/issues",
   "repository": {
     "type": "git",

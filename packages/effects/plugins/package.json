@@ -1,7 +1,11 @@
 {
   "name": "@igourd/plugins",
-  "version": "5.6.1-beta.13",
+  "version": "5.6.1-beta.21",
   "type": "module",
+  "scripts": {
+    "build": "unbuild",
+    "prepublish": "unbuild"
+  },
   "sideEffects": [
     "**/*.css"
   ],
@@ -21,7 +25,21 @@
   },
   "publishConfig": {
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
-    "provenance": false
+    "provenance": false,
+    "exports": {
+      "./echarts": {
+        "types": "./dist/echarts/index.d.ts",
+        "default": "./dist/echarts/index.mjs"
+      },
+      "./vxe-table": {
+        "types": "./dist/vxe-table/index.d.ts",
+        "default": "./dist/vxe-table/index.mjs"
+      },
+      "./motion": {
+        "types": "./dist/motion/index.d.ts",
+        "default": "./dist/motion/index.mjs"
+      }
+    }
   },
   "peerDependencies": {
     "@igourd-core/form-ui": "workspace:^",
@@ -54,6 +72,7 @@
     "@vueuse/motion": "catalog:",
     "echarts": "catalog:",
     "vue": "catalog:",
+    "vue-sfc-transformer": "^0.1.16",
     "vxe-pc-ui": "catalog:",
     "vxe-table": "catalog:"
   }

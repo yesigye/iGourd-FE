@@ -1,8 +1,12 @@
 {
   "name": "@igourd/types",
-  "version": "5.6.1-beta.13",
+  "version": "5.6.1-beta.21",
   "license": "UNLICENSED",
   "type": "module",
+  "scripts": {
+    "build": "unbuild",
+    "prepublish": "unbuild"
+  },
   "exports": {
     ".": {
       "types": "./src/index.ts",
@@ -14,7 +18,16 @@
   },
   "publishConfig": {
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
-    "provenance": false
+    "provenance": false,
+    "exports": {
+      ".": {
+        "types": "./src/index.d.ts",
+        "default": "./src/index.mjs"
+      },
+      "./global": {
+        "types": "./global.d.ts"
+      }
+    }
   },
   "peerDependencies": {
     "@igourd-core/typings": "workspace:^",
