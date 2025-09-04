@@ -1,14 +1,14 @@
 {
   "name": "@igourd/styles",
-  "version": "5.6.1-beta.21",
+  "version": "5.6.1-beta.34",
   "license": "UNLICENSED",
   "type": "module",
-  "main": "./src/index.mjs",
-  "module": "./src/index.mjs",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
   "exports": {
     ".": {
-      "types": "./src/index.mjs",
-      "default": "./src/index.mjs"
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
     },
     "./ele": {
       "default": "./src/ele/index.css"

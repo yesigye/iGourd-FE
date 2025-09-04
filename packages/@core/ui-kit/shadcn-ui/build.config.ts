@@ -13,7 +13,7 @@ export default defineBuildConfig({
     {
       builder: 'mkdist',
       input: './src',
-      loaders: ['vue', 'js'],
+      loaders: ['vue', 'js', 'sass'],
       pattern: ['**/*.vue'],
     },
     {

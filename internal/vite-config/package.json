@@ -1,10 +1,8 @@
 {
   "name": "@igourd/vite-config",
-  "version": "5.6.1-beta.21",
+  "version": "5.6.1-beta.34",
   "type": "module",
-  "scripts": {
-    "prepublish": "pnpm unbuild"
-  },
+  "scripts": {},
   "files": [
     "dist"
   ],
@@ -32,6 +30,7 @@
     "@intlify/unplugin-vue-i18n": "catalog:",
     "@jspm/generator": "catalog:",
     "@pnpm/workspace.read-manifest": "catalog:",
+    "@rollup/plugin-replace": "^6.0.2",
     "@types/archiver": "catalog:",
     "@types/html-minifier-terser": "catalog:",
     "@vitejs/plugin-vue": "catalog:",

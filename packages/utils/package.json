@@ -1,11 +1,10 @@
 {
   "name": "@igourd/utils",
-  "version": "5.6.1-beta.21",
+  "version": "5.6.1-beta.34",
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
-    "build": "unbuild",
-    "prepublish": "unbuild"
+    "build": "unbuild"
   },
   "sideEffects": [
     "**/*.css"
@@ -21,8 +20,8 @@
     "provenance": false,
     "exports": {
       ".": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
+        "types": "./src/index.d.ts",
+        "default": "./src/index.ts"
       }
     }
   },

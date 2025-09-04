@@ -4,6 +4,7 @@ import type { DefineLibraryOptions } from '../typing';
 
 import { readPackageJSON } from '@igourd/node-utils';
 
+import replace from '@rollup/plugin-replace';
 import { defineConfig, mergeConfig } from 'vite';
 
 import { loadLibraryPlugins } from '../plugins';
@@ -48,7 +49,33 @@ function defineLibraryConfig(userConfigPromise?: DefineLibraryOptions) {
           },
         },
       },
-      plugins,
+      plugins: [
+        ...plugins,
+        replace({
+          // 保留环境变量引用，不进行替换
+          'import.meta.env.VITE_APP_API_LOGIN_URL':
+            'import.meta.env.VITE_APP_API_LOGIN_URL',
+          'import.meta.env.VITE_APP_API_BASE_URL':
+            'import.meta.env.VITE_APP_API_BASE_URL',
+          'import.meta.env.VITE_APP_TITLE': 'import.meta.env.VITE_APP_TITLE',
+          'import.meta.env.VITE_APP_DESCRIPTION':
+            'import.meta.env.VITE_APP_DESCRIPTION',
+          'import.meta.env.VITE_APP_VERSION':
+            'import.meta.env.VITE_APP_VERSION',
+          'import.meta.env.VITE_APP_BUILD_TIME':
+            'import.meta.env.VITE_APP_BUILD_TIME',
+          'import.meta.env.VITE_APP_MODE': 'import.meta.env.VITE_APP_MODE',
+          'import.meta.env.VITE_APP_DEV': 'import.meta.env.VITE_APP_DEV',
+          'import.meta.env.VITE_APP_PROD': 'import.meta.env.VITE_APP_PROD',
+          'import.meta.env.VITE_APP_SSR': 'import.meta.env.VITE_APP_SSR',
+          'import.meta.env.VITE_APP_LOGIN_PATH':
+            'import.meta.env.VITE_APP_LOGIN_PATH',
+          'import.meta.env.VITE_APP_STORE_SECURE_KEY':
+            'import.meta.env.VITE_APP_STORE_SECURE_KEY',
+          delimiters: ['', ''],
+          preventAssignment: true,
+        }),
+      ],
     };
     const commonConfig = await getCommonConfig();
     const mergedConmonConfig = mergeConfig(commonConfig, packageConfig);

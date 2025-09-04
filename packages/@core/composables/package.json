@@ -1,33 +1,23 @@
 {
   "name": "@igourd-core/composables",
-  "version": "5.6.1-beta.21",
+  "version": "5.6.1-beta.34",
   "type": "module",
   "scripts": {
-    "build": "pnpm unbuild",
-    "prepublish": "pnpm unbuild"
+    "build": "pnpm unbuild"
   },
-  "files": [
-    "dist"
-  ],
   "sideEffects": false,
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
   "exports": {
     ".": {
       "types": "./src/index.ts",
       "development": "./src/index.ts",
-      "default": "./dist/index.mjs"
+      "default": "./src/index.ts"
     }
   },
   "publishConfig": {
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
-    "provenance": false,
-    "exports": {
-      ".": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      }
-    }
+    "provenance": false
   },
   "peerDependencies": {
     "@igourd-core/shared": "workspace:^",

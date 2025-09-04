@@ -1,11 +1,10 @@
 {
   "name": "@igourd/node-utils",
-  "version": "5.6.1-beta.21",
+  "version": "5.6.1-beta.34",
   "type": "module",
   "scripts": {
     "stub": "pnpm unbuild --stub",
-    "build": "pnpm unbuild",
-    "prepublish": "pnpm unbuild"
+    "build": "pnpm unbuild"
   },
   "files": [
     "dist"

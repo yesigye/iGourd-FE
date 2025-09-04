@@ -1,11 +1,7 @@
 {
   "name": "@igourd/common-ui",
-  "version": "5.6.1-beta.21",
+  "version": "5.6.1-beta.34",
   "type": "module",
-  "scripts": {
-    "build": "vite build",
-    "prepublish": "pnpm build"
-  },
   "sideEffects": [
     "**/*.css"
   ],
@@ -26,22 +22,7 @@
   },
   "publishConfig": {
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
-    "provenance": false,
-    "exports": {
-      ".": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      },
-      "./es/tippy": {
-        "types": "./dist/components/tippy/index.d.ts",
-        "default": "./dist/components/tippy/index.mjs"
-      },
-      "./es/loading": {
-        "types": "./dist/components/loading/index.d.ts",
-        "default": "./dist/components/loading/index.mjs"
-      },
-      "./style": "./dist/components/style.mjs"
-    }
+    "provenance": false
   },
   "peerDependencies": {
     "@element-plus/icons-vue": "catalog:",
@@ -69,7 +50,7 @@
     "element-plus": "catalog:",
     "json-bigint": "catalog:",
     "qrcode": "catalog:",
-    "radix-vue": "catelog:",
+    "radix-vue": "catalog:",
     "resize-observer-polyfill": "catalog:",
     "tippy.js": "catalog:",
     "vue": "catalog:",

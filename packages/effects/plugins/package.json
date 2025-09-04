@@ -1,10 +1,9 @@
 {
   "name": "@igourd/plugins",
-  "version": "5.6.1-beta.21",
+  "version": "5.6.1-beta.34",
   "type": "module",
   "scripts": {
-    "build": "unbuild",
-    "prepublish": "unbuild"
+    "build": "unbuild"
   },
   "sideEffects": [
     "**/*.css"
@@ -25,21 +24,7 @@
   },
   "publishConfig": {
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
-    "provenance": false,
-    "exports": {
-      "./echarts": {
-        "types": "./dist/echarts/index.d.ts",
-        "default": "./dist/echarts/index.mjs"
-      },
-      "./vxe-table": {
-        "types": "./dist/vxe-table/index.d.ts",
-        "default": "./dist/vxe-table/index.mjs"
-      },
-      "./motion": {
-        "types": "./dist/motion/index.d.ts",
-        "default": "./dist/motion/index.mjs"
-      }
-    }
+    "provenance": false
   },
   "peerDependencies": {
     "@igourd-core/form-ui": "workspace:^",

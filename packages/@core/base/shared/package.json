@@ -1,80 +1,51 @@
 {
   "name": "@igourd-core/shared",
-  "version": "5.6.1-beta.21",
+  "version": "5.6.1-beta.34",
   "type": "module",
   "scripts": {
-    "build": "pnpm unbuild",
-    "prepublish": "pnpm unbuild",
-    "stub": "pnpm unbuild --stub"
+    "build": "unbuild",
+    "stub": "unbuild --stub"
   },
-  "files": [
-    "dist"
-  ],
   "sideEffects": false,
   "exports": {
     "./constants": {
       "types": "./src/constants/index.ts",
       "development": "./src/constants/index.ts",
-      "default": "./dist/constants/index.mjs"
+      "default": "./src/constants/index.ts"
     },
     "./utils": {
       "types": "./src/utils/index.ts",
       "development": "./src/utils/index.ts",
-      "default": "./dist/utils/index.mjs"
+      "default": "./src/utils/index.ts"
     },
     "./color": {
       "types": "./src/color/index.ts",
       "development": "./src/color/index.ts",
-      "default": "./dist/color/index.mjs"
+      "default": "./src/color/index.ts"
     },
     "./cache": {
       "types": "./src/cache/index.ts",
       "development": "./src/cache/index.ts",
-      "default": "./dist/cache/index.mjs"
+      "default": "./src/cache/index.ts"
     },
     "./store": {
       "types": "./src/store.ts",
       "development": "./src/store.ts",
-      "default": "./dist/store.mjs"
+      "default": "./src/store.ts"
     },
     "./global-state": {
       "types": "./src/global-state.ts",
       "development": "./src/global-state.ts",
-      "default": "./dist/global-state.mjs"
+      "default": "./src/global-state.ts"
     }
   },
   "publishConfig": {
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
-    "provenance": false,
-    "exports": {
-      "./constants": {
-        "types": "./dist/constants/index.d.ts",
-        "default": "./dist/constants/index.mjs"
-      },
-      "./utils": {
-        "types": "./dist/utils/index.d.ts",
-        "default": "./dist/utils/index.mjs"
-      },
-      "./color": {
-        "types": "./dist/color/index.d.ts",
-        "default": "./dist/color/index.mjs"
-      },
-      "./cache": {
-        "types": "./dist/cache/index.d.ts",
-        "default": "./dist/cache/index.mjs"
-      },
-      "./store": {
-        "types": "./dist/store.d.ts",
-        "default": "./dist/store.mjs"
-      },
-      "./global-state": {
-        "types": "./dist/global-state.d.ts",
-        "default": "./dist/global-state.mjs"
-      }
-    }
+    "provenance": false
   },
   "peerDependencies": {
     "@ctrl/tinycolor": "catalog:",
+    "@tanstack/store": "^0.7.4",
     "@tanstack/vue-store": "catalog:",
     "@types/lodash.clonedeep": "catalog:",
     "@types/lodash.get": "catalog:",
@@ -91,10 +62,12 @@
     "lodash.set": "catalog:",
     "nprogress": "catalog:",
     "tailwind-merge": "catalog:",
-    "theme-colors": "catalog:"
+    "theme-colors": "catalog:",
+    "vue-demi": "^0.14.10"
   },
   "devDependencies": {
     "@ctrl/tinycolor": "catalog:",
+    "@tanstack/store": "^0.7.4",
     "@tanstack/vue-store": "catalog:",
     "@types/lodash.clonedeep": "catalog:",
     "@types/lodash.get": "catalog:",
@@ -103,7 +76,6 @@
     "@types/nprogress": "catalog:",
     "@vue/shared": "catalog:",
     "clsx": "catalog:",
-    "dayjs": "catalog:",
     "defu": "catalog:",
     "lodash.clonedeep": "catalog:",
     "lodash.get": "catalog:",
@@ -111,6 +83,7 @@
     "lodash.set": "catalog:",
     "nprogress": "catalog:",
     "tailwind-merge": "catalog:",
-    "theme-colors": "catalog:"
+    "theme-colors": "catalog:",
+    "vue-demi": "^0.14.10"
   }
 }

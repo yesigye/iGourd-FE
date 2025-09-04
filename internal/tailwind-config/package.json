@@ -1,10 +1,9 @@
 {
   "name": "@igourd/tailwind-config",
-  "version": "5.6.1-beta.21",
+  "version": "5.6.1-beta.34",
   "type": "module",
   "scripts": {
-    "stub": "pnpm unbuild --stub",
-    "prepublish": "pnpm unbuild"
+    "stub": "pnpm unbuild --stub"
   },
   "files": [
     "dist"

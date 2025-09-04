@@ -1,12 +1,11 @@
 {
   "name": "@igourd/eslint-config",
-  "version": "5.6.1-beta.21",
+  "version": "5.6.1-beta.34",
   "private": false,
   "type": "module",
   "scripts": {
     "stub": "pnpm unbuild --stub",
-    "build": "pnpm unbuild",
-    "prepublish": "pnpm build"
+    "build": "pnpm unbuild"
   },
   "files": [
     "dist"
