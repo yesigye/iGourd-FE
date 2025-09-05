@@ -26,7 +26,6 @@ export * from './form-tab';
 export * from './icon-picker';
 export * from './input';
 export * from './input-number';
-export * from './json-viewer';
 export * from './loading';
 export * from './page';
 export * from './password';

@@ -1,7 +1,13 @@
 {
   "name": "@igourd/common-ui",
-  "version": "5.6.1-beta.34",
+  "version": "5.6.2-beta.6",
   "type": "module",
+  "scripts": {
+    "build": "vite build"
+  },
+  "files": [
+    "dist"
+  ],
   "sideEffects": [
     "**/*.css"
   ],
@@ -21,10 +27,36 @@
     "./style": "./src/components/style.ts"
   },
   "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "./es/tippy": {
+        "types": "./dist/es/tippy/index.d.ts",
+        "default": "./dist/es/tippy/index.mjs"
+      },
+      "./es/loading": {
+        "types": "./dist/es/loading/index.d.ts",
+        "default": "./dist/es/loading/index.mjs"
+      },
+      "./style": "./dist/common-ui.css"
+    },
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
     "provenance": false
   },
   "peerDependencies": {
+    "@igourd/constants": "workspace:^",
+    "@igourd/hooks": "workspace:^",
+    "@igourd/icons": "workspace:^",
+    "@igourd/locales": "workspace:^",
+    "@igourd/types": "workspace:^",
+    "@vueuse/core": "catalog:",
+    "dayjs": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:"
+  },
+  "devDependencies": {
     "@element-plus/icons-vue": "catalog:",
     "@formily/core": "catalog:",
     "@formily/grid": "catalog:",
@@ -54,28 +86,8 @@
     "resize-observer-polyfill": "catalog:",
     "tippy.js": "catalog:",
     "vue": "catalog:",
-    "vue-json-viewer": "catalog:",
     "vue-router": "catalog:",
     "vue-tippy": "catalog:",
     "vuedraggable": "catalog:"
-  },
-  "devDependencies": {
-    "@element-plus/icons-vue": "catalog:",
-    "@igourd-core/form-ui": "workspace:^",
-    "@igourd-core/popup-ui": "workspace:^",
-    "@igourd-core/preferences": "workspace:^",
-    "@igourd-core/shadcn-ui": "workspace:^",
-    "@igourd-core/shared": "workspace:^",
-    "@igourd/constants": "workspace:^",
-    "@igourd/hooks": "workspace:^",
-    "@igourd/icons": "workspace:^",
-    "@igourd/locales": "workspace:^",
-    "@igourd/types": "workspace:^",
-    "@types/qrcode": "catalog:",
-    "@vueuse/core": "catalog:",
-    "dayjs": "catalog:",
-    "element-plus": "catalog:",
-    "vue": "catalog:",
-    "vue-router": "catalog:"
   }
 }
