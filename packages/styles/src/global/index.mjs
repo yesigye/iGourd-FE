@@ -1,0 +1,1 @@
+import '@igourd-core/design';

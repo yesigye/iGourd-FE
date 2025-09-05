@@ -1,10 +1,13 @@
 {
   "name": "@igourd-core/popup-ui",
-  "version": "5.6.1-beta.34",
+  "version": "5.6.2-beta.5",
   "type": "module",
   "scripts": {
-    "build": "pnpm unbuild"
+    "build": "vite build"
   },
+  "files": [
+    "dist"
+  ],
   "sideEffects": [
     "**/*.css"
   ],
@@ -20,8 +23,8 @@
   "publishConfig": {
     "exports": {
       ".": {
-        "default": "./src/index.ts",
-        "types": "./src/index.d.ts"
+        "default": "./dist/index.mjs",
+        "types": "./dist/index.d.ts"
       }
     },
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",

@@ -1,6 +1,6 @@
 {
   "name": "@igourd/styles",
-  "version": "5.6.1-beta.34",
+  "version": "5.6.2-beta.5",
   "license": "UNLICENSED",
   "type": "module",
   "main": "./src/index.ts",
@@ -11,7 +11,7 @@
       "default": "./src/index.ts"
     },
     "./ele": {
-      "default": "./src/ele/index.css"
+      "default": "./src//global/ele/index.css"
     },
     "./global": {
       "default": "./src/global/index.scss"
@@ -19,7 +19,13 @@
   },
   "publishConfig": {
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
-    "provenance": false
+    "provenance": false,
+    "./ele": {
+      "default": "./dist/ele/index.css"
+    },
+    "./global": {
+      "default": "./src/index.scss"
+    }
   },
   "peerDependencies": {
     "@igourd-core/design": "workspace:^"

@@ -10,7 +10,6 @@ import type {
 
 import type { SetupContext } from 'vue';
 
-// import type { IgourdFormProps } from '@igourd-core/form-ui';
 import type { ExtendedVxeGridApi, VxeGridProps } from './types';
 
 import {
@@ -23,6 +22,7 @@ import {
   useTemplateRef,
 } from 'vue';
 
+import { useTableSearchForm } from '@igourd/common-ui';
 import { usePriorityValues } from '@igourd/hooks';
 import { EmptyIcon } from '@igourd/icons';
 import { $t, useI18n } from '@igourd/locales';
@@ -35,7 +35,6 @@ import {
   mergeWithArrayOverride,
 } from '@igourd/utils';
 
-import { useTableSearchForm } from '@igourd-core/form-ui';
 import { IgourdHelpTooltip, IgourdLoading } from '@igourd-core/shadcn-ui';
 
 import { VxeButton } from 'vxe-pc-ui';

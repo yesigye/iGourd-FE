@@ -7,10 +7,8 @@ import type {
 
 import type { Ref } from 'vue';
 
+import type { IGourdFormProps, ISchema } from '@igourd/common-ui';
 import type { ClassType, DeepPartial } from '@igourd/types';
-
-// import type { BaseFormComponentType, IgourdFormProps } from '@igourd-core/form-ui';
-import type { IGourdFormProps, ISchema } from '@igourd-core/form-ui';
 
 import type { VxeGridApi } from './api';
 

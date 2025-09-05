@@ -1,6 +1,5 @@
 import type { VxeGridInstance } from 'vxe-table';
 
-// import type { ExtendedFormApi } from '@igourd-core/form-ui';
 import type { VxeGridProps } from './types';
 
 import { toRaw } from 'vue';

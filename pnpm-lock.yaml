@@ -504,9 +504,6 @@ catalogs:
     vue-i18n:
       specifier: ^11.1.7
       version: 11.1.7
-    vue-json-viewer:
-      specifier: ^3.0.4
-      version: 3.0.4
     vue-router:
       specifier: ^4.5.1
       version: 4.5.1
@@ -1420,7 +1417,10 @@ importers:
         version: 3.5.17(typescript@5.8.3)
 
   packages/effects/common-ui:
-    dependencies:
+    devDependencies:
+      '@element-plus/icons-vue':
+        specifier: 'catalog:'
+        version: 2.3.2(vue@3.5.17(typescript@5.8.3))
       '@formily/core':
         specifier: 'catalog:'
         version: 2.3.7
@@ -1442,37 +1442,6 @@ importers:
       '@formily/vue':
         specifier: 'catalog:'
         version: 2.3.7(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3))
-      '@vueuse/integrations':
-        specifier: 'catalog:'
-        version: 13.4.0(async-validator@4.2.5)(axios@1.10.0)(focus-trap@7.6.4)(jwt-decode@4.0.0)(nprogress@0.2.0)(qrcode@1.5.4)(sortablejs@1.15.6)(vue@3.5.17(typescript@5.8.3))
-      json-bigint:
-        specifier: 'catalog:'
-        version: 1.0.0
-      qrcode:
-        specifier: 'catalog:'
-        version: 1.5.4
-      radix-vue:
-        specifier: 'catalog:'
-        version: 1.9.17(vue@3.5.17(typescript@5.8.3))
-      resize-observer-polyfill:
-        specifier: 'catalog:'
-        version: 1.5.1
-      tippy.js:
-        specifier: 'catalog:'
-        version: 6.3.7
-      vue-json-viewer:
-        specifier: 'catalog:'
-        version: 3.0.4(vue@3.5.17(typescript@5.8.3))
-      vue-tippy:
-        specifier: 'catalog:'
-        version: 6.7.1(vue@3.5.17(typescript@5.8.3))
-      vuedraggable:
-        specifier: 'catalog:'
-        version: 2.24.3
-    devDependencies:
-      '@element-plus/icons-vue':
-        specifier: 'catalog:'
-        version: 2.3.2(vue@3.5.17(typescript@5.8.3))
       '@igourd-core/form-ui':
         specifier: workspace:^
         version: link:../../@core/ui-kit/form-ui
@@ -1509,18 +1478,42 @@ importers:
       '@vueuse/core':
         specifier: 'catalog:'
         version: 13.4.0(vue@3.5.17(typescript@5.8.3))
+      '@vueuse/integrations':
+        specifier: 'catalog:'
+        version: 13.4.0(async-validator@4.2.5)(axios@1.10.0)(focus-trap@7.6.4)(jwt-decode@4.0.0)(nprogress@0.2.0)(qrcode@1.5.4)(sortablejs@1.15.6)(vue@3.5.17(typescript@5.8.3))
       dayjs:
         specifier: 'catalog:'
         version: 1.11.13
       element-plus:
         specifier: 'catalog:'
         version: 2.11.1(vue@3.5.17(typescript@5.8.3))
+      json-bigint:
+        specifier: 'catalog:'
+        version: 1.0.0
+      qrcode:
+        specifier: 'catalog:'
+        version: 1.5.4
+      radix-vue:
+        specifier: 'catalog:'
+        version: 1.9.17(vue@3.5.17(typescript@5.8.3))
+      resize-observer-polyfill:
+        specifier: 'catalog:'
+        version: 1.5.1
+      tippy.js:
+        specifier: 'catalog:'
+        version: 6.3.7
       vue:
         specifier: ^3.5.17
         version: 3.5.17(typescript@5.8.3)
       vue-router:
         specifier: 'catalog:'
         version: 4.5.1(vue@3.5.17(typescript@5.8.3))
+      vue-tippy:
+        specifier: 'catalog:'
+        version: 6.7.1(vue@3.5.17(typescript@5.8.3))
+      vuedraggable:
+        specifier: 'catalog:'
+        version: 2.24.3
 
   packages/effects/hooks:
     devDependencies:
@@ -1610,10 +1603,11 @@ importers:
         version: 4.5.1(vue@3.5.17(typescript@5.8.3))
 
   packages/effects/plugins:
-    devDependencies:
-      '@igourd-core/form-ui':
+    dependencies:
+      '@igourd/common-ui':
         specifier: workspace:^
-        version: link:../../@core/ui-kit/form-ui
+        version: link:../common-ui
+    devDependencies:
       '@igourd-core/shadcn-ui':
         specifier: workspace:^
         version: link:../../@core/ui-kit/shadcn-ui
@@ -1650,9 +1644,6 @@ importers:
       vue:
         specifier: ^3.5.17
         version: 3.5.17(typescript@5.8.3)
-      vue-sfc-transformer:
-        specifier: ^0.1.16
-        version: 0.1.16(@vue/compiler-core@3.5.17)(esbuild@0.25.3)(vue@3.5.17(typescript@5.8.3))
       vxe-pc-ui:
         specifier: 'catalog:'
         version: 4.9.14(vue@3.5.17(typescript@5.8.3))
@@ -1661,7 +1652,16 @@ importers:
         version: 4.16.5(vue@3.5.17(typescript@5.8.3))
 
   packages/effects/request:
-    dependencies:
+    devDependencies:
+      '@igourd/locales':
+        specifier: workspace:^
+        version: link:../../locales
+      '@igourd/utils':
+        specifier: workspace:^
+        version: link:../../utils
+      '@types/qs':
+        specifier: 'catalog:'
+        version: 6.14.0
       axios:
         specifier: 'catalog:'
         version: 1.10.0
@@ -1677,16 +1677,6 @@ importers:
       qs:
         specifier: 'catalog:'
         version: 6.14.0
-    devDependencies:
-      '@igourd/locales':
-        specifier: workspace:^
-        version: link:../../locales
-      '@igourd/utils':
-        specifier: workspace:^
-        version: link:../../utils
-      '@types/qs':
-        specifier: 'catalog:'
-        version: 6.14.0
 
   packages/icons:
     devDependencies:
@@ -1695,6 +1685,13 @@ importers:
         version: link:../@core/base/icons
 
   packages/locales:
+    dependencies:
+      '@vueuse/core':
+        specifier: 'catalog:'
+        version: 13.4.0(vue@3.5.17(typescript@5.8.3))
+      radix-vue:
+        specifier: 'catalog:'
+        version: 1.9.17(vue@3.5.17(typescript@5.8.3))
     devDependencies:
       '@igourd-core/composables':
         specifier: workspace:^
@@ -1710,6 +1707,10 @@ importers:
         version: 11.1.7(vue@3.5.17(typescript@5.8.3))
 
   packages/preferences:
+    dependencies:
+      vue:
+        specifier: ^3.5.17
+        version: 3.5.17(typescript@5.8.3)
     devDependencies:
       '@igourd-core/preferences':
         specifier: workspace:^
@@ -1753,10 +1754,11 @@ importers:
         version: link:../@core/base/design
 
   packages/types:
-    devDependencies:
+    dependencies:
       '@igourd-core/typings':
         specifier: workspace:^
         version: link:../@core/base/typings
+    devDependencies:
       vue:
         specifier: ^3.5.17
         version: 3.5.17(typescript@5.8.3)
@@ -3629,17 +3631,11 @@ packages:
   '@floating-ui/core@1.7.3':
     resolution: {integrity: sha512-sGnvb5dmrJaKEZ+LDIpguvdX3bDlEllmv4/ClQ9awcmCZrlx5jQyyMWFM5kBI+EyNOCDDiKk8il0zeuX3Zlg/w==}
 
-  '@floating-ui/dom@1.6.13':
-    resolution: {integrity: sha512-umqzocjDgNRGTuO7Q8CU32dkHkECqI8ZdMZ5Swb6QAM0t5rnlrN3lGo1hdpscRd3WS8T6DKYK4ephgIH9iRh3w==}
-
   '@floating-ui/dom@1.7.4':
     resolution: {integrity: sha512-OOchDgh4F2CchOX94cRVqhvy7b3AFb+/rQXyswmzmGakRfkMgoWVjfnLWkRirfLEfuD4ysVW16eXzwt3jHIzKA==}
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
-
-  '@floating-ui/vue@1.1.6':
-    resolution: {integrity: sha512-XFlUzGHGv12zbgHNk5FN2mUB7ROul3oG2ENdTpWdE+qMFxyNxWSRmsoyhiEnpmabNm6WnUvR1OvJfUfN4ojC1A==}
 
   '@floating-ui/vue@1.1.9':
     resolution: {integrity: sha512-BfNqNW6KA83Nexspgb9DZuz578R7HT8MZw1CfK9I6Ah4QReNWEJsXWHN+SdmOVLNGmTPDi+fDT535Df5PzMLbQ==}
@@ -3755,14 +3751,8 @@ packages:
     peerDependencies:
       vue: ^3.5.17
 
-  '@internationalized/date@3.8.0':
-    resolution: {integrity: sha512-J51AJ0fEL68hE4CwGPa6E0PO6JDaVLd8aln48xFCSy7CZkZc96dGEGmLs2OEEbBxcsVZtfrqkXJwI2/MSG8yKw==}
-
   '@internationalized/date@3.9.0':
     resolution: {integrity: sha512-yaN3brAnHRD+4KyyOsJyk49XUvj2wtbNACSqg0bz3u8t2VuzhC8Q5dfRnrSxjnnbDb+ienBnkn1TzQfE154vyg==}
-
-  '@internationalized/number@3.6.1':
-    resolution: {integrity: sha512-UVsb4bCwbL944E0SX50CHFtWEeZ2uB5VozZ5yDXJdq6iPZsZO5p+bjVMZh2GxHf4Bs/7xtDCcPwEa2NU9DaG/g==}
 
   '@internationalized/number@3.6.5':
     resolution: {integrity: sha512-6hY4Kl4HPBvtfS62asS/R22JzNNy8vi/Ssev7x6EobfCp+9QIB2hKvI2EtbdJ0VSQacxVNtqhE/NmF/NZ0gm6g==}
@@ -5980,9 +5970,6 @@ packages:
     resolution: {integrity: sha512-nPdaFdQ0h/GEigbPClz11D0v/ZJEwxmeVZGeMo3Z5StPtUTkA9o1lD6QwoirYiSDzbcwn2XcjwmCp68W1IS4TA==}
     engines: {node: '>=18'}
 
-  clipboard@2.0.11:
-    resolution: {integrity: sha512-C+0bbOqkezLIsmWSvlsXS0Q0bmkugu7jcfMIACB+RDEntIzQIkdr148we28AfSloQLRdZlYL/QYyrq05j/3Faw==}
-
   clipboardy@4.0.0:
     resolution: {integrity: sha512-5mOlNS0mhX0707P2I0aZ2V/cmHUEO/fL7VFLqszkhUsxt7RwnmrInf/eEQKlf5GzvYeHIjT+Ov1HRfNmymlG0w==}
     engines: {node: '>=18'}
@@ -6516,9 +6503,6 @@ packages:
   delayed-stream@1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
-
-  delegate@3.2.0:
-    resolution: {integrity: sha512-IofjkYBZaZivn0V8nnsMJGBr4jVLxHDheKSW88PyxS5QC4Vo9ZbZVvhzlSxY87fVq3STR6r+4cGepyHkcWOQSw==}
 
   denque@2.1.0:
     resolution: {integrity: sha512-HVQE3AAb/pxF8fQAoiqpvg9i3evqug3hoiwakOyZAwJm+6vZehbkYXZ0l4JxS+I3QxM97v5aaRNhj8v5oBhekw==}
@@ -7515,9 +7499,6 @@ packages:
     resolution: {integrity: sha512-otgSPpUmdWJ43VXyiNgEYE4luzHCL2pz4wQ0OnDluC6Eg4Ko3Vexy/SrSynglw/eR+OhkzmqFCZa/OFa/RgAOQ==}
     engines: {node: '>=0.6.0'}
     hasBin: true
-
-  good-listener@1.2.2:
-    resolution: {integrity: sha512-goW1b+d9q/HIwbVYZzZ6SsTr4IgE+WA44A0GmPIQstuOrgsFcT7VEJ48nmr9GaRtNu0XTKacFLGnBPAM6Afouw==}
 
   gopd@1.2.0:
     resolution: {integrity: sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==}
@@ -10179,9 +10160,6 @@ packages:
     resolution: {integrity: sha512-Wgtnw0QSm0v7gVKv11nOoeyGS65EThGXnBB7jfd4IhZd2eq3B4AMPcXAL5qJ1h55+Qolun7TONTwX7H5m6e2pQ==}
     engines: {node: '>=8.0'}
 
-  select@1.1.2:
-    resolution: {integrity: sha512-OwpTSOfy6xSs1+pwcNrv0RBMOzI39Lp3qQKUTPVVPRjCdNa5JH/oPRiqsesIskK8TVgmRiHwO4KXlV2Li9dANA==}
-
   semver-compare@1.0.0:
     resolution: {integrity: sha512-YM3/ITh2MJ5MtzaM429anh+x2jiLVjqILF4m4oyQB18W7Ggea7BfqdH/wGMK7dDiMghv/6WG7znWMwUDzJiXow==}
 
@@ -10741,9 +10719,6 @@ packages:
 
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
-
-  tiny-emitter@2.1.0:
-    resolution: {integrity: sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==}
 
   tinybench@2.9.0:
     resolution: {integrity: sha512-0+DUvqWMValLmha6lr4kD8iAMK1HzV0/aKnCtWb9v9641TnP/MFb7Pc2bxoxQjTXAErryXVgUOfv2YqNllqGeg==}
@@ -11394,11 +11369,6 @@ packages:
   vue-i18n@11.1.7:
     resolution: {integrity: sha512-CDrU7Cmyh1AxJjerQmipV9nVa//exVBdhTcWGlbfcDCN8bKp/uAe7Le6IoN4//5emIikbsSKe9Uofmf/xXkhOA==}
     engines: {node: '>= 16'}
-    peerDependencies:
-      vue: ^3.5.17
-
-  vue-json-viewer@3.0.4:
-    resolution: {integrity: sha512-pnC080rTub6YjccthVSNQod2z9Sl5IUUq46srXtn6rxwhW8QM4rlYn+CTSLFKXWfw+N3xv77Cioxw7B4XUKIbQ==}
     peerDependencies:
       vue: ^3.5.17
 
@@ -13832,26 +13802,12 @@ snapshots:
     dependencies:
       '@floating-ui/utils': 0.2.10
 
-  '@floating-ui/dom@1.6.13':
-    dependencies:
-      '@floating-ui/core': 1.7.3
-      '@floating-ui/utils': 0.2.10
-
   '@floating-ui/dom@1.7.4':
     dependencies:
       '@floating-ui/core': 1.7.3
       '@floating-ui/utils': 0.2.10
 
   '@floating-ui/utils@0.2.10': {}
-
-  '@floating-ui/vue@1.1.6(vue@3.5.17(typescript@5.8.3))':
-    dependencies:
-      '@floating-ui/dom': 1.7.4
-      '@floating-ui/utils': 0.2.10
-      vue-demi: 0.14.10(vue@3.5.17(typescript@5.8.3))
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
 
   '@floating-ui/vue@1.1.9(vue@3.5.17(typescript@5.8.3))':
     dependencies:
@@ -13999,15 +13955,7 @@ snapshots:
       '@iconify/types': 2.0.0
       vue: 3.5.17(typescript@5.8.3)
 
-  '@internationalized/date@3.8.0':
-    dependencies:
-      '@swc/helpers': 0.5.17
-
   '@internationalized/date@3.9.0':
-    dependencies:
-      '@swc/helpers': 0.5.17
-
-  '@internationalized/number@3.6.1':
     dependencies:
       '@swc/helpers': 0.5.17
 
@@ -16485,12 +16433,6 @@ snapshots:
       slice-ansi: 5.0.0
       string-width: 7.2.0
 
-  clipboard@2.0.11:
-    dependencies:
-      good-listener: 1.2.2
-      select: 1.1.2
-      tiny-emitter: 2.1.0
-
   clipboardy@4.0.0:
     dependencies:
       execa: 8.0.1
@@ -17032,8 +16974,6 @@ snapshots:
   defu@6.1.4: {}
 
   delayed-stream@1.0.0: {}
-
-  delegate@3.2.0: {}
 
   denque@2.1.0: {}
 
@@ -18255,10 +18195,6 @@ snapshots:
   gonzales-pe@4.3.0:
     dependencies:
       minimist: 1.2.8
-
-  good-listener@1.2.2:
-    dependencies:
-      delegate: 3.2.0
 
   gopd@1.2.0: {}
 
@@ -20566,10 +20502,10 @@ snapshots:
 
   radix-vue@1.9.17(vue@3.5.17(typescript@5.8.3)):
     dependencies:
-      '@floating-ui/dom': 1.6.13
-      '@floating-ui/vue': 1.1.6(vue@3.5.17(typescript@5.8.3))
-      '@internationalized/date': 3.8.0
-      '@internationalized/number': 3.6.1
+      '@floating-ui/dom': 1.7.4
+      '@floating-ui/vue': 1.1.9(vue@3.5.17(typescript@5.8.3))
+      '@internationalized/date': 3.9.0
+      '@internationalized/number': 3.6.5
       '@tanstack/vue-virtual': 3.13.6(vue@3.5.17(typescript@5.8.3))
       '@vueuse/core': 10.11.1(vue@3.5.17(typescript@5.8.3))
       '@vueuse/shared': 10.11.1(vue@3.5.17(typescript@5.8.3))
@@ -20987,8 +20923,6 @@ snapshots:
     dependencies:
       crypto-js: 4.2.0
       lz-string: 1.5.0
-
-  select@1.1.2: {}
 
   semver-compare@1.0.0: {}
 
@@ -21658,8 +21592,6 @@ snapshots:
   throttle-debounce@5.0.2: {}
 
   through@2.3.8: {}
-
-  tiny-emitter@2.1.0: {}
 
   tinybench@2.9.0: {}
 
@@ -22448,11 +22380,6 @@ snapshots:
       '@intlify/core-base': 11.1.7
       '@intlify/shared': 11.1.7
       '@vue/devtools-api': 6.6.4
-      vue: 3.5.17(typescript@5.8.3)
-
-  vue-json-viewer@3.0.4(vue@3.5.17(typescript@5.8.3)):
-    dependencies:
-      clipboard: 2.0.11
       vue: 3.5.17(typescript@5.8.3)
 
   vue-router@4.5.1(vue@3.5.17(typescript@5.8.3)):
