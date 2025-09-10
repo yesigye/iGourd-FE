@@ -1,0 +1,33 @@
+{
+  "report": {
+    "title": "报表管理",
+    "add": "新增报表",
+    "edit": "编辑报表",
+    "view": "查看报表",
+    "delete": "删除报表",
+    "addReport": "新增报表",
+    "editReport": "编辑报表",
+    "viewReport": "报表详情",
+    "reportList": "报表列表",
+    "reportName": "报表名称",
+    "reportType": "报表类型",
+    "status": "状态",
+    "createTime": "创建时间",
+    "updateTime": "更新时间",
+    "saveSuccess": "保存成功",
+    "saveError": "保存失败",
+    "deleteSuccess": "删除成功",
+    "deleteError": "删除失败",
+    "deleteConfirm": "确定删除选中的报表吗？",
+    "deleteTitle": "删除确认",
+    "editError": "编辑失败",
+    "viewError": "查看失败",
+    "exportSuccess": "导出成功",
+    "exportError": "导出失败",
+    "description": "描述",
+    "keywords": "关键词",
+    "name": "名称",
+    "pleaseSelectStatus": "请选择状态",
+    "pleaseSelectType": "请选择类型"
+  }
+}

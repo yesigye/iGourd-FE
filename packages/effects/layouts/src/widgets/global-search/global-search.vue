@@ -13,7 +13,7 @@ import {
 import { $t } from '@igourd/locales';
 import { isWindowsOs } from '@igourd/utils';
 
-import { useIgourdModal } from '@igourd-core/popup-ui';
+import { useIgourdModal } from '@igourd/common-ui';
 
 import { useMagicKeys, whenever } from '@vueuse/core';
 

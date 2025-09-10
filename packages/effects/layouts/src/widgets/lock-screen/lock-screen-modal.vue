@@ -6,7 +6,7 @@ import { computed, reactive } from 'vue';
 import { $t } from '@igourd/locales';
 
 // import { useIgourdForm, z } from '@igourd-core/form-ui';
-import { useIgourdModal } from '@igourd-core/popup-ui';
+import { useIgourdModal } from '@igourd/common-ui';
 import { IgourdAvatar, IgourdButton } from '@igourd-core/shadcn-ui';
 
 interface Props {

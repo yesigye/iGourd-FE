@@ -58,8 +58,8 @@ function loadLocalesMapFromDir(
 ): Record<Locale, ImportLocaleFn> {
   const localesRaw: Record<Locale, Record<string, () => Promise<unknown>>> = {};
   const localesMap: Record<Locale, ImportLocaleFn> = {};
-
   // Iterate over the modules to extract language and file names
+
   for (const path in modules) {
     const match = path.match(regexp);
     if (match) {
@@ -129,13 +129,17 @@ async function loadLocaleMessages(lang: SupportedLanguagesType) {
   const message = await localesMap[lang]?.();
 
   if (message?.default) {
-    i18n.global.setLocaleMessage(lang, message.default);
+    i18n.global.mergeLocaleMessage(lang, message.default);
   }
 
   const mergeMessage = await loadMessages(lang);
-  i18n.global.mergeLocaleMessage(lang, mergeMessage);
+  i18n.global.mergeLocaleMessage(lang, mergeMessage ?? {});
 
   return setI18nLanguage(lang);
+}
+
+function mergeLocaleMessage(local: SupportedLanguagesType, message: any) {
+  i18n.global.mergeLocaleMessage(local, message);
 }
 
 export {
@@ -144,4 +148,5 @@ export {
   loadLocalesMap,
   loadLocalesMapFromDir,
   setupI18n,
+  mergeLocaleMessage,
 };

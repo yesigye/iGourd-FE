@@ -16,7 +16,7 @@ import type {
   ThemeModeType,
 } from '@igourd-core/typings';
 
-type SupportedLanguagesType = 'en-US' | 'zh-CN';
+type SupportedLanguagesType = 'en-US' | 'zh-CN' | 'fr-FR';
 
 interface AppPreferences {
   /** 权限模式 */

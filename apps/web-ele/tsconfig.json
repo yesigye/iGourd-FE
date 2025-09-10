@@ -5,8 +5,7 @@
     "baseUrl": ".",
     "paths": {
       "#/*": ["./src/*"]
-    },
-    "types": ["@igourd/plugins/vxe-table"]
+    }
   },
   "references": [{ "path": "./tsconfig.node.json" }],
 

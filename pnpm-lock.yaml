@@ -1546,6 +1546,10 @@ importers:
         version: 1.6.3
 
   packages/effects/layouts:
+    dependencies:
+      '@igourd/common-ui':
+        specifier: workspace:^
+        version: link:../common-ui
     devDependencies:
       '@igourd-core/composables':
         specifier: workspace:^
@@ -1556,9 +1560,6 @@ importers:
       '@igourd-core/menu-ui':
         specifier: workspace:^
         version: link:../../@core/ui-kit/menu-ui
-      '@igourd-core/popup-ui':
-        specifier: workspace:^
-        version: link:../../@core/ui-kit/popup-ui
       '@igourd-core/shadcn-ui':
         specifier: workspace:^
         version: link:../../@core/ui-kit/shadcn-ui

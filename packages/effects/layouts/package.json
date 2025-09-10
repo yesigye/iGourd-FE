@@ -1,6 +1,6 @@
 {
   "name": "@igourd/layouts",
-  "version": "5.6.2-beta.5",
+  "version": "5.6.2-beta.10",
   "type": "module",
   "scripts": {
     "build": "vite build"
@@ -31,6 +31,7 @@
     "provenance": false
   },
   "peerDependencies": {
+    "@igourd/common-ui": "workspace:^",
     "@igourd/constants": "workspace:^",
     "@igourd/hooks": "workspace:^",
     "@igourd/icons": "workspace:^",
@@ -47,7 +48,6 @@
     "@igourd-core/composables": "workspace:^",
     "@igourd-core/layout-ui": "workspace:^",
     "@igourd-core/menu-ui": "workspace:^",
-    "@igourd-core/popup-ui": "workspace:^",
     "@igourd-core/shadcn-ui": "workspace:^",
     "@igourd-core/shared": "workspace:^",
     "@igourd-core/tabs-ui": "workspace:^",

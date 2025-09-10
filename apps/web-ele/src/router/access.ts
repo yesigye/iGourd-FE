@@ -14,8 +14,7 @@ const forbiddenComponent = () => import('#/views/_core/fallback/forbidden.vue');
 
 async function generateAccess(options: GenerateMenuAndRoutesOptions) {
   const accessStore = useAccessStore();
-  const pageMap: ComponentRecordType = import.meta.glob('../views/**/*.vue');
-
+  const pageMap: ComponentRecordType = import.meta.glob(['../views/**/*.vue', '../features/*/pages/**/*.vue']);
   const layoutMap: ComponentRecordType = {
     BasicLayout,
     IFrameView,
@@ -29,7 +28,6 @@ async function generateAccess(options: GenerateMenuAndRoutesOptions) {
     },
     // 可以指定没有权限跳转403页面
     forbiddenComponent,
-    // 如果 route.meta.menuVisibleWithForbidden = true
     layoutMap,
     pageMap,
   });

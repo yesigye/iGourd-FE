@@ -1,0 +1,33 @@
+{
+  "report": {
+    "title": "Report Management",
+    "add": "Add Report",
+    "edit": "Edit Report",
+    "view": "View Report",
+    "delete": "Delete Report",
+    "addReport": "Add Report",
+    "editReport": "Edit Report",
+    "viewReport": "Report Detail",
+    "reportList": "Report List",
+    "reportName": "Report Name",
+    "reportType": "Report Type",
+    "status": "Status",
+    "createTime": "Create Time",
+    "updateTime": "Update Time",
+    "saveSuccess": "Save Success",
+    "saveError": "Save Failed",
+    "deleteSuccess": "Delete Success",
+    "deleteError": "Delete Failed",
+    "deleteConfirm": "Are you sure to delete selected reports?",
+    "deleteTitle": "Delete Confirmation",
+    "editError": "Edit Failed",
+    "viewError": "View Failed",
+    "exportSuccess": "Export Success",
+    "exportError": "Export Failed",
+    "description": "Description",
+    "keywords": "Keywords",
+    "name": "Name",
+    "pleaseSelectStatus": "Please select status",
+    "pleaseSelectType": "Please select type"
+  }
+}

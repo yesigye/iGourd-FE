@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
-
-import { IgourdButton, Page } from '@igourd/common-ui';
+import Form from './components/form.vue';
+import { IgourdButton, Page, useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { useIgourdVxeGrid } from '#/adapter/vxe-table';
@@ -15,7 +15,7 @@ function getVendorPageListApi(data: any) {
   return requestClient.post('v1/merchant/purchase/vendor/page-list', data);
 }
 
-// const [Drawer, drawerApi] = useIgourdDrawer();
+
 const { t } = useI18n();
 interface RowType {
   category: string;
@@ -27,7 +27,7 @@ interface RowType {
 }
 const gridEvents: VxeGridListeners<RowType> = {
   cellClick: ({ row }) => {
-    console.log(row);
+    drawerApi.setData(row).open();
   },
   filterChange({ $grid, filterList }) {
     const query: Record<string, any> = {};
@@ -111,6 +111,7 @@ const [Grid, gridApi] = useIgourdVxeGrid({
 
 <template>
   <Page auto-content-height>
+    <Drawer />
     <Grid>
       <template #table-title>
         <IgourdButton>新增</IgourdButton>

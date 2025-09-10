@@ -1,6 +1,6 @@
 {
   "name": "@igourd/styles",
-  "version": "5.6.2-beta.5",
+  "version": "5.6.2-beta.10",
   "license": "UNLICENSED",
   "type": "module",
   "main": "./src/index.ts",

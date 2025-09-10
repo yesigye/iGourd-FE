@@ -11,7 +11,7 @@ import { $t } from '@igourd/locales';
 import { preferences, usePreferences } from '@igourd/preferences';
 import { isWindowsOs } from '@igourd/utils';
 
-import { useIgourdModal } from '@igourd-core/popup-ui';
+import { useIgourdModal } from '@igourd/common-ui';
 import {
   Badge,
   DropdownMenu,

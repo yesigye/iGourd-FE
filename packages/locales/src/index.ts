@@ -4,6 +4,7 @@ import {
   loadLocalesMap,
   loadLocalesMapFromDir,
   setupI18n,
+  mergeLocaleMessage,
 } from './i18n';
 
 const $t = i18n.global.t;
@@ -17,6 +18,7 @@ export {
   loadLocalesMap,
   loadLocalesMapFromDir,
   setupI18n,
+  mergeLocaleMessage,
 };
 export {
   type ImportLocaleFn,

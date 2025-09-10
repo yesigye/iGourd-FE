@@ -37,7 +37,7 @@ async function generateRoutesByBackend(
 }
 
 function functionTreesToRouteNodes(
-  functionTrees: Record<string,any>[],
+  functionTrees: Record<string, any>[],
 ): RouteRecordStringComponent[] {
   const nodes: RouteRecordStringComponent[] = [];
 
@@ -49,10 +49,41 @@ function functionTreesToRouteNodes(
     const menuUrl = menu.url || '';
     const routeName = menuUrl.split('/').filter(Boolean).join('_') || 'Home';
 
-    const node: RouteRecordStringComponent = {
+    // 生成组件路径
+    let componentPath = menu.component_paths;
+    if (!componentPath) {
+      // 根据 URL 生成 features 结构的组件路径
+      if (menuUrl && menuUrl.startsWith('/')) {
+        const pathParts = menuUrl.split('/').filter(Boolean);
+        if (pathParts.length >= 2) {
+          const module = pathParts[0];
+          const page = pathParts[1];
+          // 将 purchase/list 转换为 purchase-list 格式，并处理驼峰命名
+          const pageName = page
+            .replace(/\//g, '-')
+            .replace(/([A-Z])/g, '-$1')
+            .toLowerCase()
+            .replace(/^-/, '');
+          componentPath = `/features/${module}/pages/${pageName}/index.vue`;
+        } else if (pathParts.length === 1) {
+          // 对于单层路径，如果有子路由则不生成组件路径
+          if (tree.sub_function_trees && tree.sub_function_trees.length > 0) {
+            componentPath = undefined; // 不生成组件路径，作为容器路由
+          } else {
+            const module = pathParts[0];
+            componentPath = `/features/${module}/pages/index/index.vue`;
+          }
+        } else {
+          componentPath = `${menuUrl}/index.vue`;
+        }
+      } else {
+        componentPath = `${menuUrl}/index.vue`;
+      }
+    }
+
+    const node: any = {
       path: menuUrl,
       name: routeName,
-      component: menu.component_paths || `${menuUrl}/index.vue`, // 传 component_paths 给 convertRoutes
       meta: {
         hidden: menu.is_displayed === false,
         title: menu.menu_key,
@@ -61,22 +92,31 @@ function functionTreesToRouteNodes(
       },
     };
 
+    // 只有当 componentPath 存在时才设置 component 属性
+    if (componentPath) {
+      node.component = componentPath;
+    }
+
     if (tree.sub_function_trees && tree.sub_function_trees.length > 0) {
       node.children = functionTreesToRouteNodes(tree.sub_function_trees);
     } else if (!tree.sub_function_trees && menu.parent_id === '0') {
       // 顶级无子节点也生成默认子路由
-      node.children = [
-        {
-          path: '',
-          name: `${routeName}_First`,
-          component: menu.component_paths || `${menuUrl}/index.vue`,
-          meta: {
-            entitle: menu.name,
-            title: menu.menu_key,
-            icon: menu.style_class,
-          },
+      const childNode: any = {
+        path: '',
+        name: `${routeName}_First`,
+        meta: {
+          entitle: menu.name,
+          title: menu.menu_key,
+          icon: menu.style_class,
         },
-      ];
+      };
+
+      // 只有当 componentPath 存在时才设置 component 属性
+      if (componentPath) {
+        childNode.component = componentPath;
+      }
+
+      node.children = [childNode];
     }
 
     nodes.push(node);
@@ -129,6 +169,16 @@ function normalizeViewPath(path: string): string {
     : `/${normalizedPath}`;
 
   // 这里耦合了igourd-admin的目录结构
-  return viewPath.replace(/^\/views/, '');
+  // 支持 /views 和 /features/{module}/pages 两种路径形式
+  if (viewPath.startsWith('/views')) {
+    return viewPath.replace(/^\/views/, '');
+  }
+
+  // 对于 features 结构，直接返回相对路径格式以匹配 pageMap
+  if (viewPath.startsWith('/features/')) {
+    return viewPath.replace(/^\//, '../');
+  }
+
+  return viewPath;
 }
 export { generateRoutesByBackend };

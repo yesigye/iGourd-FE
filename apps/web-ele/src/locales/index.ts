@@ -15,6 +15,7 @@ import {
   $t,
   setupI18n as coreSetup,
   loadLocalesMapFromDir,
+  mergeLocaleMessage,
 } from '@igourd/locales';
 import { preferences } from '@igourd/preferences';
 import { useUserStore } from '@igourd/stores';
@@ -26,6 +27,8 @@ import defaultLocale from 'element-plus/es/locale/lang/zh-cn';
 
 import { getLocaleApi } from '#/api';
 
+let isLocaleLoaded = false;
+
 const elementLocale = ref<Language>(defaultLocale);
 
 // @ts-ignore
@@ -35,6 +38,11 @@ const localesMap = loadLocalesMapFromDir(
   /\.\/langs\/([^/]+)\/(.*)\.json$/,
   modules,
 );
+
+// 加载 features 目录下的多语言文件
+// @ts-ignore
+const featureModules = import.meta.glob('../features/*/locales/**/*.json');
+
 /**
  * 加载应用特有的语言包
  * 这里也可以改造为从服务端获取翻译数据
@@ -45,8 +53,8 @@ async function loadMessages(lang: SupportedLanguagesType) {
     localesMap[lang]?.(),
     loadThirdPartyMessage(lang),
   ]);
-  const message = await loadRemoteLocale(lang);
-  return Object.assign(appLocaleMessages?.default || {}, message);
+  // 合并核心语言文件、features 语言文件和远程语言文件
+  return appLocaleMessages?.default;
 }
 
 /**
@@ -56,16 +64,9 @@ async function loadMessages(lang: SupportedLanguagesType) {
 async function loadThirdPartyMessage(lang: SupportedLanguagesType) {
   await Promise.all([loadElementLocale(lang), loadDayjsLocale(lang)]);
 }
-function resolveRemoteLocaleKey(key: string) {
-  const map = {
-    'zh-CN': 'zh_CN',
-    'en-US': 'en',
-    fr: 'fr',
-  };
-  // @ts-ignore
-  return map[key];
-}
-async function loadRemoteLocale(lang: SupportedLanguagesType) {
+
+async function loadRemoteLocale() {
+  if (isLocaleLoaded) return;
   const { currentLoginUserApp } = useUserStore();
   if (!currentLoginUserApp) return {};
   const params = {
@@ -75,15 +76,12 @@ async function loadRemoteLocale(lang: SupportedLanguagesType) {
     app_key: import.meta.env.VITE_APP_APP_KEY,
   };
   const data = await getLocaleApi(params);
-  const key = resolveRemoteLocaleKey(lang);
-  const value = data[key] as Record<string, Record<string, string>>;
-  const messages = Object.values(value).reduce(
-    (pre, current) => {
-      return Object.assign(pre, current);
-    },
-    {} as Record<string, any>,
-  );
-  return messages;
+
+  (Object.keys(data) as SupportedLanguagesType[]).forEach((key) => {
+    mergeLocaleMessage(key, data[key]);
+  });
+  isLocaleLoaded = true;
+  // return messages;
 }
 /**
  * 加载dayjs的语言包
@@ -138,4 +136,14 @@ async function setupI18n(app: App, options: LocaleSetupOptions = {}) {
   });
 }
 
-export { $t, elementLocale, loadRemoteLocale, setupI18n };
+async function loadFeatureLocal(moduleName: string) {
+  if (!moduleName) return;
+  const regexp = new RegExp(`locales/([^/]+)/(${moduleName})\\.json$`);
+  const featureLocalesMap = loadLocalesMapFromDir(regexp, featureModules);
+  Object.keys(featureLocalesMap).map(async (key) => {
+    const message = await featureLocalesMap[key]?.();
+    mergeLocaleMessage(key as SupportedLanguagesType, message?.default);
+  });
+}
+
+export { $t, elementLocale, loadRemoteLocale, setupI18n, loadFeatureLocal };

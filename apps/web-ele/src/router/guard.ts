@@ -10,6 +10,8 @@ import { accessRoutes, coreRouteNames } from '#/router/routes';
 import { useAuthStore } from '#/store';
 
 import { generateAccess } from './access';
+import { loadFeatureLocal, loadRemoteLocale } from '#/locales';
+import type { SupportedLanguagesType } from '@igourd/locales';
 
 /**
  * 通用守卫配置
@@ -21,7 +23,6 @@ function setupCommonGuard(router: Router) {
 
   router.beforeEach((to) => {
     to.meta.loaded = loadedPaths.has(to.path);
-
     // 页面加载进度条
     if (!to.meta.loaded && preferences.transition.progress) {
       startProgress();
@@ -40,7 +41,6 @@ function setupCommonGuard(router: Router) {
     }
   });
 }
-// const { t } = useI18n();
 /**
  * 权限访问守卫配置
  * @param router
@@ -65,6 +65,7 @@ function setupAccessGuard(router: Router) {
       }
       return true;
     }
+
     // accessToken 检查
     if (!accessStore.accessToken && !token_id) {
       // 明确声明忽略权限访问权限，则可以访问
@@ -100,9 +101,6 @@ function setupAccessGuard(router: Router) {
     if (accessStore.isAccessChecked) {
       return true;
     }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-
     // 生成菜单和路由
     const { accessibleMenus, accessibleRoutes } = await generateAccess({
       roles: userRoles,
@@ -113,27 +111,21 @@ function setupAccessGuard(router: Router) {
     // 保存菜单信息和路由信息
     accessStore.setAccessMenus(accessibleMenus);
     accessStore.setAccessRoutes(accessibleRoutes);
-    accessStore.setIsAccessChecked(true);
-    // const currentLoginUserApp = userStore.userInfo
-    //   ?.current_login_user_app as any;
-    // await loadRemoteLocale({
-    //   user_id: currentLoginUserApp.user_id,
-    //   owner_id: currentLoginUserApp.owner_id,
-    //   owner_type: currentLoginUserApp.owner_type,
-    //   app_key: import.meta.env.VITE_APP_APP_KEY,
-    // });
-    const redirectPath = (from.query.redirect ??
-      (to.path === preferences.app.defaultHomePath
-        ? userInfo.homePath || preferences.app.defaultHomePath
-        : to.fullPath)) as string;
 
     return {
-      ...router.resolve(decodeURIComponent(redirectPath)),
+      path: to.path,
       replace: true,
     };
   });
 }
 
+function setupI18n(router: Router) {
+  router.beforeEach(async (to, _, next) => {
+    const module = to.matched.at(1)?.name;
+    await Promise.all([loadRemoteLocale(), loadFeatureLocal(module as string)]);
+    next();
+  });
+}
 /**
  * 项目守卫配置
  * @param router
@@ -143,6 +135,9 @@ function createRouterGuard(router: Router) {
   setupCommonGuard(router);
   /** 权限访问 */
   setupAccessGuard(router);
+
+  /** 国际化 */
+  setupI18n(router);
 }
 
 export { createRouterGuard };

@@ -1,11 +1,18 @@
 import { defineConfig } from '@igourd/vite-config';
 
+import path from 'node:path';
+
 import ElementPlus from 'unplugin-element-plus/vite';
 
 export default defineConfig(async () => {
   return {
     application: {},
     vite: {
+      resolve: {
+        alias: {
+          '@@': path.resolve(__dirname, 'src/features'),
+        },
+      },
       plugins: [
         ElementPlus({
           format: 'esm',

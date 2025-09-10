@@ -7,7 +7,9 @@ import type { IGourdFormProps } from './types';
 import { computed, defineComponent, h, renderSlot, watch } from 'vue';
 
 import { registerValidateLocale } from '@formily/core';
+
 import { observable } from '@formily/reactive';
+
 import { createSchemaField, FormProvider } from '@formily/vue';
 
 import { useForm } from './form-api';
@@ -45,7 +47,7 @@ export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
 
   const Form = defineComponent(
     (
-      props: Omit<IGourdFormProps<T>, 'i18n' | 'schema' | 'scope'>,
+      props: Partial<Omit<IGourdFormProps<T>, 'i18n' | 'schema' | 'scope'>>,
       { attrs, slots },
     ) => {
       return () =>

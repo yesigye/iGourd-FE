@@ -86,14 +86,11 @@ export const useAccessStore = defineStore('core-access', {
       this.accessMenus = menus;
     },
     setAccessRoutes(routes: RouteRecordRaw[]) {
+      this.isAccessChecked = true;
       this.accessRoutes = routes;
-      // this.setAccessMenus(transformMenu(routes));
     },
     setAccessToken(token: AccessToken) {
       this.accessToken = token;
-    },
-    setIsAccessChecked(isAccessChecked: boolean) {
-      this.isAccessChecked = isAccessChecked;
     },
     setLoginExpired(loginExpired: boolean) {
       this.loginExpired = loginExpired;

@@ -5,7 +5,7 @@ export const LOGIN_PATH = import.meta.env.VITE_APP_LOGIN_PATH;
 
 export interface LanguageOption {
   label: string;
-  value: 'en-US' | 'fr' | 'zh-CN';
+  value: 'en-US' | 'fr-FR' | 'zh-CN';
 }
 
 /**
@@ -22,7 +22,7 @@ export const SUPPORT_LANGUAGES: LanguageOption[] = [
   },
   {
     label: 'Français',
-    value: 'fr',
+    value: 'fr-FR',
   },
 ];
 

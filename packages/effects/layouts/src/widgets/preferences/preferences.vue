@@ -6,7 +6,7 @@ import { $t, loadLocaleMessages } from '@igourd/locales';
 import { preferences, updatePreferences } from '@igourd/preferences';
 import { capitalizeFirstLetter } from '@igourd/utils';
 
-import { useIgourdDrawer } from '@igourd-core/popup-ui';
+import { useIgourdDrawer } from '@igourd/common-ui';
 import { IgourdButton } from '@igourd-core/shadcn-ui';
 
 import PreferencesDrawer from './preferences-drawer.vue';

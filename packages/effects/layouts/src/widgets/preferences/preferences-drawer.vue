@@ -25,7 +25,7 @@ import {
   usePreferences,
 } from '@igourd/preferences';
 
-import { useIgourdDrawer } from '@igourd-core/popup-ui';
+import { useIgourdDrawer } from '@igourd/common-ui';
 import {
   IgourdButton,
   IgourdIconButton,

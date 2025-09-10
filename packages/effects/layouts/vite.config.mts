@@ -18,6 +18,7 @@ export default defineLibraryConfig(async () => {
             '@vueuse/core',
             'vue',
             'vue-router',
+            '@igourd/common-ui',
             '@igourd/constants',
             '@igourd/hooks',
             '@igourd/icons',

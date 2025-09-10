@@ -62,6 +62,7 @@ const { Form, formAPI } = useIgourdForm({
     password: '',
   },
   useI18n,
+  scope: {},
   schema: props.formSchema as any,
 });
 const router = useRouter();

@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
 
+import { useIgourdModal } from '@igourd/common-ui';
 import { $t } from '@igourd/locales';
-
-import { useIgourdModal } from '@igourd-core/popup-ui';
 
 interface Props {
   // 轮询时间，分钟
