@@ -1,10 +1,15 @@
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from '@igourd/locales';
 import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/common-ui';
-import { purchaseApi } from '../apis';
-import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
+import { useIgourdDrawer, confirm } from '@igourd/common-ui';
+import { getPurchaseBillsListApi } from '../apis';
+import type {
+  VxeGridListeners,
+  VxeGridProps,
+  VxeGridPropTypes,
+} from '#/adapter/vxe-table';
 import PurchaseBillsDrawerFrom from '../components/purchase-bills-drawer.vue';
+import { useUserStore } from '@igourd/stores';
 
 // 定义行数据类型
 interface PurchaseBillsInfo {
@@ -20,106 +25,107 @@ interface PurchaseBillsInfo {
 
 export function usePurchaseBillsList() {
   const { t } = useI18n();
-
+  const checkedKeys = ref<number[]>([]);
+  const { currentLoginUserApp } = useUserStore();
   // 获取抽屉组件
   const [Drawer, drawerApi] = useIgourdDrawer({
     connectedComponent: PurchaseBillsDrawerFrom,
   });
 
   // 表格列配置
-  const columns = [
+  const columns: VxeGridPropTypes.Column<any>[] = [
     {
-      field: 'bill_no',
-      title: "{{t('purchase.billNo')}}",
+      field: 'purchase_bill_no',
+      title: t('purchase.purchasebillno'),
       width: 150,
       sortable: true,
     },
     {
-      field: 'bill_date',
-      title: "{{t('purchase.billDate')}}",
+      field: 'total_amount',
+      title: t('purchase.totalAmount'),
+      width: 120,
+      sortable: true,
+    },
+    {
+      field: 'paid_amount',
+      title: t('purchase.paidAmount'),
+      width: 120,
+      sortable: true,
+    },
+    {
+      field: 'unpaid_amount',
+      title: t('purchase.unpaid_amount'),
+      width: 120,
+      sortable: true,
+    },
+    {
+      field: 'vendor_name',
+      title: t('purchase.paymentstatus'),
+      width: 120,
+      sortable: true,
+    },
+    {
+      field: 'purchase_order_no',
+      title: t('purchase.purchaseorderno'),
+      width: 120,
+      sortable: true,
+    },
+        {
+      field: 'create_time',
+      title: t('purchase.creationTime'),
+      width: 120,
+      sortable: true,
+    },
+    {
+      field: 'review_status',
+      title: t('purchase.reviewStatus'),
       width: 120,
       sortable: true,
       formatter: 'formatDate',
     },
+
     {
-      field: 'total_amount',
-      title: "{{t('purchase.totalAmount')}}",
-      width: 120,
-      sortable: true,
-    },
-    {
-      field: 'status',
-      title: "{{t('purchase.status')}}",
+      field: 'creator_name',
+      title: t('purchase.creator'),
       width: 100,
-      slots: { default: 'status' },
-    },
-    {
-      field: 'remark',
-      title: "{{t('purchase.remark')}}",
-      width: 200,
     },
     {
       field: 'create_time',
-      title: "{{t('purchase.createTime')}}",
+      title: t('purchase.creationTime'),
       width: 160,
       sortable: true,
       formatter: 'formatDateTime',
     },
     {
       field: 'action',
-      title: "{{t('common.action')}}",
+      title: t('common.action'),
       width: 120,
       fixed: 'right',
       align: 'center',
-      slots: { default: 'action' },
+      slots: { default: 'actions' },
     },
   ];
 
   // 搜索表单配置
   const searchFormSchema = {
-    status: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-decorator-props': {
-        gridSpan: 'span 2',
-      },
-      'x-component': 'Select',
-      'x-class': 'w-full',
-      'x-component-props': {
-        placeholder: "{{t('purchase.pleaseSelectStatus')}}",
-        options: [
-          { label: '待付款', value: 'pending' },
-          { label: '已付款', value: 'paid' },
-          { label: '逾期', value: 'overdue' },
-          { label: '已取消', value: 'cancelled' },
-        ],
-      },
-    },
     keywords: {
       type: 'string',
       'x-decorator': 'FormItem',
-      'x-decorator-props': {
-        gridSpan: 'span 2',
-      },
       'x-component': 'Input',
       'x-class': 'w-full',
       'x-component-props': {
-        placeholder: "{{t('purchase.keywords')}}",
+        placeholder: "{{t('common.keywords')}}",
       },
     },
   };
 
   // Grid 事件配置
-  const gridEvents: VxeGridListeners<PurchaseBillsInfo> = {
-    cellClick: ({ row }) => {
-      drawerApi.setData(row).open();
+  const gridEvents: VxeGridListeners<any> = {
+    checkboxChange(params) {
+      checkedKeys.value = params.records.map((item) => item.id);
     },
-    filterChange({ $grid, filterList }) {
-      const query: Record<string, unknown> = {};
-      filterList.forEach((item) => {
-        query[item.field] = item.values;
-      });
-      $grid.commitProxy('reload', query);
+    checkboxAll(params) {
+      checkedKeys.value = params.records.map((item) => item.id);
     },
   };
 
@@ -140,7 +146,7 @@ export function usePurchaseBillsList() {
       form: false,
       ajax: {
         query: async ({ page }, form = {}) => {
-          return await purchaseApi.getBillsList({
+          return getPurchaseBillsListApi({
             page_num: page.currentPage,
             page_size: page.pageSize,
             merchant_id: '1938848394566025217',
@@ -148,13 +154,6 @@ export function usePurchaseBillsList() {
           });
         },
       },
-    },
-    toolbarConfig: {
-      custom: true,
-      export: false,
-      import: false,
-      refresh: true,
-      zoom: true,
     },
   };
 
@@ -165,17 +164,36 @@ export function usePurchaseBillsList() {
     formOptions: { schema: searchFormSchema, scope: {} },
   });
 
+  async function handleEdit(row: any) {
+    drawerApi.setData(row).open();
+  }
+  const canBatchDelete = computed(() => checkedKeys.value.length > 0);
+
+  function batchDelete() {
+    confirm({
+      title: t('purchase.deleteConfirmTitle'),
+      content: t('purchase.deleteConfirmText'),
+    })
+      .then(() => {
+        // return goodsReceiptDelete({
+        //   goods_receipt_note_id_list: checkedKeys.value,
+        //   merchant_id: currentLoginUserApp.owner_id,
+        // });
+      })
+      .then(() => {
+        gridApi.reload();
+        checkedKeys.value = [];
+      });
+  }
+
   return {
     // 组件
     Grid,
     Drawer,
     gridApi,
     drawerApi,
-
-    // 配置
-    columns,
-    searchFormSchema,
-    gridEvents,
-    gridOptions,
+    handleEdit,
+    canBatchDelete,
+    batchDelete,
   };
 }

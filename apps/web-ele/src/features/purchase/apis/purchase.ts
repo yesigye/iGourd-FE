@@ -186,7 +186,7 @@ export function createOrUpdatePurchaseReceiptApi(data: any) {
 // 获取采购退货分页列表
 export function getPurchaseReturnedListApi(data: any) {
   return requestClient.post(
-    `/merchant/purchase/purchase-returned/page-list`,
+    `/v1/merchant/purchase/purchase-returned/list`,
     data,
   );
 }
@@ -231,7 +231,7 @@ export function createOrUpdatePurchaseReturnedApi(data: any) {
 
 // 获取采购账单分页列表
 export function getPurchaseBillsListApi(data: any) {
-  return requestClient.post(`/merchant/purchase/purchase-bill/page-list`, data);
+  return requestClient.post(`/v1/merchant/purchase/purchase-bill/page-list`, data);
 }
 
 // 获取采购账单详情
