@@ -100,7 +100,6 @@ export function usePurchaseCustomizedList() {
       sortable: true,
       minWidth: 180,
       slots: { default: 'operation' },
-      formatter: 'formatDateTime',
     },
   ];
 

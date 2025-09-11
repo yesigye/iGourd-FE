@@ -127,7 +127,14 @@ export function createOrUpdatePurchaseOrderApi(data: any) {
 // 获取采购收据分页列表
 export function getPurchaseReceiptListApi(data: any) {
   return requestClient.post(
-    `/v1/merchant/purchase/purchase-receipt/page-list`,
+    `/v1/merchant/purchase/goods-receipt-note/page-list`,
+    data,
+  );
+}
+
+export function goodsReceiptDelete(data: unknown) {
+  return requestClient.post(
+    '/v1/merchant/purchase/goods-receipt-note/remove',
     data,
   );
 }
@@ -404,10 +411,8 @@ export function deleteVendorApi(id: string) {
 }
 
 // 批量删除供应商
-export function batchDeleteVendorApi(ids: string[]) {
-  return requestClient.delete(`/merchant/purchase/vendor/batch`, {
-    data: { ids },
-  });
+export function batchDeleteVendorApi(data: unknown) {
+  return requestClient.post(`/merchant/purchase/vendor/batch`, data);
 }
 
 // 创建或更新供应商

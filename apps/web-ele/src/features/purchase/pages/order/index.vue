@@ -2,21 +2,24 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <IgourdButton @click="drawerApi.open()">
-          {{ t('purchase.addOrder') }}
-        </IgourdButton>
+        <ElButton type="primary" @click="drawerApi.open()">
+          {{ t('common.create') }}
+        </ElButton>
+        <ElButton type="danger" v-if="canBatchDelete" @click="batchDelete">
+          {{ t('common.delete') }}
+        </ElButton>
       </template>
-      <template #action>
-        <IgourdButton @click="drawerApi.open()">
+      <template #operation="{ row }">
+        <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
-        </IgourdButton>
+        </ElButton>
       </template>
     </Grid>
-  <Drawer />
-</Page>
+    <Drawer />
+  </Page>
 </template>
 <script setup lang="ts">
-import { Page, IgourdButton } from '@igourd/common-ui';
+import { Page, ElButton } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { usePurchaseOrderList } from '../../hooks/use-purchase-order-list';
 
@@ -25,5 +28,6 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, drawerApi } = usePurchaseOrderList();
+const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
+  usePurchaseOrderList();
 </script>

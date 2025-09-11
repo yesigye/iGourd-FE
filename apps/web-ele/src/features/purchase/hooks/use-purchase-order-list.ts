@@ -1,10 +1,16 @@
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from '@igourd/locales';
 import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/common-ui';
+import { useIgourdDrawer, confirm } from '@igourd/common-ui';
 import { purchaseApi } from '../apis';
-import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
+import type {
+  VxeGridListeners,
+  VxeGridProps,
+  VxeGridPropTypes,
+} from '#/adapter/vxe-table';
 import PurchaseOrderDrawerFrom from '../components/purchase-order-drawer.vue';
+import { useUserStore } from '@igourd/stores';
+import { purchaseOrderDelete } from '../apis/order';
 
 // 定义行数据类型 - 基于原有的表格数据结构
 interface PurchaseOrderInfo {
@@ -23,24 +29,25 @@ interface PurchaseOrderInfo {
 
 export function usePurchaseOrderList() {
   const { t } = useI18n();
-
+  const checkedKeys = ref<number[]>([]);
   // 获取抽屉组件
   const [Drawer, drawerApi] = useIgourdDrawer({
     connectedComponent: PurchaseOrderDrawerFrom,
   });
-
+  const { currentLoginUserApp } = useUserStore();
   // 表格列配置 - 基于原有的 columnsVisible 数组
-  const columns = [
+  const columns: VxeGridPropTypes.Column<any>[] = [
+    {
+      type: 'checkbox',
+      width: 80,
+      fixed: 'left',
+    },
     {
       field: 'purchase_order_no',
-      title: t('customized.name'),
+      title: t('purchase.purchaseorderno'),
       width: 200,
       sortable: false,
-      fixed: 'left',
       align: 'left',
-      filterable: {
-
-      }
     },
     {
       field: 'purchase_date',
@@ -120,11 +127,11 @@ export function usePurchaseOrderList() {
     },
     {
       field: 'action',
-      title: t('common.action'),
+      title: t('purchase.operation'),
       width: 160,
       fixed: 'right',
       align: 'center',
-      slots: { default: 'action' },
+      slots: { default: 'operation' },
     },
   ];
 
@@ -132,31 +139,23 @@ export function usePurchaseOrderList() {
   const searchFormSchema = {
     keywords: {
       type: 'string',
-      title: "{{t('purchase.purchasePlaceholder')}}",
       'x-decorator': 'FormItem',
-      'x-decorator-props': {
-        gridSpan: 'span 2',
-      },
       'x-component': 'Input',
       'x-class': 'w-full',
       'x-component-props': {
-        placeholder: "{{t('purchase.purchasePlaceholder')}}",
+        placeholder: "{{t('common.keywords')}}",
         clearable: true,
       },
     },
   };
 
   // Grid 事件配置
-  const gridEvents: VxeGridListeners<PurchaseOrderInfo> = {
-    cellClick: ({ row }) => {
-      drawerApi.setData(row).open();
+  const gridEvents: VxeGridListeners<any> = {
+    checkboxChange(params) {
+      checkedKeys.value = params.records.map((item) => item.id);
     },
-    filterChange({ $grid, filterList }) {
-      const query: Record<string, unknown> = {};
-      filterList.forEach((item) => {
-        query[item.field] = item.values;
-      });
-      $grid.commitProxy('reload', query);
+    checkboxAll(params) {
+      checkedKeys.value = params.records.map((item) => item.id);
     },
   };
 
@@ -164,7 +163,6 @@ export function usePurchaseOrderList() {
   const gridOptions: VxeGridProps<PurchaseOrderInfo> = {
     checkboxConfig: {
       highlight: true,
-      labelField: 'purchase_order_no',
     },
     filterConfig: {
       remote: true,
@@ -180,7 +178,7 @@ export function usePurchaseOrderList() {
           return await purchaseApi.getOrderList({
             page_num: page.currentPage,
             page_size: page.pageSize,
-            merchant_id: '1938848394566025217',
+            merchant_id: currentLoginUserApp.owner_id,
             ...form,
           });
         },
@@ -199,8 +197,29 @@ export function usePurchaseOrderList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema },
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
+
+  async function handleEdit(row: any) {
+    drawerApi.setData(row).open();
+  }
+  const canBatchDelete = computed(() => checkedKeys.value.length > 0);
+  function batchDelete() {
+    confirm({
+      title: t('purchase.deleteConfirmTitle'),
+      content: t('purchase.deleteConfirmText'),
+    })
+      .then(() => {
+        return purchaseOrderDelete({
+          purchase_order_id_list: checkedKeys.value,
+          merchant_id: currentLoginUserApp.owner_id,
+        });
+      })
+      .then(() => {
+        gridApi.reload();
+        checkedKeys.value = [];
+      });
+  }
 
   return {
     // 组件
@@ -208,11 +227,8 @@ export function usePurchaseOrderList() {
     Drawer,
     gridApi,
     drawerApi,
-
-    // 配置
-    columns,
-    searchFormSchema,
-    gridEvents,
-    gridOptions,
+    handleEdit,
+    batchDelete,
+    canBatchDelete,
   };
 }

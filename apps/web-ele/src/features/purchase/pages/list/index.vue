@@ -1,19 +1,26 @@
 <template>
   <Page auto-content-height>
-    <Drawer />
     <Grid>
       <template #table-title>
-        <IgourdButton @click="drawerApi.open()">
-          {{ t('purchase.addPurchase') }}
-        </IgourdButton>
+        <ElButton type="primary" @click="drawerApi.open()">
+          {{ t('common.create') }}
+        </ElButton>
+        <ElButton type="danger" v-if="canBatchDelete" @click="batchDelete">
+          {{ t('common.delete') }}
+        </ElButton>
       </template>
-      <template #profile_photo> 123 头像 </template>
+      <template #operation="{ row }">
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.edit') }}
+        </ElButton>
+      </template>
     </Grid>
+    <Drawer />
   </Page>
 </template>
 
 <script setup lang="ts">
-import { Page, IgourdButton } from '@igourd/common-ui';
+import { Page, ElButton } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { usePurchaseList } from '../../hooks/use-purchase-list';
 
@@ -23,5 +30,6 @@ defineOptions({
 
 const { t } = useI18n();
 
-const { Grid, Drawer, drawerApi } = usePurchaseList();
+const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
+  usePurchaseList();
 </script>

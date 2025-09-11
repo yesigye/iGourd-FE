@@ -85,10 +85,10 @@ function functionTreesToRouteNodes(
       path: menuUrl,
       name: routeName,
       meta: {
-        hidden: menu.is_displayed === false,
+        hideInMenu: menu.is_displayed === false,
         title: menu.menu_key,
         icon: menu.style_class,
-        affix: routeName.toLowerCase() === 'Home',
+        affix: routeName.toLowerCase() === 'home',
       },
     };
 
@@ -100,28 +100,11 @@ function functionTreesToRouteNodes(
     if (tree.sub_function_trees && tree.sub_function_trees.length > 0) {
       node.children = functionTreesToRouteNodes(tree.sub_function_trees);
     } else if (!tree.sub_function_trees && menu.parent_id === '0') {
-      // 顶级无子节点也生成默认子路由
-      const childNode: any = {
-        path: '',
-        name: `${routeName}_First`,
-        meta: {
-          entitle: menu.name,
-          title: menu.menu_key,
-          icon: menu.style_class,
-        },
-      };
-
-      // 只有当 componentPath 存在时才设置 component 属性
-      if (componentPath) {
-        childNode.component = componentPath;
-      }
-
-      node.children = [childNode];
     }
 
     nodes.push(node);
   });
-
+  console.log(nodes);
   return nodes;
 }
 

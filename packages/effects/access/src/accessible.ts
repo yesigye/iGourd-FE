@@ -98,7 +98,6 @@ async function generateRoutes(
         generateRoutesByFrontend(routes, roles || [], forbiddenComponent),
         generateRoutesByBackend(options),
       ]);
-      console.log(frontend_resultRoutes, backend_resultRoutes);
       resultRoutes = [...frontend_resultRoutes, ...backend_resultRoutes];
       break;
     }

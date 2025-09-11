@@ -1,10 +1,15 @@
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from '@igourd/locales';
 import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/common-ui';
-import { purchaseApi } from '../apis';
-import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
+import { useIgourdDrawer, confirm } from '@igourd/common-ui';
+import { batchDeleteVendorApi, purchaseApi } from '../apis';
+import type {
+  VxeGridListeners,
+  VxeGridProps,
+  VxeGridPropTypes,
+} from '#/adapter/vxe-table';
 import PurchaseDrawerFrom from '../components/purchase-drawer.vue';
+import { useUserStore } from '@igourd/stores';
 
 // 定义行数据类型 - 基于原有的表格数据结构
 interface PurchaseInfo {
@@ -20,91 +25,102 @@ interface PurchaseInfo {
 
 export function usePurchaseList() {
   const { t } = useI18n();
-
+  const checkedKeys = ref<number[]>([]);
   // 获取抽屉组件
   const [Drawer, drawerApi] = useIgourdDrawer({
     connectedComponent: PurchaseDrawerFrom,
   });
-
+  const { currentLoginUserApp } = useUserStore();
   // 表格列配置 - 基于原有的 columnsVisible 数组
-  const columns = computed(() => [
+  const columns: VxeGridPropTypes.Column<any>[] = [
     {
-      field: 'profile_photo',
-      title: "{{t('purchase.profilePhoto')}}",
+      type: 'checkbox',
       width: 80,
-      align: 'center',
-      fixed: 'left',
     },
     {
       field: 'name',
-      title: "{{t('purchase.vendorName')}}",
+      title: t('purchase.featureName'),
+      minWidth: 170,
+      sortable: true,
+      align: 'left',
+    },
+    {
+      cellRender: { name: 'CellImage' },
+      field: 'profile_photo',
+      title: t('purchase.profilePhoto'),
+      width: 80,
+      align: 'center',
+    },
+    {
+      field: 'name',
+      title: t('purchase.vendorName'),
       width: 155,
       sortable: true,
-      fixed: 'left',
     },
     {
       field: 'contact_name',
-      title: "{{t('purchase.name')}}",
+      title: t('purchase.name'),
       width: 160,
       sortable: true,
     },
     {
       field: 'contact_telephone',
-      title: "{{t('purchase.contactTelephone')}}",
+      title: t('purchase.contactTelephone'),
       width: 200,
       sortable: true,
     },
     {
       field: 'address',
-      title: "{{t('purchase.address')}}",
+      title: t('purchase.address'),
       width: 200,
       sortable: true,
     },
     {
       field: 'creator_name',
-      title: "{{t('purchase.creator')}}",
+      title: t('purchase.creator'),
       width: 200,
       sortable: true,
       align: 'left',
     },
     {
       field: 'create_time',
-      title: "{{t('purchase.createTime')}}",
+      title: t('purchase.createTime'),
       width: 180,
       sortable: true,
       align: 'left',
       formatter: 'formatDateTime',
     },
-  ]);
+    {
+      field: 'operation',
+      title: t('purchase.operation'),
+      sortable: true,
+      minWidth: 180,
+      fixed: 'right',
+      slots: { default: 'operation' },
+    },
+  ];
 
   // 搜索表单配置 - 基于原有的 queryParams 对象
   const searchFormSchema = {
     keywords: {
       type: 'string',
       'x-decorator': 'FormItem',
-      'x-decorator-props': {
-        gridSpan: 'span 2',
-      },
       'x-component': 'Input',
       'x-class': 'w-full',
       'x-component-props': {
-        placeholder: "{{t('purchase.placeholder_vendor')}}",
-        clearable: true
-      }
-    }
+        placeholder: "{{t('common.keywords')}}",
+        clearable: true,
+      },
+    },
   };
 
   // Grid 事件配置
-  const gridEvents: VxeGridListeners<PurchaseInfo> = {
-    cellClick: ({ row }) => {
-      drawerApi.setData(row).open();
+  const gridEvents: VxeGridListeners<any> = {
+    checkboxChange(params) {
+      checkedKeys.value = params.records.map((item) => item.id);
     },
-    filterChange({ $grid, filterList }) {
-      const query: Record<string, unknown> = {};
-      filterList.forEach((item) => {
-        query[item.field] = item.values;
-      });
-      $grid.commitProxy('reload', query);
+    checkboxAll(params) {
+      checkedKeys.value = params.records.map((item) => item.id);
     },
   };
 
@@ -112,55 +128,57 @@ export function usePurchaseList() {
   const gridOptions: VxeGridProps<PurchaseInfo> = {
     checkboxConfig: {
       highlight: true,
-      labelField: 'name',
     },
-    filterConfig: {
-      remote: true,
-    },
-    columns: columns.value,
-    exportConfig: {},
+    columns: columns,
     height: 'auto',
     keepSource: true,
     proxyConfig: {
-      form: false,
       ajax: {
         query: async ({ page }, form = {}) => {
           return await purchaseApi.getPageList({
             page_num: page.currentPage,
             page_size: page.pageSize,
-            merchant_id: '1938848394566025217',
+            merchant_id: currentLoginUserApp.owner_id,
             ...form,
           });
         },
       },
     },
-    toolbarConfig: {
-      custom: true,
-      export: false,
-      import: false,
-      refresh: true,
-      zoom: true,
-    },
   };
-
+  const canBatchDelete = computed(() => checkedKeys.value.length > 0);
+  function batchDelete() {
+    confirm({
+      title: t('purchase.deleteConfirmTitle'),
+      content: t('purchase.deleteConfirmText'),
+    })
+      .then(() => {
+        return batchDeleteVendorApi({
+          vendor_id_list: checkedKeys.value,
+          merchant_id: currentLoginUserApp.owner_id,
+        });
+      })
+      .then(() => {
+        gridApi.reload();
+        checkedKeys.value = [];
+      });
+  }
   // 使用 useIgourdVxeGrid
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
     formOptions: { schema: searchFormSchema, scope: {} },
   });
-
+  async function handleEdit(row: any) {
+    drawerApi.setData(row).open();
+  }
   return {
     // 组件
     Grid,
     Drawer,
     gridApi,
     drawerApi,
-
-    // 配置
-    columns,
-    searchFormSchema,
-    gridEvents,
-    gridOptions,
+    batchDelete,
+    handleEdit,
+    canBatchDelete,
   };
 }
