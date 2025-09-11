@@ -28,9 +28,7 @@ export function useStoreManagementList() {
   });
 
   // 表格列配置 - 基于原有的表格数据结构
-  const columns = computed(() => [
-
-
+  const columns = [
     {
       field: 'store_name',
       title: "{{t('storeManagement.storeName')}}",
@@ -93,111 +91,123 @@ export function useStoreManagementList() {
       sortable: true,
       formatter: 'formatDateTime',
     },
-  ]);
+  ];
 
   // 搜索表单配置 - 基于原有的查询参数
-  const searchFormSchema = {keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeManagement.keywords')}}",
-          clearable: true,
-        },
+  const searchFormSchema = {
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      store_name: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeManagement.storeName')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeManagement.keywords')}}",
+        clearable: true,
       },
-      store_code: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeManagement.storeCode')}}",
-          clearable: true,
-        },
+    },
+    store_name: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      store_type: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeManagement.pleaseSelectStoreType')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('storeManagement.storeType_FLAGSHIP'), value: 'FLAGSHIP' },
-            { label: "{{t('storeManagement.storeType_STANDARD'), value: 'STANDARD' },
-            { label: "{{t('storeManagement.storeType_BASIC'), value: 'BASIC' },
-            { label: "{{t('storeManagement.storeType_MINI'), value: 'MINI' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeManagement.storeName')}}",
+        clearable: true,
       },
-      manager_name: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeManagement.managerName')}}",
-          clearable: true,
-        },
+    },
+    store_code: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      contact_phone: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeManagement.contactPhone')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeManagement.storeCode')}}",
+        clearable: true,
       },
-      status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeManagement.pleaseSelectStatus')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('storeManagement.status_ACTIVE'), value: 'ACTIVE' },
-            { label: "{{t('storeManagement.status_INACTIVE'), value: 'INACTIVE' },
-            { label: "{{t('storeManagement.status_MAINTENANCE'), value: 'MAINTENANCE' },
-            { label: "{{t('storeManagement.status_CLOSED'), value: 'CLOSED' },
-          ],
-        },
+    },
+    store_type: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeManagement.pleaseSelectStoreType')}}",
+        clearable: true,
+        options: [
+          {
+            label: "{{t('storeManagement.storeType_FLAGSHIP')}}",
+            value: 'FLAGSHIP',
+          },
+          {
+            label: "{{t('storeManagement.storeType_STANDARD')}}",
+            value: 'STANDARD',
+          },
+          { label: "{{t('storeManagement.storeType_BASIC')}}", value: 'BASIC' },
+          { label: "{{t('storeManagement.storeType_MINI')}}", value: 'MINI' },
+        ],
+      },
+    },
+    manager_name: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeManagement.managerName')}}",
+        clearable: true,
+      },
+    },
+    contact_phone: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeManagement.contactPhone')}}",
+        clearable: true,
+      },
+    },
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeManagement.pleaseSelectStatus')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('storeManagement.status_ACTIVE')}}", value: 'ACTIVE' },
+          {
+            label: "{{t('storeManagement.status_INACTIVE')}}",
+            value: 'INACTIVE',
+          },
+          {
+            label: "{{t('storeManagement.status_MAINTENANCE')}}",
+            value: 'MAINTENANCE',
+          },
+          { label: "{{t('storeManagement.status_CLOSED')}}", value: 'CLOSED' },
+        ],
       },
     },
   };
@@ -225,7 +235,7 @@ export function useStoreManagementList() {
     filterConfig: {
       remote: true,
     },
-    columns: columns.value,
+    columns: columns,
     exportConfig: {},
     height: 'auto',
     keepSource: true,
@@ -255,7 +265,7 @@ export function useStoreManagementList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -272,8 +282,3 @@ export function useStoreManagementList() {
     gridOptions,
   };
 }
-
-
-
-
-

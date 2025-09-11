@@ -14,7 +14,7 @@ export * from './use-purchase-bills-form';
 export * from './use-purchase-customized-form';
 export * from './use-purchase-new-order-form';
 export * from './use-purchase-new-order-history-form';
-export * from './use-purchase-order-detail-drawer';
+// export * from './use-purchase-order-detail-drawer';
 export * from './use-purchase-order-add-drawer';
 export * from './use-purchase-order-clearing-drawer';
 export * from './use-purchase-bills-add-drawer';

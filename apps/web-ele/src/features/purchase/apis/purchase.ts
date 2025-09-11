@@ -14,27 +14,47 @@ export function getPurchaseListApi(data: any) {
 
 // 获取采购详情
 export function getPurchaseDetailApi(id: string) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/detail`, { id });
+  return requestClient.post(`/v1/merchant/purchase/purchase-order/detail`, {
+    id,
+  });
 }
 
 // 创建采购
 export function createPurchaseApi(data: any) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/create`, data);
+  return requestClient.post(
+    `/v1/merchant/purchase/purchase-order/create`,
+    data,
+  );
 }
 
 // 更新采购
 export function updatePurchaseApi(id: string, data: any) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/modify`, data);
+  return requestClient.post(
+    `/v1/merchant/purchase/purchase-order/modify`,
+    data,
+  );
 }
 
 // 删除采购
 export function deletePurchaseApi(id: string) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/remove`, { id });
+  return requestClient.post(`/v1/merchant/purchase/purchase-order/remove`, {
+    id,
+  });
 }
 
 // 批量删除采购
 export function batchDeletePurchaseApi(ids: string[]) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/remove`, { ids });
+  return requestClient.post(`/v1/merchant/purchase/purchase-order/remove`, {
+    ids,
+  });
+}
+
+export function createOrUpdateCustomer(data: any) {
+  if (data.id) {
+    return updatePurchaseApi(data.id, data);
+  } else {
+    return createPurchaseApi(data);
+  }
 }
 
 // 创建或更新采购
@@ -50,32 +70,47 @@ export function createOrUpdatePurchaseApi(data: any) {
 
 // 获取采购订单分页列表
 export function getPurchaseOrderListApi(data: any) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/page-list`, data);
+  return requestClient.post(
+    `/v1/merchant/purchase/purchase-order/page-list`,
+    data,
+  );
 }
 
 // 获取采购订单详情
 export function getPurchaseOrderDetailApi(id: string) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/detail`, { id });
+  return requestClient.post(`/v1/merchant/purchase/purchase-order/detail`, {
+    id,
+  });
 }
 
 // 创建采购订单
 export function createPurchaseOrderApi(data: any) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/create`, data);
+  return requestClient.post(
+    `/v1/merchant/purchase/purchase-order/create`,
+    data,
+  );
 }
 
 // 更新采购订单
 export function updatePurchaseOrderApi(id: string, data: any) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/modify`, data);
+  return requestClient.post(
+    `/v1/merchant/purchase/purchase-order/modify`,
+    data,
+  );
 }
 
 // 删除采购订单
 export function deletePurchaseOrderApi(id: string) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/remove`, { id });
+  return requestClient.post(`/v1/merchant/purchase/purchase-order/remove`, {
+    id,
+  });
 }
 
 // 批量删除采购订单
 export function batchDeletePurchaseOrderApi(ids: string[]) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/remove`, { ids });
+  return requestClient.post(`/v1/merchant/purchase/purchase-order/remove`, {
+    ids,
+  });
 }
 
 // 创建或更新采购订单
@@ -91,7 +126,10 @@ export function createOrUpdatePurchaseOrderApi(data: any) {
 
 // 获取采购收据分页列表
 export function getPurchaseReceiptListApi(data: any) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-receipt/page-list`, data);
+  return requestClient.post(
+    `/v1/merchant/purchase/purchase-receipt/page-list`,
+    data,
+  );
 }
 
 // 获取采购收据详情
@@ -101,12 +139,18 @@ export function getPurchaseReceiptDetailApi(id: string) {
 
 // 创建采购收据
 export function createPurchaseReceiptApi(data: any) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/receipt`, data);
+  return requestClient.post(
+    `/v1/merchant/purchase/purchase-order/receipt`,
+    data,
+  );
 }
 
 // 更新采购收据
 export function updatePurchaseReceiptApi(id: string, data: any) {
-  return requestClient.put(`/v1/merchant/purchase/purchase-receipt/${id}`, data);
+  return requestClient.put(
+    `/v1/merchant/purchase/purchase-receipt/${id}`,
+    data,
+  );
 }
 
 // 删除采购收据
@@ -116,7 +160,9 @@ export function deletePurchaseReceiptApi(id: string) {
 
 // 批量删除采购收据
 export function batchDeletePurchaseReceiptApi(ids: string[]) {
-  return requestClient.delete(`/v1/merchant/purchase/purchase-receipt/batch`, { data: { ids } });
+  return requestClient.delete(`/v1/merchant/purchase/purchase-receipt/batch`, {
+    data: { ids },
+  });
 }
 
 // 创建或更新采购收据
@@ -132,7 +178,10 @@ export function createOrUpdatePurchaseReceiptApi(data: any) {
 
 // 获取采购退货分页列表
 export function getPurchaseReturnedListApi(data: any) {
-  return requestClient.post(`/merchant/purchase/purchase-returned/page-list`, data);
+  return requestClient.post(
+    `/merchant/purchase/purchase-returned/page-list`,
+    data,
+  );
 }
 
 // 获取采购退货详情
@@ -157,7 +206,9 @@ export function deletePurchaseReturnedApi(id: string) {
 
 // 批量删除采购退货
 export function batchDeletePurchaseReturnedApi(ids: string[]) {
-  return requestClient.delete(`/merchant/purchase/purchase-returned/batch`, { data: { ids } });
+  return requestClient.delete(`/merchant/purchase/purchase-returned/batch`, {
+    data: { ids },
+  });
 }
 
 // 创建或更新采购退货
@@ -198,7 +249,9 @@ export function deletePurchaseBillsApi(id: string) {
 
 // 批量删除采购账单
 export function batchDeletePurchaseBillsApi(ids: string[]) {
-  return requestClient.delete(`/merchant/purchase/purchase-bill/batch`, { data: { ids } });
+  return requestClient.delete(`/merchant/purchase/purchase-bill/batch`, {
+    data: { ids },
+  });
 }
 
 // 创建或更新采购账单
@@ -212,50 +265,19 @@ export function createOrUpdatePurchaseBillsApi(data: any) {
 
 // ==================== 定制采购 APIs ====================
 
-// 获取定制采购分页列表
-export function getPurchaseCustomizedListApi(data: any) {
-  return requestClient.post(`/v1/merchant/basics/dynamic-column/page-list`, data);
-}
-
 // 获取定制采购详情
 export function getPurchaseCustomizedDetailApi(id: string) {
   return requestClient.get(`/merchant/purchase/purchase-customized/${id}`);
-}
-
-// 创建定制采购
-export function createPurchaseCustomizedApi(data: any) {
-  return requestClient.post(`/merchant/purchase/purchase-order/customized`, data);
-}
-
-// 更新定制采购
-export function updatePurchaseCustomizedApi(id: string, data: any) {
-  return requestClient.put(`/merchant/purchase/purchase-customized/${id}`, data);
-}
-
-// 删除定制采购
-export function deletePurchaseCustomizedApi(id: string) {
-  return requestClient.delete(`/merchant/purchase/purchase-customized/${id}`);
-}
-
-// 批量删除定制采购
-export function batchDeletePurchaseCustomizedApi(ids: string[]) {
-  return requestClient.delete(`/merchant/purchase/purchase-customized/batch`, { data: { ids } });
-}
-
-// 创建或更新定制采购
-export function createOrUpdatePurchaseCustomizedApi(data: any) {
-  if (data.id) {
-    return updatePurchaseCustomizedApi(data.id, data);
-  } else {
-    return createPurchaseCustomizedApi(data);
-  }
 }
 
 // ==================== 新订单 APIs ====================
 
 // 获取新订单分页列表
 export function getPurchaseNewOrderListApi(data: any) {
-  return requestClient.post(`/merchant/purchase/purchase-new-order/page-list`, data);
+  return requestClient.post(
+    `/merchant/purchase/purchase-new-order/page-list`,
+    data,
+  );
 }
 
 // 获取新订单详情
@@ -265,7 +287,10 @@ export function getPurchaseNewOrderDetailApi(id: string) {
 
 // 创建新订单
 export function createPurchaseNewOrderApi(data: any) {
-  return requestClient.post(`/merchant/purchase/purchase-order/new-order`, data);
+  return requestClient.post(
+    `/merchant/purchase/purchase-order/new-order`,
+    data,
+  );
 }
 
 // 更新新订单
@@ -280,7 +305,9 @@ export function deletePurchaseNewOrderApi(id: string) {
 
 // 批量删除新订单
 export function batchDeletePurchaseNewOrderApi(ids: string[]) {
-  return requestClient.delete(`/merchant/purchase/purchase-new-order/batch`, { data: { ids } });
+  return requestClient.delete(`/merchant/purchase/purchase-new-order/batch`, {
+    data: { ids },
+  });
 }
 
 // 创建或更新新订单
@@ -296,32 +323,48 @@ export function createOrUpdatePurchaseNewOrderApi(data: any) {
 
 // 获取新订单历史分页列表
 export function getPurchaseNewOrderHistoryListApi(data: any) {
-  return requestClient.post(`/merchant/purchase/purchase-new-order-history/page-list`, data);
+  return requestClient.post(
+    `/merchant/purchase/purchase-new-order-history/page-list`,
+    data,
+  );
 }
 
 // 获取新订单历史详情
 export function getPurchaseNewOrderHistoryDetailApi(id: string) {
-  return requestClient.get(`/merchant/purchase/purchase-new-order-history/${id}`);
+  return requestClient.get(
+    `/merchant/purchase/purchase-new-order-history/${id}`,
+  );
 }
 
 // 创建新订单历史
 export function createPurchaseNewOrderHistoryApi(data: any) {
-  return requestClient.post(`/merchant/purchase/purchase-order/new-order-history`, data);
+  return requestClient.post(
+    `/merchant/purchase/purchase-order/new-order-history`,
+    data,
+  );
 }
 
 // 更新新订单历史
 export function updatePurchaseNewOrderHistoryApi(id: string, data: any) {
-  return requestClient.put(`/merchant/purchase/purchase-new-order-history/${id}`, data);
+  return requestClient.put(
+    `/merchant/purchase/purchase-new-order-history/${id}`,
+    data,
+  );
 }
 
 // 删除新订单历史
 export function deletePurchaseNewOrderHistoryApi(id: string) {
-  return requestClient.delete(`/merchant/purchase/purchase-new-order-history/${id}`);
+  return requestClient.delete(
+    `/merchant/purchase/purchase-new-order-history/${id}`,
+  );
 }
 
 // 批量删除新订单历史
 export function batchDeletePurchaseNewOrderHistoryApi(ids: string[]) {
-  return requestClient.delete(`/merchant/purchase/purchase-new-order-history/batch`, { data: { ids } });
+  return requestClient.delete(
+    `/merchant/purchase/purchase-new-order-history/batch`,
+    { data: { ids } },
+  );
 }
 
 // 创建或更新新订单历史
@@ -362,7 +405,9 @@ export function deleteVendorApi(id: string) {
 
 // 批量删除供应商
 export function batchDeleteVendorApi(ids: string[]) {
-  return requestClient.delete(`/merchant/purchase/vendor/batch`, { data: { ids } });
+  return requestClient.delete(`/merchant/purchase/vendor/batch`, {
+    data: { ids },
+  });
 }
 
 // 创建或更新供应商
@@ -390,7 +435,10 @@ export function exportPurchaseReceiptApi(data: any) {
 }
 
 export function exportPurchaseReturnedApi(data: any) {
-  return requestClient.post(`/merchant/purchase/purchase-returned/export`, data);
+  return requestClient.post(
+    `/merchant/purchase/purchase-returned/export`,
+    data,
+  );
 }
 
 export function exportPurchaseBillsApi(data: any) {
@@ -398,15 +446,24 @@ export function exportPurchaseBillsApi(data: any) {
 }
 
 export function exportPurchaseCustomizedApi(data: any) {
-  return requestClient.post(`/merchant/purchase/purchase-customized/export`, data);
+  return requestClient.post(
+    `/merchant/purchase/purchase-customized/export`,
+    data,
+  );
 }
 
 export function exportPurchaseNewOrderApi(data: any) {
-  return requestClient.post(`/merchant/purchase/purchase-new-order/export`, data);
+  return requestClient.post(
+    `/merchant/purchase/purchase-new-order/export`,
+    data,
+  );
 }
 
 export function exportPurchaseNewOrderHistoryApi(data: any) {
-  return requestClient.post(`/merchant/purchase/purchase-new-order-history/export`, data);
+  return requestClient.post(
+    `/merchant/purchase/purchase-new-order-history/export`,
+    data,
+  );
 }
 
 export function exportVendorApi(data: any) {
@@ -456,13 +513,7 @@ export const purchaseApi = {
   deleteBills: deletePurchaseBillsApi,
   batchDeleteBills: batchDeletePurchaseBillsApi,
 
-  // 定制采购
-  getCustomizedList: getPurchaseCustomizedListApi,
   getCustomizedDetail: getPurchaseCustomizedDetailApi,
-  createCustomized: createPurchaseCustomizedApi,
-  updateCustomized: updatePurchaseCustomizedApi,
-  deleteCustomized: deletePurchaseCustomizedApi,
-  batchDeleteCustomized: batchDeletePurchaseCustomizedApi,
 
   // 新订单
   getNewOrderList: getPurchaseNewOrderListApi,
@@ -499,4 +550,3 @@ export const purchaseApi = {
   exportNewOrderHistory: exportPurchaseNewOrderHistoryApi,
   exportVendor: exportVendorApi,
 };
-

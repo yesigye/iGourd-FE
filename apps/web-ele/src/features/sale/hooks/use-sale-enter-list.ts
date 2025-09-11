@@ -32,9 +32,7 @@ export function useSaleEnterList() {
   });
 
   // 表格列配置
-  const columns = computed(() => [
-
-
+  const columns = [
     {
       field: 'customer_name',
       title: "{{t('sale.customerName')}}",
@@ -95,78 +93,78 @@ export function useSaleEnterList() {
       sortable: true,
       formatter: 'formatDateTime',
     },
-  ]);
+  ];
 
   // 搜索表单配置
-  const searchFormSchema = {customer_id: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('sale.pleaseSelectCustomer')}}",
-          filterable: true,
-        },
+  const searchFormSchema = {
+    customer_id: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      product_id: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('sale.pleaseSelectProduct')}}",
-          filterable: true,
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('sale.pleaseSelectCustomer')}}",
+        filterable: true,
       },
-      status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('sale.pleaseSelectStatus')}}",
-          options: [
-            { label: '待处理', value: 'pending' },
-            { label: '已确认', value: 'confirmed' },
-            { label: '已取消', value: 'cancelled' },
-          ],
-        },
+    },
+    product_id: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      dateRange: {
-        type: 'array',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          type: 'daterange',
-          rangeSeparator: '至',
-          startPlaceholder: t('sale.startDate'),
-          endPlaceholder: t('sale.endDate'),
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('sale.pleaseSelectProduct')}}",
+        filterable: true,
       },
-      keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('sale.keywords')}}",
-        },
+    },
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('sale.pleaseSelectStatus')}}",
+        options: [
+          { label: '待处理', value: 'pending' },
+          { label: '已确认', value: 'confirmed' },
+          { label: '已取消', value: 'cancelled' },
+        ],
+      },
+    },
+    dateRange: {
+      type: 'array',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        type: 'daterange',
+        rangeSeparator: '至',
+        startPlaceholder: t('sale.startDate'),
+        endPlaceholder: t('sale.endDate'),
+      },
+    },
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('sale.keywords')}}",
       },
     },
   };
@@ -181,7 +179,7 @@ export function useSaleEnterList() {
       filterList.forEach((item) => {
         query[item.field] = item.values;
       });
-      $grid.commitProxy('reload', query);
+      $grid?.commitProxy('reload', query);
     },
   };
 
@@ -194,7 +192,7 @@ export function useSaleEnterList() {
     filterConfig: {
       remote: true,
     },
-    columns: columns.value,
+    columns: columns,
     exportConfig: {},
     height: 'auto',
     keepSource: true,
@@ -224,7 +222,7 @@ export function useSaleEnterList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -241,7 +239,3 @@ export function useSaleEnterList() {
     gridOptions,
   };
 }
-
-
-
-

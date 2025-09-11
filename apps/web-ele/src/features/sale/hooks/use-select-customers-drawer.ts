@@ -72,10 +72,10 @@ export function useSelectCustomersDrawer() {
               clearable: true,
             },
             enum: [
-              { label: "{{t('customer.vip'), value: 'VIP' },
-              { label: "{{t('customer.gold'), value: 'GOLD' },
-              { label: "{{t('customer.silver'), value: 'SILVER' },
-              { label: "{{t('customer.bronze'), value: 'BRONZE' },
+              { label: "{{t('customer.vip')}}", value: 'VIP' },
+              { label: "{{t('customer.gold')}}", value: 'GOLD' },
+              { label: "{{t('customer.silver')}}", value: 'SILVER' },
+              { label: "{{t('customer.bronze')}}", value: 'BRONZE' },
             ],
           },
         },
@@ -202,7 +202,7 @@ export function useSelectCustomersDrawer() {
   };
 
   // 使用 useIgourdForm
-  const { Form, formApi } = useIgourdForm({
+  const { Form, formAPI } = useIgourdForm({
     schema: formSchema,
     initialValues: {
       customerName: '',
@@ -210,12 +210,8 @@ export function useSelectCustomersDrawer() {
       phone: '',
       customerLevel: '',
       selectedCustomer: '',
-      customerName: '',
-      customerCode: '',
-      phone: '',
       email: '',
       address: '',
-      customerLevel: '',
     },
   });
 
@@ -225,7 +221,7 @@ export function useSelectCustomersDrawer() {
     width: '86%',
     onConfirm: async () => {
       try {
-        const values = formAPI.values
+        const values = formAPI.values;
         const selectedCustomer = values.selectedCustomer;
 
         if (!selectedCustomer) {
@@ -246,7 +242,7 @@ export function useSelectCustomersDrawer() {
   });
 
   const openDrawer = (title?: string) => {
-    formApi.reset();
+    formAPI.reset();
     loadCustomerList();
     drawerApi.open();
   };
@@ -265,7 +261,7 @@ export function useSelectCustomersDrawer() {
           label: `${item.name} (${item.code})`,
           value: item.id,
         }));
-        formApi.setFieldState('selectedCustomer', {
+        formAPI.setFieldState('selectedCustomer', {
           componentProps: {
             enum: options,
           },
@@ -280,7 +276,7 @@ export function useSelectCustomersDrawer() {
     if (customerId) {
       loadCustomerDetail(customerId);
     } else {
-      formApi.setValues({
+      formAPI.setValues({
         customerName: '',
         customerCode: '',
         phone: '',
@@ -295,7 +291,7 @@ export function useSelectCustomersDrawer() {
     try {
       const res = await CustomerService.getCustomerDetail(customerId);
       if (String(res?.code) === 'SUCCESS') {
-        formApi.setValues({
+        formAPI.setValues({
           customerName: res.data.name || '',
           customerCode: res.data.code || '',
           phone: res.data.phone || '',
@@ -313,7 +309,7 @@ export function useSelectCustomersDrawer() {
     Drawer,
     Form,
     drawerApi,
-    formApi,
+    formApi: formAPI,
     openDrawer,
     closeDrawer,
     loadCustomerList,

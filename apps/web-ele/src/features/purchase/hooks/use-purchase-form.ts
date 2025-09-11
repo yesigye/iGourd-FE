@@ -4,11 +4,17 @@ import {
   useIgourdForm,
   type ISchema,
 } from '@igourd/common-ui';
-import { purchaseApi } from '../apis';
+import { createOrUpdateCustomer, purchaseApi } from '../apis';
 
 export function usePurchaseForm() {
   const { t } = useI18n();
 
+  const fun = (value: string) => {
+    if (value && value.length > 100) {
+      return t('purchase.remarkLimit');
+    }
+    return '';
+  };
   const formSchema: ISchema = {
     type: 'object',
     properties: {
@@ -94,6 +100,7 @@ export function usePurchaseForm() {
         'x-decorator': 'FormItem',
         'x-decorator-props': {
           gridSpan: 'span 2',
+          rules: '[{validate: {{ fun}} ]',
         },
         'x-component': 'Input',
         'x-class': 'w-full',
@@ -115,13 +122,15 @@ export function usePurchaseForm() {
     },
     async onConfirm() {
       await formAPI.validate();
-      await formAPI.submit(purchaseApi.createOrUpdate);
+      await formAPI.submit(createOrUpdateCustomer);
       drawerApi.close();
     },
   });
 
   const { Form, formAPI } = useIgourdForm({
-    scope: {},
+    scope: {
+      fun,
+    },
     useI18n,
     schema: formSchema,
   });

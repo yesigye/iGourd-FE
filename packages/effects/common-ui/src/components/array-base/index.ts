@@ -76,7 +76,7 @@ const useArray = () => {
 
 const useIndex = (index?: number) => {
   const { index: indexRef } = toRefs(inject(ItemSymbol) as IArrayBaseItemProps);
-  return indexRef.value ?? ref(index);
+  return indexRef ?? ref(index);
 };
 
 const useRecord = (record?: number) => {

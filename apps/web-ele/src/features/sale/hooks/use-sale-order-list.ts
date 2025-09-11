@@ -30,9 +30,7 @@ export function useSaleOrderList() {
   });
 
   // 表格列配置 - 基于原有的 columnsVisible 数组
-  const columns = computed(() => [
-
-
+  const columns = [
     {
       field: 'order_no',
       title: "{{t('sales.saleOrderNo')}}",
@@ -128,7 +126,7 @@ export function useSaleOrderList() {
       align: 'center',
       slots: { default: 'action' },
     },
-  ]);
+  ];
 
   // 搜索表单配置 - 基于原有的查询参数（只有 keywords 和 status）
   const searchFormSchema = {
@@ -157,12 +155,11 @@ export function useSaleOrderList() {
         placeholder: "{{t('common.selectStatus')}}",
         clearable: true,
         options: [
-          { label: "{{t('common.status.CANCEL'), value: 'CANCEL' },
-          { label: "{{t('common.status.paying'), value: 'PENDING' },
-          { label: "{{t('common.status.PAID'), value: 'PAID' },
+          { label: "{{t('common.status.CANCEL')}}", value: 'CANCEL' },
+          { label: "{{t('common.status.paying')}}", value: 'PENDING' },
+          { label: "{{t('common.status.PAID')}}", value: 'PAID' },
         ],
       },
-    },
     },
   };
 
@@ -176,7 +173,7 @@ export function useSaleOrderList() {
       filterList.forEach((item) => {
         query[item.field] = item.values;
       });
-      $grid.commitProxy('reload', query);
+      $grid?.commitProxy('reload', query);
     },
   };
 
@@ -189,7 +186,7 @@ export function useSaleOrderList() {
     filterConfig: {
       remote: true,
     },
-    columns: columns.value,
+    columns: columns,
     exportConfig: {},
     height: 'auto',
     keepSource: true,
@@ -219,7 +216,7 @@ export function useSaleOrderList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {

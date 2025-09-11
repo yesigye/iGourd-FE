@@ -30,9 +30,7 @@ export function useStoreStaffList() {
   });
 
   // 表格列配置 - 基于原有的表格数据结构
-  const columns = computed(() => [
-
-
+  const columns = [
     {
       field: 'staff_name',
       title: "{{t('storeStaff.staffName')}}",
@@ -108,136 +106,148 @@ export function useStoreStaffList() {
       sortable: true,
       formatter: 'formatDateTime',
     },
-  ]);
+  ];
 
   // 搜索表单配置 - 基于原有的查询参数
-  const searchFormSchema = {keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeStaff.keywords')}}",
-          clearable: true,
-        },
+  const searchFormSchema = {
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      staff_name: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeStaff.staffName')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeStaff.keywords')}}",
+        clearable: true,
       },
-      staff_code: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeStaff.staffCode')}}",
-          clearable: true,
-        },
+    },
+    staff_name: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      position: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeStaff.pleaseSelectPosition')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('storeStaff.position_MANAGER'), value: 'MANAGER' },
-            { label: "{{t('storeStaff.position_SUPERVISOR'), value: 'SUPERVISOR' },
-            { label: "{{t('storeStaff.position_CASHIER'), value: 'CASHIER' },
-            { label: "{{t('storeStaff.position_SALES'), value: 'SALES' },
-            { label: "{{t('storeStaff.position_STOCK'), value: 'STOCK' },
-            { label: "{{t('storeStaff.position_CLEANER'), value: 'CLEANER' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeStaff.staffName')}}",
+        clearable: true,
       },
-      department: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeStaff.pleaseSelectDepartment')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('storeStaff.department_MANAGEMENT'), value: 'MANAGEMENT' },
-            { label: "{{t('storeStaff.department_SALES'), value: 'SALES' },
-            { label: "{{t('storeStaff.department_INVENTORY'), value: 'INVENTORY' },
-            { label: "{{t('storeStaff.department_FINANCE'), value: 'FINANCE' },
-            { label: "{{t('storeStaff.department_HR'), value: 'HR' },
-            { label: "{{t('storeStaff.department_IT'), value: 'IT' },
-          ],
-        },
+    },
+    staff_code: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeStaff.pleaseSelectStatus')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('storeStaff.status_ACTIVE'), value: 'ACTIVE' },
-            { label: "{{t('storeStaff.status_INACTIVE'), value: 'INACTIVE' },
-            { label: "{{t('storeStaff.status_ON_LEAVE'), value: 'ON_LEAVE' },
-            { label: "{{t('storeStaff.status_TERMINATED'), value: 'TERMINATED' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeStaff.staffCode')}}",
+        clearable: true,
       },
-      hire_date_start: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeStaff.hireDateStart')}}",
-          type: 'date',
-          clearable: true,
-        },
+    },
+    position: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      hire_date_end: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeStaff.hireDateEnd')}}",
-          type: 'date',
-          clearable: true,
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeStaff.pleaseSelectPosition')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('storeStaff.position_MANAGER')}}", value: 'MANAGER' },
+          {
+            label: "{{t('storeStaff.position_SUPERVISOR')}}",
+            value: 'SUPERVISOR',
+          },
+          { label: "{{t('storeStaff.position_CASHIER')}}", value: 'CASHIER' },
+          { label: "{{t('storeStaff.position_SALES')}}", value: 'SALES' },
+          { label: "{{t('storeStaff.position_STOCK')}}", value: 'STOCK' },
+          { label: "{{t('storeStaff.position_CLEANER')}}", value: 'CLEANER' },
+        ],
+      },
+    },
+    department: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeStaff.pleaseSelectDepartment')}}",
+        clearable: true,
+        options: [
+          {
+            label: "{{t('storeStaff.department_MANAGEMENT')}}",
+            value: 'MANAGEMENT',
+          },
+          { label: "{{t('storeStaff.department_SALES')}}", value: 'SALES' },
+          {
+            label: "{{t('storeStaff.department_INVENTORY')}}",
+            value: 'INVENTORY',
+          },
+          { label: "{{t('storeStaff.department_FINANCE')}}", value: 'FINANCE' },
+          { label: "{{t('storeStaff.department_HR')}}", value: 'HR' },
+          { label: "{{t('storeStaff.department_IT')}}", value: 'IT' },
+        ],
+      },
+    },
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeStaff.pleaseSelectStatus')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('storeStaff.status_ACTIVE')}}", value: 'ACTIVE' },
+          { label: "{{t('storeStaff.status_INACTIVE')}}", value: 'INACTIVE' },
+          { label: "{{t('storeStaff.status_ON_LEAVE')}}", value: 'ON_LEAVE' },
+          {
+            label: "{{t('storeStaff.status_TERMINATED')}}",
+            value: 'TERMINATED',
+          },
+        ],
+      },
+    },
+    hire_date_start: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeStaff.hireDateStart')}}",
+        type: 'date',
+        clearable: true,
+      },
+    },
+    hire_date_end: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeStaff.hireDateEnd')}}",
+        type: 'date',
+        clearable: true,
       },
     },
   };
@@ -252,7 +262,7 @@ export function useStoreStaffList() {
       filterList.forEach((item) => {
         query[item.field] = item.values;
       });
-      $grid.commitProxy('reload', query);
+      $grid?.commitProxy('reload', query);
     },
   };
 
@@ -265,7 +275,7 @@ export function useStoreStaffList() {
     filterConfig: {
       remote: true,
     },
-    columns: columns.value,
+    columns: columns,
     exportConfig: {},
     height: 'auto',
     keepSource: true,
@@ -295,7 +305,7 @@ export function useStoreStaffList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -312,9 +322,3 @@ export function useStoreStaffList() {
     gridOptions,
   };
 }
-
-
-
-
-
-

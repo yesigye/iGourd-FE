@@ -35,7 +35,6 @@ setupIgourdVxeTable({
           animation: true,
         },
         rowDragConfig: {
-          showIcon: true,
           showDragTip: true,
           animation: true,
         },

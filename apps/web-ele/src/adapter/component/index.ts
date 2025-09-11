@@ -43,6 +43,7 @@ import {
   Transfer,
   Upload,
 } from '@igourd/common-ui';
+
 import '@igourd/common-ui/style';
 
 async function initComponentAdapter() {

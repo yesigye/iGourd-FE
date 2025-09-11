@@ -147,7 +147,6 @@ async function setupI18n(app: App, options: LocaleSetupOptions = {}) {
 
 async function loadFeatureLocal(moduleName: string) {
   if (!moduleName) return;
-  console.log(moduleName, featureModules);
   const regexp = new RegExp(`${moduleName}\/locales\/([^/]+)\/(.*)\.json$`);
   const featureLocalesMap = loadLocalesMapFromDir(regexp, featureModules);
   Object.keys(featureLocalesMap).map(async (key) => {

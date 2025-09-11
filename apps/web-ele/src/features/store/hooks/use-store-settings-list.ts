@@ -29,9 +29,7 @@ export function useStoreSettingsList() {
   });
 
   // 表格列配置 - 基于原有的表格数据结构
-  const columns = computed(() => [
-
-
+  const columns = [
     {
       field: 'setting_name',
       title: "{{t('storeSettings.settingName')}}",
@@ -103,101 +101,110 @@ export function useStoreSettingsList() {
       sortable: true,
       formatter: 'formatDateTime',
     },
-  ]);
+  ];
 
   // 搜索表单配置 - 基于原有的查询参数
-  const searchFormSchema = {keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeSettings.keywords')}}",
-          clearable: true,
-        },
+  const searchFormSchema = {
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      setting_name: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeSettings.settingName')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeSettings.keywords')}}",
+        clearable: true,
       },
-      setting_key: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeSettings.settingKey')}}",
-          clearable: true,
-        },
+    },
+    setting_name: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      setting_type: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeSettings.pleaseSelectSettingType')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('storeSettings.settingType_STRING'), value: 'STRING' },
-            { label: "{{t('storeSettings.settingType_NUMBER'), value: 'NUMBER' },
-            { label: "{{t('storeSettings.settingType_BOOLEAN'), value: 'BOOLEAN' },
-            { label: "{{t('storeSettings.settingType_JSON'), value: 'JSON' },
-            { label: "{{t('storeSettings.settingType_ARRAY'), value: 'ARRAY' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeSettings.settingName')}}",
+        clearable: true,
       },
-      is_required: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeSettings.pleaseSelectIsRequired')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('common.yes'), value: 'true' },
-            { label: "{{t('common.no'), value: 'false' },
-          ],
-        },
+    },
+    setting_key: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      is_active: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('storeSettings.pleaseSelectIsActive')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('common.yes'), value: 'true' },
-            { label: "{{t('common.no'), value: 'false' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeSettings.settingKey')}}",
+        clearable: true,
+      },
+    },
+    setting_type: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeSettings.pleaseSelectSettingType')}}",
+        clearable: true,
+        options: [
+          {
+            label: "{{t('storeSettings.settingType_STRING')}}",
+            value: 'STRING',
+          },
+          {
+            label: "{{t('storeSettings.settingType_NUMBER')}}",
+            value: 'NUMBER',
+          },
+          {
+            label: "{{t('storeSettings.settingType_BOOLEAN')}}",
+            value: 'BOOLEAN',
+          },
+          { label: "{{t('storeSettings.settingType_JSON')}}", value: 'JSON' },
+          { label: "{{t('storeSettings.settingType_ARRAY')}}", value: 'ARRAY' },
+        ],
+      },
+    },
+    is_required: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeSettings.pleaseSelectIsRequired')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('common.yes')}}", value: 'true' },
+          { label: "{{t('common.no')}}", value: 'false' },
+        ],
+      },
+    },
+    is_active: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('storeSettings.pleaseSelectIsActive')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('common.yes')}}", value: 'true' },
+          { label: "{{t('common.no')}}", value: 'false' },
+        ],
       },
     },
   };
@@ -225,7 +232,7 @@ export function useStoreSettingsList() {
     filterConfig: {
       remote: true,
     },
-    columns: columns.value,
+    columns: columns,
     exportConfig: {},
     height: 'auto',
     keepSource: true,
@@ -255,7 +262,7 @@ export function useStoreSettingsList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -272,8 +279,3 @@ export function useStoreSettingsList() {
     gridOptions,
   };
 }
-
-
-
-
-
