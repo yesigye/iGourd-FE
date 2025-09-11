@@ -3,14 +3,13 @@
     <Grid>
       <template #table-title>
         <IgourdButton @click="drawerApi.open()">
-          {{ t('purchase.addNewOrderHistory') }}
+          {{ t('common.create') }}
         </IgourdButton>
       </template>
     </Grid>
+    <Drawer />
   </Page>
-  <Drawer />
 </template>
-
 <script setup lang="ts">
 import { Page, IgourdButton } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';

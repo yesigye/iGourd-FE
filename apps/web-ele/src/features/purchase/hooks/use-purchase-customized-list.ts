@@ -2,7 +2,11 @@ import { useI18n } from '@igourd/locales';
 import { useIgourdVxeGrid } from '#/adapter/vxe-table';
 import { useIgourdDrawer } from '@igourd/common-ui';
 import { purchaseApi } from '../apis';
-import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
+import type {
+  VxeGridListeners,
+  VxeGridProps,
+  VxeGridPropTypes,
+} from '#/adapter/vxe-table';
 import PurchaseCustomizedDrawerFrom from '../components/purchase-customized-drawer.vue';
 
 // 定义行数据类型 - 基于原有的表格数据结构
@@ -25,11 +29,11 @@ export function usePurchaseCustomizedList() {
   });
 
   // 表格列配置 - 基于原有的 columnsVisible 数组
-  const columns = [
+  const columns: VxeGridPropTypes.Column<PurchaseCustomizedInfo>[] = [
     {
       field: 'name',
-      title: t('customized.name'),
-      width: 170,
+      title: t('purchase.featureName'),
+      minWidth: 170,
       sortable: true,
       fixed: 'left',
       align: 'left',
@@ -37,43 +41,43 @@ export function usePurchaseCustomizedList() {
     {
       field: 'type',
       title: t('purchase.featureType'),
-      width: 180,
+      minWidth: 180,
       sortable: true,
       align: 'left',
-      // 类型列需要特殊处理，使用自定义渲染
-      slots: { default: 'type' },
     },
     {
       field: 'is_fixed_option',
       title: t('purchase.selectionType'),
-      width: 200,
+      minWidth: 200,
       sortable: true,
       align: 'left',
-      // 选择类型列需要特殊处理，使用自定义渲染
-      slots: { default: 'is_fixed_option' },
     },
     {
       field: 'is_compulsory',
       title: t('purchase.compulsory'),
-      width: 150,
+      minWidth: 150,
       sortable: true,
       align: 'left',
-      // 是否必填列需要特殊处理，使用自定义渲染
-      slots: { default: 'is_compulsory' },
     },
     {
       field: 'creator_name',
       title: t('purchase.creator'),
-      width: 180,
+      minWidth: 180,
       sortable: true,
       align: 'left',
     },
     {
       field: 'create_time',
       title: t('purchase.creationTime'),
-      width: 180,
+      minWidth: 180,
       sortable: true,
       align: 'left',
+      formatter: 'formatDateTime',
+    },
+    {
+      field: 'operation',
+      title: t('purchase.operation'),
+      sortable: true,
       formatter: 'formatDateTime',
     },
   ];
@@ -83,13 +87,9 @@ export function usePurchaseCustomizedList() {
     keywords: {
       type: 'string',
       'x-decorator': 'FormItem',
-      'x-decorator-props': {
-        gridSpan: 'span 2',
-      },
       'x-component': 'Input',
-      'x-class': 'w-full',
       'x-component-props': {
-        placeholder: "{{t('purchase.keywords')}}",
+        placeholder: "{{t('common.keywords')}}",
         clearable: true,
       },
     },
@@ -105,7 +105,7 @@ export function usePurchaseCustomizedList() {
       filterList.forEach((item) => {
         query[item.field] = item.values;
       });
-      $grid.commitProxy('reload', query);
+      $grid?.commitProxy('reload', query);
     },
   };
 

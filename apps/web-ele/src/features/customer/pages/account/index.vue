@@ -3,14 +3,14 @@
     <Grid>
       <template #table-title>
         <div class="flex gap-2">
-          <IgourdButton 
+          <IgourdButton
             v-auth="'customer_account_add_revenue'"
             type="primary"
             @click="handleAddRevenue"
           >
             {{ t('customers.addRevenue') }}
           </IgourdButton>
-          <IgourdButton 
+          <IgourdButton
             v-auth="'customer_account_add_expenditures'"
             type="danger"
             @click="handleAddExpenditures"
@@ -20,10 +20,9 @@
         </div>
       </template>
     </Grid>
-  </Page>
   <Drawer />
+</Page>
 </template>
-
 <script setup lang="ts">
 import { Page, IgourdButton } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';

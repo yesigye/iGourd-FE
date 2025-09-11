@@ -124,7 +124,8 @@ export function useTableSearchForm<T extends object>(
         type: 'void',
         'x-component': 'FormGrid',
         'x-component-props': {
-          minColumns: [4, 6, 10],
+          minColumns: [2, 4, 6, 8, 12],
+          breakpoints: [720, 1280, 1920, 2560, 3840],
         },
         properties: { ...copySchema },
       },

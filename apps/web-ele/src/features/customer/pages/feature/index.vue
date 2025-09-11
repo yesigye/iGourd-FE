@@ -2,20 +2,19 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <IgourdButton 
+        <IgourdButton
           v-auth="'customer_customized_feature_add'"
           type="primary"
           :disabled="isMaxItems"
           @click="handleAdd"
         >
-          {{ t('customers.addCustomerProp') }}
+          {{ t('common.create') }}
         </IgourdButton>
       </template>
     </Grid>
+    <Drawer />
   </Page>
-  <Drawer />
 </template>
-
 <script setup lang="ts">
 import { Page, IgourdButton } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
@@ -37,4 +36,3 @@ const handleAdd = () => {
   drawerApi.open();
 };
 </script>
-

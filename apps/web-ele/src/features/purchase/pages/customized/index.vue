@@ -3,7 +3,12 @@
     <Grid>
       <template #table-title>
         <IgourdButton @click="drawerApi.open()">
-          {{ t('purchase.addPurchase') }}
+          {{ t('common.create') }}
+        </IgourdButton>
+      </template>
+      <template #operations="{ row }">
+        <IgourdButton type="text" @click="drawerApi.open()">
+          {{ t('common.edit') }}
         </IgourdButton>
       </template>
     </Grid>

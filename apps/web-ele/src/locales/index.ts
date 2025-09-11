@@ -24,6 +24,7 @@ import { useUserStore } from '@igourd/stores';
 import dayjs from 'dayjs';
 import enLocale from 'element-plus/es/locale/lang/en';
 import defaultLocale from 'element-plus/es/locale/lang/zh-cn';
+import frLocal from 'element-plus/es/locale/lang/fr';
 
 import { getLocaleApi } from '#/api';
 
@@ -98,6 +99,10 @@ async function loadDayjsLocale(lang: SupportedLanguagesType) {
       locale = await import('dayjs/locale/zh-cn');
       break;
     }
+    case 'fr-FR': {
+      locale = await import('dayjs/locale/fr');
+      break;
+    }
     // 默认使用英语
     default: {
       locale = await import('dayjs/locale/en');
@@ -124,6 +129,10 @@ async function loadElementLocale(lang: SupportedLanguagesType) {
       elementLocale.value = defaultLocale;
       break;
     }
+    case 'fr-FR': {
+      elementLocale.value = frLocal;
+      break;
+    }
   }
 }
 
@@ -138,7 +147,8 @@ async function setupI18n(app: App, options: LocaleSetupOptions = {}) {
 
 async function loadFeatureLocal(moduleName: string) {
   if (!moduleName) return;
-  const regexp = new RegExp(`locales/([^/]+)/(${moduleName})\\.json$`);
+  console.log(moduleName, featureModules);
+  const regexp = new RegExp(`${moduleName}\/locales\/([^/]+)\/(.*)\.json$`);
   const featureLocalesMap = loadLocalesMapFromDir(regexp, featureModules);
   Object.keys(featureLocalesMap).map(async (key) => {
     const message = await featureLocalesMap[key]?.();

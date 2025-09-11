@@ -2,7 +2,7 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <IgourdButton 
+        <IgourdButton
           @click="drawerApi.open()"
           :disabled="isMaxItems"
         >
@@ -10,13 +10,12 @@
         </IgourdButton>
       </template>
       <template #table-field>
-        
+
       </template>
     </Grid>
-  </Page>
   <Drawer />
+</Page>
 </template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from '@igourd/locales';

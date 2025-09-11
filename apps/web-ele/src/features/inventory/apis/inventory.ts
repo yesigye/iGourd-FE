@@ -520,9 +520,9 @@ export function createOrUpdateProductApi(data: any) {
 // ==================== 通用 APIs ====================
 
 // 库存清零
-export function clearInventoryApi(data: any) {
-  return requestClient.post(`/merchant/basics/inventory/clear`, data);
-}
+// export function clearInventoryApi(data: any) {
+//   return requestClient.post(`/merchant/basics/inventory/clear`, data);
+// }
 
 // 库存移除
 export function removeInventoryApi(data: any) {
@@ -584,7 +584,7 @@ export const inventoryApi = {
   update: updateInventoryApi,
   delete: deleteInventoryApi,
   batchDelete: batchDeleteInventoryApi,
-  
+
   // 库存变动
   getChangeList: getInventoryChangeListApi,
   getChangeDetail: getInventoryChangeDetailApi,
@@ -592,7 +592,7 @@ export const inventoryApi = {
   updateChange: updateInventoryChangeApi,
   deleteChange: deleteInventoryChangeApi,
   batchDeleteChange: batchDeleteInventoryChangeApi,
-  
+
   // 库存盘点
   getCountList: getInventoryCountListApi,
   getCountDetail: getInventoryCountDetailApi,
@@ -600,7 +600,7 @@ export const inventoryApi = {
   updateCount: updateInventoryCountApi,
   deleteCount: deleteInventoryCountApi,
   batchDeleteCount: batchDeleteInventoryCountApi,
-  
+
   // 库存价格
   getPriceList: getInventoryPriceListApi,
   getPriceDetail: getInventoryPriceDetailApi,
@@ -608,7 +608,7 @@ export const inventoryApi = {
   updatePrice: updateInventoryPriceApi,
   deletePrice: deleteInventoryPriceApi,
   batchDeletePrice: batchDeleteInventoryPriceApi,
-  
+
   // 商品规格
   getProductSpecList: getProductSpecListApi,
   getProductSpecDetail: getProductSpecDetailApi,
@@ -616,7 +616,7 @@ export const inventoryApi = {
   updateProductSpec: updateProductSpecApi,
   deleteProductSpec: deleteProductSpecApi,
   batchDeleteProductSpec: batchDeleteProductSpecApi,
-  
+
   // SKU列表
   getSkuListList: getSkuListListApi,
   getSkuListDetail: getSkuListDetailApi,
@@ -624,7 +624,7 @@ export const inventoryApi = {
   updateSkuList: updateSkuListApi,
   deleteSkuList: deleteSkuListApi,
   batchDeleteSkuList: batchDeleteSkuListApi,
-  
+
   // 库存损耗
   getSpoilageList: getInventorySpoilageListApi,
   getSpoilageDetail: getInventorySpoilageDetailApi,
@@ -632,7 +632,7 @@ export const inventoryApi = {
   updateSpoilage: updateInventorySpoilageApi,
   deleteSpoilage: deleteInventorySpoilageApi,
   batchDeleteSpoilage: batchDeleteInventorySpoilageApi,
-  
+
   // 库存调拨
   getTransferList: getInventoryTransferListApi,
   getTransferDetail: getInventoryTransferDetailApi,
@@ -640,7 +640,7 @@ export const inventoryApi = {
   updateTransfer: updateInventoryTransferApi,
   deleteTransfer: deleteInventoryTransferApi,
   batchDeleteTransfer: batchDeleteInventoryTransferApi,
-  
+
   // 库存单位
   getUnitList: getInventoryUnitListApi,
   getUnitDetail: getInventoryUnitDetailApi,
@@ -648,7 +648,7 @@ export const inventoryApi = {
   updateUnit: updateInventoryUnitApi,
   deleteUnit: deleteInventoryUnitApi,
   batchDeleteUnit: batchDeleteInventoryUnitApi,
-  
+
   // 仓库管理
   getWarehouseList: getWarehouseListApi,
   getWarehouseDetail: getWarehouseDetailApi,
@@ -656,7 +656,7 @@ export const inventoryApi = {
   updateWarehouse: updateWarehouseApi,
   deleteWarehouse: deleteWarehouseApi,
   batchDeleteWarehouse: batchDeleteWarehouseApi,
-  
+
   // 商品管理
   getProductList: getProductListApi,
   getProductDetail: getProductDetailApi,
@@ -664,7 +664,7 @@ export const inventoryApi = {
   updateProduct: updateProductApi,
   deleteProduct: deleteProductApi,
   batchDeleteProduct: batchDeleteProductApi,
-  
+
   // 库存变更日志
   getChangeLogList: getChangeLogListApi,
   getChangeLogDetail: getChangeLogDetailApi,
@@ -678,7 +678,7 @@ export const inventoryApi = {
   updateCount: updateCountApi,
   deleteCount: deleteCountApi,
   batchDeleteCount: batchDeleteCountApi,
-  
+
   // 通用
   clear: clearInventoryApi,
   remove: removeInventoryApi,

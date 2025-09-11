@@ -5,7 +5,7 @@
       :grid-events="gridEvents"
       :form-options="formOptions"
     />
-    
+
     <!-- 添加/编辑抽屉 -->
     <InventoryWarehouseDrawer
       v-if="drawerVisible"
@@ -14,7 +14,7 @@
       @success="handleDrawerSuccess"
       @cancel="handleDrawerCancel"
     />
-    
+
     <!-- 详情抽屉 -->
     <InventoryWarehouseDetail
       v-if="detailVisible"
@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/ui';
+import { useIgourdDrawer } from '@igourd/common-ui';
 import { useInventoryWarehouseList } from '../../hooks';
 import { InventoryWarehouseDrawer, InventoryWarehouseDetail } from '../../components';
 

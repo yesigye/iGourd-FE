@@ -7,13 +7,12 @@
         </IgourdButton>
       </template>
       <template #table-field>
-        
+
       </template>
     </Grid>
-  </Page>
   <Drawer />
+</Page>
 </template>
-
 <script setup lang="ts">
 import { useI18n } from '@igourd/locales';
 import { Page, IgourdButton } from '@igourd/common-ui';

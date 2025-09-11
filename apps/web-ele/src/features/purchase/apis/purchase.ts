@@ -214,7 +214,7 @@ export function createOrUpdatePurchaseBillsApi(data: any) {
 
 // 获取定制采购分页列表
 export function getPurchaseCustomizedListApi(data: any) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-customized/page-list`, data);
+  return requestClient.post(`/v1/merchant/basics/dynamic-column/page-list`, data);
 }
 
 // 获取定制采购详情

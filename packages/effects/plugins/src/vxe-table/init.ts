@@ -35,6 +35,8 @@ import {
 import enUS from 'vxe-pc-ui/es/language/en-US';
 // 导入默认的语言
 import zhCN from 'vxe-pc-ui/es/language/zh-CN';
+
+import frFR from 'vxe-pc-ui/es/language/fr-FR';
 import {
   VxeColgroup,
   VxeColumn,
@@ -106,6 +108,7 @@ export function setupIgourdVxeTable(setupOptions: SetupVxeTable) {
   const localMap = {
     'zh-CN': zhCN,
     'en-US': enUS,
+    'fr-FR': frFR,
   };
 
   watch(

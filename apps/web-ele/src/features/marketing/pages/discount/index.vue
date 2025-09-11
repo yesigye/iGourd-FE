@@ -7,9 +7,9 @@
         </IgourdButton>
       </template>
       <template #table-field>
-        
+
       </template>
-      
+
       <!-- 类型列插槽 -->
       <template #type="{ row }">
         <span>{{ activityType[row.type] }}</span>
@@ -60,10 +60,9 @@
         </el-tooltip>
       </template>
     </Grid>
-  </Page>
   <Drawer />
+</Page>
 </template>
-
 <script setup lang="ts">
 import { useI18n } from '@igourd/locales';
 import { Check, Close } from '@element-plus/icons-vue';

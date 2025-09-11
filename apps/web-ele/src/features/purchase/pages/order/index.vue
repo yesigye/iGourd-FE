@@ -12,10 +12,9 @@
         </IgourdButton>
       </template>
     </Grid>
-  </Page>
   <Drawer />
+</Page>
 </template>
-
 <script setup lang="ts">
 import { Page, IgourdButton } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';

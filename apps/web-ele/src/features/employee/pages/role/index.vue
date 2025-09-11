@@ -2,7 +2,7 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <IgourdButton 
+        <IgourdButton
           v-auth="'employee_role_add'"
           type="primary"
           @click="handleAdd"
@@ -11,10 +11,9 @@
         </IgourdButton>
       </template>
     </Grid>
-  </Page>
   <Drawer />
+</Page>
 </template>
-
 <script setup lang="ts">
 import { Page, IgourdButton } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';

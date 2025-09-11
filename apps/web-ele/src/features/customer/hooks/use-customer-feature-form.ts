@@ -1,10 +1,15 @@
 import { useI18n } from '@igourd/locales';
-import { useIgourdDrawer, useIgourdForm, type ISchema } from '@igourd/common-ui';
+import {
+  useIgourdDrawer,
+  useIgourdForm,
+  type ISchema,
+} from '@igourd/common-ui';
 import { customerApi } from '../apis';
+import CustomerFeatureDrawer from '../components/customer-feature-drawer.vue';
 
 export function useCustomerFeatureForm() {
   const { t } = useI18n();
-  
+
   const formSchema: ISchema = {
     type: 'object',
     properties: {
@@ -99,32 +104,19 @@ export function useCustomerFeatureForm() {
   };
 
   const [Drawer, drawerApi] = useIgourdDrawer({
-    connectedComponent: () => import('./customer-feature-drawer.vue'),
+    connectedComponent: CustomerFeatureDrawer,
   });
 
-  const { Form, formApi } = useIgourdForm({
+  const { Form, formAPI } = useIgourdForm({
     schema: formSchema,
-    onSubmit: async (values) => {
-      try {
-        if (values.id) {
-          await customerApi.updateFeature(values);
-        } else {
-          await customerApi.createFeature(values);
-        }
-        drawerApi.close();
-        // 刷新列表
-        window.location.reload();
-      } catch (error) {
-        console.error('保存失败:', error);
-      }
-    },
+    useI18n,
+    scope: {},
   });
 
   return {
     Drawer,
     Form,
-    formApi,
+    formAPI,
     drawerApi,
   };
 }
-
