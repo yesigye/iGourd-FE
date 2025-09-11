@@ -47,7 +47,7 @@ function functionTreesToRouteNodes(
 
     const menu = fn.menu;
     const menuUrl = menu.url || '';
-    const routeName = menuUrl.split('/').filter(Boolean).join('_') || 'Home';
+    const routeName = menuUrl.split('/').filter(Boolean).join('_') || 'home';
 
     // 生成组件路径
     let componentPath = menu.component_paths;
@@ -88,7 +88,10 @@ function functionTreesToRouteNodes(
         hideInMenu: menu.is_displayed === false,
         title: menu.menu_key,
         icon: menu.style_class,
-        affix: routeName.toLowerCase() === 'home',
+        // 所有路由强制 KeepAlive
+        keepAlive: true,
+        sort: menu.sort_number,
+        affixTab: routeName.toLowerCase() === 'home',
       },
     };
 
