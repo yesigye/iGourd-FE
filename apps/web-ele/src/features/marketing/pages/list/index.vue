@@ -1,123 +1,34 @@
 <template>
-  <div class="marketing-list">
-    <IgourdVxeGrid
-      :grid-options="gridOptions"
-      :grid-events="gridEvents"
-      :form-options="formOptions"
-    />
-    
-    <!-- 添加/编辑抽屉 -->
-    <MarketingDrawer
-      v-if="drawerVisible"
-      :data="currentData"
-      :mode="drawerMode"
-      @success="handleDrawerSuccess"
-      @cancel="handleDrawerCancel"
-    />
-  </div>
+  <Page auto-content-height>
+    <Grid>
+      <template #table-title>
+        <ElButton type="primary" @click="drawerApi.open()">
+          {{ t('common.create') }}
+        </ElButton>
+        <ElButton type="danger" v-if="canBatchDelete" @click="batchDelete">
+          {{ t('common.delete') }}
+        </ElButton>
+      </template>
+      <template #operation="{ row }">
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.edit') }}
+        </ElButton>
+      </template>
+    </Grid>
+    <Drawer />
+  </Page>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/ui';
-import { useMarketingList } from '../../hooks';
-import { MarketingDrawer } from '../../components';
+import { Page, ElButton } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+import { useMarketingListList } from '../../hooks/use-marketing-list-list';
 
-// 使用列表逻辑
-const {
-  tableData,
-  total,
-  loading,
-  selectedRows,
-  columns,
-  searchFormSchema,
-  getMarketingList,
-  handleSearch,
-  handleReset,
-  handlePageChange,
-  handlePageSizeChange,
-  handleSelectionChange,
-  handleDelete,
-  handleExport,
-  init,
-} = useMarketingList();
-
-// 配置表格
-const { gridOptions, gridEvents } = useIgourdVxeGrid({
-  columns: columns.value,
-  data: tableData,
-  loading,
-  total,
-  searchFormSchema,
-  onSearch: handleSearch,
-  onReset: handleReset,
-  onPageChange: handlePageChange,
-  onPageSizeChange: handlePageSizeChange,
-  onSelectionChange: handleSelectionChange,
-  onDelete: handleDelete,
-  onExport: handleExport,
+defineOptions({
+  name: 'IMarketingList',
 });
 
-// 配置搜索表单
-const formOptions = {
-  schema: searchFormSchema,
-  layout: 'inline',
-  labelCol: { span: 6 },
-  wrapperCol: { span: 18 },
-};
-
-// 抽屉相关
-const drawerVisible = ref(false);
-const drawerMode = ref<'add' | 'edit' | 'view'>('add');
-const currentData = ref({});
-
-// 使用抽屉
-const [Drawer, drawerApi] = useIgourdDrawer({
-  connectedComponent: MarketingDrawer,
-});
-
-// 处理添加
-const handleAdd = () => {
-  currentData.value = {};
-  drawerMode.value = 'add';
-  drawerApi.setData({}).open();
-};
-
-// 处理编辑
-const handleEdit = (row: any) => {
-  currentData.value = row;
-  drawerMode.value = 'edit';
-  drawerApi.setData(row).open();
-};
-
-// 处理查看
-const handleView = (row: any) => {
-  currentData.value = row;
-  drawerMode.value = 'view';
-  drawerApi.setData(row).open();
-};
-
-// 抽屉成功回调
-const handleDrawerSuccess = () => {
-  drawerApi.close();
-  getMarketingList();
-};
-
-// 抽屉取消回调
-const handleDrawerCancel = () => {
-  drawerApi.close();
-};
-
-// 初始化
-onMounted(() => {
-  init();
-});
+const { t } = useI18n();
+const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
+  useMarketingListList();
 </script>
-
-<style scoped>
-.marketing-list {
-  height: 100%;
-}
-</style>
-

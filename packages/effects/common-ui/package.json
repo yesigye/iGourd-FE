@@ -51,6 +51,7 @@
     "@igourd/icons": "workspace:^",
     "@igourd/locales": "workspace:^",
     "@igourd/types": "workspace:^",
+    "@igourd/utils": "workspace:^",
     "@vueuse/core": "catalog:",
     "dayjs": "catalog:",
     "vue": "catalog:",
@@ -59,6 +60,7 @@
   "devDependencies": {
     "@element-plus/icons-vue": "catalog:",
     "@formily/core": "catalog:",
+    "@igourd/utils": "workspace:^",
     "@formily/grid": "catalog:",
     "@formily/json-schema": "catalog:",
     "@formily/reactive": "catalog:",

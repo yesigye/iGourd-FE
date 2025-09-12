@@ -13,10 +13,11 @@ export function getPurchaseListApi(data: any) {
 }
 
 // 获取采购详情
-export function getPurchaseDetailApi(id: string) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/detail`, {
-    id,
-  });
+export function getPurchaseDetailApi(data: any) {
+  return requestClient.post(
+    `/v1/merchant/purchase/purchase-order/detail`,
+    data,
+  );
 }
 
 // 创建采购
@@ -231,7 +232,10 @@ export function createOrUpdatePurchaseReturnedApi(data: any) {
 
 // 获取采购账单分页列表
 export function getPurchaseBillsListApi(data: any) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-bill/page-list`, data);
+  return requestClient.post(
+    `/v1/merchant/purchase/purchase-bill/page-list`,
+    data,
+  );
 }
 
 // 获取采购账单详情
@@ -473,6 +477,17 @@ export function exportPurchaseNewOrderHistoryApi(data: any) {
 
 export function exportVendorApi(data: any) {
   return requestClient.post(`/merchant/purchase/vendor/export`, data);
+}
+
+export function warehouseProductPageList(data: any) {
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/warehouse/product/page-list',
+    data,
+  );
+}
+
+export function productSearch(data: any) {
+  return requestClient.post('/v1/merchant/basics/inventory/search', data);
 }
 
 // 保持原有的对象导出方式（向后兼容）

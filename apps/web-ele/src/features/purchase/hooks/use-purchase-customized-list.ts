@@ -152,8 +152,8 @@ export function usePurchaseCustomizedList() {
     gridOptions,
     formOptions: { schema: searchFormSchema, scope: {} },
   });
-  async function handleEdit(row: PurchaseCustomizedInfo) {
-    drawerApi.setData(row).open();
+  async function handleEdit(row?: PurchaseCustomizedInfo) {
+    drawerApi.setData(row || {}).open();
   }
   const canBatchDelete = computed(() => checkedKeys.value.length > 0);
   function batchDelete() {

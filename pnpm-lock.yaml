@@ -1472,6 +1472,9 @@ importers:
       '@igourd/types':
         specifier: workspace:^
         version: link:../../types
+      '@igourd/utils':
+        specifier: workspace:^
+        version: link:../../utils
       '@types/qrcode':
         specifier: 'catalog:'
         version: 1.5.5

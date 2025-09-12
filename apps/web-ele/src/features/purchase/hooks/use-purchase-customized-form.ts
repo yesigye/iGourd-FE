@@ -56,6 +56,9 @@ export function usePurchaseCustomizedForm() {
             : [],
         };
         formAPI.setValues(formdata);
+        if (!row.id) {
+          formAPI.reset();
+        }
       }
     },
     onClosed() {
@@ -258,6 +261,7 @@ export function usePurchaseCustomizedForm() {
   const { Form, formAPI } = useIgourdForm({
     useI18n,
     schema: formSchema,
+    readPretty: true,
     initialValues: {
       entity: 'VENDOR',
       name: '',

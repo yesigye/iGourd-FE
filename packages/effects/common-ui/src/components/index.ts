@@ -41,7 +41,7 @@ export * from './time-picker';
 export * from './tippy';
 export * from './transfer';
 export * from './upload';
-
+export { default as ProductArrayTable } from './array-product-form';
 // 给文档用
 export {
   IgourdAvatar,

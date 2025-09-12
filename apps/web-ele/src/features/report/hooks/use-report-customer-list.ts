@@ -4,7 +4,7 @@ import { useIgourdVxeGrid } from '#/adapter/vxe-table';
 import { useIgourdDrawer } from '@igourd/common-ui';
 import { reportApi } from '../apis';
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
-import ReportCustomerDrawerFrom from '../components/report-customer-drawer.vue';
+import ReportCustomerDrawerFrom from '../components/report-drawer.vue';
 
 // 定义行数据类型 - 基于原有的表格数据结构
 interface ReportCustomerInfo {
@@ -195,11 +195,11 @@ export function useReportCustomerList() {
           placeholder: "{{t('reports.pleaseSelectTimeRange')}}",
           clearable: true,
           options: [
-            { label: "{{t('reports.timeRange_DAY'), value: 'DAY' },
-            { label: "{{t('reports.timeRange_WEEK'), value: 'WEEK' },
-            { label: "{{t('reports.timeRange_MONTH'), value: 'MONTH' },
-            { label: "{{t('reports.timeRange_QUARTER'), value: 'QUARTER' },
-            { label: "{{t('reports.timeRange_YEAR'), value: 'YEAR' },
+            { label: "{{t('reports.timeRange_DAY')}}", value: 'DAY' },
+            { label: "{{t('reports.timeRange_WEEK')}}", value: 'WEEK' },
+            { label: "{{t('reports.timeRange_MONTH')}}", value: 'MONTH' },
+            { label: "{{t('reports.timeRange_QUARTER')}}", value: 'QUARTER' },
+            { label: "{{t('reports.timeRange_YEAR')}}", value: 'YEAR' },
           ],
         },
       },
@@ -231,8 +231,7 @@ export function useReportCustomerList() {
           clearable: true,
         },
       },
-    },
-  };
+    }
 
   // Grid 事件配置
   const gridEvents: VxeGridListeners<ReportCustomerInfo> = {

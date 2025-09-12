@@ -1,141 +1,34 @@
 <template>
-  <div class="inventory-transfer">
-    <IgourdVxeGrid
-      :grid-options="gridOptions"
-      :grid-events="gridEvents"
-      :form-options="formOptions"
-    />
-    
-    <!-- 添加/编辑抽屉 -->
-    <InventoryTransferDrawer
-      v-if="drawerVisible"
-      :data="currentData"
-      :mode="drawerMode"
-      @success="handleDrawerSuccess"
-      @cancel="handleDrawerCancel"
-    />
-    
-    <!-- 详情抽屉 -->
-    <InventoryTransferDetail
-      v-if="detailVisible"
-      :data="currentData"
-      @close="handleDetailClose"
-    />
-  </div>
+  <Page auto-content-height>
+    <Grid>
+      <template #table-title>
+        <ElButton type="primary" @click="drawerApi.open()">
+          {{ t('common.create') }}
+        </ElButton>
+        <ElButton type="danger" v-if="canBatchDelete" @click="batchDelete">
+          {{ t('common.delete') }}
+        </ElButton>
+      </template>
+      <template #operation="{ row }">
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.edit') }}
+        </ElButton>
+      </template>
+    </Grid>
+    <Drawer />
+  </Page>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/ui';
-import { useInventoryTransferList } from '../../hooks';
-import { InventoryTransferDrawer, InventoryTransferDetail } from '../../components';
+import { Page, ElButton } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+import { useInventoryTransferList } from '../../hooks/use-inventory-transfer-list';
 
-// 使用列表逻辑
-const {
-  tableData,
-  total,
-  loading,
-  selectedRows,
-  columns,
-  searchFormSchema,
-  getInventoryTransferList,
-  handleSearch,
-  handleReset,
-  handlePageChange,
-  handlePageSizeChange,
-  handleSelectionChange,
-  handleDelete,
-  handleExport,
-  handleConfirm,
-  init,
-} = useInventoryTransferList();
-
-// 配置表格
-const { gridOptions, gridEvents } = useIgourdVxeGrid({
-  columns: columns.value,
-  data: tableData,
-  loading,
-  total,
-  searchFormSchema,
-  onSearch: handleSearch,
-  onReset: handleReset,
-  onPageChange: handlePageChange,
-  onPageSizeChange: handlePageSizeChange,
-  onSelectionChange: handleSelectionChange,
-  onDelete: handleDelete,
-  onExport: handleExport,
+defineOptions({
+  name: 'IInventoryTransfer',
 });
 
-// 配置搜索表单
-const formOptions = {
-  schema: searchFormSchema,
-  layout: 'inline',
-  labelCol: { span: 6 },
-  wrapperCol: { span: 18 },
-};
-
-// 抽屉相关
-const drawerVisible = ref(false);
-const detailVisible = ref(false);
-const drawerMode = ref<'add' | 'edit' | 'view'>('add');
-const currentData = ref({});
-
-// 使用抽屉
-const [Drawer, drawerApi] = useIgourdDrawer({
-  connectedComponent: InventoryTransferDrawer,
-});
-
-// 处理添加
-const handleAdd = () => {
-  currentData.value = {};
-  drawerMode.value = 'add';
-  drawerApi.setData({}).open();
-};
-
-// 处理编辑
-const handleEdit = (row: any) => {
-  currentData.value = row;
-  drawerMode.value = 'edit';
-  drawerApi.setData(row).open();
-};
-
-// 处理查看
-const handleView = (row: any) => {
-  currentData.value = row;
-  detailVisible.value = true;
-};
-
-// 处理确认
-const handleConfirmAction = (row: any) => {
-  handleConfirm(row);
-};
-
-// 抽屉成功回调
-const handleDrawerSuccess = () => {
-  drawerApi.close();
-  getInventoryTransferList();
-};
-
-// 抽屉取消回调
-const handleDrawerCancel = () => {
-  drawerApi.close();
-};
-
-// 详情关闭回调
-const handleDetailClose = () => {
-  detailVisible.value = false;
-};
-
-// 初始化
-onMounted(() => {
-  init();
-});
+const { t } = useI18n();
+const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
+  useInventoryTransferList();
 </script>
-
-<style scoped>
-.inventory-transfer {
-  height: 100%;
-}
-</style>
-

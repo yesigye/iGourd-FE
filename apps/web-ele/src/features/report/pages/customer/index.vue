@@ -1,92 +1,34 @@
 <template>
-  <div class="report-customer">
-    <IgourdVxeGrid
-      :grid-options="gridOptions"
-      :grid-events="gridEvents"
-      :form-options="formOptions"
-    />
-    
-    <!-- 详情抽屉 -->
-    <ReportCustomerDetail
-      v-if="detailVisible"
-      :data="currentData"
-      @close="handleDetailClose"
-    />
-  </div>
+  <Page auto-content-height>
+    <Grid>
+      <template #table-title>
+        <ElButton type="primary" @click="drawerApi.open()">
+          {{ t('common.create') }}
+        </ElButton>
+        <ElButton type="danger" v-if="canBatchDelete" @click="batchDelete">
+          {{ t('common.delete') }}
+        </ElButton>
+      </template>
+      <template #operation="{ row }">
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.edit') }}
+        </ElButton>
+      </template>
+    </Grid>
+    <Drawer />
+  </Page>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/ui';
-import { useReportCustomerList } from '../../hooks';
-import { ReportCustomerDetail } from '../../components';
+import { Page, ElButton } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+import { useReportCustomerList } from '../../hooks/use-report-customer-list';
 
-// 使用列表逻辑
-const {
-  tableData,
-  total,
-  loading,
-  selectedRows,
-  columns,
-  searchFormSchema,
-  getReportCustomerList,
-  handleSearch,
-  handleReset,
-  handlePageChange,
-  handlePageSizeChange,
-  handleSelectionChange,
-  handleExport,
-  init,
-} = useReportCustomerList();
-
-// 配置表格
-const { gridOptions, gridEvents } = useIgourdVxeGrid({
-  columns: columns.value,
-  data: tableData,
-  loading,
-  total,
-  searchFormSchema,
-  onSearch: handleSearch,
-  onReset: handleReset,
-  onPageChange: handlePageChange,
-  onPageSizeChange: handlePageSizeChange,
-  onSelectionChange: handleSelectionChange,
-  onExport: handleExport,
+defineOptions({
+  name: 'IReportCustomer',
 });
 
-// 配置搜索表单
-const formOptions = {
-  schema: searchFormSchema,
-  layout: 'inline',
-  labelCol: { span: 6 },
-  wrapperCol: { span: 18 },
-};
-
-// 抽屉相关
-const detailVisible = ref(false);
-const currentData = ref({});
-
-// 处理查看
-const handleView = (row: any) => {
-  currentData.value = row;
-  detailVisible.value = true;
-};
-
-// 详情关闭回调
-const handleDetailClose = () => {
-  detailVisible.value = false;
-};
-
-// 初始化
-onMounted(() => {
-  init();
-});
+const { t } = useI18n();
+const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
+  useReportCustomerList();
 </script>
-
-<style scoped>
-.report-customer {
-  height: 100%;
-}
-</style>
-

@@ -1,113 +1,34 @@
 <template>
-  <Page auto-content-height> sss </Page>
+  <Page auto-content-height>
+    <Grid>
+      <template #table-title>
+        <ElButton type="primary" @click="drawerApi.open()">
+          {{ t('common.create') }}
+        </ElButton>
+        <ElButton type="danger" v-if="canBatchDelete" @click="batchDelete">
+          {{ t('common.delete') }}
+        </ElButton>
+      </template>
+      <template #operation="{ row }">
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.edit') }}
+        </ElButton>
+      </template>
+    </Grid>
+    <Drawer />
+  </Page>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer, Page } from '@igourd/common-ui';
-import { useSaleScanList } from '../../hooks';
-// import { SaleScanDrawer, SaleScanDetail } from '../../components';
+import { Page, ElButton } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+import { useSaleScanList } from '../../hooks/use-sale-scan-list';
 
-// // 使用列表逻辑
-// const {
-//   tableData,
-//   total,
-//   loading,
-//   selectedRows,
-//   columns,
-//   searchFormSchema,
-//   getSaleScanList,
-//   handleSearch,
-//   handleReset,
-//   handlePageChange,
-//   handlePageSizeChange,
-//   handleSelectionChange,
-//   handleDelete,
-//   handleExport,
-//   handleScan,
-//   init,
-// } = useSaleScanList();
+defineOptions({
+  name: 'ISaleScan',
+});
 
-// // 配置表格
-// const { gridOptions, gridEvents } = useIgourdVxeGrid({
-//   columns: columns.value,
-//   data: tableData,
-//   loading,
-//   total,
-//   searchFormSchema,
-//   onSearch: handleSearch,
-//   onReset: handleReset,
-//   onPageChange: handlePageChange,
-//   onPageSizeChange: handlePageSizeChange,
-//   onSelectionChange: handleSelectionChange,
-//   onDelete: handleDelete,
-//   onExport: handleExport,
-// });
-
-// // 配置搜索表单
-// const formOptions = {
-//   schema: searchFormSchema,
-//   layout: 'inline',
-//   labelCol: { span: 6 },
-//   wrapperCol: { span: 18 },
-// };
-
-// // 抽屉相关
-// const drawerVisible = ref(false);
-// const detailVisible = ref(false);
-// const drawerMode = ref<'add' | 'edit' | 'view'>('add');
-// const currentData = ref({});
-
-// // 使用抽屉
-// const [Drawer, drawerApi] = useIgourdDrawer({
-//   connectedComponent: SaleScanDrawer,
-// });
-
-// // 处理扫码
-// const handleScanAction = () => {
-//   currentData.value = {};
-//   drawerMode.value = 'add';
-//   drawerApi.setData({}).open();
-// };
-
-// // 处理编辑
-// const handleEdit = (row: any) => {
-//   currentData.value = row;
-//   drawerMode.value = 'edit';
-//   drawerApi.setData(row).open();
-// };
-
-// // 处理查看
-// const handleView = (row: any) => {
-//   currentData.value = row;
-//   detailVisible.value = true;
-// };
-
-// // 抽屉成功回调
-// const handleDrawerSuccess = () => {
-//   drawerApi.close();
-//   getSaleScanList();
-// };
-
-// // 抽屉取消回调
-// const handleDrawerCancel = () => {
-//   drawerApi.close();
-// };
-
-// // 详情关闭回调
-// const handleDetailClose = () => {
-//   detailVisible.value = false;
-// };
-
-// // 初始化
-// onMounted(() => {
-//   init();
-// });
+const { t } = useI18n();
+const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
+  useSaleScanList();
 </script>
-
-<style scoped>
-.sale-scan {
-  height: 100%;
-}
-</style>

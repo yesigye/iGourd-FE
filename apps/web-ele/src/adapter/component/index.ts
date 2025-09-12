@@ -42,6 +42,7 @@ import {
   TimePicker,
   Transfer,
   Upload,
+  ProductArrayTable,
 } from '@igourd/common-ui';
 
 import '@igourd/common-ui/style';
@@ -54,6 +55,7 @@ async function initComponentAdapter() {
     ArrayTable,
     ArrayTabs,
     Cascader,
+    ProductArrayTable,
     Editable,
     Checkbox,
     DatePicker,
