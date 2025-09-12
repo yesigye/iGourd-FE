@@ -5,6 +5,7 @@ import type { ISchema } from '@formily/vue';
 import type { ButtonProps } from 'element-plus';
 
 import type { ClassType, MaybeComputedRef } from '@igourd-core/typings';
+import type { Component } from 'vue';
 
 export interface ActionButtonOptions extends ButtonProps {
   [key: string]: any;
@@ -86,9 +87,15 @@ export interface IGourdFormProps<T extends object> extends IFormProps<T> {
    */
   resetButtonOptions?: ActionButtonOptions;
 
+  /**
+   * 表单 JSON Schema
+   */
   schema: ISchema;
 
-  scope: any;
+  /**
+   * 副作用
+   */
+  scope?: Record<string, any>;
 
   /**
    * 验证失败时是否自动滚动到第一个错误字段
@@ -112,6 +119,11 @@ export interface IGourdFormProps<T extends object> extends IFormProps<T> {
    * @default false
    */
   submitOnChange?: boolean;
+
+  /**
+   * 自定义表单组件
+   */
+  components: Record<string, Component>;
 
   /**
    * 是否在回车时提交表单
