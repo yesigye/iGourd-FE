@@ -30,8 +30,6 @@ export function useSaleScanList() {
 
   // 表格列配置
   const columns = computed(() => [
-
-
     {
       field: 'product_name',
       title: "{{t('sale.productName')}}",
@@ -83,62 +81,62 @@ export function useSaleScanList() {
   ]);
 
   // 搜索表单配置
-  const searchFormSchema = {product_id: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('sale.pleaseSelectProduct')}}",
-          filterable: true,
-        },
+  const searchFormSchema = {
+    product_id: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('sale.pleaseSelectStatus')}}",
-          options: [
-            { label: '待处理', value: 'pending' },
-            { label: '已处理', value: 'processed' },
-            { label: '失败', value: 'failed' },
-          ],
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('sale.pleaseSelectProduct')}}",
+        filterable: true,
       },
-      dateRange: {
-        type: 'array',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          type: 'daterange',
-          rangeSeparator: '至',
-          startPlaceholder: t('sale.startDate'),
-          endPlaceholder: t('sale.endDate'),
-        },
+    },
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('sale.keywords')}}",
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('sale.pleaseSelectStatus')}}",
+        options: [
+          { label: '待处理', value: 'pending' },
+          { label: '已处理', value: 'processed' },
+          { label: '失败', value: 'failed' },
+        ],
+      },
+    },
+    dateRange: {
+      type: 'array',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        type: 'daterange',
+        rangeSeparator: '至',
+        startPlaceholder: t('sale.startDate'),
+        endPlaceholder: t('sale.endDate'),
+      },
+    },
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('sale.keywords')}}",
       },
     },
   };
@@ -196,7 +194,7 @@ export function useSaleScanList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -213,7 +211,3 @@ export function useSaleScanList() {
     gridOptions,
   };
 }
-
-
-
-

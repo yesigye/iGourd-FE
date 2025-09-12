@@ -26,8 +26,6 @@ export function useReportList() {
 
   // 表格列配置
   const columns = computed(() => [
-
-
     {
       field: 'name',
       title: "{{t('report.name')}}",
@@ -60,53 +58,53 @@ export function useReportList() {
   ]);
 
   // 搜索表单配置
-  const searchFormSchema = {type: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('report.pleaseSelectType')}}",
-          options: [
-            { label: '客户报表', value: 'customer' },
-            { label: '财务报表', value: 'financial' },
-            { label: '库存报表', value: 'inventory' },
-            { label: '销售报表', value: 'sales' },
-          ],
-        },
+  const searchFormSchema = {
+    type: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('report.pleaseSelectStatus')}}",
-          options: [
-            { label: '启用', value: 'active' },
-            { label: '禁用', value: 'inactive' },
-            { label: '草稿', value: 'draft' },
-            { label: '已发布', value: 'published' },
-          ],
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('report.pleaseSelectType')}}",
+        options: [
+          { label: '客户报表', value: 'customer' },
+          { label: '财务报表', value: 'financial' },
+          { label: '库存报表', value: 'inventory' },
+          { label: '销售报表', value: 'sales' },
+        ],
       },
-      keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('report.keywords')}}",
-        },
+    },
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('report.pleaseSelectStatus')}}",
+        options: [
+          { label: '启用', value: 'active' },
+          { label: '禁用', value: 'inactive' },
+          { label: '草稿', value: 'draft' },
+          { label: '已发布', value: 'published' },
+        ],
+      },
+    },
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('report.keywords')}}",
       },
     },
   };
@@ -164,7 +162,7 @@ export function useReportList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -181,9 +179,3 @@ export function useReportList() {
     gridOptions,
   };
 }
-
-
-
-
-
-

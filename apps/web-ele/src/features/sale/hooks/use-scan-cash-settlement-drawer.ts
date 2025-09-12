@@ -94,9 +94,9 @@ export function useScanCashSettlementDrawer() {
               clearable: true,
             },
             enum: [
-              { label: "{{t('sales.alipay'), value: 'ALIPAY' },
-              { label: "{{t('sales.wechat'), value: 'WECHAT' },
-              { label: "{{t('sales.unionPay'), value: 'UNIONPAY' },
+              { label: "{{t('sales.alipay')}}", value: 'ALIPAY' },
+              { label: "{{t('sales.wechat')}}", value: 'WECHAT' },
+              { label: "{{t('sales.unionPay')}}", value: 'UNIONPAY' },
             ],
             'x-validator': [
               {
@@ -192,7 +192,7 @@ export function useScanCashSettlementDrawer() {
   };
 
   // 使用 useIgourdForm
-  const { Form, formApi } = useIgourdForm({
+  const { Form, formAPI } = useIgourdForm({
     schema: formSchema,
     initialValues: {
       orderNo: '',
@@ -231,7 +231,7 @@ export function useScanCashSettlementDrawer() {
       }
     },
     onCancel: () => {
-      formApi.reset();
+      formAPI.reset();
       drawerApi.close();
     },
   });
@@ -241,7 +241,7 @@ export function useScanCashSettlementDrawer() {
     orderData?: any;
   }) => {
     if (data.orderData) {
-      formApi.setValues({
+      formAPI.setValues({
         orderNo: data.orderData.orderNo || '',
         customerName: data.orderData.customerName || '',
         orderDate: data.orderData.orderDate || '',
@@ -254,7 +254,7 @@ export function useScanCashSettlementDrawer() {
         paymentTime: '',
       });
     } else {
-      formApi.reset();
+      formAPI.reset();
     }
     drawerApi.open();
   };
@@ -271,7 +271,7 @@ export function useScanCashSettlementDrawer() {
         merchant_id: Local.get('userinfo')?.current_login_user_app?.owner_id,
       });
       if (String(res?.code) === 'SUCCESS') {
-        formApi.setFieldState('qrCode', {
+        formAPI.setFieldState('qrCode', {
           value: res.data.qrCode,
         });
       }
@@ -284,7 +284,7 @@ export function useScanCashSettlementDrawer() {
     try {
       const res = await SaleService.checkPaymentStatus(transactionId);
       if (String(res?.code) === 'SUCCESS') {
-        formApi.setValues({
+        formAPI.setValues({
           status: res.data.status,
           paymentTime: res.data.paymentTime,
         });
@@ -298,7 +298,7 @@ export function useScanCashSettlementDrawer() {
     Drawer,
     Form,
     drawerApi,
-    formApi,
+    formAPI,
     openDrawer,
     closeDrawer,
     generateQRCode,

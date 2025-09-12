@@ -28,8 +28,6 @@ export function useMarketingList() {
 
   // 表格列配置
   const columns = computed(() => [
-
-
     {
       field: 'name',
       title: "{{t('marketing.name')}}",
@@ -84,70 +82,70 @@ export function useMarketingList() {
   ]);
 
   // 搜索表单配置
-  const searchFormSchema = {type: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.pleaseSelectType')}}",
-          options: [
-            { label: '营销活动', value: 'activity' },
-            { label: '优惠券', value: 'coupon' },
-            { label: '促销活动', value: 'promotion' },
-            { label: '折扣管理', value: 'discount' },
-            { label: '价格管理', value: 'price' },
-          ],
-        },
+  const searchFormSchema = {
+    type: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.pleaseSelectStatus')}}",
-          options: [
-            { label: '草稿', value: 'draft' },
-            { label: '启用', value: 'active' },
-            { label: '禁用', value: 'inactive' },
-            { label: '已过期', value: 'expired' },
-            { label: '已取消', value: 'cancelled' },
-          ],
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.pleaseSelectType')}}",
+        options: [
+          { label: '营销活动', value: 'activity' },
+          { label: '优惠券', value: 'coupon' },
+          { label: '促销活动', value: 'promotion' },
+          { label: '折扣管理', value: 'discount' },
+          { label: '价格管理', value: 'price' },
+        ],
       },
-      dateRange: {
-        type: 'array',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          type: 'daterange',
-          rangeSeparator: '至',
-          startPlaceholder: t('marketing.startDate'),
-          endPlaceholder: t('marketing.endDate'),
-        },
+    },
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.keywords')}}",
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.pleaseSelectStatus')}}",
+        options: [
+          { label: '草稿', value: 'draft' },
+          { label: '启用', value: 'active' },
+          { label: '禁用', value: 'inactive' },
+          { label: '已过期', value: 'expired' },
+          { label: '已取消', value: 'cancelled' },
+        ],
+      },
+    },
+    dateRange: {
+      type: 'array',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        type: 'daterange',
+        rangeSeparator: '至',
+        startPlaceholder: t('marketing.startDate'),
+        endPlaceholder: t('marketing.endDate'),
+      },
+    },
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.keywords')}}",
       },
     },
   };
@@ -205,7 +203,7 @@ export function useMarketingList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -222,9 +220,3 @@ export function useMarketingList() {
     gridOptions,
   };
 }
-
-
-
-
-
-

@@ -30,8 +30,6 @@ export function useInventoryTransferList() {
 
   // 表格列配置 - 基于原有的 columnsVisible 数组
   const columns = computed(() => [
-
-
     {
       field: 'transfer_no',
       title: "{{t('inventory.transferNo')}}",
@@ -111,106 +109,106 @@ export function useInventoryTransferList() {
   ]);
 
   // 搜索表单配置 - 基于原有的查询参数
-  const searchFormSchema = {keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.keywords')}}",
-          clearable: true,
-        },
+  const searchFormSchema = {
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      transfer_no: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.transferNo')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.keywords')}}",
+        clearable: true,
       },
-      from_warehouse_id: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.pleaseSelectFromWarehouse')}}",
-          filterable: true,
-          clearable: true,
-        },
+    },
+    transfer_no: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      to_warehouse_id: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.pleaseSelectToWarehouse')}}",
-          filterable: true,
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.transferNo')}}",
+        clearable: true,
       },
-      status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.pleaseSelectStatus')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('inventory.status_PENDING'), value: 'PENDING' },
-            { label: "{{t('inventory.status_APPROVED'), value: 'APPROVED' },
-            { label: "{{t('inventory.status_REJECTED'), value: 'REJECTED' },
-            { label: "{{t('inventory.status_COMPLETED'), value: 'COMPLETED' },
-          ],
-        },
+    },
+    from_warehouse_id: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      start_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.startDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.pleaseSelectFromWarehouse')}}",
+        filterable: true,
+        clearable: true,
       },
-      end_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.endDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+    },
+    to_warehouse_id: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.pleaseSelectToWarehouse')}}",
+        filterable: true,
+        clearable: true,
+      },
+    },
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.pleaseSelectStatus')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('inventory.status_PENDING')}}", value: 'PENDING' },
+          { label: "{{t('inventory.status_APPROVED')}}", value: 'APPROVED' },
+          { label: "{{t('inventory.status_REJECTED')}}", value: 'REJECTED' },
+          { label: "{{t('inventory.status_COMPLETED')}}", value: 'COMPLETED' },
+        ],
+      },
+    },
+    start_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.startDate')}}",
+        type: 'date',
+        clearable: true,
+      },
+    },
+    end_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.endDate')}}",
+        type: 'date',
+        clearable: true,
       },
     },
   };
@@ -268,7 +266,7 @@ export function useInventoryTransferList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -285,7 +283,3 @@ export function useInventoryTransferList() {
     gridOptions,
   };
 }
-
-
-
-

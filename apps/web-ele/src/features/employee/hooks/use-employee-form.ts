@@ -40,8 +40,8 @@ export function useEmployeeForm() {
         'x-component': 'Radio',
         'x-component-props': {
           options: [
-            { label: "{{t('employee.createExistedUser'), value: 'PLATFORM_EXISTED_USER' },
-            { label: "{{t('employee.createNewUser'), value: 'PLATFORM_NEW_REGISTER_USER' },
+            { label: "{{t('employee.createExistedUser')}}", value: 'PLATFORM_EXISTED_USER' },
+            { label: "{{t('employee.createNewUser')}}", value: 'PLATFORM_NEW_REGISTER_USER' },
           ],
         },
         'x-validator': [
@@ -85,9 +85,9 @@ export function useEmployeeForm() {
             'x-component': 'Radio',
             'x-component-props': {
               options: [
-                { label: "{{t('employee.loginId'), value: 'LOGIN_ID' },
-                { label: "{{t('employee.email'), value: 'EMAIL' },
-                { label: "{{t('employee.phoneNumber'), value: 'PHONE_NUMBER' },
+                { label: "{{t('employee.loginId')}}", value: 'LOGIN_ID' },
+                { label: "{{t('employee.email')}}", value: 'EMAIL' },
+                { label: "{{t('employee.phoneNumber')}}", value: 'PHONE_NUMBER' },
               ],
             },
             'x-validator': [
@@ -407,6 +407,7 @@ export function useEmployeeForm() {
       email_verification_code: '',
       sms_verification_code: '',
     },
+    useI18n
   });
 
   // 表单提交处理

@@ -123,7 +123,7 @@ export interface IGourdFormProps<T extends object> extends IFormProps<T> {
   /**
    * 自定义表单组件
    */
-  components: Record<string, Component>;
+  components?: Record<string, Component>;
 
   /**
    * 是否在回车时提交表单

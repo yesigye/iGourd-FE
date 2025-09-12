@@ -29,8 +29,6 @@ export function useSaleReturnedList() {
 
   // 表格列配置
   const columns = computed(() => [
-
-
     {
       field: 'returned_no',
       title: "{{t('sale.returnedNo')}}",
@@ -75,35 +73,35 @@ export function useSaleReturnedList() {
   ]);
 
   // 搜索表单配置
-  const searchFormSchema = {status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('sale.pleaseSelectStatus')}}",
-          options: [
-            { label: '待处理', value: 'pending' },
-            { label: '已批准', value: 'approved' },
-            { label: '已拒绝', value: 'rejected' },
-            { label: '已完成', value: 'completed' },
-          ],
-        },
+  const searchFormSchema = {
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('sale.keywords')}}",
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('sale.pleaseSelectStatus')}}",
+        options: [
+          { label: '待处理', value: 'pending' },
+          { label: '已批准', value: 'approved' },
+          { label: '已拒绝', value: 'rejected' },
+          { label: '已完成', value: 'completed' },
+        ],
+      },
+    },
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('sale.keywords')}}",
       },
     },
   };
@@ -161,7 +159,7 @@ export function useSaleReturnedList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -178,7 +176,3 @@ export function useSaleReturnedList() {
     gridOptions,
   };
 }
-
-
-
-

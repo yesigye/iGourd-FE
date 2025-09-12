@@ -152,8 +152,8 @@ export function useInventoryWarehouseList() {
         placeholder: "{{t('inventory.pleaseSelectDefaultWarehouse')}}",
         clearable: true,
         options: [
-          { label: "{{t('common.yes'), value: '1' },
-          { label: "{{t('common.no'), value: '0' },
+          { label: "{{t('common.yes')}}", value: '1' },
+          { label: "{{t('common.no')}}", value: '0' },
         ],
       },
     },
@@ -169,8 +169,8 @@ export function useInventoryWarehouseList() {
         placeholder: "{{t('inventory.pleaseSelectDefaultSale')}}",
         clearable: true,
         options: [
-          { label: "{{t('common.yes'), value: '1' },
-          { label: "{{t('common.no'), value: '0' },
+          { label: "{{t('common.yes')}}", value: '1' },
+          { label: "{{t('common.no')}}", value: '0' },
         ],
       },
     },

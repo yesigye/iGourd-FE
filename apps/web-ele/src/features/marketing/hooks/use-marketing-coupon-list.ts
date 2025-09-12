@@ -33,8 +33,6 @@ export function useMarketingCouponList() {
 
   // 表格列配置 - 基于原有的 columnsVisible 数组
   const columns = computed(() => [
-
-
     {
       field: 'coupon_name',
       title: "{{t('marketing.couponName')}}",
@@ -146,110 +144,119 @@ export function useMarketingCouponList() {
   ]);
 
   // 搜索表单配置 - 基于原有的查询参数
-  const searchFormSchema = {keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.keywords')}}",
-          clearable: true,
-        },
+  const searchFormSchema = {
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      coupon_name: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.couponName')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.keywords')}}",
+        clearable: true,
       },
-      coupon_code: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.couponCode')}}",
-          clearable: true,
-        },
+    },
+    coupon_name: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      coupon_type: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.pleaseSelectCouponType')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('marketing.coupon_type_PERCENTAGE'), value: 'PERCENTAGE' },
-            { label: "{{t('marketing.coupon_type_FIXED'), value: 'FIXED' },
-            { label: "{{t('marketing.coupon_type_FREE_SHIPPING'), value: 'FREE_SHIPPING' },
-            { label: "{{t('marketing.coupon_type_BUY_ONE_GET_ONE'), value: 'BUY_ONE_GET_ONE' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.couponName')}}",
+        clearable: true,
       },
-      status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.pleaseSelectStatus')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('marketing.status_ACTIVE'), value: 'ACTIVE' },
-            { label: "{{t('marketing.status_INACTIVE'), value: 'INACTIVE' },
-            { label: "{{t('marketing.status_EXPIRED'), value: 'EXPIRED' },
-            { label: "{{t('marketing.status_USED_UP'), value: 'USED_UP' },
-          ],
-        },
+    },
+    coupon_code: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      start_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.startDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.couponCode')}}",
+        clearable: true,
       },
-      end_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.endDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+    },
+    coupon_type: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.pleaseSelectCouponType')}}",
+        clearable: true,
+        options: [
+          {
+            label: "{{t('marketing.coupon_type_PERCENTAGE')}}",
+            value: 'PERCENTAGE',
+          },
+          { label: "{{t('marketing.coupon_type_FIXED')}}", value: 'FIXED' },
+          {
+            label: "{{t('marketing.coupon_type_FREE_SHIPPING')}}",
+            value: 'FREE_SHIPPING',
+          },
+          {
+            label: "{{t('marketing.coupon_type_BUY_ONE_GET_ONE')}}",
+            value: 'BUY_ONE_GET_ONE',
+          },
+        ],
+      },
+    },
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.pleaseSelectStatus')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('marketing.status_ACTIVE')}}", value: 'ACTIVE' },
+          { label: "{{t('marketing.status_INACTIVE')}}", value: 'INACTIVE' },
+          { label: "{{t('marketing.status_EXPIRED')}}", value: 'EXPIRED' },
+          { label: "{{t('marketing.status_USED_UP')}}", value: 'USED_UP' },
+        ],
+      },
+    },
+    start_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.startDate')}}",
+        type: 'date',
+        clearable: true,
+      },
+    },
+    end_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.endDate')}}",
+        type: 'date',
+        clearable: true,
       },
     },
   };
@@ -264,7 +271,7 @@ export function useMarketingCouponList() {
       filterList.forEach((item) => {
         query[item.field] = item.values;
       });
-      $grid.commitProxy('reload', query);
+      $grid?.commitProxy('reload', query);
     },
   };
 
@@ -307,7 +314,7 @@ export function useMarketingCouponList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema },
   });
 
   return {
@@ -324,9 +331,3 @@ export function useMarketingCouponList() {
     gridOptions,
   };
 }
-
-
-
-
-
-

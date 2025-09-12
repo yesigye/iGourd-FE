@@ -3,7 +3,8 @@ import { useI18n } from '@igourd/locales';
 import { useIgourdVxeGrid } from '#/adapter/vxe-table';
 import { useIgourdDrawer } from '@igourd/common-ui';
 import { inventoryApi } from '../apis';
-import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
+import type { VxeGridListeners, VxeGridProps, VxeGridPropTypes } from '#/adapter/vxe-table';
+import ProductFeatureDrawer from '../components/inventory-product-feature-drawer.vue';
 
 // 定义产品特性数据类型
 interface ProductFeatureInfo {
@@ -22,31 +23,28 @@ interface ProductFeatureInfo {
 
 export function useInventoryProductFeatureList() {
   const { t } = useI18n();
-  
+
   // 获取抽屉组件
   const [Drawer, drawerApi] = useIgourdDrawer({
-    connectedComponent: () => import('../components/inventory-product-feature-drawer.vue'),
+    connectedComponent: ProductFeatureDrawer,
   });
 
   // 搜索表单配置
   const searchFormSchema = {
-    type: 'object',
-    properties: {
-      keywords: {
-        type: 'string',
-        title: "{{t('purchase.placeholder')}}",
-        'x-decorator': 'FormItem',
-        'x-component': 'Input',
-        'x-component-props': {
-          placeholder: "{{t('purchase.placeholder')}}",
-          clearable: true,
-        },
+    keywords: {
+      type: 'string',
+      title: "{{t('purchase.placeholder')}}",
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
+      'x-component-props': {
+        placeholder: "{{t('purchase.placeholder')}}",
+        clearable: true,
       },
     },
   };
 
   // 表格列配置
-  const columns = computed(() => [
+  const columns: VxeGridPropTypes.Column<any>[] = [
     {
       field: 'name',
       title: "{{t('customers.featureName')}}",
@@ -95,30 +93,27 @@ export function useInventoryProductFeatureList() {
       fixed: 'right',
       slots: { default: 'action' },
     },
-  ]);
+  ];
 
   // 表格配置
-  const gridOptions = computed<VxeGridProps>(() => ({
-    columns: columns.value,
-    data: [],
-    height: 'auto',
-    stripe: true,
-    border: true,
-    resizable: true,
-    showOverflow: 'tooltip',
-    rowKey: 'id',
-    checkboxConfig: {
-      highlight: true,
+  const gridOptions: VxeGridProps<any> = {
+    columns: columns,
+    proxyConfig: {
+      ajax: {
+        query: async ({ page }, form = {}) => {
+          return await purchaseApi.getProductFeatureList({
+            page_num: page.currentPage,
+            page_size: page.pageSize,
+            merchant_id: '1938848394566025217',
+            ...form,
+          });
+        },
+      },
     },
-  }));
+  };
 
   // 表格事件
-  const gridEvents = computed<VxeGridListeners>(() => ({
-    checkboxChange: ({ records }) => {
-      // 处理选中行变化
-      console.log('选中的行:', records);
-    },
-  }));
+  const gridEvents = computed<VxeGridListeners>(() => ({}));
 
   // 获取列表数据
   const getList = async () => {
@@ -146,18 +141,16 @@ export function useInventoryProductFeatureList() {
   const isMaxItems = ref(false);
 
   // 使用 VXE Grid
-  const { Grid, gridApi } = useIgourdVxeGrid({
-    gridOptions,
+  const [Grid, gridApi] = useIgourdVxeGrid({
+    formOptions: { schema: searchFormSchema },
     gridEvents,
-    formOptions: {
-      schema: searchFormSchema,
-    },
-    getList,
+    gridOptions,
   });
 
   return {
     Grid,
     Drawer,
+    gridApi,
     drawerApi,
     searchFormSchema,
     isMaxItems,

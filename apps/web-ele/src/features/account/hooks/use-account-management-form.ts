@@ -45,10 +45,10 @@ export function useAccountManagementForm() {
             'x-component': 'Radio.Group',
             'x-component-props': {
               options: [
-                { label: "{{t('account.bankAccount'), value: 'BANK' },
-                { label: "{{t('account.cashAccount'), value: 'CASH' },
-                { label: "{{t('account.creditCard'), value: 'CREDIT_CARD' },
-                { label: "{{t('account.other'), value: 'OTHER' },
+                { label: "{{t('account.bankAccount')}}", value: 'BANK' },
+                { label: "{{t('account.cashAccount')}}", value: 'CASH' },
+                { label: "{{t('account.creditCard')}}", value: 'CREDIT_CARD' },
+                { label: "{{t('account.other')}}", value: 'OTHER' },
               ],
             },
             'x-validator': [

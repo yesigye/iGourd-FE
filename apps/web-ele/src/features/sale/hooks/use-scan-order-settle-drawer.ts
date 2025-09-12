@@ -148,10 +148,10 @@ export function useScanOrderSettleDrawer() {
               clearable: true,
             },
             enum: [
-              { label: "{{t('sales.cash'), value: 'CASH' },
-              { label: "{{t('sales.card'), value: 'CARD' },
-              { label: "{{t('sales.alipay'), value: 'ALIPAY' },
-              { label: "{{t('sales.wechat'), value: 'WECHAT' },
+              { label: "{{t('sales.cash')}}", value: 'CASH' },
+              { label: "{{t('sales.card')}}", value: 'CARD' },
+              { label: "{{t('sales.alipay')}}", value: 'ALIPAY' },
+              { label: "{{t('sales.wechat')}}", value: 'WECHAT' },
             ],
             'x-validator': [
               {

@@ -28,8 +28,6 @@ export function useAccountCurrencyList() {
 
   // 表格列配置
   const columns = [
-
-
     {
       field: 'currency_code',
       title: t('account.currencyCode'),
@@ -72,54 +70,55 @@ export function useAccountCurrencyList() {
   ];
 
   // 搜索表单配置
-  const searchFormSchema = {currency_code: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('account.pleaseSelectCurrencyCode')}}",
-          options: [
-            { label: 'USD', value: 'USD' },
-            { label: 'EUR', value: 'EUR' },
-            { label: 'GBP', value: 'GBP' },
-            { label: 'JPY', value: 'JPY' },
-            { label: 'CNY', value: 'CNY' },
-          ],
-        },
+  const searchFormSchema = {
+    currency_code: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('account.pleaseSelectStatus')}}",
-          options: [
-            { label: '启用', value: 'active' },
-            { label: '禁用', value: 'inactive' },
-          ],
-        },
-      },
-      keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('account.keywords')}}",
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('account.pleaseSelectCurrencyCode')}}",
+        options: [
+          { label: 'USD', value: 'USD' },
+          { label: 'EUR', value: 'EUR' },
+          { label: 'GBP', value: 'GBP' },
+          { label: 'JPY', value: 'JPY' },
+          { label: 'CNY', value: 'CNY' },
+        ],
       },
     },
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('account.pleaseSelectStatus')}}",
+        options: [
+          { label: '启用', value: 'active' },
+          { label: '禁用', value: 'inactive' },
+        ],
+      },
+    },
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('account.keywords')}}",
+      },
+    },
+  };
 
   // Grid 事件配置
   const gridEvents: VxeGridListeners<AccountCurrencyInfo> = {
@@ -174,7 +173,7 @@ export function useAccountCurrencyList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -191,6 +190,3 @@ export function useAccountCurrencyList() {
     gridOptions,
   };
 }
-
-
-

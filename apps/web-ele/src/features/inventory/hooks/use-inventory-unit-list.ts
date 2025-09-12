@@ -29,8 +29,6 @@ export function useInventoryUnitList() {
 
   // 表格列配置 - 基于原有的 columnsVisible 数组
   const columns = computed(() => [
-
-
     {
       field: 'unit_name',
       title: "{{t('inventory.unitName')}}",
@@ -102,98 +100,98 @@ export function useInventoryUnitList() {
   ]);
 
   // 搜索表单配置 - 基于原有的查询参数
-  const searchFormSchema = {keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.keywords')}}",
-          clearable: true,
-        },
+  const searchFormSchema = {
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      unit_name: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.unitName')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.keywords')}}",
+        clearable: true,
       },
-      unit_code: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.unitCode')}}",
-          clearable: true,
-        },
+    },
+    unit_name: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      unit_type: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.pleaseSelectUnitType')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('inventory.unitType_WEIGHT'), value: 'WEIGHT' },
-            { label: "{{t('inventory.unitType_VOLUME'), value: 'VOLUME' },
-            { label: "{{t('inventory.unitType_LENGTH'), value: 'LENGTH' },
-            { label: "{{t('inventory.unitType_AREA'), value: 'AREA' },
-            { label: "{{t('inventory.unitType_COUNT'), value: 'COUNT' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.unitName')}}",
+        clearable: true,
       },
-      is_base_unit: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.pleaseSelectIsBaseUnit')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('common.yes'), value: 'true' },
-            { label: "{{t('common.no'), value: 'false' },
-          ],
-        },
+    },
+    unit_code: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      is_active: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.pleaseSelectIsActive')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('common.yes'), value: 'true' },
-            { label: "{{t('common.no'), value: 'false' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.unitCode')}}",
+        clearable: true,
+      },
+    },
+    unit_type: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.pleaseSelectUnitType')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('inventory.unitType_WEIGHT')}}", value: 'WEIGHT' },
+          { label: "{{t('inventory.unitType_VOLUME')}}", value: 'VOLUME' },
+          { label: "{{t('inventory.unitType_LENGTH')}}", value: 'LENGTH' },
+          { label: "{{t('inventory.unitType_AREA')}}", value: 'AREA' },
+          { label: "{{t('inventory.unitType_COUNT')}}", value: 'COUNT' },
+        ],
+      },
+    },
+    is_base_unit: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.pleaseSelectIsBaseUnit')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('common.yes')}}", value: 'true' },
+          { label: "{{t('common.no')}}", value: 'false' },
+        ],
+      },
+    },
+    is_active: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.pleaseSelectIsActive')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('common.yes')}}", value: 'true' },
+          { label: "{{t('common.no')}}", value: 'false' },
+        ],
       },
     },
   };
@@ -251,7 +249,7 @@ export function useInventoryUnitList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -268,7 +266,3 @@ export function useInventoryUnitList() {
     gridOptions,
   };
 }
-
-
-
-

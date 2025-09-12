@@ -3,23 +3,23 @@
     <Drawer />
     <Grid>
       <template #table-title>
-        <IgourdButton @click="handlerCreate">{{ t('employee.add') }}</IgourdButton>
+        <ElButton @click="handlerCreate">{{ t('employee.add') }}</ElButton>
       </template>
-      
+
       <!-- 登录账号列插槽 -->
       <template #loginAccount="{ row }">
         <div v-for="(item, index) in row.login_ids" :key="index">
           {{ item.country_area_code }} {{ item.login_account }}
         </div>
       </template>
-      
+
       <!-- 角色列插槽 -->
       <template #roles="{ row }">
         <el-tag v-for="(item, index) in row.roles" :key="index" class="mr-1">
           {{ item.name }}
         </el-tag>
       </template>
-      
+
       <!-- 状态列插槽 -->
       <template #status="{ row }">
         <el-switch
@@ -27,28 +27,28 @@
           class="mt-2"
           inline-prompt
           :active-icon="Check"
-          :inactive-icon="Close"
+          :inactive-icon="CircleX"
           @change="handleStatusChange(row)"
           :disabled="row.roles.some(role => role.type === 'SUPER_ADMIN')"
         />
       </template>
-      
+
       <!-- 操作列插槽 -->
       <template #action="{ row }">
-        <IgourdButton 
-          type="primary" 
-          size="small" 
+        <ElButton
+          type="primary"
+          size="small"
           @click="handleEdit(row)"
         >
           {{ t('employee.edit') }}
-        </IgourdButton>
-        <IgourdButton 
-          type="danger" 
-          size="small" 
+        </ElButton>
+        <ElButton
+          type="danger"
+          size="small"
           @click="handleDelete(row)"
         >
           {{ t('employee.delete') }}
-        </IgourdButton>
+        </ElButton>
       </template>
     </Grid>
   </Page>
@@ -57,11 +57,11 @@
 <script lang="ts" setup>
 import type { VxeGridListeners } from '#/adapter/vxe-table';
 
-import { IgourdButton, Page, useIgourdDrawer, alert, confirm } from '@igourd/common-ui';
+import { ElButton, Page, useIgourdDrawer, alert, confirm } from '@igourd/common-ui';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { Check, Close } from '@element-plus/icons-vue';
+import { Check, CircleX } from '@igourd/icons';
 
-import Drawer from '@@/employee/components/employee-drawer.vue';
+import EmployeeForm from '@@/employee/components/employee-drawer.vue';
 import { useEmployeeList, type EmployeeInfo } from '@@/employee/hooks/use-employee-list';
 import { useI18n } from '@igourd/locales';
 
@@ -70,7 +70,7 @@ defineOptions({
 });
 
 const [Drawer, drawerApi] = useIgourdDrawer({
-  connectedComponent: Drawer,
+  connectedComponent: EmployeeForm,
 });
 
 const { t } = useI18n();
@@ -96,12 +96,12 @@ async function handleDelete(row: EmployeeInfo) {
       t('employee.deleteConfirm'),
       t('employee.deleteTitle')
     );
-    
+
     if (confirmed) {
       // 执行删除操作
       await deleteRowData(row.user_id);
       ElMessage.success(t('employee.deleteSuccess'));
-      
+
       // 刷新表格
       refreshGrid();
     }

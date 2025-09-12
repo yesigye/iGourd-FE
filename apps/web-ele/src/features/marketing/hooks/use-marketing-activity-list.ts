@@ -31,8 +31,6 @@ export function useMarketingActivityList() {
 
   // 表格列配置 - 基于原有的 columnsVisible 数组
   const columns = computed(() => [
-
-
     {
       field: 'activity_name',
       title: "{{t('marketing.activityName')}}",
@@ -124,118 +122,139 @@ export function useMarketingActivityList() {
   ]);
 
   // 搜索表单配置 - 基于原有的查询参数
-  const searchFormSchema = {keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.keywords')}}",
-          clearable: true,
-        },
+  const searchFormSchema = {
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      activity_name: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.activityName')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.keywords')}}",
+        clearable: true,
       },
-      activity_type: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.pleaseSelectActivityType')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('marketing.activity_type_PROMOTION'), value: 'PROMOTION' },
-            { label: "{{t('marketing.activity_type_DISCOUNT'), value: 'DISCOUNT' },
-            { label: "{{t('marketing.activity_type_COUPON'), value: 'COUPON' },
-            { label: "{{t('marketing.activity_type_GIFT'), value: 'GIFT' },
-            { label: "{{t('marketing.activity_type_EVENT'), value: 'EVENT' },
-          ],
-        },
+    },
+    activity_name: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      activity_status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.pleaseSelectActivityStatus')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('marketing.activity_status_DRAFT'), value: 'DRAFT' },
-            { label: "{{t('marketing.activity_status_ACTIVE'), value: 'ACTIVE' },
-            { label: "{{t('marketing.activity_status_PAUSED'), value: 'PAUSED' },
-            { label: "{{t('marketing.activity_status_COMPLETED'), value: 'COMPLETED' },
-            { label: "{{t('marketing.activity_status_CANCELLED'), value: 'CANCELLED' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.activityName')}}",
+        clearable: true,
       },
-      target_audience: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.pleaseSelectTargetAudience')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('marketing.target_audience_ALL'), value: 'ALL' },
-            { label: "{{t('marketing.target_audience_NEW'), value: 'NEW' },
-            { label: "{{t('marketing.target_audience_EXISTING'), value: 'EXISTING' },
-            { label: "{{t('marketing.target_audience_VIP'), value: 'VIP' },
-          ],
-        },
+    },
+    activity_type: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      start_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.startDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.pleaseSelectActivityType')}}",
+        clearable: true,
+        options: [
+          {
+            label: "{{t('marketing.activity_type_PROMOTION')}}",
+            value: 'PROMOTION',
+          },
+          {
+            label: "{{t('marketing.activity_type_DISCOUNT')}}",
+            value: 'DISCOUNT',
+          },
+          { label: "{{t('marketing.activity_type_COUPON')}}", value: 'COUPON' },
+          { label: "{{t('marketing.activity_type_GIFT')}}", value: 'GIFT' },
+          { label: "{{t('marketing.activity_type_EVENT')}}", value: 'EVENT' },
+        ],
       },
-      end_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.endDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+    },
+    activity_status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.pleaseSelectActivityStatus')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('marketing.activity_status_DRAFT')}}", value: 'DRAFT' },
+          {
+            label: "{{t('marketing.activity_status_ACTIVE')}}",
+            value: 'ACTIVE',
+          },
+          {
+            label: "{{t('marketing.activity_status_PAUSED')}}",
+            value: 'PAUSED',
+          },
+          {
+            label: "{{t('marketing.activity_status_COMPLETED')}}",
+            value: 'COMPLETED',
+          },
+          {
+            label: "{{t('marketing.activity_status_CANCELLED')}}",
+            value: 'CANCELLED',
+          },
+        ],
+      },
+    },
+    target_audience: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.pleaseSelectTargetAudience')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('marketing.target_audience_ALL')}}", value: 'ALL' },
+          { label: "{{t('marketing.target_audience_NEW')}}", value: 'NEW' },
+          {
+            label: "{{t('marketing.target_audience_EXISTING')}}",
+            value: 'EXISTING',
+          },
+          { label: "{{t('marketing.target_audience_VIP')}}", value: 'VIP' },
+        ],
+      },
+    },
+    start_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.startDate')}}",
+        type: 'date',
+        clearable: true,
+      },
+    },
+    end_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.endDate')}}",
+        type: 'date',
+        clearable: true,
       },
     },
   };
@@ -293,7 +312,7 @@ export function useMarketingActivityList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema },
   });
 
   return {
@@ -310,9 +329,3 @@ export function useMarketingActivityList() {
     gridOptions,
   };
 }
-
-
-
-
-
-

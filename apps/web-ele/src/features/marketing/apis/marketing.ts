@@ -206,33 +206,6 @@ export function createOrUpdateMarketingPromotionApi(data: any) {
   }
 }
 
-// ==================== 折扣管理 APIs ====================
-
-// 获取折扣分页列表
-export function getDiscountListApi(data: any) {
-  return requestClient.post(`/merchant/marketing/discount/page-list`, data);
-}
-
-// 获取折扣详情
-export function getDiscountDetailApi(id: string) {
-  return requestClient.get(`/merchant/marketing/discount/${id}`);
-}
-
-// 创建折扣
-export function createDiscountApi(data: any) {
-  return requestClient.post(`/merchant/marketing/discount`, data);
-}
-
-// 更新折扣
-export function updateDiscountApi(id: string, data: any) {
-  return requestClient.put(`/merchant/marketing/discount/${id}`, data);
-}
-
-// 删除折扣
-export function deleteDiscountApi(id: string) {
-  return requestClient.delete(`/merchant/marketing/discount/${id}`);
-}
-
 // 批量删除折扣
 export function batchDeleteDiscountApi(ids: string[]) {
   return requestClient.delete(`/merchant/marketing/discount/batch`, { data: { ids } });
@@ -241,7 +214,7 @@ export function batchDeleteDiscountApi(ids: string[]) {
 // 创建或更新折扣
 export function createOrUpdateDiscountApi(data: any) {
   if (data.id) {
-    return updateDiscountApi(data.id, data);
+    return updateDiscountApi(data);
   } else {
     return createDiscountApi(data);
   }
@@ -345,7 +318,7 @@ export const marketingApi = {
   update: updateMarketingApi,
   delete: deleteMarketingApi,
   batchDelete: batchDeleteMarketingApi,
-  
+
   // 营销活动
   getActivityList: getMarketingActivityListApi,
   getActivityDetail: getMarketingActivityDetailApi,
@@ -353,7 +326,7 @@ export const marketingApi = {
   updateActivity: updateMarketingActivityApi,
   deleteActivity: deleteMarketingActivityApi,
   batchDeleteActivity: batchDeleteMarketingActivityApi,
-  
+
   // 优惠券
   getCouponList: getMarketingCouponListApi,
   getCouponDetail: getMarketingCouponDetailApi,
@@ -361,7 +334,7 @@ export const marketingApi = {
   updateCoupon: updateMarketingCouponApi,
   deleteCoupon: deleteMarketingCouponApi,
   batchDeleteCoupon: batchDeleteMarketingCouponApi,
-  
+
   // 促销活动
   getPromotionList: getMarketingPromotionListApi,
   getPromotionDetail: getMarketingPromotionDetailApi,
@@ -369,7 +342,7 @@ export const marketingApi = {
   updatePromotion: updateMarketingPromotionApi,
   deletePromotion: deleteMarketingPromotionApi,
   batchDeletePromotion: batchDeleteMarketingPromotionApi,
-  
+
   // 折扣管理
   getDiscountList: getDiscountListApi,
   getDiscountDetail: getDiscountDetailApi,
@@ -378,7 +351,7 @@ export const marketingApi = {
   deleteDiscount: deleteDiscountApi,
   statusOpen: statusOpenApi,
   statusClose: statusCloseApi,
-  
+
   // 价格管理
   getPriceList: getPriceListApi,
   getPriceDetail: getPriceDetailApi,
@@ -388,7 +361,7 @@ export const marketingApi = {
   batchDeletePrice: batchDeletePriceApi,
   statusOpenPrice: statusOpenPriceApi,
   statusClosePrice: statusClosePriceApi,
-  
+
   // 通用
   getProductList: getProductListApi,
   getCustomerList: getCustomerListApi,

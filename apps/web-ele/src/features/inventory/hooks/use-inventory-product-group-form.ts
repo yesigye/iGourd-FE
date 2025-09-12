@@ -1,10 +1,11 @@
 import { useI18n } from '@igourd/locales';
 import { useIgourdDrawer, useIgourdForm, type ISchema } from '@igourd/common-ui';
 import { inventoryApi } from '../apis';
+import ProductGroupForm from '../components/inventory-product-group-drawer.vue';
 
 export function useInventoryProductGroupForm() {
   const { t } = useI18n();
-  
+
   const formSchema: ISchema = {
     type: 'object',
     properties: {
@@ -97,10 +98,10 @@ export function useInventoryProductGroupForm() {
   };
 
   const [Drawer, drawerApi] = useIgourdDrawer({
-    connectedComponent: () => import('./inventory-product-group-drawer.vue'),
+    connectedComponent: ProductGroupForm,
   });
 
-  const { Form, formApi } = useIgourdForm({
+  const { Form, formAPI } = useIgourdForm({
     schema: formSchema,
     onSubmit: async (values) => {
       try {
@@ -121,7 +122,7 @@ export function useInventoryProductGroupForm() {
   return {
     Drawer,
     Form,
-    formApi,
+    formAPI,
     drawerApi,
   };
 }

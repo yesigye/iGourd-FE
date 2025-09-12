@@ -30,8 +30,6 @@ export function useSaleShiftsList() {
 
   // 表格列配置
   const columns = computed(() => [
-
-
     {
       field: 'shift_name',
       title: "{{t('sale.shiftName')}}",
@@ -90,49 +88,49 @@ export function useSaleShiftsList() {
   ]);
 
   // 搜索表单配置
-  const searchFormSchema = {status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('sale.pleaseSelectStatus')}}",
-          options: [
-            { label: '启用', value: 'active' },
-            { label: '禁用', value: 'inactive' },
-            { label: '已完成', value: 'completed' },
-          ],
-        },
+  const searchFormSchema = {
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      dateRange: {
-        type: 'array',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          type: 'daterange',
-          rangeSeparator: '至',
-          startPlaceholder: t('sale.startDate'),
-          endPlaceholder: t('sale.endDate'),
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('sale.pleaseSelectStatus')}}",
+        options: [
+          { label: '启用', value: 'active' },
+          { label: '禁用', value: 'inactive' },
+          { label: '已完成', value: 'completed' },
+        ],
       },
-      keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('sale.keywords')}}",
-        },
+    },
+    dateRange: {
+      type: 'array',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        type: 'daterange',
+        rangeSeparator: '至',
+        startPlaceholder: t('sale.startDate'),
+        endPlaceholder: t('sale.endDate'),
+      },
+    },
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('sale.keywords')}}",
       },
     },
   };
@@ -190,7 +188,7 @@ export function useSaleShiftsList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -207,7 +205,3 @@ export function useSaleShiftsList() {
     gridOptions,
   };
 }
-
-
-
-

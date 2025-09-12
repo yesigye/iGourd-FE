@@ -1,11 +1,11 @@
 import { useI18n } from '@igourd/locales';
-import { useIgourdDrawer, useIgourdForm } from '#/adapter/drawer';
+import { useIgourdForm, useIgourdDrawer } from '@igourd/common-ui';
 import type { ISchema } from '@igourd/common-ui';
 import { inventoryApi } from '../apis';
 
 export function useInventoryProductFeatureForm() {
   const { t } = useI18n();
-  
+
   const formSchema: ISchema = {
     type: 'object',
     properties: {
@@ -36,10 +36,10 @@ export function useInventoryProductFeatureForm() {
         'x-component': 'Radio.Group',
         'x-component-props': {
           options: [
-            { label: "{{t('inventory.textType'), value: 'TEXT' },
-            { label: "{{t('inventory.selectType'), value: 'SELECT' },
-            { label: "{{t('inventory.numberType'), value: 'NUMBER' },
-            { label: "{{t('inventory.dateType'), value: 'DATE' },
+            { label: "{{t('inventory.textType')}}", value: 'TEXT' },
+            { label: "{{t('inventory.selectType')}}", value: 'SELECT' },
+            { label: "{{t('inventory.numberType')}}", value: 'NUMBER' },
+            { label: "{{t('inventory.dateType')}}", value: 'DATE' },
           ],
         },
         'x-reactions': [
@@ -117,32 +117,17 @@ export function useInventoryProductFeatureForm() {
     },
   };
 
-  const [Drawer, drawerApi] = useIgourdDrawer({
-    connectedComponent: () => import('./inventory-product-feature-drawer.vue'),
-  });
+  const [Drawer, drawerApi] = useIgourdDrawer({});
 
-  const { Form, formApi } = useIgourdForm({
+  const { Form, formAPI } = useIgourdForm({
     schema: formSchema,
-    onSubmit: async (values) => {
-      try {
-        if (values.id) {
-          await inventoryApi.updateProductFeature(values);
-        } else {
-          await inventoryApi.createProductFeature(values);
-        }
-        drawerApi.close();
-        // 刷新列表
-        window.location.reload();
-      } catch (error) {
-        console.error('保存失败:', error);
-      }
-    },
+    useI18n,
   });
 
   return {
     Drawer,
     Form,
-    formApi,
+    formAPI,
     drawerApi,
   };
 }

@@ -21,9 +21,7 @@ async function generateRoutesByBackend(
     if (!menuRoutes) {
       return [];
     }
-
     const normalizePageMap: ComponentRecordType = {};
-
     for (const [key, value] of Object.entries(pageMap)) {
       normalizePageMap[normalizeViewPath(key)] = value;
     }
@@ -107,7 +105,6 @@ function functionTreesToRouteNodes(
 
     nodes.push(node);
   });
-  console.log(nodes);
   return nodes;
 }
 
@@ -119,7 +116,6 @@ function convertRoutes(
   return mapTree(routes, (node) => {
     const route = node as unknown as RouteRecordRaw;
     const { component, name } = node;
-
     if (!name) {
       console.error('route name is required', route);
     }

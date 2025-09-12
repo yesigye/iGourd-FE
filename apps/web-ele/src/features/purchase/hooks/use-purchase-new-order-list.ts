@@ -30,9 +30,7 @@ export function usePurchaseNewOrderList() {
   });
 
   // 表格列配置 - 基于原有的 columnsVisible 数组
-  const columns = computed(() => [
-
-
+  const columns = [
     {
       field: 'purchase_order_no',
       title: "{{t('purchase.purchaseorderno')}}",
@@ -117,126 +115,115 @@ export function usePurchaseNewOrderList() {
       align: 'left',
       formatter: 'formatDateTime',
     },
-  ]);
+  ];
 
   // 搜索表单配置 - 基于原有的 queryParams 对象
-  const searchFormSchema = {keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('purchase.purchasePlaceholder')}}",
-          clearable: true,
-        },
+  const searchFormSchema = {
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      review_status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('purchase.pleaseSelectReviewStatus')}}",
-          clearable: true,
-          options: [
-            { label: '待审核', value: 'PENDING' },
-            { label: '已通过', value: 'APPROVED' },
-            { label: '已拒绝', value: 'REJECTED' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('purchase.purchasePlaceholder')}}",
+        clearable: true,
       },
-      start_create_time: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('purchase.startCreateTime')}}",
-          type: 'date',
-          clearable: true,
-        },
+    },
+    review_status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      end_create_time: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('purchase.endCreateTime')}}",
-          type: 'date',
-          clearable: true,
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('purchase.pleaseSelectReviewStatus')}}",
+        clearable: true,
+        options: [
+          { label: '待审核', value: 'PENDING' },
+          { label: '已通过', value: 'APPROVED' },
+          { label: '已拒绝', value: 'REJECTED' },
+        ],
       },
-      purchase_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('purchase.purchaseDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+    },
+    start_create_time: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      vendor_id: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('purchase.pleaseSelectVendor')}}",
-          filterable: true,
-          clearable: true,
-        },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('purchase.startCreateTime')}}",
+        type: 'date',
+        clearable: true,
       },
-      warehouse_id: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('purchase.pleaseSelectWarehouse')}}",
-          filterable: true,
-          clearable: true,
-        },
+    },
+    end_create_time: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('purchase.endCreateTime')}}",
+        type: 'date',
+        clearable: true,
+      },
+    },
+    purchase_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('purchase.purchaseDate')}}",
+        type: 'date',
+        clearable: true,
+      },
+    },
+    vendor_id: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('purchase.pleaseSelectVendor')}}",
+        filterable: true,
+        clearable: true,
+      },
+    },
+    warehouse_id: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('purchase.pleaseSelectWarehouse')}}",
+        filterable: true,
+        clearable: true,
       },
     },
   };
 
   // Grid 事件配置
-  const gridEvents: VxeGridListeners<PurchaseNewOrderInfo> = {
-    cellClick: ({ row }) => {
-      drawerApi.setData(row).open();
-    },
-    filterChange({ $grid, filterList }) {
-      const query: Record<string, unknown> = {};
-      filterList.forEach((item) => {
-        query[item.field] = item.values;
-      });
-      $grid.commitProxy('reload', query);
-    },
-  };
+  const gridEvents: VxeGridListeners<PurchaseNewOrderInfo> = {};
 
   // Grid 选项配置
   const gridOptions: VxeGridProps<PurchaseNewOrderInfo> = {
@@ -247,7 +234,7 @@ export function usePurchaseNewOrderList() {
     filterConfig: {
       remote: true,
     },
-    columns: columns.value,
+    columns: columns,
     exportConfig: {},
     height: 'auto',
     keepSource: true,
@@ -277,7 +264,7 @@ export function usePurchaseNewOrderList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -294,7 +281,3 @@ export function usePurchaseNewOrderList() {
     gridOptions,
   };
 }
-
-
-
-

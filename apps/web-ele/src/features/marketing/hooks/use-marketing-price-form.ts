@@ -39,8 +39,8 @@ export function useMarketingPriceForm() {
         'x-component-props': {
           placeholder: "{{t('marketing.pleaseSelectPriceLevelType')}}",
           options: [
-            { label: "{{t('marketing.typedecrease'), value: 'DECREASE' },
-            { label: "{{t('marketing.typeincrease'), value: 'INCREASE' },
+            { label: "{{t('marketing.typedecrease')}}", value: 'DECREASE' },
+            { label: "{{t('marketing.typeincrease')}}", value: 'INCREASE' },
           ],
         },
         'x-decorator': 'FormItem',
@@ -57,8 +57,8 @@ export function useMarketingPriceForm() {
         'x-component-props': {
           placeholder: "{{t('marketing.pleaseSelectPriceLevelMode')}}",
           options: [
-            { label: "{{t('marketing.amount'), value: 'AMOUNT' },
-            { label: "{{t('marketing.percentage'), value: 'PERCENTAGE' },
+            { label: "{{t('marketing.amount')}}", value: 'AMOUNT' },
+            { label: "{{t('marketing.percentage')}}", value: 'PERCENTAGE' },
           ],
         },
         'x-decorator': 'FormItem',
@@ -102,9 +102,9 @@ export function useMarketingPriceForm() {
         'x-component-props': {
           placeholder: "{{t('marketing.pleaseSelectRoundingOff')}}",
           options: [
-            { label: "{{t('marketing.roundhigh'), value: 'HIGH' },
-            { label: "{{t('marketing.roundmiddle'), value: 'MIDDLE' },
-            { label: "{{t('marketing.roundlow'), value: 'LOW' },
+            { label: "{{t('marketing.roundhigh')}}", value: 'HIGH' },
+            { label: "{{t('marketing.roundmiddle')}}", value: 'MIDDLE' },
+            { label: "{{t('marketing.roundlow')}}", value: 'LOW' },
           ],
         },
         'x-decorator': 'FormItem',
@@ -203,10 +203,10 @@ export function useMarketingPriceForm() {
         'x-component': 'Radio.Group',
         'x-component-props': {
           options: [
-            { label: "{{t('marketing.allproduct'), value: 'ALL' },
-            { label: "{{t('marketing.productgroup'), value: 'PRODUCT_GROUP' },
-            { label: "{{t('marketing.productlabel'), value: 'PRODUCT_LABEL' },
-            { label: "{{t('marketing.productName'), value: 'PRODUCT' },
+            { label: "{{t('marketing.allproduct')}}", value: 'ALL' },
+            { label: "{{t('marketing.productgroup')}}", value: 'PRODUCT_GROUP' },
+            { label: "{{t('marketing.productlabel')}}", value: 'PRODUCT_LABEL' },
+            { label: "{{t('marketing.productName')}}", value: 'PRODUCT' },
           ],
         },
         'x-decorator': 'FormItem',

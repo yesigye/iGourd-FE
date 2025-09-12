@@ -28,8 +28,6 @@ export function usePurchaseNewOrderHistoryList() {
 
   // 表格列配置
   const columns = computed(() => [
-
-
     {
       field: 'order_no',
       title: "{{t('purchase.orderNo')}}",
@@ -70,38 +68,38 @@ export function usePurchaseNewOrderHistoryList() {
   ]);
 
   // 搜索表单配置
-  const searchFormSchema = {action: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('purchase.pleaseSelectAction')}}",
-          options: [
-            { label: '创建', value: 'created' },
-            { label: '更新', value: 'updated' },
-            { label: '确认', value: 'confirmed' },
-            { label: '发货', value: 'shipped' },
-            { label: '送达', value: 'delivered' },
-            { label: '取消', value: 'cancelled' },
-            { label: '完成', value: 'completed' },
-          ],
-        },
+  const searchFormSchema = {
+    action: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('purchase.keywords')}}",
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('purchase.pleaseSelectAction')}}",
+        options: [
+          { label: '创建', value: 'created' },
+          { label: '更新', value: 'updated' },
+          { label: '确认', value: 'confirmed' },
+          { label: '发货', value: 'shipped' },
+          { label: '送达', value: 'delivered' },
+          { label: '取消', value: 'cancelled' },
+          { label: '完成', value: 'completed' },
+        ],
+      },
+    },
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('purchase.keywords')}}",
       },
     },
   };
@@ -159,7 +157,7 @@ export function usePurchaseNewOrderHistoryList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -176,4 +174,3 @@ export function usePurchaseNewOrderHistoryList() {
     gridOptions,
   };
 }
-
