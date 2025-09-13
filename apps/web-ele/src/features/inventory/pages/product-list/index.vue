@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import { ElButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+// import { useInventoryProduct } from '../../hooks/use-inventory-product-list-list';
+
+defineOptions({
+  name: 'IInventoryProductList',
+});
+
+const { t } = useI18n();
+// const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
+//   useInventoryProduct - listList();
+</script>
+
 <template>
   <Page auto-content-height>
     <Grid>
@@ -18,17 +33,3 @@
     <Drawer />
   </Page>
 </template>
-
-<script setup lang="ts">
-import { Page, ElButton } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-import { useInventoryProduct-listList } from '../../hooks/use-inventory-product-list-list';
-
-defineOptions({
-  name: 'IInventoryProduct-list',
-});
-
-const { t } = useI18n();
-const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
-  useInventoryProduct-listList();
-</script>

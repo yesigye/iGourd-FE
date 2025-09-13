@@ -1,55 +1,47 @@
-import { defineComponent, computed, h } from 'vue';
-import {
-  useField,
-  RecursionField,
-  ExpressionScope,
-  connect,
-  mapProps,
-} from '@formily/vue';
-import {
-  // 这些组件需要在外层 createSchemaField 注册（见下文）
-  ArrayTable,
-  FormItem,
-  Input,
-  InputNumber,
-  Select,
-  PreviewText,
-} from '@formily/element-plus';
+import type { InventoryService } from './useTable';
+
+import { computed, defineComponent, h } from 'vue';
+
+import { connect, mapProps, RecursionField, useField } from '@formily/vue';
 
 // —— 直接复用你现有的业务模块 —— //
-import { useProductColumns, getDefaultProductItem } from './product-config';
-import { useProductTable, type InventoryService } from './useTable';
+import { getDefaultProductItem, useProductColumns } from './product-config';
+import { useProductTable } from './useTable';
 
 // 业务类型
 type TableType =
   | 'default'
-  | 'stock'
   | 'physical'
-  | 'spoilage'
-  | 'transfer'
   | 'receipt'
-  | 'return';
+  | 'return'
+  | 'spoilage'
+  | 'stock'
+  | 'transfer';
 
 type Col = {
-  prop: string;
+  align?: 'center' | 'left' | 'right';
   label: string;
-  width?: number | string;
-  align?: 'left' | 'center' | 'right';
+  prop: string;
   required?: boolean;
-  type?: 'input' | 'select' | 'date' | 'number' | 'custom';
+  type?: 'custom' | 'date' | 'input' | 'number' | 'select';
+  width?: number | string;
 };
 
 // 把列描述映射为 Formily 组件名
 function toFieldComponentType(col: Col) {
   switch (col.type) {
-    case 'number':
-      return 'InputNumber';
-    case 'input':
+    case 'input': {
       return 'Input';
-    case 'select':
+    }
+    case 'number': {
+      return 'InputNumber';
+    }
+    case 'select': {
       return 'Select';
-    default:
-      return 'PreviewText.Input'; // 只读显示
+    }
+    default: {
+      return 'PreviewText.Input';
+    } // 只读显示
   }
 }
 
