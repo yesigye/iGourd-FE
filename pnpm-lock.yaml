@@ -1217,6 +1217,9 @@ importers:
       '@formily/core':
         specifier: ^2.3.7
         version: 2.3.7
+      '@formily/reactive':
+        specifier: ^2.3.7
+        version: 2.3.7
       '@formily/vue':
         specifier: ^2.3.7
         version: 2.3.7(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3))

@@ -1,4 +1,3 @@
-/* eslint-disable n/no-extraneous-import */
 import type { IFormProps } from '@formily/core';
 import type { ISchema } from '@formily/vue';
 
@@ -7,9 +6,7 @@ import type { IGourdFormProps } from './types';
 import { computed, defineComponent, h, renderSlot, watch } from 'vue';
 
 import { registerValidateLocale } from '@formily/core';
-
 import { observable } from '@formily/reactive';
-
 import { createSchemaField, FormProvider } from '@formily/vue';
 
 import { useForm } from './form-api';
@@ -21,7 +18,6 @@ registerValidateLocale({
 }); // 初始化表单校验国际化
 
 export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
-
   const { formAPI } = useForm(options as IFormProps<object>);
   const components = getFormComponents();
   const { t, locale } = options.useI18n() as any;
