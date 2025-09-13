@@ -1,9 +1,11 @@
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
+
+import { useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useIgourdDrawer } from '#/adapter/drawer';
-import { marketingApi } from '../apis/marketing';
-import { inventoryApi } from '../../inventory/apis/inventory';
+
 import { ElMessage } from 'element-plus';
+
+import { marketingApi } from '../apis/marketing';
 import MarketingPriceDrawer from '../components/marketing-price-drawer.vue';
 
 export function useMarketingPriceForm() {
@@ -88,8 +90,10 @@ export function useMarketingPriceForm() {
             dependencies: ['change_mode'],
             fulfill: {
               state: {
-                'component[1].placeholder': '{{ $deps[0] === "AMOUNT" ? t("marketing.pleaseInputAmount") : t("marketing.pleaseInputPercentage") }}',
-                'component[1].suffix': '{{ $deps[0] === "AMOUNT" ? "￥" : "%" }}',
+                'component[1].placeholder':
+                  '{{ $deps[0] === "AMOUNT" ? t("marketing.pleaseInputAmount") : t("marketing.pleaseInputPercentage") }}',
+                'component[1].suffix':
+                  '{{ $deps[0] === "AMOUNT" ? "￥" : "%" }}',
               },
             },
           },
@@ -191,7 +195,8 @@ export function useMarketingPriceForm() {
             dependencies: ['effective_time'],
             fulfill: {
               state: {
-                'component[1].disabledDate': '{{ (time) => time < new Date($deps[0]) }}',
+                'component[1].disabledDate':
+                  '{{ (time) => time < new Date($deps[0]) }}',
               },
             },
           },
@@ -204,8 +209,14 @@ export function useMarketingPriceForm() {
         'x-component-props': {
           options: [
             { label: "{{t('marketing.allproduct')}}", value: 'ALL' },
-            { label: "{{t('marketing.productgroup')}}", value: 'PRODUCT_GROUP' },
-            { label: "{{t('marketing.productlabel')}}", value: 'PRODUCT_LABEL' },
+            {
+              label: "{{t('marketing.productgroup')}}",
+              value: 'PRODUCT_GROUP',
+            },
+            {
+              label: "{{t('marketing.productlabel')}}",
+              value: 'PRODUCT_LABEL',
+            },
             { label: "{{t('marketing.productName')}}", value: 'PRODUCT' },
           ],
         },
@@ -257,7 +268,7 @@ export function useMarketingPriceForm() {
         }
         drawerApi.value?.close();
         return true;
-      } catch (error) {
+      } catch {
         ElMessage.error(t('marketing.priceLevelAddedFailure'));
         return false;
       }
@@ -271,4 +282,3 @@ export function useMarketingPriceForm() {
     formData,
   };
 }
-

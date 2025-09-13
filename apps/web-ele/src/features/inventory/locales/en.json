@@ -48,7 +48,7 @@
     "stock_clear_propmt": "Are you sure to clear selected inventory?",
     "clearing": "Clearing",
     "cancel": "Cancel",
-    "close": "Close",
+    "close": "CircleX",
     "stock_delete_propmt": "Are you sure to delete selected inventory?",
     "stock_delete_title": "Delete Inventory"
   }

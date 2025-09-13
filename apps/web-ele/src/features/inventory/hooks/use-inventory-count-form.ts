@@ -1,8 +1,11 @@
 import { ref } from 'vue';
+
+import { useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useIgourdDrawer } from '#/adapter/drawer';
-import { inventoryApi } from '../apis/inventory';
+
 import { ElMessage } from 'element-plus';
+
+import { inventoryApi } from '../apis/inventory';
 import InventoryCountDrawer from '../components/inventory-count-drawer.vue';
 
 export function useInventoryCountForm() {
@@ -39,8 +42,8 @@ export function useInventoryCountForm() {
         'x-component-props': {
           placeholder: "{{t('inventory.pleaseSelectCountType')}}",
           options: [
-            { label: "{{t('inventory.fullCount'), value: 'FULL' },
-            { label: "{{t('inventory.partialCount'), value: 'PARTIAL' },
+            { label: "{{t('inventory.fullCount')}}", value: 'FULL' },
+            { label: "{{t('inventory.partialCount')}}", value: 'PARTIAL' },
           ],
         },
         'x-decorator': 'FormItem',
@@ -89,7 +92,7 @@ export function useInventoryCountForm() {
         }
         drawerApi.value?.close();
         return true;
-      } catch (error) {
+      } catch {
         ElMessage.error(t('inventory.countCreateFailed'));
         return false;
       }

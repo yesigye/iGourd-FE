@@ -1,10 +1,14 @@
-import { computed } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/common-ui';
-import { marketingApi } from '../apis';
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
-import MarketingPromotionDrawerFrom from '../components/marketing-promotion-drawer.vue';
+
+import { computed } from 'vue';
+
+import { useIgourdDrawer } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+
+import { marketingApi } from '../apis';
+// import MarketingPromotionDrawerFrom from '../components/marketing-promotion-drawer.vue';
 
 // 定义行数据类型 - 基于原有的表格数据结构
 interface MarketingPromotionInfo {
@@ -32,8 +36,6 @@ export function useMarketingPromotionList() {
 
   // 表格列配置 - 基于原有的 columnsVisible 数组
   const columns = computed(() => [
-
-
     {
       field: 'promotion_name',
       title: "{{t('marketing.promotionName')}}",
@@ -136,99 +138,129 @@ export function useMarketingPromotionList() {
   ]);
 
   // 搜索表单配置 - 基于原有的查询参数
-  const searchFormSchema = {keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.keywords')}}",
-          clearable: true,
-        },
+  const searchFormSchema = {
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      promotion_name: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.promotionName')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.keywords')}}",
+        clearable: true,
       },
-      promotion_type: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.pleaseSelectPromotionType')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('marketing.promotion_type_BUY_ONE_GET_ONE')}}", value: 'BUY_ONE_GET_ONE' },
-            { label: "{{t('marketing.promotion_type_BUY_TWO_GET_ONE')}}", value: 'BUY_TWO_GET_ONE' },
-            { label: "{{t('marketing.promotion_type_QUANTITY_DISCOUNT')}}", value: 'QUANTITY_DISCOUNT' },
-            { label: "{{t('marketing.promotion_type_TIERED_DISCOUNT')}}", value: 'TIERED_DISCOUNT' },
-            { label: "{{t('marketing.promotion_type_FREE_GIFT')}}", value: 'FREE_GIFT' },
-          ],
-        },
+    },
+    promotion_name: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      promotion_status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.pleaseSelectPromotionStatus')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('marketing.promotion_status_DRAFT'), value: 'DRAFT' },
-            { label: "{{t('marketing.promotion_status_ACTIVE'), value: 'ACTIVE' },
-            { label: "{{t('marketing.promotion_status_PAUSED'), value: 'PAUSED' },
-            { label: "{{t('marketing.promotion_status_COMPLETED'), value: 'COMPLETED' },
-            { label: "{{t('marketing.promotion_status_CANCELLED'), value: 'CANCELLED' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.promotionName')}}",
+        clearable: true,
       },
-      start_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.startDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+    },
+    promotion_type: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      end_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('marketing.endDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.pleaseSelectPromotionType')}}",
+        clearable: true,
+        options: [
+          {
+            label: "{{t('marketing.promotion_type_BUY_ONE_GET_ONE')}}",
+            value: 'BUY_ONE_GET_ONE',
+          },
+          {
+            label: "{{t('marketing.promotion_type_BUY_TWO_GET_ONE')}}",
+            value: 'BUY_TWO_GET_ONE',
+          },
+          {
+            label: "{{t('marketing.promotion_type_QUANTITY_DISCOUNT')}}",
+            value: 'QUANTITY_DISCOUNT',
+          },
+          {
+            label: "{{t('marketing.promotion_type_TIERED_DISCOUNT')}}",
+            value: 'TIERED_DISCOUNT',
+          },
+          {
+            label: "{{t('marketing.promotion_type_FREE_GIFT')}}",
+            value: 'FREE_GIFT',
+          },
+        ],
+      },
+    },
+    promotion_status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.pleaseSelectPromotionStatus')}}",
+        clearable: true,
+        options: [
+          {
+            label: "{{t('marketing.promotion_status_DRAFT')}}",
+            value: 'DRAFT',
+          },
+          {
+            label: "{{t('marketing.promotion_status_ACTIVE')}}",
+            value: 'ACTIVE',
+          },
+          {
+            label: "{{t('marketing.promotion_status_PAUSED')}}",
+            value: 'PAUSED',
+          },
+          {
+            label: "{{t('marketing.promotion_status_COMPLETED')}}",
+            value: 'COMPLETED',
+          },
+          {
+            label: "{{t('marketing.promotion_status_CANCELLED')}}",
+            value: 'CANCELLED',
+          },
+        ],
+      },
+    },
+    start_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.startDate')}}",
+        type: 'date',
+        clearable: true,
+      },
+    },
+    end_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('marketing.endDate')}}",
+        type: 'date',
+        clearable: true,
       },
     },
   };
@@ -286,7 +318,7 @@ export function useMarketingPromotionList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -303,9 +335,3 @@ export function useMarketingPromotionList() {
     gridOptions,
   };
 }
-
-
-
-
-
-

@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { ElButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+// import { useStoreListList } from '../../hooks/use-store-list-list';
+
+defineOptions({
+  name: 'IStoreList',
+});
+
+const { t } = useI18n();
+const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } = {};
+// useStoreListList();
+</script>
+
 <template>
   <Page auto-content-height>
     <Grid>
@@ -18,17 +32,3 @@
     <Drawer />
   </Page>
 </template>
-
-<script setup lang="ts">
-import { Page, ElButton } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-import { useStoreListList } from '../../hooks/use-store-list-list';
-
-defineOptions({
-  name: 'IStoreList',
-});
-
-const { t } = useI18n();
-const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
-  useStoreListList();
-</script>

@@ -1,10 +1,13 @@
+import type { ISchema } from '@igourd/common-ui';
+
+import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useIgourdDrawer, useIgourdForm, type ISchema } from '@igourd/common-ui';
+
 import { employeeApi } from '../apis';
 
 export function useEmployeeRoleForm() {
   const { t } = useI18n();
-  
+
   const formSchema: ISchema = {
     type: 'object',
     properties: {
@@ -41,20 +44,18 @@ export function useEmployeeRoleForm() {
     },
   };
 
-  const [Drawer, drawerApi] = useIgourdDrawer({
-    connectedComponent: () => import('./employee-role-drawer.vue'),
+  const [Drawer, drawerAPI] = useIgourdDrawer({
+    // connectedComponent: () => import('./employee-role-drawer.vue'),
   });
 
-  const { Form, formApi } = useIgourdForm({
+  const { Form, formAPI } = useIgourdForm({
     schema: formSchema,
     onSubmit: async (values) => {
       try {
-        if (values.role_id) {
-          await employeeApi.updateRole(values);
-        } else {
-          await employeeApi.createRole(values);
-        }
-        drawerApi.close();
+        await (values.role_id
+          ? employeeApi.updateRole(values)
+          : employeeApi.createRole(values));
+        drawerAPI.close();
         // 刷新列表
         window.location.reload();
       } catch (error) {
@@ -66,7 +67,7 @@ export function useEmployeeRoleForm() {
   return {
     Drawer,
     Form,
-    formApi,
-    drawerApi,
+    formAPI,
+    drawerAPI,
   };
 }

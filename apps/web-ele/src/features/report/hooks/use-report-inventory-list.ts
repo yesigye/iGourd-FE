@@ -1,10 +1,14 @@
-import { computed } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/common-ui';
-import { reportApi } from '../apis';
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
-import ReportInventoryDrawerFrom from '../components/report-inventory-drawer.vue';
+
+import { computed } from 'vue';
+
+import { useIgourdDrawer } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+
+import { reportApi } from '../apis';
+// import ReportInventoryDrawerFrom from '../components/report-inventory-drawer.vue';
 
 // 定义行数据类型 - 基于原有的表格数据结构
 interface ReportInventoryInfo {
@@ -28,8 +32,6 @@ export function useReportInventoryList() {
 
   // 表格列配置 - 基于原有的 columnsVisible 数组
   const columns = computed(() => [
-
-
     {
       field: 'product_major_name',
       title: "{{t('reports.productName')}}",
@@ -88,120 +90,120 @@ export function useReportInventoryList() {
   ]);
 
   // 搜索表单配置 - 基于原有的查询参数
-  const searchFormSchema = {keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.keywords')}}",
-          clearable: true,
-        },
+  const searchFormSchema = {
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      product_name: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.productName')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.keywords')}}",
+        clearable: true,
       },
-      product_code: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.productCode')}}",
-          clearable: true,
-        },
+    },
+    product_name: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      product_group_id: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.pleaseSelectProductGroup')}}",
-          filterable: true,
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.productName')}}",
+        clearable: true,
       },
-      warehouse_id: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.pleaseSelectWarehouse')}}",
-          filterable: true,
-          clearable: true,
-        },
+    },
+    product_code: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      time_range: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.pleaseSelectTimeRange')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('reports.timeRange_DAY')}}", value: 'DAY' },
-            { label: "{{t('reports.timeRange_WEEK')}}", value: 'WEEK' },
-            { label: "{{t('reports.timeRange_MONTH')}}", value: 'MONTH' },
-            { label: "{{t('reports.timeRange_QUARTER')}}", value: 'QUARTER' },
-            { label: "{{t('reports.timeRange_YEAR')}}", value: 'YEAR' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.productCode')}}",
+        clearable: true,
       },
-      start_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.startDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+    },
+    product_group_id: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      end_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.endDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.pleaseSelectProductGroup')}}",
+        filterable: true,
+        clearable: true,
+      },
+    },
+    warehouse_id: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.pleaseSelectWarehouse')}}",
+        filterable: true,
+        clearable: true,
+      },
+    },
+    time_range: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.pleaseSelectTimeRange')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('reports.timeRange_DAY')}}", value: 'DAY' },
+          { label: "{{t('reports.timeRange_WEEK')}}", value: 'WEEK' },
+          { label: "{{t('reports.timeRange_MONTH')}}", value: 'MONTH' },
+          { label: "{{t('reports.timeRange_QUARTER')}}", value: 'QUARTER' },
+          { label: "{{t('reports.timeRange_YEAR')}}", value: 'YEAR' },
+        ],
+      },
+    },
+    start_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.startDate')}}",
+        type: 'date',
+        clearable: true,
+      },
+    },
+    end_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.endDate')}}",
+        type: 'date',
+        clearable: true,
       },
     },
   };
@@ -259,7 +261,7 @@ export function useReportInventoryList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -276,9 +278,3 @@ export function useReportInventoryList() {
     gridOptions,
   };
 }
-
-
-
-
-
-

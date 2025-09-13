@@ -1,9 +1,10 @@
-import { ref, computed } from 'vue';
 import { useI18n } from '@igourd/locales';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { marketingApi } from '../apis/marketing';
+
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { Check, Close } from '@element-plus/icons-vue';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+
+import { marketingApi } from '../apis/marketing';
 
 export function useMarketingPriceList() {
   const { t } = useI18n();
@@ -108,7 +109,7 @@ export function useMarketingPriceList() {
         }
         // 刷新列表
         gridApi.value?.commitProxy('query');
-      } catch (error) {
+      } catch {
         ElMessage.error(t('marketing.OpenFailure'));
       }
     },
@@ -123,7 +124,7 @@ export function useMarketingPriceList() {
             cancelButtonText: t('purchase.deleteCancelBtn'),
             type: 'warning',
             closeOnClickModal: false,
-          }
+          },
         );
         await marketingApi.batchDeletePrice(ids);
         ElMessage.success(t('common.deleteSuccess'));

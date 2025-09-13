@@ -1,3 +1,29 @@
+<script setup lang="ts">
+import { IgourdButton, Page } from '@igourd/common-ui';
+import { Check, CircleX } from '@igourd/icons';
+import { useI18n } from '@igourd/locales';
+
+// import { activityType } from '@/utils/enumeration';
+import { useMarketingDiscountList } from '../../hooks/use-marketing-discount-list';
+
+defineOptions({
+  name: 'IMarketingDiscountList',
+});
+
+const { t } = useI18n();
+const { Grid, Drawer, drawerApi } = useMarketingDiscountList();
+
+// 编辑
+const handleEdit = (id: string) => {
+  drawerApi.open({ id });
+};
+
+// 状态切换
+const handleStatusChange = async (row: { id: string; status: string }) => {
+  // 这里可以添加状态切换逻辑
+  console.log('状态切换:', row);
+};
+</script>
 <template>
   <Page auto-content-height>
     <Grid>
@@ -6,9 +32,7 @@
           {{ t('marketing.addFullDiscount') }}
         </IgourdButton>
       </template>
-      <template #table-field>
-
-      </template>
+      <template #table-field> </template>
 
       <!-- 类型列插槽 -->
       <template #type="{ row }">
@@ -32,7 +56,7 @@
           <el-switch
             v-model="row.status"
             :active-icon="Check"
-            :inactive-icon="Close"
+            :inactive-icon="CircleX"
             active-value="OPEN"
             inactive-value="CLOSE"
             @change="handleStatusChange(row)"
@@ -60,32 +84,6 @@
         </el-tooltip>
       </template>
     </Grid>
-  <Drawer />
-</Page>
+    <Drawer />
+  </Page>
 </template>
-<script setup lang="ts">
-import { useI18n } from '@igourd/locales';
-import { Check, Close } from '@element-plus/icons-vue';
-import { Page, IgourdButton } from '@igourd/common-ui';
-import { useMarketingDiscountList } from '../../hooks/use-marketing-discount-list';
-import { activityType } from '@/utils/enumeration';
-
-defineOptions({
-  name: 'IMarketingDiscountList',
-});
-
-const { t } = useI18n();
-const { Grid, Drawer, drawerApi } = useMarketingDiscountList();
-
-// 编辑
-const handleEdit = (id: string) => {
-  drawerApi.open({ id });
-};
-
-// 状态切换
-const handleStatusChange = async (row: { id: string; status: string }) => {
-  // 这里可以添加状态切换逻辑
-  console.log('状态切换:', row);
-};
-</script>
-

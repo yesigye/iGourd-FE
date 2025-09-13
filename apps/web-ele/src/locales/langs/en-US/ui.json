@@ -88,7 +88,7 @@
       "searchNavigate": "Search Navigation",
       "select": "Select",
       "navigate": "Navigate",
-      "close": "Close",
+      "close": "CircleX",
       "noResults": "No Search Results Found",
       "noRecent": "No Search History",
       "recent": "Search History"

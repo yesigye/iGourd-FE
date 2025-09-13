@@ -1,5 +1,5 @@
 import { useI18n } from '@igourd/locales';
-import { useIgourdDrawer, useIgourdForm } from '#/adapter/drawer';
+import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import { EmployeeService } from '../../employee/apis';
 import { Local } from '@/utils';
 import type { ISchema } from '@igourd/common-ui';

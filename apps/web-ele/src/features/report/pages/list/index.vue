@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import { ElButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+// import { useReportListList } from '../../hooks/use-report-list-list';
+
+defineOptions({
+  name: 'IReportList',
+});
+
+const { t } = useI18n();
+const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } = {};
+// useReportListList();
+</script>
+
 <template>
   <Page auto-content-height>
     <Grid>
@@ -18,17 +33,3 @@
     <Drawer />
   </Page>
 </template>
-
-<script setup lang="ts">
-import { Page, ElButton } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-import { useReportListList } from '../../hooks/use-report-list-list';
-
-defineOptions({
-  name: 'IReportList',
-});
-
-const { t } = useI18n();
-const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
-  useReportListList();
-</script>

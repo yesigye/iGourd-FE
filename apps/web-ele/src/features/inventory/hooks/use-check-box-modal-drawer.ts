@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { useI18n } from '@igourd/locales';
-import { useIgourdDrawer, useIgourdForm } from '#/adapter/drawer';
+import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import type { ISchema } from '@igourd/common-ui';
 
 export function useCheckBoxModalDrawer() {
@@ -62,11 +62,11 @@ export function useCheckBoxModalDrawer() {
   }) => {
     options.value = data.options || [];
     onConfirmCallback.value = data.onConfirm || null;
-    
+
     formApi.setValues({
       selectedValues: data.initialSelected || [],
     });
-    
+
     drawerApi.open();
   };
 

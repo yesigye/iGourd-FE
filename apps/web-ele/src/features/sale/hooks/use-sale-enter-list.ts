@@ -1,11 +1,19 @@
+import type {
+  VxeGridListeners,
+  VxeGridProps,
+  VxeGridPropTypes,
+} from '#/adapter/vxe-table';
+
 import { computed, ref } from 'vue';
+
+import { confirm, useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer, confirm } from '@igourd/common-ui';
-import { saleApi } from '../apis';
-import type { VxeGridListeners, VxeGridProps, VxeGridPropTypes } from '#/adapter/vxe-table';
-import SaleEnterDrawerFrom from '../components/sale-enter-drawer.vue';
+// import SaleEnterDrawerFrom from '../components/sale-enter-drawer.vue';
 import { useUserStore } from '@igourd/stores';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+
+import { saleApi } from '../apis';
 
 // 定义行数据类型
 interface SaleEnterInfo {
@@ -227,12 +235,12 @@ export function useSaleEnterList() {
         title: t('sale.deleteConfirmTitle'),
         content: t('sale.deleteConfirmText'),
       });
-      
+
       await saleApi.deleteEnterList({
         id_list: checkedKeys.value,
         merchant_id: currentLoginUserApp.owner_id,
       });
-      
+
       gridApi.reload();
       checkedKeys.value = [];
     } catch (error) {

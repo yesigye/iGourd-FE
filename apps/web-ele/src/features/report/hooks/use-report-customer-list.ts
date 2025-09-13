@@ -1,9 +1,13 @@
-import { computed } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/common-ui';
-import { reportApi } from '../apis';
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
+
+import { computed } from 'vue';
+
+import { useIgourdDrawer } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+
+import { reportApi } from '../apis';
 import ReportCustomerDrawerFrom from '../components/report-drawer.vue';
 
 // 定义行数据类型 - 基于原有的表格数据结构
@@ -29,8 +33,6 @@ export function useReportCustomerList() {
 
   // 表格列配置 - 基于原有的 columnsVisible 数组
   const columns = computed(() => [
-
-
     {
       field: 'customer_name',
       title: "{{t('reports.customerName')}}",
@@ -105,133 +107,143 @@ export function useReportCustomerList() {
   ]);
 
   // 搜索表单配置 - 基于原有的查询参数
-  const searchFormSchema = {keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.keywords')}}",
-          clearable: true,
-        },
+  const searchFormSchema = {
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      customer_name: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.customerName')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.keywords')}}",
+        clearable: true,
       },
-      customer_code: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.customerCode')}}",
-          clearable: true,
-        },
+    },
+    customer_name: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      customer_type: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.pleaseSelectCustomerType')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('reports.customerType_INDIVIDUAL')}}", value: 'INDIVIDUAL' },
-            { label: "{{t('reports.customerType_COMPANY')}}", value: 'COMPANY' },
-            { label: "{{t('reports.customerType_WHOLESALE')}}", value: 'WHOLESALE' },
-            { label: "{{t('reports.customerType_RETAIL')}}", value: 'RETAIL' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.customerName')}}",
+        clearable: true,
       },
-      customer_level: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.pleaseSelectCustomerLevel')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('reports.customerLevel_BRONZE'), value: 'BRONZE' },
-            { label: "{{t('reports.customerLevel_SILVER'), value: 'SILVER' },
-            { label: "{{t('reports.customerLevel_GOLD'), value: 'GOLD' },
-            { label: "{{t('reports.customerLevel_PLATINUM'), value: 'PLATINUM' },
-            { label: "{{t('reports.customerLevel_DIAMOND'), value: 'DIAMOND' },
-          ],
-        },
+    },
+    customer_code: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      time_range: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.pleaseSelectTimeRange')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('reports.timeRange_DAY')}}", value: 'DAY' },
-            { label: "{{t('reports.timeRange_WEEK')}}", value: 'WEEK' },
-            { label: "{{t('reports.timeRange_MONTH')}}", value: 'MONTH' },
-            { label: "{{t('reports.timeRange_QUARTER')}}", value: 'QUARTER' },
-            { label: "{{t('reports.timeRange_YEAR')}}", value: 'YEAR' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.customerCode')}}",
+        clearable: true,
       },
-      start_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.startDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+    },
+    customer_type: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      end_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.endDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.pleaseSelectCustomerType')}}",
+        clearable: true,
+        options: [
+          {
+            label: "{{t('reports.customerType_INDIVIDUAL')}}",
+            value: 'INDIVIDUAL',
+          },
+          { label: "{{t('reports.customerType_COMPANY')}}", value: 'COMPANY' },
+          {
+            label: "{{t('reports.customerType_WHOLESALE')}}",
+            value: 'WHOLESALE',
+          },
+          { label: "{{t('reports.customerType_RETAIL')}}", value: 'RETAIL' },
+        ],
       },
-    }
+    },
+    customer_level: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.pleaseSelectCustomerLevel')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('reports.customerLevel_BRONZE')}}", value: 'BRONZE' },
+          { label: "{{t('reports.customerLevel_SILVER')}}", value: 'SILVER' },
+          { label: "{{t('reports.customerLevel_GOLD')}}", value: 'GOLD' },
+          {
+            label: "{{t('reports.customerLevel_PLATINUM')}}",
+            value: 'PLATINUM',
+          },
+          { label: "{{t('reports.customerLevel_DIAMOND')}}", value: 'DIAMOND' },
+        ],
+      },
+    },
+    time_range: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.pleaseSelectTimeRange')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('reports.timeRange_DAY')}}", value: 'DAY' },
+          { label: "{{t('reports.timeRange_WEEK')}}", value: 'WEEK' },
+          { label: "{{t('reports.timeRange_MONTH')}}", value: 'MONTH' },
+          { label: "{{t('reports.timeRange_QUARTER')}}", value: 'QUARTER' },
+          { label: "{{t('reports.timeRange_YEAR')}}", value: 'YEAR' },
+        ],
+      },
+    },
+    start_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.startDate')}}",
+        type: 'date',
+        clearable: true,
+      },
+    },
+    end_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.endDate')}}",
+        type: 'date',
+        clearable: true,
+      },
+    },
+  };
 
   // Grid 事件配置
   const gridEvents: VxeGridListeners<ReportCustomerInfo> = {
@@ -286,7 +298,7 @@ export function useReportCustomerList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -303,9 +315,3 @@ export function useReportCustomerList() {
     gridOptions,
   };
 }
-
-
-
-
-
-

@@ -1,85 +1,19 @@
-<template>
-  <Page auto-content-height>
-    <CustomerDrawer />
-    <DebtModal />
-    <BalanceDrawer />
-    <ConversionDrawer />
-    <Grid>
-      <template #table-title>
-        <IgourdButton @click="handlerCreate">{{ t('customer.add') }}</IgourdButton>
-      </template>
-      
-      <!-- 余额列插槽 -->
-      <template #balance="{ row }">
-        <div class="flex-y-center place-content-between cursor-pointer">
-          <span>{{ moneyFormat(row.balance || 0) }}</span>
-          <i
-            class="iconfont icon-icon_details"
-            @click="handleOpenBalanceDetail(row)"
-          ></i>
-        </div>
-      </template>
-      
-      <!-- 积分列插槽 -->
-      <template #points="{ row }">
-        <div class="flex-y-center place-content-between cursor-pointer">
-          <span>{{ numberFormat(row.points || 0) }}</span>
-          <i
-            class="iconfont icon-giveaway text-text-yellow"
-            @click="openConvertGift(row)"
-          ></i>
-        </div>
-      </template>
-      
-      <!-- 欠款列插槽 -->
-      <template #debt="{ row }">
-        <div class="text-error-03 flex-y-center place-content-between">
-          <span>{{ moneyFormat(row.debt_amount || 0) }}</span>
-          <div class="flex-y-center">
-            <i
-              class="iconfont icon-icon_details"
-              @click="openDebtDetail(row)"
-            ></i>
-          </div>
-        </div>
-      </template>
-      
-      <!-- 操作列插槽 -->
-      <template #action="{ row }">
-        <IgourdButton 
-          type="primary" 
-          size="small" 
-          @click="handleEdit(row)"
-        >
-          {{ t('customer.edit') }}
-        </IgourdButton>
-        <IgourdButton 
-          type="info" 
-          size="small" 
-          @click="handleView(row)"
-        >
-          {{ t('customer.view') }}
-        </IgourdButton>
-        <IgourdButton 
-          type="danger" 
-          size="small" 
-          @click="handleDelete(row)"
-        >
-          {{ t('customer.delete') }}
-        </IgourdButton>
-      </template>
-    </Grid>
-  </Page>
-</template>
-
 <script lang="ts" setup>
+import type { CustomerInfo } from '@@/customer/hooks/use-customer-list';
+
 import type { VxeGridListeners } from '#/adapter/vxe-table';
 
-import { IgourdButton, Page, alert, confirm, moneyFormat, numberFormat } from '@igourd/common-ui';
-import { ElMessage } from 'element-plus';
-
-import { useCustomerList, type CustomerInfo } from '@@/customer/hooks/use-customer-list';
+import {
+  confirm,
+  IgourdButton,
+  // moneyFormat,
+  // numberFormat,
+  Page,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+
+import { useCustomerList } from '@@/customer/hooks/use-customer-list';
+import { ElMessage } from 'element-plus';
 
 defineOptions({
   name: 'ICustomerList',
@@ -126,14 +60,14 @@ async function handleDelete(row: CustomerInfo) {
   try {
     const confirmed = await confirm(
       t('customer.deleteConfirm', { name: row.name || row.id }),
-      t('customer.deleteTitle')
+      t('customer.deleteTitle'),
     );
-    
+
     if (confirmed) {
       // 执行删除操作
       await deleteRowData(row.id);
       ElMessage.success(t('customer.deleteSuccess'));
-      
+
       // 刷新表格
       refreshGrid();
     }
@@ -194,3 +128,67 @@ function refreshGrid() {
   }
 }
 </script>
+
+<template>
+  <Page auto-content-height>
+    <CustomerDrawer />
+    <DebtModal />
+    <BalanceDrawer />
+    <ConversionDrawer />
+    <Grid>
+      <template #table-title>
+        <IgourdButton @click="handlerCreate">
+          {{ t('customer.add') }}
+        </IgourdButton>
+      </template>
+
+      <!-- 余额列插槽 -->
+      <template #balance="{ row }">
+        <div class="flex-y-center cursor-pointer place-content-between">
+          <span>{{ moneyFormat(row.balance || 0) }}</span>
+          <i
+            class="iconfont icon-icon_details"
+            @click="handleOpenBalanceDetail(row)"
+          ></i>
+        </div>
+      </template>
+
+      <!-- 积分列插槽 -->
+      <template #points="{ row }">
+        <div class="flex-y-center cursor-pointer place-content-between">
+          <span>{{ numberFormat(row.points || 0) }}</span>
+          <i
+            class="iconfont icon-giveaway text-text-yellow"
+            @click="openConvertGift(row)"
+          ></i>
+        </div>
+      </template>
+
+      <!-- 欠款列插槽 -->
+      <template #debt="{ row }">
+        <div class="text-error-03 flex-y-center place-content-between">
+          <span>{{ moneyFormat(row.debt_amount || 0) }}</span>
+          <div class="flex-y-center">
+            <i
+              class="iconfont icon-icon_details"
+              @click="openDebtDetail(row)"
+            ></i>
+          </div>
+        </div>
+      </template>
+
+      <!-- 操作列插槽 -->
+      <template #action="{ row }">
+        <IgourdButton type="primary" size="small" @click="handleEdit(row)">
+          {{ t('customer.edit') }}
+        </IgourdButton>
+        <IgourdButton type="info" size="small" @click="handleView(row)">
+          {{ t('customer.view') }}
+        </IgourdButton>
+        <IgourdButton type="danger" size="small" @click="handleDelete(row)">
+          {{ t('customer.delete') }}
+        </IgourdButton>
+      </template>
+    </Grid>
+  </Page>
+</template>

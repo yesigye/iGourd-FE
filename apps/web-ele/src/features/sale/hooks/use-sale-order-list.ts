@@ -1,11 +1,19 @@
+import type {
+  VxeGridListeners,
+  VxeGridProps,
+  VxeGridPropTypes,
+} from '#/adapter/vxe-table';
+
 import { computed, ref } from 'vue';
+
+import { confirm, useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer, confirm } from '@igourd/common-ui';
-import { saleApi } from '../apis';
-import type { VxeGridListeners, VxeGridProps, VxeGridPropTypes } from '#/adapter/vxe-table';
-import SaleOrderDrawerFrom from '../components/sale-order-drawer.vue';
 import { useUserStore } from '@igourd/stores';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+
+import { saleApi } from '../apis';
+// import SaleOrderDrawerFrom from '../components/sale-order-drawer.vue';
 
 // 定义行数据类型 - 基于原有的表格数据结构
 interface SaleOrderInfo {
@@ -227,13 +235,13 @@ export function useSaleOrderList() {
         title: t('sales.deleteConfirmTitle'),
         content: t('sales.deleteConfirmText'),
       });
-      
+
       await saleApi.cancelOrder({
         id_list: checkedKeys.value,
         merchant_id: currentLoginUserApp.owner_id,
         status: 'CANCEL',
       });
-      
+
       gridApi.reload();
       checkedKeys.value = [];
     } catch (error) {

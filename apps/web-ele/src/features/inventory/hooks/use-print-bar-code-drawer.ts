@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { useI18n } from '@igourd/locales';
-import { useIgourdDrawer } from '#/adapter/drawer';
+import { useIgourdDrawer } from '@igourd/common-ui';
 import PrintBarCodeDrawer from '../components/print-bar-code-drawer.vue';
 
 export function usePrintBarCodeDrawer() {

@@ -69,7 +69,7 @@
     "maxCountTip": "When the number of tabs exceeds the maximum,\nthe oldest tab will be closed.\n Set to 0 to disable count checking.",
     "draggable": "Enable Draggable Sort",
     "wheelable": "Support Mouse Wheel",
-    "middleClickClose": "Close Tab when Mouse Middle Button Click",
+    "middleClickClose": "CircleX Tab when Mouse Middle Button Click",
     "wheelableTip": "When enabled, the Tabbar area responds to vertical scrolling events of the scroll wheel.",
     "styleType": {
       "title": "Tabs Style",
@@ -80,13 +80,13 @@
     },
     "contextMenu": {
       "reload": "Reload",
-      "close": "Close",
+      "close": "CircleX",
       "pin": "Pin",
       "unpin": "Unpin",
-      "closeLeft": "Close Left Tabs",
-      "closeRight": "Close Right Tabs",
-      "closeOther": "Close Other Tabs",
-      "closeAll": "Close All Tabs",
+      "closeLeft": "CircleX Left Tabs",
+      "closeRight": "CircleX Right Tabs",
+      "closeOther": "CircleX Other Tabs",
+      "closeAll": "CircleX All Tabs",
       "openInNewWindow": "Open in New Window",
       "maximize": "Maximize",
       "restoreMaximize": "Restore"

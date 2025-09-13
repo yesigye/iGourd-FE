@@ -1,10 +1,12 @@
-import { computed } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/common-ui';
-import { inventoryApi } from '../apis';
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
-import InventoryWarehouseDrawerFrom from '../components/inventory-warehouse-drawer.vue';
+
+import { useIgourdDrawer } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+
+import { inventoryApi } from '../apis';
+// import InventoryWarehouseDrawerFrom from '../components/inventory-warehouse-drawer.vue';
 
 // 定义行数据类型 - 基于原有的表格数据结构
 interface WarehouseInfo {
@@ -199,7 +201,7 @@ export function useInventoryWarehouseList() {
     filterConfig: {
       remote: true,
     },
-    columns: columns,
+    columns,
     exportConfig: {},
     height: 'auto',
     keepSource: true,

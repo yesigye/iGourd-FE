@@ -1,10 +1,14 @@
-import { computed } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/common-ui';
-import { saleApi } from '../apis';
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
-import SaleShiftsDrawerFrom from '../components/sale-shifts-drawer.vue';
+
+import { computed } from 'vue';
+
+import { useIgourdDrawer } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+
+import { saleApi } from '../apis';
+// import SaleShiftsDrawerFrom from '../components/sale-shifts-drawer.vue';
 
 // 定义行数据类型
 interface SaleShiftsInfo {

@@ -1,10 +1,12 @@
-import { computed } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/common-ui';
-import { storeApi } from '../apis';
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
-import StoreStaffDrawerFrom from '../components/store-staff-drawer.vue';
+
+import { useIgourdDrawer } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+
+import { storeApi } from '../apis';
+// import StoreStaffDrawerFrom from '../components/store-staff-drawer.vue';
 
 // 定义行数据类型 - 基于原有的表格数据结构
 interface StoreStaffInfo {
@@ -275,7 +277,7 @@ export function useStoreStaffList() {
     filterConfig: {
       remote: true,
     },
-    columns: columns,
+    columns,
     exportConfig: {},
     height: 'auto',
     keepSource: true,

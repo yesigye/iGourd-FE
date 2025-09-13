@@ -1,10 +1,14 @@
-import { computed } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/common-ui';
-import { inventoryApi } from '../apis';
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
-import InventorySpoilageDrawerFrom from '../components/inventory-spoilage-drawer.vue';
+
+import { computed } from 'vue';
+
+import { useIgourdDrawer } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+
+import { inventoryApi } from '../apis';
+// import InventorySpoilageDrawerFrom from '../components/inventory-spoilage-drawer.vue';
 
 // 定义行数据类型 - 基于原有的表格数据结构
 interface InventorySpoilageInfo {
@@ -35,8 +39,6 @@ export function useInventorySpoilageList() {
 
   // 表格列配置 - 基于原有的 columnsVisible 数组
   const columns = computed(() => [
-
-
     {
       field: 'spoilage_no',
       title: "{{t('inventory.spoilageNo')}}",
@@ -155,144 +157,144 @@ export function useInventorySpoilageList() {
   ]);
 
   // 搜索表单配置 - 基于原有的查询参数
-  const searchFormSchema = {keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.keywords')}}",
-          clearable: true,
-        },
+  const searchFormSchema = {
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      spoilage_no: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.spoilageNo')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.keywords')}}",
+        clearable: true,
       },
-      warehouse_id: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.pleaseSelectWarehouse')}}",
-          filterable: true,
-          clearable: true,
-        },
+    },
+    spoilage_no: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      product_name: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.productName')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.spoilageNo')}}",
+        clearable: true,
       },
-      product_code: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.productCode')}}",
-          clearable: true,
-        },
+    },
+    warehouse_id: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      sku_name: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.skuName')}}",
-          clearable: true,
-        },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.pleaseSelectWarehouse')}}",
+        filterable: true,
+        clearable: true,
       },
-      sku_code: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.skuCode')}}",
-          clearable: true,
-        },
+    },
+    product_name: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.pleaseSelectStatus')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('inventory.status_PENDING'), value: 'PENDING' },
-            { label: "{{t('inventory.status_APPROVED'), value: 'APPROVED' },
-            { label: "{{t('inventory.status_REJECTED'), value: 'REJECTED' },
-            { label: "{{t('inventory.status_COMPLETED'), value: 'COMPLETED' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.productName')}}",
+        clearable: true,
       },
-      start_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.startDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+    },
+    product_code: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      end_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('inventory.endDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.productCode')}}",
+        clearable: true,
+      },
+    },
+    sku_name: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.skuName')}}",
+        clearable: true,
+      },
+    },
+    sku_code: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.skuCode')}}",
+        clearable: true,
+      },
+    },
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.pleaseSelectStatus')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('inventory.status_PENDING')}}", value: 'PENDING' },
+          { label: "{{t('inventory.status_APPROVED')}}", value: 'APPROVED' },
+          { label: "{{t('inventory.status_REJECTED')}}", value: 'REJECTED' },
+          { label: "{{t('inventory.status_COMPLETED')}}", value: 'COMPLETED' },
+        ],
+      },
+    },
+    start_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.startDate')}}",
+        type: 'date',
+        clearable: true,
+      },
+    },
+    end_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('inventory.endDate')}}",
+        type: 'date',
+        clearable: true,
       },
     },
   };
@@ -350,7 +352,7 @@ export function useInventorySpoilageList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -367,7 +369,3 @@ export function useInventorySpoilageList() {
     gridOptions,
   };
 }
-
-
-
-

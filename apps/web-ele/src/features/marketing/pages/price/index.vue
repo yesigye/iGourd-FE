@@ -1,85 +1,12 @@
-<template>
-  <Page auto-content-height>
-    <Grid>
-      <template #table-title>
-        <el-button
-          v-auth="'marketing_price_add'"
-          type="primary"
-          @click="handleAdd"
-        >
-          <i class="iconfont icon-tianjia-dianpu"></i>
-          {{ t('employee.addButton') }}
-        </el-button>
-        <el-button
-          v-auth="'marketing_price_delete'"
-          type="danger"
-          plain
-          :disabled="!selectedRows.length"
-          @click="handleDelete"
-        >
-          <i class="iconfont icon-shanchu2"></i>
-          {{ t('employee.deleteButton') }}
-        </el-button>
-        <el-button @click="showFieldSettings">
-          <i class="iconfont icon-liebiaoshezhixianshi"></i>
-          {{ t('employee.field') }}
-        </el-button>
-      </template>
-      <template #change_type="{ row }">
-        {{ t(`marketing.${row.change_type}`) }}
-      </template>
-      <template #change_mode="{ row }">
-        {{ t(`marketing.${row.change_mode}`) }}
-      </template>
-      <template #status="{ row }">
-        <el-tooltip
-          :content="row.status === 'OPEN' ? 'OPEN' : 'CLOSE'"
-          placement="top"
-          :show-after="600"
-          :enterable="false"
-        >
-          <el-switch
-            v-auth="'marketing_price_close_switch'"
-            v-model="row.status"
-            inline-prompt
-            :active-icon="Check"
-            :inactive-icon="Close"
-            active-value="OPEN"
-            inactive-value="CLOSE"
-            @change="handleStatusChange(row)"
-          />
-        </el-tooltip>
-      </template>
-      <template #action="{ row }">
-        <el-tooltip
-          content="Edit"
-          placement="top"
-          :show-after="600"
-          :enterable="false"
-        >
-          <el-button
-            v-auth="'marketing_price_edit'"
-            link
-            type="primary"
-            size="small"
-            @click="handleEdit(row.id)"
-          >
-            <i class="iconfont icon-icon_Edit"></i>
-          </el-button>
-        </el-tooltip>
-      </template>
-    </Grid>
-    <Drawer />
-  </Page>
-</template>
-
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useI18n } from '@igourd/locales';
+import { ref } from 'vue';
+
 import { Page } from '@igourd/common-ui';
-import { Check, Close } from '@element-plus/icons-vue';
-import { useMarketingPriceList } from '../../hooks/use-marketing-price-list';
+import { Check, CircleX } from '@igourd/icons';
+import { useI18n } from '@igourd/locales';
+
 import { useMarketingPriceForm } from '../../hooks/use-marketing-price-form';
+import { useMarketingPriceList } from '../../hooks/use-marketing-price-list';
 
 const { t } = useI18n();
 
@@ -110,7 +37,7 @@ const handleEdit = (id: string) => {
 
 // 删除
 const handleDelete = () => {
-  const ids = selectedRows.value.map(row => row.id);
+  const ids = selectedRows.value.map((row) => row.id);
   gridEvents.onDelete(ids);
 };
 
@@ -131,7 +58,81 @@ const handleSelectionChange = (selection: any[]) => {
 };
 </script>
 
+<template>
+  <Page auto-content-height>
+    <Grid>
+      <template #table-title>
+        <el-button
+          v-auth="'marketing_price_add'"
+          type="primary"
+          @click="handleAdd"
+        >
+          <i class="iconfont icon-tianjia-dianpu"></i>
+          {{ t('employee.addButton') }}
+        </el-button>
+        <el-button
+          v-auth="'marketing_price_delete'"
+          type="danger"
+          plain
+          :disabled="selectedRows.length === 0"
+          @click="handleDelete"
+        >
+          <i class="iconfont icon-shanchu2"></i>
+          {{ t('employee.deleteButton') }}
+        </el-button>
+        <el-button @click="showFieldSettings">
+          <i class="iconfont icon-liebiaoshezhixianshi"></i>
+          {{ t('employee.field') }}
+        </el-button>
+      </template>
+      <template #change_type="{ row }">
+        {{ t(`marketing.${row.change_type}`) }}
+      </template>
+      <template #change_mode="{ row }">
+        {{ t(`marketing.${row.change_mode}`) }}
+      </template>
+      <template #status="{ row }">
+        <el-tooltip
+          :content="row.status === 'OPEN' ? 'OPEN' : 'CLOSE'"
+          placement="top"
+          :show-after="600"
+          :enterable="false"
+        >
+          <el-switch
+            v-auth="'marketing_price_close_switch'"
+            v-model="row.status"
+            inline-prompt
+            :active-icon="Check"
+            :inactive-icon="CircleX"
+            active-value="OPEN"
+            inactive-value="CLOSE"
+            @change="handleStatusChange(row)"
+          />
+        </el-tooltip>
+      </template>
+      <template #action="{ row }">
+        <el-tooltip
+          content="Edit"
+          placement="top"
+          :show-after="600"
+          :enterable="false"
+        >
+          <el-button
+            v-auth="'marketing_price_edit'"
+            link
+            type="primary"
+            size="small"
+            @click="handleEdit(row.id)"
+          >
+            <i class="iconfont icon-icon_Edit"></i>
+          </el-button>
+        </el-tooltip>
+      </template>
+    </Grid>
+    <Drawer />
+  </Page>
+</template>
+
 <style lang="scss" scoped>
 // 可以添加自定义样式
 </style>
-

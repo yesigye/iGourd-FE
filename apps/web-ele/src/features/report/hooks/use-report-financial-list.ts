@@ -1,10 +1,14 @@
-import { computed } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/common-ui';
-import { reportApi } from '../apis';
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
-import ReportFinancialDrawerFrom from '../components/report-financial-drawer.vue';
+
+import { computed } from 'vue';
+
+import { useIgourdDrawer } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+
+import { reportApi } from '../apis';
+// import ReportFinancialDrawerFrom from '../components/report-financial-drawer.vue';
 
 // 定义行数据类型 - 基于原有的表格数据结构
 interface ReportFinancialInfo {
@@ -30,8 +34,6 @@ export function useReportFinancialList() {
 
   // 表格列配置 - 基于原有的 columnsVisible 数组
   const columns = computed(() => [
-
-
     {
       field: 'account_name',
       title: "{{t('reports.accountName')}}",
@@ -122,112 +124,115 @@ export function useReportFinancialList() {
   ]);
 
   // 搜索表单配置 - 基于原有的查询参数
-  const searchFormSchema = {keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.keywords')}}",
-          clearable: true,
-        },
+  const searchFormSchema = {
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      account_name: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.accountName')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.keywords')}}",
+        clearable: true,
       },
-      account_code: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.accountCode')}}",
-          clearable: true,
-        },
+    },
+    account_name: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      account_type: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.pleaseSelectAccountType')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('reports.accountType_ASSET')}}", value: 'ASSET' },
-            { label: "{{t('reports.accountType_LIABILITY')}}", value: 'LIABILITY' },
-            { label: "{{t('reports.accountType_EQUITY')}}", value: 'EQUITY' },
-            { label: "{{t('reports.accountType_REVENUE')}}", value: 'REVENUE' },
-            { label: "{{t('reports.accountType_EXPENSE')}}", value: 'EXPENSE' },
-          ],
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.accountName')}}",
+        clearable: true,
       },
-      time_range: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.pleaseSelectTimeRange')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('reports.timeRange_DAY'), value: 'DAY' },
-            { label: "{{t('reports.timeRange_WEEK'), value: 'WEEK' },
-            { label: "{{t('reports.timeRange_MONTH'), value: 'MONTH' },
-            { label: "{{t('reports.timeRange_QUARTER'), value: 'QUARTER' },
-            { label: "{{t('reports.timeRange_YEAR'), value: 'YEAR' },
-          ],
-        },
+    },
+    account_code: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      start_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.startDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.accountCode')}}",
+        clearable: true,
       },
-      end_date: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'DatePicker',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('reports.endDate')}}",
-          type: 'date',
-          clearable: true,
-        },
+    },
+    account_type: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.pleaseSelectAccountType')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('reports.accountType_ASSET')}}", value: 'ASSET' },
+          {
+            label: "{{t('reports.accountType_LIABILITY')}}",
+            value: 'LIABILITY',
+          },
+          { label: "{{t('reports.accountType_EQUITY')}}", value: 'EQUITY' },
+          { label: "{{t('reports.accountType_REVENUE')}}", value: 'REVENUE' },
+          { label: "{{t('reports.accountType_EXPENSE')}}", value: 'EXPENSE' },
+        ],
+      },
+    },
+    time_range: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.pleaseSelectTimeRange')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('reports.timeRange_DAY')}}", value: 'DAY' },
+          { label: "{{t('reports.timeRange_WEEK')}}", value: 'WEEK' },
+          { label: "{{t('reports.timeRange_MONTH')}}", value: 'MONTH' },
+          { label: "{{t('reports.timeRange_QUARTER')}}", value: 'QUARTER' },
+          { label: "{{t('reports.timeRange_YEAR')}}", value: 'YEAR' },
+        ],
+      },
+    },
+    start_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.startDate')}}",
+        type: 'date',
+        clearable: true,
+      },
+    },
+    end_date: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'DatePicker',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('reports.endDate')}}",
+        type: 'date',
+        clearable: true,
       },
     },
   };
@@ -285,7 +290,7 @@ export function useReportFinancialList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -302,9 +307,3 @@ export function useReportFinancialList() {
     gridOptions,
   };
 }
-
-
-
-
-
-

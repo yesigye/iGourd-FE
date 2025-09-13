@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import { ElButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+defineOptions({
+  name: 'ISaleRefundOrder',
+});
+
+const { t } = useI18n();
+const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
+  useSaleRefund - orderList();
+</script>
+
 <template>
   <Page auto-content-height>
     <Grid>
@@ -18,17 +31,3 @@
     <Drawer />
   </Page>
 </template>
-
-<script setup lang="ts">
-import { Page, ElButton } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-import { useSaleRefund-orderList } from '../../hooks/use-sale-refund-order-list';
-
-defineOptions({
-  name: 'ISaleRefund-order',
-});
-
-const { t } = useI18n();
-const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
-  useSaleRefund-orderList();
-</script>

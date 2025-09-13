@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import { ElButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+defineOptions({
+  name: 'IInventorySkuList',
+});
+
+const { t } = useI18n();
+const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
+  useInventorySku - listList();
+</script>
+
 <template>
   <Page auto-content-height>
     <Grid>
@@ -18,17 +31,3 @@
     <Drawer />
   </Page>
 </template>
-
-<script setup lang="ts">
-import { Page, ElButton } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-import { useInventorySku-listList } from '../../hooks/use-inventory-sku-list-list';
-
-defineOptions({
-  name: 'IInventorySku-list',
-});
-
-const { t } = useI18n();
-const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
-  useInventorySku-listList();
-</script>

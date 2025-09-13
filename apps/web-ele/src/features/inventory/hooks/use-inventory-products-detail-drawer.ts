@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { useI18n } from '@igourd/locales';
-import { useIgourdDrawer } from '#/adapter/drawer';
+import { useIgourdDrawer } from '@igourd/common-ui';
 import InventoryProductsDetailDrawer from '../components/inventory-products-detail-drawer.vue';
 
 export function useInventoryProductsDetailDrawer() {

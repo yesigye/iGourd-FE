@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { useI18n } from '@igourd/locales';
-import { useIgourdDrawer } from '#/adapter/drawer';
+import { useIgourdDrawer } from '@igourd/common-ui';
 import PurchaseOrderClearingDrawer from '../components/purchase-order-clearing-drawer.vue';
 
 export function usePurchaseOrderClearingDrawer() {

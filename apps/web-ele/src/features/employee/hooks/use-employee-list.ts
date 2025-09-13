@@ -1,9 +1,13 @@
-import { computed } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/common-ui';
-import { employeeApi } from '../apis';
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
+
+import { computed } from 'vue';
+
+import { useIgourdDrawer } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+
+import { employeeApi } from '../apis';
 import EmployeeDrawerFrom from '../components/employee-drawer.vue';
 
 // 定义行数据类型 - 基于原有的表格数据结构
@@ -34,8 +38,6 @@ export function useEmployeeList() {
 
   // 表格列配置 - 基于原有的 columns 数组
   const columns = computed(() => [
-
-
     {
       field: 'login_ids',
       title: "{{t('employee.employee_account')}}",
@@ -92,75 +94,75 @@ export function useEmployeeList() {
   ]);
 
   // 搜索表单配置 - 基于原有的查询参数
-  const searchFormSchema = {keyword: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('employee.keyword')}}",
-          clearable: true,
-        },
+  const searchFormSchema = {
+    keyword: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      name: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('employee.employee_name')}}",
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('employee.keyword')}}",
+        clearable: true,
       },
-      login_account: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Input',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('employee.employee_account')}}",
-          clearable: true,
-        },
+    },
+    name: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
       },
-      role_id: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('employee.pleaseSelectRole')}}",
-          filterable: true,
-          clearable: true,
-        },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('employee.employee_name')}}",
+        clearable: true,
       },
-      status: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-decorator-props': {
-          gridSpan: 'span 2',
-        },
-        'x-component': 'Select',
-        'x-class': 'w-full',
-        'x-component-props': {
-          placeholder: "{{t('employee.pleaseSelectStatus')}}",
-          clearable: true,
-          options: [
-            { label: "{{t('employee.status_ACTIVE'), value: 'ACTIVE' },
-            { label: "{{t('employee.status_FROZEN'), value: 'FROZEN' },
-          ],
-        },
+    },
+    login_account: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Input',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('employee.employee_account')}}",
+        clearable: true,
+      },
+    },
+    role_id: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('employee.pleaseSelectRole')}}",
+        filterable: true,
+        clearable: true,
+      },
+    },
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        gridSpan: 'span 2',
+      },
+      'x-component': 'Select',
+      'x-class': 'w-full',
+      'x-component-props': {
+        placeholder: "{{t('employee.pleaseSelectStatus')}}",
+        clearable: true,
+        options: [
+          { label: "{{t('employee.status_ACTIVE')}}", value: 'ACTIVE' },
+          { label: "{{t('employee.status_FROZEN')}}", value: 'FROZEN' },
+        ],
       },
     },
   };
@@ -218,7 +220,7 @@ export function useEmployeeList() {
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents,
     gridOptions,
-    formOptions: { schema: searchFormSchema, scope: {} }
+    formOptions: { schema: searchFormSchema, scope: {} },
   });
 
   return {
@@ -235,4 +237,3 @@ export function useEmployeeList() {
     gridOptions,
   };
 }
-

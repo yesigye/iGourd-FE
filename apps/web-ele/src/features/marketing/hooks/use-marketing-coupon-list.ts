@@ -1,10 +1,14 @@
-import { computed } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer } from '@igourd/common-ui';
-import { marketingApi } from '../apis';
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
-import MarketingCouponDrawerFrom from '../components/marketing-coupon-drawer.vue';
+
+import { computed } from 'vue';
+
+import { useIgourdDrawer } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+
+import { marketingApi } from '../apis';
+// import MarketingCouponDrawerFrom from '../components/marketing-coupon-drawer.vue';
 
 // 定义行数据类型 - 基于原有的表格数据结构
 interface MarketingCouponInfo {
