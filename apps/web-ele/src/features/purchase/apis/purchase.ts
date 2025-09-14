@@ -1,4 +1,5 @@
 import { requestClient } from '#/api/request';
+import { useUserStore } from '@igourd/stores';
 
 // ==================== 采购管理 APIs ====================
 
@@ -487,6 +488,8 @@ export function warehouseProductPageList(data: any) {
 }
 
 export function productSearch(data: any) {
+  const { currentLoginUserApp } = useUserStore();
+  data.merchant_id = currentLoginUserApp.owner_id;
   return requestClient.post('/v1/merchant/basics/inventory/search', data);
 }
 

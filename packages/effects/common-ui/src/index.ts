@@ -38,3 +38,4 @@ export function useTableSearchForm<T extends object>(
   return useCoreTableSearchForm(options);
 }
 export { setupIgourdForm };
+export type { IGourdFormProps };

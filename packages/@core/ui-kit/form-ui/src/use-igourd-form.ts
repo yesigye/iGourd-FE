@@ -20,6 +20,7 @@ registerValidateLocale({
 export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
   const { formAPI } = useForm(options as IFormProps<object>);
   const components = getFormComponents();
+  //@ts-ignore
   const { t, locale } = options.useI18n() as any;
   const $locale = computed(() => locale.value);
   const $i18n = observable({ lang: $locale.value });

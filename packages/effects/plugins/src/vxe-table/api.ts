@@ -113,9 +113,6 @@ export class VxeGridApi<T extends Record<string, any> = any> {
     this.setState({
       showSearchForm: isBoolean(show) ? show : !this.state?.showSearchForm,
     });
-    // nextTick(() => {
-    //   this.grid.recalculate();
-    // });
     return this.state?.showSearchForm;
   }
 

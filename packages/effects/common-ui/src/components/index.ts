@@ -2,6 +2,7 @@ export * from './api-component';
 export * from './array-cards';
 export * from './array-collapse';
 export * from './array-items';
+export { default as ProductArrayTable } from './array-product-form';
 export * from './array-table';
 export * from './array-tabs';
 export * from './captcha';
@@ -33,6 +34,7 @@ export * from './preview-text';
 export * from './radio';
 export * from './reset';
 export * from './resize';
+export { default as ScanCodeEntry } from './scan-code-entry';
 export * from './select';
 export * from './space';
 export * from './submit';
@@ -40,8 +42,9 @@ export * from './switch';
 export * from './time-picker';
 export * from './tippy';
 export * from './transfer';
-export * from './upload';
-export { default as ProductArrayTable } from './array-product-form';
+
+export { default as Upload } from './upload';
+
 // 给文档用
 export {
   IgourdAvatar,
@@ -73,3 +76,10 @@ export {
   ElMessageBox,
   ElNotification,
 } from 'element-plus';
+
+export type { UploadProps } from './upload';
+
+// export type {
+//   ProductArrayTableProps,
+//   InventoryServiceLike,
+// } from './array-product-form';

@@ -33,11 +33,10 @@ export function useInventoryProductFeatureList() {
   const searchFormSchema = {
     keywords: {
       type: 'string',
-      title: "{{t('purchase.placeholder')}}",
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('purchase.placeholder')}}",
+        placeholder: "{{t('common.keywords')}}",
         clearable: true,
       },
     },
@@ -47,48 +46,48 @@ export function useInventoryProductFeatureList() {
   const columns: VxeGridPropTypes.Column<any>[] = [
     {
       field: 'name',
-      title: "{{t('customers.featureName')}}",
+      title: t('inventory.featureName'),
       width: 200,
       fixed: 'left',
       showOverflow: 'tooltip',
     },
     {
       field: 'type',
-      title: "{{t('purchase.featureType')}}",
+      title: t('purchase.featureType'),
       width: 150,
       slots: { default: 'type' },
     },
     {
       field: 'is_compulsory',
-      title: "{{t('purchase.isCompulsory')}}",
+      title: t('inventory.isCompulsory'),
       width: 120,
       slots: { default: 'is_compulsory' },
     },
     {
       field: 'is_fixed_option',
-      title: "{{t('purchase.isFixedOption')}}",
+      title: t('inventory.isFixedOption'),
       width: 150,
       slots: { default: 'is_fixed_option' },
     },
     {
       field: 'max_length',
-      title: "{{t('purchase.maxLength')}}",
+      title: t('inventory.maxLength'),
       width: 120,
     },
     {
       field: 'remark',
-      title: "{{t('common.remark')}}",
+      title: t('inventory.remark'),
       width: 200,
       showOverflow: 'tooltip',
     },
     {
       field: 'create_time',
-      title: "{{t('common.createTime')}}",
+      title: t('inventory.createTime'),
       width: 180,
     },
     {
       field: 'action',
-      title: "{{t('common.action')}}",
+      title: t('common.action'),
       width: 120,
       fixed: 'right',
       slots: { default: 'action' },
@@ -98,6 +97,7 @@ export function useInventoryProductFeatureList() {
   // 表格配置
   const gridOptions: VxeGridProps<any> = {
     columns: columns,
+    height: 'auto',
     proxyConfig: {
       ajax: {
         query: async ({ page }, form = {}) => {

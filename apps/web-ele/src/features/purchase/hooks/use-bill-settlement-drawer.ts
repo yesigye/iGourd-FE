@@ -1,7 +1,6 @@
 import { useI18n } from '@igourd/locales';
 import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import { PurchaseService } from '../apis';
-import { Local } from '@/utils';
 import type { ISchema } from '@igourd/common-ui';
 
 export function useBillSettlementDrawer() {
@@ -110,10 +109,13 @@ export function useBillSettlementDrawer() {
             'x-component-props': {
               placeholder: "{{t('purchase.pleaseSelectPaymentMethod')}}",
               options: [
-                { label: "{{t('purchase.cash'), value: 'CASH' },
-                { label: "{{t('purchase.bankTransfer'), value: 'BANK_TRANSFER' },
-                { label: "{{t('purchase.check'), value: 'CHECK' },
-                { label: "{{t('purchase.other'), value: 'OTHER' },
+                { label: "{{t('purchase.cash')}}", value: 'CASH' },
+                {
+                  label: "{{t('purchase.bankTransfer')}}",
+                  value: 'BANK_TRANSFER',
+                },
+                { label: "{{t('purchase.check')}}", value: 'CHECK' },
+                { label: "{{t('purchase.other')}}", value: 'OTHER' },
               ],
             },
             'x-validator': [
@@ -183,7 +185,8 @@ export function useBillSettlementDrawer() {
   };
 
   // 使用 useIgourdForm
-  const { Form, formApi } = useIgourdForm({
+  const { Form, formAPI } = useIgourdForm({
+    useI18n,
     schema: formSchema,
     initialValues: {
       purchaseOrderNo: '',
@@ -200,10 +203,10 @@ export function useBillSettlementDrawer() {
   // 使用 useIgourdDrawer
   const [Drawer, drawerApi] = useIgourdDrawer({
     title: "{{t('purchase.billSettlement')}}",
-    width: '86%',
+    class: 'w-[86%]',
     onConfirm: async () => {
       try {
-        const values = formAPI.values
+        const values = formAPI.values;
         const data = {
           ...values,
           merchant_id: Local.get('userinfo')?.current_login_user_app?.owner_id,
@@ -255,4 +258,3 @@ export function useBillSettlementDrawer() {
     closeDrawer,
   };
 }
-

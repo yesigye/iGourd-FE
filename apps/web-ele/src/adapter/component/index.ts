@@ -3,7 +3,7 @@
  * 可用于 igourd-form、igourd-modal、igourd-drawer 等组件使用,
  */
 
-import type { Component } from 'vue';
+import type { Component, FunctionalComponent } from 'vue';
 
 import {
   ApiComponent,
@@ -41,23 +41,27 @@ import {
   Switch,
   TimePicker,
   Transfer,
-  Upload,
-  ProductArrayTable,
+  ScanCodeEntry,
 } from '@igourd/common-ui';
+
+import Upload from './upload';
+import ProductArrayTable from './arrat-product-table';
 
 import '@igourd/common-ui/style';
 
 async function initComponentAdapter() {
-  const components: Partial<Record<string, Component>> = {
+  const components: Partial<Record<string, Component | FunctionalComponent>> = {
     ArrayCards,
     ArrayCollapse,
     ArrayItems,
     ArrayTable,
     ArrayTabs,
     Cascader,
+    ScanCodeEntry,
     ProductArrayTable,
     Editable,
     Checkbox,
+    Upload,
     DatePicker,
     Form,
     FormButtonGroup,
@@ -80,7 +84,6 @@ async function initComponentAdapter() {
     Switch,
     TimePicker,
     Transfer,
-    Upload,
     ApiComponent,
     Button: ElButton,
   };

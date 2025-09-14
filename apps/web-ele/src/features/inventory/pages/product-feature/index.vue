@@ -3,7 +3,7 @@
     <Grid>
       <template #table-title>
         <IgourdButton @click="drawerApi.open()" :disabled="isMaxItems">
-          {{ t('inventory.addProductFeature') }}
+          {{ t('common.create') }}
         </IgourdButton>
       </template>
     </Grid>

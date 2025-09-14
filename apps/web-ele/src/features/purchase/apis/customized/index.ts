@@ -1,12 +1,5 @@
 import { requestClient } from '#/api/request';
-
-/*
-  删除动态属性的参数
-*/
-interface DynamicAttributeDeleteParams {
-  dynamic_column_id_list?: Array<number>; // 动态属性ID列表
-  merchant_id?: number; // 商户ID
-}
+import type { DynamicAttributeDeleteParams } from './type';
 
 // 获取定制采购分页列表
 export function getPurchaseCustomizedListApi(data: any) {
@@ -36,6 +29,12 @@ export function createOrUpdateCustomizedField(data: any) {
  * 删除动态字段
  * @param data
  */
-export function deleteDynamicColumn(data: DynamicAttributeDeleteParams) {
-  return requestClient.post(`/v1/merchant/basics/dynamic-column/remove`, data);
+export function deleteDynamicColumn(
+  dynamic_column_id_list: (string | number)[],
+) {
+  return requestClient.post(`/v1/merchant/basics/dynamic-column/remove`, {
+    dynamic_column_id_list,
+  });
 }
+
+export * from './type';

@@ -34,9 +34,7 @@ export type HandleResetFn = (
   values?: Record<string, any>,
 ) => Promise<void> | void;
 
-export type HandleSubmitFn = (
-  values?: Record<string, any>,
-) => Promise<void> | void;
+export type HandleSubmitFn = (values?: any) => Promise<void> | void;
 
 export interface IGourdFormProps<T extends object> extends IFormProps<T> {
   /**
@@ -130,6 +128,6 @@ export interface IGourdFormProps<T extends object> extends IFormProps<T> {
    * @default false
    */
   submitOnEnter?: boolean;
-  useI18n: () => unknown;
+  useI18n?: () => unknown;
 }
 export type { IFormProps };

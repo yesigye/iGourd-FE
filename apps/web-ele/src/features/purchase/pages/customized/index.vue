@@ -5,7 +5,7 @@
         <ElButton type="primary" @click="handleEdit()">
           {{ t('common.create') }}
         </ElButton>
-        <ElButton type="danger" v-if="canBatchDelete" @click="batchDelete">
+        <ElButton type="danger" v-if="canBatchOperate" @click="handleBatchDelete">
           {{ t('common.delete') }}
         </ElButton>
       </template>
@@ -22,13 +22,12 @@
 <script setup lang="ts">
 import { Page, ElButton } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { usePurchaseCustomizedList } from '../../hooks/use-purchase-customized-list';
+import { useCustomized } from '@@/purchase/hooks';
 
 defineOptions({
   name: 'IPurchaseCustomized',
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
-  usePurchaseCustomizedList();
+const { Grid, Drawer, handleEdit, canBatchOperate,handleBatchDelete } = useCustomized();
 </script>

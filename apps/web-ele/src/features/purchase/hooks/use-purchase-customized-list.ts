@@ -12,15 +12,7 @@ import PurchaseCustomizedDrawerFrom from '../components/purchase-customized-draw
 import { useUserStore } from '@igourd/stores';
 
 // 定义行数据类型 - 基于原有的表格数据结构
-interface PurchaseCustomizedInfo {
-  id: number;
-  name: string;
-  type: string;
-  is_fixed_option: boolean;
-  is_compulsory: boolean;
-  creator_name: string;
-  create_time: string;
-}
+
 
 export function usePurchaseCustomizedList() {
   const { t } = useI18n();

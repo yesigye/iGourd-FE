@@ -53,17 +53,6 @@ export function useIgourdVxeGrid<
       >,
     },
   );
-  // Add reactivity support
-  // if (IS_REACTIVE) {
-  //   watch(
-  //     () => options,
-  //     () => {
-  //       api.setState(options);
-  //     },
-  //     { immediate: true },
-  //   );
-  // }
-
   return [Grid, extendedApi] as const;
 }
 

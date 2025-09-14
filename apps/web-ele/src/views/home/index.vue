@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
 import Form from './components/form.vue';
-import { IgourdButton, Page, useIgourdDrawer } from '@igourd/common-ui';
+import { IgourdButton, ColPage, useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { useIgourdVxeGrid } from '#/adapter/vxe-table';
@@ -14,7 +14,6 @@ defineOptions({
 function getVendorPageListApi(data: any) {
   return requestClient.post('v1/merchant/purchase/vendor/page-list', data);
 }
-
 
 const { t } = useI18n();
 interface RowType {
@@ -78,14 +77,6 @@ const gridOptions: VxeGridProps<RowType> = {
       },
     },
   },
-
-  toolbarConfig: {
-    custom: true,
-    export: false,
-    import: false,
-    refresh: true,
-    zoom: true,
-  },
 };
 const schema = {
   username: {
@@ -105,17 +96,15 @@ const schema = {
 const [Grid, gridApi] = useIgourdVxeGrid({
   gridEvents,
   gridOptions,
-  formOptions: { schema, scope: {} },
 });
 </script>
 
 <template>
-  <Page auto-content-height>
-    <Drawer />
-    <Grid>
-      <template #table-title>
-        <IgourdButton>新增</IgourdButton>
-      </template>
-    </Grid>
-  </Page>
+  <ColPage auto-content-height :left-max-width="10">
+    <template #left>
+      <section class="w-full gap-2">1</section>
+    </template>
+
+    <Grid> </Grid>
+  </ColPage>
 </template>
