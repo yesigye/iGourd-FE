@@ -1,8 +1,12 @@
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useCrud } from '#/hooks';
 import { useI18n } from '@igourd/locales';
-import type { PurchaseCustomizedInfo } from './types';
+import type {
+  CustomizedDTO,
+  CustomizedRow,
+} from './types';
 import {
+  createOrUpdateCustomizedField,
   deleteDynamicColumn,
   getPurchaseCustomizedListApi,
 } from '@@/purchase/apis';
@@ -10,7 +14,7 @@ import { CustomizedDrawerForm } from '@@/purchase/components';
 
 export function useCustomized() {
   const { t } = useI18n();
-  const columns: VxeGridPropTypes.Column<PurchaseCustomizedInfo>[] = [
+  const columns: VxeGridPropTypes.Column<CustomizedRow>[] = [
     {
       type: 'checkbox',
       width: 80,
@@ -90,7 +94,7 @@ export function useCustomized() {
       },
     },
   };
-  return useCrud({
+  return useCrud<CustomizedRow, CustomizedDTO>({
     columns,
     searchFormSchema,
     batchOperate: true,
@@ -98,6 +102,8 @@ export function useCustomized() {
     service: {
       query: getPurchaseCustomizedListApi,
       drop: deleteDynamicColumn,
+      create: createOrUpdateCustomizedField,
+      update: createOrUpdateCustomizedField,
     },
   });
 }

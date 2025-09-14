@@ -19,18 +19,18 @@ interface List<T> {
   };
 }
 
-export interface Service<T> {
+export interface Service<T, P> {
   query: (
     params: List<Partial<T>>['QueryParams'],
   ) => Promise<List<Partial<T>>['QueryResult']>;
   detail: (id: number | string) => Promise<T>;
   drop: (ids: (string | number)[]) => {};
-  update: (dto: T) => Promise<string | number>;
-  create: (dto: T) => Promise<string | number>;
+  update: (dto: P) => Promise<string | number>;
+  create: (dto: P) => Promise<string | number>;
 }
 
-export interface CRUDOptions<T> extends VxeGridProps<T> {
-  service: Partial<Service<T>>;
+export interface CRUDOptions<T, P> extends VxeGridProps<T> {
+  service: Partial<Service<T, P>>;
   searchFormSchema: ISchema['properties'];
   batchOperate: boolean;
   girdEvents: VxeGridListeners<T>;
@@ -69,7 +69,9 @@ function useBatchOperate<T>(
   return [checkedKeys, gridEvents, canBatchOperate];
 }
 
-function useCrud<T extends object>(options: Partial<CRUDOptions<T>>) {
+function useCrud<T extends object, P extends object>(
+  options: Partial<CRUDOptions<T, P>>,
+) {
   const { t } = useI18n();
   const [checkedKeys, gridEvents, canBatchOperate] = useBatchOperate(
     options.girdEvents?.checkboxChange,
@@ -148,7 +150,7 @@ function useCrud<T extends object>(options: Partial<CRUDOptions<T>>) {
         gridApi.reload();
       });
   };
-  provide(Symbol.for('PageGrid'), gridApi);
+  provide(Symbol.for('PageGrid'), { gridApi, service: options.service });
   return {
     canBatchOperate,
     checkedKeys,

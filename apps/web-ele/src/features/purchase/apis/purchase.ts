@@ -1,5 +1,6 @@
 import { requestClient } from '#/api/request';
 import { useUserStore } from '@igourd/stores';
+import type { ProductInfoQueryParams, ProductProfileQueryParams } from './types';
 
 // ==================== 采购管理 APIs ====================
 
@@ -573,3 +574,313 @@ export const purchaseApi = {
   exportNewOrderHistory: exportPurchaseNewOrderHistoryApi,
   exportVendor: exportVendorApi,
 };
+
+export class InventoryService {
+  // 商品导入
+  //字段初始化要展示的列
+  public static async dynamicTableColumnFind(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/dynamic-table-column/find',
+      data,
+    );
+  }
+  // 调整顺序和减少字段，调用 API同步后端保存
+  public static async dynamicTableColumnModify(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/dynamic-table-column/modify',
+      data,
+    );
+  }
+  // 临时文件上传
+  public static async tempUpload(data: any) {
+    return requestClient.post('/resource/file-upload/temp/upload', data);
+  }
+  // 临时文件解析
+  public static async excelParsing(data: any) {
+    return requestClient.post('/resource/file-upload/excel/parsing', data);
+  }
+  // 文件预览
+  public static async excelPreview(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product/import/excel/preview',
+      data,
+      {
+        timeout: 300000,
+      },
+    );
+  }
+  // 文件导入
+  public static async excelImport(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product/import/excel',
+      data,
+      {
+        timeout: 300000,
+      },
+    );
+  }
+  // 商品分类
+  // 商品一级分类信息查询
+  public static async productFirstGroupList(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-group/first/page-list',
+      data,
+    );
+  }
+  // 商品二级分类信息查询
+  public static async productTwoGroupList(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-group/second/page-list',
+      data,
+    );
+  }
+  //商品分类信息查询
+  public static async productGroupList(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-group/page-list',
+      data,
+    );
+  }
+  //商品分类信息创建
+  public static async productGroupCreate(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-group/create',
+      data,
+    );
+  }
+  //商品分类信息修改
+  public static async productGroupModify(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-group/modify',
+      data,
+    );
+  }
+  //商品分类信息批量删除
+  public static async productGroupRemove(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-group/remove',
+      data,
+    );
+  }
+  // 标签
+  // 商品标签信息查询（分页）
+  public static async productLabelPage(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-label/page-list',
+      data,
+    );
+  }
+  // 商品标签信息创建
+  public static async productLabelCreate(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-label/create',
+      data,
+    );
+  }
+  // 商品标签信息修改
+  public static async productLabelModify(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-label/modify',
+      data,
+    );
+  }
+  // 商品标签信息批量删除
+  public static async productLabelRemove(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-label/remove',
+      data,
+    );
+  }
+  // 商品列表
+  // 商品资料分页查询查询
+  public static async productPageList(data: any, customerHeader = {}) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product/page-list',
+      data,
+      customerHeader,
+    );
+  }
+  // 商品创建
+  public static async productCreate(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product/create',
+      data,
+    );
+  }
+  //商品信息详情
+  public static async productDetail(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product/detail',
+      data,
+    );
+  }
+  // 商品修改
+  public static async productModify(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product/modify',
+      data,
+    );
+  }
+  // 基于商品标签信息查询商品信息
+  public static async productLabelNum(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product/product-label/list',
+      data,
+    );
+  }
+  // 商品信息批量删除
+  public static async productRemove(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product/remove',
+      data,
+    );
+  }
+  // 商品标签和商品信息绑定接口（多对多绑定和多对多解绑）
+  public static async productLabelBind(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product/label/bind',
+      data,
+    );
+  }
+  // 商品标签和商品信息绑定接口（多对多绑定和多对多解绑）
+  public static async productBind(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-label/product/bind',
+      data,
+    );
+  }
+  // 查询商品一级分类信息（分页）
+  public static async productGroupFirst(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-group/first/page-list',
+      data,
+    );
+  }
+  // 库存变更日志
+  public static async inventoryChangeLog(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/inventory-change-log/page-list',
+      data,
+    );
+  }
+  // 仓库下商品资料分页查询
+  public static async warehouseProductPageList(data: any, customerHeader = {}) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/warehouse/product/page-list',
+      data,
+      customerHeader,
+    );
+  }
+  // SKU
+  // 基础商品信息分页查询
+  public static async productProfilePageList(data: ProductInfoQueryParams) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-info/page-list',
+      data,
+    );
+  }
+  // 商品规格值信息修改
+  public static async productInfoModify(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-info/modify',
+      data,
+    );
+  }
+  //商品规格值列表
+  public static async productSpecValueList(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-spec-value/list',
+      data,
+    );
+  }
+  //创建商品规格值
+  public static async productSpecValueCreate(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-spec-value/create',
+      data,
+    );
+  }
+  //修改商品规格值
+  public static async productSpecValueModify(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-spec-value/modify',
+      data,
+    );
+  }
+  //删除商品规格值
+  public static async productSpecValueRemove(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-spec-value/remove',
+      data,
+    );
+  }
+  //商品规格列表
+  public static async productSpecList(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-spec/list',
+      data,
+    );
+  }
+  //创建商品规格
+  public static async productSpecCreate(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-spec/create',
+      data,
+    );
+  }
+  //修改商品规格
+  public static async productSpecModify(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-spec/modify',
+      data,
+    );
+  }
+  //基础商品信息创建
+  public static async productProfileCreate(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-profile/create',
+      data,
+    );
+  }
+  //基础商品信息分页
+  public static async productProfileSKUPageList(
+    data: ProductProfileQueryParams,
+  ) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-profile/page-list',
+      data,
+    );
+  }
+  //基础商品信息修改
+  public static async productProfileModify(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-profile/modify',
+      data,
+    );
+  }
+  //基础商品信息详情
+  public static async productProfileDetail(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/product-profile/detail',
+      data,
+    );
+  }
+  //库存信息分页查询列表
+  public static async stockInfoPageList(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/stock-info/page-list',
+      data,
+    );
+  }
+  //库存信息创建接口
+  public static async stockInfoCreate(data: any) {
+    return requestClient.post(
+      '/v1/merchant/basics/inventory/stock-info/create/batch',
+      data,
+    );
+  }
+  //搜索商品相关信息
+  public static async productSearch(data: any) {
+    return requestClient.post('/v1/merchant/basics/inventory/search', data);
+  }
+}

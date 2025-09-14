@@ -1,4 +1,4 @@
-export interface PurchaseCustomizedInfo {
+export interface CustomizedRow {
   id: number;
   name: string;
   type: string;
@@ -8,7 +8,8 @@ export interface PurchaseCustomizedInfo {
   create_time: string;
 }
 // 定义表单数据类型
-export interface PurchaseCustomizedFormData {
+export interface CustomizedDTO {
+  id: string;
   entity: string;
   name: string;
   is_compulsory: boolean;

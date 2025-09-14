@@ -11,7 +11,12 @@ import { resetAllStores, useAccessStore, useUserStore } from '@igourd/stores';
 
 import { defineStore } from 'pinia';
 
-import { getAccessCodesApi, getUserInfoApi, loginApi } from '#/api';
+import {
+  basicsMerchantList,
+  getAccessCodesApi,
+  getUserInfoApi,
+  loginApi,
+} from '#/api';
 import { $t } from '#/locales';
 
 export const useAuthStore = defineStore('auth', () => {
@@ -104,9 +109,45 @@ export const useAuthStore = defineStore('auth', () => {
       owner_id: userStore.owner_id,
       owner_type: userStore.owner_type,
     });
+    userStore.setMerchantInfo({
+      //@ts-ignore
+      owner_id: userInfo.owner_id,
+      //@ts-ignore
+      owner_type: userInfo.owner_type,
+      //@ts-ignore
+      user_id: userInfo.user_id,
+    });
     if (!userInfo) {
       throw new TypeError('UserInfo is Null');
     }
+    //@ts-ignore
+    const userApps = userInfo.userModel?.user_apps || [];
+    //@ts-ignore
+    const merchant_ids = userApps.map((item) => item.owner_id);
+    const res = await basicsMerchantList({ merchant_ids });
+    //@ts-ignore
+    function customizerMerchantList(dataList, user_apps) {
+      if (dataList?.length && user_apps?.length) {
+        //@ts-ignore
+        return dataList.reduce((acc, cur) => {
+          //@ts-ignore
+          user_apps.forEach((item) => {
+            if (item.owner_id === cur.merchant_id) {
+              acc.push({ ...cur, ...item });
+            }
+          });
+          return acc;
+        }, []);
+      }
+      return [];
+    }
+    const merList = customizerMerchantList(res ?? [], userApps);
+
+    const merchantInfo = (merList || []).find(
+      //@ts-ignore
+      (item) => item.owner_id === userStore.merchantInfo.owner_id,
+    );
+    userStore.setMerchantInfo(merchantInfo);
 
     userStore.setTokenId(userInfo.jwt_token.token_id);
     userStore.setUserModel(userInfo.useModel);

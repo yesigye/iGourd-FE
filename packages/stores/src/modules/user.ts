@@ -46,6 +46,7 @@ interface AccessState {
   owner_type: string;
   tokenId: string;
   user_id: string;
+  merchantList: any[];
   /**
    * 用户信息
    */
@@ -57,6 +58,8 @@ interface AccessState {
    * 用户角色
    */
   userRoles: string[];
+
+  merchantInfo: any;
 }
 
 /**
@@ -83,10 +86,8 @@ export const useUserStore = defineStore('core-user', {
     setUserModel(useModel: Record<string, any>) {
       this.userModel = useModel;
     },
-    setMerchantInfo(
-      info: Pick<AccessState, 'owner_id' | 'owner_type' | 'user_id'>,
-    ) {
-      Object.assign(this, info);
+    setMerchantInfo(info: any) {
+      this.merchantInfo = info;
     },
     setLoginAccount(login_account: string) {
       this.login_account = login_account;
@@ -108,6 +109,9 @@ export const useUserStore = defineStore('core-user', {
         return state.userInfo?.current_login_user_app;
       }
     },
+    currencySymbol(state) {
+      return state.merchantInfo.currency_symbol ?? '';
+    },
   },
   state: (): AccessState => ({
     userInfo: null,
@@ -116,6 +120,8 @@ export const useUserStore = defineStore('core-user', {
     owner_id: '',
     owner_type: '',
     user_id: '',
+    merchantList: [],
+    merchantInfo: {},
   }),
 });
 

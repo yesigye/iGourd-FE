@@ -46,6 +46,7 @@
     "@igourd/utils": "workspace:^",
     "@vueuse/core": "catalog:",
     "dayjs": "catalog:",
+    "decimal.js": "^10.6.0",
     "element-plus": "catalog:",
     "pinia": "catalog:",
     "vue": "catalog:",
