@@ -59,7 +59,6 @@
 <script setup lang="ts">
 import {
   ref,
-  nextTick,
   onMounted,
   onUnmounted,
   defineProps,
@@ -68,7 +67,14 @@ import {
   watch,
 } from 'vue';
 import { CircleX } from '@igourd/icons';
-import { ElMessage } from 'element-plus';
+import {
+  ElMessage,
+  ElPopover,
+  ElButton,
+  ElInput,
+  ElCheckbox,
+  ElIcon,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { InventoryService } from '@@/purchase/apis';
 import { debounce } from '@igourd/utils';
@@ -130,14 +136,6 @@ const showBarcodePopover = () => {
   scanBuffer.value = '';
 };
 
-const focusInput = () => {
-  nextTick(() => {
-    if (barcodeInputRef.value) {
-      barcodeInputRef.value.focus();
-    }
-  });
-};
-
 const closePopover = () => {
   popoverVisible.value = false;
   resetForm();
@@ -150,16 +148,6 @@ const resetForm = () => {
     quantity: props.initialQuantity || 0,
     enterQty: false,
   };
-};
-
-const handleEnterKey = () => {
-  if (barcodeForm.value.enterQty) {
-    nextTick(() => {
-      document.querySelector('.barcode-input input:nth-child(1)')?.focus();
-    });
-  } else {
-    handleSubmit();
-  }
 };
 
 const validateQuantityInput = () => {
@@ -224,7 +212,6 @@ const searchProductsByWarehouseAndCode = async (
   try {
     const params = {
       warehouse_id: warehouseId,
-      merchant_id: merchantId.value,
       page_num: 1,
       keywords: code,
       page_size: 10,
@@ -265,7 +252,6 @@ const searchProductsByCode = async (code: string) => {
       keywords: code,
       page_num: 1,
       page_size: 10,
-      merchant_id: merchantId.value,
     };
     const response = await InventoryService.productSearch(params);
 

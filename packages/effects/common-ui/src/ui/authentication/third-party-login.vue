@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAppConfig } from '@igourd/hooks';
-import { MdiGithub, MdiGoogle, MdiQqchat, MdiWechat } from '@igourd/icons';
+import { MdiGithub, MdiGoogle, MdiQqchat } from '@igourd/icons';
 import { $t } from '@igourd/locales';
 
 import { IgourdIconButton } from '@igourd-core/shadcn-ui';

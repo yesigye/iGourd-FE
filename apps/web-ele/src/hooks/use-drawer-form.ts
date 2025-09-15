@@ -1,12 +1,12 @@
-import {
-  useIgourdForm,
-  useIgourdDrawer,
-  type IGourdFormProps,
-  type DrawerApiOptions,
-} from '@igourd/common-ui';
-import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
-import { inject } from 'vue';
+import type { DrawerApiOptions, IGourdFormProps } from '@igourd/common-ui';
+
 import type { Service } from '.';
+
+import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
+
+import { inject } from 'vue';
+
+import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 
 interface DrawerFormOptions {
   drawerOptions: DrawerApiOptions;
@@ -17,7 +17,7 @@ export function useDrawerForm(options: DrawerFormOptions) {
   const handleSubmit = options.formOptions.handleSubmit;
   const { gridApi, service } = inject<{
     gridApi: ExtendedVxeGridApi;
-    service: Partial<Service<unknown>>;
+    service: Partial<Service<unknown, unknown>>;
   }>(Symbol.for('PageGrid'), {} as unknown as any);
   const onConfirm = options.drawerOptions.onConfirm;
   options.drawerOptions.onConfirm = async function () {
@@ -29,11 +29,9 @@ export function useDrawerForm(options: DrawerFormOptions) {
     if (handleSubmit) {
       await handleSubmit(formAPI.values);
     } else {
-      if (Reflect.has(formAPI.values, 'id')) {
-        await service.update?.(formAPI.values);
-      } else {
-        await service.create?.(formAPI.values);
-      }
+      await (Reflect.has(formAPI.values, 'id')
+        ? service.update?.(formAPI.values)
+        : service.create?.(formAPI.values));
     }
     gridApi?.reload();
     drawerApi.unlock();

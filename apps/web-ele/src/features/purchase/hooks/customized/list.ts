@@ -1,16 +1,17 @@
+import type { CustomizedDTO, CustomizedRow } from './types';
+
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
-import { useCrud } from '#/hooks';
+
 import { useI18n } from '@igourd/locales';
-import type {
-  CustomizedDTO,
-  CustomizedRow,
-} from './types';
+
 import {
   createOrUpdateCustomizedField,
   deleteDynamicColumn,
   getPurchaseCustomizedListApi,
 } from '@@/purchase/apis';
 import { CustomizedDrawerForm } from '@@/purchase/components';
+
+import { useCrud } from '#/hooks';
 
 export function useCustomized() {
   const { t } = useI18n();

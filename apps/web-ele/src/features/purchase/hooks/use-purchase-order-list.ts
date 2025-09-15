@@ -1,15 +1,20 @@
-import { computed, ref } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { useIgourdDrawer, confirm } from '@igourd/common-ui';
-import { purchaseApi } from '../apis';
 import type {
   VxeGridListeners,
   VxeGridProps,
   VxeGridPropTypes,
 } from '#/adapter/vxe-table';
-import PurchaseOrderDrawerFrom from '../components/purchase-order-drawer.vue';
+
+import { computed, ref } from 'vue';
+
+import { confirm, useIgourdDrawer } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
+
+import { OrderDrawer } from '@@/purchase/components';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+
+import { purchaseApi } from '../apis';
 import { purchaseOrderDelete } from '../apis/order';
 
 // 定义行数据类型 - 基于原有的表格数据结构
@@ -32,7 +37,7 @@ export function usePurchaseOrderList() {
   const checkedKeys = ref<number[]>([]);
   // 获取抽屉组件
   const [Drawer, drawerApi] = useIgourdDrawer({
-    connectedComponent: PurchaseOrderDrawerFrom,
+    connectedComponent: OrderDrawer,
   });
   const { currentLoginUserApp } = useUserStore();
   // 表格列配置 - 基于原有的 columnsVisible 数组
@@ -167,7 +172,7 @@ export function usePurchaseOrderList() {
     filterConfig: {
       remote: true,
     },
-    columns: columns,
+    columns,
     exportConfig: {},
     height: 'auto',
     keepSource: true,

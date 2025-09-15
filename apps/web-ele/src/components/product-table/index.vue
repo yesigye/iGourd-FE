@@ -1,403 +1,43 @@
-<template>
-  <div class="product-table">
-    <el-table
-      :data="productList"
-      style="width: 100%"
-      stripe
-      border
-      class="down-table-list"
-      :span-method="objectSpanMethod"
-      :cell-class-name="tableRowClassName"
-    >
-      <template v-for="(column, index) in displayColumns" :key="index">
-        <el-table-column
-          v-if="column.prop === 'index'"
-          :prop="column.prop"
-          :label="column.label"
-          :width="column.width"
-          :align="column.align"
-          :fixed="column.fixed"
-        >
-          <template #default="scope">
-            {{ scope.$index + 1 }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-if="column.prop == 'product_code'"
-          :prop="column.prop"
-          :label="t(`common.purchase.${column.prop}`)"
-          :min-width="column.width"
-        >
-          <template #default="scope">
-            {{ scope.row[column.prop] }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-else-if="column.prop == 'major_name'"
-          :prop="column.prop"
-          :label="t(`common.purchase.${column.prop}`)"
-          :min-width="column.width"
-        >
-          <template #header>
-            <div class="header-box">
-              <!-- <span>{{ t(`common.purchase.${column.prop}`) }}</span> -->
-              <ScanCodeEntry
-                ref="scanCodeEntryRef"
-                :type="type"
-                :warehouse-id="warehouseId"
-                @scan-complete="handleBarcodeScan"
-              ></ScanCodeEntry>
-            </div>
-          </template>
-
-          <template #default="scope">
-            <el-select
-              v-model="scope.row['display_major_name']"
-              class="bodernone search-type-drawer"
-              popper-class="money-type"
-              filterable
-              clearable
-              :disabled="isFieldDisabled(scope.$index, 'major_name')"
-              :placeholder="$t('common.selectProduct')"
-              :filter-method="filterProductSku"
-              @change="(val) => productChange(val, scope.row)"
-            >
-              <el-option
-                v-for="(item, index) in productSelectList"
-                :key="index"
-                :value="item.id"
-                :label="`${item.major_name}${item.product_spec_kvmessage ? '-' + item.product_spec_kvmessage : ''}`"
-              >
-                <div class="product-box">
-                  <div>
-                    <span v-if="item.product_code"
-                      >{{ item.product_code }}-</span
-                    >
-                    <span>{{ item.major_name }}</span>
-                    <span>{{
-                      item.product_spec_kvmessage
-                        ? '-' + item.product_spec_kvmessage
-                        : ''
-                    }}</span>
-                  </div>
-                </div>
-              </el-option>
-            </el-select>
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-else-if="column.prop == 'product_unit_code'"
-          :prop="column.prop"
-          :label="t(`common.purchase.${column.prop}`)"
-          :width="column.width"
-        >
-          <template #default="scope">
-            {{ scope.row[column.prop] }}
-          </template>
-        </el-table-column>
-
-        <el-table-column
-          v-else-if="column.prop == 'basic_unit_radio'"
-          :prop="column.prop"
-          :label="t(`common.purchase.${column.prop}`)"
-          :width="column.width"
-        >
-          <template #default="scope">
-            <template v-if="scope.row.basic_unit_radio">
-              1: {{ scope.row.basic_unit_radio }}
-            </template>
-          </template>
-        </el-table-column>
-
-        <el-table-column
-          v-else-if="column.prop == 'cost_price'"
-          :prop="column.prop"
-          :label="t(`common.purchase.${column.prop}`) + `(${currencySymbol})`"
-          :width="column.width"
-          placeholder=""
-        >
-          <template #default="scope">
-            {{ scope.row[column.prop] }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-else-if="column.prop == 'profile_photo'"
-          :prop="column.prop"
-          :label="t(`common.purchase.${column.prop}`)"
-          :width="column.width"
-          :fixed="column.fixed"
-          :align="column.align"
-        >
-          <template #default="scope">
-            <el-image
-              fit="cover"
-              class="product-pic"
-              alt="Image"
-              :src="scope.row.product"
-              :preview-src-list="[scope.row.product]"
-              :initial-index="0"
-              :preview-teleported="true"
-            >
-              <template #error>
-                <div class="image-slot">
-                  <img
-                    src="@/assets/img/productDefault.png"
-                    alt=""
-                    class="product-pic"
-                  />
-                </div>
-              </template>
-            </el-image>
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-else-if="
-            column.prop === 'enter_quantity' ||
-            column.prop === 'transfer_quantity'
-          "
-          :prop="column.prop"
-          :label="t(`common.purchase.quantity`)"
-          :width="column.width"
-        >
-          <template #default="scope">
-            <el-input
-              v-input-number="8"
-              class="input-number-control"
-              :placeholder="$t('purchase.pleaseEnterQuantity')"
-              :controls="false"
-              :disabled="isFieldDisabled(scope.$index, 'enter_quantity')"
-              style="width: 100%"
-              :model-value="getQuantityValue(scope.row)"
-              @input="(val) => handleQuantityChangeLocal(val, scope.row)"
-              @update:model-value="(val) => updateQuantityValue(val, scope.row)"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-else-if="column.prop == 'sub_product_stock_search_models'"
-          :prop="column.prop"
-          :label="t(`common.purchase.${column.prop}`)"
-          :width="column.width"
-          class="unit-select"
-        >
-          <template #default="scope">
-            <el-dropdown
-              v-if="type !== 'receipt' || !purchaseOrderSelected"
-              popper-class="unit-dropdown"
-            >
-              <span class="el-dropdown-link">
-                {{ scope.row['product_unit_name'] }}
-                <el-icon
-                  v-if="scope.row[column.prop]?.length > 0"
-                  class="el-icon--right"
-                >
-                  <arrow-down />
-                </el-icon>
-              </span>
-
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item
-                    v-for="item in scope.row[column.prop]"
-                    :key="item?.id"
-                    @click="
-                      () =>
-                        unitChange(
-                          scope.row,
-                          item,
-                          item.sub_product_stock_search_models,
-                        )
-                    "
-                  >
-                    <div
-                      class="unit-item"
-                      style="width: 300px; overflow: scroll"
-                    >
-                      <span>{{ item.product_unit_name }}</span>
-                      <span v-if="item.basic_unit_radio"
-                        >1:{{ item.basic_unit_radio }}</span
-                      >
-                    </div>
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-            <span v-else>{{ scope.row['product_unit_name'] }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-else-if="column.prop === 'actual_quantity'"
-          :prop="column.prop"
-          :label="t(`common.purchase.${column.prop}`)"
-          :width="column.width"
-          :align="column.align"
-          :fixed="column.fixed"
-        >
-          <template #default="scope">
-            {{
-              scope.row.basic_unit_radio &&
-              scope.row.quantity &&
-              retainDecimal8(
-                stayFloatMul(
-                  scope.row.basic_unit_radio,
-                  retainDecimal8(scope.row.quantity, 8),
-                ),
-                8,
-              )
-            }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-else-if="column.prop === 'purchase_qty'"
-          :prop="column.prop"
-          :label="t(`common.purchase.${column.prop}`)"
-          :width="column.width"
-          :align="column.align"
-          :fixed="column.fixed"
-        >
-          <template #default="scope">
-            {{ scope.row[column.prop] }}
-            {{ formatPurchaseQuantity(scope.row) }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-else-if="column.prop === 'sale_warehouse_product_stock_quantity'"
-          :prop="column.prop"
-          :label="t(`common.purchase.${column.prop}`)"
-          :width="column.width"
-          :align="column.align"
-          :fixed="column.fixed"
-        >
-          <template #default="scope">
-            {{ scope.row[column.prop] }} {{ scope.row.major_unit_name }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-else-if="
-            column.prop == 'sale_warehouse_product_stock_quantity_message'
-          "
-          :prop="column.prop"
-          :label="t(`common.purchase.${column.prop}`)"
-          :width="column.width"
-          :align="column.align"
-          :fixed="column.fixed"
-        >
-          <template #default="scope"> {{ scope.row[column.prop] }} </template>
-        </el-table-column>
-
-        <el-table-column
-          v-else-if="column.prop == 'stock_add_quantity'"
-          :prop="column.prop"
-          :label="t(`common.purchase.${column.prop}`)"
-          :width="column.width"
-        >
-          <template #default="scope">
-            <el-input
-              v-if="!readOnly"
-              v-model="scope.row.stock_add_quantity"
-              v-input-number="8"
-              class="input-number-control"
-              :placeholder="$t('inventory.stock_add_quantity')"
-              :controls="false"
-              style="width: 100%"
-              @input="() => handleStockQuantityChange(scope.row)"
-            />
-            <span v-else>{{ scope.row.stock_add_quantity }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-else-if="column.prop == 'stock_warning_quantity'"
-          :prop="column.prop"
-          :label="t(`common.purchase.${column.prop}`)"
-          :width="column.width"
-        >
-          <template #default="scope">
-            <el-input
-              v-if="!readOnly"
-              v-model="scope.row.stock_warning_quantity"
-              v-input-number="8"
-              class="input-number-control"
-              :placeholder="$t('inventory.stock_warning_quantity')"
-              :controls="false"
-              style="width: 100%"
-              @input="() => handleStockQuantityChange(scope.row)"
-            />
-            <span v-else>{{ scope.row.stock_warning_quantity }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-else-if="column.prop != 'index'"
-          :prop="column.prop"
-          :label="t(`common.purchase.${column.prop}`)"
-          :width="column.width"
-        >
-          <template #default="scope">
-            <el-input
-              v-model="scope.row[column.prop]"
-              v-rpSymbol
-              disabled
-              maxlength="64"
-            />
-          </template>
-        </el-table-column>
-        <!-- Stock -->
-      </template>
-      <el-table-column
-        :label="t(`common.purchase.action`)"
-        width="100"
-        align="center"
-        fixed="right"
-      >
-        <template #default="scope">
-          <el-button
-            v-if="isShowDelete"
-            link
-            type="primary"
-            size="small"
-            @click.prevent="handleDelete(scope.$index)"
-          >
-            <i class="iconfont icon-shanchu2 shanchu-red"></i>
-          </el-button>
-          <el-button
-            v-if="scope.$index === productList.length - 1"
-            link
-            type="primary"
-            size="small"
-            @click="handleAdd(scope.row)"
-          >
-            <i class="iconfont icon-tianjia"></i>
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-  </div>
-</template>
-
 <script setup lang="ts">
+import type { SpanMethodProps } from 'element-plus';
+
 import {
-  ref,
   computed,
-  defineProps,
   defineEmits,
-  watch,
   defineExpose,
+  defineProps,
   nextTick,
+  ref,
+  watch,
 } from 'vue';
-import { ElMessage, ElMessageBox } from 'element-plus';
-import { useI18n } from '@igourd/locales';
-import { retainDecimal8, stayFloatMul } from '#/utils';
+
+import {
+  ElButton,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElIcon,
+  ElInput,
+  ElMessage,
+  ElMessageBox,
+  ElOption,
+  ElSelect,
+  ElTable,
+  ElTableColumn,
+} from '@igourd/common-ui';
 import { ArrowDown } from '@igourd/icons';
-import ScanCodeEntry from '#/components/ScanEntry/ScanCodeEntry.vue';
+import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
+
+import Decimal from 'decimal.js';
+
+import { ScanCodeEntry } from '#/components';
+import { retainDecimal8, stayFloatMul } from '#/utils';
+
 import { getDefaultProductItem, useProductColumns } from './product.config';
 import { useProductTable } from './useTable';
 
-import Decimal from 'decimal.js';
-import type { SpanMethodProps } from 'element-plus';
 import style from './index.module.scss';
-const { t } = useI18n();
-const { currencySymbol } = useUserStore();
-const productColumnsConfig = useProductColumns();
 
 const props = defineProps({
   productList: {
@@ -414,12 +54,12 @@ const props = defineProps({
     validator: (value) =>
       [
         'default',
-        'receipt',
+        'physical',
         'purchase',
+        'receipt',
         'return',
         'stock',
         'transfer',
-        'physical',
       ].includes(value),
   },
   readOnly: {
@@ -443,17 +83,19 @@ const props = defineProps({
     default: false,
   },
 });
-
-const displayColumns = computed(() => {
-  return productColumnsConfig.getColumnsByType(props.type);
-});
-
 const emit = defineEmits([
   'update:productList',
   'calculations-updated',
   'quantity-change',
   'product-change',
 ]);
+const { t } = useI18n();
+const { currencySymbol } = useUserStore();
+const productColumnsConfig = useProductColumns();
+
+const displayColumns = computed(() => {
+  return productColumnsConfig.getColumnsByType(props.type);
+});
 
 const {
   productSelectList,
@@ -514,8 +156,8 @@ const productChange = (val: any, row: any) => {
     row.product_spec_kvmessage = productActive.product_spec_kvmessage;
     row.product_unit_code = productActive.product_unit_code;
     row.major_name = productActive.major_name;
-    row.product_name = `${productActive.major_name}${productActive.product_spec_kvmessage ? '-' + productActive.product_spec_kvmessage : ''}`;
-    row.display_major_name = `${productActive.major_name}${productActive.product_spec_kvmessage ? '-' + productActive.product_spec_kvmessage : ''}`;
+    row.product_name = `${productActive.major_name}${productActive.product_spec_kvmessage ? `-${productActive.product_spec_kvmessage}` : ''}`;
+    row.display_major_name = `${productActive.major_name}${productActive.product_spec_kvmessage ? `-${productActive.product_spec_kvmessage}` : ''}`;
     row.basic_unit_radio = productActive.basic_unit_radio;
     row.basic_unit_name = productActive.major_unit_name;
     row.sku_group_code = productActive.sku_group_code;
@@ -570,31 +212,50 @@ const productChange = (val: any, row: any) => {
 const quantityChange = (val: number | string, row: any) => {
   const parsedVal = safeParseFloat(val);
 
-  if (props.type === 'receipt') {
-    row.received_quantity = parsedVal;
-    row.quantity = parsedVal;
-    row.enter_quantity = parsedVal;
-  } else if (props.type === 'return') {
-    row.returned_quantity = parsedVal;
-    row.quantity = parsedVal;
-    row.enter_quantity = parsedVal;
-  } else if (props.type === 'transfer') {
-    row.transfer_quantity = parsedVal;
-  } else if (props.type === 'physical') {
-    row.physical_quantity = parsedVal;
-  } else if (props.type === 'stock') {
-    row.stock_quantity = parsedVal;
-  } else if (props.type === 'spoilage') {
-    row.consumption_quantity = parsedVal;
-  } else {
-    if (row.basic_unit_radio && val) {
-      row.quantity = parsedVal * safeParseFloat(row.basic_unit_radio);
-    } else {
-      row.quantity = parsedVal;
+  switch (props.type) {
+    case 'physical': {
+      row.physical_quantity = parsedVal;
+
+      break;
     }
-    if ('enter_quantity' in row) {
+    case 'receipt': {
+      row.received_quantity = parsedVal;
+      row.quantity = parsedVal;
       row.enter_quantity = parsedVal;
+
+      break;
+    }
+    case 'return': {
       row.returned_quantity = parsedVal;
+      row.quantity = parsedVal;
+      row.enter_quantity = parsedVal;
+
+      break;
+    }
+    case 'spoilage': {
+      row.consumption_quantity = parsedVal;
+
+      break;
+    }
+    case 'stock': {
+      row.stock_quantity = parsedVal;
+
+      break;
+    }
+    case 'transfer': {
+      row.transfer_quantity = parsedVal;
+
+      break;
+    }
+    default: {
+      row.quantity =
+        row.basic_unit_radio && val
+          ? parsedVal * safeParseFloat(row.basic_unit_radio)
+          : parsedVal;
+      if ('enter_quantity' in row) {
+        row.enter_quantity = parsedVal;
+        row.returned_quantity = parsedVal;
+      }
     }
   }
   row.quantity = parsedVal;
@@ -606,22 +267,23 @@ const handleQuantityChangeLocal = (val: number | string, row: any) => {
   if (
     props.type === 'receipt' &&
     props.purchaseOrderSelected &&
-    row.purchase_quantity !== undefined
+    row.purchase_quantity !== undefined &&
+    val > row.purchase_quantity
   ) {
-    if (val > row.purchase_quantity) {
-      val = row.purchase_quantity;
-    }
+    val = row.purchase_quantity;
   }
-  if (props.type === 'return' && row.received_quantity !== undefined) {
-    if (val > row.received_quantity) {
-      val = row.received_quantity;
-    }
+  if (
+    props.type === 'return' &&
+    row.received_quantity !== undefined &&
+    val > row.received_quantity
+  ) {
+    val = row.received_quantity;
   }
   quantityChange(val, row);
   emit('quantity-change', val, row);
 };
 // 处理输入方法
-const getQuantityValue = (row: any): number | null => {
+const getQuantityValue = (row: any): null | number => {
   // 优先获取类型对应的字段,回退到通用字段
   if (props.type === 'receipt' && row.received_quantity !== undefined) {
     return row.received_quantity;
@@ -636,7 +298,7 @@ const getQuantityValue = (row: any): number | null => {
 };
 
 const updateQuantityValue = (val: number | string, row: any) => {
-  let parsedVal = safeParseFloat(val);
+  const parsedVal = safeParseFloat(val);
 
   if (props.type === 'transfer') {
     row.transfer_quantity = parsedVal;
@@ -700,22 +362,21 @@ const handleAdd = (row: any) => {
 const unitChange = (product: any, unitItem: any, newModels: any) => {
   if (props.readOnly) return;
 
-  product.sub_product_stock_search_models =
-    product.sub_product_stock_search_models;
+  // product.sub_product_stock_search_models = product.sub_product_stock_search_models;
   product.product_barcode = unitItem.product_barcode;
   product.sku_barcode = unitItem.sku_barcode;
   product.product_spec_kvmessage = unitItem.product_spec_kvmessage;
   product.product_unit_code = unitItem.product_unit_code;
   product.major_name = unitItem.major_name;
   product.basic_unit_radio = unitItem.basic_unit_radio;
-  product.display_major_name = `${unitItem.major_name}${unitItem.product_spec_kvmessage ? '-' + unitItem.product_spec_kvmessage : ''}`;
+  product.display_major_name = `${unitItem.major_name}${unitItem.product_spec_kvmessage ? `-${unitItem.product_spec_kvmessage}` : ''}`;
   product.product_unit_name = unitItem.product_unit_name;
   product.major_unit_name = unitItem.major_unit_name;
   product.product_unit_id = unitItem.product_unit_id;
   product.product_id = unitItem.id;
   product.profile_photo = unitItem.profile_photo;
   product.product_code = unitItem.product_code;
-  product.display_product = unitItem.product_code + '-' + unitItem.major_name;
+  product.display_product = `${unitItem.product_code}-${unitItem.major_name}`;
   product.cost_price = unitItem.cost_price;
   product.other_tax_amount = unitItem.other_tax?.tax_amount || 0;
   product.vat_amount = unitItem.vat_tax?.tax_amount || 0;
@@ -778,7 +439,7 @@ const calculateOrderItem = (item: any): any => {
 
     const costPrice = safeParseFloat(item.cost_price);
     const baseAmount = quantity * costPrice;
-    let vatAmount: number, otherTaxAmount: number;
+    let otherTaxAmount: number, vatAmount: number;
 
     const subtotalAmount = baseAmount;
 
@@ -844,7 +505,7 @@ const calculateTotals = () => {
       other_tax_amount: Number(totals.otherTax.toFixed(2)),
       discount_amount: Number(totals.discount.toFixed(2)),
       total_amount: Number(totals.total.toFixed(2)),
-      calculatedItems: calculatedItems,
+      calculatedItems,
     });
 
     return totals;
@@ -889,7 +550,7 @@ const resetAllProductRows = () => {
   emit('update:productList', newList);
 };
 
-const enabledFields = ref<{ index: number; fields: string[] }[]>([]);
+const enabledFields = ref<{ fields: string[]; index: number }[]>([]);
 
 // 禁用所有输入框
 const isFieldDisabled = (index: number, fieldName: string): boolean => {
@@ -942,14 +603,10 @@ const formatPurchaseQuantity = (row: any): string => {
   }
 
   if (quantityValue && row.major_unit_name) {
-    return (
-      (row.basic_unit_radio
-        ? new Decimal(quantityValue).mul(row.basic_unit_radio)
-        : new Decimal(quantityValue)
-      ).toFixed(0) +
-      ' ' +
-      row.major_unit_name
-    );
+    return `${(row.basic_unit_radio
+      ? new Decimal(quantityValue).mul(row.basic_unit_radio)
+      : new Decimal(quantityValue)
+    ).toFixed(0)} ${row.major_unit_name}`;
   }
   return '';
 };
@@ -967,7 +624,7 @@ const objectSpanMethod = ({
 };
 
 interface ProductItem {
-  product_id: string | number;
+  product_id: number | string;
   product_name?: string;
   major_name?: string;
   [key: string]: any;
@@ -975,7 +632,7 @@ interface ProductItem {
 
 interface DuplicateItem {
   index: number;
-  productId: string | number;
+  productId: number | string;
   productName: string;
   duplicateIndex: number;
 }
@@ -990,7 +647,7 @@ const tableRowClassName = (event) => {
 };
 const checkDuplicateProducts = () => {
   const duplicates: DuplicateItem[] = [];
-  const productMap = new Map<string | number, number>();
+  const productMap = new Map<number | string, number>();
 
   props.productList
     .filter((item: ProductItem) => item.product_id)
@@ -1026,6 +683,375 @@ defineExpose({
   calculateTotals,
 });
 </script>
+
+<template>
+  <div class="product-table">
+    <ElTable
+      :data="productList"
+      style="width: 100%"
+      stripe
+      border
+      class="down-table-list"
+      :span-method="objectSpanMethod"
+      :cell-class-name="tableRowClassName"
+    >
+      <template v-for="(column, index) in displayColumns" :key="index">
+        <ElTableColumn
+          v-if="column.prop === 'index'"
+          :prop="column.prop"
+          :label="column.label"
+          :width="column.width"
+          :align="column.align"
+          :fixed="column.fixed"
+        >
+          <template #default="scope">
+            {{ scope.$index + 1 }}
+          </template>
+        </ElTableColumn>
+        <ElTableColumn
+          v-if="column.prop == 'product_code'"
+          :prop="column.prop"
+          :label="t(`common.purchase.${column.prop}`)"
+          :min-width="column.width"
+        >
+          <template #default="scope">
+            {{ scope.row[column.prop] }}
+          </template>
+        </ElTableColumn>
+        <ElTableColumn
+          v-else-if="column.prop == 'major_name'"
+          :prop="column.prop"
+          :label="t(`common.purchase.${column.prop}`)"
+          :min-width="column.width"
+        >
+          <template #header>
+            <div class="header-box">
+              <!-- <span>{{ t(`common.purchase.${column.prop}`) }}</span> -->
+              <ScanCodeEntry
+                ref="scanCodeEntryRef"
+                :type="type"
+                :warehouse-id="warehouseId"
+                @scan-complete="handleBarcodeScan"
+              />
+            </div>
+          </template>
+
+          <template #default="scope">
+            <ElSelect
+              v-model="scope.row.display_major_name"
+              class="bodernone search-type-drawer"
+              popper-class="money-type"
+              filterable
+              clearable
+              :disabled="isFieldDisabled(scope.$index, 'major_name')"
+              :placeholder="$t('common.selectProduct')"
+              :filter-method="filterProductSku"
+              @change="(val) => productChange(val, scope.row)"
+            >
+              <ElOption
+                v-for="(item, index) in productSelectList"
+                :key="index"
+                :value="item.id"
+                :label="`${item.major_name}${item.product_spec_kvmessage ? `-${item.product_spec_kvmessage}` : ''}`"
+              >
+                <div class="product-box">
+                  <div>
+                    <span v-if="item.product_code">{{ item.product_code }}-</span>
+                    <span>{{ item.major_name }}</span>
+                    <span>{{
+                      item.product_spec_kvmessage
+                        ? `-${item.product_spec_kvmessage}`
+                        : ''
+                    }}</span>
+                  </div>
+                </div>
+              </ElOption>
+            </ElSelect>
+          </template>
+        </ElTableColumn>
+        <ElTableColumn
+          v-else-if="column.prop == 'product_unit_code'"
+          :prop="column.prop"
+          :label="t(`common.purchase.${column.prop}`)"
+          :width="column.width"
+        >
+          <template #default="scope">
+            {{ scope.row[column.prop] }}
+          </template>
+        </ElTableColumn>
+
+        <ElTableColumn
+          v-else-if="column.prop == 'basic_unit_radio'"
+          :prop="column.prop"
+          :label="t(`common.purchase.${column.prop}`)"
+          :width="column.width"
+        >
+          <template #default="scope">
+            <template v-if="scope.row.basic_unit_radio">
+              1: {{ scope.row.basic_unit_radio }}
+            </template>
+          </template>
+        </ElTableColumn>
+
+        <ElTableColumn
+          v-else-if="column.prop == 'cost_price'"
+          :prop="column.prop"
+          :label="`${t(`common.purchase.${column.prop}`)}(${currencySymbol})`"
+          :width="column.width"
+          placeholder=""
+        >
+          <template #default="scope">
+            {{ scope.row[column.prop] }}
+          </template>
+        </ElTableColumn>
+        <ElTableColumn
+          v-else-if="column.prop == 'profile_photo'"
+          :prop="column.prop"
+          :label="t(`common.purchase.${column.prop}`)"
+          :width="column.width"
+          :fixed="column.fixed"
+          :align="column.align"
+        >
+          <template #default="scope">
+            <el-image
+              fit="cover"
+              class="product-pic"
+              alt="Image"
+              :src="scope.row.product"
+              :preview-src-list="[scope.row.product]"
+              :initial-index="0"
+              :preview-teleported="true"
+            >
+              <template #error>
+                <div class="image-slot">
+                  <img alt="" class="product-pic" />
+                </div>
+              </template>
+            </el-image>
+          </template>
+        </ElTableColumn>
+        <ElTableColumn
+          v-else-if="
+            column.prop === 'enter_quantity' ||
+            column.prop === 'transfer_quantity'
+          "
+          :prop="column.prop"
+          :label="t(`common.purchase.quantity`)"
+          :width="column.width"
+        >
+          <template #default="scope">
+            <ElInput
+              v-input-number="8"
+              class="input-number-control"
+              :placeholder="$t('purchase.pleaseEnterQuantity')"
+              :controls="false"
+              :disabled="isFieldDisabled(scope.$index, 'enter_quantity')"
+              style="width: 100%"
+              :model-value="getQuantityValue(scope.row)"
+              @input="(val) => handleQuantityChangeLocal(val, scope.row)"
+              @update:model-value="(val) => updateQuantityValue(val, scope.row)"
+            />
+          </template>
+        </ElTableColumn>
+        <ElTableColumn
+          v-else-if="column.prop == 'sub_product_stock_search_models'"
+          :prop="column.prop"
+          :label="t(`common.purchase.${column.prop}`)"
+          :width="column.width"
+          class="unit-select"
+        >
+          <template #default="scope">
+            <ElDropdown
+              v-if="type !== 'receipt' || !purchaseOrderSelected"
+              popper-class="unit-dropdown"
+            >
+              <span class="el-dropdown-link">
+                {{ scope.row.product_unit_name }}
+                <ElIcon
+                  v-if="scope.row[column.prop]?.length > 0"
+                  class="el-icon--right"
+                >
+                  <ArrowDown />
+                </ElIcon>
+              </span>
+
+              <template #dropdown>
+                <ElDropdownMenu>
+                  <ElDropdownItem
+                    v-for="item in scope.row[column.prop]"
+                    :key="item?.id"
+                    @click="
+                      () =>
+                        unitChange(
+                          scope.row,
+                          item,
+                          item.sub_product_stock_search_models,
+                        )
+                    "
+                  >
+                    <div
+                      class="unit-item"
+                      style="width: 300px; overflow: scroll"
+                    >
+                      <span>{{ item.product_unit_name }}</span>
+                      <span v-if="item.basic_unit_radio"
+                        >1:{{ item.basic_unit_radio }}</span
+                      >
+                    </div>
+                  </ElDropdownItem>
+                </ElDropdownMenu>
+              </template>
+            </ElDropdown>
+            <span v-else>{{ scope.row.product_unit_name }}</span>
+          </template>
+        </ElTableColumn>
+        <ElTableColumn
+          v-else-if="column.prop === 'actual_quantity'"
+          :prop="column.prop"
+          :label="t(`common.purchase.${column.prop}`)"
+          :width="column.width"
+          :align="column.align"
+          :fixed="column.fixed"
+        >
+          <template #default="scope">
+            {{
+              scope.row.basic_unit_radio &&
+              scope.row.quantity &&
+              retainDecimal8(
+                stayFloatMul(
+                  scope.row.basic_unit_radio,
+                  retainDecimal8(scope.row.quantity, 8),
+                ),
+                8,
+              )
+            }}
+          </template>
+        </ElTableColumn>
+        <ElTableColumn
+          v-else-if="column.prop === 'purchase_qty'"
+          :prop="column.prop"
+          :label="t(`common.purchase.${column.prop}`)"
+          :width="column.width"
+          :align="column.align"
+          :fixed="column.fixed"
+        >
+          <template #default="scope">
+            {{ scope.row[column.prop] }}
+            {{ formatPurchaseQuantity(scope.row) }}
+          </template>
+        </ElTableColumn>
+        <ElTableColumn
+          v-else-if="column.prop === 'sale_warehouse_product_stock_quantity'"
+          :prop="column.prop"
+          :label="t(`common.purchase.${column.prop}`)"
+          :width="column.width"
+          :align="column.align"
+          :fixed="column.fixed"
+        >
+          <template #default="scope">
+            {{ scope.row[column.prop] }} {{ scope.row.major_unit_name }}
+          </template>
+        </ElTableColumn>
+        <ElTableColumn
+          v-else-if="
+            column.prop == 'sale_warehouse_product_stock_quantity_message'
+          "
+          :prop="column.prop"
+          :label="t(`common.purchase.${column.prop}`)"
+          :width="column.width"
+          :align="column.align"
+          :fixed="column.fixed"
+        >
+          <template #default="scope"> {{ scope.row[column.prop] }} </template>
+        </ElTableColumn>
+
+        <ElTableColumn
+          v-else-if="column.prop == 'stock_add_quantity'"
+          :prop="column.prop"
+          :label="t(`common.purchase.${column.prop}`)"
+          :width="column.width"
+        >
+          <template #default="scope">
+            <ElInput
+              v-if="!readOnly"
+              v-model="scope.row.stock_add_quantity"
+              v-input-number="8"
+              class="input-number-control"
+              :placeholder="$t('inventory.stock_add_quantity')"
+              :controls="false"
+              style="width: 100%"
+              @input="() => handleStockQuantityChange(scope.row)"
+            />
+            <span v-else>{{ scope.row.stock_add_quantity }}</span>
+          </template>
+        </ElTableColumn>
+        <ElTableColumn
+          v-else-if="column.prop == 'stock_warning_quantity'"
+          :prop="column.prop"
+          :label="t(`common.purchase.${column.prop}`)"
+          :width="column.width"
+        >
+          <template #default="scope">
+            <ElInput
+              v-if="!readOnly"
+              v-model="scope.row.stock_warning_quantity"
+              v-input-number="8"
+              class="input-number-control"
+              :placeholder="$t('inventory.stock_warning_quantity')"
+              :controls="false"
+              style="width: 100%"
+              @input="() => handleStockQuantityChange(scope.row)"
+            />
+            <span v-else>{{ scope.row.stock_warning_quantity }}</span>
+          </template>
+        </ElTableColumn>
+        <ElTableColumn
+          v-else-if="column.prop != 'index'"
+          :prop="column.prop"
+          :label="t(`common.purchase.${column.prop}`)"
+          :width="column.width"
+        >
+          <template #default="scope">
+            <ElInput
+              v-model="scope.row[column.prop]"
+              v-rpSymbol
+              disabled
+              maxlength="64"
+            />
+          </template>
+        </ElTableColumn>
+        <!-- Stock -->
+      </template>
+      <ElTableColumn
+        :label="t(`common.purchase.action`)"
+        width="100"
+        align="center"
+        fixed="right"
+      >
+        <template #default="scope">
+          <ElButton
+            v-if="isShowDelete"
+            link
+            type="primary"
+            size="small"
+            @click.prevent="handleDelete(scope.$index)"
+          >
+            <i class="iconfont icon-shanchu2 shanchu-red"></i>
+          </ElButton>
+          <ElButton
+            v-if="scope.$index === productList.length - 1"
+            link
+            type="primary"
+            size="small"
+            @click="handleAdd(scope.row)"
+          >
+            <i class="iconfont icon-tianjia"></i>
+          </ElButton>
+        </template>
+      </ElTableColumn>
+    </ElTable>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .product-table {

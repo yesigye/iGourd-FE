@@ -1,8 +1,8 @@
-import { ProductColumnConfig } from './type'
-import { useI18n } from 'vue-i18n'
+import type { ProductColumnConfig } from './type';
+import { useI18n } from '@igourd/locales';
 
-export const useProductColumns = type => {
-  const { t } = useI18n()
+export const useProductColumns = () => {
+  const { t } = useI18n();
 
   const baseColumns: ProductColumnConfig[] = [
     {
@@ -94,7 +94,7 @@ export const useProductColumns = type => {
       isSelect: true,
       type: 'custom',
     },
-  ]
+  ];
 
   // 库存相关列
   const stockColumns: ProductColumnConfig[] = [
@@ -112,7 +112,7 @@ export const useProductColumns = type => {
       isSelect: true,
       type: 'custom',
     },
-  ]
+  ];
 
   // 盘点相关列
   const physicalColumns: ProductColumnConfig[] = [
@@ -137,7 +137,7 @@ export const useProductColumns = type => {
       isSelect: true,
       type: 'custom',
     },
-  ]
+  ];
 
   // 收货单特有
   const receiptColumns: ProductColumnConfig[] = [
@@ -148,7 +148,7 @@ export const useProductColumns = type => {
       isSelect: true,
       type: 'custom',
     },
-  ]
+  ];
 
   //退单特有
   const returnColumns: ProductColumnConfig[] = [
@@ -159,7 +159,7 @@ export const useProductColumns = type => {
       isSelect: true,
       type: 'custom',
     },
-  ]
+  ];
 
   //报损单特有
   const spoilageColumns: ProductColumnConfig[] = [
@@ -177,7 +177,7 @@ export const useProductColumns = type => {
       isSelect: true,
       type: 'custom',
     },
-  ]
+  ];
 
   // 调拨单特有
   const transferColumns: ProductColumnConfig[] = [
@@ -188,19 +188,19 @@ export const useProductColumns = type => {
       isSelect: true,
       type: 'custom',
     },
-  ]
+  ];
 
   // 组合列显示表格
   const getColumnsByType = (type: string): ProductColumnConfig[] => {
-    const allColumns = [...baseColumns]
+    const allColumns = [...baseColumns];
 
-    let filteredColumns = allColumns
+    let filteredColumns = allColumns;
 
     if (type === 'stock') {
       filteredColumns = allColumns.filter(
-        col => col.prop !== 'quantity' && col.prop !== 'enter_quantity',
-      )
-      return [...filteredColumns, ...stockColumns]
+        (col) => col.prop !== 'quantity' && col.prop !== 'enter_quantity',
+      );
+      return [...filteredColumns, ...stockColumns];
     }
 
     // if (['spoilage', 'transfer', 'physical'].includes(type)) {
@@ -208,27 +208,27 @@ export const useProductColumns = type => {
     // }
     switch (type) {
       case 'physical':
-        return [...allColumns, ...physicalColumns]
+        return [...allColumns, ...physicalColumns];
       case 'spoilage':
-        return [...allColumns, ...spoilageColumns]
+        return [...allColumns, ...spoilageColumns];
       case 'transfer':
-        return [...allColumns, ...spoilageColumns, ...transferColumns]
+        return [...allColumns, ...spoilageColumns, ...transferColumns];
       case 'receipt':
-        return [...allColumns]
+        return [...allColumns];
       case 'return':
-        return [...allColumns]
+        return [...allColumns];
       default:
-        return allColumns
+        return allColumns;
     }
-  }
+  };
 
-  const standardColumns = [...baseColumns, ...stockColumns]
+  const standardColumns = [...baseColumns, ...stockColumns];
 
   return {
     standardColumns,
     getColumnsByType,
-  }
-}
+  };
+};
 
 export const getDefaultProductItem = (): any => ({
   product_id: null,
@@ -255,4 +255,4 @@ export const getDefaultProductItem = (): any => ({
   selling_price: null,
   product_group_name: '',
   remark: '',
-})
+});

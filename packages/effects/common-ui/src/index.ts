@@ -1,16 +1,8 @@
+import type { ISchema } from '@formily/json-schema';
+
 import type { IGourdFormProps } from '@igourd-core/form-ui';
-import './components/style';
+
 import { useI18n } from '@igourd/locales';
-
-export * from './components';
-
-export * from './ui';
-
-// export * from '@igourd-core/form-ui';
-
-export * from '@igourd-core/popup-ui';
-
-export * from './formily';
 
 import {
   setupIgourdForm,
@@ -18,7 +10,17 @@ import {
   useTableSearchForm as useCoreTableSearchForm,
 } from '@igourd-core/form-ui';
 
-import type { ISchema } from '@formily/json-schema';
+import './components/style';
+
+export * from './components';
+
+export * from './formily';
+
+// export * from '@igourd-core/form-ui';
+
+export * from './ui';
+
+export * from '@igourd-core/popup-ui';
 
 export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
   if (!options.useI18n) {

@@ -15,3 +15,5 @@ export { default as BillSettlementDrawer } from './bill-settlement-drawer.vue';
 export * from './customized';
 
 export * from './list';
+
+export * from './order';

@@ -48,36 +48,7 @@ function functionTreesToRouteNodes(
     const routeName = menuUrl.split('/').filter(Boolean).join('_') || 'home';
 
     // 生成组件路径
-    let componentPath = menu.component_paths;
-    if (!componentPath) {
-      // 根据 URL 生成 features 结构的组件路径
-      if (menuUrl && menuUrl.startsWith('/')) {
-        const pathParts = menuUrl.split('/').filter(Boolean);
-        if (pathParts.length >= 2) {
-          const module = pathParts[0];
-          const page = pathParts[1];
-          // 将 purchase/list 转换为 purchase-list 格式，并处理驼峰命名
-          const pageName = page
-            .replace(/\//g, '-')
-            .replace(/([A-Z])/g, '-$1')
-            .toLowerCase()
-            .replace(/^-/, '');
-          componentPath = `/features/${module}/pages/${pageName}/index.vue`;
-        } else if (pathParts.length === 1) {
-          // 对于单层路径，如果有子路由则不生成组件路径
-          if (tree.sub_function_trees && tree.sub_function_trees.length > 0) {
-            componentPath = undefined; // 不生成组件路径，作为容器路由
-          } else {
-            const module = pathParts[0];
-            componentPath = `/features/${module}/pages/index/index.vue`;
-          }
-        } else {
-          componentPath = `${menuUrl}/index.vue`;
-        }
-      } else {
-        componentPath = `${menuUrl}/index.vue`;
-      }
-    }
+    const componentPath = menu.component_paths as string;
 
     const node: any = {
       path: menuUrl,
@@ -93,7 +64,6 @@ function functionTreesToRouteNodes(
       },
     };
 
-    // 只有当 componentPath 存在时才设置 component 属性
     if (componentPath) {
       node.component = componentPath;
     }

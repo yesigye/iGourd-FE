@@ -238,5 +238,6 @@
     "nolebase",
     "rollup",
     "vitest"
-  ]
+  ],
+  "explorer.copyPathSeparator": "/"
 }

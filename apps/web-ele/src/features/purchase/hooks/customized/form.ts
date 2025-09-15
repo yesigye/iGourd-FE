@@ -1,6 +1,7 @@
+import type { ISchema } from '@igourd/common-ui';
+
 import { useI18n } from '@igourd/locales';
 
-import type { ISchema } from '@igourd/common-ui';
 import { useDrawerForm } from '#/hooks/use-drawer-form';
 
 export function useCustomizedForm() {

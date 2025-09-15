@@ -1,6 +1,6 @@
-import { useI18n } from '@/i18n'
+import { useI18n } from '@igourd/locales'
 import Decimal from 'decimal.js'
-const { t } = useI18n()
+
 // 1.验证只能输入字母和数字的正则表达式
 export function validateAlphaNumeric(
   i18n: (s: string) => string,
@@ -18,6 +18,7 @@ export function validateAlphaNumeric(
 
 // 2. 只能输入英文和汉字
 export const validateAlphaChinese = (rule, value, callback) => {
+  const { t } = useI18n()
   const reg = /^[\u4e00-\u9fa5a-zA-Z]+$/
   if (value && !reg.test(value)) {
     callback(new Error(t('common.pleaseEnterEnglishOrChinese')))
@@ -29,7 +30,9 @@ export const validateAlphaChinese = (rule, value, callback) => {
 // 3. 只能输入数字和汉字
 export const validateNumericChinese = (rule, value, callback) => {
   const reg = /^[\u4e00-\u9fa5\d]+$/
+  const { t } = useI18n()
   if (value && !reg.test(value)) {
+
     callback(new Error(t('common.pleaseEnterNumericChinese')))
   } else {
     return callback()
@@ -58,6 +61,7 @@ export const validateChinese = (rule, value, callback) => {
 // 7. 验证字符串是否包含空白字符
 export const validateNoWhitespace = (rule, value, callback) => {
   if (value && /\s/.test(value)) {
+    const { t } = useI18n()
     callback(new Error(t('common.pleaseEnterNoWhitespace')))
   } else {
     callback()
@@ -67,6 +71,7 @@ export const validateNoWhitespace = (rule, value, callback) => {
 // 8.验证字符串长度
 export const validateLength = (rule, value, callback) => {
   if (value && value.length > 40) {
+    const { t } = useI18n()
     callback(new Error(t('common.pleaseEnterLessThan40Characters')))
   } else {
     callback()
@@ -77,6 +82,7 @@ export function validateNoSpecialChar(rule, value, callback) {
   const reg =
     /[`~!@#$%^&*()_\-+=<>?:"{}|,./;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：""【】、；''，。、]/
   if (value && reg.test(value)) {
+    const { t } = useI18n()
     callback(new Error(t('common.pleaseEnterNoSpecialChar')))
   } else {
     callback()
@@ -91,6 +97,7 @@ export function validateEmail(t: (s: string) => string, rule, value, callback) {
   if (!value) {
     callback()
   } else if (!emailRegex.test(value)) {
+    const { t } = useI18n()
     callback(new Error(t('common.pleaseEnterCorrectEmail')))
   } else {
     callback()
@@ -117,6 +124,7 @@ export function validatePhone(
 export const validateAlphaChineseWithSpace = (rule, value, callback) => {
   const reg = /^[\u4e00-\u9fa5a-zA-Z\s]+$/
   if (value && !reg.test(value)) {
+    const { t } = useI18n()
     callback(new Error(t('common.pleaseEnterEnglishOrChineseWithSpace')))
   } else {
     return callback()
@@ -127,6 +135,7 @@ export const validateAlphaChineseWithSpace = (rule, value, callback) => {
 export const validateAlphaNumericChineseWithSpace = (rule, value, callback) => {
   const reg = /^[\u4e00-\u9fa5a-zA-Z0-9\s]+$/
   if (value && !reg.test(value)) {
+    const { t } = useI18n()
     callback(new Error(t('common.pleaseEnterEnglishChineseNumericWithSpace')))
   } else {
     return callback()
@@ -136,6 +145,7 @@ export const validateAlphaNumericChineseWithSpace = (rule, value, callback) => {
 export const validateAmount = (rule, value, callback) => {
   const reg = /^(([1-9]\d*)|\d)(\.\d{1,2})?$/
   if (value && !reg.test(value)) {
+    const { t } = useI18n()
     callback(new Error(t('common.validate.amountFormat', { value: 2 })))
   } else {
     callback()
@@ -155,6 +165,7 @@ export function checkPhoneNumber(
   callback: any,
   t: Function,
 ) {
+
   const regexp =
     /^(((13[0-9]{1})|(15[0-9]{1})|(16[0-9]{1})|(17[3-8]{1})|(18[0-9]{1})|(19[0-9]{1})|(14[5-7]{1}))+\d{8})$/
   if (value === '') callback(t('common.pleaseEnterPhoneNumber'))
@@ -227,6 +238,7 @@ export const createCustomValidator = (
 export const validateNumeric = (rule, value, callback) => {
   const reg = /^\d+$/
   if (value && !reg.test(value)) {
+    const { t } = useI18n()
     callback(new Error(t('common.pleaseEnterNumeric')))
   } else {
     callback()
@@ -239,6 +251,7 @@ export const validateEightNumeric = (rule, value, callback) => {
     return value && !reg.test(value)
   }
   if (value && !reg.test(value)) {
+    const { t } = useI18n()
     callback(new Error(t('common.pleaseEnterEightNumeric')))
   } else {
     callback()
@@ -319,6 +332,7 @@ export const validateAddress = (
 ) => {
   const specialChars = /[!~#^`<>+=\\|?/]/
   if (value && (value.length > 256 || specialChars.test(value))) {
+    const { t } = useI18n()
     callback(
       new Error(
         t('common.validate.maxLengthAndNoSpecialChars', { length: 256 }),
@@ -346,6 +360,7 @@ export const validateEmailAll = (
   }
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
   if (!emailRegex.test(value)) {
+    const { t } = useI18n()
     callback(new Error(t('common.validate.emailFormat')))
   } else {
     callback()
@@ -382,6 +397,7 @@ export const validatePhoneAll = (countryCode: string) => {
 
     const format = phoneFormats[countryCode] || phoneFormats.DEFAULT
     if (!format.pattern.test(value)) {
+      const { t } = useI18n()
       callback(new Error(t('common.validate.phoneFormat')))
     } else {
       callback()
@@ -406,6 +422,7 @@ const validateAmountAll = (
   }
   const pattern = /^\d+(\.\d{1,2})?$/
   if (!pattern.test(String(value))) {
+    const { t } = useI18n()
     callback(new Error(t('common.validate.amountFormat', { value: 2 })))
   } else {
     callback()
@@ -451,6 +468,7 @@ const validateSpecialChars = (
   }
   const specialChars = /[!~#^`<>+=\\|?/]/
   if (specialChars.test(value)) {
+    const { t } = useI18n()
     callback(new Error(t('common.validate.noSpecialChars')))
   } else {
     callback()
@@ -464,6 +482,7 @@ const validateSpecialChars = (
  */
 export const validatePhoneAndCode = (form: any) => {
   return (rule: any, value: any, callback: Function) => {
+    const { t } = useI18n()
     if (!form.contact_country_area_code) {
       return callback(new Error(t('common.validate.countryCodeRequired')))
     }

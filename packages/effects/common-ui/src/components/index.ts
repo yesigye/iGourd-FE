@@ -68,16 +68,39 @@ export { globalShareState } from '@igourd-core/shared/global-state';
 
 export {
   ElButton,
+  ElCalendar,
   ElCard,
+  ElCheckbox,
+  ElCol,
   ElConfigProvider,
+  ElDatePicker,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElForm,
+  ElFormItem,
+  ElIcon,
   ElImage,
+  ElImageViewer,
+  ElInput,
+  ElLink,
   ElLoading,
   ElMessage,
   ElMessageBox,
   ElNotification,
+  ElOption,
+  ElPopover,
+  ElRow,
+  ElSelect,
+  ElTable,
+  ElTableColumn,
+  ElUpload,
+  formContextKey,
 } from 'element-plus';
 
-export type { UploadProps } from './upload';
+export type { UploadFile, UploadProps, UploadUserFile } from 'element-plus';
+
+// export type { UploadProps } from './upload';
 
 // export type {
 //   ProductArrayTableProps,

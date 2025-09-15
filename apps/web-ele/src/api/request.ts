@@ -58,9 +58,10 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
   client.addRequestInterceptor({
     fulfilled: async (config) => {
       const { currentLoginUserApp } = useUserStore();
-      if (config.data) {
-        config.data['merchant_id'] = currentLoginUserApp.owner_id;
+      if (!config.data) {
+        config.data = {};
       }
+      config.data['merchant_id'] = currentLoginUserApp.owner_id;
       return config;
     },
   });
