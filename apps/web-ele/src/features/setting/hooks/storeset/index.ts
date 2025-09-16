@@ -1,0 +1,1 @@
+export { useSettingStoreset } from './list';

@@ -1,34 +1,42 @@
+<script setup lang="ts">
+import { ElButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useRole } from '@@/employee/hooks';
+
+defineOptions({
+  name: 'IRole',
+});
+
+const { t } = useI18n();
+const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
+  useRole();
+</script>
+
 <template>
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <IgourdButton
-          v-auth="'employee_role_add'"
-          type="primary"
-          @click="handleAdd"
+        <ElButton type="primary" @click="handleEdit()">
+          {{ t('employee.addRole') }}
+        </ElButton>
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          @click="handleBatchDelete"
         >
-          {{ t('employee.addButton') }}
-        </IgourdButton>
+          {{ t('common.delete') }}
+        </ElButton>
+      </template>
+      <template #operation="{ row }">
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.edit') }}
+        </ElButton>
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.detail') }}
+        </ElButton>
       </template>
     </Grid>
-  <Drawer />
-</Page>
+    <Drawer />
+  </Page>
 </template>
-<script setup lang="ts">
-import { Page, IgourdButton } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-import { useEmployeeRoleList } from '../../hooks/use-employee-role-list';
-
-defineOptions({
-  name: 'IEmployeeRole',
-});
-
-const { t } = useI18n();
-const { Grid, Drawer, drawerApi } = useEmployeeRoleList();
-
-// 添加角色
-const handleAdd = () => {
-  drawerApi.open();
-};
-</script>
-

@@ -1,11 +1,30 @@
+<script setup lang="ts">
+import { ElButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useWarehouse } from '@@/inventory/hooks';
+
+defineOptions({
+  name: 'IWarehouse',
+});
+
+const { t } = useI18n();
+const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
+  useWarehouse();
+</script>
+
 <template>
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="drawerApi.open()">
-          {{ t('common.create') }}
+        <ElButton type="primary" @click="handleEdit()">
+          {{ t('inventory.addWarehouse') }}
         </ElButton>
-        <ElButton type="danger" v-if="canBatchDelete" @click="batchDelete">
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          @click="handleBatchDelete"
+        >
           {{ t('common.delete') }}
         </ElButton>
       </template>
@@ -13,22 +32,11 @@
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.detail') }}
+        </ElButton>
       </template>
     </Grid>
     <Drawer />
   </Page>
 </template>
-
-<script setup lang="ts">
-import { Page, ElButton } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-import { useInventoryWarehouseList } from '../../hooks/use-inventory-warehouse-list';
-
-defineOptions({
-  name: 'IInventoryWarehouse',
-});
-
-const { t } = useI18n();
-const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
-  useInventoryWarehouseList();
-</script>

@@ -1,11 +1,30 @@
+<script setup lang="ts">
+import { ElButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useSaleOrder } from '@@/sale/hooks';
+
+defineOptions({
+  name: 'ISaleOrder',
+});
+
+const { t } = useI18n();
+const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
+  useSaleOrder();
+</script>
+
 <template>
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="drawerApi.open()">
-          {{ t('common.create') }}
+        <ElButton type="primary" @click="handleEdit()">
+          {{ t('sale.addOrder') }}
         </ElButton>
-        <ElButton type="danger" v-if="canBatchDelete" @click="batchDelete">
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          @click="handleBatchDelete"
+        >
           {{ t('common.delete') }}
         </ElButton>
       </template>
@@ -13,22 +32,11 @@
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.detail') }}
+        </ElButton>
       </template>
     </Grid>
     <Drawer />
   </Page>
 </template>
-
-<script setup lang="ts">
-import { Page, ElButton } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-import { useSaleOrderList } from '../../hooks/use-sale-order-list';
-
-defineOptions({
-  name: 'ISaleOrder',
-});
-
-const { t } = useI18n();
-const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
-  useSaleOrderList();
-</script>

@@ -1,2 +1,3 @@
-export { default as zhCn } from './zh-cn';
-export { default as en } from './en';
+export { default as zhCN } from './zh-CN';
+export { default as enUS } from './en-US';
+export { default as frFR } from './fr-FR';

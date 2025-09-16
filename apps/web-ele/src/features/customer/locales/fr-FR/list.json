@@ -1,0 +1,21 @@
+{
+  "customerName": "Nom du Client",
+  "customerCode": "Code du Client",
+  "customerType": "Type de Client",
+  "contactPerson": "Personne de Contact",
+  "contactPhone": "Téléphone de Contact",
+  "contactEmail": "Email de Contact",
+  "address": "Adresse",
+  "status": "Statut",
+  "addCustomer": "Ajouter Client",
+  "editCustomer": "Modifier Client",
+  "customerDetail": "Détail du Client",
+  "customerTypeOptions": {
+    "individual": "Client Individuel",
+    "enterprise": "Client Entreprise"
+  },
+  "statusOptions": {
+    "active": "Actif",
+    "inactive": "Inactif"
+  }
+}

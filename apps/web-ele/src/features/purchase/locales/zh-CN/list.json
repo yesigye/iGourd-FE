@@ -1,0 +1,19 @@
+{
+  "purchaseNo": "采购单号",
+  "supplierName": "供应商名称",
+  "productName": "商品名称",
+  "productCode": "商品编码",
+  "quantity": "数量",
+  "unitPrice": "单价",
+  "totalAmount": "总金额",
+  "purchaseDate": "采购日期",
+  "status": "状态",
+  "addPurchase": "添加采购",
+  "editPurchase": "编辑采购",
+  "purchaseDetail": "采购详情",
+  "statusOptions": {
+    "pending": "待处理",
+    "completed": "已完成",
+    "cancelled": "已取消"
+  }
+}

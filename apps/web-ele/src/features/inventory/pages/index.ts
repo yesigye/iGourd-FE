@@ -1,0 +1,17 @@
+export { default as WarehousePage } from './warehouse/index.vue';
+export { default as ProductPage } from './product/index.vue';
+export { default as InventoryPage } from './list/index.vue';
+export { default as InventoryChangePage } from './change/index.vue';
+export { default as InventoryCountPage } from './count/index.vue';
+export { default as InventoryPricePage } from './price/index.vue';
+export { default as InventoryProductFeaturePage } from './product-feature/index.vue';
+export { default as InventoryProductGroupPage } from './product-group/index.vue';
+export { default as InventoryProductLabelPage } from './product-label/index.vue';
+export { default as InventoryProductListPage } from './product-list/index.vue';
+export { default as InventoryProductSpecPage } from './product-spec/index.vue';
+export { default as InventorySkuListPage } from './sku-list/index.vue';
+export { default as InventorySpoilagePage } from './spoilage/index.vue';
+export { default as InventoryTransferPage } from './transfer/index.vue';
+export { default as InventoryUnitPage } from './unit/index.vue';
+export { default as InventoryChangeLogPage } from './change-log/index.vue';
+export { default as InventoryPriceLogPage } from './price-log/index.vue';

@@ -1,0 +1,52 @@
+{
+  "collection_voucher": "收款单",
+  "receipt_order_no": "收款单号",
+  "customer": "客户",
+  "payer_name": "付款人姓名",
+  "receipt_time": "收款时间",
+  "receivable_balance": "应收余额",
+  "last_debt": "最后欠款",
+  "related_orders": "关联订单",
+  "remark": "备注",
+  "attachments": "附件",
+  "add_collection_voucher": "添加收款单",
+  "edit_collection_voucher": "编辑收款单",
+  "collection_voucher_detail": "收款单详情",
+  "enter_receipt_order_no": "请输入收款单号",
+  "please_enter_receipt_order_no": "请输入收款单号",
+  "please_select_customer": "请选择客户",
+  "please_enter_payer_name": "请输入付款人姓名",
+  "please_select_receipt_time": "请选择收款时间",
+  "please_enter_receivable_balance": "请输入应收余额",
+  "please_enter_last_debt": "请输入最后欠款",
+  "please_select_related_orders": "请选择关联订单",
+  "please_enter_remark": "请输入备注",
+  "upload_attachment": "上传附件",
+  "print": "打印",
+  "delete_collection_voucher_confirm": "确认删除收款单",
+  "receipt_direction": {
+    "negative_order": "红单",
+    "positive_order": "蓝单"
+  },
+  "business_type": {
+    "sales_order": "销售订单",
+    "sales_order_returned": "销售退单",
+    "purchase_order": "采购订单",
+    "goods_receipt_note": "收货单",
+    "purchase_order_refund": "采购退单",
+    "stock_transfer": "库存调拨",
+    "physical_stock_take": "库存盘点",
+    "inventory_write_off": "库存报损",
+    "accounting_note": "记账笔记",
+    "customer_recharger": "客户充值",
+    "currency_exchange": "货币兑换",
+    "prepayment": "预付款项",
+    "ar_credit_sale": "客户赊销"
+  },
+  "ledger_type_enum": {
+    "revenue": "预收款",
+    "receivable": "应收款"
+  },
+  "return_short": "退",
+  "accountType": "科目类型"
+}

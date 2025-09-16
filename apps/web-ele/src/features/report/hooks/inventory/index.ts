@@ -1,0 +1,1 @@
+export { useInventoryReport } from './list';

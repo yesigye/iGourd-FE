@@ -1,0 +1,22 @@
+{
+  "exchange": "Échange de Devises",
+  "accountExchange": "Échange de Compte",
+  "sellAmount": "Montant de Vente",
+  "buyAmount": "Montant d'Achat",
+  "sellCurrency": "Devise de Vente",
+  "buyCurrency": "Devise d'Achat",
+  "exchangeRate": "Taux de Change",
+  "remark": "Remarque",
+  "creatorName": "Créateur",
+  "createTime": "Heure de Création",
+  "addCurrencyExchange": "Ajouter Échange de Devises",
+  "editCurrencyExchange": "Modifier Échange de Devises",
+  "currencyExchangeDetail": "Détail de l'Échange de Devises",
+  "please_select_sell_currency": "Veuillez sélectionner la devise de vente",
+  "please_select_buy_currency": "Veuillez sélectionner la devise d'achat",
+  "please_enter_sell_amount": "Veuillez entrer le montant de vente",
+  "please_enter_buy_amount": "Veuillez entrer le montant d'achat",
+  "please_enter_exchange_rate": "Veuillez entrer le taux de change",
+  "please_enter_remark": "Veuillez entrer une remarque",
+  "operation": "Opération"
+}

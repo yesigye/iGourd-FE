@@ -1,0 +1,22 @@
+{
+  "exchange": "货币兑换",
+  "accountExchange": "账户兑换",
+  "sellAmount": "卖出金额",
+  "buyAmount": "买入金额",
+  "sellCurrency": "卖出货币",
+  "buyCurrency": "买入货币",
+  "exchangeRate": "汇率",
+  "remark": "备注",
+  "creatorName": "创建人",
+  "createTime": "创建时间",
+  "addCurrencyExchange": "添加货币兑换",
+  "editCurrencyExchange": "编辑货币兑换",
+  "currencyExchangeDetail": "货币兑换详情",
+  "please_select_sell_currency": "请选择卖出货币",
+  "please_select_buy_currency": "请选择买入货币",
+  "please_enter_sell_amount": "请输入卖出金额",
+  "please_enter_buy_amount": "请输入买入金额",
+  "please_enter_exchange_rate": "请输入汇率",
+  "please_enter_remark": "请输入备注",
+  "operation": "操作"
+}

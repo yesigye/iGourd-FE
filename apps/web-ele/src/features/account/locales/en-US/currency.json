@@ -1,0 +1,20 @@
+{
+  "currency": "Currency",
+  "currencySymbol": "Currency Name",
+  "currencyCode": "Currency Code",
+  "exchangeRate": "Exchange Rate",
+  "symbol": "Currency Symbol",
+  "decimalPlaces": "Decimal Places",
+  "is_default": "Is Default",
+  "currencyManagement": "Currency Management",
+  "defaultBaseMoney": "Default Base Money",
+  "add_currency": "Add Currency",
+  "edit_currency": "Edit Currency",
+  "currency_detail": "Currency Detail",
+  "please_enter_currency_name": "Please enter currency name",
+  "please_enter_currency_code": "Please enter currency code",
+  "please_enter_exchange_rate": "Please enter exchange rate",
+  "please_enter_symbol": "Please enter currency symbol",
+  "please_enter_decimal_places": "Please enter decimal places",
+  "pleaseEnterKeywordsToSearchSelect": "Please enter keywords to search and select"
+}

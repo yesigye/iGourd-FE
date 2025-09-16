@@ -1,0 +1,22 @@
+{
+  "inventoryCount": "Inventaire",
+  "enterCountKeywords": "Veuillez saisir des mots-clés d'inventaire",
+  "physical_stock_take_no": "Numéro d'Inventaire",
+  "physical_stock_take_date": "Date d'Inventaire",
+  "warehouse_name": "Nom de l'Entrepôt",
+  "originTotalQuantity": "Quantité Totale d'Origine",
+  "physical_total_quantity": "Quantité Totale Physique",
+  "total_variance_quantity": "Quantité de Variance Totale",
+  "total_variance_selling_price": "Prix de Vente de Variance Totale",
+  "total_variance_cost": "Coût de Variance Totale",
+  "review": "Révision",
+  "creator": "Créateur",
+  "creationTime": "Heure de Création",
+  "addInventoryCountSave": "Ajouter Inventaire",
+  "editInventoryCountSave": "Modifier Inventaire",
+  "inventoryCountDetail": "Détail d'Inventaire",
+  "printInventoryCount": "Imprimer Inventaire",
+  "productDetail": "Détail du Produit",
+  "action": "Action",
+  "changeErr": "Échec de la mise à jour du statut"
+}

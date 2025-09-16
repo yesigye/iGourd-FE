@@ -2,7 +2,7 @@ import { ref, computed } from 'vue'
 import { useI18n } from '@igourd/locales'
 import { useIgourdModal } from '@igourd/common-ui'
 import { listPageOrder } from '@/apis'
-import { useUserStore } from '@/store'
+import { useUserStore } from '@igourd/stores'
 import { OrderQueryVO } from '@/apis/sale/type'
 
 export function useDebtModal() {

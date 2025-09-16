@@ -1,0 +1,1 @@
+export { usePurchaseReceipt } from './list';

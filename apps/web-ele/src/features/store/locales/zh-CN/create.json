@@ -1,0 +1,83 @@
+{
+  "storeName": "店铺名称",
+  "storeCode": "店铺编码",
+  "storeType": "店铺类型",
+  "status": "状态",
+  "currentStep": "当前步骤",
+  "progress": "进度",
+  "createDate": "创建日期",
+  "submitDate": "提交日期",
+  "approveDate": "审批日期",
+  "creatorName": "创建人",
+  "createTime": "创建时间",
+  "basicInfo": "基本信息",
+  "editionSelection": "版本选择",
+  "packageSelection": "套餐选择",
+  "payment": "支付",
+  "orderSummary": "订单摘要",
+  "edition": "版本",
+  "package": "套餐",
+  "total": "总计",
+  "paymentMethod": "支付方式",
+  "createSuccess": "创建成功",
+  "createSuccessMessage": "店铺创建申请已提交，请等待审核",
+  "addStoreCreate": "添加店铺创建",
+  "editStoreCreate": "编辑店铺创建",
+  "storeCreateDetail": "店铺创建详情",
+  "storeCreate": "店铺创建",
+  "please_enter_store_name": "请输入店铺名称",
+  "please_enter_store_code": "请输入店铺编码",
+  "please_select_store_type": "请选择店铺类型",
+  "please_enter_address": "请输入地址",
+  "please_enter_city": "请输入城市",
+  "please_enter_phone": "请输入电话",
+  "please_select_manager": "请选择店长",
+  "please_enter_description": "请输入描述",
+  "please_select_payment_method": "请选择支付方式",
+  "submit": "提交",
+  "continue": "继续",
+  "search": "搜索",
+  "searchPlaceholder": "请输入店铺名称或编码",
+  "storeType": {
+    "retail": "零售店",
+    "wholesale": "批发店",
+    "online": "网店",
+    "hybrid": "混合店"
+  },
+  "status": {
+    "draft": "草稿",
+    "submitted": "已提交",
+    "reviewing": "审核中",
+    "approved": "已通过",
+    "rejected": "已拒绝",
+    "completed": "已完成"
+  },
+  "step": {
+    "basicInfo": "基本信息",
+    "edition": "版本选择",
+    "package": "套餐选择",
+    "payment": "支付",
+    "complete": "完成"
+  },
+  "edition": {
+    "basic": "基础版",
+    "standard": "标准版",
+    "premium": "高级版",
+    "basicDesc": "适合小型店铺",
+    "standardDesc": "适合中型店铺",
+    "premiumDesc": "适合大型店铺"
+  },
+  "package": {
+    "starter": "入门套餐",
+    "growth": "成长套餐",
+    "enterprise": "企业套餐",
+    "starterDesc": "基础功能",
+    "growthDesc": "更多功能",
+    "enterpriseDesc": "全功能"
+  },
+  "paymentMethod": {
+    "alipay": "支付宝",
+    "wechat": "微信支付",
+    "bank": "银行转账"
+  }
+}

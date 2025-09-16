@@ -2,37 +2,64 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <IgourdButton
-          v-auth="'customer_customized_feature_add'"
-          type="primary"
-          :disabled="isMaxItems"
-          @click="handleAdd"
+        <ElButton type="primary" @click="handleAdd">
+          {{ t('customer.addCustomerFeature') }}
+        </ElButton>
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          :disabled="!selectedRows.length"
+          @click="handleBatchDeleteFeature"
         >
-          {{ t('common.create') }}
-        </IgourdButton>
+          {{ t('common.delete') }}
+        </ElButton>
+      </template>
+      
+      <template #operation="{ row }">
+        <ElButton type="text" @click="handleDetail(row)">
+          {{ t('common.detail') }}
+        </ElButton>
+        <ElButton 
+          type="text"
+          @click="handleEditFeature(row)"
+        >
+          {{ t('common.edit') }}
+        </ElButton>
+        <ElButton 
+          type="text"
+          @click="handleDelete(row)"
+        >
+          {{ t('common.delete') }}
+        </ElButton>
       </template>
     </Grid>
-    <Drawer />
+    
+    <FeatureDrawer @success="refresh" />
   </Page>
 </template>
+
 <script setup lang="ts">
-import { Page, IgourdButton } from '@igourd/common-ui';
+import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useCustomerFeatureList } from '../../hooks/use-customer-feature-list';
+
+import { useCustomerFeature } from '@@/customer/hooks';
 
 defineOptions({
   name: 'ICustomerFeature',
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, drawerApi, isMaxItems } = useCustomerFeatureList();
 
-// 添加特性
-const handleAdd = () => {
-  if (isMaxItems.value) {
-    // 显示限制提示
-    return;
-  }
-  drawerApi.open();
-};
+const {
+  Grid,
+  FeatureDrawer,
+  selectedRows,
+  handleAdd,
+  handleEditFeature,
+  handleDetail,
+  handleDelete,
+  handleBatchDeleteFeature,
+  canBatchOperate,
+  refresh,
+} = useCustomerFeature();
 </script>

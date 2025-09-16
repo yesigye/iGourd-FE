@@ -1,0 +1,23 @@
+{
+  "productName": "Nom du Produit",
+  "productCode": "Code du Produit",
+  "priceType": "Type de Prix",
+  "price": "Prix",
+  "cost": "Coût",
+  "margin": "Marge",
+  "startTime": "Heure de Début",
+  "endTime": "Heure de Fin",
+  "status": "Statut",
+  "addPrice": "Ajouter Prix",
+  "editPrice": "Modifier Prix",
+  "priceDetail": "Détail du Prix",
+  "priceTypeOptions": {
+    "retail": "Prix de Détail",
+    "wholesale": "Prix de Gros",
+    "vip": "Prix VIP"
+  },
+  "statusOptions": {
+    "active": "Actif",
+    "inactive": "Inactif"
+  }
+}

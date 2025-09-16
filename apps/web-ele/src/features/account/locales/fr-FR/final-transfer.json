@@ -1,0 +1,21 @@
+{
+  "final_transfer": "Report Final",
+  "final_rocessin": "Traitement Final",
+  "reverse_arryover": "Report Inversé",
+  "uncarried_forward_gains_losses": "Gains/Pertes Non Reportés",
+  "profits_losses_transferred_not_settled": "Profits/Pertes Reportés Non Réglés",
+  "accounts_have_been_closed": "Comptes Fermés",
+  "current_accounting_period": "Période Comptable Actuelle",
+  "transfer_period": "Période de Report",
+  "transfer_date": "Date de Report",
+  "remark": "Remarque",
+  "execute_transfer": "Exécuter le Report",
+  "reverse_transfer": "Report Inverse",
+  "transfer_detail": "Détail du Report",
+  "please_select_transfer_period": "Veuillez sélectionner la période de report",
+  "please_select_transfer_date": "Veuillez sélectionner la date de report",
+  "please_enter_remark": "Veuillez entrer une remarque",
+  "account": "Compte",
+  "debit_amount": "Montant Débiteur",
+  "credit_amount": "Montant Créditeur"
+}

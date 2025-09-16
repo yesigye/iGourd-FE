@@ -1,0 +1,16 @@
+{
+  "productName": "商品名称",
+  "productCode": "商品编码",
+  "warehouseName": "仓库名称",
+  "currentStock": "当前库存",
+  "minStock": "最小库存",
+  "maxStock": "最大库存",
+  "stockStatus": "库存状态",
+  "lastUpdateTime": "最后更新时间",
+  "exportReport": "导出报表",
+  "stockStatusOptions": {
+    "normal": "正常",
+    "low": "库存不足",
+    "out": "缺货"
+  }
+}

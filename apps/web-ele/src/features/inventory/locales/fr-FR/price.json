@@ -1,0 +1,16 @@
+{
+  "priceChangeLog": "Journal des Changements de Prix",
+  "enterPriceKeywords": "Veuillez saisir des mots-clés de prix",
+  "selectPriceType": "Sélectionner le Type de Prix",
+  "changeType": "Type de Changement",
+  "productName": "Nom du Produit",
+  "productCode": "Code Produit",
+  "preChangePrice": "Prix Avant Changement",
+  "postChangePrice": "Prix Après Changement",
+  "changeAmount": "Montant du Changement",
+  "remarks": "Remarques",
+  "creator": "Créateur",
+  "creationTime": "Heure de Création",
+  "cost_price": "Prix de Revient",
+  "selling_price": "Prix de Vente"
+}

@@ -1,0 +1,17 @@
+{
+  "productName": "商品名称",
+  "productCode": "商品编码",
+  "category": "分类",
+  "brand": "品牌",
+  "unit": "单位",
+  "price": "价格",
+  "cost": "成本",
+  "status": "状态",
+  "addProduct": "添加商品",
+  "editProduct": "编辑商品",
+  "productDetail": "商品详情",
+  "statusOptions": {
+    "active": "启用",
+    "inactive": "禁用"
+  }
+}

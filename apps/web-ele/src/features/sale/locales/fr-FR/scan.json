@@ -1,0 +1,18 @@
+{
+  "scanNo": "N° de Scan",
+  "productName": "Nom du Produit",
+  "productCode": "Code du Produit",
+  "quantity": "Quantité",
+  "unitPrice": "Prix Unitaire",
+  "totalAmount": "Montant Total",
+  "scanTime": "Heure de Scan",
+  "status": "Statut",
+  "addScan": "Ajouter Scan",
+  "editScan": "Modifier Scan",
+  "scanDetail": "Détail du Scan",
+  "statusOptions": {
+    "pending": "En Attente",
+    "completed": "Terminé",
+    "cancelled": "Annulé"
+  }
+}

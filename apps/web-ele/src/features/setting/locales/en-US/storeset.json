@@ -1,0 +1,52 @@
+{
+  "settingName": "Setting Name",
+  "settingKey": "Setting Key",
+  "settingValue": "Setting Value",
+  "settingType": "Setting Type",
+  "status": "Status",
+  "groupName": "Group Name",
+  "description": "Description",
+  "sortOrder": "Sort Order",
+  "creatorName": "Creator",
+  "createTime": "Create Time",
+  "addStoreset": "Add Store Setting",
+  "editStoreset": "Edit Store Setting",
+  "storesetDetail": "Store Setting Detail",
+  "storeset": "Store Setting",
+  "please_enter_setting_name": "Please enter setting name",
+  "please_enter_setting_key": "Please enter setting key",
+  "please_enter_setting_value": "Please enter setting value",
+  "please_select_setting_type": "Please select setting type",
+  "please_select_group_name": "Please select group name",
+  "please_enter_description": "Please enter description",
+  "please_enter_sort_order": "Please enter sort order",
+  "activate": "Activate",
+  "deactivate": "Deactivate",
+  "search": "Search",
+  "searchPlaceholder": "Please enter setting name",
+  "settingType": {
+    "boolean": "Boolean",
+    "string": "String",
+    "number": "Number",
+    "json": "JSON"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "group": {
+    "basic": "Basic Information",
+    "business": "Business Settings",
+    "display": "Display Settings",
+    "policy": "Policy Settings"
+  },
+  "basicInformation": "Basic Information",
+  "storeSettings": "Store Settings",
+  "addSetting": "Add Setting",
+  "version": "Version",
+  "businessType": "Business Type",
+  "validity": "Validity",
+  "registrationTime": "Registration Time",
+  "cashier": "Cashier",
+  "pcWindowsPos": "PC Windows POS"
+}

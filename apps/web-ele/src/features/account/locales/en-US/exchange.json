@@ -1,0 +1,22 @@
+{
+  "exchange": "Currency Exchange",
+  "accountExchange": "Account Exchange",
+  "sellAmount": "Sell Amount",
+  "buyAmount": "Buy Amount",
+  "sellCurrency": "Sell Currency",
+  "buyCurrency": "Buy Currency",
+  "exchangeRate": "Exchange Rate",
+  "remark": "Remark",
+  "creatorName": "Creator",
+  "createTime": "Create Time",
+  "addCurrencyExchange": "Add Currency Exchange",
+  "editCurrencyExchange": "Edit Currency Exchange",
+  "currencyExchangeDetail": "Currency Exchange Detail",
+  "please_select_sell_currency": "Please select sell currency",
+  "please_select_buy_currency": "Please select buy currency",
+  "please_enter_sell_amount": "Please enter sell amount",
+  "please_enter_buy_amount": "Please enter buy amount",
+  "please_enter_exchange_rate": "Please enter exchange rate",
+  "please_enter_remark": "Please enter remark",
+  "operation": "Operation"
+}

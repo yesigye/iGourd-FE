@@ -1,30 +1,71 @@
 <template>
   <Page auto-content-height>
-    <Drawer />
     <Grid>
       <template #table-title>
-        <IgourdButton @click="handleAdd">{{ t('account.add') }}</IgourdButton>
+        <ElButton type="primary" @click="handleAdd">
+          {{ t('common.add') }}
+        </ElButton>
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          :disabled="!selectedRows.length"
+          @click="handleBatchDeleteCollectionVoucher"
+        >
+          {{ t('common.delete') }}
+        </ElButton>
+      </template>
+      
+      <template #operation="{ row }">
+        <ElButton 
+          type="text" 
+          :disabled="row.review_status !== 'PENDING'"
+          @click="handleEditCollectionVoucher(row)"
+        >
+          {{ t('common.edit') }}
+        </ElButton>
+        <ElButton 
+          type="text"
+          @click="handleDetail(row)"
+        >
+          {{ t('inventory.details') }}
+        </ElButton>
+        <ElButton 
+          type="text"
+          @click="handlePrint(row)"
+        >
+          {{ t('account.print') }}
+        </ElButton>
       </template>
     </Grid>
+    
+    <Drawer @success="refresh" />
+    <DetailDrawer @close="refresh" />
   </Page>
 </template>
 
 <script setup lang="ts">
-import { IgourdButton, Page } from '@igourd/common-ui';
+import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useCollectionVoucherList } from '../../hooks';
+
+import { useCollectionVoucher } from '@@/account/hooks';
 
 defineOptions({
-  name: 'ICollectionVoucherList',
+  name: 'ICollectionVoucher',
 });
 
 const { t } = useI18n();
 
-// 使用列表逻辑
-const { Grid, Drawer, drawerApi } = useCollectionVoucherList();
-
-// 处理添加
-const handleAdd = () => {
-  drawerApi.setData({}).open();
-};
+const {
+  Grid,
+  Drawer,
+  DetailDrawer,
+  selectedRows,
+  handleAdd,
+  handleEditCollectionVoucher,
+  handleDetail,
+  handlePrint,
+  handleBatchDeleteCollectionVoucher,
+  canBatchOperate,
+  refresh,
+} = useCollectionVoucher();
 </script>

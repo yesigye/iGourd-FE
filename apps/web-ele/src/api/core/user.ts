@@ -11,8 +11,9 @@ export async function getUserInfoApi(data: {
 }) {
   return requestClient.post<UserInfo>(`/v1/passport/owner/selection`, data);
 }
+
 export async function basicsMerchantList(data: any) {
-  return requestClient.post('/merchant/basics/merchant/list', data);
+  return requestClient.post('/v1/merchant/basics/merchant/list', data);
 }
 
 /**

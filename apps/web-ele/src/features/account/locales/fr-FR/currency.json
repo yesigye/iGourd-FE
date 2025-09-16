@@ -1,0 +1,20 @@
+{
+  "currency": "Devise",
+  "currencySymbol": "Nom de la Devise",
+  "currencyCode": "Code de la Devise",
+  "exchangeRate": "Taux de Change",
+  "symbol": "Symbole de la Devise",
+  "decimalPlaces": "Places Décimales",
+  "is_default": "Par Défaut",
+  "currencyManagement": "Gestion des Devises",
+  "defaultBaseMoney": "Devise de Base par Défaut",
+  "add_currency": "Ajouter Devise",
+  "edit_currency": "Modifier Devise",
+  "currency_detail": "Détail de la Devise",
+  "please_enter_currency_name": "Veuillez entrer le nom de la devise",
+  "please_enter_currency_code": "Veuillez entrer le code de la devise",
+  "please_enter_exchange_rate": "Veuillez entrer le taux de change",
+  "please_enter_symbol": "Veuillez entrer le symbole de la devise",
+  "please_enter_decimal_places": "Veuillez entrer les places décimales",
+  "pleaseEnterKeywordsToSearchSelect": "Veuillez entrer des mots-clés pour rechercher et sélectionner"
+}

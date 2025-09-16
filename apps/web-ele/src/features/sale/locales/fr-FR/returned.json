@@ -1,0 +1,18 @@
+{
+  "returnedNo": "N° de Retour",
+  "orderNo": "N° de Commande",
+  "customerName": "Nom du Client",
+  "customerCode": "Code du Client",
+  "totalAmount": "Montant Total",
+  "status": "Statut",
+  "addReturned": "Ajouter Commande de Retour",
+  "editReturned": "Modifier Commande de Retour",
+  "returnedDetail": "Détail de la Commande de Retour",
+  "statusOptions": {
+    "draft": "Brouillon",
+    "pending": "En Attente",
+    "approved": "Approuvé",
+    "rejected": "Rejeté",
+    "completed": "Terminé"
+  }
+}

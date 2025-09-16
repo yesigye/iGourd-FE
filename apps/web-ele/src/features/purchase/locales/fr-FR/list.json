@@ -1,0 +1,19 @@
+{
+  "purchaseNo": "N° d'Achat",
+  "supplierName": "Nom du Fournisseur",
+  "productName": "Nom du Produit",
+  "productCode": "Code du Produit",
+  "quantity": "Quantité",
+  "unitPrice": "Prix Unitaire",
+  "totalAmount": "Montant Total",
+  "purchaseDate": "Date d'Achat",
+  "status": "Statut",
+  "addPurchase": "Ajouter Achat",
+  "editPurchase": "Modifier Achat",
+  "purchaseDetail": "Détail de l'Achat",
+  "statusOptions": {
+    "pending": "En Attente",
+    "completed": "Terminé",
+    "cancelled": "Annulé"
+  }
+}

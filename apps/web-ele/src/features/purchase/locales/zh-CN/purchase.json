@@ -1,5 +1,6 @@
 {
-  "addPurchase":"添加采购",
+  "purchaseNo": "供应商列表编辑",
+  "addPurchase": "添加采购",
   "purchaseTitle": "打印采购订单",
   "goodTitle": "收货单",
   "purchasePlaceholder": "输入(采购单号)",

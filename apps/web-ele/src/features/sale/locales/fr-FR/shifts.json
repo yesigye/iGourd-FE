@@ -1,0 +1,40 @@
+{
+  "shiftNo": "Numéro de Quart",
+  "staffName": "Nom du Personnel",
+  "shiftType": "Type de Quart",
+  "status": "Statut",
+  "startTime": "Heure de Début",
+  "endTime": "Heure de Fin",
+  "totalSales": "Ventes Totales",
+  "totalOrders": "Commandes Totales",
+  "cashAmount": "Montant en Espèces",
+  "cardAmount": "Montant par Carte",
+  "remark": "Remarque",
+  "creatorName": "Créateur",
+  "createTime": "Heure de Création",
+  "addSaleShifts": "Ajouter la Gestion des Quarts",
+  "editSaleShifts": "Modifier la Gestion des Quarts",
+  "saleShiftsDetail": "Détail de la Gestion des Quarts",
+  "saleShifts": "Gestion des Quarts",
+  "please_select_staff": "Veuillez sélectionner le personnel",
+  "please_select_shift_type": "Veuillez sélectionner le type de quart",
+  "please_select_start_time": "Veuillez sélectionner l'heure de début",
+  "please_select_end_time": "Veuillez sélectionner l'heure de fin",
+  "please_enter_remark": "Veuillez entrer une remarque",
+  "export": "Exporter",
+  "startShift": "Commencer le Quart",
+  "endShift": "Terminer le Quart",
+  "search": "Rechercher",
+  "searchPlaceholder": "Veuillez entrer le numéro de quart ou le nom du personnel",
+  "shiftType": {
+    "morning": "Matin",
+    "afternoon": "Après-midi",
+    "evening": "Soir",
+    "night": "Nuit"
+  },
+  "status": {
+    "active": "Actif",
+    "completed": "Terminé",
+    "cancelled": "Annulé"
+  }
+}

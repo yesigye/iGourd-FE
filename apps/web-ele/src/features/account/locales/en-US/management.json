@@ -1,0 +1,16 @@
+{
+  "ledger_no": "Ledger No.",
+  "ledger_name": "Ledger Name",
+  "account_ledger": "Account Ledger",
+  "ledger_type": "Ledger Type",
+  "opening_balance": "Opening Balance",
+  "closing_balance": "Closing Balance",
+  "operation": "Operation",
+  "enter_cash_or_bank_name": "Enter cash or bank name",
+  "bank": "Bank",
+  "cash": "Cash",
+  "all": "All",
+  "addAccount": "Add Account",
+  "editAccount": "Edit Account",
+  "accountDetail": "Account Detail"
+}

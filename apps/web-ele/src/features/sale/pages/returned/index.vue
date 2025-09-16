@@ -1,11 +1,30 @@
+<script setup lang="ts">
+import { ElButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useReturnedOrder } from '@@/sale/hooks';
+
+defineOptions({
+  name: 'IReturnedOrder',
+});
+
+const { t } = useI18n();
+const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
+  useReturnedOrder();
+</script>
+
 <template>
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="drawerApi.open()">
-          {{ t('common.create') }}
+        <ElButton type="primary" @click="handleEdit()">
+          {{ t('sale.addReturned') }}
         </ElButton>
-        <ElButton type="danger" v-if="canBatchDelete" @click="batchDelete">
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          @click="handleBatchDelete"
+        >
           {{ t('common.delete') }}
         </ElButton>
       </template>
@@ -13,22 +32,11 @@
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.detail') }}
+        </ElButton>
       </template>
     </Grid>
     <Drawer />
   </Page>
 </template>
-
-<script setup lang="ts">
-import { Page, ElButton } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-import { useSaleReturnedList } from '../../hooks/use-sale-returned-list';
-
-defineOptions({
-  name: 'ISaleReturned',
-});
-
-const { t } = useI18n();
-const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
-  useSaleReturnedList();
-</script>

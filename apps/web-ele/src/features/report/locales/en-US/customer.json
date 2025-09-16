@@ -1,0 +1,9 @@
+{
+  "customerName": "Customer Name",
+  "customerCode": "Customer Code",
+  "totalOrders": "Total Orders",
+  "totalAmount": "Total Amount",
+  "avgOrderAmount": "Average Order Amount",
+  "lastOrderDate": "Last Order Date",
+  "exportReport": "Export Report"
+}

@@ -1,0 +1,18 @@
+{
+  "returnedNo": "Returned No.",
+  "orderNo": "Order No.",
+  "customerName": "Customer Name",
+  "customerCode": "Customer Code",
+  "totalAmount": "Total Amount",
+  "status": "Status",
+  "addReturned": "Add Returned Order",
+  "editReturned": "Edit Returned Order",
+  "returnedDetail": "Returned Order Detail",
+  "statusOptions": {
+    "draft": "Draft",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "completed": "Completed"
+  }
+}

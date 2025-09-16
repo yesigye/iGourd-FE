@@ -1,0 +1,40 @@
+{
+  "shiftNo": "Shift No",
+  "staffName": "Staff Name",
+  "shiftType": "Shift Type",
+  "status": "Status",
+  "startTime": "Start Time",
+  "endTime": "End Time",
+  "totalSales": "Total Sales",
+  "totalOrders": "Total Orders",
+  "cashAmount": "Cash Amount",
+  "cardAmount": "Card Amount",
+  "remark": "Remark",
+  "creatorName": "Creator",
+  "createTime": "Create Time",
+  "addSaleShifts": "Add Sale Shifts",
+  "editSaleShifts": "Edit Sale Shifts",
+  "saleShiftsDetail": "Sale Shifts Detail",
+  "saleShifts": "Sale Shifts",
+  "please_select_staff": "Please select staff",
+  "please_select_shift_type": "Please select shift type",
+  "please_select_start_time": "Please select start time",
+  "please_select_end_time": "Please select end time",
+  "please_enter_remark": "Please enter remark",
+  "export": "Export",
+  "startShift": "Start Shift",
+  "endShift": "End Shift",
+  "search": "Search",
+  "searchPlaceholder": "Please enter shift number or staff name",
+  "shiftType": {
+    "morning": "Morning",
+    "afternoon": "Afternoon",
+    "evening": "Evening",
+    "night": "Night"
+  },
+  "status": {
+    "active": "Active",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  }
+}

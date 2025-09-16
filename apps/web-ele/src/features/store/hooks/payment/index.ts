@@ -1,0 +1,1 @@
+export { useStorePayment } from './list';

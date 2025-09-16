@@ -1,0 +1,16 @@
+{
+  "employeeName": "Nom de l'Employé",
+  "employeeCode": "Code de l'Employé",
+  "phone": "Téléphone",
+  "email": "Email",
+  "department": "Département",
+  "position": "Poste",
+  "status": "Statut",
+  "addEmployee": "Ajouter Employé",
+  "editEmployee": "Modifier Employé",
+  "employeeDetail": "Détail de l'Employé",
+  "statusOptions": {
+    "active": "Actif",
+    "inactive": "Inactif"
+  }
+}

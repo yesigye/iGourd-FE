@@ -1,30 +1,45 @@
-<template>
-  <Page auto-content-height>
-    <Drawer />
-    <Grid>
-      <template #table-title>
-        <IgourdButton @click="handleAdd">{{ t('account.add') }}</IgourdButton>
-      </template>
-    </Grid>
-  </Page>
-</template>
-
 <script setup lang="ts">
-import { IgourdButton, Page } from '@igourd/common-ui';
+import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useAccountManagementList } from '../../hooks';
+
+import { useAccountManagement } from '@@/account/hooks';
 
 defineOptions({
-  name: 'IAccountManagementList',
+  name: 'IAccountManagement',
 });
 
 const { t } = useI18n();
-
-// 使用列表逻辑
-const { Grid, Drawer, drawerApi } = useAccountManagementList();
-
-// 处理添加
-const handleAdd = () => {
-  drawerApi.setData({}).open();
-};
+const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
+  useAccountManagement();
 </script>
+
+<template>
+  <Page auto-content-height>
+    <Grid>
+      <template #table-title>
+        <ElButton type="primary" @click="handleEdit()">
+          {{ t('account.add_cash') }}
+        </ElButton>
+        <ElButton type="primary" @click="handleEdit()">
+          {{ t('account.add_bank_card') }}
+        </ElButton>
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          @click="handleBatchDelete"
+        >
+          {{ t('common.deleteBtn') }}
+        </ElButton>
+      </template>
+      <template #operation="{ row }">
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.edit') }}
+        </ElButton>
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.detail') }}
+        </ElButton>
+      </template>
+    </Grid>
+    <Drawer />
+  </Page>
+</template>

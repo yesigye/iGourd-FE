@@ -1,0 +1,21 @@
+{
+  "customerName": "Customer Name",
+  "customerCode": "Customer Code",
+  "customerType": "Customer Type",
+  "contactPerson": "Contact Person",
+  "contactPhone": "Contact Phone",
+  "contactEmail": "Contact Email",
+  "address": "Address",
+  "status": "Status",
+  "addCustomer": "Add Customer",
+  "editCustomer": "Edit Customer",
+  "customerDetail": "Customer Detail",
+  "customerTypeOptions": {
+    "individual": "Individual Customer",
+    "enterprise": "Enterprise Customer"
+  },
+  "statusOptions": {
+    "active": "Active",
+    "inactive": "Inactive"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "productName": "Product Name",
+  "productCode": "Product Code",
+  "priceType": "Price Type",
+  "price": "Price",
+  "cost": "Cost",
+  "margin": "Margin",
+  "startTime": "Start Time",
+  "endTime": "End Time",
+  "status": "Status",
+  "addPrice": "Add Price",
+  "editPrice": "Edit Price",
+  "priceDetail": "Price Detail",
+  "priceTypeOptions": {
+    "retail": "Retail Price",
+    "wholesale": "Wholesale Price",
+    "vip": "VIP Price"
+  },
+  "statusOptions": {
+    "active": "Active",
+    "inactive": "Inactive"
+  }
+}

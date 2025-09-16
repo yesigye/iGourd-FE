@@ -1,33 +1,42 @@
-<template>
-  <Page auto-content-height>
-    <Grid>
-      <template #table-title>
-        <ElButton type="primary" @click="drawerApi.open()">
-          {{ t('common.create') }}
-        </ElButton>
-        <ElButton type="danger" v-if="canBatchDelete" @click="batchDelete">
-          {{ t('common.delete') }}
-        </ElButton>
-      </template>
-      <template #actions="{ row }">
-        <ElButton type="text" @click="handleEdit(row)">
-          {{ t('common.edit') }}
-        </ElButton>
-      </template>
-    </Grid>
-    <Drawer />
-  </Page>
-</template>
 <script setup lang="ts">
-import { Page, ElButton } from '@igourd/common-ui';
+import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { usePurchaseBillsList } from '../../hooks/use-purchase-bills-list';
+
+import { usePurchaseBills } from '@@/purchase/hooks';
 
 defineOptions({
   name: 'IPurchaseBills',
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } =
-  usePurchaseBillsList();
+const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
+  usePurchaseBills();
 </script>
+
+<template>
+  <Page auto-content-height>
+    <Grid>
+      <template #table-title>
+        <ElButton type="primary" @click="handleEdit()">
+          {{ t('purchase.addBill') }}
+        </ElButton>
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          @click="handleBatchDelete"
+        >
+          {{ t('common.delete') }}
+        </ElButton>
+      </template>
+      <template #operation="{ row }">
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.edit') }}
+        </ElButton>
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.detail') }}
+        </ElButton>
+      </template>
+    </Grid>
+    <Drawer />
+  </Page>
+</template>

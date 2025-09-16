@@ -1,0 +1,19 @@
+{
+  "purchaseNo": "Purchase No.",
+  "supplierName": "Supplier Name",
+  "productName": "Product Name",
+  "productCode": "Product Code",
+  "quantity": "Quantity",
+  "unitPrice": "Unit Price",
+  "totalAmount": "Total Amount",
+  "purchaseDate": "Purchase Date",
+  "status": "Status",
+  "addPurchase": "Add Purchase",
+  "editPurchase": "Edit Purchase",
+  "purchaseDetail": "Purchase Detail",
+  "statusOptions": {
+    "pending": "Pending",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "shiftNo": "班次编号",
+  "staffName": "员工名称",
+  "shiftType": "班次类型",
+  "status": "状态",
+  "startTime": "开始时间",
+  "endTime": "结束时间",
+  "totalSales": "总销售额",
+  "totalOrders": "总订单数",
+  "cashAmount": "现金金额",
+  "cardAmount": "刷卡金额",
+  "remark": "备注",
+  "creatorName": "创建人",
+  "createTime": "创建时间",
+  "addSaleShifts": "添加班次管理",
+  "editSaleShifts": "编辑班次管理",
+  "saleShiftsDetail": "班次管理详情",
+  "saleShifts": "班次管理",
+  "please_select_staff": "请选择员工",
+  "please_select_shift_type": "请选择班次类型",
+  "please_select_start_time": "请选择开始时间",
+  "please_select_end_time": "请选择结束时间",
+  "please_enter_remark": "请输入备注",
+  "export": "导出",
+  "startShift": "开始班次",
+  "endShift": "结束班次",
+  "search": "搜索",
+  "searchPlaceholder": "请输入班次编号或员工名称",
+  "shiftType": {
+    "morning": "早班",
+    "afternoon": "中班",
+    "evening": "晚班",
+    "night": "夜班"
+  },
+  "status": {
+    "active": "进行中",
+    "completed": "已完成",
+    "cancelled": "已取消"
+  }
+}

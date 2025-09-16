@@ -1,0 +1,42 @@
+{
+  "labelName": "Label Name",
+  "labelCode": "Label Code",
+  "labelType": "Label Type",
+  "color": "Color",
+  "sortOrder": "Sort Order",
+  "customerCount": "Customer Count",
+  "status": "Status",
+  "description": "Description",
+  "creatorName": "Creator",
+  "createTime": "Create Time",
+  "addCustomerLabel": "Add Customer Label",
+  "editCustomerLabel": "Edit Customer Label",
+  "customerLabelDetail": "Customer Label Detail",
+  "customerLabel": "Customer Label",
+  "please_enter_label_name": "Please enter label name",
+  "please_enter_label_code": "Please enter label code",
+  "please_select_label_type": "Please select label type",
+  "please_select_color": "Please select color",
+  "please_enter_sort_order": "Please enter sort order",
+  "please_enter_description": "Please enter description",
+  "search": "Search",
+  "searchPlaceholder": "Please enter label name or code",
+  "labelType": {
+    "category": "Category Label",
+    "status": "Status Label",
+    "level": "Level Label",
+    "behavior": "Behavior Label",
+    "preference": "Preference Label",
+    "other": "Other"
+  },
+  "color": {
+    "red": "Red",
+    "orange": "Orange",
+    "yellow": "Yellow",
+    "green": "Green",
+    "blue": "Blue",
+    "purple": "Purple",
+    "pink": "Pink",
+    "gray": "Gray"
+  }
+}

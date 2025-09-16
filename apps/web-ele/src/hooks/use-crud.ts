@@ -115,6 +115,7 @@ function useCrud<T extends object, P extends object>(
       ...gridOptions,
     },
   });
+
   const [Drawer, drawerApi] = useIgourdDrawer({
     connectedComponent: options.connectedComponent,
     onConfirm() {
@@ -124,7 +125,7 @@ function useCrud<T extends object, P extends object>(
       drawerApi.setData({});
     },
   });
-
+  console.log(drawerApi);
   const handleEdit = (dto?: T) => {
     drawerApi.setData(dto ?? {}).open();
   };

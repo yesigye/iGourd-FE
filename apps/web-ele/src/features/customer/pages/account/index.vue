@@ -2,47 +2,70 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <div class="flex gap-2">
-          <IgourdButton
-            v-auth="'customer_account_add_revenue'"
-            type="primary"
+        <div class="flex gap-4">
+          <ElButton
+            type="success"
             @click="handleAddRevenue"
           >
             {{ t('customers.addRevenue') }}
-          </IgourdButton>
-          <IgourdButton
-            v-auth="'customer_account_add_expenditures'"
+          </ElButton>
+          <ElButton
             type="danger"
-            @click="handleAddExpenditures"
+            @click="handleAddExpenditure"
           >
             {{ t('customers.addExpenditures') }}
-          </IgourdButton>
+          </ElButton>
+          <ElButton
+            type="default"
+            @click="handleImport"
+          >
+            {{ t('customers.import') }}
+          </ElButton>
         </div>
       </template>
+      
+      <template #operation="{ row }">
+        <ElButton 
+          type="text"
+          @click="handleEdit(row)"
+        >
+          {{ t('common.edit') }}
+        </ElButton>
+        <ElButton 
+          type="text"
+          @click="handleDelete(row)"
+        >
+          {{ t('common.delete') }}
+        </ElButton>
+      </template>
     </Grid>
-  <Drawer />
-</Page>
+    
+    <RevenueDrawer @success="refresh" />
+    <ImportDrawer @success="refresh" />
+  </Page>
 </template>
+
 <script setup lang="ts">
-import { Page, IgourdButton } from '@igourd/common-ui';
+import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useCustomerAccountList } from '../../hooks/use-customer-account-list';
+
+import { useCustomerAccount } from '@@/customer/hooks';
 
 defineOptions({
   name: 'ICustomerAccount',
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, drawerApi } = useCustomerAccountList();
 
-// 添加收入
-const handleAddRevenue = () => {
-  drawerApi.open({ type: 'revenue' });
-};
-
-// 添加支出
-const handleAddExpenditures = () => {
-  drawerApi.open({ type: 'expenditures' });
-};
+const {
+  Grid,
+  RevenueDrawer,
+  ImportDrawer,
+  handleAddRevenue,
+  handleAddExpenditure,
+  handleImport,
+  handleEdit,
+  handleDelete,
+  refresh,
+} = useCustomerAccount();
 </script>
-

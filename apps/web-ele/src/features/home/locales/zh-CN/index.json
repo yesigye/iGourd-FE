@@ -1,0 +1,14 @@
+{
+  "title": "首页",
+  "dashboard": "仪表板",
+  "recentOrders": "最近订单",
+  "recentCustomers": "最近客户",
+  "lowStockProducts": "库存不足商品",
+  "recentActivities": "最近活动",
+  "todayOrders": "今日订单",
+  "todayRevenue": "今日收入",
+  "totalCustomers": "总客户数",
+  "totalProducts": "总商品数",
+  "lowStockCount": "库存不足数量",
+  "pendingOrders": "待处理订单"
+}

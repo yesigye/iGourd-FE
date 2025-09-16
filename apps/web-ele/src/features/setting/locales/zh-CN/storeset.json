@@ -1,0 +1,52 @@
+{
+  "settingName": "设置名称",
+  "settingKey": "设置键",
+  "settingValue": "设置值",
+  "settingType": "设置类型",
+  "status": "状态",
+  "groupName": "分组名称",
+  "description": "描述",
+  "sortOrder": "排序",
+  "creatorName": "创建人",
+  "createTime": "创建时间",
+  "addStoreset": "添加店铺设置",
+  "editStoreset": "编辑店铺设置",
+  "storesetDetail": "店铺设置详情",
+  "storeset": "店铺设置",
+  "please_enter_setting_name": "请输入设置名称",
+  "please_enter_setting_key": "请输入设置键",
+  "please_enter_setting_value": "请输入设置值",
+  "please_select_setting_type": "请选择设置类型",
+  "please_select_group_name": "请选择分组名称",
+  "please_enter_description": "请输入描述",
+  "please_enter_sort_order": "请输入排序",
+  "activate": "启用",
+  "deactivate": "禁用",
+  "search": "搜索",
+  "searchPlaceholder": "请输入设置名称",
+  "settingType": {
+    "boolean": "布尔值",
+    "string": "字符串",
+    "number": "数字",
+    "json": "JSON"
+  },
+  "status": {
+    "active": "启用",
+    "inactive": "禁用"
+  },
+  "group": {
+    "basic": "基本信息",
+    "business": "业务设置",
+    "display": "显示设置",
+    "policy": "政策设置"
+  },
+  "basicInformation": "基本信息",
+  "storeSettings": "店铺设置",
+  "addSetting": "添加设置",
+  "version": "版本",
+  "businessType": "业务类型",
+  "validity": "有效期",
+  "registrationTime": "注册时间",
+  "cashier": "收银台",
+  "pcWindowsPos": "PC Windows POS"
+}

@@ -1,4 +1,4 @@
-import type { CustomizedDTO, CustomizedRow } from './types';
+import type { CustomizedDTO, CustomizedRow } from '@@/purchase/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 

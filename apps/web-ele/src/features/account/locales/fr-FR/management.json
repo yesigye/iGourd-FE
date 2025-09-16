@@ -1,0 +1,16 @@
+{
+  "ledger_no": "N° de Grand Livre",
+  "ledger_name": "Nom du Grand Livre",
+  "account_ledger": "Grand Livre Comptable",
+  "ledger_type": "Type de Grand Livre",
+  "opening_balance": "Solde d'Ouverture",
+  "closing_balance": "Solde de Clôture",
+  "operation": "Opération",
+  "enter_cash_or_bank_name": "Entrez le nom de l'espèces ou de la banque",
+  "bank": "Banque",
+  "cash": "Espèces",
+  "all": "Tous",
+  "addAccount": "Ajouter Compte",
+  "editAccount": "Modifier Compte",
+  "accountDetail": "Détail du Compte"
+}

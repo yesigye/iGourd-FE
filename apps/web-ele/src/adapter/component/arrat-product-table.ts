@@ -1,25 +1,23 @@
-import { ProductArrayTable as CoreProductArrayTable } from '@igourd/common-ui';
-import type { ProductArrayTableProps } from '@igourd/common-ui';
-import type { SetupContext } from 'vue';
-import { h, mergeProps } from 'vue';
-import { warehouseProductPageList, productSearch } from '@@/purchase/apis';
+// import type { ProductArrayTableProps } from '@igourd/common-ui';
 
-export function ProductArrayTable(
-  props: ProductArrayTableProps,
-  { attrs, slots }: Omit<SetupContext, 'expose'>,
-) {
-  const merged: ProductArrayTableProps = mergeProps(
-    props,
-    {
-      InventoryService: {
-        productSearch,
-        warehouseProductPageList,
-      },
-    },
+// import { warehouseProductPageList, productSearch } from '@@/purchase/apis';
 
-    attrs,
-  );
-  return h(CoreProductArrayTable, merged, slots);
-}
+// export function ProductArrayTable(
+//   props: ProductArrayTableProps,
+//   { attrs, slots }: Omit<SetupContext, 'expose'>,
+// ) {
+//   const merged: ProductArrayTableProps = mergeProps(
+//     props,
+//     {
+//       InventoryService: {
+//         productSearch,
+//         warehouseProductPageList,
+//       },
+//     },
 
-export default ProductArrayTable;
+//     attrs,
+//   );
+//   return h(CoreProductArrayTable, merged, slots);
+// }
+
+// export default ProductArrayTable;

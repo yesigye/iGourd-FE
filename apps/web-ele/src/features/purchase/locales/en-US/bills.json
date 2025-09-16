@@ -1,0 +1,17 @@
+{
+  "billNo": "Purchase Bill No.",
+  "supplierName": "Supplier Name",
+  "supplierCode": "Supplier Code",
+  "totalAmount": "Total Amount",
+  "status": "Status",
+  "addBill": "Add Purchase Bill",
+  "editBill": "Edit Purchase Bill",
+  "billDetail": "Purchase Bill Detail",
+  "statusOptions": {
+    "draft": "Draft",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "completed": "Completed"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "final_transfer": "Final Transfer",
+  "final_rocessin": "Final Processing",
+  "reverse_arryover": "Reverse Carryover",
+  "uncarried_forward_gains_losses": "Uncarried Forward Gains/Losses",
+  "profits_losses_transferred_not_settled": "Profits/Losses Transferred Not Settled",
+  "accounts_have_been_closed": "Accounts Have Been Closed",
+  "current_accounting_period": "Current Accounting Period",
+  "transfer_period": "Transfer Period",
+  "transfer_date": "Transfer Date",
+  "remark": "Remark",
+  "execute_transfer": "Execute Transfer",
+  "reverse_transfer": "Reverse Transfer",
+  "transfer_detail": "Transfer Detail",
+  "please_select_transfer_period": "Please select transfer period",
+  "please_select_transfer_date": "Please select transfer date",
+  "please_enter_remark": "Please enter remark",
+  "account": "Account",
+  "debit_amount": "Debit Amount",
+  "credit_amount": "Credit Amount"
+}

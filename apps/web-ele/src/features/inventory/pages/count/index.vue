@@ -1,145 +1,221 @@
+<script setup lang="ts">
+import { Page } from '@/components/Page';
+import { useI18n } from 'vue-i18n';
+import { useInventoryCountList } from '../../hooks/count/list';
+import { ElButton, ElTooltip } from 'element-plus';
+import AuditOpinionDialog from '@/components/Audit/AuditOpinionDialog.vue';
+import InventoryCountAdd from '../../components/count/InventoryCountAdd.vue';
+import InventoryProductsDetail from '../../components/count/InventoryProductsDetail.vue';
+import PrintIndex from '@/components/Print/Index.vue';
+
+defineOptions({
+  name: 'IInventoryCount',
+});
+
+const { t } = useI18n();
+const {
+  Grid,
+  canBatchOperate,
+  handleBatchDelete,
+  selectedRows,
+  countAddDrawer,
+  countDetailDialog,
+  printDrawer,
+  handleAdd,
+  handleEdit,
+  handleDetail,
+  handlePrint,
+  auditDialogRef,
+  handleAuditConfirm,
+  query,
+  getStatusInfo
+} = useInventoryCountList();
+
+const confirmAddClose = () => {
+  countAddDrawer.value.visible = false;
+  query();
+};
+
+const confirmDetailClose = () => {
+  countDetailDialog.value.visible = false;
+};
+
+const confirmPrintClose = () => {
+  printDrawer.value.visible = false;
+};
+</script>
+
 <template>
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <el-button
-          v-auth="'inventory_physical_add'"
-          type="primary"
-          @click="handleAdd"
-        >
-          <i class="iconfont icon-tianjia-dianpu"></i>
-          {{ t('employee.addButton') }}
-        </el-button>
-        <el-button
-          v-auth="'inventory_physical_delete'"
-          type="danger"
-          plain
-          :disabled="!selectedRows.length"
-          @click="handleDelete"
-        >
-          <i class="iconfont icon-shanchu2"></i>
-          {{ t('employee.deleteButton') }}
-        </el-button>
-        <el-button @click="showFieldSettings">
-          <i class="iconfont icon-liebiaoshezhixianshi"></i>
-          {{ t('employee.field') }}
-        </el-button>
+        <div class="flex justify-between items-center w-full">
+          <div class="flex items-center gap-4">
+            <ElButton
+              v-if="canBatchOperate && selectedRows.length > 0"
+              v-auth="'inventory_physical_delete'"
+              type="danger"
+              @click="handleBatchDelete"
+            >
+              {{ t('employee.deleteButton') }}
+            </ElButton>
+          </div>
+          <div class="flex items-center gap-2">
+            <ElButton
+              v-auth="'inventory_physical_add'"
+              type="primary"
+              @click="handleAdd"
+            >
+              <i class="iconfont icon-tianjia-dianpu mr-1"></i>
+              {{ t('employee.addButton') }}
+            </ElButton>
+            <ElTooltip
+              class="box-item"
+              effect="customized"
+              :content="t('inventory.fieldSettings')"
+              placement="top"
+              :show-after="600"
+              :enterable="false"
+            >
+              <ElButton @click="() => {}">
+                <i class="iconfont icon-liebiaoshezhixianshi mr-1"></i>
+                {{ t('employee.field') }}
+              </ElButton>
+            </ElTooltip>
+          </div>
+        </div>
       </template>
-      <template #count_type="{ row }">
-        {{ t(`inventory.${row.count_type}`) }}
-      </template>
-      <template #status="{ row }">
-        <el-tag :type="getStatusType(row.status)">
-          {{ t(`inventory.${row.status}`) }}
-        </el-tag>
-      </template>
-      <template #action="{ row }">
-        <el-tooltip
-          content="Edit"
+      
+      <template #review_status="{ row }">
+        <ElTooltip
+          class="box-item"
+          effect="customized"
+          :content="getStatusInfo(row.review_status).text"
           placement="top"
           :show-after="600"
           :enterable="false"
         >
-          <el-button
+          <i
+            :class="[
+              'iconfont',
+              getStatusInfo(row.review_status).icon
+            ]"
+            :style="{
+              cursor: row.review_status === 'PENDING' ? 'pointer' : 'not-allowed',
+              color: getStatusInfo(row.review_status).color
+            }"
+            @click="row.review_status === 'PENDING' ? auditDialogRef?.open({ ...row, review_status: 'PENDING' }) : null"
+          />
+        </ElTooltip>
+      </template>
+      
+      <template #operation="{ row }">
+        <ElTooltip
+          class="box-item"
+          effect="customized"
+          :content="t('common.edit')"
+          placement="top"
+          :show-after="600"
+          :enterable="false"
+        >
+          <ElButton
+            v-auth="'inventory_physical_edit'"
             link
             type="primary"
             size="small"
+            :disabled="row.review_status === 'APPROVED' || row.review_status === 'REJECTED'"
             @click="handleEdit(row.id)"
           >
-            <i class="iconfont icon-icon_Edit"></i>
-          </el-button>
-        </el-tooltip>
-        <el-tooltip
-          content="Detail"
+            <i class="iconfont icon-icon_Edit icon-hover"></i>
+          </ElButton>
+        </ElTooltip>
+        <ElTooltip
+          class="box-item"
+          effect="customized"
+          :content="t('common.print')"
           placement="top"
           :show-after="600"
           :enterable="false"
         >
-          <el-button
+          <ElButton
+            v-auth="'inventory_physical_print'"
+            link
+            type="primary"
+            size="small"
+            @click="handlePrint(row)"
+          >
+            <i class="iconfont icon-icon_printer"></i>
+          </ElButton>
+        </ElTooltip>
+        <ElTooltip
+          class="box-item"
+          effect="customized"
+          :content="t('common.detail')"
+          placement="top"
+          :show-after="600"
+          :enterable="false"
+        >
+          <ElButton
+            v-auth="'inventory_physical_detail'"
             link
             type="primary"
             size="small"
             @click="handleDetail(row.id)"
           >
-            <i class="iconfont icon-chakan"></i>
-          </el-button>
-        </el-tooltip>
+            <i class="iconfont icon-icon_details"></i>
+          </ElButton>
+        </ElTooltip>
       </template>
     </Grid>
-    <Drawer />
+
+    <!-- Add/Edit/Detail Drawer -->
+    <InventoryCountAdd
+      v-if="countAddDrawer.visible"
+      :inventory-add-title="countAddDrawer.title"
+      :inventory-add-show="countAddDrawer.visible"
+      :current-id="countAddDrawer.currentId"
+      :is-disabled="countAddDrawer.isDisabled"
+      @close-tkr="confirmAddClose"
+      @saved="confirmAddClose"
+    />
+
+    <!-- Audit Dialog -->
+    <AuditOpinionDialog ref="auditDialogRef" @success="handleAuditConfirm" />
+
+    <!-- Print Dialog -->
+    <PrintIndex
+      v-if="printDrawer.visible"
+      v-model:show-print-prop="printDrawer.visible"
+      :title="t('inventory.printInventoryCount')"
+      :document-number="printDrawer.documentNumber"
+      :dynamic-fields-list="printDrawer.dynamicFieldsList"
+      :product-details="printDrawer.productDetails"
+      :product-columns-list="printDrawer.productColumnsList"
+      :additional-details-title="t('set.goodsReceiptNoteDetails')"
+      :show-product-details="true"
+      :show-additional-details="false"
+      @close-tkr="confirmPrintClose"
+    />
+
+    <!-- Inventory Products Detail -->
+    <InventoryProductsDetail
+      :return-title="countDetailDialog.title"
+      :drawer-return-show="countDetailDialog.visible"
+      :count-id="countDetailDialog.countId"
+      tag="count"
+      @close-tkr="confirmDetailClose"
+    />
   </Page>
 </template>
 
-<script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { Page } from '@igourd/common-ui';
-import { useInventoryCountList } from '../../hooks/use-inventory-count-list';
-import { useInventoryCountForm } from '../../hooks/use-inventory-count-form';
+<style scoped lang="scss">
+.box-item {
+  margin-right: 8px;
+}
 
-const { t } = useI18n();
-
-// 使用列表钩子
-const { Grid, gridApi, gridEvents } = useInventoryCountList();
-
-// 使用表单钩子
-const { Drawer, drawerApi } = useInventoryCountForm();
-
-// 选中的行
-const selectedRows = ref([]);
-
-// 获取状态类型
-const getStatusType = (status: string) => {
-  const statusMap = {
-    'PENDING': 'warning',
-    'IN_PROGRESS': 'primary',
-    'COMPLETED': 'success',
-    'CANCELLED': 'danger',
-  };
-  return statusMap[status] || 'info';
-};
-
-// 添加
-const handleAdd = () => {
-  drawerApi.value?.open({
-    title: "{{t('inventory.addCount')}}",
-    formData: {},
-  });
-};
-
-// 编辑
-const handleEdit = (id: string) => {
-  drawerApi.value?.open({
-    title: "{{t('inventory.editCount')}}",
-    formData: { id },
-  });
-};
-
-// 详情
-const handleDetail = (id: string) => {
-  // TODO: 实现详情页面
-  console.log('查看详情:', id);
-};
-
-// 删除
-const handleDelete = () => {
-  const ids = selectedRows.value.map(row => row.id);
-  gridEvents.onDelete(ids);
-};
-
-// 显示字段设置
-const showFieldSettings = () => {
-  // TODO: 实现字段设置功能
-  console.log('显示字段设置');
-};
-
-// 监听表格选择变化
-const handleSelectionChange = (selection: any[]) => {
-  selectedRows.value = selection;
-};
-</script>
-
-<style lang="scss" scoped>
-// 可以添加自定义样式
+.icon-hover {
+  &:hover {
+    color: var(--el-color-primary);
+  }
+}
 </style>
-

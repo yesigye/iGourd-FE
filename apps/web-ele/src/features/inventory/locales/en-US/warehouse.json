@@ -1,0 +1,15 @@
+{
+  "warehouseName": "Warehouse Name",
+  "warehouseCode": "Warehouse Code",
+  "address": "Address",
+  "contactPerson": "Contact Person",
+  "contactPhone": "Contact Phone",
+  "status": "Status",
+  "addWarehouse": "Add Warehouse",
+  "editWarehouse": "Edit Warehouse",
+  "warehouseDetail": "Warehouse Detail",
+  "statusOptions": {
+    "active": "Active",
+    "inactive": "Inactive"
+  }
+}

@@ -1,0 +1,16 @@
+import { requestClient } from '#/api/request';
+
+// 获取销售报表数据
+export function getSalesReportApi(data: any) {
+  return requestClient.post('/v1/merchant/report/sales', data);
+}
+
+// 导出销售报表
+export function exportSalesReportApi(data: any) {
+  return requestClient.post('/v1/merchant/report/sales/export', data);
+}
+
+// 获取销售统计信息
+export function getSalesStatsApi(data: any) {
+  return requestClient.post('/v1/merchant/report/sales/stats', data);
+}

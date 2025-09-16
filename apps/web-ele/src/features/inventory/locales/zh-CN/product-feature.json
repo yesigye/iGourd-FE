@@ -1,0 +1,17 @@
+{
+  "inventoryProductCustomizedFeature": "商品自定义属性",
+  "name": "属性名称",
+  "type": "属性类型",
+  "selectionType": "选择类型",
+  "compulsory": "是否必填",
+  "creator": "创建人",
+  "creationTime": "创建时间",
+  "addFeature": "新增属性",
+  "editFeature": "编辑属性",
+  "customFeature": "自定义属性",
+  "detailButton": "详情",
+  "select": "选择",
+  "input": "输入",
+  "userCreated": "用户创建",
+  "fixed": "固定"
+}

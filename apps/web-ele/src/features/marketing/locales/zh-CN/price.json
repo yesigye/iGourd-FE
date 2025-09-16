@@ -1,0 +1,23 @@
+{
+  "productName": "商品名称",
+  "productCode": "商品编码",
+  "priceType": "价格类型",
+  "price": "价格",
+  "cost": "成本",
+  "margin": "利润",
+  "startTime": "开始时间",
+  "endTime": "结束时间",
+  "status": "状态",
+  "addPrice": "添加价格",
+  "editPrice": "编辑价格",
+  "priceDetail": "价格详情",
+  "priceTypeOptions": {
+    "retail": "零售价",
+    "wholesale": "批发价",
+    "vip": "VIP价"
+  },
+  "statusOptions": {
+    "active": "启用",
+    "inactive": "禁用"
+  }
+}

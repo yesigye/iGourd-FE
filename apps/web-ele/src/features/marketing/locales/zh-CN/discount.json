@@ -1,0 +1,22 @@
+{
+  "discountName": "折扣名称",
+  "discountCode": "折扣编码",
+  "discountType": "折扣类型",
+  "discountValue": "折扣值",
+  "minAmount": "最小金额",
+  "maxAmount": "最大金额",
+  "startTime": "开始时间",
+  "endTime": "结束时间",
+  "status": "状态",
+  "addDiscount": "添加折扣",
+  "editDiscount": "编辑折扣",
+  "discountDetail": "折扣详情",
+  "typeOptions": {
+    "percentage": "百分比",
+    "fixed": "固定金额"
+  },
+  "statusOptions": {
+    "active": "启用",
+    "inactive": "禁用"
+  }
+}

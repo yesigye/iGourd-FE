@@ -1,0 +1,8 @@
+{
+  "date": "日期",
+  "orderCount": "订单数量",
+  "totalAmount": "总金额",
+  "avgOrderAmount": "平均订单金额",
+  "productCount": "商品数量",
+  "exportReport": "导出报表"
+}

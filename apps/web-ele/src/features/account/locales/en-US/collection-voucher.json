@@ -1,0 +1,52 @@
+{
+  "collection_voucher": "Collection Voucher",
+  "receipt_order_no": "Receipt Order No",
+  "customer": "Customer",
+  "payer_name": "Payer Name",
+  "receipt_time": "Receipt Time",
+  "receivable_balance": "Receivable Balance",
+  "last_debt": "Last Debt",
+  "related_orders": "Related Orders",
+  "remark": "Remark",
+  "attachments": "Attachments",
+  "add_collection_voucher": "Add Collection Voucher",
+  "edit_collection_voucher": "Edit Collection Voucher",
+  "collection_voucher_detail": "Collection Voucher Detail",
+  "enter_receipt_order_no": "Enter receipt order number",
+  "please_enter_receipt_order_no": "Please enter receipt order number",
+  "please_select_customer": "Please select customer",
+  "please_enter_payer_name": "Please enter payer name",
+  "please_select_receipt_time": "Please select receipt time",
+  "please_enter_receivable_balance": "Please enter receivable balance",
+  "please_enter_last_debt": "Please enter last debt",
+  "please_select_related_orders": "Please select related orders",
+  "please_enter_remark": "Please enter remark",
+  "upload_attachment": "Upload Attachment",
+  "print": "Print",
+  "delete_collection_voucher_confirm": "Confirm delete collection voucher",
+  "receipt_direction": {
+    "negative_order": "Negative Order",
+    "positive_order": "Positive Order"
+  },
+  "business_type": {
+    "sales_order": "Sales Order",
+    "sales_order_returned": "Sales Return",
+    "purchase_order": "Purchase Order",
+    "goods_receipt_note": "Goods Receipt Note",
+    "purchase_order_refund": "Purchase Refund",
+    "stock_transfer": "Stock Transfer",
+    "physical_stock_take": "Physical Stock Take",
+    "inventory_write_off": "Inventory Write Off",
+    "accounting_note": "Accounting Note",
+    "customer_recharger": "Customer Recharge",
+    "currency_exchange": "Currency Exchange",
+    "prepayment": "Prepayment",
+    "ar_credit_sale": "AR Credit Sale"
+  },
+  "ledger_type_enum": {
+    "revenue": "Revenue",
+    "receivable": "Receivable"
+  },
+  "return_short": "Return",
+  "accountType": "Account Type"
+}

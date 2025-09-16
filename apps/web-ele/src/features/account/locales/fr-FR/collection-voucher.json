@@ -1,0 +1,52 @@
+{
+  "collection_voucher": "Bon de Recouvrement",
+  "receipt_order_no": "Numéro de Commande de Reçu",
+  "customer": "Client",
+  "payer_name": "Nom du Payer",
+  "receipt_time": "Heure de Reçu",
+  "receivable_balance": "Solde à Recevoir",
+  "last_debt": "Dernière Dette",
+  "related_orders": "Commandes Associées",
+  "remark": "Remarque",
+  "attachments": "Pièces Jointes",
+  "add_collection_voucher": "Ajouter Bon de Recouvrement",
+  "edit_collection_voucher": "Modifier Bon de Recouvrement",
+  "collection_voucher_detail": "Détail du Bon de Recouvrement",
+  "enter_receipt_order_no": "Entrez le numéro de commande de reçu",
+  "please_enter_receipt_order_no": "Veuillez entrer le numéro de commande de reçu",
+  "please_select_customer": "Veuillez sélectionner un client",
+  "please_enter_payer_name": "Veuillez entrer le nom du payer",
+  "please_select_receipt_time": "Veuillez sélectionner l'heure de reçu",
+  "please_enter_receivable_balance": "Veuillez entrer le solde à recevoir",
+  "please_enter_last_debt": "Veuillez entrer la dernière dette",
+  "please_select_related_orders": "Veuillez sélectionner les commandes associées",
+  "please_enter_remark": "Veuillez entrer une remarque",
+  "upload_attachment": "Télécharger Pièce Jointe",
+  "print": "Imprimer",
+  "delete_collection_voucher_confirm": "Confirmer la suppression du bon de recouvrement",
+  "receipt_direction": {
+    "negative_order": "Commande Négative",
+    "positive_order": "Commande Positive"
+  },
+  "business_type": {
+    "sales_order": "Commande de Vente",
+    "sales_order_returned": "Retour de Vente",
+    "purchase_order": "Commande d'Achat",
+    "goods_receipt_note": "Note de Réception de Marchandises",
+    "purchase_order_refund": "Remboursement d'Achat",
+    "stock_transfer": "Transfert de Stock",
+    "physical_stock_take": "Inventaire Physique",
+    "inventory_write_off": "Radiation d'Inventaire",
+    "accounting_note": "Note Comptable",
+    "customer_recharger": "Recharge Client",
+    "currency_exchange": "Échange de Devises",
+    "prepayment": "Prépaiement",
+    "ar_credit_sale": "Vente à Crédit AR"
+  },
+  "ledger_type_enum": {
+    "revenue": "Revenus",
+    "receivable": "À Recevoir"
+  },
+  "return_short": "Retour",
+  "accountType": "Type de Compte"
+}

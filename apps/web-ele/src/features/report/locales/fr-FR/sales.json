@@ -1,0 +1,8 @@
+{
+  "date": "Date",
+  "orderCount": "Nombre de Commandes",
+  "totalAmount": "Montant Total",
+  "avgOrderAmount": "Montant Moyen des Commandes",
+  "productCount": "Nombre de Produits",
+  "exportReport": "Exporter Rapport"
+}

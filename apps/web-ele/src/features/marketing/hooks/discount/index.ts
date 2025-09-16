@@ -1,0 +1,1 @@
+export { useDiscount } from './list';

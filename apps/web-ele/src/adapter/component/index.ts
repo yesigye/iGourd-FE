@@ -11,11 +11,11 @@ import {
   ArrayCollapse,
   ArrayItems,
   ArrayTable,
-  Editable,
   ArrayTabs,
   Cascader,
   Checkbox,
   DatePicker,
+  Editable,
   ElButton,
   ElNotification,
   Form,
@@ -34,6 +34,7 @@ import {
   PreviewText,
   Radio,
   Reset,
+  ScanCodeEntry,
   Select,
   setupIgourdForm,
   Space,
@@ -41,13 +42,11 @@ import {
   Switch,
   TimePicker,
   Transfer,
-  ScanCodeEntry,
 } from '@igourd/common-ui';
+import '@igourd/common-ui/style';
+// import ProductArrayTable from './arrat-product-table';
 
 import Upload from './upload';
-import ProductArrayTable from './arrat-product-table';
-
-import '@igourd/common-ui/style';
 
 async function initComponentAdapter() {
   const components: Partial<Record<string, Component | FunctionalComponent>> = {
@@ -58,7 +57,7 @@ async function initComponentAdapter() {
     ArrayTabs,
     Cascader,
     ScanCodeEntry,
-    ProductArrayTable,
+    // ProductArrayTable,
     Editable,
     Checkbox,
     Upload,

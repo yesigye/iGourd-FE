@@ -1,0 +1,18 @@
+{
+  "title": "店铺管理",
+  "storeName": "店铺名称",
+  "storeCode": "店铺编码",
+  "description": "描述",
+  "logo": "Logo",
+  "address": "地址",
+  "contactPerson": "联系人",
+  "contactPhone": "联系电话",
+  "contactEmail": "联系邮箱",
+  "status": "状态",
+  "totalOrders": "总订单数",
+  "totalCustomers": "总客户数",
+  "totalProducts": "总商品数",
+  "totalRevenue": "总收入",
+  "monthlyOrders": "月订单数",
+  "monthlyRevenue": "月收入"
+}

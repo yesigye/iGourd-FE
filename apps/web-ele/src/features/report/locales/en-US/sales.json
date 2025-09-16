@@ -1,0 +1,8 @@
+{
+  "date": "Date",
+  "orderCount": "Order Count",
+  "totalAmount": "Total Amount",
+  "avgOrderAmount": "Average Order Amount",
+  "productCount": "Product Count",
+  "exportReport": "Export Report"
+}

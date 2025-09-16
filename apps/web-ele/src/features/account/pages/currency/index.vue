@@ -1,30 +1,61 @@
 <template>
   <Page auto-content-height>
-    <Drawer />
     <Grid>
       <template #table-title>
-        <IgourdButton @click="handleAdd">{{ t('account.add') }}</IgourdButton>
+        <ElButton type="primary" @click="handleAdd">
+          {{ t('common.add') }}
+        </ElButton>
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          :disabled="!selectedIds.length"
+          @click="handleBatchDeleteCurrency"
+        >
+          {{ t('common.delete') }}
+        </ElButton>
+      </template>
+      
+      <template #operation="{ row }">
+        <ElButton 
+          type="text"
+          @click="handleEditCurrency(row)"
+        >
+          {{ t('common.edit') }}
+        </ElButton>
+        <ElButton 
+          type="text"
+          @click="handleDelete(row)"
+        >
+          {{ t('common.delete') }}
+        </ElButton>
       </template>
     </Grid>
+    
+    <Drawer @success="refresh" />
   </Page>
 </template>
 
 <script setup lang="ts">
-import { IgourdButton, Page } from '@igourd/common-ui';
+import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useAccountCurrencyList } from '../../hooks';
+
+import { useCurrency } from '@@/account/hooks';
 
 defineOptions({
-  name: 'IAccountCurrencyList',
+  name: 'ICurrency',
 });
 
 const { t } = useI18n();
 
-// 使用列表逻辑
-const { Grid, Drawer, drawerApi } = useAccountCurrencyList();
-
-// 处理添加
-const handleAdd = () => {
-  drawerApi.setData({}).open();
-};
+const {
+  Grid,
+  Drawer,
+  selectedIds,
+  handleAdd,
+  handleEditCurrency,
+  handleDelete,
+  handleBatchDeleteCurrency,
+  canBatchOperate,
+  refresh,
+} = useCurrency();
 </script>

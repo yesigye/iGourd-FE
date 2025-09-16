@@ -1,0 +1,18 @@
+{
+  "orderNo": "Order No.",
+  "customerName": "Customer Name",
+  "customerCode": "Customer Code",
+  "totalAmount": "Total Amount",
+  "status": "Status",
+  "addOrder": "Add Order",
+  "editOrder": "Edit Order",
+  "orderDetail": "Order Detail",
+  "statusOptions": {
+    "draft": "Draft",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  }
+}

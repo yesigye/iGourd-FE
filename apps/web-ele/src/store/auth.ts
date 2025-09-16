@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import type { Recordable, UserInfo } from '@igourd/types';
 
 import { ref } from 'vue';
@@ -105,49 +107,53 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function fetchUserInfo() {
     let userInfo: null | UserInfo = null;
+    const currentInfo = userStore.userInfo!.current_login_user_app;
     userInfo = await getUserInfoApi({
-      owner_id: userStore.owner_id,
-      owner_type: userStore.owner_type,
+      owner_id: currentInfo.owner_id,
+      owner_type: currentInfo.owner_type,
     });
     userStore.setMerchantInfo({
-      //@ts-ignore
+      // @ts-ignore
       owner_id: userInfo.owner_id,
-      //@ts-ignore
+      // @ts-ignore
       owner_type: userInfo.owner_type,
-      //@ts-ignore
+      // @ts-ignore
       user_id: userInfo.user_id,
     });
     if (!userInfo) {
       throw new TypeError('UserInfo is Null');
     }
-    //@ts-ignore
-    const userApps = userInfo.userModel?.user_apps || [];
-    //@ts-ignore
+    // @ts-ignore
+    const userApps = userInfo.user_model?.user_apps || [];
+    // @ts-ignore
     const merchant_ids = userApps.map((item) => item.owner_id);
-    const res = await basicsMerchantList({ merchant_ids });
-    //@ts-ignore
-    function customizerMerchantList(dataList, user_apps) {
-      if (dataList?.length && user_apps?.length) {
-        //@ts-ignore
-        return dataList.reduce((acc, cur) => {
-          //@ts-ignore
-          user_apps.forEach((item) => {
-            if (item.owner_id === cur.merchant_id) {
-              acc.push({ ...cur, ...item });
-            }
-          });
-          return acc;
-        }, []);
+    // 所有微任务执行完以后，再去请求，否则可能token还没生效。后续需要挪到 router.after 的钩子中。
+    setTimeout(() => {
+      const res = basicsMerchantList({ merchant_ids });
+      // @ts-ignore
+      function customizerMerchantList(dataList, user_apps) {
+        if (dataList?.length && user_apps?.length) {
+          // @ts-ignore
+          return dataList.reduce((acc, cur) => {
+            // @ts-ignore
+            user_apps.forEach((item) => {
+              if (item.owner_id === cur.merchant_id) {
+                acc.push({ ...cur, ...item });
+              }
+            });
+            return acc;
+          }, []);
+        }
+        return [];
       }
-      return [];
-    }
-    const merList = customizerMerchantList(res ?? [], userApps);
+      const merList = customizerMerchantList(res ?? [], userApps);
 
-    const merchantInfo = (merList || []).find(
-      //@ts-ignore
-      (item) => item.owner_id === userStore.merchantInfo.owner_id,
-    );
-    userStore.setMerchantInfo(merchantInfo);
+      const merchantInfo = (merList || []).find(
+        // @ts-ignore
+        (item) => item.owner_id === userStore.merchantInfo.owner_id,
+      );
+      userStore.setMerchantInfo(merchantInfo);
+    }, 0);
 
     userStore.setTokenId(userInfo.jwt_token.token_id);
     userStore.setUserModel(userInfo.useModel);

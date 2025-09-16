@@ -1,0 +1,15 @@
+{
+  "title": "系统设置",
+  "systemSettings": "系统设置",
+  "userSettings": "用户设置",
+  "siteName": "站点名称",
+  "siteLogo": "站点Logo",
+  "siteDescription": "站点描述",
+  "contactEmail": "联系邮箱",
+  "contactPhone": "联系电话",
+  "address": "地址",
+  "theme": "主题",
+  "language": "语言",
+  "timezone": "时区",
+  "notifications": "通知"
+}

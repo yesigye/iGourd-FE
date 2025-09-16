@@ -1,30 +1,45 @@
 <template>
   <Page auto-content-height>
-    <Drawer />
     <Grid>
       <template #table-title>
-        <IgourdButton @click="handleAdd">{{ t('account.add') }}</IgourdButton>
+        <ElButton type="primary" @click="handleEdit()">
+          {{ t('account.add_sub_ledger') }}
+        </ElButton>
+      </template>
+
+      <template #operation="{ row }">
+        <ElButton
+          type="text"
+          :disabled="row.source_type === 'SYSTEM'"
+          @click="handleEdit(row)"
+        >
+          {{ t('common.edit') }}
+        </ElButton>
+        <ElButton
+          type="text"
+          :disabled="row.source_type === 'SYSTEM'"
+          @click="handleBatchDelete(row)"
+        >
+          {{ t('common.delete') }}
+        </ElButton>
       </template>
     </Grid>
+
+    <Drawer />
   </Page>
 </template>
 
 <script setup lang="ts">
-import { IgourdButton, Page } from '@igourd/common-ui';
+import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useChartOfAccountsList } from '../../hooks';
+
+import { useChartOfAccounts } from '@@/account/hooks';
 
 defineOptions({
-  name: 'IChartOfAccountsList',
+  name: 'IChartOfAccounts',
 });
 
 const { t } = useI18n();
 
-// 使用列表逻辑
-const { Grid, Drawer, drawerApi } = useChartOfAccountsList();
-
-// 处理添加
-const handleAdd = () => {
-  drawerApi.setData({}).open();
-};
+const { Grid, Drawer, handleEdit, handleBatchDelete } = useChartOfAccounts();
 </script>

@@ -1,0 +1,14 @@
+{
+  "productName": "Nom du Produit",
+  "productCode": "Code du Produit",
+  "warehouseName": "Nom de l'Entrepôt",
+  "warehouseCode": "Code de l'Entrepôt",
+  "quantity": "Quantité",
+  "availableQuantity": "Quantité Disponible",
+  "reservedQuantity": "Quantité Réservée",
+  "unit": "Unité",
+  "lastUpdateTime": "Dernière Mise à Jour",
+  "updateInventory": "Mettre à Jour Inventaire",
+  "editInventory": "Modifier Inventaire",
+  "inventoryDetail": "Détail de l'Inventaire"
+}

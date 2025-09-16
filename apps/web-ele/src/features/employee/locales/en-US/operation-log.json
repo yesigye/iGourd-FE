@@ -1,0 +1,12 @@
+{
+  "operationLog": "Operation Log",
+  "operatorName": "Operator Name",
+  "account": "Account",
+  "operationType": "Operation Type",
+  "operationDescription": "Operation Description",
+  "ipAddress": "IP Address",
+  "operationTime": "Operation Time",
+  "pleaseOperationLog": "Please enter operation log keywords",
+  "searchButton": "Search",
+  "search": "Search"
+}

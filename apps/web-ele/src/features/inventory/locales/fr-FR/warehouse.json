@@ -1,0 +1,15 @@
+{
+  "warehouseName": "Nom de l'Entrepôt",
+  "warehouseCode": "Code de l'Entrepôt",
+  "address": "Adresse",
+  "contactPerson": "Personne de Contact",
+  "contactPhone": "Téléphone de Contact",
+  "status": "Statut",
+  "addWarehouse": "Ajouter Entrepôt",
+  "editWarehouse": "Modifier Entrepôt",
+  "warehouseDetail": "Détail de l'Entrepôt",
+  "statusOptions": {
+    "active": "Actif",
+    "inactive": "Inactif"
+  }
+}

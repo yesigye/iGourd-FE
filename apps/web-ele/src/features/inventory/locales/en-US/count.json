@@ -1,0 +1,22 @@
+{
+  "inventoryCount": "Inventory Count",
+  "enterCountKeywords": "Please enter count keywords",
+  "physical_stock_take_no": "Count Number",
+  "physical_stock_take_date": "Count Date",
+  "warehouse_name": "Warehouse Name",
+  "originTotalQuantity": "Original Total Quantity",
+  "physical_total_quantity": "Physical Total Quantity",
+  "total_variance_quantity": "Total Variance Quantity",
+  "total_variance_selling_price": "Total Variance Selling Price",
+  "total_variance_cost": "Total Variance Cost",
+  "review": "Review",
+  "creator": "Creator",
+  "creationTime": "Creation Time",
+  "addInventoryCountSave": "Add Inventory Count",
+  "editInventoryCountSave": "Edit Inventory Count",
+  "inventoryCountDetail": "Inventory Count Detail",
+  "printInventoryCount": "Print Inventory Count",
+  "productDetail": "Product Detail",
+  "action": "Action",
+  "changeErr": "Status update failed"
+}

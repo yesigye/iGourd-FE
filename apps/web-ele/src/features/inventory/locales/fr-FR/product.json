@@ -1,0 +1,17 @@
+{
+  "productName": "Nom du Produit",
+  "productCode": "Code du Produit",
+  "category": "Catégorie",
+  "brand": "Marque",
+  "unit": "Unité",
+  "price": "Prix",
+  "cost": "Coût",
+  "status": "Statut",
+  "addProduct": "Ajouter Produit",
+  "editProduct": "Modifier Produit",
+  "productDetail": "Détail du Produit",
+  "statusOptions": {
+    "active": "Actif",
+    "inactive": "Inactif"
+  }
+}

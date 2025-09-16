@@ -1,30 +1,43 @@
 <template>
   <Page auto-content-height>
-    <Drawer />
     <Grid>
       <template #table-title>
-        <IgourdButton @click="handleAdd">{{ t('account.add') }}</IgourdButton>
+        <div class="flex gap-4">
+          <!-- <ElButton
+            v-for="tab in tabOptions"
+            :key="tab.value"
+            :type="selectedTabType === tab.value ? 'primary' : 'default'"
+            @click="handleTabChange(tab.value)"
+          >
+            {{ tab.label }}
+          </ElButton> -->
+        </div>
+      </template>
+
+      <template #topRightActions>
+        <ElButton type="default">
+          {{ t('account.print') }}
+        </ElButton>
+        <ElButton type="default">
+          {{ t('account.export') }}
+        </ElButton>
       </template>
     </Grid>
+    <Drawer />
   </Page>
 </template>
 
 <script setup lang="ts">
-import { IgourdButton, Page } from '@igourd/common-ui';
+import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useAccountFlowsList } from '../../hooks';
+
+import { useFlows } from '@@/account/hooks';
 
 defineOptions({
-  name: 'IAccountFlowsList',
+  name: 'IFlows',
 });
 
 const { t } = useI18n();
 
-// 使用列表逻辑
-const { Grid, Drawer, drawerApi } = useAccountFlowsList();
-
-// 处理添加
-const handleAdd = () => {
-  drawerApi.setData({}).open();
-};
+const { Grid, Drawer } = useFlows();
 </script>

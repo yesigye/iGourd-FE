@@ -1,6 +1,6 @@
+import type { CustomizedDTO } from '@@/purchase/types';
+
 import { requestClient } from '#/api/request';
-import type { CustomizedDTO } from '../../hooks';
-import type { DynamicAttributeDeleteParams } from './type';
 
 // 获取定制采购分页列表
 export function getPurchaseCustomizedListApi(data: any) {
@@ -18,9 +18,7 @@ function updateCustomizedField(data: any) {
   return requestClient.post(`/v1/merchant/basics/dynamic-column/modify`, data);
 }
 
-export function createOrUpdateCustomizedField(
-  data: CustomizedDTO,
-) {
+export function createOrUpdateCustomizedField(data: CustomizedDTO) {
   const optionNames =
     data.selectionOptions
       ?.map((option) => option.name)
@@ -30,11 +28,9 @@ export function createOrUpdateCustomizedField(
     ...data,
     options: data.type === 'SELECT' ? JSON.stringify(optionNames) : '',
   };
-  if (data.id) {
-    return updateCustomizedField(formattedValues);
-  } else {
-    return createCustomizedField(formattedValues);
-  }
+  return data.id
+    ? updateCustomizedField(formattedValues)
+    : createCustomizedField(formattedValues);
 }
 
 /**
@@ -42,11 +38,9 @@ export function createOrUpdateCustomizedField(
  * @param data
  */
 export function deleteDynamicColumn(
-  dynamic_column_id_list: (string | number)[],
+  dynamic_column_id_list: (number | string)[],
 ) {
   return requestClient.post(`/v1/merchant/basics/dynamic-column/remove`, {
     dynamic_column_id_list,
   });
 }
-
-export * from './type';

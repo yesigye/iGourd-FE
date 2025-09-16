@@ -1,0 +1,17 @@
+{
+  "inventoryProductCustomizedFeature": "Fonctionnalité Personnalisée du Produit",
+  "name": "Nom de la Fonctionnalité",
+  "type": "Type de Fonctionnalité",
+  "selectionType": "Type de Sélection",
+  "compulsory": "Obligatoire",
+  "creator": "Créateur",
+  "creationTime": "Heure de Création",
+  "addFeature": "Ajouter Fonctionnalité",
+  "editFeature": "Modifier Fonctionnalité",
+  "customFeature": "Fonctionnalité Personnalisée",
+  "detailButton": "Détail",
+  "select": "Sélectionner",
+  "input": "Saisie",
+  "userCreated": "Créé par l'Utilisateur",
+  "fixed": "Fixe"
+}

@@ -1,0 +1,1 @@
+export { useSettingPayment } from './list';

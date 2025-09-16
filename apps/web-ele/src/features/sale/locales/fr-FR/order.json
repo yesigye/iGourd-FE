@@ -1,0 +1,18 @@
+{
+  "orderNo": "N° de Commande",
+  "customerName": "Nom du Client",
+  "customerCode": "Code du Client",
+  "totalAmount": "Montant Total",
+  "status": "Statut",
+  "addOrder": "Ajouter Commande",
+  "editOrder": "Modifier Commande",
+  "orderDetail": "Détail de la Commande",
+  "statusOptions": {
+    "draft": "Brouillon",
+    "pending": "En Attente",
+    "approved": "Approuvé",
+    "rejected": "Rejeté",
+    "completed": "Terminé",
+    "cancelled": "Annulé"
+  }
+}

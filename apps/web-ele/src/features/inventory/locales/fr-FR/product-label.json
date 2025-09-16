@@ -1,0 +1,19 @@
+{
+  "productLabel": "Étiquette de Produit",
+  "productLabelName": "Nom de l'Étiquette de Produit",
+  "productNumber": "Nombre de Produits",
+  "productsDetail": "Détails du Produit",
+  "creator": "Créateur",
+  "creationTime": "Heure de Création",
+  "action": "Action",
+  "addProductLabel": "Ajouter Étiquette de Produit",
+  "editProductLabel": "Modifier Étiquette de Produit",
+  "productDetails": "Détails du Produit",
+  "pleaseEnterKeywordsToSearchVendorNameCreditLine": "Veuillez saisir des mots-clés pour rechercher le nom du fournisseur, la ligne de crédit",
+  "deleteConfirm": "Êtes-vous sûr de vouloir supprimer",
+  "tips": "Conseils",
+  "confirmButton": "Confirmer",
+  "cancelButton": "Annuler",
+  "deleteSuccess": "Suppression Réussie",
+  "cancelDelete": "Annuler la Suppression"
+}

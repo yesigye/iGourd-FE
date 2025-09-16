@@ -1,0 +1,17 @@
+{
+  "billNo": "N° de Facture d'Achat",
+  "supplierName": "Nom du Fournisseur",
+  "supplierCode": "Code du Fournisseur",
+  "totalAmount": "Montant Total",
+  "status": "Statut",
+  "addBill": "Ajouter Facture d'Achat",
+  "editBill": "Modifier Facture d'Achat",
+  "billDetail": "Détail de la Facture d'Achat",
+  "statusOptions": {
+    "draft": "Brouillon",
+    "pending": "En Attente",
+    "approved": "Approuvé",
+    "rejected": "Rejeté",
+    "completed": "Terminé"
+  }
+}

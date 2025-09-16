@@ -1,0 +1,22 @@
+{
+  "inventoryCount": "库存盘点",
+  "enterCountKeywords": "请输入盘点关键词",
+  "physical_stock_take_no": "盘点单号",
+  "physical_stock_take_date": "盘点日期",
+  "warehouse_name": "仓库名称",
+  "originTotalQuantity": "原总数量",
+  "physical_total_quantity": "盘点总数量",
+  "total_variance_quantity": "总差异数量",
+  "total_variance_selling_price": "总差异销售价",
+  "total_variance_cost": "总差异成本",
+  "review": "审核",
+  "creator": "创建人",
+  "creationTime": "创建时间",
+  "addInventoryCountSave": "新增库存盘点",
+  "editInventoryCountSave": "编辑库存盘点",
+  "inventoryCountDetail": "库存盘点详情",
+  "printInventoryCount": "打印库存盘点",
+  "productDetail": "商品详情",
+  "action": "操作",
+  "changeErr": "状态更新失败"
+}

@@ -1,0 +1,17 @@
+{
+  "inventoryProductCustomizedFeature": "Product Customized Feature",
+  "name": "Feature Name",
+  "type": "Feature Type",
+  "selectionType": "Selection Type",
+  "compulsory": "Compulsory",
+  "creator": "Creator",
+  "creationTime": "Creation Time",
+  "addFeature": "Add Feature",
+  "editFeature": "Edit Feature",
+  "customFeature": "Custom Feature",
+  "detailButton": "Detail",
+  "select": "Select",
+  "input": "Input",
+  "userCreated": "User Created",
+  "fixed": "Fixed"
+}

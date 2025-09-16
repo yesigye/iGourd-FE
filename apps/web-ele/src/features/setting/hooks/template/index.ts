@@ -1,0 +1,1 @@
+export { useSettingTemplate } from './list';

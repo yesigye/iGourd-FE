@@ -1,0 +1,22 @@
+{
+  "discountName": "Discount Name",
+  "discountCode": "Discount Code",
+  "discountType": "Discount Type",
+  "discountValue": "Discount Value",
+  "minAmount": "Minimum Amount",
+  "maxAmount": "Maximum Amount",
+  "startTime": "Start Time",
+  "endTime": "End Time",
+  "status": "Status",
+  "addDiscount": "Add Discount",
+  "editDiscount": "Edit Discount",
+  "discountDetail": "Discount Detail",
+  "typeOptions": {
+    "percentage": "Percentage",
+    "fixed": "Fixed Amount"
+  },
+  "statusOptions": {
+    "active": "Active",
+    "inactive": "Inactive"
+  }
+}

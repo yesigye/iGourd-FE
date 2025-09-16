@@ -2,33 +2,64 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <IgourdButton
-          v-auth="'customer_label_add'"
-          type="primary"
-          @click="handleAdd"
+        <ElButton type="primary" @click="handleAdd">
+          {{ t('customer.addCustomerLabel') }}
+        </ElButton>
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          :disabled="!selectedRows.length"
+          @click="handleBatchDeleteLabel"
         >
-          {{ t('employee.addButton') }}
-        </IgourdButton>
+          {{ t('common.delete') }}
+        </ElButton>
+      </template>
+      
+      <template #operation="{ row }">
+        <ElButton type="text" @click="handleDetail(row)">
+          {{ t('common.detail') }}
+        </ElButton>
+        <ElButton 
+          type="text"
+          @click="handleEditLabel(row)"
+        >
+          {{ t('common.edit') }}
+        </ElButton>
+        <ElButton 
+          type="text"
+          @click="handleDelete(row)"
+        >
+          {{ t('common.delete') }}
+        </ElButton>
       </template>
     </Grid>
-  <Drawer />
-</Page>
+    
+    <LabelDrawer @success="refresh" />
+  </Page>
 </template>
+
 <script setup lang="ts">
-import { Page, IgourdButton } from '@igourd/common-ui';
+import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useCustomerLabelList } from '../../hooks/use-customer-label-list';
+
+import { useCustomerLabel } from '@@/customer/hooks';
 
 defineOptions({
   name: 'ICustomerLabel',
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, drawerApi } = useCustomerLabelList();
 
-// 添加标签
-const handleAdd = () => {
-  drawerApi.open();
-};
+const {
+  Grid,
+  LabelDrawer,
+  selectedRows,
+  handleAdd,
+  handleEditLabel,
+  handleDetail,
+  handleDelete,
+  handleBatchDeleteLabel,
+  canBatchOperate,
+  refresh,
+} = useCustomerLabel();
 </script>
-

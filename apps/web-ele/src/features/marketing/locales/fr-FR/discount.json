@@ -1,0 +1,22 @@
+{
+  "discountName": "Nom de la Remise",
+  "discountCode": "Code de la Remise",
+  "discountType": "Type de Remise",
+  "discountValue": "Valeur de la Remise",
+  "minAmount": "Montant Minimum",
+  "maxAmount": "Montant Maximum",
+  "startTime": "Heure de Début",
+  "endTime": "Heure de Fin",
+  "status": "Statut",
+  "addDiscount": "Ajouter Remise",
+  "editDiscount": "Modifier Remise",
+  "discountDetail": "Détail de la Remise",
+  "typeOptions": {
+    "percentage": "Pourcentage",
+    "fixed": "Montant Fixe"
+  },
+  "statusOptions": {
+    "active": "Actif",
+    "inactive": "Inactif"
+  }
+}

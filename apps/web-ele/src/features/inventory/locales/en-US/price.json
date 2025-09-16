@@ -1,0 +1,16 @@
+{
+  "priceChangeLog": "Price Change Log",
+  "enterPriceKeywords": "Please enter price keywords",
+  "selectPriceType": "Select Price Type",
+  "changeType": "Change Type",
+  "productName": "Product Name",
+  "productCode": "Product Code",
+  "preChangePrice": "Pre-change Price",
+  "postChangePrice": "Post-change Price",
+  "changeAmount": "Change Amount",
+  "remarks": "Remarks",
+  "creator": "Creator",
+  "creationTime": "Creation Time",
+  "cost_price": "Cost Price",
+  "selling_price": "Selling Price"
+}

@@ -2,37 +2,79 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="drawerApi.open()">
-          {{ t('common.create') }}
+        <ElButton type="primary" @click="handleAdd">
+          {{ t('sale.addSaleEnter') }}
         </ElButton>
-        <ElButton type="danger" v-if="canBatchDelete" @click="batchDelete">
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          :disabled="!selectedRows.length"
+          @click="handleBatchDeleteEnter"
+        >
           {{ t('common.delete') }}
         </ElButton>
       </template>
+      
       <template #operation="{ row }">
-        <ElButton type="text" @click="handleEdit(row)">
+        <ElButton type="text" @click="handleDetail(row)">
+          {{ t('common.detail') }}
+        </ElButton>
+        <ElButton 
+          v-if="row.status === 'DRAFT'"
+          type="text"
+          @click="handleEditEnter(row)"
+        >
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleView(row)">
-          {{ t('common.view') }}
+        <ElButton 
+          v-if="row.status === 'DRAFT'"
+          type="text"
+          @click="handleConfirm(row)"
+        >
+          {{ t('sale.confirm') }}
+        </ElButton>
+        <ElButton 
+          v-if="['DRAFT', 'CONFIRMED'].includes(row.status)"
+          type="text"
+          @click="handleDelete(row)"
+        >
+          {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>
-    <Drawer />
+    
+    <EnterDrawer @success="refresh" />
   </Page>
 </template>
 
 <script setup lang="ts">
-import { Page, ElButton } from '@igourd/common-ui';
+import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useSaleEnterList } from '../../hooks/use-sale-enter-list';
+
+import { useSaleEnter } from '@@/sale/hooks';
 
 defineOptions({
   name: 'ISaleEnter',
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, drawerApi, handleEdit, handleView, canBatchDelete, batchDelete } =
-  useSaleEnterList();
-</script>
 
+const {
+  Grid,
+  EnterDrawer,
+  selectedRows,
+  handleAdd,
+  handleEditEnter,
+  handleDetail,
+  handleDelete,
+  handleBatchDeleteEnter,
+  canBatchOperate,
+  refresh,
+} = useSaleEnter();
+
+// 处理确认
+const handleConfirm = (row: any) => {
+  // 这里可以添加确认逻辑
+  console.log('确认销售录入:', row);
+};
+</script>

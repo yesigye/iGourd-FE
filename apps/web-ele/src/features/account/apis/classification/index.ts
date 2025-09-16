@@ -1,0 +1,50 @@
+import type {
+  FinanceCategoryListPayload,
+  FinanceCategoryListResponse,
+  FinanceCategoryPayload,
+  DeleteFinanceCategoryPayload,
+  DetailFinanceCategoryPayload,
+  FinanceCategoryDetailModel,
+} from '@@/account/types';
+
+import { requestClient } from '#/api/request';
+
+// 获取财务分类列表
+export function getFinanceCategoryListApi(data: FinanceCategoryListPayload) {
+  return requestClient.post(
+    `/merchant/basics/accounting/finance-category/page-list`,
+    data,
+  );
+}
+
+// 创建财务分类
+export function createFinanceCategoryApi(data: FinanceCategoryPayload) {
+  return requestClient.post(
+    `/merchant/basics/accounting/finance-category/create`,
+    data,
+  );
+}
+
+// 更新财务分类
+export function updateFinanceCategoryApi(data: FinanceCategoryPayload) {
+  return requestClient.post(
+    `/merchant/basics/accounting/finance-category/modify`,
+    data,
+  );
+}
+
+// 删除财务分类
+export function deleteFinanceCategoryApi(data: DeleteFinanceCategoryPayload) {
+  return requestClient.post(
+    `/merchant/basics/accounting/finance-category/remove`,
+    data,
+  );
+}
+
+// 获取财务分类详情
+export function getFinanceCategoryDetailApi(data: DetailFinanceCategoryPayload) {
+  return requestClient.post(
+    `/merchant/basics/accounting/finance-category/detail`,
+    data,
+  );
+}

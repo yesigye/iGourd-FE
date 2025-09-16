@@ -92,6 +92,7 @@ export {
   ElPopover,
   ElRow,
   ElSelect,
+  ElSpace,
   ElTable,
   ElTableColumn,
   ElUpload,
@@ -100,9 +101,14 @@ export {
 
 export type { UploadFile, UploadProps, UploadUserFile } from 'element-plus';
 
-// export type { UploadProps } from './upload';
-
-// export type {
-//   ProductArrayTableProps,
-//   InventoryServiceLike,
-// } from './array-product-form';
+export {
+  ElButton as Button,
+  ElForm as Form,
+  ElRadioGroup as RadioGroup,
+  ElOption as SelectOption,
+  ElSpace as Space,
+  ElSwitch as Switch,
+  ElTreeSelect as TreeSelect,
+  ElTable as Table,
+  ElInput as Textarea
+} from 'element-plus';

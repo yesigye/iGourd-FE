@@ -1,0 +1,18 @@
+{
+  "scanNo": "扫码单号",
+  "productName": "商品名称",
+  "productCode": "商品编码",
+  "quantity": "数量",
+  "unitPrice": "单价",
+  "totalAmount": "总金额",
+  "scanTime": "扫码时间",
+  "status": "状态",
+  "addScan": "添加扫码",
+  "editScan": "编辑扫码",
+  "scanDetail": "扫码详情",
+  "statusOptions": {
+    "pending": "待处理",
+    "completed": "已完成",
+    "cancelled": "已取消"
+  }
+}

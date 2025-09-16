@@ -1,0 +1,83 @@
+{
+  "storeName": "Store Name",
+  "storeCode": "Store Code",
+  "storeType": "Store Type",
+  "status": "Status",
+  "currentStep": "Current Step",
+  "progress": "Progress",
+  "createDate": "Create Date",
+  "submitDate": "Submit Date",
+  "approveDate": "Approve Date",
+  "creatorName": "Creator",
+  "createTime": "Create Time",
+  "basicInfo": "Basic Info",
+  "editionSelection": "Edition Selection",
+  "packageSelection": "Package Selection",
+  "payment": "Payment",
+  "orderSummary": "Order Summary",
+  "edition": "Edition",
+  "package": "Package",
+  "total": "Total",
+  "paymentMethod": "Payment Method",
+  "createSuccess": "Create Success",
+  "createSuccessMessage": "Store creation application has been submitted, please wait for review",
+  "addStoreCreate": "Add Store Create",
+  "editStoreCreate": "Edit Store Create",
+  "storeCreateDetail": "Store Create Detail",
+  "storeCreate": "Store Create",
+  "please_enter_store_name": "Please enter store name",
+  "please_enter_store_code": "Please enter store code",
+  "please_select_store_type": "Please select store type",
+  "please_enter_address": "Please enter address",
+  "please_enter_city": "Please enter city",
+  "please_enter_phone": "Please enter phone",
+  "please_select_manager": "Please select manager",
+  "please_enter_description": "Please enter description",
+  "please_select_payment_method": "Please select payment method",
+  "submit": "Submit",
+  "continue": "Continue",
+  "search": "Search",
+  "searchPlaceholder": "Please enter store name or code",
+  "storeType": {
+    "retail": "Retail Store",
+    "wholesale": "Wholesale Store",
+    "online": "Online Store",
+    "hybrid": "Hybrid Store"
+  },
+  "status": {
+    "draft": "Draft",
+    "submitted": "Submitted",
+    "reviewing": "Reviewing",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "completed": "Completed"
+  },
+  "step": {
+    "basicInfo": "Basic Info",
+    "edition": "Edition",
+    "package": "Package",
+    "payment": "Payment",
+    "complete": "Complete"
+  },
+  "edition": {
+    "basic": "Basic",
+    "standard": "Standard",
+    "premium": "Premium",
+    "basicDesc": "Suitable for small stores",
+    "standardDesc": "Suitable for medium stores",
+    "premiumDesc": "Suitable for large stores"
+  },
+  "package": {
+    "starter": "Starter Package",
+    "growth": "Growth Package",
+    "enterprise": "Enterprise Package",
+    "starterDesc": "Basic features",
+    "growthDesc": "More features",
+    "enterpriseDesc": "Full features"
+  },
+  "paymentMethod": {
+    "alipay": "Alipay",
+    "wechat": "WeChat Pay",
+    "bank": "Bank Transfer"
+  }
+}

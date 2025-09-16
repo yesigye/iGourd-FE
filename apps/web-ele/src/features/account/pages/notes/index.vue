@@ -1,30 +1,46 @@
-<template>
-  <Page auto-content-height>
-    <Drawer />
-    <Grid>
-      <template #table-title>
-        <IgourdButton @click="handleAdd">{{ t('account.add') }}</IgourdButton>
-      </template>
-    </Grid>
-  </Page>
-</template>
-
 <script setup lang="ts">
-import { IgourdButton, Page } from '@igourd/common-ui';
+import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useAccountNotesList } from '../../hooks';
+
+import { useAccountNotes } from '@@/account/hooks';
 
 defineOptions({
-  name: 'IAccountNotesList',
+  name: 'IAccountNotes',
 });
 
 const { t } = useI18n();
-
-// 使用列表逻辑
-const { Grid, Drawer, drawerApi } = useAccountNotesList();
-
-// 处理添加
-const handleAdd = () => {
-  drawerApi.setData({}).open();
-};
+const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
+  useAccountNotes();
 </script>
+
+<template>
+  <Page auto-content-height>
+    <Grid>
+      <template #table-title>
+        <ElButton type="primary" @click="handleEdit()">
+          {{ t('account.add_note') }}
+        </ElButton>
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          @click="handleBatchDelete"
+        >
+          {{ t('common.delete') }}
+        </ElButton>
+      </template>
+      <template #operation="{ row }">
+        <ElButton
+          type="text"
+          :disabled="row.review_status !== 'PENDING'"
+          @click="handleEdit(row)"
+        >
+          {{ t('common.edit') }}
+        </ElButton>
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.detail') }}
+        </ElButton>
+      </template>
+    </Grid>
+    <Drawer />
+  </Page>
+</template>

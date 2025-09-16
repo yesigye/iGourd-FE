@@ -1,0 +1,14 @@
+{
+  "productName": "商品名称",
+  "productCode": "商品编码",
+  "warehouseName": "仓库名称",
+  "warehouseCode": "仓库编码",
+  "quantity": "库存数量",
+  "availableQuantity": "可用数量",
+  "reservedQuantity": "预留数量",
+  "unit": "单位",
+  "lastUpdateTime": "最后更新时间",
+  "updateInventory": "更新库存",
+  "editInventory": "编辑库存",
+  "inventoryDetail": "库存详情"
+}

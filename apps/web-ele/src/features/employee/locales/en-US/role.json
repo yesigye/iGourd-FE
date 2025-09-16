@@ -1,0 +1,14 @@
+{
+  "roleName": "Role Name",
+  "roleCode": "Role Code",
+  "description": "Description",
+  "status": "Status",
+  "addRole": "Add Role",
+  "editRole": "Edit Role",
+  "roleDetail": "Role Detail",
+  "permissions": "Permissions",
+  "statusOptions": {
+    "active": "Active",
+    "inactive": "Inactive"
+  }
+}

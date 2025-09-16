@@ -6,12 +6,11 @@ import { preferences } from '@igourd/preferences';
 import { useAccessStore, useUserStore } from '@igourd/stores';
 import { startProgress, stopProgress } from '@igourd/utils';
 
+import { loadFeatureLocal, loadRemoteLocale } from '#/locales';
 import { accessRoutes, coreRouteNames } from '#/router/routes';
 import { useAuthStore } from '#/store';
 
 import { generateAccess } from './access';
-import { loadFeatureLocal, loadRemoteLocale } from '#/locales';
-import type { SupportedLanguagesType } from '@igourd/locales';
 
 /**
  * 通用守卫配置
@@ -85,11 +84,12 @@ function setupAccessGuard(router: Router) {
         current_login_user_app: { owner_id, owner_type, user_id },
         jwt_token: { token_id },
       } as any);
+      await authStore.fetchUserInfo();
       userStore.setMerchantInfo({ owner_id, owner_type, user_id } as any);
     }
-    if (loginAgain) {
-      await authStore.fetchUserInfo();
-    }
+    // if (loginAgain) {
+    //   await authStore.fetchUserInfo();
+    // }
     // 生成路由表
     // 当前登录用户拥有的角色标识列表
     if (!userStore.userInfo) {
