@@ -3,16 +3,39 @@
     <Drawer />
     <Grid>
       <template #table-title>
-        <IgourdButton @click="handleAdd">{{ t('account.add') }}</IgourdButton>
+        <ElButton type="primary">
+          {{ t('account.add') }}
+        </ElButton>
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+        >
+          {{ t('common.delete') }}
+        </ElButton>
+      </template>
+      
+      <template #operation="{ row }">
+        <ElButton 
+          type="text"
+          @click="handleEdit(row)"
+        >
+          {{ t('common.edit') }}
+        </ElButton>
+        <ElButton 
+          type="text"
+          @click="handleBatchDelete(row)"
+        >
+          {{ t('common.delete') }}
+        </ElButton>
       </template>
     </Grid>
   </Page>
 </template>
 
 <script setup lang="ts">
-import { IgourdButton, Page } from '@igourd/common-ui';
+import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useAccountList } from '../../hooks';
+import { useAccountList } from '@@/account/hooks';
 
 defineOptions({
   name: 'IAccountList',
@@ -20,12 +43,12 @@ defineOptions({
 
 const { t } = useI18n();
 
-// 使用列表逻辑
-const { Grid, Drawer, drawerApi } = useAccountList();
-
-// 处理添加
-const handleAdd = () => {
-  drawerApi.setData({}).open();
-};
+const {
+  Grid,
+  Drawer,
+  handleEdit,
+  handleBatchDelete,
+  canBatchOperate,
+} = useAccountList();
 </script>
 

@@ -2,14 +2,12 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="handleAdd">
+        <ElButton type="primary">
           {{ t('common.add') }}
         </ElButton>
         <ElButton
           type="danger"
           v-if="canBatchOperate"
-          :disabled="!selectedIds.length"
-          @click="handleBatchDeleteTax"
         >
           {{ t('common.delete') }}
         </ElButton>
@@ -18,20 +16,20 @@
       <template #operation="{ row }">
         <ElButton 
           type="text"
-          @click="handleEditTax(row)"
+          @click="handleEdit(row)"
         >
           {{ t('common.edit') }}
         </ElButton>
         <ElButton 
           type="text"
-          @click="handleDelete(row)"
+          @click="handleBatchDelete(row)"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>
     
-    <Drawer @success="refresh" />
+    <Drawer />
   </Page>
 </template>
 
@@ -50,12 +48,8 @@ const { t } = useI18n();
 const {
   Grid,
   Drawer,
-  selectedIds,
-  handleAdd,
-  handleEditTax,
-  handleDelete,
-  handleBatchDeleteTax,
+  handleEdit,
+  handleBatchDelete,
   canBatchOperate,
-  refresh,
 } = useTax();
 </script>

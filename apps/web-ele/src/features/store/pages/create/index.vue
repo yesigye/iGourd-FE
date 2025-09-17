@@ -2,55 +2,51 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="handleAdd">
+        <ElButton type="primary">
           {{ t('store.addStoreCreate') }}
         </ElButton>
         <ElButton
           type="danger"
           v-if="canBatchOperate"
-          :disabled="!selectedRows.length"
-          @click="handleBatchDeleteStoreCreate"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
 
       <template #operation="{ row }">
-        <ElButton type="text" @click="handleDetail(row)">
+        <ElButton type="text">
           {{ t('common.detail') }}
         </ElButton>
         <ElButton
           v-if="row.status === 'DRAFT'"
           type="text"
-          @click="handleEditStoreCreate(row)"
+          @click="handleEdit(row)"
         >
           {{ t('common.edit') }}
         </ElButton>
         <ElButton
           v-if="row.status === 'DRAFT'"
           type="text"
-          @click="handleSubmit(row)"
         >
           {{ t('store.submit') }}
         </ElButton>
         <ElButton
           v-if="row.status === 'APPROVED'"
           type="text"
-          @click="handleContinue(row)"
         >
           {{ t('store.continue') }}
         </ElButton>
         <ElButton
           v-if="['DRAFT', 'REJECTED'].includes(row.status)"
           type="text"
-          @click="handleDelete(row)"
+          @click="handleBatchDelete(row)"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>
 
-    <StoreCreateDrawer @success="refresh" />
+    <Drawer />
   </Page>
 </template>
 
@@ -58,7 +54,7 @@
 import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { useStoreCreate } from '@@igourd/stores/hooks';
+import { useStoreCreate } from '@@/store/hooks';
 
 defineOptions({
   name: 'IStoreCreate',
@@ -68,16 +64,9 @@ const { t } = useI18n();
 
 const {
   Grid,
-  StoreCreateDrawer,
-  selectedRows,
-  handleAdd,
-  handleEditStoreCreate,
-  handleDetail,
-  handleSubmit,
-  handleContinue,
-  handleDelete,
-  handleBatchDeleteStoreCreate,
+  Drawer,
+  handleEdit,
+  handleBatchDelete,
   canBatchOperate,
-  refresh,
 } = useStoreCreate();
 </script>

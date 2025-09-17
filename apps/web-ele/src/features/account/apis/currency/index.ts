@@ -12,7 +12,7 @@ import { requestClient } from '#/api/request';
 // 获取货币分页列表
 export function getCurrencyPageListApi(data: CurrencyQueryPageVO) {
   return requestClient.post(
-    `/merchant/basics/currency/page-list`,
+    `/v1/merchant/basics/currency/page-list`,
     data,
   );
 }
@@ -20,7 +20,7 @@ export function getCurrencyPageListApi(data: CurrencyQueryPageVO) {
 // 获取货币列表
 export function getCurrencyListApi(data: any) {
   return requestClient.post(
-    `/merchant/basics/currency/list`,
+    `/v1/merchant/basics/currency/list`,
     data,
   );
 }
@@ -28,7 +28,7 @@ export function getCurrencyListApi(data: any) {
 // 创建货币
 export function createCurrencyApi(data: CurrencyCreateVO) {
   return requestClient.post(
-    `/merchant/basics/currency/create`,
+    `/v1/merchant/basics/currency/create`,
     data,
   );
 }
@@ -36,7 +36,7 @@ export function createCurrencyApi(data: CurrencyCreateVO) {
 // 更新货币
 export function updateCurrencyApi(data: CurrencyModifyVO) {
   return requestClient.post(
-    `/merchant/basics/currency/modify`,
+    `/v1/merchant/basics/currency/modify`,
     data,
   );
 }
@@ -44,7 +44,7 @@ export function updateCurrencyApi(data: CurrencyModifyVO) {
 // 删除货币
 export function deleteCurrencyApi(data: CurrencyRemoveVO) {
   return requestClient.post(
-    `/merchant/basics/currency/remove`,
+    `/v1/merchant/basics/currency/remove`,
     data,
   );
 }
@@ -52,7 +52,7 @@ export function deleteCurrencyApi(data: CurrencyRemoveVO) {
 // 获取货币详情
 export function getCurrencyDetailApi(currency_id: number) {
   return requestClient.post(
-    `/merchant/basics/currency/detail`,
+    `/v1/merchant/basics/currency/detail`,
     { currency_id },
   );
 }

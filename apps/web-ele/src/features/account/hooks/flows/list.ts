@@ -1,26 +1,15 @@
-import { ref, computed } from 'vue';
 import { useI18n } from '@igourd/locales';
-import { useUserStore } from '@igourd/stores';
 import { useCrud } from '#/hooks';
-import { useIgourdDrawer as useDrawer } from '@igourd/common-ui';
-import { formatRangeTime } from '@igourd/utils';
-import { dayjs } from 'element-plus';
-import { FlowsDrawer } from '@@/account/components';
-import type {
-  FinanceFlowQueryParams,
-  FinanceFlowSearchParams,
-  ColumnType,
-  BalanceDirection,
-  listPageFinanceFlowResponse,
-} from '@@/account/types';
+import type { VxeGridPropTypes } from '#/adapter/vxe-table';
+
+import type { AccountFlowsInfo } from '../../types/account';
 
 import {
   getFinanceFlowPageListApi,
   getFinanceFlowListApi,
   getFinanceFlowTotalApi,
 } from '@@/account/apis';
-import type { VxeGridPropTypes } from '#/adapter/vxe-table';
-import type { AccountFlowsInfo } from '../../types/account';
+import { FlowsDrawer } from '@@/account/components';
 
 export function useFlows() {
   const { t } = useI18n();
@@ -107,35 +96,11 @@ export function useFlows() {
       title: t('account.createTime'),
     },
   ];
-  // 当前选中的标签类型
-  // const selectedTabType = ref<ColumnType>('ALL');
 
   // 服务函数
   const service = {
     // 获取列表数据
-    query: async (params: FinanceFlowQueryParams) => {
-      const payload = {
-        ...params,
-        source_type_list: params?.source_type_list
-          ? params?.source_type_list?.map((str) => str.toUpperCase())
-          : undefined,
-      };
-
-      if (params.timeRange?.length) {
-        payload.start_date = params.timeRange[0]
-          ? formatRangeTime(dayjs(params.timeRange[0]))
-          : undefined;
-        payload.end_date = params.timeRange[1]
-          ? formatRangeTime(dayjs(params.timeRange[1]), 'end')
-          : undefined;
-      }
-
-      const response = await getFinanceFlowPageListApi(payload);
-      return {
-        data: response.data?.list || [],
-        total: response.data?.total || 0,
-      };
-    },
+    query: getFinanceFlowPageListApi,
   };
 
   // 使用 CRUD Hook
@@ -164,33 +129,14 @@ export function useFlows() {
     connectedComponent: FlowsDrawer,
   });
 
-  // 获取标签选项
-  const getTabOptions = () => {
-    return [
-      {
-        title: t('common.all'),
-        value: 'ALL',
-      },
-      {
-        title: t('account.revenue'),
-        value: 'REVENUE',
-      },
-      {
-        title: t('account.expenditure'),
-        value: 'EXPENDITURE',
-      },
-    ];
-  };
-
   return {
     // 组件
     Grid,
     Drawer,
-    columns: baseColumns,
-    tabOptions: getTabOptions(),
+
+    // 方法
     handleEdit,
     canBatchOperate,
     handleBatchDelete,
-    gridApi,
   };
 }

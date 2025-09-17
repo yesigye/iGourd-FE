@@ -9,7 +9,7 @@ import type {
 
 import { requestClient } from '#/api/request';
 
-const SALE_ENTER_BASE_URL = '/merchant/sale/enter';
+const SALE_ENTER_BASE_URL = '/v1/merchant/sale/enter';
 
 // 获取销售录入分页列表
 export function getSaleEnterPageListApi(data: SaleEnterQueryPageVO) {

@@ -1784,6 +1784,9 @@ importers:
       '@igourd-core/typings':
         specifier: workspace:^
         version: link:../@core/base/typings
+      decimal.js:
+        specifier: ^10.6.0
+        version: 10.6.0
       vue-router:
         specifier: 'catalog:'
         version: 4.5.1(vue@3.5.17(typescript@5.8.3))

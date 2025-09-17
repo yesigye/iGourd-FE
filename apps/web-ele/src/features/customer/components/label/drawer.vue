@@ -1,159 +1,39 @@
-<template>
-  <BasicDrawer
-    v-bind="$attrs"
-    :title="drawerTitle"
-    :width="600"
-    @register="register"
-    @success="handleSuccess"
-  >
-    <div class="p-4">
-      <Form
-        ref="formRef"
-        :model="formData"
-        :rules="formRules"
-        :label-col="{ span: 6 }"
-        :wrapper-col="{ span: 18 }"
-      >
-        <!-- 标签名称 -->
-        <FormItem
-          name="label_name"
-          :label="t('customer.labelName')"
-          :rules="[{ required: true, message: t('customer.please_enter_label_name') }]"
-        >
-          <Input
-            v-model:value="formData.label_name"
-            :placeholder="t('customer.please_enter_label_name')"
-          />
-        </FormItem>
-
-        <!-- 标签编码 -->
-        <FormItem
-          name="label_code"
-          :label="t('customer.labelCode')"
-          :rules="[{ required: true, message: t('customer.please_enter_label_code') }]"
-        >
-          <Input
-            v-model:value="formData.label_code"
-            :placeholder="t('customer.please_enter_label_code')"
-          />
-        </FormItem>
-
-        <!-- 标签类型 -->
-        <FormItem
-          name="label_type"
-          :label="t('customer.labelType')"
-          :rules="[{ required: true, message: t('customer.please_select_label_type') }]"
-        >
-          <Select
-            v-model:value="formData.label_type"
-            :placeholder="t('customer.please_select_label_type')"
-            :options="labelTypeOptions"
-          />
-        </FormItem>
-
-        <!-- 标签颜色 -->
-        <FormItem
-          name="color"
-          :label="t('customer.color')"
-          :rules="[{ required: true, message: t('customer.please_select_color') }]"
-        >
-          <Select
-            v-model:value="formData.color"
-            :placeholder="t('customer.please_select_color')"
-            :options="colorOptions"
-          >
-            <template #option="{ label, value }">
-              <div class="flex items-center">
-                <div
-                  class="w-4 h-4 rounded mr-2"
-                  :style="{ backgroundColor: getColorValue(value) }"
-                ></div>
-                <span>{{ label }}</span>
-              </div>
-            </template>
-          </Select>
-        </FormItem>
-
-        <!-- 排序 -->
-        <FormItem
-          name="sort_order"
-          :label="t('customer.sortOrder')"
-          :rules="[{ required: true, message: t('customer.please_enter_sort_order') }]"
-        >
-          <InputNumber
-            v-model:value="formData.sort_order"
-            :min="0"
-            :precision="0"
-            style="width: 100%"
-            :placeholder="t('customer.please_enter_sort_order')"
-          />
-        </FormItem>
-
-        <!-- 描述 -->
-        <FormItem
-          name="description"
-          :label="t('customer.description')"
-        >
-          <Textarea
-            v-model:value="formData.description"
-            :placeholder="t('customer.please_enter_description')"
-            :rows="3"
-          />
-        </FormItem>
-      </Form>
-    </div>
-
-    <template #footer>
-      <Space>
-        <Button @click="handleCancel">
-          {{ t('common.cancel') }}
-        </Button>
-        <Button
-          v-if="drawerData?.type !== 'detail'"
-          type="primary"
-          @click="handleSubmit"
-          :loading="loading"
-        >
-          {{ t('common.confirm') }}
-        </Button>
-      </Space>
-    </template>
-  </BasicDrawer>
-</template>
-
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useUserStore } from '@igourd/stores';
-import { useIgourdDrawer as useDrawer } from '@igourd/common-ui';
-import {
-  Form,
-  FormItem,
-  Input,
-  Select,
-  InputNumber,
-  Textarea,
-  Button,
-  Space,
-} from '@igourd/common-ui';
-
 import type {
   CustomerLabelCreateVO,
   CustomerLabelModifyVO,
-  LabelType,
   LabelColor,
 } from '@@/customer/types';
 
+import { computed, ref, watch } from 'vue';
+
+import {
+  Button,
+  Form,
+  FormItem,
+  Input,
+  InputNumber,
+  Select,
+  Space,
+  Textarea,
+  useIgourdDrawer,
+} from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+import { useUserStore } from '@igourd/stores';
+
 import {
   createCustomerLabelApi,
-  updateCustomerLabelApi,
   getCustomerLabelDetailApi,
+  updateCustomerLabelApi,
 } from '@@/customer/apis';
 
 defineOptions({
   name: 'CustomerLabelDrawer',
 });
 
+const emit = defineEmits<{
+  success: [];
+}>();
 const { t } = useI18n();
 const userStore = useUserStore();
 
@@ -214,30 +94,43 @@ const formData = ref<CustomerLabelCreateVO | CustomerLabelModifyVO>({
 
 // 表单规则
 const formRules = computed(() => ({
-  label_name: [{ required: true, message: t('customer.please_enter_label_name') }],
-  label_code: [{ required: true, message: t('customer.please_enter_label_code') }],
-  label_type: [{ required: true, message: t('customer.please_select_label_type') }],
+  label_name: [
+    { required: true, message: t('customer.please_enter_label_name') },
+  ],
+  label_code: [
+    { required: true, message: t('customer.please_enter_label_code') },
+  ],
+  label_type: [
+    { required: true, message: t('customer.please_select_label_type') },
+  ],
   color: [{ required: true, message: t('customer.please_select_color') }],
-  sort_order: [{ required: true, message: t('customer.please_enter_sort_order') }],
+  sort_order: [
+    { required: true, message: t('customer.please_enter_sort_order') },
+  ],
 }));
 
 // 抽屉标题
 const drawerTitle = computed(() => {
   const type = drawerData.value?.type;
 
-  if (type === 'add') {
-    return t('customer.addCustomerLabel');
-  } else if (type === 'edit') {
-    return t('customer.editCustomerLabel');
-  } else if (type === 'detail') {
-    return t('customer.customerLabelDetail');
-  } else {
-    return t('customer.customerLabel');
+  switch (type) {
+    case 'add': {
+      return t('customer.addCustomerLabel');
+    }
+    case 'detail': {
+      return t('customer.customerLabelDetail');
+    }
+    case 'edit': {
+      return t('customer.editCustomerLabel');
+    }
+    default: {
+      return t('customer.customerLabel');
+    }
   }
 });
 
 // 抽屉数据
-const drawerData = ref<{ type: string; id?: number } | null>(null);
+const drawerData = ref<null | { id?: number; type: string }>(null);
 
 // 监听抽屉数据变化
 watch(
@@ -253,7 +146,7 @@ watch(
       }
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // 加载表单数据
@@ -261,7 +154,6 @@ const loadFormData = async (id: number) => {
   try {
     const response = await getCustomerLabelDetailApi({
       label_id: id,
-      merchant_id: userStore.merchantId,
     });
     const data = response.data;
 
@@ -332,7 +224,7 @@ const handleSuccess = () => {
 };
 
 // 设置抽屉数据
-const setDrawerData = (data: { type: string; id?: number }) => {
+const setDrawerData = (data: { id?: number; type: string }) => {
   drawerData.value = data;
 };
 
@@ -340,8 +232,134 @@ const setDrawerData = (data: { type: string; id?: number }) => {
 defineExpose({
   setDrawerData,
 });
-
-const emit = defineEmits<{
-  success: [];
-}>();
 </script>
+
+<template>
+  <BasicDrawer
+    v-bind="$attrs"
+    :title="drawerTitle"
+    :width="600"
+    @register="register"
+    @success="handleSuccess"
+  >
+    <div class="p-4">
+      <Form
+        ref="formRef"
+        :model="formData"
+        :rules="formRules"
+        :label-col="{ span: 6 }"
+        :wrapper-col="{ span: 18 }"
+      >
+        <!-- 标签名称 -->
+        <FormItem
+          name="label_name"
+          :label="t('customer.labelName')"
+          :rules="[
+            { required: true, message: t('customer.please_enter_label_name') },
+          ]"
+        >
+          <Input
+            v-model:value="formData.label_name"
+            :placeholder="t('customer.please_enter_label_name')"
+          />
+        </FormItem>
+
+        <!-- 标签编码 -->
+        <FormItem
+          name="label_code"
+          :label="t('customer.labelCode')"
+          :rules="[
+            { required: true, message: t('customer.please_enter_label_code') },
+          ]"
+        >
+          <Input
+            v-model:value="formData.label_code"
+            :placeholder="t('customer.please_enter_label_code')"
+          />
+        </FormItem>
+
+        <!-- 标签类型 -->
+        <FormItem
+          name="label_type"
+          :label="t('customer.labelType')"
+          :rules="[
+            { required: true, message: t('customer.please_select_label_type') },
+          ]"
+        >
+          <Select
+            v-model:value="formData.label_type"
+            :placeholder="t('customer.please_select_label_type')"
+            :options="labelTypeOptions"
+          />
+        </FormItem>
+
+        <!-- 标签颜色 -->
+        <FormItem
+          name="color"
+          :label="t('customer.color')"
+          :rules="[
+            { required: true, message: t('customer.please_select_color') },
+          ]"
+        >
+          <Select
+            v-model:value="formData.color"
+            :placeholder="t('customer.please_select_color')"
+            :options="colorOptions"
+          >
+            <template #option="{ label, value }">
+              <div class="flex items-center">
+                <div
+                  class="mr-2 h-4 w-4 rounded"
+                  :style="{ backgroundColor: getColorValue(value) }"
+                ></div>
+                <span>{{ label }}</span>
+              </div>
+            </template>
+          </Select>
+        </FormItem>
+
+        <!-- 排序 -->
+        <FormItem
+          name="sort_order"
+          :label="t('customer.sortOrder')"
+          :rules="[
+            { required: true, message: t('customer.please_enter_sort_order') },
+          ]"
+        >
+          <InputNumber
+            v-model:value="formData.sort_order"
+            :min="0"
+            :precision="0"
+            style="width: 100%"
+            :placeholder="t('customer.please_enter_sort_order')"
+          />
+        </FormItem>
+
+        <!-- 描述 -->
+        <FormItem name="description" :label="t('customer.description')">
+          <Textarea
+            v-model:value="formData.description"
+            :placeholder="t('customer.please_enter_description')"
+            :rows="3"
+          />
+        </FormItem>
+      </Form>
+    </div>
+
+    <template #footer>
+      <Space>
+        <Button @click="handleCancel">
+          {{ t('common.cancel') }}
+        </Button>
+        <Button
+          v-if="drawerData?.type !== 'detail'"
+          type="primary"
+          @click="handleSubmit"
+          :loading="loading"
+        >
+          {{ t('common.confirm') }}
+        </Button>
+      </Space>
+    </template>
+  </BasicDrawer>
+</template>

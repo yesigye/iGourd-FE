@@ -9,7 +9,7 @@ import type {
 
 import { requestClient } from '#/api/request';
 
-const SETTING_PAYMENT_BASE_URL = '/merchant/setting/payment';
+const SETTING_PAYMENT_BASE_URL = '/v1/merchant/setting/payment';
 
 // 获取支付设置分页列表
 export function getSettingPaymentPageListApi(data: SettingPaymentQueryPageVO) {

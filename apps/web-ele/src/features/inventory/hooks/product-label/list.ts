@@ -1,8 +1,20 @@
-import type { ProductLabelItem, ProductLabelParams } from '../../types/product-label';
-import type { VxeGridPropTypes } from 'vxe-table';
-import { useI18n } from 'vue-i18n';
-import { inventoryProductLabelApi } from '../../apis/product-label';
-import { useCrud } from '@/composables/useCrud';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import type {
+  ProductLabelItem,
+  ProductLabelParams,
+} from '../../types/product-label';
+
+import type { VxeGridPropTypes } from '#/adapter/vxe-table';
+
+import { useI18n } from '@igourd/locales';
+
+import {
+  createOrUpdateProductLabel,
+  deleteProductLabel,
+  getProductLabelList,
+} from '@@/inventory/apis';
+
+import { useCrud } from '#/hooks';
 
 export function useInventoryProductLabelList() {
   const { t } = useI18n();
@@ -11,45 +23,45 @@ export function useInventoryProductLabelList() {
     {
       type: 'checkbox',
       width: 80,
-      fixed: 'left'
+      fixed: 'left',
     },
     {
       field: 'name',
       title: t('inventory.productLabelName'),
       minWidth: 220,
-      fixed: 'left'
+      fixed: 'left',
     },
     {
       field: 'product_number',
       title: t('inventory.productNumber'),
-      minWidth: 200
+      minWidth: 200,
     },
     {
       field: 'product',
       title: t('inventory.productsDetail'),
       minWidth: 85,
       fixed: 'right',
-      slots: { default: 'productDetail' }
+      slots: { default: 'productDetail' },
     },
     {
       field: 'creator_name',
       title: t('inventory.creator'),
-      minWidth: 200
+      minWidth: 200,
     },
     {
       field: 'create_time',
       title: t('inventory.creationTime'),
       minWidth: 180,
       sortable: true,
-      formatter: 'formatDateTime'
+      formatter: 'formatDateTime',
     },
     {
       field: 'operation',
       title: t('inventory.action'),
       minWidth: 85,
       fixed: 'right',
-      slots: { default: 'operation' }
-    }
+      slots: { default: 'operation' },
+    },
   ];
 
   const searchFormSchema = {
@@ -58,10 +70,11 @@ export function useInventoryProductLabelList() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('inventory.pleaseEnterKeywordsToSearchVendorNameCreditLine')}}",
-        clearable: true
-      }
-    }
+        placeholder:
+          "{{t('inventory.pleaseEnterKeywordsToSearchVendorNameCreditLine')}}",
+        clearable: true,
+      },
+    },
   };
 
   return useCrud<ProductLabelItem, ProductLabelParams>({
@@ -69,10 +82,12 @@ export function useInventoryProductLabelList() {
     searchFormSchema,
     batchOperate: true,
     service: {
-      query: inventoryProductLabelApi.getProductLabelList,
-      drop: inventoryProductLabelApi.deleteProductLabel,
-      create: inventoryProductLabelApi.createOrUpdateProductLabel,
-      update: inventoryProductLabelApi.createOrUpdateProductLabel,
-    }
+      // @ts-ignore
+      query: getProductLabelList,
+      // @ts-ignore
+      drop: deleteProductLabel,
+      create: createOrUpdateProductLabel,
+      update: createOrUpdateProductLabel,
+    },
   });
 }

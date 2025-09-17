@@ -26,7 +26,7 @@ export function getChartOfAccountsTreeApi(
   data: AccountLedgerBalanceTreeQueryVO,
 ) {
   return requestClient.post(
-    `/merchant/basics/accounting/account-ledger-balance/tree-list`,
+    `/v1/merchant/basics/accounting/account-ledger-balance/tree-list`,
     data,
   );
 }
@@ -34,7 +34,7 @@ export function getChartOfAccountsTreeApi(
 // 修改科目余额
 export function modifyLedgerBalanceApi(data: AccountLedgerBalanceModifyVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/account-ledger-balance/modify`,
+    `/v1/merchant/basics/accounting/account-ledger-balance/modify`,
     data,
   );
 }
@@ -42,7 +42,7 @@ export function modifyLedgerBalanceApi(data: AccountLedgerBalanceModifyVO) {
 // 创建科目
 export function createAccountLedgerApi(data: AccountLedgerCreateVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/account-ledger/create`,
+    `/v1/merchant/basics/accounting/account-ledger/create`,
     data,
   );
 }
@@ -50,7 +50,7 @@ export function createAccountLedgerApi(data: AccountLedgerCreateVO) {
 // 删除科目
 export function removeAccountLedgerApi(data: AccountLedgerRemoveVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/account-ledger/remove`,
+    `/v1/merchant/basics/accounting/account-ledger/remove`,
     data,
   );
 }
@@ -58,7 +58,7 @@ export function removeAccountLedgerApi(data: AccountLedgerRemoveVO) {
 // 获取科目详情
 export function getAccountLedgerDetailApi(account_ledger_id: number) {
   return requestClient.post(
-    `/merchant/basics/accounting/account-ledger/detail`,
+    `/v1/merchant/basics/accounting/account-ledger/detail`,
     { account_ledger_id },
   );
 }
@@ -66,14 +66,14 @@ export function getAccountLedgerDetailApi(account_ledger_id: number) {
 // 修改科目
 export function modifyAccountLedgerApi(data: AccountLedgerModifyVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/account-ledger/modify`,
+    `/v1/merchant/basics/accounting/account-ledger/modify`,
     data,
   );
 }
 
 // 修改账户
 export function modifyAccountApi(data: AccountModifyVO) {
-  return requestClient.post(`/merchant/basics/accounting/account/modify`, data);
+  return requestClient.post(`/v1/merchant/basics/accounting/account/modify`, data);
 }
 
 // 查询叶子节点科目
@@ -82,7 +82,7 @@ export function getLeafLedgersApi(data: {
   merchant_id?: number;
 }) {
   return requestClient.post(
-    `/merchant/basics/accounting/account-ledger/leaf-ledgers`,
+    `/v1/merchant/basics/accounting/account-ledger/leaf-ledgers`,
     data,
   );
 }
@@ -93,7 +93,7 @@ export function getAccountSetDetailApi(data: {
   merchant_id?: number;
 }) {
   return requestClient.post(
-    `/merchant/basics/accounting/account-set/detail`,
+    `/v1/merchant/basics/accounting/account-set/detail`,
     data,
   );
 }
@@ -101,7 +101,7 @@ export function getAccountSetDetailApi(data: {
 // 明细账分页查询
 export function getSubsidiaryLedgerPageApi(data: SubsidiaryLedgerQueryPageVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/subsidiary-ledger/page-list`,
+    `/v1/merchant/basics/accounting/subsidiary-ledger/page-list`,
     data,
   );
 }
@@ -109,7 +109,7 @@ export function getSubsidiaryLedgerPageApi(data: SubsidiaryLedgerQueryPageVO) {
 // 获取当前会计期间
 export function getCurrentPeriodApi(data: FindCurrentPeriodPayload) {
   return requestClient.post(
-    `/merchant/basics/accounting/accounting-period/current`,
+    `/v1/merchant/basics/accounting/accounting-period/current`,
     data,
   );
 }
@@ -117,7 +117,7 @@ export function getCurrentPeriodApi(data: FindCurrentPeriodPayload) {
 // 获取会计期间列表
 export function getAccountingPeriodsApi(data: AccountingPeriodCurrentQueryVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/accounting-period/list`,
+    `/v1/merchant/basics/accounting/accounting-period/list`,
     data,
   );
 }

@@ -9,7 +9,7 @@ import type {
 
 import { requestClient } from '#/api/request';
 
-const SALE_SHIFTS_BASE_URL = '/merchant/sale/shifts';
+const SALE_SHIFTS_BASE_URL = '/v1/merchant/sale/shifts';
 
 // 获取班次管理分页列表
 export function getSaleShiftsPageListApi(data: SaleShiftsQueryPageVO) {

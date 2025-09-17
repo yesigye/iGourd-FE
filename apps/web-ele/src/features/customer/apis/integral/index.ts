@@ -10,7 +10,7 @@ import type {
 
 import { requestClient } from '#/api/request';
 
-const CUSTOMER_INTEGRAL_BASE_URL = '/merchant/customer/integral';
+const CUSTOMER_INTEGRAL_BASE_URL = '/v1/merchant/customer/integral';
 
 // 获取客户积分分页列表
 export function getCustomerIntegralPageListApi(data: CustomerIntegralQueryPageVO) {

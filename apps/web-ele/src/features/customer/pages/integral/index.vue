@@ -2,43 +2,40 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="handleAdd">
+        <ElButton type="primary">
           {{ t('customer.addCustomerIntegral') }}
         </ElButton>
-        <ElButton type="default" @click="handleSetting">
+        <ElButton type="default">
           {{ t('customer.integralSetting') }}
         </ElButton>
         <ElButton
           type="danger"
           v-if="canBatchOperate"
-          :disabled="!selectedRows.length"
-          @click="handleBatchDeleteIntegral"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
-      
+
       <template #operation="{ row }">
-        <ElButton type="text" @click="handleDetail(row)">
+        <ElButton type="text">
           {{ t('common.detail') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           type="text"
-          @click="handleEditIntegral(row)"
+          @click="handleEdit(row)"
         >
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           type="text"
-          @click="handleDelete(row)"
+          @click="handleBatchDelete(row)"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>
-    
-    <IntegralDrawer @success="refresh" />
-    <SettingDrawer @success="refresh" />
+
+    <Drawer />
   </Page>
 </template>
 
@@ -56,16 +53,9 @@ const { t } = useI18n();
 
 const {
   Grid,
-  IntegralDrawer,
-  SettingDrawer,
-  selectedRows,
-  handleAdd,
-  handleEditIntegral,
-  handleDetail,
-  handleSetting,
-  handleDelete,
-  handleBatchDeleteIntegral,
+  Drawer,
+  handleEdit,
+  handleBatchDelete,
   canBatchOperate,
-  refresh,
 } = useCustomerIntegral();
 </script>

@@ -2,9 +2,9 @@
 
 // 盘点状态枚举
 export enum CountStatus {
-  PENDING = 'PENDING',
   APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED'
+  PENDING = 'PENDING',
+  REJECTED = 'REJECTED',
 }
 
 // 库存盘点查询参数
@@ -93,4 +93,7 @@ export interface CountOperationParams {
 export interface DeleteCountParams {
   physical_stock_take_ids: string[];
   merchant_id: string;
+}
+export interface CountItem {
+  id: string;
 }

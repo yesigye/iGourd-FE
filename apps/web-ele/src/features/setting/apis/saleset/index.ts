@@ -9,7 +9,7 @@ import type {
 
 import { requestClient } from '#/api/request';
 
-const SETTING_SALESET_BASE_URL = '/merchant/setting/saleset';
+const SETTING_SALESET_BASE_URL = '/v1/merchant/setting/saleset';
 
 // 获取销售设置分页列表
 export function getSettingSalesetPageListApi(data: SettingSalesetQueryPageVO) {

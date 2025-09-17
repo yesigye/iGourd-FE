@@ -1,253 +1,153 @@
-import { ref, computed } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useUserStore } from '@igourd/stores';
-import { useCrud } from '#/hooks';
-import { useIgourdDrawer as useDrawer } from '@igourd/common-ui';
+import type { CustomerAccountPageModel } from '@@/customer/types';
 
-import type {
-  CustomerAccountQueryPageVO,
-  CustomerAccountPageModel,
-  AccountType,
-} from '@@/customer/types';
+import type { VxeGridPropTypes } from '#/adapter/vxe-table';
+
+import { useI18n } from '@igourd/locales';
 
 import {
-  getCustomerAccountPageListApi,
   deleteCustomerAccountApi,
-  addCustomerRevenueApi,
-  addCustomerExpenditureApi,
+  getCustomerAccountPageListApi,
 } from '@@/customer/apis';
+import { AccountDrawer } from '@@/customer/components';
+
+import { useCrud } from '#/hooks';
 
 export function useCustomerAccount() {
   const { t } = useI18n();
-  const userStore = useUserStore();
+
   // 基础列定义
-  const baseColumns = [
+  const baseColumns: VxeGridPropTypes.Column<CustomerAccountPageModel>[] = [
     {
-      prop: 'customer_name',
+      field: 'customer_name',
       width: 200,
       align: 'left',
       fixed: 'left',
       title: t('customers.customerName'),
+      sortable: true,
     },
     {
-      prop: 'phone_no',
+      field: 'phone_no',
       width: 200,
       align: 'left',
       title: t('customers.phoneNumber'),
+      sortable: true,
     },
     {
-      prop: 'type',
+      field: 'type',
       width: 200,
       align: 'left',
       title: t('customers.accountType'),
+      sortable: true,
     },
     {
-      prop: 'revenue',
+      field: 'revenue',
       width: 200,
       align: 'left',
       title: t('customers.revenue'),
+      sortable: true,
     },
     {
-      prop: 'expenditures',
+      field: 'expenditures',
       width: 200,
       align: 'left',
       title: t('customers.expenditures'),
+      sortable: true,
     },
     {
-      prop: 'date',
+      field: 'date',
       width: 200,
       align: 'left',
       title: t('customers.accountDate'),
+      sortable: true,
     },
     {
-      prop: 'remark',
+      field: 'remark',
       width: 100,
       align: 'left',
       title: t('customers.remark'),
+      sortable: true,
     },
     {
-      prop: 'transaction_number',
+      field: 'transaction_number',
       width: 200,
       align: 'left',
       title: t('customers.transactionNumber'),
+      sortable: true,
     },
     {
-      prop: 'balance',
+      field: 'balance',
       width: 100,
       align: 'left',
       title: t('customers.balance'),
+      sortable: true,
     },
     {
-      prop: 'creator',
+      field: 'creator',
       width: 100,
       align: 'left',
       title: t('customers.creator'),
+      sortable: true,
     },
     {
-      prop: 'create_time',
+      field: 'create_time',
       width: 200,
       align: 'center',
       fixed: 'right',
       title: t('customers.creationTime'),
+      sortable: true,
     },
   ];
-  // 查询参数
-  const queryParams = ref<CustomerAccountQueryPageVO>({
-    page_num: 1,
-    page_size: 10,
-    keywords: '',
-    merchant_id: userStore.merchantId,
-  });
-
-  // 选中的行数据
-  const selectedRows = ref<CustomerAccountPageModel[]>([]);
 
   // 服务函数
   const service = {
     // 获取列表数据
-    query: async (params: CustomerAccountQueryPageVO) => {
-      const response = await getCustomerAccountPageListApi(params);
+    query: async ({
+      page_num,
+      page_size,
+    }: {
+      page_num: number;
+      page_size: number;
+    }) => {
+      const response = await getCustomerAccountPageListApi({
+        page_num,
+        page_size,
+      });
       return {
-        data: response.data?.list || [],
+        list: response.data?.list || [],
         total: response.data?.total || 0,
       };
     },
 
     // 删除客户账户
-    remove: async (data: {
-      account_id_list: number[];
-      merchant_id?: number;
-    }) => {
+    remove: async (data: { account_id_list: number[] }) => {
       return await deleteCustomerAccountApi(data);
     },
   };
 
   // 使用 CRUD Hook
-  const {
-    Grid,
-    gridApi,
-    handleEdit,
-    handleDelete,
-    canBatchOperate,
-    handleBatchDelete,
-    refresh,
-    loading,
-  } = useCrud({
-    service,
-    columns: baseColumns,
-    searchFormSchema: [
-      {
-        type: 'input',
-        name: 'keywords',
-        title: t('customers.search'),
-        placeholder: t('customers.search'),
+  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
+    useCrud({
+      service,
+      columns: baseColumns,
+      searchFormSchema: {
+        keywords: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-component-props': {
+            placeholder: t('customers.search'),
+          },
+        },
       },
-    ],
-    batchOperate: true, // 支持批量删除
-    connectedComponent: false,
-  });
-
-  // 抽屉管理
-  const [RevenueDrawer, { openDrawer: openRevenueDrawer }] = useDrawer<{
-    type: AccountType;
-  }>();
-  const [ExpenditureDrawer, { openDrawer: openExpenditureDrawer }] = useDrawer<{
-    type: AccountType;
-  }>();
-  const [ImportDrawer, { openDrawer: openImportDrawer }] = useDrawer();
-
-  // 处理搜索
-  const handleSearch = (keywords: string) => {
-    queryParams.value = {
-      ...queryParams.value,
-      keywords,
-      page_num: 1,
-    };
-  };
-
-  // 处理选择
-  const handleSelectionChange = (rows: CustomerAccountPageModel[]) => {
-    selectedRows.value = rows;
-  };
-
-  // 处理添加收入
-  const handleAddRevenue = () => {
-    openRevenueDrawer(true, { type: 'REVENUE' });
-  };
-
-  // 处理添加支出
-  const handleAddExpenditure = () => {
-    openExpenditureDrawer(true, { type: 'EXPENDITURE' });
-  };
-
-  // 处理导入
-  const handleImport = () => {
-    openImportDrawer(true);
-  };
-
-  // 处理批量删除
-  const handleBatchDeleteAccount = async () => {
-    if (!selectedRows.value.length) return;
-
-    try {
-      await deleteCustomerAccountApi({
-        merchant_id: userStore.merchantId,
-        account_id_list: selectedRows.value.map((item) => item.id),
-      });
-      refresh();
-      selectedRows.value = [];
-    } catch (error) {
-      console.error('批量删除失败:', error);
-    }
-  };
-
-  // 页码改变
-  const handleCurrentChange = (val: number) => {
-    queryParams.value = {
-      ...queryParams.value,
-      page_num: val,
-    };
-  };
-
-  // 页面大小改变
-  const handleSizeChange = (val: number) => {
-    queryParams.value = {
-      ...queryParams.value,
-      page_size: val,
-    };
-  };
+      batchOperate: true, // 支持批量删除
+      connectedComponent: AccountDrawer,
+    });
 
   return {
-    // 组件
     Grid,
-    RevenueDrawer,
-    ExpenditureDrawer,
-    ImportDrawer,
-
-    // 数据
-    queryParams,
-    selectedRows,
-
-    // 配置
-    columns: baseColumns,
-
-    // 方法
+    Drawer,
     handleEdit,
-    handleDelete,
-    handleSearch,
-    handleSelectionChange,
-    handleAddRevenue,
-    handleAddExpenditure,
-    handleImport,
-    handleBatchDeleteAccount,
-    handleCurrentChange,
-    handleSizeChange,
-    canBatchOperate,
     handleBatchDelete,
-    refresh,
-    loading,
-
-    // API
-    gridApi,
+    canBatchOperate,
   };
 }

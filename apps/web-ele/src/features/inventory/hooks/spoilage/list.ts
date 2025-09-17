@@ -1,12 +1,16 @@
-import type { SpoilageItem, SpoilageParams } from '../../types/spoilage';
-import type { VxeGridPropTypes } from 'vxe-table';
-import { useI18n } from 'vue-i18n';
-import { inventorySpoilageApi } from '../../apis/spoilage';
-import { useCrud } from '@/composables/useCrud';
-import { ref, computed } from 'vue';
-import { ElMessage, ElMessageBox } from 'element-plus';
-import { formatNumber } from '@/common/functions';
-import { retainDecimal8 } from '@/utils/eleValidate';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import type { SpoilageItem } from '@@/inventory/types';
+
+import type { VxeGridPropTypes } from '#/adapter/vxe-table';
+
+import { useI18n } from '@igourd/locales';
+
+import { deleteSpoilage, getSpoilageList } from '@@/inventory/apis';
+import { SpoilageDrawer } from '@@/inventory/components';
+
+import { useCrud } from '#/hooks';
+import { retainDecimal8 } from '#/utils/eleValidate';
+import { formatNumber } from '#/utils/functions';
 
 export function useInventorySpoilageList() {
   const { t } = useI18n();
@@ -16,20 +20,19 @@ export function useInventorySpoilageList() {
       type: 'checkbox',
       width: 80,
       fixed: 'left',
-      selectable: (row) => row.status !== 'APPROVED' && row.status !== 'REJECTED'
     },
     {
       field: 'stock_consumption_no',
       title: t('inventory.stockConsumptionNo'),
       minWidth: 240,
-      fixed: 'left'
+      fixed: 'left',
     },
     {
       field: 'consumption_date',
       title: t('inventory.stockConsumptionDate'),
       minWidth: 240,
       sortable: true,
-      formatter: ({ cellValue }) => cellValue ? cellValue.split(' ')[0] : ''
+      formatter: ({ cellValue }) => (cellValue ? cellValue.split(' ')[0] : ''),
     },
     {
       field: 'total_spoilage_quantity',
@@ -37,45 +40,45 @@ export function useInventorySpoilageList() {
       minWidth: 150,
       formatter: ({ cellValue }) => {
         return formatNumber(cellValue) && retainDecimal8(cellValue, 8);
-      }
+      },
     },
     {
       field: 'warehouse_name',
       title: t('inventory.warehouse_name'),
-      minWidth: 150
+      minWidth: 150,
     },
     {
       field: 'consumption_reason',
       title: t('inventory.consumption_reason'),
       minWidth: 150,
-      formatter: ({ cellValue }) => t(`inventory.${cellValue}`)
+      formatter: ({ cellValue }) => t(`inventory.${cellValue}`),
     },
     {
       field: 'status',
       title: t('inventory.review'),
       minWidth: 85,
       fixed: 'right',
-      slots: { default: 'status' }
+      slots: { default: 'status' },
     },
     {
       field: 'creator_name',
       title: t('inventory.creator'),
-      minWidth: 200
+      minWidth: 200,
     },
     {
       field: 'create_time',
       title: t('inventory.creationTime'),
       minWidth: 180,
       sortable: true,
-      formatter: 'formatDateTime'
+      formatter: 'formatDateTime',
     },
     {
       field: 'operation',
       title: t('inventory.action'),
       minWidth: 135,
       fixed: 'right',
-      slots: { default: 'operation' }
-    }
+      slots: { default: 'operation' },
+    },
   ];
 
   const searchFormSchema = {
@@ -85,8 +88,8 @@ export function useInventorySpoilageList() {
       'x-component': 'Input',
       'x-component-props': {
         placeholder: "{{t('inventory.pleaseEnterKeywordsToSearch')}}",
-        clearable: true
-      }
+        clearable: true,
+      },
     },
     consumption_reason: {
       type: 'string',
@@ -99,9 +102,9 @@ export function useInventorySpoilageList() {
           { label: t('inventory.EXPIRED'), value: 'EXPIRED' },
           { label: t('inventory.DAMAGED'), value: 'DAMAGED' },
           { label: t('inventory.LOST'), value: 'LOST' },
-          { label: t('inventory.OTHER'), value: 'OTHER' }
-        ]
-      }
+          { label: t('inventory.OTHER'), value: 'OTHER' },
+        ],
+      },
     },
     status: {
       type: 'string',
@@ -113,116 +116,39 @@ export function useInventorySpoilageList() {
         options: [
           { label: t('inventory.PENDING'), value: 'PENDING' },
           { label: t('inventory.APPROVED'), value: 'APPROVED' },
-          { label: t('inventory.REJECTED'), value: 'REJECTED' }
-        ]
-      }
-    }
+          { label: t('inventory.REJECTED'), value: 'REJECTED' },
+        ],
+      },
+    },
   };
 
-  // 选中的行
-  const selectedRows = ref<SpoilageItem[]>([]);
-
-  // 处理选择变化
-  const handleSelectionChange = (selection: SpoilageItem[]) => {
-    selectedRows.value = selection;
+  // 服务函数
+  const service = {
+    // 获取列表数据
+    query: getSpoilageList,
+    // 删除损耗
+    remove: async (data: { stock_consumption_ids: number[] }) => {
+      // @ts-ignore
+      return await deleteSpoilage(data);
+    },
   };
 
-  // 获取状态信息
-  const getStatusInfo = (status: string) => {
-    switch (status) {
-      case 'PENDING':
-        return { icon: 'icon-daishenhe', color: '#7D90B2' };
-      case 'APPROVED':
-        return { icon: 'icon-SURE', color: '#13BA67' };
-      case 'REJECTED':
-        return { icon: 'icon-fILED', color: '#FF0000' };
-      default:
-        return { icon: 'icon-daishenhe', color: '#7D90B2' };
-    }
-  };
-
-  // 处理删除
-  const handleDelete = async () => {
-    if (selectedRows.value.length === 0) {
-      ElMessage.warning(t('inventory.pleaseSelectItemsToDelete'));
-      return;
-    }
-
-    try {
-      await ElMessageBox.confirm(
-        t('inventory.confirmDeleteSelectedItems'),
-        t('inventory.warning'),
-        {
-          confirmButtonText: t('inventory.confirm'),
-          cancelButtonText: t('inventory.cancel'),
-          type: 'warning'
-        }
-      );
-
-      const res = await inventorySpoilageApi.deleteSpoilage({
-        stock_consumption_ids: selectedRows.value.map(item => item.id),
-        merchant_id: 1 // 这里应该从用户信息获取
-      });
-
-      if (res.code === 'SUCCESS') {
-        ElMessage.success(t('inventory.deleteSuccessful'));
-        // 刷新数据
-        // 这里应该调用刷新方法
-      } else {
-        ElMessage.error(t('inventory.deleteFailed') + ': ' + res.message);
-      }
-    } catch (error) {
-      if (error !== 'cancel') {
-        ElMessage.error(t('inventory.deleteOperationFailed'));
-      }
-    }
-  };
-
-  // 处理编辑
-  const handleEdit = (row: SpoilageItem) => {
-    console.log('编辑损耗记录', row);
-  };
-
-  // 处理详情
-  const handleDetail = (row: SpoilageItem) => {
-    console.log('查看损耗详情', row);
-  };
-
-  // 处理打印
-  const handlePrint = (row: SpoilageItem) => {
-    console.log('打印损耗单', row);
-  };
-
-  // 处理审核
-  const handleAudit = (row: SpoilageItem) => {
-    console.log('审核损耗记录', row);
-  };
-
-  // 处理添加
-  const handleAdd = () => {
-    console.log('添加损耗记录');
-  };
-
-  const crud = useCrud<SpoilageItem, SpoilageParams>({
-    columns,
-    searchFormSchema,
-    batchOperate: true,
-    service: {
-      query: inventorySpoilageApi.getSpoilageList,
-      drop: inventorySpoilageApi.deleteSpoilage
-    }
-  });
+  // 使用 CRUD Hook
+  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
+    useCrud({
+      // @ts-ignore
+      service,
+      columns,
+      searchFormSchema,
+      batchOperate: true,
+      connectedComponent: SpoilageDrawer,
+    });
 
   return {
-    ...crud,
-    selectedRows,
-    handleSelectionChange,
-    handleDelete,
+    Grid,
+    Drawer,
     handleEdit,
-    handleDetail,
-    handlePrint,
-    handleAudit,
-    handleAdd,
-    getStatusInfo
+    handleBatchDelete,
+    canBatchOperate,
   };
 }

@@ -9,7 +9,7 @@ import type {
 
 import { requestClient } from '#/api/request';
 
-const CUSTOMER_FEATURE_BASE_URL = '/merchant/customer/feature';
+const CUSTOMER_FEATURE_BASE_URL = '/v1/merchant/customer/feature';
 
 // 获取客户特征分页列表
 export function getCustomerFeaturePageListApi(data: CustomerFeatureQueryPageVO) {

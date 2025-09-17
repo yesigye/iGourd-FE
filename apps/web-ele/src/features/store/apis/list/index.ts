@@ -5,11 +5,11 @@ import type {
   StoreListModifyVO,
   StoreListRemoveVO,
   StoreListDetailModel,
-} from '@@igourd/stores/types';
+} from '@@/store/types';
 
 import { requestClient } from '#/api/request';
 
-const STORE_LIST_BASE_URL = '/merchant/store/list';
+const STORE_LIST_BASE_URL = '/v1/merchant/store/list';
 
 // 获取店铺列表分页列表
 export function getStoreListPageListApi(data: StoreListQueryPageVO) {

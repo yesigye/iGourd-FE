@@ -1,8 +1,8 @@
 import type { PriceChangeLogItem, PriceChangeLogParams } from '../../types/price';
-import type { VxeGridPropTypes } from 'vxe-table';
-import { useI18n } from 'vue-i18n';
+import type { VxeGridPropTypes } from '#/adapter/vxe-table';
+import { useI18n } from '@igourd/locales';
 import { inventoryPriceApi } from '../../apis/price';
-import { useCrud } from '@/composables/useCrud';
+import { useCrud } from '#/hooks';
 import Decimal from 'decimal.js';
 
 export function useInventoryPriceList() {

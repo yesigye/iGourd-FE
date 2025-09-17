@@ -130,7 +130,7 @@
 import { ref, computed, watch } from 'vue';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
-import { useIgourdDrawer as useDrawer } from '@igourd/common-ui';
+import { useIgourdDrawer } from '@igourd/common-ui';;
 import {
   Form,
   FormItem,

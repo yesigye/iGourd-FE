@@ -12,7 +12,7 @@ import { requestClient } from '#/api/request';
 // 获取货币兑换分页列表
 export function getCurrencyExchangePageListApi(data: CurrencyExchangeQueryPageVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/currency-exchange/page-list`,
+    `/v1/merchant/basics/accounting/currency-exchange/page-list`,
     data,
   );
 }
@@ -20,7 +20,7 @@ export function getCurrencyExchangePageListApi(data: CurrencyExchangeQueryPageVO
 // 创建货币兑换
 export function createCurrencyExchangeApi(data: CurrencyExchangeCreateVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/currency-exchange/create`,
+    `/v1/merchant/basics/accounting/currency-exchange/create`,
     data,
   );
 }
@@ -28,7 +28,7 @@ export function createCurrencyExchangeApi(data: CurrencyExchangeCreateVO) {
 // 更新货币兑换
 export function updateCurrencyExchangeApi(data: CurrencyExchangeModifyVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/currency-exchange/modify`,
+    `/v1/merchant/basics/accounting/currency-exchange/modify`,
     data,
   );
 }
@@ -36,7 +36,7 @@ export function updateCurrencyExchangeApi(data: CurrencyExchangeModifyVO) {
 // 删除货币兑换
 export function deleteCurrencyExchangeApi(data: CurrencyExchangeRemoveVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/currency-exchange/remove`,
+    `/v1/merchant/basics/accounting/currency-exchange/remove`,
     data,
   );
 }
@@ -44,7 +44,7 @@ export function deleteCurrencyExchangeApi(data: CurrencyExchangeRemoveVO) {
 // 获取货币兑换详情
 export function getCurrencyExchangeDetailApi(data: { currency_exchange_id: number; merchant_id?: number }) {
   return requestClient.post(
-    `/merchant/basics/accounting/currency-exchange/detail`,
+    `/v1/merchant/basics/accounting/currency-exchange/detail`,
     data,
   );
 }

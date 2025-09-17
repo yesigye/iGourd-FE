@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ElButton, Page } from '@/components/Page';
-import { useI18n } from 'vue-i18n';
+import { ElButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
 import { useInventoryProductLabelList } from '../../hooks/product-label/list';
 import { ref } from 'vue';
 

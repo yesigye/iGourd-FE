@@ -2,46 +2,43 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="handleAdd">
+        <ElButton type="primary">
           {{ t('store.addStore') }}
         </ElButton>
         <ElButton
           type="danger"
           v-if="canBatchOperate"
-          :disabled="!selectedRows.length"
-          @click="handleBatchDeleteStore"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
 
       <template #operation="{ row }">
-        <ElButton type="text" @click="handleDetail(row)">
+        <ElButton type="text">
           {{ t('common.detail') }}
         </ElButton>
         <ElButton
           type="text"
-          @click="handleEditStore(row)"
+          @click="handleEdit(row)"
         >
           {{ t('common.edit') }}
         </ElButton>
         <ElButton
           type="text"
-          @click="handleToggleStatus(row)"
         >
           {{ row.status === 'ACTIVE' ? t('store.deactivate') : t('store.activate') }}
         </ElButton>
         <ElButton
           v-if="row.status !== 'ACTIVE'"
           type="text"
-          @click="handleDelete(row)"
+          @click="handleBatchDelete(row)"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>
 
-    <StoreListDrawer @success="refresh" />
+    <Drawer />
   </Page>
 </template>
 
@@ -49,7 +46,7 @@
 import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { useStoreList } from '@@igourd/stores/hooks';
+import { useStoreList } from '@@/store/hooks';
 
 defineOptions({
   name: 'IStoreList',
@@ -59,15 +56,9 @@ const { t } = useI18n();
 
 const {
   Grid,
-  StoreListDrawer,
-  selectedRows,
-  handleAdd,
-  handleEditStore,
-  handleDetail,
-  handleToggleStatus,
-  handleDelete,
-  handleBatchDeleteStore,
+  Drawer,
+  handleEdit,
+  handleBatchDelete,
   canBatchOperate,
-  refresh,
 } = useStoreList();
 </script>

@@ -1,10 +1,10 @@
-import { useI18n } from '@igourd/locales';
-import { useIgourdDrawer, useIgourdForm, type ISchema } from '@igourd/common-ui';
-import { createOrUpdateAccountApi } from '@@/account/apis/account';
+import type { ISchema } from '@igourd/common-ui';
+
+import { useIgourdDrawer } from '@igourd/common-ui';
 // import { useAccountForm } from '@@/account/hooks/use-account-form';
 
 export function useAccountForm() {
-  const formSchema:ISchema = {};
+  const formSchema: ISchema = {};
 
   const [Drawer, drawerApi] = useIgourdDrawer({
     onOpenChange(isOpen) {

@@ -5,32 +5,32 @@ import { requestClient } from '#/api/request';
 // 获取账户管理分页列表
 export function getAccountManagementListApi(data: AccountQueryPageVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/account/page-list`,
+    `/v1/merchant/basics/accounting/account/page-list`,
     data,
   );
 }
 
 // 创建账户
 export function createAccountApi(data: AccountCreateVO) {
-  return requestClient.post(`/merchant/basics/accounting/account/create`, data);
+  return requestClient.post(`/v1/merchant/basics/accounting/account/create`, data);
 }
 
 // 更新账户
 export function updateAccountApi(data: AccountCreateVO) {
-  return requestClient.post(`/merchant/basics/accounting/account/modify`, data);
+  return requestClient.post(`/v1/merchant/basics/accounting/account/modify`, data);
 }
 
 // 删除账户
 export function removeAccountApi(data: AccountRemoveVO) {
-  return requestClient.post(`/merchant/basics/accounting/account/remove`, data);
+  return requestClient.post(`/v1/merchant/basics/accounting/account/remove`, data);
 }
 
 // 获取账户详情
 export function getAccountDetailApi(account_id: number | string) {
-  return requestClient.get(`/merchant/basics/accounting/account/detail/${account_id}`);
+  return requestClient.get(`/v1/merchant/basics/accounting/account/detail/${account_id}`);
 }
 
 // 更新账户状态
 export function updateAccountStatusApi(data: any) {
-  return requestClient.post(`/merchant/basics/accounting/account/update-status`, data);
+  return requestClient.post(`/v1/merchant/basics/accounting/account/update-status`, data);
 }

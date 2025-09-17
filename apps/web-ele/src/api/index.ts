@@ -1,3 +1,3 @@
+export * from './common';
 export * from './core';
-export * from "./common"
-export * from "./upload"
+export * from './upload';

@@ -253,7 +253,15 @@ const currencyChange = (val: any) => {
 const warehouseParms = ref({
   page_num: 1,
   page_size: 30,
-  keywords: '',
+     keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
+      'x-component-props': {
+        placeholder: "{{t('common.keywords')}}",
+        clearable: true,
+      },
+    },
 });
 const warehouseList: any = ref([]);
 
@@ -272,7 +280,15 @@ const filterVender = debounce((query: string) => {
 
 // 获取供应商列表
 const venderParms: any = ref({
-  keywords: '',
+     keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
+      'x-component-props': {
+        placeholder: "{{t('common.keywords')}}",
+        clearable: true,
+      },
+    },
 });
 const venderList = ref([] as any);
 const getInventoryWarehouse = () => {

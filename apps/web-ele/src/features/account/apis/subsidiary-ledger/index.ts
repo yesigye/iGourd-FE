@@ -8,7 +8,7 @@ import { requestClient } from '#/api/request';
 // 获取明细账分页列表
 export function getSubsidiaryLedgerPageListApi(data: SubsidiaryLedgerQueryPageVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/subsidiary-ledger/page-list`,
+    `/v1/merchant/basics/accounting/subsidiary-ledger/page-list`,
     data,
   );
 }

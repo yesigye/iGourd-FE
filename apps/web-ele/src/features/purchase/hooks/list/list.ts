@@ -19,7 +19,7 @@ export function usePurchaseList() {
   const columns: VxeGridPropTypes.Column<PurchaseListRow>[] = [
     {
       type: 'checkbox',
-      width: 80,
+      minWidth: 80,
       fixed: 'left',
     },
     {
@@ -53,25 +53,25 @@ export function usePurchaseList() {
     {
       field: 'address',
       title: t('purchase.address'),
-      width: 100,
+      minWidth: 100,
       align: 'right',
     },
     {
       field: 'creator_name',
       title: t('purchase.creator'),
-      width: 100,
+      minWidth: 100,
       align: 'right',
     },
     {
       field: 'create_time',
       title: t('purchase.createTime'),
-      width: 120,
+      minWidth: 160,
       align: 'right',
     },
     {
       field: 'operation',
       title: t('common.operations'),
-      width: 120,
+      minWidth: 120,
       fixed: 'right',
       slots: { default: 'operation' },
     },

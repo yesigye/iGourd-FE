@@ -1,258 +1,157 @@
-import { ref, computed } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useUserStore } from '@igourd/stores';
-import { useCrud } from '#/hooks';
-import { useIgourdDrawer as useDrawer } from '@igourd/common-ui';
+import type { CustomerFeaturePageModel } from '@@/customer/types';
 
-import type {
-  CustomerFeatureQueryPageVO,
-  CustomerFeaturePageModel,
-  FeatureType,
-} from '@@/customer/types';
+import type { VxeGridPropTypes } from '#/adapter/vxe-table';
+
+import { useI18n } from '@igourd/locales';
 
 import {
   getCustomerFeaturePageListApi,
   deleteCustomerFeatureApi,
 } from '@@/customer/apis';
+import { CustomerFeatureDrawer } from '@@/customer/components';
+
+import { useCrud } from '#/hooks';
 
 export function useCustomerFeature() {
   const { t } = useI18n();
-  const userStore = useUserStore();
+
   // 基础列定义
-  const baseColumns = [
+  const baseColumns: VxeGridPropTypes.Column<CustomerFeaturePageModel>[] = [
     {
-      prop: 'feature_name',
+      field: 'feature_name',
       width: 200,
       align: 'left',
       fixed: 'left',
       title: t('customer.featureName'),
+      sortable: true,
     },
     {
-      prop: 'feature_code',
+      field: 'feature_code',
       width: 150,
       align: 'left',
       title: t('customer.featureCode'),
+      sortable: true,
     },
     {
-      prop: 'feature_type',
+      field: 'feature_type',
       width: 120,
       align: 'center',
       title: t('customer.featureType'),
+      sortable: true,
     },
     {
-      prop: 'is_required',
+      field: 'is_required',
       width: 100,
       align: 'center',
       title: t('customer.isRequired'),
+      sortable: true,
     },
     {
-      prop: 'is_searchable',
+      field: 'is_searchable',
       width: 120,
       align: 'center',
       title: t('customer.isSearchable'),
+      sortable: true,
     },
     {
-      prop: 'sort_order',
+      field: 'sort_order',
       width: 100,
       align: 'center',
       title: t('customer.sortOrder'),
+      sortable: true,
     },
     {
-      prop: 'status',
+      field: 'status',
       width: 100,
       align: 'center',
       title: t('customer.status'),
+      sortable: true,
     },
     {
-      prop: 'description',
+      field: 'description',
       width: 200,
       align: 'left',
       title: t('customer.description'),
+      sortable: true,
     },
     {
-      prop: 'creator_name',
+      field: 'creator_name',
       width: 120,
       align: 'left',
       title: t('customer.creatorName'),
+      sortable: true,
     },
     {
-      prop: 'create_time',
+      field: 'create_time',
       width: 180,
       align: 'center',
       fixed: 'right',
       title: t('customer.createTime'),
     },
   ];
-  // 查询参数
-  const queryParams = ref<CustomerFeatureQueryPageVO>({
-    page_num: 1,
-    page_size: 10,
-    keywords: '',
-    merchant_id: userStore.merchantId,
-  });
-
-  // 选中的行数据
-  const selectedRows = ref<CustomerFeaturePageModel[]>([]);
 
   // 服务函数
   const service = {
     // 获取列表数据
-    query: async (params: CustomerFeatureQueryPageVO) => {
-      const response = await getCustomerFeaturePageListApi(params);
+    query: async ({ page_num, page_size }: { page_num: number; page_size: number }) => {
+      const response = await getCustomerFeaturePageListApi({ page_num, page_size });
       return {
-        data: response.data?.list || [],
+        list: response.data?.list || [],
         total: response.data?.total || 0,
       };
     },
 
     // 删除客户特征
-    remove: async (data: {
-      feature_id_list: number[];
-      merchant_id?: number;
-    }) => {
+    remove: async (data: { feature_id_list: number[] }) => {
       return await deleteCustomerFeatureApi(data);
     },
   };
 
   // 使用 CRUD Hook
-  const {
-    Grid,
-    gridApi,
-    handleEdit,
-    handleDelete,
-    canBatchOperate,
-    handleBatchDelete,
-    refresh,
-    loading,
-  } = useCrud({
-    service,
-    columns: baseColumns,
-    searchFormSchema: [
-      {
-        type: 'input',
-        name: 'keywords',
-        title: t('customer.search'),
-        placeholder: t('customer.searchPlaceholder'),
-      },
-      {
-        type: 'select',
-        name: 'feature_type',
-        title: t('customer.featureType'),
-        options: [
-          { label: t('customer.featureType.text'), value: 'TEXT' },
-          { label: t('customer.featureType.number'), value: 'NUMBER' },
-          { label: t('customer.featureType.date'), value: 'DATE' },
-          { label: t('customer.featureType.select'), value: 'SELECT' },
-          {
-            label: t('customer.featureType.multiSelect'),
-            value: 'MULTI_SELECT',
+  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
+    useCrud({
+      service,
+      columns: baseColumns,
+      searchFormSchema: {
+        keywords: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-component-props': {
+            placeholder: t('customer.searchPlaceholder'),
           },
-          { label: t('customer.featureType.boolean'), value: 'BOOLEAN' },
-          { label: t('customer.featureType.other'), value: 'OTHER' },
-        ],
+        },
+        feature_type: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-component-props': {
+            placeholder: t('customer.featureType'),
+            options: [
+              { label: t('customer.featureType.text'), value: 'TEXT' },
+              { label: t('customer.featureType.number'), value: 'NUMBER' },
+              { label: t('customer.featureType.date'), value: 'DATE' },
+              { label: t('customer.featureType.select'), value: 'SELECT' },
+              {
+                label: t('customer.featureType.multiSelect'),
+                value: 'MULTI_SELECT',
+              },
+              { label: t('customer.featureType.boolean'), value: 'BOOLEAN' },
+              { label: t('customer.featureType.other'), value: 'OTHER' },
+            ],
+          },
+        },
       },
-    ],
-    batchOperate: true, // 支持批量删除
-    connectedComponent: false,
-  });
+      batchOperate: true, // 支持批量删除
+      connectedComponent: CustomerFeatureDrawer,
+    });
 
-  // 抽屉管理
-  const [FeatureDrawer, { openDrawer: openFeatureDrawer }] = useDrawer<{
-    type: string;
-    id?: number;
-  }>();
-
-  // 处理搜索
-  const handleSearch = (val: any) => {
-    queryParams.value = {
-      ...queryParams.value,
-      keywords: val.searchVal?.keywords || '',
-      feature_type: val.searchVal?.feature_type || undefined,
-      page_num: 1,
-    };
-  };
-
-  // 处理选择
-  const handleSelectionChange = (rows: CustomerFeaturePageModel[]) => {
-    selectedRows.value = rows;
-  };
-
-  // 处理添加
-  const handleAdd = () => {
-    openFeatureDrawer(true, { type: 'add' });
-  };
-
-  // 处理编辑
-  const handleEditFeature = (row: CustomerFeaturePageModel) => {
-    openFeatureDrawer(true, { type: 'edit', id: row.id });
-  };
-
-  // 处理详情
-  const handleDetail = (row: CustomerFeaturePageModel) => {
-    openFeatureDrawer(true, { type: 'detail', id: row.id });
-  };
-
-  // 处理批量删除
-  const handleBatchDeleteFeature = async () => {
-    if (!selectedRows.value.length) return;
-
-    try {
-      await deleteCustomerFeatureApi({
-        merchant_id: userStore.merchantId,
-        feature_id_list: selectedRows.value.map((item) => item.id),
-      });
-      refresh();
-      selectedRows.value = [];
-    } catch (error) {
-      console.error('批量删除失败:', error);
-    }
-  };
-
-  // 页码改变
-  const handleCurrentChange = (val: number) => {
-    queryParams.value = {
-      ...queryParams.value,
-      page_num: val,
-    };
-  };
-
-  // 页面大小改变
-  const handleSizeChange = (val: number) => {
-    queryParams.value = {
-      ...queryParams.value,
-      page_size: val,
-    };
-  };
 
   return {
-    // 组件
     Grid,
-    FeatureDrawer,
-
-    // 数据
-    queryParams,
-    selectedRows,
-
-    // 配置
-    columns: baseColumns,
-
-    // 方法
+    Drawer,
     handleEdit,
-    handleDelete,
-    handleSearch,
-    handleSelectionChange,
-    handleAdd,
-    handleEditFeature,
-    handleDetail,
-    handleBatchDeleteFeature,
-    handleCurrentChange,
-    handleSizeChange,
-    canBatchOperate,
     handleBatchDelete,
-    refresh,
-    loading,
-
-    // API
-    gridApi,
+    canBatchOperate,
   };
 }

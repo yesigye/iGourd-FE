@@ -5,11 +5,11 @@ import type {
   StoreCreateModifyVO,
   StoreCreateRemoveVO,
   StoreCreateDetailModel,
-} from '@@igourd/stores/types';
+} from '@@/store/types';
 
 import { requestClient } from '#/api/request';
 
-const STORE_CREATE_BASE_URL = '/merchant/store/create';
+const STORE_CREATE_BASE_URL = '/v1/merchant/store/create';
 
 // 获取店铺创建分页列表
 export function getStoreCreatePageListApi(data: StoreCreateQueryPageVO) {

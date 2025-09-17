@@ -1,26 +1,10 @@
-<template>
-  <FormDrawer
-    v-bind="getBindValue"
-    :title="getTitle"
-    @register="registerDrawer"
-    @success="handleSuccess"
-  >
-    <Form
-      ref="formRef"
-      :schema="formSchema"
-      :label-width="100"
-      @submit="handleSubmit"
-    />
-  </FormDrawer>
-</template>
-
 <script setup lang="ts">
-import { computed, unref } from 'vue';
-import { Form, useIgourdDrawer } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-
 import type { AccountPageModel, DrawerTransferData } from '@@/account/types';
 
+import { computed, ref, unref } from 'vue';
+
+import { Form, useIgourdDrawer } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
 
 defineOptions({
   name: 'AccountDrawerForm',
@@ -170,3 +154,14 @@ defineExpose({
   openDrawer,
 });
 </script>
+
+<template>
+  <FormDrawer v-bind="getBindValue" :title="getTitle">
+    <Form
+      ref="formRef"
+      :schema="formSchema"
+      :label-width="100"
+      @submit="handleSubmit"
+    />
+  </FormDrawer>
+</template>

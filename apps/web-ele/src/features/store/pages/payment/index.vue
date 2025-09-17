@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Page } from '@/components/Page';
-import { useI18n } from 'vue-i18n';
+import { Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
 import { useStorePaymentList } from '../../hooks/payment/list';
 import { ElButton, ElDialog, ElForm, ElFormItem, ElSelect, ElOption, ElCheckboxGroup, ElCheckbox, ElTooltip, ElIcon } from 'element-plus';
 import { QuestionFilled, CirclePlus } from '@element-plus/icons-vue';
@@ -61,7 +61,7 @@ onMounted(async () => {
           </ElTooltip>
         </div>
       </div>
-      
+
       <!-- 支付方式列表 -->
       <div class="payment-list mt-1 flex gap-5 flex-wrap overflow-auto">
         <draggable
@@ -152,7 +152,7 @@ onMounted(async () => {
           </template>
         </draggable>
       </div>
-      
+
       <!-- 添加支付方式弹窗 -->
       <ElDialog
         v-model="addPaymentDialogVisible"
@@ -202,7 +202,7 @@ onMounted(async () => {
           </div>
         </template>
       </ElDialog>
-      
+
       <!-- 添加场景 -->
       <ElDialog
         v-model="addSceneDialogVisible"
@@ -249,17 +249,19 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .payment-item {
   width: 360px;
+
   &:hover {
-    box-shadow: 0px 8px 20px 0px #00000014;
-    box-shadow: 0px 12px 32px 4px #0000000a;
+    box-shadow: 0 12px 32px 4px #0000000a;
 
     .payment-option {
       display: block;
     }
   }
+
   .payment-option {
     display: none;
   }
+
   .payment-item-left {
     width: 58px;
     height: 58px;

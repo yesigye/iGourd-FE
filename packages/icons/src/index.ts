@@ -4,4 +4,6 @@ export * from './iconify';
 export { default as EmptyIcon } from './icons/empty-icon.vue';
 export * from './svg';
 
-export const UploadOutlined = createIconifyIcon("ep:upload-filled");
+export const UploadOutlined = createIconifyIcon('ep:upload-filled');
+export const Check = createIconifyIcon('ep:check');
+export const Close = createIconifyIcon('ep:close');

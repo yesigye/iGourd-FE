@@ -15,7 +15,7 @@ import { requestClient } from '#/api/request';
 // 获取收款单分页列表
 export function getReceiptOrderPageListApi(data: ReceiptOrderQueryPageVO) {
   return requestClient.post(
-    `/merchant/order/receipt-order/page-list`,
+    `/v1/merchant/order/receipt-order/page-list`,
     data,
   );
 }
@@ -23,7 +23,7 @@ export function getReceiptOrderPageListApi(data: ReceiptOrderQueryPageVO) {
 // 获取收款单详情
 export function getReceiptOrderDetailApi(data: { receipt_order_id: number; merchant_id?: number }) {
   return requestClient.post(
-    `/merchant/order/receipt-order/detail`,
+    `/v1/merchant/order/receipt-order/detail`,
     data,
   );
 }
@@ -31,7 +31,7 @@ export function getReceiptOrderDetailApi(data: { receipt_order_id: number; merch
 // 删除收款单
 export function removeReceiptOrderApi(data: ReceiptOrderRemoveVO) {
   return requestClient.post(
-    `/merchant/order/receipt-order/remove`,
+    `/v1/merchant/order/receipt-order/remove`,
     data,
   );
 }
@@ -39,7 +39,7 @@ export function removeReceiptOrderApi(data: ReceiptOrderRemoveVO) {
 // 创建收款单
 export function createReceiptOrderApi(data: ReceiptOrderCreateVO) {
   return requestClient.post(
-    `/merchant/order/receipt-order/create`,
+    `/v1/merchant/order/receipt-order/create`,
     data,
   );
 }
@@ -47,7 +47,7 @@ export function createReceiptOrderApi(data: ReceiptOrderCreateVO) {
 // 修改收款单
 export function modifyReceiptOrderApi(data: ReceiptOrderModifyVO) {
   return requestClient.post(
-    `/merchant/order/receipt-order/modify`,
+    `/v1/merchant/order/receipt-order/modify`,
     data,
   );
 }
@@ -55,7 +55,7 @@ export function modifyReceiptOrderApi(data: ReceiptOrderModifyVO) {
 // 审核收款单
 export function reviewReceiptOrderApi(data: ReceiptOrderReviewVO) {
   return requestClient.post(
-    `/merchant/order/receipt-order/review`,
+    `/v1/merchant/order/receipt-order/review`,
     data,
   );
 }
@@ -63,7 +63,7 @@ export function reviewReceiptOrderApi(data: ReceiptOrderReviewVO) {
 // 获取支付方式配置列表
 export function getPaymentMethodConfigListApi(data: PaymentMethodConfigQueryVO) {
   return requestClient.post(
-    `/merchant/order/merchant-payment-method-config/list`,
+    `/v1/merchant/order/merchant-payment-method-config/list`,
     data,
   );
 }
@@ -75,7 +75,7 @@ export function modifyReceiptOrderStatusApi(data: {
   review_status: string;
 }) {
   return requestClient.post(
-    `/merchant/order/receipt-order/modify-status`,
+    `/v1/merchant/order/receipt-order/modify-status`,
     data,
   );
 }

@@ -10,7 +10,7 @@ import type {
 
 import { requestClient } from '#/api/request';
 
-const CUSTOMER_EQUITY_BASE_URL = '/merchant/customer/equity';
+const CUSTOMER_EQUITY_BASE_URL = '/v1/merchant/customer/equity';
 
 // 获取客户股权分页列表
 export function getCustomerEquityPageListApi(data: CustomerEquityQueryPageVO) {

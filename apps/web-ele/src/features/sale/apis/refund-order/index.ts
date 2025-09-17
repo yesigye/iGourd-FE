@@ -9,7 +9,7 @@ import type {
 
 import { requestClient } from '#/api/request';
 
-const SALE_REFUND_ORDER_BASE_URL = '/merchant/sale/refund-order';
+const SALE_REFUND_ORDER_BASE_URL = '/v1/merchant/sale/refund-order';
 
 // 获取退款订单分页列表
 export function getSaleRefundOrderPageListApi(data: SaleRefundOrderQueryPageVO) {

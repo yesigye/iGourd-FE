@@ -75,6 +75,32 @@ setupIgourdVxeTable({
       },
     });
 
+    vxeUI.renderer.add('ReviewStatus', {
+      renderTableDefault(_, params) {
+        const { column, row } = params;
+        const cellValue = row[column.field];
+        if (!cellValue) {
+          return h('span', '--');
+        }
+        if (cellValue === 'REJECTED') {
+          return h('i', {
+            class: 'iconfont icon-fILED',
+            style: 'color:var(--el-color-danger)',
+          });
+        }
+        if (cellValue === 'PENDING') {
+          return h('i', {
+            class: 'iconfont icon-daishenhe status_icon',
+            style: 'color:var(--el-color-warning)',
+          });
+        }
+        return h('i', {
+          class: 'iconfont icon-SURE status_icon',
+          style: 'color:var(--el-color-success)',
+        });
+      },
+    });
+
     // 这里可以自行扩展 vxe-table 的全局配置，比如自定义格式化
     // vxeUI.formats.add
   },

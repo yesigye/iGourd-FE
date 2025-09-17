@@ -1,8 +1,8 @@
 import type { ProductFeatureItem, ProductFeatureParams } from '../../types/product-feature';
-import type { VxeGridPropTypes } from 'vxe-table';
-import { useI18n } from 'vue-i18n';
+import type { VxeGridPropTypes } from '#/adapter/vxe-table';
+import { useI18n } from '@igourd/locales';
 import { inventoryProductFeatureApi } from '../../apis/product-feature';
-import { useCrud } from '@/composables/useCrud';
+import { useCrud } from '#/hooks';
 
 export function useInventoryProductFeatureList() {
   const { t } = useI18n();

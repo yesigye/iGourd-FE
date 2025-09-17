@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Page } from '@/components/Page';
-import { useI18n } from 'vue-i18n';
+import { Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
 import { useInventoryPriceList } from '../../hooks/price/list';
 
 defineOptions({

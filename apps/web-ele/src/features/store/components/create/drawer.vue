@@ -254,7 +254,7 @@
 import { ref, computed, watch } from 'vue';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
-import { useIgourdDrawer as useDrawer } from '@igourd/common-ui';
+import { useIgourdDrawer } from '@igourd/common-ui';;
 import {
   Form,
   FormItem,
@@ -269,13 +269,13 @@ import {
 import type {
   StoreCreateCreateVO,
   StoreCreateModifyVO,
-} from '@@igourd/stores/types';
+} from '@@/store/types';
 
 import {
   createStoreCreateApi,
   updateStoreCreateApi,
   getStoreCreateDetailApi,
-} from '@@igourd/stores/apis';
+} from '@@/store/apis';
 
 defineOptions({
   name: 'StoreCreateDrawer',

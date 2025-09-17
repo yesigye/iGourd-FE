@@ -1,8 +1,8 @@
 import type { InventoryChangeLogItem, InventoryChangeLogParams } from '../../types/change';
-import type { VxeGridPropTypes } from 'vxe-table';
-import { useI18n } from 'vue-i18n';
+import type { VxeGridPropTypes } from '#/adapter/vxe-table';
+import { useI18n } from '@igourd/locales';
 import { inventoryChangeApi } from '../../apis/change';
-import { useCrud } from '@/composables/useCrud';
+import { useCrud } from '#/hooks';
 
 export function useInventoryChangeList() {
   const { t } = useI18n();

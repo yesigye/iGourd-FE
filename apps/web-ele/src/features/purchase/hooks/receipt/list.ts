@@ -1,20 +1,16 @@
-import type {
-  PurchaseReceiptPageModel,
-  PurchaseReceiptQueryPageVO,
-  ReceiptStatus,
-} from '@@/purchase/types';
+import type { PurchaseReceiptPageModel } from '@@/purchase/types';
 
-import { ref } from 'vue';
+import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
-import { PurchaseReceiptDrawer } from '@@/purchase/components';
+
 import {
   deletePurchaseReceiptApi,
   getPurchaseReceiptPageListApi,
 } from '@@/purchase/apis';
+import { PurchaseReceiptDrawer } from '@@/purchase/components';
 
 import { useCrud } from '#/hooks';
-import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 export function usePurchaseReceipt() {
   const { t } = useI18n(); // 基础列定义
@@ -83,33 +79,19 @@ export function usePurchaseReceipt() {
       slots: { default: 'operation' },
     },
   ];
-  // 选中的行数据
-  const selectedRows = ref<PurchaseReceiptPageModel[]>([]);
 
   // 服务函数
   const service = {
     // 获取列表数据
-    query: async (params: PurchaseReceiptQueryPageVO) => {
-      const response = await getPurchaseReceiptPageListApi(params);
-      return {
-        data: response.data?.list || [],
-        total: response.data?.total || 0,
-      };
-    },
+    query: getPurchaseReceiptPageListApi,
 
     // 删除收货单
-    remove: async (data: {
-      merchant_id?: number;
-      receipt_id_list: number[];
-    }) => {
-      return await deletePurchaseReceiptApi(data);
-    },
+    remove: deletePurchaseReceiptApi,
   };
 
   // 使用 CRUD Hook
-  const { Grid, gridApi, handleEdit, canBatchOperate, handleBatchDelete } =
-    useCrud<any, any>({
-      //@ts-ignore
+  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
+    useCrud({
       service,
       columns: baseColumns,
       searchFormSchema: {
@@ -118,7 +100,7 @@ export function usePurchaseReceipt() {
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: "{{t('common.keywords')}}",
+            placeholder: t('common.keywords'),
             clearable: true,
           },
         },
@@ -128,18 +110,10 @@ export function usePurchaseReceipt() {
     });
 
   return {
-    // 组件
     Grid,
-    selectedRows,
-
-    // 配置
-    columns: baseColumns,
-    // 方法
+    Drawer,
     handleEdit,
-    canBatchOperate,
     handleBatchDelete,
-
-    // API
-    gridApi,
+    canBatchOperate,
   };
 }

@@ -1,9 +1,63 @@
+<script lang="ts" setup>
+import { ElButton, Page } from '@igourd/common-ui';
+import { Check, CircleX } from '@igourd/icons';
+import { useI18n } from '@igourd/locales';
+
+import { useEmployee } from '@@/employee/hooks';
+
+defineOptions({
+  name: 'IEmployeeList',
+});
+
+const { t } = useI18n();
+
+const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
+  useEmployee();
+
+// 状态切换处理
+async function handleStatusChange(row: any) {
+  try {
+    if (row.status === 'FROZEN') {
+      // 解冻
+      const { unfreezeEmployeeApi } = await import('@@/employee/apis');
+      const response = await unfreezeEmployeeApi({ user_id: row.user_id });
+      if (response.code === 'SUCCESS') {
+        row.status = 'ACTIVE';
+        // 这里可以添加成功提示
+      } else {
+        // 这里可以添加错误提示
+      }
+    } else {
+      // 冻结
+      const { freezeEmployeeApi } = await import('@@/employee/apis');
+      const response = await freezeEmployeeApi({ user_id: row.user_id });
+      if (response.code === 'SUCCESS') {
+        row.status = 'FROZEN';
+        // 这里可以添加成功提示
+      } else {
+        // 这里可以添加错误提示
+      }
+    }
+  } catch (error) {
+    console.error('状态切换失败:', error);
+  }
+}
+</script>
+
 <template>
   <Page auto-content-height>
-    <Drawer />
     <Grid>
       <template #table-title>
-        <ElButton @click="handlerCreate">{{ t('employee.add') }}</ElButton>
+        <ElButton type="primary">
+          {{ t('employee.add') }}
+        </ElButton>
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          @click="handleBatchDelete"
+        >
+          {{ t('common.delete') }}
+        </ElButton>
       </template>
 
       <!-- 登录账号列插槽 -->
@@ -29,152 +83,20 @@
           :active-icon="Check"
           :inactive-icon="CircleX"
           @change="handleStatusChange(row)"
-          :disabled="row.roles.some(role => role.type === 'SUPER_ADMIN')"
+          :disabled="row.roles.some((role) => role.type === 'SUPER_ADMIN')"
         />
       </template>
 
       <!-- 操作列插槽 -->
       <template #action="{ row }">
-        <ElButton
-          type="primary"
-          size="small"
-          @click="handleEdit(row)"
-        >
+        <ElButton type="text" @click="handleEdit(row)">
           {{ t('employee.edit') }}
         </ElButton>
-        <ElButton
-          type="danger"
-          size="small"
-          @click="handleDelete(row)"
-        >
+        <ElButton type="text" @click="handleBatchDelete()">
           {{ t('employee.delete') }}
         </ElButton>
       </template>
     </Grid>
+    <Drawer />
   </Page>
 </template>
-
-<script lang="ts" setup>
-import type { VxeGridListeners } from '#/adapter/vxe-table';
-
-import { ElButton, Page, useIgourdDrawer, alert, confirm } from '@igourd/common-ui';
-import { ElMessage, ElMessageBox } from 'element-plus';
-import { Check, CircleX } from '@igourd/icons';
-
-import EmployeeForm from '@@/employee/components/employee-drawer.vue';
-import { useEmployeeList, type EmployeeInfo } from '@@/employee/hooks/use-employee-list';
-import { useI18n } from '@igourd/locales';
-
-defineOptions({
-  name: 'IEmployeeList',
-});
-
-const [Drawer, drawerApi] = useIgourdDrawer({
-  connectedComponent: EmployeeForm,
-});
-
-const { t } = useI18n();
-
-function handlerCreate() {
-  drawerApi.setData({}).open();
-}
-
-async function handleEdit(row: EmployeeInfo) {
-  try {
-    // 获取完整的行数据
-    const fullRowData = await getRowData(row.user_id);
-    drawerApi.setData({ ...fullRowData }).open();
-  } catch (error) {
-    ElMessage.error(t('employee.editError'));
-    console.error('编辑失败:', error);
-  }
-}
-
-async function handleDelete(row: EmployeeInfo) {
-  try {
-    const confirmed = await confirm(
-      t('employee.deleteConfirm'),
-      t('employee.deleteTitle')
-    );
-
-    if (confirmed) {
-      // 执行删除操作
-      await deleteRowData(row.user_id);
-      ElMessage.success(t('employee.deleteSuccess'));
-
-      // 刷新表格
-      refreshGrid();
-    }
-  } catch (error) {
-    ElMessage.error(t('employee.deleteError'));
-    console.error('删除失败:', error);
-  }
-}
-
-// 状态切换处理
-async function handleStatusChange(row: EmployeeInfo) {
-  try {
-    if (row.status === 'FROZEN') {
-      // 解冻
-      const { unfreezeEmployeeApi } = await import('@@/employee/apis');
-      const response = await unfreezeEmployeeApi({ user_id: row.user_id });
-      if (response.code === 'SUCCESS') {
-        row.status = 'ACTIVE';
-        ElMessage.success(t('employee.unfreezeSuccess'));
-        refreshGrid();
-      } else {
-        ElMessage.error(response.message || t('employee.unfreezeError'));
-      }
-    } else {
-      // 冻结
-      const { freezeEmployeeApi } = await import('@@/employee/apis');
-      const response = await freezeEmployeeApi({ user_id: row.user_id });
-      if (response.code === 'SUCCESS') {
-        row.status = 'FROZEN';
-        ElMessage.success(t('employee.freezeSuccess'));
-        refreshGrid();
-      } else {
-        ElMessage.error(response.message || t('employee.freezeError'));
-      }
-    }
-  } catch (error) {
-    ElMessage.error(t('employee.freezeError'));
-    console.error('状态切换失败:', error);
-  }
-}
-
-// 获取行数据的函数
-async function getRowData(id: string) {
-  const { getEmployeeDetailApi } = await import('@@/employee/apis');
-  return await getEmployeeDetailApi(id);
-}
-
-// 删除数据的函数
-async function deleteRowData(id: string) {
-  const { deleteEmployeeApi } = await import('@@/employee/apis');
-  await deleteEmployeeApi(id);
-}
-
-const gridEvents: VxeGridListeners<EmployeeInfo> = {
-  cellClick: ({ row }) => {
-    // 点击行可以查看详情
-    console.log('点击行:', row);
-  },
-  filterChange({ $grid, filterList }) {
-    const query: Record<string, any> = {};
-    filterList.forEach((item) => {
-      query[item.field] = item.values;
-    });
-    $grid!.commitProxy('reload', query);
-  },
-};
-
-const [Grid, { gridRef }] = useEmployeeList({ gridEvents });
-
-// 刷新表格的函数
-function refreshGrid() {
-  if (gridRef.value) {
-    gridRef.value.commitProxy('reload');
-  }
-}
-</script>

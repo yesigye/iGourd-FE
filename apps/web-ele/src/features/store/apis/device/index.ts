@@ -5,11 +5,11 @@ import type {
   StoreDeviceModifyVO,
   StoreDeviceRemoveVO,
   StoreDeviceDetailModel,
-} from '@@igourd/stores/types';
+} from '@@/store/types';
 
 import { requestClient } from '#/api/request';
 
-const STORE_DEVICE_BASE_URL = '/merchant/store/device';
+const STORE_DEVICE_BASE_URL = '/v1/merchant/store/device';
 
 // 获取设备管理分页列表
 export function getStoreDevicePageListApi(data: StoreDeviceQueryPageVO) {

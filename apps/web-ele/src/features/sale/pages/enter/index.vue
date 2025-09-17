@@ -2,48 +2,45 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="handleAdd">
+        <ElButton type="primary">
           {{ t('sale.addSaleEnter') }}
         </ElButton>
         <ElButton
           type="danger"
           v-if="canBatchOperate"
-          :disabled="!selectedRows.length"
-          @click="handleBatchDeleteEnter"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
-      
+
       <template #operation="{ row }">
-        <ElButton type="text" @click="handleDetail(row)">
+        <ElButton type="text">
           {{ t('common.detail') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           v-if="row.status === 'DRAFT'"
           type="text"
-          @click="handleEditEnter(row)"
+          @click="handleEdit(row)"
         >
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           v-if="row.status === 'DRAFT'"
           type="text"
-          @click="handleConfirm(row)"
         >
           {{ t('sale.confirm') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           v-if="['DRAFT', 'CONFIRMED'].includes(row.status)"
           type="text"
-          @click="handleDelete(row)"
+          @click="handleBatchDelete(row)"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>
-    
-    <EnterDrawer @success="refresh" />
+
+    <Drawer />
   </Page>
 </template>
 
@@ -61,20 +58,9 @@ const { t } = useI18n();
 
 const {
   Grid,
-  EnterDrawer,
-  selectedRows,
-  handleAdd,
-  handleEditEnter,
-  handleDetail,
-  handleDelete,
-  handleBatchDeleteEnter,
+  Drawer,
+  handleEdit,
+  handleBatchDelete,
   canBatchOperate,
-  refresh,
 } = useSaleEnter();
-
-// 处理确认
-const handleConfirm = (row: any) => {
-  // 这里可以添加确认逻辑
-  console.log('确认销售录入:', row);
-};
 </script>

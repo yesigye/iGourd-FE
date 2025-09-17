@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Page } from '@/components/Page';
-import { useI18n } from 'vue-i18n';
+import { Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
 import { useInventoryPriceLogList } from '../../hooks/price-log/list';
 import { ElButton, ElTooltip } from 'element-plus';
 import { ref, onMounted } from 'vue';
@@ -10,8 +10,8 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { 
-  Grid, 
+const {
+  Grid,
   handleExport,
   getStatistics,
   priceTypeOptions
@@ -81,8 +81,8 @@ onMounted(() => {
       <div class="bg-white p-4 rounded-lg shadow">
         <h3 class="text-lg font-semibold mb-2">{{ t('inventory.priceTypes') }}</h3>
         <div class="flex flex-wrap gap-2">
-          <span 
-            v-for="(count, type) in statistics.price_type_counts" 
+          <span
+            v-for="(count, type) in statistics.price_type_counts"
             :key="type"
             class="px-2 py-1 bg-gray-100 rounded text-sm"
           >
@@ -124,7 +124,7 @@ onMounted(() => {
 }
 
 .bg-white {
-  background-color: #ffffff;
+  background-color: #fff;
 }
 
 .p-4 {
@@ -136,7 +136,7 @@ onMounted(() => {
 }
 
 .shadow {
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
 }
 
 .text-lg {
@@ -190,8 +190,8 @@ onMounted(() => {
 }
 
 .px-2 {
-  padding-left: 0.5rem;
   padding-right: 0.5rem;
+  padding-left: 0.5rem;
 }
 
 .py-1 {

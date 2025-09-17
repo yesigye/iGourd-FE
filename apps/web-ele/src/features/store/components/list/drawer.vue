@@ -152,7 +152,7 @@
 import { ref, computed, watch } from 'vue';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
-import { useIgourdDrawer as useDrawer } from '@igourd/common-ui';
+import { useIgourdDrawer } from '@igourd/common-ui';;
 import {
   Form,
   FormItem,
@@ -168,13 +168,13 @@ import type {
   StoreListCreateVO,
   StoreListModifyVO,
   StoreType,
-} from '@@igourd/stores/types';
+} from '@@/store/types';
 
 import {
   createStoreListApi,
   updateStoreListApi,
   getStoreListDetailApi,
-} from '@@igourd/stores/apis';
+} from '@@/store/apis';
 
 defineOptions({
   name: 'StoreListDrawer',

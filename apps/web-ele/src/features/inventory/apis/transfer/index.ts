@@ -1,4 +1,4 @@
-import { request } from '@/utils/request';
+import { requestClient as request } from '#/api/request';
 import type { TransferParams, TransferResponse, TransferItem, TransferDetailParams, TransferDetailResponse } from '../../types/transfer';
 
 /**

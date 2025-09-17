@@ -1,69 +1,38 @@
 <script setup lang="ts">
-import { Page } from '@/components/Page';
-import { useI18n } from 'vue-i18n';
-import { useInventoryUnitList } from '../../hooks/unit/list';
-import { ElButton, ElTooltip, ElSwitch } from 'element-plus';
-import { ref } from 'vue';
+import { ElButton, Page } from '@igourd/common-ui';
+import { Check, Close } from '@igourd/icons';
+import { useI18n } from '@igourd/locales';
+
+import { useInventoryUnitList } from '@@/inventory/hooks';
+import { ElSwitch } from 'element-plus';
 
 defineOptions({
   name: 'IInventoryUnit',
 });
 
 const { t } = useI18n();
-const { 
-  Grid, 
-  selectedRows,
-  handleSelectionChange,
-  handleDelete,
-  handleEdit,
-  handleAdd,
-  handleStatusChange,
-  isEditable,
-  isSelectable,
-  Check,
-  Close
-} = useInventoryUnitList();
-
-// 处理编辑成功回调
-const handleEditSuccess = () => {
-  console.log('编辑成功，刷新数据');
-};
+const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
+  useInventoryUnitList();
 </script>
 
 <template>
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <div class="flex justify-between items-center w-full">
-          <div class="flex items-center gap-4">
-            <ElButton
-              v-if="selectedRows.length > 0"
-              v-auth="'inventory_unit_delete'"
-              type="danger"
-              @click="handleDelete"
-            >
-              {{ t('employee.deleteButton') }}
-            </ElButton>
-          </div>
-          <div class="flex items-center gap-2">
-            <ElButton
-              v-auth="'inventory_unit_add'"
-              type="primary"
-              @click="handleAdd"
-            >
-              <i class="iconfont icon-tianjia-dianpu mr-1"></i>
-              {{ t('employee.addButton') }}
-            </ElButton>
-          </div>
-        </div>
+        <ElButton type="primary">
+          {{ t('common.add') }}
+        </ElButton>
+        <ElButton type="danger" v-if="canBatchOperate">
+          {{ t('common.delete') }}
+        </ElButton>
       </template>
-      
+
       <template #isBasicUnit="{ row }">
         <el-tag :type="row.is_basic_unit ? 'success' : 'info'">
           {{ row.is_basic_unit ? t('inventory.yes') : t('inventory.no') }}
         </el-tag>
       </template>
-      
+
       <template #status="{ row }">
         <ElSwitch
           :model-value="row.status === 'ACTIVE' || row.status === 'INIT'"
@@ -76,49 +45,17 @@ const handleEditSuccess = () => {
           @change="handleStatusChange(row)"
         />
       </template>
-      
+
       <template #operation="{ row }">
-        <ElTooltip
-          class="box-item"
-          effect="dark"
-          :content="t('employee.editButton')"
-          placement="top"
-          :show-after="600"
-          :enterable="false"
-        >
-          <ElButton
-            link
-            type="primary"
-            size="small"
-            :class="{ 'light-transparent': !isEditable(row) }"
-            :disabled="!isEditable(row)"
-            @click="handleEdit(row)"
-          >
-            <i
-              class="iconfont icon-icon_Edit"
-              :class="{
-                'disabled-icon': !isEditable(row)
-              }"
-            />
-          </ElButton>
-        </ElTooltip>
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.edit') }}
+        </ElButton>
+        <ElButton type="text" @click="handleBatchDelete(row)">
+          {{ t('common.delete') }}
+        </ElButton>
       </template>
     </Grid>
+
+    <Drawer />
   </Page>
 </template>
-
-<style scoped lang="scss">
-.box-item {
-  margin-right: 8px;
-}
-
-.light-transparent {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.disabled-icon {
-  color: #c0c4cc;
-  cursor: not-allowed;
-}
-</style>

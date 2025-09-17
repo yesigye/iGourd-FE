@@ -9,7 +9,7 @@ import type {
 
 import { requestClient } from '#/api/request';
 
-const SETTING_TEMPLATE_BASE_URL = '/merchant/setting/template';
+const SETTING_TEMPLATE_BASE_URL = '/v1/merchant/setting/template';
 
 // 获取模板设置分页列表
 export function getSettingTemplatePageListApi(data: SettingTemplateQueryPageVO) {

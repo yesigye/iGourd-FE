@@ -1,20 +1,16 @@
 import type {
-  PurchaseOrderQueryPageVO,
-  PurchaseOrderPageModel,
   PurchaseOrderCreateVO,
   PurchaseOrderModifyVO,
+  PurchaseOrderQueryPageVO,
   PurchaseOrderRemoveVO,
-  PurchaseOrderDetailModel,
 } from '@@/purchase/types';
 
 import { requestClient } from '#/api/request';
 
-const PURCHASE_ORDER_BASE_URL = '/merchant/purchase/order';
-
 // 获取采购订单分页列表
 export function getPurchaseOrderPageListApi(data: PurchaseOrderQueryPageVO) {
   return requestClient.post(
-    `${PURCHASE_ORDER_BASE_URL}/page-list`,
+    `/v1/merchant/purchase/purchase-order/page-list`,
     data,
   );
 }
@@ -22,7 +18,7 @@ export function getPurchaseOrderPageListApi(data: PurchaseOrderQueryPageVO) {
 // 创建采购订单
 export function createPurchaseOrderApi(data: PurchaseOrderCreateVO) {
   return requestClient.post(
-    `${PURCHASE_ORDER_BASE_URL}/create`,
+    `/v1/merchant/purchase/purchase-order/create`,
     data,
   );
 }
@@ -30,7 +26,7 @@ export function createPurchaseOrderApi(data: PurchaseOrderCreateVO) {
 // 更新采购订单
 export function updatePurchaseOrderApi(data: PurchaseOrderModifyVO) {
   return requestClient.post(
-    `${PURCHASE_ORDER_BASE_URL}/modify`,
+    `/v1/merchant/purchase/purchase-order/modify`,
     data,
   );
 }
@@ -38,31 +34,40 @@ export function updatePurchaseOrderApi(data: PurchaseOrderModifyVO) {
 // 删除采购订单
 export function deletePurchaseOrderApi(data: PurchaseOrderRemoveVO) {
   return requestClient.post(
-    `${PURCHASE_ORDER_BASE_URL}/remove`,
+    `/v1/merchant/purchase/purchase-order/remove`,
     data,
   );
 }
 
 // 获取采购订单详情
-export function getPurchaseOrderDetailApi(data: { order_id: number; merchant_id?: number }) {
+export function getPurchaseOrderDetailApi(data: {
+  merchant_id?: number;
+  order_id: number;
+}) {
   return requestClient.post(
-    `${PURCHASE_ORDER_BASE_URL}/detail`,
+    `/v1/merchant/purchase/purchase-order/detail`,
     data,
   );
 }
 
 // 审核采购订单
-export function auditPurchaseOrderApi(data: { order_id: number; status: string; remark?: string; merchant_id?: number }) {
-  return requestClient.post(
-    `${PURCHASE_ORDER_BASE_URL}/audit`,
-    data,
-  );
+export function auditPurchaseOrderApi(data: {
+  merchant_id?: number;
+  order_id: number;
+  remark?: string;
+  status: string;
+}) {
+  return requestClient.post(`/v1/merchant/purchase/purchase-order/audit`, data);
 }
 
 // 结算采购订单
-export function settlePurchaseOrderApi(data: { order_id: number; payment_amount: number; merchant_id?: number }) {
+export function settlePurchaseOrderApi(data: {
+  merchant_id?: number;
+  order_id: number;
+  payment_amount: number;
+}) {
   return requestClient.post(
-    `${PURCHASE_ORDER_BASE_URL}/settle`,
+    `/v1/merchant/purchase/purchase-order/settle`,
     data,
   );
 }

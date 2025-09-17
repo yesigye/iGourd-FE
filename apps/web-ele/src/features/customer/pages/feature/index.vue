@@ -2,39 +2,37 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="handleAdd">
+        <ElButton type="primary">
           {{ t('customer.addCustomerFeature') }}
         </ElButton>
         <ElButton
           type="danger"
           v-if="canBatchOperate"
-          :disabled="!selectedRows.length"
-          @click="handleBatchDeleteFeature"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
-      
+
       <template #operation="{ row }">
-        <ElButton type="text" @click="handleDetail(row)">
+        <ElButton type="text">
           {{ t('common.detail') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           type="text"
-          @click="handleEditFeature(row)"
+          @click="handleEdit(row)"
         >
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           type="text"
-          @click="handleDelete(row)"
+          @click="handleBatchDelete(row)"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>
-    
-    <FeatureDrawer @success="refresh" />
+
+    <Drawer />
   </Page>
 </template>
 
@@ -52,14 +50,9 @@ const { t } = useI18n();
 
 const {
   Grid,
-  FeatureDrawer,
-  selectedRows,
-  handleAdd,
-  handleEditFeature,
-  handleDetail,
-  handleDelete,
-  handleBatchDeleteFeature,
+  Drawer,
+  handleEdit,
+  handleBatchDelete,
   canBatchOperate,
-  refresh,
 } = useCustomerFeature();
 </script>

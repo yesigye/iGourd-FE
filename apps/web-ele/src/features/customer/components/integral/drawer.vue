@@ -18,7 +18,9 @@
         <FormItem
           name="customer_id"
           :label="t('customer.customerName')"
-          :rules="[{ required: true, message: t('customer.please_select_customer') }]"
+          :rules="[
+            { required: true, message: t('customer.please_select_customer') },
+          ]"
         >
           <Select
             v-model:value="formData.customer_id"
@@ -33,7 +35,12 @@
         <FormItem
           name="integral_type"
           :label="t('customer.integralType')"
-          :rules="[{ required: true, message: t('customer.please_select_integral_type') }]"
+          :rules="[
+            {
+              required: true,
+              message: t('customer.please_select_integral_type'),
+            },
+          ]"
         >
           <Select
             v-model:value="formData.integral_type"
@@ -46,7 +53,9 @@
         <FormItem
           name="points"
           :label="t('customer.points')"
-          :rules="[{ required: true, message: t('customer.please_enter_points') }]"
+          :rules="[
+            { required: true, message: t('customer.please_enter_points') },
+          ]"
         >
           <InputNumber
             v-model:value="formData.points"
@@ -58,10 +67,7 @@
         </FormItem>
 
         <!-- 描述 -->
-        <FormItem
-          name="description"
-          :label="t('customer.description')"
-        >
+        <FormItem name="description" :label="t('customer.description')">
           <Textarea
             v-model:value="formData.description"
             :placeholder="t('customer.please_enter_description')"
@@ -73,7 +79,9 @@
         <FormItem
           name="earn_date"
           :label="t('customer.earnDate')"
-          :rules="[{ required: true, message: t('customer.please_select_earn_date') }]"
+          :rules="[
+            { required: true, message: t('customer.please_select_earn_date') },
+          ]"
         >
           <DatePicker
             v-model:value="formData.earn_date"
@@ -83,10 +91,7 @@
         </FormItem>
 
         <!-- 过期日期 -->
-        <FormItem
-          name="expire_date"
-          :label="t('customer.expireDate')"
-        >
+        <FormItem name="expire_date" :label="t('customer.expireDate')">
           <DatePicker
             v-model:value="formData.expire_date"
             :placeholder="t('customer.please_select_expire_date')"
@@ -118,7 +123,7 @@
 import { ref, computed, watch } from 'vue';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
-import { useIgourdDrawer as useDrawer } from '@igourd/common-ui';
+import { useIgourdDrawer } from '@igourd/common-ui';
 import {
   Form,
   FormItem,
@@ -179,10 +184,16 @@ const formData = ref<CustomerIntegralCreateVO | CustomerIntegralModifyVO>({
 
 // 表单规则
 const formRules = computed(() => ({
-  customer_id: [{ required: true, message: t('customer.please_select_customer') }],
-  integral_type: [{ required: true, message: t('customer.please_select_integral_type') }],
+  customer_id: [
+    { required: true, message: t('customer.please_select_customer') },
+  ],
+  integral_type: [
+    { required: true, message: t('customer.please_select_integral_type') },
+  ],
   points: [{ required: true, message: t('customer.please_enter_points') }],
-  earn_date: [{ required: true, message: t('customer.please_select_earn_date') }],
+  earn_date: [
+    { required: true, message: t('customer.please_select_earn_date') },
+  ],
 }));
 
 // 抽屉标题
@@ -219,7 +230,7 @@ watch(
       }
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // 加载客户选项

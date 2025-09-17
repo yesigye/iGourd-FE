@@ -1,12 +1,16 @@
-import {
-  useIgourdVxeGrid,
-  type VxeGridListeners,
-  type VxeGridProps,
-} from '#/adapter/vxe-table';
-import { useIgourdDrawer, type ISchema, confirm } from '@igourd/common-ui';
-import { ref, computed, type Component, type Ref, provide } from 'vue';
-import { omit } from '@igourd/utils';
+import type { Component, Ref } from 'vue';
+
+import type { ISchema } from '@igourd/common-ui';
+
+import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
+
+import { computed, provide, ref } from 'vue';
+
+import { confirm, useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+import { omit } from '@igourd/utils';
+
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
 
 interface List<T> {
   QueryParams: {
@@ -14,8 +18,8 @@ interface List<T> {
     page_size: number;
   };
   QueryResult: {
-    total: number;
     list: Array<T> | null;
+    total: number;
   };
 }
 
@@ -24,9 +28,9 @@ export interface Service<T, P> {
     params: List<Partial<T>>['QueryParams'],
   ) => Promise<List<Partial<T>>['QueryResult']>;
   detail: (id: number | string) => Promise<T>;
-  drop: (ids: (string | number)[]) => {};
-  update: (dto: P) => Promise<string | number>;
-  create: (dto: P) => Promise<string | number>;
+  drop: (ids: (number | string)[]) => {};
+  update: (dto: P) => Promise<number | string>;
+  create: (dto: P) => Promise<number | string>;
 }
 
 export interface CRUDOptions<T, P> extends VxeGridProps<T> {
@@ -51,20 +55,20 @@ function useBatchOperate<T>(
   const checkedKeys = ref<unknown[]>([]);
   const gridEvents: VxeGridListeners<T> = {
     checkboxChange(params) {
-      //@ts-ignore
+      // @ts-ignore
       checkedKeys.value = params.records.map((item) => item.id) || [];
       if (!checkboxChange) return;
       checkboxChange(params);
     },
     checkboxAll(params) {
-      //@ts-ignore
+      // @ts-ignore
       checkedKeys.value = params.records.map((item) => item.id) || [];
       if (!checkboxAll) return;
       checkboxAll(params);
     },
   };
   const canBatchOperate = computed(() => {
-    return !!checkedKeys.value.length;
+    return checkedKeys.value.length > 0;
   });
   return [checkedKeys, gridEvents, canBatchOperate];
 }
@@ -125,7 +129,6 @@ function useCrud<T extends object, P extends object>(
       drawerApi.setData({});
     },
   });
-  console.log(drawerApi);
   const handleEdit = (dto?: T) => {
     drawerApi.setData(dto ?? {}).open();
   };
@@ -165,4 +168,4 @@ function useCrud<T extends object, P extends object>(
   };
 }
 
-export { useCrud, useBatchOperate };
+export { useBatchOperate, useCrud };

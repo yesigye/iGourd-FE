@@ -1,203 +1,40 @@
-<template>
-  <BasicDrawer
-    v-bind="$attrs"
-    :title="drawerTitle"
-    :width="600"
-    @register="register"
-    @success="handleSuccess"
-  >
-    <div class="p-4">
-      <Form
-        ref="formRef"
-        :model="formData"
-        :rules="formRules"
-        :label-col="{ span: 6 }"
-        :wrapper-col="{ span: 18 }"
-      >
-        <!-- 特征名称 -->
-        <FormItem
-          name="feature_name"
-          :label="t('customer.featureName')"
-          :rules="[{ required: true, message: t('customer.please_enter_feature_name') }]"
-        >
-          <Input
-            v-model:value="formData.feature_name"
-            :placeholder="t('customer.please_enter_feature_name')"
-          />
-        </FormItem>
-
-        <!-- 特征编码 -->
-        <FormItem
-          name="feature_code"
-          :label="t('customer.featureCode')"
-          :rules="[{ required: true, message: t('customer.please_enter_feature_code') }]"
-        >
-          <Input
-            v-model:value="formData.feature_code"
-            :placeholder="t('customer.please_enter_feature_code')"
-          />
-        </FormItem>
-
-        <!-- 特征类型 -->
-        <FormItem
-          name="feature_type"
-          :label="t('customer.featureType')"
-          :rules="[{ required: true, message: t('customer.please_select_feature_type') }]"
-        >
-          <Select
-            v-model:value="formData.feature_type"
-            :placeholder="t('customer.please_select_feature_type')"
-            :options="featureTypeOptions"
-          />
-        </FormItem>
-
-        <!-- 是否必填 -->
-        <FormItem
-          name="is_required"
-          :label="t('customer.isRequired')"
-        >
-          <Switch
-            v-model:checked="formData.is_required"
-          />
-        </FormItem>
-
-        <!-- 是否可搜索 -->
-        <FormItem
-          name="is_searchable"
-          :label="t('customer.isSearchable')"
-        >
-          <Switch
-            v-model:checked="formData.is_searchable"
-          />
-        </FormItem>
-
-        <!-- 排序 -->
-        <FormItem
-          name="sort_order"
-          :label="t('customer.sortOrder')"
-          :rules="[{ required: true, message: t('customer.please_enter_sort_order') }]"
-        >
-          <InputNumber
-            v-model:value="formData.sort_order"
-            :min="0"
-            :precision="0"
-            style="width: 100%"
-            :placeholder="t('customer.please_enter_sort_order')"
-          />
-        </FormItem>
-
-        <!-- 描述 -->
-        <FormItem
-          name="description"
-          :label="t('customer.description')"
-        >
-          <Textarea
-            v-model:value="formData.description"
-            :placeholder="t('customer.please_enter_description')"
-            :rows="3"
-          />
-        </FormItem>
-      </Form>
-
-      <!-- 选项配置 -->
-      <div v-if="needOptions" class="mt-6">
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="text-lg font-medium">{{ t('customer.options') }}</h3>
-          <Button type="primary" @click="handleAddOption">
-            {{ t('customer.addOption') }}
-          </Button>
-        </div>
-
-        <Table
-          :data-source="formData.options"
-          :columns="optionColumns"
-          :pagination="false"
-          size="small"
-        >
-          <template #bodyCell="{ column, record, index }">
-            <template v-if="column.key === 'option_label'">
-              <Input
-                v-model:value="record.option_label"
-                :placeholder="t('customer.please_enter_option_label')"
-              />
-            </template>
-            <template v-else-if="column.key === 'option_value'">
-              <Input
-                v-model:value="record.option_value"
-                :placeholder="t('customer.please_enter_option_value')"
-              />
-            </template>
-            <template v-else-if="column.key === 'sort_order'">
-              <InputNumber
-                v-model:value="record.sort_order"
-                :min="0"
-                :precision="0"
-                style="width: 100%"
-              />
-            </template>
-            <template v-else-if="column.key === 'action'">
-              <Button type="link" danger @click="handleRemoveOption(index)">
-                {{ t('common.delete') }}
-              </Button>
-            </template>
-          </template>
-        </Table>
-      </div>
-    </div>
-
-    <template #footer>
-      <Space>
-        <Button @click="handleCancel">
-          {{ t('common.cancel') }}
-        </Button>
-        <Button
-          v-if="drawerData?.type !== 'detail'"
-          type="primary"
-          @click="handleSubmit"
-          :loading="loading"
-        >
-          {{ t('common.confirm') }}
-        </Button>
-      </Space>
-    </template>
-  </BasicDrawer>
-</template>
-
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
-import { useI18n } from '@igourd/locales';
-import { useUserStore } from '@igourd/stores';
-import { useIgourdDrawer as useDrawer } from '@igourd/common-ui';
-import {
-  Form,
-  FormItem,
-  Input,
-  Select,
-  Switch,
-  InputNumber,
-  Textarea,
-  Button,
-  Space,
-  Table,
-} from '@igourd/common-ui';
-
 import type {
   CustomerFeatureCreateVO,
   CustomerFeatureModifyVO,
-  FeatureType,
-  FeatureOption,
 } from '@@/customer/types';
+
+import { computed, ref, watch } from 'vue';
+
+import {
+  Button,
+  Form,
+  FormItem,
+  Input,
+  InputNumber,
+  Select,
+  Space,
+  Switch,
+  Table,
+  Textarea,
+  useIgourdDrawer,
+} from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+import { useUserStore } from '@igourd/stores';
 
 import {
   createCustomerFeatureApi,
-  updateCustomerFeatureApi,
   getCustomerFeatureDetailApi,
+  updateCustomerFeatureApi,
 } from '@@/customer/apis';
 
 defineOptions({
   name: 'CustomerFeatureDrawer',
 });
 
+const emit = defineEmits<{
+  success: [];
+}>();
 const { t } = useI18n();
 const userStore = useUserStore();
 
@@ -229,39 +66,51 @@ const formData = ref<CustomerFeatureCreateVO | CustomerFeatureModifyVO>({
   sort_order: 0,
   description: '',
   options: [],
-  merchant_id: userStore.merchantId,
 });
 
 // 是否需要选项配置
 const needOptions = computed(() => {
-  return ['SELECT', 'MULTI_SELECT'].includes(formData.value.feature_type);
+  return ['MULTI_SELECT', 'SELECT'].includes(formData.value.feature_type);
 });
 
 // 表单规则
 const formRules = computed(() => ({
-  feature_name: [{ required: true, message: t('customer.please_enter_feature_name') }],
-  feature_code: [{ required: true, message: t('customer.please_enter_feature_code') }],
-  feature_type: [{ required: true, message: t('customer.please_select_feature_type') }],
-  sort_order: [{ required: true, message: t('customer.please_enter_sort_order') }],
+  feature_name: [
+    { required: true, message: t('customer.please_enter_feature_name') },
+  ],
+  feature_code: [
+    { required: true, message: t('customer.please_enter_feature_code') },
+  ],
+  feature_type: [
+    { required: true, message: t('customer.please_select_feature_type') },
+  ],
+  sort_order: [
+    { required: true, message: t('customer.please_enter_sort_order') },
+  ],
 }));
 
 // 抽屉标题
 const drawerTitle = computed(() => {
   const type = drawerData.value?.type;
 
-  if (type === 'add') {
-    return t('customer.addCustomerFeature');
-  } else if (type === 'edit') {
-    return t('customer.editCustomerFeature');
-  } else if (type === 'detail') {
-    return t('customer.customerFeatureDetail');
-  } else {
-    return t('customer.customerFeature');
+  switch (type) {
+    case 'add': {
+      return t('customer.addCustomerFeature');
+    }
+    case 'detail': {
+      return t('customer.customerFeatureDetail');
+    }
+    case 'edit': {
+      return t('customer.editCustomerFeature');
+    }
+    default: {
+      return t('customer.customerFeature');
+    }
   }
 });
 
 // 抽屉数据
-const drawerData = ref<{ type: string; id?: number } | null>(null);
+const drawerData = ref<null | { id?: number; type: string }>(null);
 
 // 选项列定义
 const optionColumns = [
@@ -301,7 +150,7 @@ watch(
       }
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // 监听特征类型变化
@@ -313,7 +162,7 @@ watch(
     } else if (!formData.value.options || formData.value.options.length === 0) {
       formData.value.options = [];
     }
-  }
+  },
 );
 
 // 加载表单数据
@@ -415,7 +264,7 @@ const handleSuccess = () => {
 };
 
 // 设置抽屉数据
-const setDrawerData = (data: { type: string; id?: number }) => {
+const setDrawerData = (data: { id?: number; type: string }) => {
   drawerData.value = data;
 };
 
@@ -423,8 +272,173 @@ const setDrawerData = (data: { type: string; id?: number }) => {
 defineExpose({
   setDrawerData,
 });
-
-const emit = defineEmits<{
-  success: [];
-}>();
 </script>
+
+<template>
+  <BasicDrawer
+    v-bind="$attrs"
+    :title="drawerTitle"
+    :width="600"
+    @register="register"
+    @success="handleSuccess"
+  >
+    <div class="p-4">
+      <Form
+        ref="formRef"
+        :model="formData"
+        :rules="formRules"
+        :label-col="{ span: 6 }"
+        :wrapper-col="{ span: 18 }"
+      >
+        <!-- 特征名称 -->
+        <FormItem
+          name="feature_name"
+          :label="t('customer.featureName')"
+          :rules="[
+            {
+              required: true,
+              message: t('customer.please_enter_feature_name'),
+            },
+          ]"
+        >
+          <Input
+            v-model:value="formData.feature_name"
+            :placeholder="t('customer.please_enter_feature_name')"
+          />
+        </FormItem>
+
+        <!-- 特征编码 -->
+        <FormItem
+          name="feature_code"
+          :label="t('customer.featureCode')"
+          :rules="[
+            {
+              required: true,
+              message: t('customer.please_enter_feature_code'),
+            },
+          ]"
+        >
+          <Input
+            v-model:value="formData.feature_code"
+            :placeholder="t('customer.please_enter_feature_code')"
+          />
+        </FormItem>
+
+        <!-- 特征类型 -->
+        <FormItem
+          name="feature_type"
+          :label="t('customer.featureType')"
+          :rules="[
+            {
+              required: true,
+              message: t('customer.please_select_feature_type'),
+            },
+          ]"
+        >
+          <Select
+            v-model:value="formData.feature_type"
+            :placeholder="t('customer.please_select_feature_type')"
+            :options="featureTypeOptions"
+          />
+        </FormItem>
+
+        <!-- 是否必填 -->
+        <FormItem name="is_required" :label="t('customer.isRequired')">
+          <Switch v-model:checked="formData.is_required" />
+        </FormItem>
+
+        <!-- 是否可搜索 -->
+        <FormItem name="is_searchable" :label="t('customer.isSearchable')">
+          <Switch v-model:checked="formData.is_searchable" />
+        </FormItem>
+
+        <!-- 排序 -->
+        <FormItem
+          name="sort_order"
+          :label="t('customer.sortOrder')"
+          :rules="[
+            { required: true, message: t('customer.please_enter_sort_order') },
+          ]"
+        >
+          <InputNumber
+            v-model:value="formData.sort_order"
+            :min="0"
+            :precision="0"
+            style="width: 100%"
+            :placeholder="t('customer.please_enter_sort_order')"
+          />
+        </FormItem>
+
+        <!-- 描述 -->
+        <FormItem name="description" :label="t('customer.description')">
+          <Textarea
+            v-model:value="formData.description"
+            :placeholder="t('customer.please_enter_description')"
+            :rows="3"
+          />
+        </FormItem>
+      </Form>
+
+      <!-- 选项配置 -->
+      <div v-if="needOptions" class="mt-6">
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-lg font-medium">{{ t('customer.options') }}</h3>
+          <Button type="primary" @click="handleAddOption">
+            {{ t('customer.addOption') }}
+          </Button>
+        </div>
+
+        <Table
+          :data-source="formData.options"
+          :columns="optionColumns"
+          :pagination="false"
+          size="small"
+        >
+          <template #bodyCell="{ column, record, index }">
+            <template v-if="column.key === 'option_label'">
+              <Input
+                v-model:value="record.option_label"
+                :placeholder="t('customer.please_enter_option_label')"
+              />
+            </template>
+            <template v-else-if="column.key === 'option_value'">
+              <Input
+                v-model:value="record.option_value"
+                :placeholder="t('customer.please_enter_option_value')"
+              />
+            </template>
+            <template v-else-if="column.key === 'sort_order'">
+              <InputNumber
+                v-model:value="record.sort_order"
+                :min="0"
+                :precision="0"
+                style="width: 100%"
+              />
+            </template>
+            <template v-else-if="column.key === 'action'">
+              <Button type="link" danger @click="handleRemoveOption(index)">
+                {{ t('common.delete') }}
+              </Button>
+            </template>
+          </template>
+        </Table>
+      </div>
+    </div>
+
+    <template #footer>
+      <Space>
+        <Button @click="handleCancel">
+          {{ t('common.cancel') }}
+        </Button>
+        <Button
+          v-if="drawerData?.type !== 'detail'"
+          type="primary"
+          @click="handleSubmit"
+          :loading="loading"
+        >
+          {{ t('common.confirm') }}
+        </Button>
+      </Space>
+    </template>
+  </BasicDrawer>
+</template>

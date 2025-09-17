@@ -1,5 +1,11 @@
-import { request } from '@/utils/request';
-import type { UnitParams, UnitResponse, UnitItem, UnitFormData } from '../../types/unit';
+import type {
+  UnitFormData,
+  UnitItem,
+  UnitParams,
+  UnitResponse,
+} from '../../types/unit';
+
+import { requestClient as request } from '#/api/request';
 
 /**
  * 获取单位列表
@@ -18,7 +24,10 @@ export function getUnitDetail(params: { id: number; merchant_id: number }) {
 /**
  * 删除单位
  */
-export function deleteUnit(params: { product_unit_id_list: number[]; merchant_id: number }) {
+export function deleteUnit(params: {
+  merchant_id: number;
+  product_unit_id_list: number[];
+}) {
   return request.post('/inventory/unit/delete', params);
 }
 
@@ -39,7 +48,11 @@ export function updateUnit(data: UnitFormData) {
 /**
  * 更新单位状态
  */
-export function updateUnitStatus(params: { id: number; status: 'ACTIVE' | 'FROZEN'; merchant_id: number }) {
+export function updateUnitStatus(params: {
+  id: number;
+  merchant_id: number;
+  status: 'ACTIVE' | 'FROZEN';
+}) {
   return request.post('/inventory/unit/update-status', params);
 }
 
@@ -47,5 +60,8 @@ export function updateUnitStatus(params: { id: number; status: 'ACTIVE' | 'FROZE
  * 检查单位是否被使用
  */
 export function checkUnitUsage(params: { id: number; merchant_id: number }) {
-  return request.post<{ isUsed: boolean; usageCount: number }>('/inventory/unit/check-usage', params);
+  return request.post<{ isUsed: boolean; usageCount: number }>(
+    '/inventory/unit/check-usage',
+    params,
+  );
 }

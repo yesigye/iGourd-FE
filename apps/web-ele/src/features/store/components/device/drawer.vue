@@ -150,7 +150,7 @@
 import { ref, computed, watch } from 'vue';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
-import { useIgourdDrawer as useDrawer } from '@igourd/common-ui';
+import { useIgourdDrawer } from '@igourd/common-ui';;
 import {
   Form,
   FormItem,
@@ -165,13 +165,13 @@ import type {
   StoreDeviceCreateVO,
   StoreDeviceModifyVO,
   DeviceType,
-} from '@@igourd/stores/types';
+} from '@@/store/types';
 
 import {
   createStoreDeviceApi,
   updateStoreDeviceApi,
   getStoreDeviceDetailApi,
-} from '@@igourd/stores/apis';
+} from '@@/store/apis';
 
 defineOptions({
   name: 'StoreDeviceDrawer',

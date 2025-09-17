@@ -11,7 +11,7 @@ import { requestClient } from '#/api/request';
 // 获取期末结转列表
 export function getFinalTransferListApi(data: FinalTransferQueryParams) {
   return requestClient.post(
-    `/merchant/basics/accounting/final-transfer/list`,
+    `/v1/merchant/basics/accounting/final-transfer/list`,
     data,
   );
 }
@@ -19,7 +19,7 @@ export function getFinalTransferListApi(data: FinalTransferQueryParams) {
 // 执行期末结转
 export function executeFinalTransferApi(data: FinalTransferCreateVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/final-transfer/execute`,
+    `/v1/merchant/basics/accounting/final-transfer/execute`,
     data,
   );
 }
@@ -27,7 +27,7 @@ export function executeFinalTransferApi(data: FinalTransferCreateVO) {
 // 撤销期末结转
 export function reverseFinalTransferApi(data: FinalTransferRemoveVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/final-transfer/reverse`,
+    `/v1/merchant/basics/accounting/final-transfer/reverse`,
     data,
   );
 }
@@ -35,7 +35,7 @@ export function reverseFinalTransferApi(data: FinalTransferRemoveVO) {
 // 获取期末结转详情
 export function getFinalTransferDetailApi(data: { transfer_id: number; merchant_id?: number }) {
   return requestClient.post(
-    `/merchant/basics/accounting/final-transfer/detail`,
+    `/v1/merchant/basics/accounting/final-transfer/detail`,
     data,
   );
 }
@@ -43,7 +43,7 @@ export function getFinalTransferDetailApi(data: { transfer_id: number; merchant_
 // 获取结转状态
 export function getTransferStatusApi(data: { period_id: number; merchant_id?: number }) {
   return requestClient.post(
-    `/merchant/basics/accounting/final-transfer/status`,
+    `/v1/merchant/basics/accounting/final-transfer/status`,
     data,
   );
 }

@@ -1,22 +1,33 @@
+<script setup lang="ts">
+import { ElButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { usePurchaseOrder } from '@@/purchase/hooks';
+
+defineOptions({
+  name: 'IPurchaseOrder',
+});
+
+const { t } = useI18n();
+
+const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
+  usePurchaseOrder();
+</script>
+
 <template>
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="handleEdit()">
-          {{ t('purchase.addPurchaseOrder') }}
+        <ElButton type="primary">
+          {{ t('common.create') }}
         </ElButton>
-        <ElButton
-          type="danger"
-          v-if="canBatchOperate"
-          :disabled="!selectedRows.length"
-          @click="handleBatchDelete"
-        >
+        <ElButton type="danger" v-if="canBatchOperate">
           {{ t('common.delete') }}
         </ElButton>
       </template>
 
       <template #operation="{ row }">
-        <ElButton type="text" @click="handleEdit(row)">
+        <ElButton type="text">
           {{ t('common.detail') }}
         </ElButton>
         <ElButton
@@ -35,7 +46,11 @@
         <ElButton v-if="row.status === 'APPROVED'" type="text">
           {{ t('purchase.settle') }}
         </ElButton>
-        <ElButton v-if="['DRAFT', 'PENDING'].includes(row.status)" type="text">
+        <ElButton
+          v-if="['DRAFT', 'PENDING'].includes(row.status)"
+          type="text"
+          @click="handleBatchDelete()"
+        >
           {{ t('common.delete') }}
         </ElButton>
       </template>
@@ -43,25 +58,3 @@
     <Drawer />
   </Page>
 </template>
-
-<script setup lang="ts">
-import { ElButton, Page } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-
-import { usePurchaseOrder } from '@@/purchase/hooks';
-
-defineOptions({
-  name: 'IPurchaseOrder',
-});
-
-const { t } = useI18n();
-
-const {
-  Grid,
-  Drawer,
-  selectedRows,
-  canBatchOperate,
-  handleEdit,
-  handleBatchDelete,
-} = usePurchaseOrder();
-</script>

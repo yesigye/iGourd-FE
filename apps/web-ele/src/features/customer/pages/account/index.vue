@@ -2,26 +2,15 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <div class="flex gap-4">
-          <ElButton
-            type="success"
-            @click="handleAddRevenue"
-          >
-            {{ t('customers.addRevenue') }}
-          </ElButton>
-          <ElButton
-            type="danger"
-            @click="handleAddExpenditure"
-          >
-            {{ t('customers.addExpenditures') }}
-          </ElButton>
-          <ElButton
-            type="default"
-            @click="handleImport"
-          >
-            {{ t('customers.import') }}
-          </ElButton>
-        </div>
+        <ElButton type="primary">
+          {{ t('customers.addRevenue') }}
+        </ElButton>
+        <ElButton type="danger">
+          {{ t('customers.addExpenditures') }}
+        </ElButton>
+        <ElButton type="default">
+          {{ t('customers.import') }}
+        </ElButton>
       </template>
       
       <template #operation="{ row }">
@@ -33,15 +22,14 @@
         </ElButton>
         <ElButton 
           type="text"
-          @click="handleDelete(row)"
+          @click="handleBatchDelete(row)"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>
     
-    <RevenueDrawer @success="refresh" />
-    <ImportDrawer @success="refresh" />
+    <Drawer />
   </Page>
 </template>
 
@@ -59,13 +47,9 @@ const { t } = useI18n();
 
 const {
   Grid,
-  RevenueDrawer,
-  ImportDrawer,
-  handleAddRevenue,
-  handleAddExpenditure,
-  handleImport,
+  Drawer,
   handleEdit,
-  handleDelete,
-  refresh,
+  handleBatchDelete,
+  canBatchOperate,
 } = useCustomerAccount();
 </script>

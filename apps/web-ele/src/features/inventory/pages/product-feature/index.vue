@@ -1,14 +1,24 @@
 <script setup lang="ts">
-import { ElButton, Page } from '@/components/Page';
-import { useI18n } from 'vue-i18n';
-import { useInventoryProductFeatureList } from '../../hooks/product-feature/list';
+import { ElButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useInventoryProductFeatureList } from '@@/inventory/hooks';
 
 defineOptions({
   name: 'IInventoryProductFeature',
 });
 
 const { t } = useI18n();
-const { Grid, handleEdit, canBatchOperate, handleBatchDelete } = useInventoryProductFeatureList();
+const { Grid, handleEdit, canBatchOperate, handleBatchDelete } =
+  useInventoryProductFeatureList();
+</script>
+
+<script lang="ts">
+// 详情处理
+const handleDetail = (row: any) => {
+  // 实现详情逻辑
+  console.log('详情', row);
+};
 </script>
 
 <template>
@@ -52,11 +62,3 @@ const { Grid, handleEdit, canBatchOperate, handleBatchDelete } = useInventoryPro
     </Grid>
   </Page>
 </template>
-
-<script lang="ts">
-// 详情处理
-const handleDetail = (row: any) => {
-  // 实现详情逻辑
-  console.log('详情', row);
-};
-</script>

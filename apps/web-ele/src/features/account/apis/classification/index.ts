@@ -12,7 +12,7 @@ import { requestClient } from '#/api/request';
 // 获取财务分类列表
 export function getFinanceCategoryListApi(data: FinanceCategoryListPayload) {
   return requestClient.post(
-    `/merchant/basics/accounting/finance-category/page-list`,
+    `/v1/merchant/basics/accounting/finance-category/page-list`,
     data,
   );
 }
@@ -20,7 +20,7 @@ export function getFinanceCategoryListApi(data: FinanceCategoryListPayload) {
 // 创建财务分类
 export function createFinanceCategoryApi(data: FinanceCategoryPayload) {
   return requestClient.post(
-    `/merchant/basics/accounting/finance-category/create`,
+    `/v1/merchant/basics/accounting/finance-category/create`,
     data,
   );
 }
@@ -28,7 +28,7 @@ export function createFinanceCategoryApi(data: FinanceCategoryPayload) {
 // 更新财务分类
 export function updateFinanceCategoryApi(data: FinanceCategoryPayload) {
   return requestClient.post(
-    `/merchant/basics/accounting/finance-category/modify`,
+    `/v1/merchant/basics/accounting/finance-category/modify`,
     data,
   );
 }
@@ -36,7 +36,7 @@ export function updateFinanceCategoryApi(data: FinanceCategoryPayload) {
 // 删除财务分类
 export function deleteFinanceCategoryApi(data: DeleteFinanceCategoryPayload) {
   return requestClient.post(
-    `/merchant/basics/accounting/finance-category/remove`,
+    `/v1/merchant/basics/accounting/finance-category/remove`,
     data,
   );
 }
@@ -44,7 +44,7 @@ export function deleteFinanceCategoryApi(data: DeleteFinanceCategoryPayload) {
 // 获取财务分类详情
 export function getFinanceCategoryDetailApi(data: DetailFinanceCategoryPayload) {
   return requestClient.post(
-    `/merchant/basics/accounting/finance-category/detail`,
+    `/v1/merchant/basics/accounting/finance-category/detail`,
     data,
   );
 }

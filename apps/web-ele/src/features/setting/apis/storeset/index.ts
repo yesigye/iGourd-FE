@@ -9,7 +9,7 @@ import type {
 
 import { requestClient } from '#/api/request';
 
-const SETTING_STORESET_BASE_URL = '/merchant/setting/storeset';
+const SETTING_STORESET_BASE_URL = '/v1/merchant/setting/storeset';
 
 // 获取店铺设置分页列表
 export function getSettingStoresetPageListApi(data: SettingStoresetQueryPageVO) {

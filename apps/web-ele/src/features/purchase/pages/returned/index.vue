@@ -2,56 +2,51 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="handleAdd">
+        <ElButton type="primary">
           {{ t('purchase.addPurchaseReturned') }}
         </ElButton>
         <ElButton
           type="danger"
           v-if="canBatchOperate"
-          :disabled="!selectedRows.length"
-          @click="handleBatchDeleteReturned"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
-      
+
       <template #operation="{ row }">
-        <ElButton type="text" @click="handleDetail(row)">
+        <ElButton type="text">
           {{ t('common.detail') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           v-if="row.status === 'DRAFT'"
           type="text"
-          @click="handleEditReturned(row)"
+          @click="handleEdit(row)"
         >
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           v-if="row.status === 'DRAFT'"
           type="text"
-          @click="handleAudit(row, 'PENDING')"
         >
           {{ t('purchase.submitAudit') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           v-if="row.status === 'PENDING'"
           type="text"
-          @click="handleAudit(row, 'APPROVED')"
         >
           {{ t('purchase.approve') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           v-if="['DRAFT', 'PENDING'].includes(row.status)"
           type="text"
-          @click="handleDelete(row)"
+          @click="handleBatchDelete(row)"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>
-    
-    <ReturnedDrawer @success="refresh" />
-    <AuditDrawer @success="refresh" />
+
+    <Drawer />
   </Page>
 </template>
 
@@ -69,16 +64,9 @@ const { t } = useI18n();
 
 const {
   Grid,
-  ReturnedDrawer,
-  AuditDrawer,
-  selectedRows,
-  handleAdd,
-  handleEditReturned,
-  handleDetail,
-  handleAudit,
-  handleDelete,
-  handleBatchDeleteReturned,
+  Drawer,
+  handleEdit,
+  handleBatchDelete,
   canBatchOperate,
-  refresh,
 } = usePurchaseReturned();
 </script>

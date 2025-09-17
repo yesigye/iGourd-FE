@@ -12,7 +12,7 @@ import { requestClient } from '#/api/request';
 // 获取税务分页列表
 export function getTaxPageListApi(data: TaxQueryPageVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/tax/page-list`,
+    `/v1/merchant/basics/accounting/tax/page-list`,
     data,
   );
 }
@@ -20,7 +20,7 @@ export function getTaxPageListApi(data: TaxQueryPageVO) {
 // 创建税务
 export function createTaxApi(data: TaxCreateVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/tax/create`,
+    `/v1/merchant/basics/accounting/tax/create`,
     data,
   );
 }
@@ -28,7 +28,7 @@ export function createTaxApi(data: TaxCreateVO) {
 // 更新税务
 export function updateTaxApi(data: TaxModifyVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/tax/modify`,
+    `/v1/merchant/basics/accounting/tax/modify`,
     data,
   );
 }
@@ -36,7 +36,7 @@ export function updateTaxApi(data: TaxModifyVO) {
 // 删除税务
 export function deleteTaxApi(data: TaxRemoveVO) {
   return requestClient.post(
-    `/merchant/basics/accounting/tax/remove`,
+    `/v1/merchant/basics/accounting/tax/remove`,
     data,
   );
 }
@@ -44,7 +44,7 @@ export function deleteTaxApi(data: TaxRemoveVO) {
 // 获取税务详情
 export function getTaxDetailApi(data: { tax_id: number; merchant_id?: number }) {
   return requestClient.post(
-    `/merchant/basics/accounting/tax/detail`,
+    `/v1/merchant/basics/accounting/tax/detail`,
     data,
   );
 }

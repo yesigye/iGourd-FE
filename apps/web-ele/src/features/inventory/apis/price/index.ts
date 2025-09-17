@@ -1,4 +1,4 @@
-import { request } from '@/utils/request';
+import { requestClient as request } from '#/api/request';
 
 // 库存价格变更相关 API
 export const inventoryPriceApi = {

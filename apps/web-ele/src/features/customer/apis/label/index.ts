@@ -9,7 +9,7 @@ import type {
 
 import { requestClient } from '#/api/request';
 
-const CUSTOMER_LABEL_BASE_URL = '/merchant/customer/label';
+const CUSTOMER_LABEL_BASE_URL = '/v1/merchant/customer/label';
 
 // 获取客户标签分页列表
 export function getCustomerLabelPageListApi(data: CustomerLabelQueryPageVO) {

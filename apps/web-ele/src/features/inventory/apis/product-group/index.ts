@@ -1,4 +1,4 @@
-import { request } from '@/utils/request';
+import { requestClient as request } from '#/api/request';
 
 // 商品分组相关 API
 export const inventoryProductGroupApi = {

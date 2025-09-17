@@ -1,42 +1,21 @@
-<template>
-  <FormDrawer v-bind="getBindValue" :title="getTitle" @success="handleSuccess">
-    <Form
-      ref="formRef"
-      :schema="formSchema"
-      :label-width="100"
-      @submit="handleSubmit"
-    />
-  </FormDrawer>
-</template>
-
 <script setup lang="ts">
-import { computed, unref } from 'vue';
-import { Form, useIgourdDrawer } from '@igourd/common-ui';
+import type { CustomerInfo } from '@@/customer/types';
+
+import { computed, ref, unref } from 'vue';
+
+import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-
-import type {
-  CustomerInfo,
-  CustomerDrawerTransferData,
-} from '@@/customer/types';
-
-import { useDrawer } from '#/hooks';
 
 defineOptions({
   name: 'CustomerDrawerForm',
 });
 
 const { t } = useI18n();
-const [FormDrawer, { close: closeDrawer }] = useIgourdDrawer();
-
-const formRef = ref();
-const formData = ref<Partial<CustomerInfo>>({});
-
-const getTitle = computed(() => {
-  const { type } = formData.value as CustomerDrawerTransferData;
-  if (type === 'add') return t('customer.addCustomer');
-  if (type === 'edit') return t('customer.editCustomer');
-  return t('customer.customerDetail');
+const [FormDrawer] = useIgourdDrawer({
+  title: t('customer.addCustomer'),
 });
+
+const formData = ref<Partial<CustomerInfo>>({});
 
 const getBindValue = computed(() => {
   return {
@@ -148,28 +127,13 @@ const formSchema = computed(() => {
     },
   };
 });
-
-const handleSuccess = () => {
-  closeDrawer();
-};
-
-const handleSubmit = async (values: any) => {
-  console.log('Form values:', values);
-  // 这里处理表单提交逻辑
-  handleSuccess();
-};
-
-// 暴露给父组件的方法
-const openDrawer = (open: boolean, data?: CustomerDrawerTransferData) => {
-  if (open) {
-    formData.value = data || {};
-    setDrawerProps({ open });
-  } else {
-    closeDrawer();
-  }
-};
-
-defineExpose({
-  openDrawer,
+const { Form } = useIgourdForm({
+  schema: formSchema.value,
 });
 </script>
+
+<template>
+  <FormDrawer v-bind="getBindValue" :title="getTitle">
+    <Form />
+  </FormDrawer>
+</template>

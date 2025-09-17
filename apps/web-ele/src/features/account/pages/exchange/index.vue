@@ -2,36 +2,34 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="handleAdd">
+        <ElButton type="primary">
           {{ t('employee.addButton') }}
         </ElButton>
         <ElButton
           type="danger"
           v-if="canBatchOperate"
-          :disabled="!selectedIds.length"
-          @click="handleBatchDeleteExchange"
         >
           {{ t('employee.deleteButton') }}
         </ElButton>
       </template>
-      
+
       <template #operation="{ row }">
-        <ElButton 
+        <ElButton
           type="text"
-          @click="handleEditExchange(row)"
+          @click="handleEdit(row)"
         >
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           type="text"
-          @click="handleDelete(row)"
+          @click="handleBatchDelete(row)"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>
-    
-    <Drawer @success="refresh" />
+
+    <Drawer />
   </Page>
 </template>
 
@@ -50,12 +48,8 @@ const { t } = useI18n();
 const {
   Grid,
   Drawer,
-  selectedIds,
-  handleAdd,
-  handleEditExchange,
-  handleDelete,
-  handleBatchDeleteExchange,
+  handleEdit,
+  handleBatchDelete,
   canBatchOperate,
-  refresh,
 } = useExchange();
 </script>

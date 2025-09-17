@@ -2,57 +2,53 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="handleAdd">
+        <ElButton type="primary">
           {{ t('sale.addSaleRefundOrder') }}
         </ElButton>
-        <ElButton type="default" @click="handleExport">
+        <ElButton type="default">
           {{ t('sale.export') }}
         </ElButton>
         <ElButton
           type="danger"
           v-if="canBatchOperate"
-          :disabled="!selectedRows.length"
-          @click="handleBatchDeleteRefundOrder"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
-      
+
       <template #operation="{ row }">
-        <ElButton type="text" @click="handleDetail(row)">
+        <ElButton type="text">
           {{ t('common.detail') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           v-if="row.status === 'PENDING'"
           type="text"
-          @click="handleEditRefundOrder(row)"
+          @click="handleEdit(row)"
         >
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           type="text"
-          @click="handlePrint(row)"
         >
           {{ t('sale.print') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           v-if="row.status === 'PENDING'"
           type="text"
-          @click="handleCancelRefund(row)"
         >
           {{ t('sale.cancelRefund') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           v-if="['PENDING', 'PROCESSING'].includes(row.status)"
           type="text"
-          @click="handleDelete(row)"
+          @click="handleBatchDelete(row)"
         >
           {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>
-    
-    <RefundOrderDrawer @success="refresh" />
+
+    <Drawer />
   </Page>
 </template>
 
@@ -70,17 +66,9 @@ const { t } = useI18n();
 
 const {
   Grid,
-  RefundOrderDrawer,
-  selectedRows,
-  handleAdd,
-  handleEditRefundOrder,
-  handleDetail,
-  handleCancelRefund,
-  handlePrint,
-  handleExport,
-  handleDelete,
-  handleBatchDeleteRefundOrder,
+  Drawer,
+  handleEdit,
+  handleBatchDelete,
   canBatchOperate,
-  refresh,
 } = useSaleRefundOrder();
 </script>
