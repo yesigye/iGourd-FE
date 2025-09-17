@@ -1,7 +1,7 @@
 <template>
   <Drawer />
 </template>
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import { useIgourdDrawer } from '@igourd/common-ui';
 
 const [Drawer] = useIgourdDrawer({

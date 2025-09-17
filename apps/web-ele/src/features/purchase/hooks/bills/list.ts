@@ -5,7 +5,6 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
-  approvePurchaseBillApi,
   createPurchaseBillApi,
   deletePurchaseBillApi,
   getPurchaseBillsListApi,
@@ -61,17 +60,19 @@ export function usePurchaseBills() {
       title: t('purchase.paymentstatus'),
       width: 100,
       align: 'center',
+      cellRender: {
+        name: 'PaymentStatus',
+      },
+    },
+    {
+      field: 'purchase_order_no',
+      title: t('purchase.purchaseorderno'),
+      width: 100,
+      align: 'center',
     },
     {
       field: 'create_time',
       title: t('purchase.creationTime'),
-      width: 160,
-      sortable: true,
-      align: 'center',
-    },
-    {
-      field: 'review_status',
-      title: t('purchase.reviewStatus'),
       width: 160,
       sortable: true,
       align: 'center',
@@ -79,13 +80,6 @@ export function usePurchaseBills() {
     {
       field: 'creator_name',
       title: t('purchase.creator'),
-      width: 160,
-      sortable: true,
-      align: 'center',
-    },
-    {
-      field: 'create_time',
-      title: t('purchase.creationTime'),
       width: 160,
       sortable: true,
       align: 'center',
@@ -100,51 +94,13 @@ export function usePurchaseBills() {
   ];
 
   const searchFormSchema = {
-    bill_no: {
+    keywords: {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('purchase.billNo')}}",
+        placeholder: t('common.keywords'),
         clearable: true,
-      },
-    },
-    supplier_name: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('purchase.supplierName')}}",
-        clearable: true,
-      },
-    },
-    status: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Select',
-      'x-component-props': {
-        placeholder: "{{t('purchase.status')}}",
-        clearable: true,
-        options: [
-          { label: t('purchase.statusOptions.draft'), value: 'draft' },
-          { label: t('purchase.statusOptions.pending'), value: 'pending' },
-          { label: t('purchase.statusOptions.approved'), value: 'approved' },
-          { label: t('purchase.statusOptions.rejected'), value: 'rejected' },
-          { label: t('purchase.statusOptions.completed'), value: 'completed' },
-        ],
-      },
-    },
-    date_range: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'DatePicker',
-      'x-component-props': {
-        type: 'daterange',
-        rangeSeparator: '至',
-        startPlaceholder: '开始日期',
-        endPlaceholder: '结束日期',
-        format: 'YYYY-MM-DD',
-        valueFormat: 'YYYY-MM-DD',
       },
     },
   };

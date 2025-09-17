@@ -60,12 +60,14 @@ export function useInventoryPriceLogList() {
       field: 'change_amount',
       title: t('inventory.changeAmount'),
       minWidth: 180,
-      formatter: ({ row }) => {
-        const changeAmount = new Decimal(row.final_price || 0)
-          .minus(new Decimal(row.origin_price || 0))
-          .toNumber();
-        const color = changeAmount > 0 ? '#ff0000' : '#13ba07';
-        return `<span style="color: ${color}">${formatNumber(changeAmount)}</span>`;
+      cellRender: {
+        name: 'Amount',
+        //@ts-ignore
+        computedFn({ row }) {
+          return new Decimal(row.final_price || 0)
+            .minus(new Decimal(row.origin_price || 0))
+            .toNumber();
+        },
       },
     },
     {
@@ -97,11 +99,12 @@ export function useInventoryPriceLogList() {
       columns,
       searchFormSchema: {
         keywords: {
-          type: 'input',
-          name: 'keywords',
-          title: t('inventory.keywords'),
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
           'x-component-props': {
-            placeholder: t('inventory.keywordsPlaceholder'),
+            placeholder: "{{t('common.keywords')}}",
+            clearable: true,
           },
         },
       },

@@ -5,7 +5,7 @@ import type { TransferParams, TransferResponse, TransferItem, TransferDetailPara
  * 获取库存调拨列表
  */
 export function getTransferList(params: TransferParams) {
-  return request.post<TransferResponse>('/inventory/transfer/list', params);
+  return request.post<TransferResponse>('/v1/merchant/basics/inventory/stock-transfer/page-list', params);
 }
 
 /**

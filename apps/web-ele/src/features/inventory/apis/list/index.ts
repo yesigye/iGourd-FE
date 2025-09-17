@@ -2,7 +2,7 @@ import { requestClient } from '#/api/request';
 
 // 获取库存分页列表
 export function getInventoryListApi(data: any) {
-  return requestClient.post('/v1/merchant/inventory/page-list', data);
+  return requestClient.post('/v1/merchant/basics/inventory/stock-info/page-list', data);
 }
 
 // 更新库存

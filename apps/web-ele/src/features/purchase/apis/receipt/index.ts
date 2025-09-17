@@ -7,7 +7,7 @@ import type {
 
 import { requestClient } from '#/api/request';
 
-const PURCHASE_RECEIPT_BASE_URL = '/v1/merchant/purchase/receipt';
+const PURCHASE_RECEIPT_BASE_URL = '/v1/merchant/purchase/goods-receipt-note';
 
 // 获取收货单分页列表
 export function getPurchaseReceiptPageListApi(

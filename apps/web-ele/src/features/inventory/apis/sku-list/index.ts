@@ -5,7 +5,7 @@ import type { SkuListParams, SkuListResponse, SkuListItem } from '../../types/sk
  * 获取SKU列表
  */
 export function getSkuList(params: SkuListParams) {
-  return request.post<SkuListResponse>('/inventory/sku/list', params);
+  return request.post<SkuListResponse>('/v1/merchant/basics/inventory/product-info/page-list', params);
 }
 
 /**

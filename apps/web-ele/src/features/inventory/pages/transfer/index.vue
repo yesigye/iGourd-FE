@@ -14,6 +14,7 @@ const {
   Grid,
   Drawer,
   handleEdit,
+  handleCreate,
   handleBatchDelete,
   canBatchOperate,
 } = useInventoryTransferList();
@@ -23,7 +24,7 @@ const {
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary">
+        <ElButton type="primary" @click="handleCreate()">
           {{ t('common.add') }}
         </ElButton>
         <ElButton
@@ -36,16 +37,10 @@ const {
       </template>
 
       <template #operation="{ row }">
-        <ElButton
-          type="text"
-          @click="handleEdit(row)"
-        >
+        <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton
-          type="text"
-          @click="handleBatchDelete(row)"
-        >
+        <ElButton type="text" @click="handleBatchDelete()">
           {{ t('common.delete') }}
         </ElButton>
       </template>

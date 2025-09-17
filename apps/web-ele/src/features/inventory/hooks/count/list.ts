@@ -9,52 +9,21 @@ import { formatNumber } from '#/utils/functions';
 
 import { getCountList } from '../../apis/count';
 
+import { CountDrawer } from '@@/inventory/components';
+
 export function useInventoryCountList() {
   const { t } = useI18n();
-
-  const getStatusInfo = (status: 'APPROVED' | 'PENDING' | 'REJECTED') => {
-    switch (status) {
-      case 'APPROVED': {
-        return {
-          icon: 'icon-SURE',
-          color: '#13BA67',
-          text: t('inventory.approved'),
-        };
-      }
-      case 'PENDING': {
-        return {
-          icon: 'icon-daishenhe',
-          color: '#7D90B2',
-          text: t('inventory.pendingReview'),
-        };
-      }
-      case 'REJECTED': {
-        return {
-          icon: 'icon-fILED',
-          color: '#FF0000',
-          text: t('inventory.rejected'),
-        };
-      }
-      default: {
-        return {
-          icon: 'icon-daishenhe',
-          color: '#7D90B2',
-          text: t('inventory.pendingReview'),
-        };
-      }
-    }
-  };
 
   const columns: VxeGridPropTypes.Column<CountItem>[] = [
     {
       field: 'physical_stock_take_no',
-      title: t('inventory.physicalStockTakeNo'),
+      title: t('inventory.physical_stock_take_no'),
       minWidth: 230,
       fixed: 'left',
     },
     {
       field: 'physical_stock_take_date',
-      title: t('inventory.physicalStockTakeDate'),
+      title: t('inventory.physical_stock_take_date'),
       minWidth: 160,
       formatter: ({ cellValue }) => (cellValue ? cellValue.split(' ')[0] : ''),
     },
@@ -71,25 +40,25 @@ export function useInventoryCountList() {
     },
     {
       field: 'physical_total_quantity',
-      title: t('inventory.physicalTotalQuantity'),
+      title: t('inventory.physical_total_quantity'),
       minWidth: 150,
       formatter: ({ cellValue }) => formatNumber(cellValue),
     },
     {
       field: 'total_variance_quantity',
-      title: t('inventory.totalVarianceQuantity'),
+      title: t('inventory.total_variance_quantity'),
       minWidth: 150,
       formatter: ({ cellValue }) => formatNumber(cellValue),
     },
     {
       field: 'total_variance_selling_price',
-      title: t('inventory.totalVarianceSellingPrice'),
+      title: t('inventory.total_variance_selling_price'),
       minWidth: 150,
       formatter: ({ cellValue }) => formatNumber(cellValue),
     },
     {
       field: 'total_variance_cost',
-      title: t('inventory.totalVarianceCost'),
+      title: t('inventory.total_variance_cost'),
       minWidth: 150,
       formatter: ({ cellValue }) => formatNumber(cellValue),
     },
@@ -98,9 +67,8 @@ export function useInventoryCountList() {
       title: t('inventory.review'),
       minWidth: 85,
       align: 'center',
-      formatter: ({ row }) => {
-        const statusInfo = getStatusInfo(row.review_status);
-        return `<i class="iconfont ${statusInfo.icon}" style="color: ${statusInfo.color}">${statusInfo.text}</i>`;
+      cellRender: {
+        name: 'ReviewStatus',
       },
     },
     {
@@ -115,40 +83,24 @@ export function useInventoryCountList() {
       sortable: true,
       formatter: 'formatDateTime',
     },
+    {
+      field: 'operation',
+      title: t('common.operations'),
+      width: 120,
+      fixed: 'right',
+      slots: { default: 'operation' },
+    },
   ];
 
   const service = {
-    query: async ({
-      page_num,
-      page_size,
-    }: {
-      page_num: number;
-      page_size: number;
-    }) => {
-      const res = await getCountList({
-        page_num,
-        page_size,
-        keywords: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Input',
-          'x-component-props': {
-            placeholder: "{{t('common.keywords')}}",
-            clearable: true,
-          },
-        },
-      });
-      return {
-        list: res.data?.list || [],
-        total: res.data?.total || 0,
-      };
-    },
+    query: getCountList,
   };
 
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
       columns,
+      connectedComponent: CountDrawer,
       searchFormSchema: {
         keywords: {
           type: 'string',

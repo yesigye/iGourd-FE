@@ -40,18 +40,7 @@ export function useInventoryChangeLogList() {
       minWidth: 164,
       fixed: 'left',
       formatter: ({ cellValue }) => {
-        const typeMap = {
-          PURCHASE: t('inventory.purchase'),
-          SALE: t('inventory.sale'),
-          RETURN: t('inventory.return'),
-          ADJUSTMENT: t('inventory.adjustment'),
-          TRANSFER_IN: t('inventory.transferIn'),
-          TRANSFER_OUT: t('inventory.transferOut'),
-          SPOILAGE: t('inventory.spoilage'),
-          COUNT: t('inventory.count'),
-          OTHER: t('inventory.other'),
-        };
-        return typeMap[cellValue as keyof typeof typeMap] || cellValue;
+        return t(`inventory.${cellValue}`);
       },
     },
     {
@@ -112,31 +101,46 @@ export function useInventoryChangeLogList() {
       sortable: true,
       formatter: 'formatDateTime',
     },
+    {
+      field: 'operation',
+      title: t('common.operations'),
+      width: 120,
+      fixed: 'right',
+      slots: { default: 'operation' },
+    },
   ];
 
   const service = {
     query: getInventoryChangeLogList,
   };
 
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
-    useCrud({
-      service,
-      columns,
-      searchFormSchema: {
-        keywords: {
-          type: 'input',
-          name: 'keywords',
-          title: t('inventory.keywords'),
-          'x-component-props': {
-            placeholder: t('inventory.keywordsPlaceholder'),
-          },
+  const {
+    Grid,
+    handleCreate,
+    canBatchOperate,
+    Drawer,
+    handleEdit,
+    handleBatchDelete,
+  } = useCrud({
+    service,
+    columns,
+    searchFormSchema: {
+      keywords: {
+        type: 'string',
+        'x-decorator': 'FormItem',
+        'x-component': 'Input',
+        'x-component-props': {
+          placeholder: "{{t('common.keywords')}}",
+          clearable: true,
         },
       },
-    });
+    },
+  });
 
   return {
     Grid,
     Drawer,
+    handleCreate,
     handleEdit,
     handleBatchDelete,
     canBatchOperate,

@@ -1,21 +1,16 @@
-import { useI18n } from '@igourd/locales';
-import { useCrud } from '#/hooks';
-
-import type {
-  PurchaseReturnedQueryPageVO,
-  PurchaseReturnedPageModel,
-  ReturnedStatus,
-  ReturnedType,
-} from '@@/purchase/types';
+import type { PurchaseReturnedPageModel } from '@@/purchase/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
+import { useI18n } from '@igourd/locales';
+
 import {
-  getPurchaseReturnedPageListApi,
   deletePurchaseReturnedApi,
-  auditPurchaseReturnedApi,
+  getPurchaseReturnedPageListApi,
 } from '@@/purchase/apis';
 import { PurchaseReturnedDrawer } from '@@/purchase/components';
+
+import { useCrud } from '#/hooks';
 
 export function usePurchaseReturned() {
   const { t } = useI18n();
@@ -33,12 +28,6 @@ export function usePurchaseReturned() {
       width: 200,
       align: 'left',
       title: t('purchase.returnedDate'),
-    },
-    {
-      field: 'returned_type',
-      width: 150,
-      align: 'center',
-      title: t('purchase.returnedType'),
     },
     {
       field: 'vendor_name',
@@ -74,22 +63,24 @@ export function usePurchaseReturned() {
       field: 'creator_name',
       width: 180,
       align: 'center',
-      fixed: 'right',
       title: t('purchase.creator'),
     },
     {
       field: 'create_time',
-      width: 180,
+      width: 150,
       align: 'center',
       fixed: 'right',
       title: t('purchase.creationTime'),
     },
     {
       field: 'review_status',
-      width: 180,
+      width: 80,
       align: 'center',
       fixed: 'right',
       title: t('purchase.reviewStatus'),
+      cellRender: {
+        name: 'ReviewStatus',
+      },
     },
     {
       field: 'options',
@@ -104,25 +95,7 @@ export function usePurchaseReturned() {
   // 服务函数
   const service = {
     // 获取列表数据
-    query: async (params: { page_num: number; page_size: number }) => {
-      const response = await getPurchaseReturnedPageListApi({
-        ...params,
-           keywords: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('common.keywords')}}",
-        clearable: true,
-      },
-    },
-      });
-      return {
-        list: response.data?.list || [],
-        total: response.data?.total || 0,
-      };
-    },
-
+    query: getPurchaseReturnedPageListApi,
     // 删除退货单
     remove: async (data: { returned_id_list: number[] }) => {
       return await deletePurchaseReturnedApi(data);
@@ -140,7 +113,7 @@ export function usePurchaseReturned() {
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: t('purchase.searchPlaceholder'),
+            placeholder: t('common.keywords'),
           },
         },
       },
@@ -148,14 +121,10 @@ export function usePurchaseReturned() {
       connectedComponent: PurchaseReturnedDrawer,
     });
 
-
-
   return {
     // 组件
     Grid,
     Drawer,
-
-    // 方法
     handleEdit,
     handleBatchDelete,
     canBatchOperate,

@@ -30,8 +30,8 @@ export function useWarehouse() {
       align: 'left',
     },
     {
-      field: 'code',
-      title: t('inventory.warehouseCode'),
+      field: 'country_name',
+      title: t('inventory.country'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -43,42 +43,28 @@ export function useWarehouse() {
       align: 'left',
     },
     {
-      field: 'contact_person',
-      title: t('inventory.contactPerson'),
-      minWidth: 120,
+      field: 'is_sale',
+      title: t('inventory.defaultSale'),
+      minWidth: 200,
       align: 'left',
     },
     {
-      field: 'contact_phone',
-      title: t('inventory.contactPhone'),
-      minWidth: 120,
-      align: 'left',
-    },
-    {
-      field: 'status',
-      title: t('inventory.status'),
-      width: 100,
+      field: 'creator_name',
+      title: t('common.creator'),
+      width: 160,
+      sortable: true,
       align: 'center',
-      cellRender: {
-        name: 'ElSwitch',
-        props: {
-          modelValue: '{{row.status === "active"}}',
-          activeValue: 'active',
-          inactiveValue: 'inactive',
-          onChange: '{{$event => handleStatusChange(row, $event)}}',
-        },
-      },
     },
     {
       field: 'create_time',
-      title: t('common.createTime'),
+      title: t('inventory.creationTime'),
       width: 160,
       sortable: true,
       align: 'center',
     },
     {
       field: 'operation',
-      title: t('common.operation'),
+      title: t('inventory.creationTime'),
       width: 120,
       fixed: 'right',
       slots: { default: 'operation' },
@@ -93,19 +79,6 @@ export function useWarehouse() {
       'x-component-props': {
         placeholder: "{{t('common.keywords')}}",
         clearable: true,
-      },
-    },
-    status: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Select',
-      'x-component-props': {
-        placeholder: "{{t('inventory.status')}}",
-        clearable: true,
-        options: [
-          { label: t('inventory.statusOptions.active'), value: 'active' },
-          { label: t('inventory.statusOptions.inactive'), value: 'inactive' },
-        ],
       },
     },
   };

@@ -24,7 +24,9 @@ export function useInventoryProductList() {
       title: t('inventory.image'),
       minWidth: 80,
       fixed: 'left',
-      slots: { default: 'image' },
+      cellRender: {
+        name: 'CellImage',
+      },
     },
     {
       field: 'major_name',
@@ -56,19 +58,16 @@ export function useInventoryProductList() {
       field: 'status',
       title: t('inventory.status'),
       minWidth: 110,
-      slots: { default: 'status' },
     },
     {
       field: 'product_group_name',
       title: t('inventory.productGroup'),
       minWidth: 200,
-      slots: { default: 'productGroup' },
     },
     {
       field: 'product_label_list',
       title: t('inventory.productLabel'),
       minWidth: 280,
-      slots: { default: 'productLabel' },
     },
     {
       field: 'creator_name',
@@ -80,7 +79,6 @@ export function useInventoryProductList() {
       title: t('inventory.creationTime'),
       minWidth: 180,
       sortable: true,
-      formatter: 'formatDateTime',
     },
     {
       field: 'operation',

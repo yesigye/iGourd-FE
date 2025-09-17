@@ -11,7 +11,7 @@ import { requestClient as request } from '#/api/request';
  */
 export function getProductLabelList(params: ProductLabelParams) {
   return request.post<ProductLabelResponse>(
-    '/inventory/product/label/list',
+    '/v1/merchant/basics/inventory/product-label/page-list',
     params,
   );
 }

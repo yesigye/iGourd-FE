@@ -1,11 +1,5 @@
 <template>
-  <BasicDrawer
-    v-bind="$attrs"
-    :title="drawerTitle"
-    :width="800"
-    @register="register"
-    @success="handleSuccess"
-  >
+  <BasicDrawer>
     <div class="p-4">
       <Form
         ref="formRef"
@@ -18,7 +12,9 @@
         <FormItem
           name="supplier_id"
           :label="t('purchase.supplierName')"
-          :rules="[{ required: true, message: t('purchase.please_select_supplier') }]"
+          :rules="[
+            { required: true, message: t('purchase.please_select_supplier') },
+          ]"
         >
           <Select
             v-model:value="formData.supplier_id"
@@ -33,7 +29,12 @@
         <FormItem
           name="returned_type"
           :label="t('purchase.returnedType')"
-          :rules="[{ required: true, message: t('purchase.please_select_returned_type') }]"
+          :rules="[
+            {
+              required: true,
+              message: t('purchase.please_select_returned_type'),
+            },
+          ]"
         >
           <Select
             v-model:value="formData.returned_type"
@@ -46,7 +47,12 @@
         <FormItem
           name="returned_date"
           :label="t('purchase.returnedDate')"
-          :rules="[{ required: true, message: t('purchase.please_select_returned_date') }]"
+          :rules="[
+            {
+              required: true,
+              message: t('purchase.please_select_returned_date'),
+            },
+          ]"
         >
           <DatePicker
             v-model:value="formData.returned_date"
@@ -59,7 +65,9 @@
         <FormItem
           name="reason"
           :label="t('purchase.reason')"
-          :rules="[{ required: true, message: t('purchase.please_enter_reason') }]"
+          :rules="[
+            { required: true, message: t('purchase.please_enter_reason') },
+          ]"
         >
           <Textarea
             v-model:value="formData.reason"
@@ -69,10 +77,7 @@
         </FormItem>
 
         <!-- 备注 -->
-        <FormItem
-          name="remark"
-          :label="t('purchase.remark')"
-        >
+        <FormItem name="remark" :label="t('purchase.remark')">
           <Textarea
             v-model:value="formData.remark"
             :placeholder="t('purchase.please_enter_remark')"
@@ -83,7 +88,7 @@
 
       <!-- 产品列表 -->
       <div v-if="drawerData?.type !== 'detail'" class="mt-6">
-        <div class="flex justify-between items-center mb-4">
+        <div class="mb-4 flex items-center justify-between">
           <h3 class="text-lg font-medium">{{ t('purchase.products') }}</h3>
           <Button type="primary" @click="handleAddProduct">
             {{ t('purchase.addProduct') }}
@@ -145,7 +150,7 @@
 
       <!-- 详情显示 -->
       <div v-else class="mt-6">
-        <h3 class="text-lg font-medium mb-4">{{ t('purchase.products') }}</h3>
+        <h3 class="mb-4 text-lg font-medium">{{ t('purchase.products') }}</h3>
         <Table
           :data-source="formData.products"
           :columns="productDetailColumns"
@@ -154,30 +159,13 @@
         />
       </div>
     </div>
-
-    <template #footer>
-      <Space>
-        <Button @click="handleCancel">
-          {{ t('common.cancel') }}
-        </Button>
-        <Button
-          v-if="drawerData?.type !== 'detail'"
-          type="primary"
-          @click="handleSubmit"
-          :loading="loading"
-        >
-          {{ t('common.confirm') }}
-        </Button>
-      </Space>
-    </template>
   </BasicDrawer>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import { useI18n } from '@igourd/locales';
-import { useUserStore } from '@igourd/stores';
-import { useIgourdDrawer } from '@igourd/common-ui';;
+import { useIgourdDrawer } from '@igourd/common-ui';
 import {
   Form,
   FormItem,
@@ -185,7 +173,6 @@ import {
   DatePicker,
   Textarea,
   Button,
-  Space,
   Table,
   InputNumber,
   Input,
@@ -194,8 +181,6 @@ import {
 import type {
   PurchaseReturnedCreateVO,
   PurchaseReturnedModifyVO,
-  ReturnedType,
-  PurchaseReturnedProductVO,
 } from '@@/purchase/types';
 
 import {
@@ -209,7 +194,6 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const userStore = useUserStore();
 
 const [BasicDrawer, { close: closeDrawer }] = useIgourdDrawer({
   appendToMain: true,
@@ -237,31 +221,21 @@ const formData = ref<PurchaseReturnedCreateVO | PurchaseReturnedModifyVO>({
   reason: '',
   remark: '',
   products: [],
-  merchant_id: userStore.merchantId,
 });
 
 // 表单规则
 const formRules = computed(() => ({
-  supplier_id: [{ required: true, message: t('purchase.please_select_supplier') }],
-  returned_type: [{ required: true, message: t('purchase.please_select_returned_type') }],
-  returned_date: [{ required: true, message: t('purchase.please_select_returned_date') }],
+  supplier_id: [
+    { required: true, message: t('purchase.please_select_supplier') },
+  ],
+  returned_type: [
+    { required: true, message: t('purchase.please_select_returned_type') },
+  ],
+  returned_date: [
+    { required: true, message: t('purchase.please_select_returned_date') },
+  ],
   reason: [{ required: true, message: t('purchase.please_enter_reason') }],
 }));
-
-// 抽屉标题
-const drawerTitle = computed(() => {
-  const type = drawerData.value?.type;
-
-  if (type === 'add') {
-    return t('purchase.addPurchaseReturned');
-  } else if (type === 'edit') {
-    return t('purchase.editPurchaseReturned');
-  } else if (type === 'detail') {
-    return t('purchase.purchaseReturnedDetail');
-  } else {
-    return t('purchase.purchaseReturned');
-  }
-});
 
 // 抽屉数据
 const drawerData = ref<{ type: string; id?: number } | null>(null);
@@ -351,7 +325,7 @@ watch(
       }
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // 加载供应商选项
@@ -425,7 +399,7 @@ const filterOption = (input: string, option: any) => {
 
 // 处理产品变化
 const handleProductChange = (productId: number, index: number) => {
-  const product = productOptions.value.find(p => p.value === productId);
+  const product = productOptions.value.find((p) => p.value === productId);
   if (product) {
     formData.value.products[index].product_name = product.label;
   }

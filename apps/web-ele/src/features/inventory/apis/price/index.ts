@@ -1,31 +1,18 @@
-import { requestClient as request } from '#/api/request';
+import { requestClient } from '#/api/request';
 
-// 库存价格变更相关 API
-export const inventoryPriceApi = {
-  // 获取价格变更日志列表
-  getPriceChangeLogList: (params: any) => {
-    return request({
-      url: '/inventory/price-change-log/list',
-      method: 'get',
-      params
-    });
-  },
+// 获取价格变更日志列表
+export function getPriceChangeLogList(params: any) {
+  return requestClient.get('/inventory/price-change-log/list', { params });
+}
 
-  // 获取价格变更日志详情
-  getPriceChangeLogDetail: (id: string) => {
-    return request({
-      url: `/inventory/price-change-log/${id}`,
-      method: 'get'
-    });
-  },
+// 获取价格变更日志详情
+export function getPriceChangeLogDetail(id: string) {
+  return requestClient.get(`/inventory/price-change-log/${id}`);
+}
 
-  // 导出价格变更日志
-  exportPriceChangeLog: (params: any) => {
-    return request({
-      url: '/inventory/price-change-log/export',
-      method: 'post',
-      data: params,
-      responseType: 'blob'
-    });
-  }
-};
+// 导出价格变更日志
+export function exportPriceChangeLog(params: any) {
+  return requestClient.post('/inventory/price-change-log/export', params, {
+    responseType: 'blob',
+  });
+}

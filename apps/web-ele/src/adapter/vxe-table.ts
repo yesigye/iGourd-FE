@@ -3,10 +3,12 @@ import type { VxeTableGridOptions } from '@igourd/plugins/vxe-table';
 import { h } from 'vue';
 
 import { ElButton, ElImage } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
 import {
   setupIgourdVxeTable,
   useIgourdVxeGrid,
 } from '@igourd/plugins/vxe-table';
+import { formatNumber } from '#/utils';
 
 // import { useIgourdForm } from './form';
 
@@ -98,6 +100,60 @@ setupIgourdVxeTable({
           class: 'iconfont icon-SURE status_icon',
           style: 'color:var(--el-color-success)',
         });
+      },
+    });
+    vxeUI.renderer.add('PaymentStatus', {
+      renderTableDefault(_, params) {
+        const { t } = useI18n();
+        const { row } = params;
+        const isPending = row.paid_amount < row.total_amount;
+        if (isPending) {
+          return h(
+            'div',
+            { class: 'flex justify-left items-center gap-x-[10px]' },
+            [
+              h('div', { class: 'w-[10px] h-[10px] bg-warning rounded-[5px]' }),
+              h('div', {}, t('purchase.PENDING')),
+            ],
+          );
+        }
+        return h(
+          'div',
+          { class: 'flex justify-left items-center gap-x-[10px]' },
+          [
+            h('div', { class: 'w-[10px] h-[10px] bg-success rounded-[5px]' }),
+            h('div', {}, t('purchase.COMPLETE')),
+          ],
+        );
+      },
+    });
+    vxeUI.renderer.add('Amount', {
+      renderTableDefault(props, params) {
+        const { t } = useI18n();
+        const { row, column } = params;
+        const cellValue = row[column.field];
+        //@ts-ignore
+        const { computedFn } = props || {};
+        if (!computedFn) {
+          return formatNumber(cellValue) as string;
+        }
+        const changeAmount = computedFn?.({ row });
+        if (changeAmount > 0) {
+          return h(
+            'span',
+            {
+              style: 'color:var(--el-color-success)',
+            },
+            formatNumber(changeAmount),
+          );
+        }
+        return h(
+          'span',
+          {
+            style: 'color:var(--el-color-error)',
+          },
+          formatNumber(changeAmount),
+        );
       },
     });
 

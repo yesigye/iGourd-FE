@@ -5,7 +5,7 @@ import type { PriceLogParams, PriceLogResponse, PriceLogItem } from '../../types
  * 获取价格变更日志列表
  */
 export function getInventoryPriceLogList(params: PriceLogParams) {
-  return request.post<PriceLogResponse>('/inventory/price-log/list', params);
+  return request.post<PriceLogResponse>('/v1/merchant/basics/inventory/price-change-log/page-list', params);
 }
 
 /**

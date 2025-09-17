@@ -9,16 +9,8 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { Grid, handleEdit, canBatchOperate, handleBatchDelete } =
+const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
   useInventoryProductFeatureList();
-</script>
-
-<script lang="ts">
-// 详情处理
-const handleDetail = (row: any) => {
-  // 实现详情逻辑
-  console.log('详情', row);
-};
 </script>
 
 <template>
@@ -53,12 +45,13 @@ const handleDetail = (row: any) => {
         <ElButton
           v-auth="'inventory_product_feature_detail'"
           type="text"
-          @click="handleDetail(row)"
+          @click="handleEdit(row)"
         >
           <i class="iconfont icon-icon_details mr-1"></i>
           {{ t('common.detail') }}
         </ElButton>
       </template>
     </Grid>
+    <Drawer />
   </Page>
 </template>

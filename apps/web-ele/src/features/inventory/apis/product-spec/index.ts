@@ -5,7 +5,7 @@ import type { ProductSpecParams, ProductSpecResponse, ProductSpecValueParams, Pr
  * 获取商品规格列表
  */
 export function getProductSpecList(params: ProductSpecParams) {
-  return request.post<ProductSpecResponse>('/inventory/product/spec/list', params);
+  return request.post<ProductSpecResponse>('/v1/merchant/basics/inventory/product-spec-value/list', params);
 }
 
 /**

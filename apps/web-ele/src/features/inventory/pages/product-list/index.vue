@@ -34,7 +34,7 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleBatchDelete(row)">
+        <ElButton type="text" @click="handleBatchDelete()">
           {{ t('common.delete') }}
         </ElButton>
       </template>

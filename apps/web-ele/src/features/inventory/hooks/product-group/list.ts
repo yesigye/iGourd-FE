@@ -11,7 +11,7 @@ import { useI18n } from '@igourd/locales';
 
 import { useCrud } from '#/hooks';
 
-import { inventoryProductGroupApi } from '../../apis/product-group';
+import { getFirstGroupList } from '@@/inventory/apis';
 
 export function useInventoryProductGroupList() {
   const { t } = useI18n();
@@ -95,19 +95,19 @@ export function useInventoryProductGroupList() {
     searchFormSchema,
     batchOperate: false,
     service: {
-      query: inventoryProductGroupApi.getFirstGroupList,
+      query: getFirstGroupList,
     },
   });
 
-  // 右侧表格 Hook
-  const rightCrud = useCrud<SecondGroupItem, SecondGroupParams>({
-    columns: rightColumns,
-    searchFormSchema: {},
-    batchOperate: false,
-    service: {
-      query: inventoryProductGroupApi.getSecondGroupList,
-    },
-  });
+  // // 右侧表格 Hook
+  // const rightCrud = useCrud<SecondGroupItem, SecondGroupParams>({
+  //   columns: rightColumns,
+  //   searchFormSchema: {},
+  //   batchOperate: false,
+  //   service: {
+  //     query: getSecondGroupList,
+  //   },
+  // });
 
-  return rightCrud;
+  return leftCrud;
 }

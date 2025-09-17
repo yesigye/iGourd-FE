@@ -11,7 +11,7 @@ import { requestClient as request } from '#/api/request';
  * 获取单位列表
  */
 export function getUnitList(params: UnitParams) {
-  return request.post<UnitResponse>('/inventory/unit/list', params);
+  return request.post<UnitResponse>('/v1/merchant/basics/inventory/product-unit/page-list', params);
 }
 
 /**

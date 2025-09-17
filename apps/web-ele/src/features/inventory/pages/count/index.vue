@@ -10,20 +10,15 @@ defineOptions({
 
 const { t } = useI18n();
 
-const {
-  Grid,
-  Drawer,
-  handleEdit,
-  handleBatchDelete,
-  canBatchOperate,
-} = useInventoryCountList();
+const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
+  useInventoryCountList();
 </script>
 
 <template>
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary">
+        <ElButton type="primary" @click="handleEdit()">
           {{ t('common.add') }}
         </ElButton>
         <ElButton
@@ -36,16 +31,10 @@ const {
       </template>
 
       <template #operation="{ row }">
-        <ElButton
-          type="text"
-          @click="handleEdit(row)"
-        >
+        <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton
-          type="text"
-          @click="handleBatchDelete(row)"
-        >
+        <ElButton type="text" @click="handleBatchDelete()">
           {{ t('common.delete') }}
         </ElButton>
       </template>

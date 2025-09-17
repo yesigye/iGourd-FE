@@ -5,7 +5,7 @@ import type { ChangeLogParams, ChangeLogResponse, ChangeLogItem } from '../../ty
  * 获取库存变更日志列表
  */
 export function getInventoryChangeLogList(params: ChangeLogParams) {
-  return request.post<ChangeLogResponse>('/inventory/change-log/list', params);
+  return request.post<ChangeLogResponse>('/v1/merchant/basics/inventory/stock-change-log/page-list', params);
 }
 
 /**

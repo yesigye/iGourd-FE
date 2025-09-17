@@ -11,6 +11,14 @@ import { TransferDrawer } from '@@/inventory/components';
 import { useCrud } from '#/hooks';
 import { formatNumber } from '#/utils/functions';
 
+const transferTypeList = {
+  TRANSFER_SAME_STORE: 'sameStoreTransfer',
+  TRANSFER_DIFFERENT_STORE: 'differentStoreTransfer',
+  TRANSFER_IN_ONLY: 'transferOut',
+  TRANSFER_OUT_ONLY: 'transferIn',
+};
+type transferTypeKey = keyof typeof transferTypeList;
+
 export function useInventoryTransferList() {
   const { t } = useI18n();
 
@@ -25,6 +33,9 @@ export function useInventoryTransferList() {
       title: t('inventory.transferType'),
       minWidth: 200,
       fixed: 'left',
+      formatter({ cellValue }: { cellValue: transferTypeKey }) {
+        return t(`inventory.${transferTypeList[cellValue]}`);
+      },
     },
     {
       field: 'stock_transfer_no',
@@ -106,43 +117,6 @@ export function useInventoryTransferList() {
         clearable: true,
       },
     },
-    transfer_type: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Select',
-      'x-component-props': {
-        placeholder: "{{t('inventory.transferType')}}",
-        clearable: true,
-        options: [
-          {
-            label: t('inventory.sameStoreTransfer'),
-            value: 'TRANSFER_SAME_STORE',
-          },
-          {
-            label: t('inventory.differentStoreTransfer'),
-            value: 'TRANSFER_DIFFERENT_STORE',
-          },
-          { label: t('inventory.transferOut'), value: 'TRANSFER_IN_ONLY' },
-          { label: t('inventory.transferIn'), value: 'TRANSFER_OUT_ONLY' },
-        ],
-      },
-    },
-    status: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Select',
-      'x-component-props': {
-        placeholder: "{{t('inventory.status')}}",
-        clearable: true,
-        options: [
-          { label: t('inventory.created'), value: 'CREATED' },
-          { label: t('inventory.outbound'), value: 'OUTBOUND' },
-          { label: t('inventory.inbound'), value: 'INBOUND' },
-          { label: t('inventory.refusedOutbound'), value: 'REFUSED_OUTBOUND' },
-          { label: t('inventory.refusedInbound'), value: 'REFUSED_INBOUND' },
-        ],
-      },
-    },
   };
 
   // 服务函数
@@ -158,15 +132,21 @@ export function useInventoryTransferList() {
   };
 
   // 使用 CRUD Hook
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
-    useCrud({
-      // @ts-ignore
-      service,
-      columns,
-      searchFormSchema,
-      batchOperate: true,
-      connectedComponent: TransferDrawer,
-    });
+  const {
+    Grid,
+    handleCreate,
+    canBatchOperate,
+    Drawer,
+    handleEdit,
+    handleBatchDelete,
+  } = useCrud({
+    // @ts-ignore
+    service,
+    columns,
+    searchFormSchema,
+    batchOperate: true,
+    connectedComponent: TransferDrawer,
+  });
 
   return {
     Grid,
@@ -174,5 +154,6 @@ export function useInventoryTransferList() {
     handleEdit,
     handleBatchDelete,
     canBatchOperate,
+    handleCreate,
   };
 }

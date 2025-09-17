@@ -3,9 +3,10 @@ import { requestClient as request } from '#/api/request';
 // 库存盘点相关 API
 // 获取库存盘点列表
 export const getCountList = (params: any) => {
-  return request.get('/v1/inventory/count/list', {
+  return request.post(
+    '/v1/merchant/basics/inventory/physical-stock-take/page-list',
     params,
-  });
+  );
 };
 
 // 获取库存盘点详情

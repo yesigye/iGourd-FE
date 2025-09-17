@@ -7,13 +7,13 @@ import type {
 
 import { requestClient } from '#/api/request';
 
-const PURCHASE_RETURNED_BASE_URL = '/v1/merchant/purchase/returned';
+const PURCHASE_RETURNED_BASE_URL = '/v1/merchant/purchase/purchase-returned';
 
 // 获取退货单分页列表
 export function getPurchaseReturnedPageListApi(
   data: PurchaseReturnedQueryPageVO,
 ) {
-  return requestClient.post(`${PURCHASE_RETURNED_BASE_URL}/page-list`, data);
+  return requestClient.post(`${PURCHASE_RETURNED_BASE_URL}/list`, data);
 }
 
 // 创建退货单
@@ -28,7 +28,7 @@ export function updatePurchaseReturnedApi(data: PurchaseReturnedModifyVO) {
 
 // 删除退货单
 export function deletePurchaseReturnedApi(data: PurchaseReturnedRemoveVO) {
-  return requestClient.post(`${PURCHASE_RETURNED_BASE_URL}/remove`, data);
+  return requestClient.post(`${PURCHASE_RETURNED_BASE_URL}/delete`, data);
 }
 
 // 获取退货单详情

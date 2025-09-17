@@ -5,7 +5,7 @@ import type { SpoilageParams, SpoilageResponse, SpoilageItem, SpoilageDetailPara
  * 获取库存损耗列表
  */
 export function getSpoilageList(params: SpoilageParams) {
-  return request.post<SpoilageResponse>('/inventory/spoilage/list', params);
+  return request.post<SpoilageResponse>('/v1/merchant/basics/inventory/stock-consumption/page-list', params);
 }
 
 /**

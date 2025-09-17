@@ -1,57 +1,34 @@
-import { requestClient as request } from '#/api/request';
+import { requestClient } from '#/api/request';
 
-// 商品分组相关 API
-export const inventoryProductGroupApi = {
-  // 获取一级分组列表
-  getFirstGroupList: (params: any) => {
-    return request({
-      url: '/inventory/product-group/first-list',
-      method: 'get',
-      params
-    });
-  },
+// 获取一级分组列表
+export function getFirstGroupList(params: any) {
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/product-group/first/page-list',
+    params,
+  );
+}
 
-  // 获取二级分组列表
-  getSecondGroupList: (params: any) => {
-    return request({
-      url: '/inventory/product-group/second-list',
-      method: 'get',
-      params
-    });
-  },
+// 获取二级分组列表
+export function getSecondGroupList(params: any) {
+  return requestClient.get('/inventory/product-group/second-list', { params });
+}
 
-  // 创建分组
-  createGroup: (data: any) => {
-    return request({
-      url: '/inventory/product-group/create',
-      method: 'post',
-      data
-    });
-  },
+// 创建分组
+export function createGroup(data: any) {
+  return requestClient.post('/inventory/product-group/create', data);
+}
 
-  // 更新分组
-  updateGroup: (data: any) => {
-    return request({
-      url: '/inventory/product-group/update',
-      method: 'put',
-      data
-    });
-  },
+// 更新分组
+export function updateGroup(data: any) {
+  return requestClient.put('/inventory/product-group/update', data);
+}
 
-  // 删除分组
-  deleteGroup: (data: any) => {
-    return request({
-      url: '/inventory/product-group/delete',
-      method: 'delete',
-      data
-    });
-  },
+// 删除分组
+export function deleteGroup(data: any) {
+  return requestClient.delete('/inventory/product-group/delete', { data });
+}
 
-  // 获取分组详情
-  getGroupDetail: (id: string) => {
-    return request({
-      url: `/inventory/product-group/${id}`,
-      method: 'get'
-    });
-  }
-};
+// 获取分组详情
+export function getGroupDetail(id: string) {
+  return requestClient.get(`/inventory/product-group/${id}`);
+}

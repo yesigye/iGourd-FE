@@ -18,7 +18,7 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary">
+        <ElButton type="primary" @click="handleEdit()">
           {{ t('common.add') }}
         </ElButton>
         <ElButton
@@ -39,5 +39,6 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
         </ElButton>
       </template>
     </Grid>
+    <Drawer />
   </Page>
 </template>

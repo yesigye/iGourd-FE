@@ -36,7 +36,7 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
         useUserStore().userInfo?.jwt_token.token_id || useUserStore().tokenId;
       const { owner_id, owner_type } =
         useUserStore().userInfo?.current_login_user_app || useUserStore();
-      config.headers['X-cur_lang_client'] = locale.value || 'en';
+      config.headers['X-cur_lang_client'] = 'zh_CN';
       config.headers['X-time_zone_client'] =
         Intl.DateTimeFormat().resolvedOptions().timeZone;
       config.headers['X-request_date_client'] = Date.now();

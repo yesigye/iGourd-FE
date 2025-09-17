@@ -4,11 +4,7 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import {
-  batchUpdateInventoryApi,
-  getInventoryListApi,
-  updateInventoryApi,
-} from '@@/inventory/apis';
+import { getInventoryListApi, updateInventoryApi } from '@@/inventory/apis';
 import { InventoryDrawer } from '@@/inventory/components';
 
 import { useCrud } from '#/hooks';
@@ -22,8 +18,19 @@ export function useInventory() {
       fixed: 'left',
     },
     {
-      field: 'product_name',
+      field: 'profile_photo',
       title: t('inventory.productName'),
+      minWidth: 150,
+      fixed: 'left',
+      sortable: true,
+      align: 'left',
+      cellRender: {
+        name: 'CellImage',
+      },
+    },
+    {
+      field: 'major_name',
+      title: t('inventory.major_name'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -36,71 +43,76 @@ export function useInventory() {
       align: 'left',
     },
     {
-      field: 'warehouse_name',
-      title: t('inventory.warehouseName'),
+      field: 'spec_code',
+      title: t('inventory.spec_code'),
       minWidth: 150,
       sortable: true,
       align: 'left',
     },
     {
-      field: 'warehouse_code',
-      title: t('inventory.warehouseCode'),
+      field: 'sku_barcode',
+      title: t('inventory.sku_barcode'),
       minWidth: 150,
       sortable: true,
       align: 'left',
     },
     {
-      field: 'quantity',
-      title: t('inventory.quantity'),
+      field: 'product_unit_names',
+      title: t('inventory.product_unit_names'),
       width: 100,
       align: 'right',
-      cellRender: {
-        name: 'ElText',
-        props: {
-          formatter: '{{row.quantity || 0}}',
-        },
-      },
     },
     {
-      field: 'available_quantity',
-      title: t('inventory.availableQuantity'),
+      field: 'warehouse_name',
+      title: t('inventory.warehouse_name'),
+      width: 100,
+      align: 'right',
+    },
+    {
+      field: 'stock_quantity_message',
+      title: t('inventory.stock'),
+      width: 120,
+    },
+    {
+      field: 'stock_quantity',
+      title: t('inventory.stock_quantity_message'),
       width: 120,
       align: 'right',
-      cellRender: {
-        name: 'ElText',
-        props: {
-          formatter: '{{row.available_quantity || 0}}',
-        },
-      },
     },
     {
-      field: 'reserved_quantity',
-      title: t('inventory.reservedQuantity'),
-      width: 120,
-      align: 'right',
-      cellRender: {
-        name: 'ElText',
-        props: {
-          formatter: '{{row.reserved_quantity || 0}}',
-        },
-      },
-    },
-    {
-      field: 'unit',
-      title: t('inventory.unit'),
+      field: 'inbound_in_transit_stock_message',
+      title: t('inventory.inboundTransitStock'),
       width: 80,
       align: 'center',
     },
     {
-      field: 'last_update_time',
-      title: t('inventory.lastUpdateTime'),
+      field: 'outbound_in_transit_stock_message',
+      title: t('inventory.outboundTransitStock'),
+      width: 80,
+      align: 'center',
+    },
+    {
+      field: 'product_group_name',
+      title: t('inventory.productGroup'),
+      width: 80,
+      align: 'center',
+    },
+    {
+      field: 'creator_name',
+      title: t('inventory.creator'),
+      width: 80,
+      align: 'center',
+    },
+    {
+      field: 'create_time',
+      title: t('inventory.creationTime'),
       width: 160,
       sortable: true,
       align: 'center',
     },
     {
       field: 'operation',
-      title: t('common.operation'),
+      title: t('common.operations'),
       width: 120,
       fixed: 'right',
       slots: { default: 'operation' },

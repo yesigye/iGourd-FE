@@ -7,3 +7,4 @@ export * from './spoilage';
 export * from './transfer';
 export * from './unit';
 export * from './warehouse';
+export * from "./count"

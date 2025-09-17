@@ -45,6 +45,9 @@ export function usePurchaseReceipt() {
       width: 150,
       align: 'center',
       title: t('purchase.reviewStatus'),
+      cellRender: {
+        name: 'ReviewStatus',
+      },
     },
     {
       field: 'total_amount',
@@ -56,14 +59,7 @@ export function usePurchaseReceipt() {
       field: 'purchase_order_no',
       width: 180,
       align: 'center',
-      fixed: 'right',
       title: t('purchase.purchaseorderno'),
-    },
-    {
-      field: 'receipt_date',
-      width: 200,
-      align: 'left',
-      title: t('purchase.receiptDate'),
     },
     {
       field: 'creator_name',
@@ -76,7 +72,15 @@ export function usePurchaseReceipt() {
       width: 200,
       align: 'left',
       title: t('purchase.creationTime'),
-      slots: { default: 'operation' },
+    },
+    {
+      field: 'operation',
+      minWidth: 180,
+      fixed: 'right',
+      title: t('common.operations'),
+      slots: {
+        default: 'operation',
+      },
     },
   ];
 

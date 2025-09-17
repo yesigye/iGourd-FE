@@ -1,4 +1,3 @@
-export * from './change';
 export * from './change-log';
 export * from './count';
 export * from './list';
