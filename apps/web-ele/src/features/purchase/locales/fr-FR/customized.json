@@ -1,1 +1,8 @@
-{}
+{
+  "name": "Nom",
+  "type": "Type",
+  "options-type": "Type d'option",
+  "compulsory": "Est-elle obligatoire",
+  "creator": "Créateur",
+  "creation-time": "Date de création"
+}

@@ -23,14 +23,14 @@ export function useCustomized() {
     },
     {
       field: 'name',
-      title: t('purchase.featureName'),
+      title: t('customized.name'),
       minWidth: 170,
       sortable: true,
       align: 'left',
     },
     {
       field: 'type',
-      title: t('purchase.featureType'),
+      title: t('customized.type'),
       minWidth: 120,
       sortable: true,
       align: 'left',
@@ -41,7 +41,7 @@ export function useCustomized() {
     },
     {
       field: 'is_fixed_option',
-      title: t('purchase.selectionType'),
+      title: t('customized.options-type'),
       minWidth: 200,
       sortable: true,
       align: 'left',
@@ -52,7 +52,7 @@ export function useCustomized() {
     },
     {
       field: 'is_compulsory',
-      title: t('purchase.compulsory'),
+      title: t('customized.compulsory'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -63,14 +63,14 @@ export function useCustomized() {
     },
     {
       field: 'creator_name',
-      title: t('purchase.creator'),
+      title: t('customized.creator'),
       minWidth: 180,
       sortable: true,
       align: 'left',
     },
     {
       field: 'create_time',
-      title: t('purchase.creationTime'),
+      title: t('customized.creation-time'),
       sortable: true,
       align: 'left',
       minWidth: 180,
