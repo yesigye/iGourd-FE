@@ -18,169 +18,179 @@ export function useCustomizedForm() {
           wrapperCol: 14,
         },
         properties: {
-          name: {
-            type: 'string',
-            title: "{{t('purchase.featureName')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Input',
+          common: {
+            type: 'void',
+            'x-component': 'Card',
             'x-component-props': {
-              maxLength: 32,
-              placeholder: "{{t('purchase.pleaseEnterFeatureName')}}",
-              clearable: true,
+              header: 'Hello Card',
             },
-            'x-validator': [
-              {
+            properties: {
+              name: {
+                type: 'string',
+                title: "{{t('purchase.featureName')}}",
                 required: true,
-                message: "{{t('purchase.pleaseEnterFeatureName')}}",
-              },
-              { max: 64, message: "{{t('common.maxChars', { n: 64 })}}" },
-            ],
-          },
-
-          type: {
-            type: 'string',
-            title: "{{t('purchase.featureType')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Radio.Group',
-            enum: '{{featureTypes}}',
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('purchase.pleaseSelectFeatureType')}}",
-              },
-            ],
-          },
-
-          is_fixed_option: {
-            type: 'boolean',
-            title: "{{t('purchase.selectionType')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Radio.Group',
-            enum: '{{selectTypes}}',
-            'x-visible': "{{$values.type === 'SELECT'}}",
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('purchase.pleaseSelectIsFixedValue')}}",
-              },
-            ],
-          },
-
-          selectionOptions: {
-            type: 'array',
-            title: "{{t('purchase.selectionOptions')}}",
-            'x-decorator': 'FormItem',
-            'x-visible': "{{$values.type === 'SELECT'}}",
-            'x-component': 'ArrayTable',
-            'x-component-props': {
-              border: true,
-              stripe: true,
-              size: 'small',
-            },
-            items: {
-              type: 'object',
-              properties: {
-                column1: {
-                  type: 'void',
-                  'x-component': 'ArrayTable.Column',
-                  'x-component-props': {
-                    width: 80,
-                    title: '#',
-                    align: 'center',
-                  },
-                  properties: {
-                    index: {
-                      type: 'void',
-                      'x-component': 'ArrayTable.Index',
-                    },
-                  },
+                'x-decorator': 'FormItem',
+                'x-component': 'Input',
+                'x-component-props': {
+                  maxLength: 32,
+                  placeholder: "{{t('purchase.pleaseEnterFeatureName')}}",
+                  clearable: true,
                 },
-                colName: {
-                  type: 'void',
-                  'x-component': 'ArrayTable.Column',
-                  'x-component-props': {
-                    title: "{{t('purchase.optionName')}}",
+                'x-validator': [
+                  {
+                    required: true,
+                    message: "{{t('purchase.pleaseEnterFeatureName')}}",
                   },
+                  { max: 64, message: "{{t('common.maxChars', { n: 64 })}}" },
+                ],
+              },
+
+              type: {
+                type: 'string',
+                title: "{{t('purchase.featureType')}}",
+                required: true,
+                'x-decorator': 'FormItem',
+                'x-component': 'Radio.Group',
+                enum: '{{featureTypes}}',
+                'x-validator': [
+                  {
+                    required: true,
+                    message: "{{t('purchase.pleaseSelectFeatureType')}}",
+                  },
+                ],
+              },
+
+              is_fixed_option: {
+                type: 'boolean',
+                title: "{{t('purchase.selectionType')}}",
+                required: true,
+                'x-decorator': 'FormItem',
+                'x-component': 'Radio.Group',
+                enum: '{{selectTypes}}',
+                'x-visible': "{{$values.type === 'SELECT'}}",
+                'x-validator': [
+                  {
+                    required: true,
+                    message: "{{t('purchase.pleaseSelectIsFixedValue')}}",
+                  },
+                ],
+              },
+
+              selectionOptions: {
+                type: 'array',
+                title: "{{t('purchase.selectionOptions')}}",
+                'x-decorator': 'FormItem',
+                'x-visible': "{{$values.type === 'SELECT'}}",
+                'x-component': 'ArrayTable',
+                'x-component-props': {
+                  border: true,
+                  stripe: true,
+                  size: 'small',
+                },
+                items: {
+                  type: 'object',
                   properties: {
-                    name: {
-                      type: 'string',
-                      'x-decorator': 'FormItem',
-                      'x-component': 'Input',
+                    column1: {
+                      type: 'void',
+                      'x-component': 'ArrayTable.Column',
                       'x-component-props': {
-                        placeholder: "{{t('purchase.pleaseEnterOptionName')}}",
-                        clearable: true,
+                        width: 80,
+                        title: '#',
+                        align: 'center',
+                      },
+                      properties: {
+                        index: {
+                          type: 'void',
+                          'x-component': 'ArrayTable.Index',
+                        },
                       },
                     },
-                  },
-                },
-                colOps: {
-                  type: 'void',
-                  'x-component': 'ArrayTable.Column',
-                  'x-component-props': {
-                    title: "{{t('common.operations')}}",
-                    width: 180,
-                    fixed: 'right',
-                  },
-                  properties: {
-                    ops: {
+                    colName: {
                       type: 'void',
-                      'x-component': 'FormItem',
+                      'x-component': 'ArrayTable.Column',
+                      'x-component-props': {
+                        title: "{{t('purchase.optionName')}}",
+                      },
                       properties: {
-                        remove: {
+                        name: {
+                          type: 'string',
+                          'x-decorator': 'FormItem',
+                          'x-component': 'Input',
+                          'x-component-props': {
+                            placeholder:
+                              "{{t('purchase.pleaseEnterOptionName')}}",
+                            clearable: true,
+                          },
+                        },
+                      },
+                    },
+                    colOps: {
+                      type: 'void',
+                      'x-component': 'ArrayTable.Column',
+                      'x-component-props': {
+                        title: "{{t('common.operations')}}",
+                        width: 180,
+                        fixed: 'right',
+                      },
+                      properties: {
+                        ops: {
                           type: 'void',
-                          'x-component': 'ArrayTable.Remove',
+                          'x-component': 'FormItem',
+                          properties: {
+                            remove: {
+                              type: 'void',
+                              'x-component': 'ArrayTable.Remove',
+                            },
+                          },
                         },
                       },
                     },
                   },
                 },
-              },
-            },
-            properties: {
-              add: {
-                type: 'void',
-                'x-component': 'ArrayTable.Addition',
-                title: "{{t('common.addOption')}}",
-              },
-            },
-          },
-
-          is_compulsory: {
-            type: 'boolean',
-            title: "{{t('purchase.compulsorySelection')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Radio.Group',
-            enum: '{{compulsoryTypes}}',
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('purchase.pleaseSelectIsCompulsory')}}",
-              },
-            ],
-          },
-
-          entity: {
-            type: 'string',
-            default: 'VENDOR',
-            'x-hidden': true,
-          },
-
-          options: {
-            type: 'string',
-            'x-hidden': true,
-            'x-reactions': [
-              {
-                dependencies: ['selectionOptions'],
-                fulfill: {
-                  'state.value':
-                    "{{$deps[0] ? JSON.stringify(($deps[0] || []).map(x=>({name: x?.name})).filter(x=>x.name && x.name.trim())) : ''}}",
+                properties: {
+                  add: {
+                    type: 'void',
+                    'x-component': 'ArrayTable.Addition',
+                    title: "{{t('common.addOption')}}",
+                  },
                 },
               },
-            ],
+
+              is_compulsory: {
+                type: 'boolean',
+                title: "{{t('purchase.compulsorySelection')}}",
+                required: true,
+                'x-decorator': 'FormItem',
+                'x-component': 'Radio.Group',
+                enum: '{{compulsoryTypes}}',
+                'x-validator': [
+                  {
+                    required: true,
+                    message: "{{t('purchase.pleaseSelectIsCompulsory')}}",
+                  },
+                ],
+              },
+
+              entity: {
+                type: 'string',
+                default: 'VENDOR',
+                'x-hidden': true,
+              },
+
+              options: {
+                type: 'string',
+                'x-hidden': true,
+                'x-reactions': [
+                  {
+                    dependencies: ['selectionOptions'],
+                    fulfill: {
+                      'state.value':
+                        "{{$deps[0] ? JSON.stringify(($deps[0] || []).map(x=>({name: x?.name})).filter(x=>x.name && x.name.trim())) : ''}}",
+                    },
+                  },
+                ],
+              },
+            },
           },
         },
       },

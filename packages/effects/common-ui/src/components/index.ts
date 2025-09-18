@@ -41,6 +41,7 @@ export * from './submit';
 export * from './switch';
 export * from './time-picker';
 export * from './tippy';
+export * from './card';
 export * from './transfer';
 
 export { default as Upload } from './upload';
@@ -110,5 +111,5 @@ export {
   ElSwitch as Switch,
   ElTreeSelect as TreeSelect,
   ElTable as Table,
-  ElInput as Textarea
+  ElInput as Textarea,
 } from 'element-plus';
