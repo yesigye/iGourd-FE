@@ -14,7 +14,7 @@ interface DrawerFormOptions {
 }
 
 export function useDrawerForm(options: DrawerFormOptions) {
-  const handleSubmit = options.formOptions.handleSubmit;
+  let handleSubmit = options.formOptions.handleSubmit;
   const { gridApi, service } = inject<{
     gridApi: ExtendedVxeGridApi;
     service: Partial<Service<unknown, unknown>>;
@@ -26,16 +26,20 @@ export function useDrawerForm(options: DrawerFormOptions) {
     }
     await formAPI.validate();
     drawerApi.lock();
-    if (handleSubmit) {
-      await handleSubmit(formAPI.values);
-    } else {
-      await (Reflect.has(formAPI.values, 'id')
-        ? service.update?.(formAPI.values)
-        : service.create?.(formAPI.values));
+
+    try {
+      if (handleSubmit) {
+        await handleSubmit(formAPI.values);
+      } else {
+        await (Reflect.has(formAPI.values, 'id')
+          ? service.update?.(formAPI.values)
+          : service.create?.(formAPI.values));
+        gridApi?.reload();
+        drawerApi.close();
+      }
+    } finally {
+      drawerApi.unlock();
     }
-    gridApi?.reload();
-    drawerApi.unlock();
-    drawerApi.close();
   };
   if (!options.drawerOptions.onOpenChange) {
     options.drawerOptions.onOpenChange = function (isOpen) {
