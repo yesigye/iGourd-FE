@@ -42,6 +42,7 @@ import {
   Switch,
   TimePicker,
   Transfer,
+  Card,
 } from '@igourd/common-ui';
 import '@igourd/common-ui/style';
 // import ProductArrayTable from './arrat-product-table';
@@ -50,6 +51,7 @@ import Upload from './upload';
 
 async function initComponentAdapter() {
   const components: Partial<Record<string, Component | FunctionalComponent>> = {
+    Card,
     ArrayCards,
     ArrayCollapse,
     ArrayItems,
