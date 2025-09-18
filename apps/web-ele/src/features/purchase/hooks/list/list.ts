@@ -5,7 +5,7 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
-  createPurchaseRecordApi,
+  createPurchaseVendorApi,
   deletePurchaseRecordApi,
   getPurchaseListApi,
   updatePurchaseRecordApi,
@@ -97,7 +97,7 @@ export function usePurchaseList() {
     service: {
       query: getPurchaseListApi,
       drop: deletePurchaseRecordApi,
-      create: createPurchaseRecordApi,
+      create: createPurchaseVendorApi,
       update: updatePurchaseRecordApi,
     },
   });
