@@ -1,3 +1,4 @@
+/* eslint-disable vue/one-component-per-file */
 import type { ArrayField } from '@formily/core';
 import type { ISchema } from '@formily/json-schema';
 

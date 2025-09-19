@@ -2,14 +2,17 @@ import { requestClient } from '#/api/request';
 
 // 获取仓库分页列表
 export function getWarehouseListApi(data: any) {
-  return requestClient
-    .post('/v1/merchant/basics/inventory/warehouse/list', data)
-    .then((res) => {
-      return {
-        total: res.length ?? 0,
-        list: res,
-      };
-    });
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/warehouse/page-list',
+    data,
+  );
+}
+
+export function warehouseProductPageList(data) {
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/warehouse/product/page-list',
+    data,
+  );
 }
 
 // 创建仓库
