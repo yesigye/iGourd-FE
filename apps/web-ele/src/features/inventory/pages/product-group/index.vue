@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ElButton, Page } from '@igourd/common-ui';
+import { ColPage, ElButton } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { useInventoryProductGroupList } from '../../hooks/product-group/list';
@@ -15,7 +15,7 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
 </script>
 
 <template>
-  <Page auto-content-height>
+  <ColPage auto-content-height>
     <Grid>
       <template #table-title>
         <ElButton type="primary">
@@ -41,5 +41,5 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
     </Grid>
 
     <Drawer />
-  </Page>
+  </ColPage>
 </template>

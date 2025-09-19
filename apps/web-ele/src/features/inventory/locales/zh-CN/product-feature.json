@@ -13,5 +13,22 @@
   "select": "选择",
   "input": "输入",
   "userCreated": "用户创建",
-  "fixed": "固定"
+  "fixed": "固定",
+  "feature": "属性",
+  "feature-type": "属性类型",
+  "selection-type": "选择类型",
+  "selection-options": "选择选项",
+  "compulsory-selection": "是否必填",
+  "please-enter-feature-name": "请输入属性名称",
+  "please-select-feature-type": "请选择属性类型",
+  "please-select-is-fixed-value": "请选择是否固定值",
+  "option-name": "选项名称",
+  "please-enter-option-name": "请输入选项名称",
+  "please-select-is-compulsory": "请选择是否必填",
+  "input-box": "输入框",
+  "select-box": "选择框",
+  "fixed-value": "固定值",
+  "user-created": "用户创建",
+  "yes": "是",
+  "no": "否"
 }

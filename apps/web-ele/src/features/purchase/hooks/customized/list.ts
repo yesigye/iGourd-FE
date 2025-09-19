@@ -11,7 +11,7 @@ import {
 } from '@@/purchase/apis';
 import { CustomizedDrawerForm } from '@@/purchase/components';
 
-import { useCrud } from '#/hooks';
+import { useCrud, withEntityParam } from '#/hooks';
 
 export function useCustomized() {
   const { t } = useI18n();
@@ -101,10 +101,16 @@ export function useCustomized() {
     batchOperate: true,
     connectedComponent: CustomizedDrawerForm,
     service: {
-      query: getPurchaseCustomizedListApi,
-      drop: deleteDynamicColumn,
-      create: createOrUpdateCustomizedField,
-      update: createOrUpdateCustomizedField,
+      query: withEntityParam({ entity: 'VENDOR' })(
+        getPurchaseCustomizedListApi,
+      ),
+      drop: withEntityParam({ entity: 'VENDOR' })(deleteDynamicColumn),
+      create: withEntityParam({ entity: 'VENDOR' })(
+        createOrUpdateCustomizedField,
+      ),
+      update: withEntityParam({ entity: 'VENDOR' })(
+        createOrUpdateCustomizedField,
+      ),
     },
   });
 }
