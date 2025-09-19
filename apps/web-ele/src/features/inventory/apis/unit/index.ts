@@ -11,7 +11,10 @@ import { requestClient as request } from '#/api/request';
  * 获取单位列表
  */
 export function getUnitList(params: UnitParams) {
-  return request.post<UnitResponse>('/v1/merchant/basics/inventory/product-unit/page-list', params);
+  return request.post<UnitResponse>(
+    '/v1/merchant/basics/inventory/product-unit/page-list',
+    params,
+  );
 }
 
 /**
@@ -28,14 +31,17 @@ export function deleteUnit(params: {
   merchant_id: number;
   product_unit_id_list: number[];
 }) {
-  return request.post('/inventory/unit/delete', params);
+  return request.post('/v1/merchant/basics/inventory/unit/delete', params);
 }
 
 /**
  * 创建单位
  */
 export function createUnit(data: UnitFormData) {
-  return request.post('/inventory/unit/create', data);
+  return request.post(
+    '/v1/merchant/basics/inventory/product-unit/create',
+    data,
+  );
 }
 
 /**

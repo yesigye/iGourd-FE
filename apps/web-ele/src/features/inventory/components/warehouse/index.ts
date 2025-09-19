@@ -1,1 +1,1 @@
-export { default as WarehouseDrawer } from './drawer.vue';
+export { default as WarehouseDrawer } from './warehouse.vue';

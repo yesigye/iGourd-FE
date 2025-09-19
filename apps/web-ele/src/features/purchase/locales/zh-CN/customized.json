@@ -1,5 +1,11 @@
 {
   "featureName": "",
   "featureType": "",
-  "addCustomized": "添加定制"
+  "addCustomized": "添加定制",
+  "name": "名称",
+  "type": "类型",
+  "options-type": "选项类型",
+  "compulsory": "是否必填",
+  "creator": "创建人",
+  "creation-time": "创建时间"
 }

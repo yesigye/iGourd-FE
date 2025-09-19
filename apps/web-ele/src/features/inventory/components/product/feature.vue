@@ -1,10 +1,10 @@
-<template>
-  <Drawer />
-</template>
 <script lang="ts" setup>
-import { useIgourdDrawer } from '@igourd/common-ui';
+import { useFeatureForm } from '@@/inventory/hooks/product-feature/form';
 
-const [Drawer] = useIgourdDrawer({
-  appendToMain: true,
-});
+const { Drawer, Form } = useFeatureForm();
 </script>
+<template>
+  <Drawer>
+    <Form />
+  </Drawer>
+</template>

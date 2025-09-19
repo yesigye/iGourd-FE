@@ -2,18 +2,20 @@ import type {
   ProductFeatureItem,
   ProductFeatureParams,
 } from '@@/inventory/types';
-import type { VxeGridPropTypes } from '#/adapter/vxe-table';
-import { useI18n } from '@igourd/locales';
-import {
-  getDynamicColumnList,
-  createDynamicColumn,
-  updateDynamicColumn,
-  deleteDynamicColumn,
-} from '@@/inventory/apis';
 
+import type { VxeGridPropTypes } from '#/adapter/vxe-table';
+
+import { useI18n } from '@igourd/locales';
+
+import {
+  createDynamicColumn,
+  deleteDynamicColumn,
+  getDynamicColumnList,
+  updateDynamicColumn,
+} from '@@/inventory/apis';
 import { FeatureDrawer } from '@@/inventory/components';
 
-import { useCrud } from '#/hooks';
+import { useCrud, withEntityParam } from '#/hooks';
 
 export function useInventoryProductFeatureList() {
   const { t } = useI18n();
@@ -100,10 +102,10 @@ export function useInventoryProductFeatureList() {
     batchOperate: true,
     connectedComponent: FeatureDrawer,
     service: {
-      query: getDynamicColumnList,
-      create: createDynamicColumn,
-      update: updateDynamicColumn,
-      drop: deleteDynamicColumn,
+      query: withEntityParam({ entity: 'PRODUCT' })(getDynamicColumnList),
+      create: withEntityParam({ entity: 'PRODUCT' })(createDynamicColumn),
+      update: withEntityParam({ entity: 'PRODUCT' })(updateDynamicColumn),
+      drop: withEntityParam({ entity: 'PRODUCT' })(deleteDynamicColumn),
     },
   });
 }

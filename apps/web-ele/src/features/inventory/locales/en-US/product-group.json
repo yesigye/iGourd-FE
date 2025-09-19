@@ -20,5 +20,18 @@
   "yes": "Yes",
   "no": "No",
   "deleteSuccess": "Delete Success",
-  "cancelDelete": "Cancel Delete"
+  "cancelDelete": "Cancel Delete",
+  "category": "Product Group",
+  "product": "Product",
+  "product_code": "Product Code",
+  "status": "Status",
+  "unit": "Unit",
+  "add-product-group": "Add Product Group",
+  "level": "Product Group Level",
+  "previous-category": "Previous Product Group",
+  "please-select": "Please select",
+  "please-enter-category-name": "Please enter product group name",
+  "category-name": "Product Group Name",
+  "please-select-previous-category": "Please select previous product group",
+  "please-select-level": "Please select product group level"
 }

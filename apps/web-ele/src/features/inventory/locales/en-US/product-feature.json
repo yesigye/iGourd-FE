@@ -13,5 +13,22 @@
   "select": "Select",
   "input": "Input",
   "userCreated": "User Created",
-  "fixed": "Fixed"
+  "fixed": "Fixed",
+  "feature": "Feature",
+  "feature-type": "Feature Type",
+  "selection-type": "Selection Type",
+  "selection-options": "Selection Options",
+  "compulsory-selection": "Compulsory Selection",
+  "please-enter-feature-name": "Please enter feature name",
+  "please-select-feature-type": "Please select feature type",
+  "please-select-is-fixed-value": "Please select if the value is fixed",
+  "option-name": "Option Name",
+  "please-enter-option-name": "Please enter option name",
+  "please-select-is-compulsory": "Please select if the feature is compulsory",
+  "input-box": "Input Box",
+  "select-box": "Select Box",
+  "fixed-value": "Fixed Value",
+  "user-created": "User Created",
+  "yes": "Yes",
+  "no": "No"
 }

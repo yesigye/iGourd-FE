@@ -26,3 +26,7 @@ export function deletePurchaseRecordApi(record_id_list: (number | string)[]) {
 export function getPurchaseRecordDetailApi(record_id: number | string) {
   return requestClient.get(`/v1/merchant/purchase/vendor/detail/${record_id}`);
 }
+// 创建供应商
+export function createPurchaseVendorApi(data: any) {
+  return requestClient.post('/v1/merchant/purchase/vendor/create', data);
+}

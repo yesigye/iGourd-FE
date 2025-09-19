@@ -1,7 +1,6 @@
 {
   "warehouseName": "Nom de l'Entrepôt",
   "warehouseCode": "Code de l'Entrepôt",
-  "address": "Adresse",
   "contactPerson": "Personne de Contact",
   "contactPhone": "Téléphone de Contact",
   "status": "Statut",
@@ -11,5 +10,15 @@
   "statusOptions": {
     "active": "Actif",
     "inactive": "Inactif"
-  }
+  },
+  "add-warehouse": "Ajouter un entrepôt",
+  "warehouse-name": "Nom de l'Entrepôt",
+  "country": "Pays",
+  "address": "Adresse",
+  "contact-name": "Contacts",
+  "contact-telephone": "Téléphone de Contact",
+  "email": "Email",
+  "remarks": "Remarques",
+  "please-warehouse-name": "Veuillez entrer le nom de l'entrepôt",
+  "default-sale": "Entrepôt par défaut"
 }

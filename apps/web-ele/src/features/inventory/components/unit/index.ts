@@ -1,1 +1,1 @@
-export { default as UnitDrawer } from './index.vue';
+export { default as UnitDrawer } from './unit.vue';
