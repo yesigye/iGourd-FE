@@ -6,6 +6,7 @@ export { default as ProductArrayTable } from './array-product-form';
 export * from './array-table';
 export * from './array-tabs';
 export * from './captcha';
+export * from './card';
 export * from './cascader';
 export * from './checkbox';
 export * from './col-page';
@@ -41,7 +42,6 @@ export * from './submit';
 export * from './switch';
 export * from './time-picker';
 export * from './tippy';
-export * from './card';
 export * from './transfer';
 
 export { default as Upload } from './upload';
@@ -96,6 +96,7 @@ export {
   ElSpace,
   ElTable,
   ElTableColumn,
+  ElTree,
   ElUpload,
   formContextKey,
 } from 'element-plus';
@@ -109,7 +110,7 @@ export {
   ElOption as SelectOption,
   ElSpace as Space,
   ElSwitch as Switch,
-  ElTreeSelect as TreeSelect,
   ElTable as Table,
   ElInput as Textarea,
+  ElTreeSelect as TreeSelect,
 } from 'element-plus';

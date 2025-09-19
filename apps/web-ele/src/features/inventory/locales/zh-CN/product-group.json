@@ -20,5 +20,18 @@
   "yes": "是",
   "no": "否",
   "deleteSuccess": "删除成功",
-  "cancelDelete": "取消删除"
+  "cancelDelete": "取消删除",
+  "category": "商品分类",
+  "product": "商品",
+  "product_code": "商品编码",
+  "status": "状态",
+  "unit": "单位",
+  "add-product-group": "添加商品分类",
+  "level": "商品分类等级",
+  "previous-category": "上一级商品分类",
+  "please-select": "请选择",
+  "please-enter-category-name": "请输入商品分类名称",
+  "category-name": "商品分类名称",
+  "please-select-previous-category": "请选择上一级商品分类",
+  "please-select-level": "请选择商品分类等级"
 }
