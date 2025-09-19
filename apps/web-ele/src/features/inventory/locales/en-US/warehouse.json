@@ -1,7 +1,6 @@
 {
   "warehouseName": "Warehouse Name",
   "warehouseCode": "Warehouse Code",
-  "address": "Address",
   "contactPerson": "Contact Person",
   "contactPhone": "Contact Phone",
   "status": "Status",
@@ -11,5 +10,15 @@
   "statusOptions": {
     "active": "Active",
     "inactive": "Inactive"
-  }
+  },
+  "add-warehouse": "Add Warehouse",
+  "warehouse-name": "Warehouse Name",
+  "country": "Country",
+  "address": "Address",
+  "contact-name": "Contact Name",
+  "contact-telephone": "Contact Phone",
+  "email": "Email",
+  "remarks": "Remarks",
+  "please-warehouse-name": "Please enter the warehouse name",
+  "default-sale": "Default Warehouse"
 }

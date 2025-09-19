@@ -91,6 +91,8 @@ export {
   ElNotification,
   ElOption,
   ElPopover,
+  ElRadio,
+  ElRadioGroup,
   ElRow,
   ElSelect,
   ElSpace,
@@ -106,7 +108,6 @@ export type { UploadFile, UploadProps, UploadUserFile } from 'element-plus';
 export {
   ElButton as Button,
   ElForm as Form,
-  ElRadioGroup as RadioGroup,
   ElOption as SelectOption,
   ElSpace as Space,
   ElSwitch as Switch,

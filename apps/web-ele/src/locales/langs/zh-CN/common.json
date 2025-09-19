@@ -281,5 +281,6 @@
   "esc": "取消",
   "PleaseEnterRemark": "请输入备注",
   "productPriceCannotBeZero": "商品售价不能为0",
-  "paySuccess": "支付成功"
+  "paySuccess": "支付成功",
+  "creation-time": "创建时间"
 }
