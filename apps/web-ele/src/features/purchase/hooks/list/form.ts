@@ -49,7 +49,7 @@ export function useListForm() {
                     },
                   },
                   profile_photo: {
-                    type: 'array',
+                    type: 'string',
                     title: t('list.image'),
                     'x-decorator': 'FormItem',
                     'x-component': 'Upload',
@@ -165,6 +165,13 @@ export function useListForm() {
                         type: 'string',
                         'x-decorator': 'FormItem',
                         'x-component': 'Select',
+                        'x-component-props': {
+                          placeholder: t('purchase.name'),
+                          class: 'w-[120px] flex-1',
+                          style: {
+                            width: '120px',
+                          },
+                        },
                         required: true,
                         'x-reactions': ['{{useAsyncDataSource(loadData)}}', {}],
                       },
@@ -181,6 +188,7 @@ export function useListForm() {
                   },
                   email: {
                     type: 'string',
+                    required: true,
                     title: t('list.email'),
                     'x-decorator': 'FormItem',
                     'x-component': 'Input',
@@ -432,8 +440,8 @@ export function useListForm() {
     const optionResult = await basicsCountryAreaList({});
     const option = optionResult.map(
       (item: { label: string; value: string }) => ({
-        label: item.area_code,
-        value: item.area_code,
+        label: `${item.name}+${item.area_code}`,
+        value: `+${item.area_code}`,
       }),
     );
     return new Promise((resolve) => {
@@ -442,7 +450,7 @@ export function useListForm() {
   };
   return useDrawerForm({
     drawerOptions: {
-      title: t('customized.addCustomized'),
+      title: t('list.addPurchaseVendor'),
       appendToMain: true,
       class: 'w-full',
     },

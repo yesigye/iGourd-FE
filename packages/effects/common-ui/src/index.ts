@@ -19,7 +19,7 @@ export * from './formily';
 // export * from '@igourd-core/form-ui';
 
 export * from './ui';
-
+export * from '@formily/reactive';
 export * from '@igourd-core/popup-ui';
 
 export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
