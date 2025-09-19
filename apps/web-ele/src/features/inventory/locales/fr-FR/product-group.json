@@ -20,5 +20,18 @@
   "yes": "Oui",
   "no": "Non",
   "deleteSuccess": "Suppression Réussie",
-  "cancelDelete": "Annuler la Suppression"
+  "cancelDelete": "Annuler la Suppression",
+  "category": "Groupe de Produits",
+  "product": "Produit",
+  "product_code": "Code Produit",
+  "status": "Statut",
+  "unit": "Unité",
+  "add-product-group": "Ajouter Groupe de Produits",
+  "level": "Niveau de Groupe de Produits",
+  "previous-category": "Groupe de Produits Parent",
+  "please-select": "Veuillez sélectionner",
+  "please-enter-category-name": "Veuillez entrer le nom du groupe de produits",
+  "category-name": "Nom du Groupe de Produits",
+  "please-select-previous-category": "Veuillez sélectionner le groupe de produits parent",
+  "please-select-level": "Veuillez sélectionner le niveau de groupe de produits"
 }

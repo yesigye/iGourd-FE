@@ -101,13 +101,13 @@ export function useInventoryChangeLogList() {
       sortable: true,
       formatter: 'formatDateTime',
     },
-    {
-      field: 'operation',
-      title: t('common.operations'),
-      width: 120,
-      fixed: 'right',
-      slots: { default: 'operation' },
-    },
+    // {
+    //   field: 'operation',
+    //   title: t('common.operations'),
+    //   width: 120,
+    //   fixed: 'right',
+    //   slots: { default: 'operation' },
+    // },
   ];
 
   const service = {

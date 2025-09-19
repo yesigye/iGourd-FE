@@ -11,7 +11,7 @@ import {
 } from '@@/purchase/apis';
 import { CustomizedDrawerForm } from '@@/purchase/components';
 
-import { useCrud } from '#/hooks';
+import { useCrud, withEntityParam } from '#/hooks';
 
 export function useCustomized() {
   const { t } = useI18n();
@@ -23,7 +23,7 @@ export function useCustomized() {
     },
     {
       field: 'name',
-      title: t('purchase.featureName'),
+      title: t('customized.name'),
       minWidth: 170,
       sortable: true,
       align: 'left',
@@ -31,7 +31,7 @@ export function useCustomized() {
     },
     {
       field: 'type',
-      title: t('purchase.featureType'),
+      title: t('customized.type'),
       minWidth: 120,
       sortable: true,
       align: 'left',
@@ -42,7 +42,7 @@ export function useCustomized() {
     },
     {
       field: 'is_fixed_option',
-      title: t('purchase.selectionType'),
+      title: t('customized.options-type'),
       minWidth: 200,
       sortable: true,
       align: 'left',
@@ -53,7 +53,7 @@ export function useCustomized() {
     },
     {
       field: 'is_compulsory',
-      title: t('purchase.compulsory'),
+      title: t('customized.compulsory'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -64,14 +64,14 @@ export function useCustomized() {
     },
     {
       field: 'creator_name',
-      title: t('purchase.creator'),
+      title: t('customized.creator'),
       minWidth: 180,
       sortable: true,
       align: 'left',
     },
     {
       field: 'create_time',
-      title: t('purchase.creationTime'),
+      title: t('customized.creation-time'),
       sortable: true,
       align: 'left',
       minWidth: 180,
@@ -107,15 +107,16 @@ export function useCustomized() {
     batchOperate: true,
     connectedComponent: CustomizedDrawerForm,
     service: {
-      query: (params) => {
-        return getPurchaseCustomizedListApi({
-          ...params,
-          entry: ['ddd'],
-        });
-      },
-      drop: deleteDynamicColumn,
-      create: createOrUpdateCustomizedField,
-      update: createOrUpdateCustomizedField,
+      query: withEntityParam({ entity: 'VENDOR' })(
+        getPurchaseCustomizedListApi,
+      ),
+      drop: withEntityParam({ entity: 'VENDOR' })(deleteDynamicColumn),
+      create: withEntityParam({ entity: 'VENDOR' })(
+        createOrUpdateCustomizedField,
+      ),
+      update: withEntityParam({ entity: 'VENDOR' })(
+        createOrUpdateCustomizedField,
+      ),
     },
   });
 }

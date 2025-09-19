@@ -5,10 +5,10 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { deleteSku, getSkuList } from '@@/inventory/apis';
+import { deleteSku, getSkuList, modifySku } from '@@/inventory/apis';
 import { SkuListDrawer } from '@@/inventory/components';
 
-import { useCrud } from '#/hooks';
+import { useCrud, withEntityParam } from '#/hooks';
 
 export function useInventorySkuList() {
   const { t } = useI18n();
@@ -140,6 +140,12 @@ export function useInventorySkuList() {
       searchFormSchema,
       batchOperate: true,
       connectedComponent: SkuListDrawer,
+      service: {
+        query: withEntityParam({})(getSkuList),
+        create: withEntityParam({})(modifySku),
+        update: withEntityParam({})(modifySku),
+        drop: withEntityParam({})(deleteSku),
+      },
     });
 
   return {

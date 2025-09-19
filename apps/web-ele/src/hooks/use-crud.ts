@@ -41,7 +41,13 @@ export interface CRUDOptions<T, P> extends VxeGridProps<T> {
   connectedComponent: Component;
   params: Record<string, any>;
 }
-
+export function withEntityParam(parameters: object) {
+  return function (fn: (params: any) => any) {
+    return function (data: any) {
+      return fn({ ...data, ...parameters });
+    };
+  };
+}
 /**
  * 批量操作的Hooks
  * @param checkboxChange

@@ -17,7 +17,10 @@ export function warehouseProductPageList(data) {
 
 // 创建仓库
 export function createWarehouseApi(data: any) {
-  return requestClient.post('/v1/merchant/warehouse/create', data);
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/warehouse/create',
+    data,
+  );
 }
 
 // 更新仓库

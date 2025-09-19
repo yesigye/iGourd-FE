@@ -1,199 +1,464 @@
+import type { ISchema } from '@igourd/common-ui';
+
+import { h } from 'vue';
+
+import { action, ElButton } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import type { ISchema } from '@igourd/common-ui';
+import { basicsCountryAreaList } from '#/api/common';
 import { useDrawerForm } from '#/hooks/use-drawer-form';
 
+const UploadButton = () => {
+  return h(ElButton, {}, { default: () => '上传图片' });
+};
 export function useListForm() {
   const { t } = useI18n();
 
   const schema: ISchema = {
     type: 'object',
     properties: {
-      form: {
+      card1: {
         type: 'void',
-        'x-component': 'FormLayout',
+        'x-component': 'Card',
         'x-component-props': {
           labelCol: 6,
           wrapperCol: 14,
+          header: t('list.basic-information'),
         },
         properties: {
-          name: {
-            type: 'string',
-            title: "{{t('purchase.featureName')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Input',
+          grid: {
+            type: 'void',
+            'x-component': 'FormGrid',
             'x-component-props': {
-              maxLength: 32,
-              placeholder: "{{t('purchase.pleaseEnterFeatureName')}}",
-              clearable: true,
+              minColumns: 3,
+              maxColumns: 3,
             },
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('purchase.pleaseEnterFeatureName')}}",
-              },
-              { max: 64, message: "{{t('common.maxChars', { n: 64 })}}" },
-            ],
-          },
-
-          type: {
-            type: 'string',
-            title: "{{t('purchase.featureType')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Radio.Group',
-            enum: '{{featureTypes}}',
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('purchase.pleaseSelectFeatureType')}}",
-              },
-            ],
-          },
-
-          is_fixed_option: {
-            type: 'boolean',
-            title: "{{t('purchase.selectionType')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Radio.Group',
-            enum: '{{selectTypes}}',
-            'x-visible': "{{$values.type === 'SELECT'}}",
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('purchase.pleaseSelectIsFixedValue')}}",
-              },
-            ],
-          },
-
-          selectionOptions: {
-            type: 'array',
-            title: "{{t('purchase.selectionOptions')}}",
-            'x-decorator': 'FormItem',
-            'x-visible': "{{$values.type === 'SELECT'}}",
-            'x-component': 'ArrayTable',
-            'x-component-props': {
-              border: true,
-              stripe: true,
-              size: 'small',
-            },
-            items: {
-              type: 'object',
-              properties: {
-                column1: {
-                  type: 'void',
-                  'x-component': 'ArrayTable.Column',
-                  'x-component-props': {
-                    width: 80,
-                    title: '#',
-                    align: 'center',
+            properties: {
+              layout1: {
+                type: 'void',
+                'x-component': 'FormLayout',
+                properties: {
+                  name: {
+                    type: 'string',
+                    title: t('list.vendor-name'),
+                    required: true,
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
                   },
-                  properties: {
-                    index: {
-                      type: 'void',
-                      'x-component': 'ArrayTable.Index',
+                  profile_photo: {
+                    type: 'string',
+                    title: t('list.image'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Upload',
+                    'x-component-props': {
+                      action: 'https://formily-vue.free.beeceptor.com/file',
+                    },
+                    'x-content': UploadButton,
+                  },
+                },
+              },
+              layout2: {
+                type: 'void',
+                'x-component': 'FormLayout',
+                properties: {
+                  effective_time: {
+                    type: 'string',
+                    title: t('list.effective-time'),
+                    required: true,
+                    'x-decorator': 'FormItem',
+                    'x-component': 'DatePicker',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
                     },
                   },
                 },
-                colName: {
-                  type: 'void',
-                  'x-component': 'ArrayTable.Column',
-                  'x-component-props': {
-                    title: "{{t('purchase.optionName')}}",
+              },
+              layout3: {
+                type: 'void',
+                'x-component': 'FormLayout',
+                properties: {
+                  expiration_time: {
+                    type: 'string',
+                    title: t('list.expiration-time'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'DatePicker',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
                   },
-                  properties: {
-                    name: {
-                      type: 'string',
-                      'x-decorator': 'FormItem',
-                      'x-component': 'Input',
-                      'x-component-props': {
-                        placeholder: "{{t('purchase.pleaseEnterOptionName')}}",
-                        clearable: true,
+                },
+              },
+            },
+          },
+        },
+      },
+      card2: {
+        type: 'void',
+        'x-component': 'Card',
+        'x-component-props': {
+          labelCol: 6,
+          wrapperCol: 14,
+          header: t('list.contact-information'),
+          class: 'mt-2',
+        },
+        properties: {
+          grid: {
+            type: 'void',
+            'x-component': 'FormGrid',
+            'x-component-props': {
+              minColumns: 3,
+              maxColumns: 3,
+            },
+            properties: {
+              layout1: {
+                type: 'void',
+                'x-component': 'FormLayout',
+                properties: {
+                  contact_name: {
+                    type: 'string',
+                    title: t('list.contact-name'),
+                    required: true,
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
+                  currency_code: {
+                    type: 'string',
+                    title: t('list.country'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Select',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
+                  zip_code: {
+                    type: 'string',
+                    title: t('list.zip-code'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
+                },
+              },
+              layout2: {
+                type: 'void',
+                'x-component': 'FormLayout',
+                properties: {
+                  contact: {
+                    type: 'void',
+                    title: t('list.contact-telephone'),
+                    'x-decorator': 'FormItem',
+                    'x-decorator-props': {
+                      asterisk: true,
+                      feedbackLayout: 'none',
+                    },
+                    'x-component': 'Space',
+                    properties: {
+                      contact_country_area_code: {
+                        type: 'string',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Select',
+                        'x-component-props': {
+                          placeholder: t('purchase.name'),
+                          class: 'w-[120px] flex-1',
+                          style: {
+                            width: '120px',
+                          },
+                        },
+                        required: true,
+                        'x-reactions': ['{{useAsyncDataSource(loadData)}}', {}],
                       },
-                    },
-                  },
-                },
-                colOps: {
-                  type: 'void',
-                  'x-component': 'ArrayTable.Column',
-                  'x-component-props': {
-                    title: "{{t('common.operations')}}",
-                    width: 180,
-                    fixed: 'right',
-                  },
-                  properties: {
-                    ops: {
-                      type: 'void',
-                      'x-component': 'FormItem',
-                      properties: {
-                        remove: {
-                          type: 'void',
-                          'x-component': 'ArrayTable.Remove',
+                      contact_telephone: {
+                        type: 'string',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Input',
+                        required: true,
+                        'x-component-props': {
+                          class: 'w-full',
                         },
                       },
                     },
                   },
+                  email: {
+                    type: 'string',
+                    required: true,
+                    title: t('list.email'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('list.email'),
+                    },
+                  },
                 },
               },
+              layout3: {
+                type: 'void',
+                'x-component': 'FormLayout',
+                properties: {
+                  address: {
+                    type: 'string',
+                    title: t('list.address'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input.TextArea',
+                    'x-component-props': {
+                      placeholder: t('purchase.address'),
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      card3: {
+        type: 'void',
+        'x-component': 'Card',
+        'x-component-props': {
+          labelCol: 6,
+          wrapperCol: 14,
+          header: t('list.customized-information'),
+          class: 'mt-2',
+        },
+        properties: {
+          grid: {
+            type: 'void',
+            'x-component': 'FormGrid',
+            'x-component-props': {
+              minColumns: 3,
+              maxColumns: 3,
             },
             properties: {
-              add: {
+              layout1: {
                 type: 'void',
-                'x-component': 'ArrayTable.Addition',
-                title: "{{t('common.addOption')}}",
+                'x-component': 'FormLayout',
+                properties: {
+                  name: {
+                    type: 'string',
+                    title: t('list.vendor-name'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
+                  image: {
+                    type: 'array',
+                    title: t('list.image'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Upload',
+                    'x-component-props': {
+                      action: 'https://formily-vue.free.beeceptor.com/file',
+                    },
+                    'x-content': UploadButton,
+                  },
+                },
+              },
+              layout2: {
+                type: 'void',
+                'x-component': 'FormLayout',
+                properties: {
+                  effective_time: {
+                    type: 'string',
+                    title: t('list.effective-time'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
+                },
+              },
+              layout3: {
+                type: 'void',
+                'x-component': 'FormLayout',
+                properties: {
+                  expiration_time: {
+                    type: 'string',
+                    title: t('list.expiration-time'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
+                },
               },
             },
           },
-
-          is_compulsory: {
-            type: 'boolean',
-            title: "{{t('purchase.compulsorySelection')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Radio.Group',
-            enum: '{{compulsoryTypes}}',
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('purchase.pleaseSelectIsCompulsory')}}",
-              },
-            ],
-          },
-
-          entity: {
-            type: 'string',
-            default: 'VENDOR',
-            'x-hidden': true,
-          },
-
-          options: {
-            type: 'string',
-            'x-hidden': true,
-            'x-reactions': [
-              {
-                dependencies: ['selectionOptions'],
-                fulfill: {
-                  'state.value':
-                    "{{$deps[0] ? JSON.stringify(($deps[0] || []).map(x=>({name: x?.name})).filter(x=>x.name && x.name.trim())) : ''}}",
+        },
+      },
+      card4: {
+        type: 'void',
+        'x-component': 'Card',
+        'x-component-props': {
+          labelCol: 6,
+          wrapperCol: 14,
+          header: t('list.financial-information'),
+          class: 'mt-2',
+        },
+        properties: {
+          grid: {
+            type: 'void',
+            'x-component': 'FormGrid',
+            'x-component-props': {
+              minColumns: 3,
+              maxColumns: 3,
+            },
+            properties: {
+              layout1: {
+                type: 'void',
+                'x-component': 'FormLayout',
+                properties: {
+                  bank_name: {
+                    type: 'string',
+                    title: t('list.bank-name'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
+                  bank_account_name: {
+                    type: 'string',
+                    title: t('list.bank-account-name'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
+                  bank_account_number: {
+                    type: 'string',
+                    title: t('list.bank-account-number'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
+                  bank_swift_code: {
+                    type: 'string',
+                    title: t('list.bank-swift-code'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
                 },
               },
-            ],
+              layout2: {
+                type: 'void',
+                'x-component': 'FormLayout',
+                properties: {
+                  currency_code: {
+                    type: 'string',
+                    title: t('list.currency'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
+                  balance: {
+                    type: 'string',
+                    title: t('list.opening-balance'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
+                  tin_number: {
+                    type: 'string',
+                    title: t('list.tin-number'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
+                  tax_number: {
+                    type: 'string',
+                    title: t('list.tax-number'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
+                },
+              },
+              layout3: {
+                type: 'void',
+                'x-component': 'FormLayout',
+                properties: {
+                  bank_address: {
+                    type: 'string',
+                    title: t('list.bank-address'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input.TextArea',
+                    'x-component-props': {
+                      placeholder: t('purchase.name'),
+                    },
+                  },
+                  remark: {
+                    type: 'string',
+                    title: t('list.remarks'),
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input.TextArea',
+                    'x-component-props': {
+                      placeholder: t('purchase.remarks'),
+                    },
+                  },
+                },
+              },
+            },
           },
         },
       },
     },
   };
+  const useAsyncDataSource = (service) => (field) => {
+    field.loading = true;
+    service(field).then(
+      action?.bound((data) => {
+        field.dataSource = data;
+        field.loading = false;
+      }),
+    );
+  };
+
+  const loadData = async (field: { props: { name: string } }) => {
+    const optionResult = await basicsCountryAreaList({});
+    const option = optionResult.map(
+      (item: { label: string; value: string }) => ({
+        label: `${item.name}+${item.area_code}`,
+        value: `+${item.area_code}`,
+      }),
+    );
+    return new Promise((resolve) => {
+      resolve(option);
+    });
+  };
   return useDrawerForm({
     drawerOptions: {
-      title: t('customized.addCustomized'),
+      title: t('list.addPurchaseVendor'),
       appendToMain: true,
       class: 'w-full',
     },
     formOptions: {
       schema,
       scope: {
+        useAsyncDataSource,
+        loadData,
         featureTypes: [
           { label: t('purchase.inputBox'), value: 'INPUT' },
           { label: t('purchase.selectBox'), value: 'SELECT' },

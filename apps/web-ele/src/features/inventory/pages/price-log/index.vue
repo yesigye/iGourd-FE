@@ -1,21 +1,20 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
+
 import { Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useInventoryPriceLogList } from '../../hooks/price-log/list';
+
 import { ElButton, ElTooltip } from 'element-plus';
-import { ref, onMounted } from 'vue';
+
+import { useInventoryPriceLogList } from '../../hooks/price-log/list';
 
 defineOptions({
   name: 'IInventoryPriceLog',
 });
 
 const { t } = useI18n();
-const {
-  Grid,
-  handleExport,
-  getStatistics,
-  priceTypeOptions
-} = useInventoryPriceLogList();
+const { Grid, handleExport, getStatistics, priceTypeOptions } =
+  useInventoryPriceLogList();
 
 // 统计信息
 const statistics = ref(null);
@@ -34,7 +33,7 @@ onMounted(() => {
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <div class="flex justify-between items-center w-full">
+        <div class="flex w-full items-center justify-between">
           <div class="flex items-center gap-4">
             <ElButton
               v-auth="'inventory_price-log_export'"
@@ -65,28 +64,43 @@ onMounted(() => {
     </Grid>
 
     <!-- 统计信息卡片 -->
-    <div v-if="statistics" class="mt-4 grid grid-cols-1 md:grid-cols-4 gap-4">
-      <div class="bg-white p-4 rounded-lg shadow">
-        <h3 class="text-lg font-semibold mb-2">{{ t('inventory.totalChanges') }}</h3>
-        <p class="text-2xl font-bold text-blue-600">{{ statistics.total_changes }}</p>
+    <div v-if="statistics" class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-4">
+      <div class="rounded-lg bg-white p-4 shadow">
+        <h3 class="mb-2 text-lg font-semibold">
+          {{ t('inventory.totalChanges') }}
+        </h3>
+        <p class="text-2xl font-bold text-blue-600">
+          {{ statistics.total_changes }}
+        </p>
       </div>
-      <div class="bg-white p-4 rounded-lg shadow">
-        <h3 class="text-lg font-semibold mb-2">{{ t('inventory.totalPriceChanged') }}</h3>
-        <p class="text-2xl font-bold text-green-600">{{ statistics.total_price_changed }}</p>
+      <div class="rounded-lg bg-white p-4 shadow">
+        <h3 class="mb-2 text-lg font-semibold">
+          {{ t('inventory.totalPriceChanged') }}
+        </h3>
+        <p class="text-2xl font-bold text-green-600">
+          {{ statistics.total_price_changed }}
+        </p>
       </div>
-      <div class="bg-white p-4 rounded-lg shadow">
-        <h3 class="text-lg font-semibold mb-2">{{ t('inventory.averageChangeAmount') }}</h3>
-        <p class="text-2xl font-bold text-purple-600">{{ statistics.average_change_amount }}</p>
+      <div class="rounded-lg bg-white p-4 shadow">
+        <h3 class="mb-2 text-lg font-semibold">
+          {{ t('inventory.averageChangeAmount') }}
+        </h3>
+        <p class="text-2xl font-bold text-purple-600">
+          {{ statistics.average_change_amount }}
+        </p>
       </div>
-      <div class="bg-white p-4 rounded-lg shadow">
-        <h3 class="text-lg font-semibold mb-2">{{ t('inventory.priceTypes') }}</h3>
+      <div class="rounded-lg bg-white p-4 shadow">
+        <h3 class="mb-2 text-lg font-semibold">
+          {{ t('inventory.priceTypes') }}
+        </h3>
         <div class="flex flex-wrap gap-2">
           <span
             v-for="(count, type) in statistics.price_type_counts"
             :key="type"
-            class="px-2 py-1 bg-gray-100 rounded text-sm"
+            class="rounded bg-gray-100 px-2 py-1 text-sm"
           >
-            {{ priceTypeOptions.find(opt => opt.value === type)?.label }}: {{ count }}
+            {{ priceTypeOptions.find((opt) => opt.value === type)?.label }}:
+            {{ count }}
           </span>
         </div>
       </div>
@@ -136,7 +150,9 @@ onMounted(() => {
 }
 
 .shadow {
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
+  box-shadow:
+    0 1px 3px 0 rgb(0 0 0 / 10%),
+    0 1px 2px 0 rgb(0 0 0 / 6%);
 }
 
 .text-lg {

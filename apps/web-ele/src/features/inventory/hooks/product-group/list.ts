@@ -1,17 +1,16 @@
 import type {
   FirstGroupItem,
   FirstGroupParams,
-  SecondGroupItem,
-  SecondGroupParams,
 } from '../../types/product-group';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { useCrud } from '#/hooks';
-
 import { getFirstGroupList } from '@@/inventory/apis';
+import { ProductGroupDrawer } from '@@/inventory/components';
+
+import { useCrud } from '#/hooks';
 
 export function useInventoryProductGroupList() {
   const { t } = useI18n();
@@ -24,56 +23,41 @@ export function useInventoryProductGroupList() {
       fixed: 'left',
     },
     {
-      field: 'major_name',
-      title: t('inventory.parentProductGroup'),
-      minWidth: 350,
+      field: 'category',
+      title: t('product-group.category'),
+      minWidth: 150,
+      fixed: 'left',
+    },
+    {
+      field: 'product',
+      title: t('product-group.product'),
+      minWidth: 150,
+      fixed: 'left',
+    },
+    {
+      field: 'product_code',
+      title: t('product-group.product_code'),
+      minWidth: 150,
+      fixed: 'left',
+    },
+    {
+      field: 'status',
+      title: t('product-group.status'),
+      minWidth: 150,
+      fixed: 'left',
+    },
+    {
+      field: 'unit',
+      title: t('product-group.unit'),
+      minWidth: 150,
       fixed: 'left',
     },
     {
       field: 'operation',
-      title: t('inventory.action'),
+      title: t('common.action'),
       minWidth: 135,
       fixed: 'right',
       slots: { default: 'leftOperation' },
-    },
-  ];
-
-  // 右侧表格列配置（二级分组）
-  const rightColumns: VxeGridPropTypes.Column<SecondGroupItem>[] = [
-    {
-      field: 'major_name',
-      title: t('inventory.productTwoGroup'),
-      minWidth: 200,
-      fixed: 'left',
-    },
-    {
-      field: 'parent_group_name',
-      title: t('inventory.parentProductGroup'),
-      minWidth: 200,
-    },
-    {
-      field: 'product_number',
-      title: t('inventory.productNumber'),
-      minWidth: 160,
-    },
-    {
-      field: 'creator_name',
-      title: t('inventory.creator'),
-      minWidth: 180,
-    },
-    {
-      field: 'create_time',
-      title: t('inventory.create_time'),
-      minWidth: 180,
-      sortable: true,
-      formatter: 'formatDateTime',
-    },
-    {
-      field: 'operation',
-      title: t('inventory.action'),
-      minWidth: 100,
-      fixed: 'right',
-      slots: { default: 'rightOperation' },
     },
   ];
 
@@ -90,24 +74,13 @@ export function useInventoryProductGroupList() {
   };
 
   // 左侧表格 Hook
-  const leftCrud = useCrud<FirstGroupItem, FirstGroupParams>({
+  return useCrud<FirstGroupItem, FirstGroupParams>({
     columns: leftColumns,
     searchFormSchema,
     batchOperate: false,
+    connectedComponent: ProductGroupDrawer,
     service: {
       query: getFirstGroupList,
     },
   });
-
-  // // 右侧表格 Hook
-  // const rightCrud = useCrud<SecondGroupItem, SecondGroupParams>({
-  //   columns: rightColumns,
-  //   searchFormSchema: {},
-  //   batchOperate: false,
-  //   service: {
-  //     query: getSecondGroupList,
-  //   },
-  // });
-
-  return leftCrud;
 }

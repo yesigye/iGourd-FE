@@ -1,23 +1,36 @@
 <script setup lang="ts">
-import { ElButton, Page } from '@igourd/common-ui';
+import type { ProductLabelItem } from '../../types';
+
+import { onMounted, ref } from 'vue';
+
+import { ColPage, ElButton, ElRadio, ElRadioGroup } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+
+import { getProductLabelList } from '../../apis/product-label';
 import { useInventoryProductLabelList } from '../../hooks/product-label/list';
-import { ref } from 'vue';
 
 defineOptions({
   name: 'IInventoryProductLabel',
 });
 
 const { t } = useI18n();
-const { Grid, handleEdit, canBatchOperate, handleBatchDelete } = useInventoryProductLabelList();
-
+const { Grid, handleEdit, canBatchOperate, handleBatchDelete } =
+  useInventoryProductLabelList();
+const productLabelList = ref<ProductLabelItem[]>([]);
+const selectedLabelId = ref<string>('');
+// 获取商品标签列表
+const handleGetProductLabelList = async () => {
+  const res = await getProductLabelList({});
+  if (res) {
+    productLabelList.value = res.list || [];
+  }
+};
 // 商品详情相关
 const productShow = ref(false);
-const productDialogList = ref([]);
 const goodParms = ref({
   title: t('inventory.productDetails'),
   visible: true,
-  innerDrawerShow: true
+  innerDrawerShow: true,
 });
 
 // 处理商品详情显示
@@ -25,17 +38,40 @@ const handleProductDetail = async (row: any) => {
   goodParms.value.title = t('inventory.productDetails');
   productShow.value = true;
   // 这里应该调用 API 获取商品详情
-  console.log('显示商品详情', row);
 };
 
 // 处理关闭
 const handleClose = () => {
   productShow.value = false;
 };
+onMounted(() => {
+  handleGetProductLabelList();
+});
 </script>
 
 <template>
-  <Page auto-content-height>
+  <ColPage auto-content-height>
+    <template #left="{ isCollapsed, expand }">
+      <section class="bg-card mb-5 h-full rounded p-2.5">
+        <p class="mb-5 text-sm font-medium">
+          {{ t('product-label.product-label') }}
+        </p>
+        <!-- 分类树 -->
+        <div>
+          <ElRadioGroup class="flex-col" v-model="selectedLabelId">
+            <div>
+              <ElRadio
+                label="1"
+                v-for="item in productLabelList"
+                :key="item.id"
+              >
+                {{ item.name }}
+              </ElRadio>
+            </div>
+          </ElRadioGroup>
+        </div>
+      </section>
+    </template>
     <Grid>
       <template #table-title>
         <ElButton
@@ -92,7 +128,7 @@ const handleClose = () => {
         {{ t('inventory.productDetails') }}
       </div>
     </el-dialog>
-  </Page>
+  </ColPage>
 </template>
 
 <style scoped>

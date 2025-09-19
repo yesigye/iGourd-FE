@@ -15,5 +15,6 @@
   "confirmButton": "确定",
   "cancelButton": "取消",
   "deleteSuccess": "删除成功",
-  "cancelDelete": "取消删除"
+  "cancelDelete": "取消删除",
+  "product-label": "商品标签"
 }
