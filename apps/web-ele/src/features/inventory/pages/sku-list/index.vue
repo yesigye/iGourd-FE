@@ -21,8 +21,8 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleBatchDelete(row)">
-          {{ t('common.delete') }}
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.detail') }}
         </ElButton>
       </template>
     </Grid>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useGroupForm } from '@@/inventory/hooks/product-group/form';
+import { useSkuListForm } from '@@/inventory/hooks/sku-list/form';
 
-const { Drawer, Form } = useGroupForm();
+const { Drawer, Form } = useSkuListForm();
 </script>
 <template>
   <Drawer>
