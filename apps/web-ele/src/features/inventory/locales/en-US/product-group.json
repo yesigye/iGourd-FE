@@ -33,5 +33,6 @@
   "please-enter-category-name": "Please enter product group name",
   "category-name": "Product Group Name",
   "please-select-previous-category": "Please select previous product group",
-  "please-select-level": "Please select product group level"
+  "please-select-level": "Please select product group level",
+  "product_category": "Product Group"
 }
