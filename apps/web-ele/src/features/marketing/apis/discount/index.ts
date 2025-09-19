@@ -2,7 +2,7 @@ import { requestClient } from '#/api/request';
 
 // 获取折扣分页列表
 export function getDiscountListApi(data: any) {
-  return requestClient.post('/v1/merchant/marketing/discount/page-list', data);
+  return requestClient.post('/v1/merchant/basics/marketing/promotion/page-list', data);
 }
 
 // 创建折扣

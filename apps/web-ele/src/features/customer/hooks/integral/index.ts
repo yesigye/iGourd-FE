@@ -1,1 +1,2 @@
-export { useCustomerIntegral } from './list';
+// export { useCustomerIntegral } from './list';
+export {}

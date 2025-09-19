@@ -1,1 +1,1 @@
-export { useCustomerEquity } from './list';
+export {}

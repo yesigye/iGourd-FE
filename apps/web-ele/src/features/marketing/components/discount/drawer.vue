@@ -1,12 +1,16 @@
 <template>
-  <div>
-    <!-- 折扣表单抽屉组件 -->
+  <Drawer>
     <p>折扣表单抽屉组件</p>
-  </div>
+  </Drawer>
 </template>
 
 <script setup lang="ts">
+import { useIgourdDrawer } from '@igourd/common-ui';
+
 defineOptions({
   name: 'DiscountDrawer',
+});
+const [Drawer] = useIgourdDrawer({
+  appendToMain: true,
 });
 </script>

@@ -21,34 +21,42 @@ export function useClassification() {
       title: t('account.classification'),
     },
     {
-      field: 'code',
+      field: 'type',
       width: 120,
-      title: t('account.code'),
+      title: t('account.revenue_and_expenditure'),
     },
     {
-      field: 'parent_name',
+      field: 'ledger_names',
       width: 150,
-      title: t('account.parentClassification'),
+      title: t('account.classification_form.debit'),
     },
     {
-      field: 'level',
+      field: 'target_ledger_name',
       width: 100,
-      title: t('account.level'),
-    },
-    {
-      field: 'sort_order',
-      width: 100,
-      title: t('account.sortOrder'),
-    },
-    {
-      field: 'status',
-      width: 100,
-      title: t('account.status'),
+      title: t('account.classification_form.credit'),
     },
     {
       field: 'remark',
-      width: 200,
+      width: 300,
       title: t('account.remark'),
+    },
+    {
+      field: 'creator_name',
+      width: 100,
+      title: t('account.creatorName'),
+    },
+    {
+      field: 'create_time',
+      width: 120,
+      title: t('account.createTime'),
+    },
+    {
+      field: 'operation',
+      title: t('account.operation'),
+      sortable: true,
+      minWidth: 180,
+      fixed: 'right',
+      slots: { default: 'operation' },
     },
   ];
 

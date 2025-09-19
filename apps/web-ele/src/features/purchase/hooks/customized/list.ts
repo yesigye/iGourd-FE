@@ -27,6 +27,7 @@ export function useCustomized() {
       minWidth: 170,
       sortable: true,
       align: 'left',
+      filters: [{ label: 'test', value: 'test' }],
     },
     {
       field: 'type',
@@ -97,11 +98,21 @@ export function useCustomized() {
   };
   return useCrud<CustomizedRow, CustomizedDTO>({
     columns,
+    toolbarConfig: {
+      export: true,
+      zoom: true,
+      custom: true,
+    },
     searchFormSchema,
     batchOperate: true,
     connectedComponent: CustomizedDrawerForm,
     service: {
-      query: getPurchaseCustomizedListApi,
+      query: (params) => {
+        return getPurchaseCustomizedListApi({
+          ...params,
+          entry: ['ddd'],
+        });
+      },
       drop: deleteDynamicColumn,
       create: createOrUpdateCustomizedField,
       update: createOrUpdateCustomizedField,

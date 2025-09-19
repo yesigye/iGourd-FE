@@ -3,7 +3,6 @@
     v-bind="$attrs"
     :title="drawerTitle"
     :width="800"
-    @register="register"
     @success="handleSuccess"
   >
     <div class="p-4">
@@ -18,7 +17,12 @@
         <FormItem
           name="sell_currency_id"
           :label="t('account.sellCurrency')"
-          :rules="[{ required: true, message: t('account.please_select_sell_currency') }]"
+          :rules="[
+            {
+              required: true,
+              message: t('account.please_select_sell_currency'),
+            },
+          ]"
         >
           <Select
             v-model:value="formData.sell_currency_id"
@@ -32,7 +36,12 @@
         <FormItem
           name="buy_currency_id"
           :label="t('account.buyCurrency')"
-          :rules="[{ required: true, message: t('account.please_select_buy_currency') }]"
+          :rules="[
+            {
+              required: true,
+              message: t('account.please_select_buy_currency'),
+            },
+          ]"
         >
           <Select
             v-model:value="formData.buy_currency_id"
@@ -46,7 +55,9 @@
         <FormItem
           name="sell_amount"
           :label="t('account.sellAmount')"
-          :rules="[{ required: true, message: t('account.please_enter_sell_amount') }]"
+          :rules="[
+            { required: true, message: t('account.please_enter_sell_amount') },
+          ]"
         >
           <InputNumber
             v-model:value="formData.sell_amount"
@@ -62,7 +73,9 @@
         <FormItem
           name="buy_amount"
           :label="t('account.buyAmount')"
-          :rules="[{ required: true, message: t('account.please_enter_buy_amount') }]"
+          :rules="[
+            { required: true, message: t('account.please_enter_buy_amount') },
+          ]"
         >
           <InputNumber
             v-model:value="formData.buy_amount"
@@ -78,7 +91,12 @@
         <FormItem
           name="exchange_rate"
           :label="t('account.exchangeRate')"
-          :rules="[{ required: true, message: t('account.please_enter_exchange_rate') }]"
+          :rules="[
+            {
+              required: true,
+              message: t('account.please_enter_exchange_rate'),
+            },
+          ]"
         >
           <InputNumber
             v-model:value="formData.exchange_rate"
@@ -91,10 +109,7 @@
         </FormItem>
 
         <!-- 备注 -->
-        <FormItem
-          name="remark"
-          :label="t('account.remark')"
-        >
+        <FormItem name="remark" :label="t('account.remark')">
           <Textarea
             v-model:value="formData.remark"
             :placeholder="t('account.please_enter_remark')"
@@ -121,7 +136,7 @@
 import { ref, computed, watch } from 'vue';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
-import { useIgourdDrawer } from '@igourd/common-ui';;
+import { useIgourdDrawer } from '@igourd/common-ui';
 import {
   Form,
   FormItem,
@@ -132,9 +147,7 @@ import {
   Space,
 } from '@igourd/common-ui';
 
-import type {
-  CurrencyExchangeForm,
-} from '@@/account/types';
+import type { CurrencyExchangeForm } from '@@/account/types';
 
 import {
   createCurrencyExchangeApi,
@@ -170,11 +183,21 @@ const formData = ref<CurrencyExchangeForm>({
 
 // 表单规则
 const formRules = computed(() => ({
-  sell_currency_id: [{ required: true, message: t('account.please_select_sell_currency') }],
-  buy_currency_id: [{ required: true, message: t('account.please_select_buy_currency') }],
-  sell_amount: [{ required: true, message: t('account.please_enter_sell_amount') }],
-  buy_amount: [{ required: true, message: t('account.please_enter_buy_amount') }],
-  exchange_rate: [{ required: true, message: t('account.please_enter_exchange_rate') }],
+  sell_currency_id: [
+    { required: true, message: t('account.please_select_sell_currency') },
+  ],
+  buy_currency_id: [
+    { required: true, message: t('account.please_select_buy_currency') },
+  ],
+  sell_amount: [
+    { required: true, message: t('account.please_enter_sell_amount') },
+  ],
+  buy_amount: [
+    { required: true, message: t('account.please_enter_buy_amount') },
+  ],
+  exchange_rate: [
+    { required: true, message: t('account.please_enter_exchange_rate') },
+  ],
 }));
 
 // 抽屉标题
@@ -207,7 +230,7 @@ watch(
       }
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // 加载货币选项
@@ -272,14 +295,16 @@ const handleBuyCurrencyChange = (currencyId: number) => {
 // 计算买入金额
 const calculateBuyAmount = () => {
   if (formData.value.sell_amount && formData.value.exchange_rate) {
-    formData.value.buy_amount = formData.value.sell_amount * formData.value.exchange_rate;
+    formData.value.buy_amount =
+      formData.value.sell_amount * formData.value.exchange_rate;
   }
 };
 
 // 计算卖出金额
 const calculateSellAmount = () => {
   if (formData.value.buy_amount && formData.value.exchange_rate) {
-    formData.value.sell_amount = formData.value.buy_amount / formData.value.exchange_rate;
+    formData.value.sell_amount =
+      formData.value.buy_amount / formData.value.exchange_rate;
   }
 };
 

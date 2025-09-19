@@ -15,26 +15,26 @@ export function useCurrency() {
   const baseColumns: VxeGridPropTypes.Column<any>[] = [
     {
       field: 'name',
-      width: 200,
+      minWidth: 200,
       align: 'left',
       fixed: 'left',
       title: t('account.currencySymbol'),
     },
     {
       field: 'code',
-      width: 160,
+      minWidth: 160,
       align: 'left',
       title: t('account.currencyCode'),
     },
     {
       field: 'exchange_rate',
-      width: 160,
+      minWidth: 160,
       align: 'left',
       title: t('account.exchangeRate'),
     },
     {
       field: 'symbol',
-      width: 160,
+      minWidth: 160,
       align: 'center',
       title: t('account.symbol'),
     },

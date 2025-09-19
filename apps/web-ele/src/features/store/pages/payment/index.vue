@@ -2,7 +2,18 @@
 import { Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useStorePaymentList } from '../../hooks/payment/list';
-import { ElButton, ElDialog, ElForm, ElFormItem, ElSelect, ElOption, ElCheckboxGroup, ElCheckbox, ElTooltip, ElIcon } from 'element-plus';
+import {
+  ElButton,
+  ElDialog,
+  ElForm,
+  ElFormItem,
+  ElSelect,
+  ElOption,
+  ElCheckboxGroup,
+  ElCheckbox,
+  ElTooltip,
+  ElIcon,
+} from 'element-plus';
 import { QuestionFilled, CirclePlus } from '@element-plus/icons-vue';
 import { ref, onMounted, computed, watch } from 'vue';
 import { themeVariables } from '@/styles/variables';
@@ -33,7 +44,7 @@ const {
   editPayMenthod,
   getPayMenthodList,
   getPayMenthodMarkList,
-  handleClose
+  handleClose,
 } = useStorePaymentList();
 
 onMounted(async () => {
@@ -46,16 +57,16 @@ onMounted(async () => {
   <Page auto-content-height>
     <div class="setting-container">
       <!-- 页面标题 -->
-      <div class="top flex gap-1 items-center pt-2.5 pb-2.5">
-        <div class="w-1 h-2.5 rounded-sm bg-primary"></div>
-        <div class="top-title flex gap-2 items-center">
+      <div class="top flex items-center gap-1 pb-2.5 pt-2.5">
+        <div class="bg-primary h-2.5 w-1 rounded-sm"></div>
+        <div class="top-title flex items-center gap-2">
           <span>{{ t('set.payment_set') }}</span>
           <ElTooltip
             class="box-item"
             effect="dark"
             :content="t('settings.payment_method_question')"
             placement="top-start"
-            style="width: 300px;"
+            style="width: 300px"
           >
             <ElIcon><QuestionFilled /></ElIcon>
           </ElTooltip>
@@ -63,33 +74,33 @@ onMounted(async () => {
       </div>
 
       <!-- 支付方式列表 -->
-      <div class="payment-list mt-1 flex gap-5 flex-wrap overflow-auto">
+      <div class="payment-list mt-1 flex flex-wrap gap-5 overflow-auto">
         <draggable
           :list="payMethodList"
           ghost-class="ghost"
           chosen-class="chosenClass"
           animation="300"
           filter=".payment-item-no-drag"
-          class="flex gap-5 flex-wrap w-full"
+          class="flex w-full flex-wrap gap-5"
         >
           <template #item="{ element, index }">
             <div v-if="element.isDraggable">
               <div
-                class="payment-item bg-white border-t-[2px] border-solid border-primary h-40 flex items-center gap-2.5 relative pl-4 pr-4 cursor-pointer"
+                class="payment-item border-primary relative flex h-40 cursor-pointer items-center gap-2.5 border-t-[2px] border-solid bg-white pl-4 pr-4"
               >
                 <div
-                  class="payment-item-left flex items-center justify-center bg-primary-50 flex-shrink-0"
+                  class="payment-item-left bg-primary-50 flex flex-shrink-0 items-center justify-center"
                 >
                   <img :src="payment" alt="" />
                 </div>
 
                 <div>
-                  <p class="font-bold text-sm">
+                  <p class="text-sm font-bold">
                     {{ index + 1 > 10 ? index + 1 : '0' + (index + 1) }}
                     {{ element.payment_method_name }}
                   </p>
 
-                  <p class="word-break-all text-xs mt-2.5">
+                  <p class="word-break-all mt-2.5 text-xs">
                     {{ sceneDesc(element.scenes) }}
                   </p>
                 </div>
@@ -98,10 +109,10 @@ onMounted(async () => {
                     class="icon iconfont icon-tuodongbingdianzhentuodongpaixu"
                   ></i>
                 </div>
-                <div class="absolute top-3 right-3 payment-option">
+                <div class="payment-option absolute right-3 top-3">
                   <ElButton
                     :color="themeVariables['primary-100']"
-                    class="border border-primary"
+                    class="border-primary border"
                     @click.stop="selectPaymet(element)"
                   >
                     <span class="text-primary">{{ t('common.edit') }}</span>
@@ -118,11 +129,11 @@ onMounted(async () => {
             </div>
             <div
               v-else
-              class="payment-item payment-item-no-drag bg-white border-t-[2px] border-solid border-primary h-40"
+              class="payment-item payment-item-no-drag border-primary h-40 border-t-[2px] border-solid bg-white"
               @click="handAddPaymentDialogVisible"
             >
               <div
-                class="w-full h-full flex items-center justify-center gap-2.5"
+                class="flex h-full w-full items-center justify-center gap-2.5"
                 :class="
                   payMethodMarkListOption.length == 0
                     ? 'cursor-not-allowed'
@@ -136,7 +147,8 @@ onMounted(async () => {
                         ? themeVariables['text-disabled']
                         : themeVariables['primary']
                     "
-                  ><CirclePlus /></ElIcon>
+                    ><CirclePlus
+                  /></ElIcon>
                   <p
                     :class="
                       payMethodMarkListOption.length == 0

@@ -2,13 +2,10 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary">
+        <ElButton type="primary" @click="handleEdit()">
           {{ t('common.add') }}
         </ElButton>
-        <ElButton
-          type="danger"
-          v-if="canBatchOperate"
-        >
+        <ElButton type="danger" v-if="canBatchOperate">
           {{ t('common.delete') }}
         </ElButton>
       </template>
@@ -40,11 +37,6 @@ defineOptions({
 
 const { t } = useI18n();
 
-const {
-  Grid,
-  Drawer,
-  handleEdit,
-  handleBatchDelete,
-  canBatchOperate,
-} = useClassification();
+const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
+  useClassification();
 </script>

@@ -22,7 +22,6 @@ interface List<T> {
     total: number;
   };
 }
-
 export interface Service<T, P> {
   query: (
     params: List<Partial<T>>['QueryParams'],
@@ -40,6 +39,7 @@ export interface CRUDOptions<T, P> extends VxeGridProps<T> {
   girdEvents: VxeGridListeners<T>;
   scope: Record<string, any>;
   connectedComponent: Component;
+  params: Record<string, any>;
 }
 
 /**
@@ -108,6 +108,7 @@ function useCrud<T extends object, P extends object>(
         page_num: page.currentPage,
         page_size: page.pageSize,
         ...form,
+        ...(options.params || {}),
       });
     };
   }

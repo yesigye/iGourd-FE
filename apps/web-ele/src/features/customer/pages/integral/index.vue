@@ -1,61 +1,11 @@
 <template>
-  <Page auto-content-height>
-    <Grid>
-      <template #table-title>
-        <ElButton type="primary">
-          {{ t('customer.addCustomerIntegral') }}
-        </ElButton>
-        <ElButton type="default">
-          {{ t('customer.integralSetting') }}
-        </ElButton>
-        <ElButton
-          type="danger"
-          v-if="canBatchOperate"
-        >
-          {{ t('common.delete') }}
-        </ElButton>
-      </template>
-
-      <template #operation="{ row }">
-        <ElButton type="text">
-          {{ t('common.detail') }}
-        </ElButton>
-        <ElButton
-          type="text"
-          @click="handleEdit(row)"
-        >
-          {{ t('common.edit') }}
-        </ElButton>
-        <ElButton
-          type="text"
-          @click="handleBatchDelete(row)"
-        >
-          {{ t('common.delete') }}
-        </ElButton>
-      </template>
-    </Grid>
-
-    <Drawer />
-  </Page>
+  <Page auto-content-height> 积分设置 </Page>
 </template>
 
 <script setup lang="ts">
-import { ElButton, Page } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-
-import { useCustomerIntegral } from '@@/customer/hooks';
+import { Page } from '@igourd/common-ui';
 
 defineOptions({
   name: 'ICustomerIntegral',
 });
-
-const { t } = useI18n();
-
-const {
-  Grid,
-  Drawer,
-  handleEdit,
-  handleBatchDelete,
-  canBatchOperate,
-} = useCustomerIntegral();
 </script>

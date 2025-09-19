@@ -1,13 +1,14 @@
-import type { CustomerInfo, CustomerInfoPageQueryParams, CustomerDrawerTransferData } from '@@/customer/types';
+import type {
+  CustomerInfo,
+  CustomerInfoPageQueryParams,
+  CustomerDrawerTransferData,
+} from '@@/customer/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import {
-  getCustomerListApi,
-  deleteCustomerApi,
-} from '@@/customer/apis';
+import { getCustomerListApi, deleteCustomerApi } from '@@/customer/apis';
 import { CustomerDrawerForm } from '@@/customer/components';
 
 import { useCrud } from '#/hooks';
@@ -21,29 +22,22 @@ export function useCustomerList() {
       fixed: 'left',
     },
     {
-      field: 'code',
-      title: t('customer.customer_code'),
-      minWidth: 120,
-      sortable: true,
-      align: 'left',
-    },
-    {
       field: 'name',
-      title: t('customer.customer_name'),
+      title: t('customer.customerName'),
       minWidth: 150,
       sortable: true,
       align: 'left',
     },
     {
-      field: 'phone_number',
-      title: t('customer.phone_number'),
+      field: 'salesman_name',
+      title: t('customer.salesman'),
       minWidth: 120,
       sortable: true,
       align: 'left',
     },
     {
-      field: 'email',
-      title: t('customer.email'),
+      field: 'contact_name',
+      title: t('customer.contact_name'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -64,8 +58,8 @@ export function useCustomerList() {
       align: 'left',
     },
     {
-      field: 'is_vip',
-      title: t('customer.is_vip'),
+      field: 'debt_amount',
+      title: t('customer.debt'),
       minWidth: 100,
       sortable: true,
       align: 'left',
@@ -74,8 +68,78 @@ export function useCustomerList() {
       },
     },
     {
-      field: 'vip_level_name',
-      title: t('customer.vip_level'),
+      field: 'vip_code',
+      title: t('customer.vipCode'),
+      minWidth: 120,
+      sortable: true,
+      align: 'left',
+    },
+    {
+      field: 'vip_level',
+      title: t('customer.vipLevel'),
+      minWidth: 120,
+      sortable: true,
+      align: 'left',
+    },
+    {
+      field: 'vip_points_multiple',
+      title: t('customer.vipPointsMultiple'),
+      minWidth: 120,
+      sortable: true,
+      align: 'left',
+    },
+    {
+      field: 'vip_discount_percentage',
+      title: t('customer.vipDiscountPercentage'),
+      minWidth: 120,
+      sortable: true,
+      align: 'left',
+    },
+    {
+      field: 'vip_rights_expiration_date',
+      title: t('customer.vipRightsExpirationDate'),
+      minWidth: 250,
+      sortable: true,
+      align: 'left',
+    },
+    {
+      field: 'vip_other_rights',
+      title: t('customer.vipOtherRights'),
+      minWidth: 120,
+      sortable: true,
+      align: 'left',
+    },
+    {
+      field: 'vip_begin_time',
+      title: t('customer.vipBeginTime'),
+      minWidth: 120,
+      sortable: true,
+      align: 'left',
+    },
+    {
+      field: 'label_id_list',
+      title: t('customer.customerLabel'),
+      minWidth: 120,
+      sortable: true,
+      align: 'left',
+    },
+    {
+      field: 'address',
+      title: t('customer.address'),
+      minWidth: 200,
+      sortable: true,
+      align: 'left',
+    },
+    {
+      field: 'last_order_date',
+      title: t('customer.lastOrderDate'),
+      minWidth: 120,
+      sortable: true,
+      align: 'left',
+    },
+    {
+      field: 'remark',
+      title: t('customer.remark'),
       minWidth: 120,
       sortable: true,
       align: 'left',
@@ -89,7 +153,7 @@ export function useCustomerList() {
     },
     {
       field: 'create_time',
-      title: t('customer.create_time'),
+      title: t('customer.creationTime'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -97,9 +161,10 @@ export function useCustomerList() {
     },
     {
       field: 'operation',
-      title: t('customer.operation'),
+      title: t('common.operations'),
       sortable: true,
       minWidth: 180,
+      fixed: 'right',
       slots: { default: 'operation' },
     },
   ];

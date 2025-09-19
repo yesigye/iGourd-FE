@@ -18,88 +18,41 @@ export function useCustomerLabel() {
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<CustomerLabelPageModel>[] = [
     {
-      field: 'label_name',
-      width: 200,
+      field: 'name',
+      minWidth: 200,
       align: 'left',
       fixed: 'left',
-      title: t('customer.labelName'),
-      sortable: true,
-    },
-    {
-      field: 'label_code',
-      width: 150,
-      align: 'left',
-      title: t('customer.labelCode'),
-      sortable: true,
-    },
-    {
-      field: 'label_type',
-      width: 120,
-      align: 'center',
-      title: t('customer.labelType'),
-      sortable: true,
-    },
-    {
-      field: 'color',
-      width: 100,
-      align: 'center',
-      title: t('customer.color'),
-      sortable: true,
-    },
-    {
-      field: 'sort_order',
-      width: 100,
-      align: 'center',
-      title: t('customer.sortOrder'),
-      sortable: true,
-    },
-    {
-      field: 'customer_count',
-      width: 120,
-      align: 'center',
-      title: t('customer.customerCount'),
-      sortable: true,
-    },
-    {
-      field: 'status',
-      width: 100,
-      align: 'center',
-      title: t('customer.status'),
-      sortable: true,
-    },
-    {
-      field: 'description',
-      width: 200,
-      align: 'left',
-      title: t('customer.description'),
+      title: t('customer.customerLabelName'),
       sortable: true,
     },
     {
       field: 'creator_name',
-      width: 120,
+      minWidth: 150,
       align: 'left',
-      title: t('customer.creatorName'),
+      title: t('customer.creator'),
       sortable: true,
     },
     {
       field: 'create_time',
-      width: 180,
+      minWidth: 100,
       align: 'center',
+      title: t('customer.creationTime'),
+      sortable: true,
+    },
+    {
+      field: 'operation',
+      title: t('common.operations'),
+      sortable: true,
+      minWidth: 180,
       fixed: 'right',
-      title: t('customer.createTime'),
+      slots: { default: 'operation' },
     },
   ];
 
   // 服务函数
   const service = {
     // 获取列表数据
-    query: async ({ page_num, page_size }: { page_num: number; page_size: number }) => {
-      const response = await getCustomerLabelPageListApi({ page_num, page_size });
-      return {
-        list: response.data?.list || [],
-        total: response.data?.total || 0,
-      };
-    },
+    query: getCustomerLabelPageListApi,
 
     // 删除客户标签
     remove: async (data: { label_id_list: number[] }) => {
@@ -132,7 +85,10 @@ export function useCustomerLabel() {
               { label: t('customer.labelType.status'), value: 'STATUS' },
               { label: t('customer.labelType.level'), value: 'LEVEL' },
               { label: t('customer.labelType.behavior'), value: 'BEHAVIOR' },
-              { label: t('customer.labelType.preference'), value: 'PREFERENCE' },
+              {
+                label: t('customer.labelType.preference'),
+                value: 'PREFERENCE',
+              },
               { label: t('customer.labelType.other'), value: 'OTHER' },
             ],
           },
@@ -141,7 +97,6 @@ export function useCustomerLabel() {
       batchOperate: true, // 支持批量删除
       connectedComponent: CustomerLabelDrawer,
     });
-
 
   return {
     Grid,

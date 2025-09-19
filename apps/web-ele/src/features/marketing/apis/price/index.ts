@@ -2,7 +2,7 @@ import { requestClient } from '#/api/request';
 
 // 获取价格分页列表
 export function getPriceListApi(data: any) {
-  return requestClient.post('/v1/merchant/marketing/price/page-list', data);
+  return requestClient.post('/v1/merchant/basics/marketing/price-level/page-list', data);
 }
 
 // 创建价格

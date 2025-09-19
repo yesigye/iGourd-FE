@@ -275,13 +275,7 @@ defineExpose({
 </script>
 
 <template>
-  <BasicDrawer
-    v-bind="$attrs"
-    :title="drawerTitle"
-    :width="600"
-    @register="register"
-    @success="handleSuccess"
-  >
+  <BasicDrawer>
     <div class="p-4">
       <Form
         ref="formRef"

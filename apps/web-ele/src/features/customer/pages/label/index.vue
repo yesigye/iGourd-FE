@@ -25,7 +25,7 @@
         </ElButton>
         <ElButton
           type="text"
-          @click="handleBatchDelete(row)"
+          @click="handleBatchDelete()"
         >
           {{ t('common.delete') }}
         </ElButton>

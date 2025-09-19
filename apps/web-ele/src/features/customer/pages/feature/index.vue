@@ -2,8 +2,8 @@
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary">
-          {{ t('customer.addCustomerFeature') }}
+        <ElButton type="primary" @click="handleEdit()">
+          {{ t('common.create') }}
         </ElButton>
         <ElButton
           type="danger"
@@ -13,10 +13,7 @@
         </ElButton>
       </template>
 
-      <template #operation="{ row }">
-        <ElButton type="text">
-          {{ t('common.detail') }}
-        </ElButton>
+      <template #operations="{ row }">
         <ElButton
           type="text"
           @click="handleEdit(row)"
@@ -25,7 +22,7 @@
         </ElButton>
         <ElButton
           type="text"
-          @click="handleBatchDelete(row)"
+          @click="handleBatchDelete()"
         >
           {{ t('common.delete') }}
         </ElButton>

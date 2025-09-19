@@ -16,6 +16,11 @@ export function useExchange() {
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<any>[] = [
     {
+      type: 'checkbox',
+      width: 80,
+      fixed: 'left',
+    },
+    {
       field: 'sell_amount',
       width: 200,
       align: 'left',
@@ -35,28 +40,30 @@ export function useExchange() {
       title: t('account.exchangeRate'),
     },
     {
-      field: 'sell_currency_name',
-      width: 150,
-      align: 'center',
-      title: t('account.sellCurrency'),
-    },
-    {
-      field: 'buy_currency_name',
-      width: 150,
-      align: 'center',
-      title: t('account.buyCurrency'),
-    },
-    {
-      field: 'exchange_date',
-      width: 150,
-      align: 'center',
-      title: t('account.exchangeDate'),
-    },
-    {
       field: 'remark',
+      width: 150,
+      align: 'center',
+      title: t('account.remark'),
+    },
+    {
+      field: 'creator_name',
+      width: 150,
+      align: 'center',
+      title: t('account.creatorName'),
+    },
+    {
+      field: 'create_time',
       width: 200,
       align: 'left',
-      title: t('account.remark'),
+      title: t('account.createTime'),
+    },
+    {
+      field: 'operation',
+      title: t('account.operation'),
+      sortable: true,
+      minWidth: 180,
+      fixed: 'right',
+      slots: { default: 'operation' },
     },
   ];
 

@@ -25,22 +25,17 @@ export function useAccountNotes() {
     },
     {
       field: 'accounting_note_no',
-      title: t('account.note_no'),
+      title: t('account.notes_no'),
       minWidth: 150,
       sortable: true,
       align: 'left',
     },
     {
-      field: 'change_type',
-      title: t('account.change_type'),
+      field: 'finance_category_name',
+      title: t('account.finance_category'),
       minWidth: 120,
       sortable: true,
       align: 'left',
-      formatter: ({ cellValue }) => {
-        if (cellValue === 'REVENUE') return t('account.revenue');
-        if (cellValue === 'EXPENDITURE') return t('account.expenditure');
-        return cellValue;
-      },
     },
     {
       field: 'amount',
@@ -51,31 +46,53 @@ export function useAccountNotes() {
       formatter: 'formatMoney',
     },
     {
-      field: 'payer_name',
-      title: t('account.payer_name'),
+      field: 'our_account',
+      title: t('account.our_account'),
+      align: 'center',
+      children: [
+        {
+          field: 'our_account_name',
+          title: t('account.payment_account'),
+          align: 'center',
+          width: 138,
+        },
+        {
+          field: 'our_payment_method_name',
+          title: t('account.payment_method'),
+          align: 'center',
+          width: 135,
+        },
+        {
+          field: 'amount',
+          title: t('account.amount'),
+          align: 'center',
+          width: 135,
+        },
+      ],
+    },
+    {
+      field: 'external_account',
+      align: 'center',
+      title: t('account.external_account'),
+      children: [
+        {
+          field: 'target_account_name',
+          title: t('account.payment_account'),
+          width: 138,
+        },
+        {
+          field: 'amount',
+          title: t('account.amount'),
+          width: 138,
+        },
+      ],
+    },
+    {
+      field: 'trading_time',
+      title: t('account.transaction_time'),
       minWidth: 150,
       sortable: true,
       align: 'left',
-    },
-    {
-      field: 'finance_category_name',
-      title: t('account.finance_category'),
-      minWidth: 150,
-      sortable: true,
-      align: 'left',
-    },
-    {
-      field: 'review_status',
-      title: t('account.review_status'),
-      minWidth: 120,
-      sortable: true,
-      align: 'left',
-      formatter: ({ cellValue }) => {
-        if (cellValue === 'PENDING') return t('account.pending');
-        if (cellValue === 'APPROVED') return t('account.approved');
-        if (cellValue === 'REJECTED') return t('account.rejected');
-        return cellValue;
-      },
     },
     {
       field: 'creator_name',
@@ -86,11 +103,16 @@ export function useAccountNotes() {
     },
     {
       field: 'create_time',
-      title: t('account.create_time'),
+      title: t('account.creation_time'),
       minWidth: 150,
       sortable: true,
       align: 'left',
       formatter: 'formatDateTime',
+    },
+    {
+      field: 'reviewer',
+      title: t('account.Review'),
+      width: 165,
     },
     {
       field: 'operation',

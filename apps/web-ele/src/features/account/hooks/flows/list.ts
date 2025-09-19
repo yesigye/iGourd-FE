@@ -16,6 +16,11 @@ export function useFlows() {
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<AccountFlowsInfo>[] = [
     {
+      type: 'checkbox',
+      width: 80,
+      fixed: 'left',
+    },
+    {
       field: 'flow_no',
       width: 165,
       align: 'left',
@@ -53,17 +58,24 @@ export function useFlows() {
     {
       field: 'target_account_name',
       width: 200,
-      title: t('account.target_account_name'),
-    },
-    {
-      field: 'payment_method_name',
-      width: 200,
-      title: t('account.payment_method'),
-    },
-    {
-      field: 'amount',
-      width: 200,
-      title: t('account.payment_amount'),
+      title: '支付信息',
+      children: [
+        {
+          field: 'target_account_name',
+          width: 200,
+          title: t('account.target_account_name'),
+        },
+        {
+          field: 'payment_method_name',
+          width: 200,
+          title: t('account.target_account_name'),
+        },
+        {
+          field: 'payment_method_name',
+          width: 200,
+          title: t('account.payment_method'),
+        },
+      ],
     },
     {
       field: 'source_type',
@@ -94,6 +106,14 @@ export function useFlows() {
       field: 'create_time',
       width: 180,
       title: t('account.createTime'),
+    },
+    {
+      field: 'operation',
+      title: t('account.operation'),
+      sortable: true,
+      minWidth: 180,
+      fixed: 'right',
+      slots: { default: 'operation' },
     },
   ];
 

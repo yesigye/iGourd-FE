@@ -5,25 +5,16 @@
         <ElButton type="primary">
           {{ t('common.add') }}
         </ElButton>
-        <ElButton
-          type="danger"
-          v-if="canBatchOperate"
-        >
+        <ElButton type="danger" v-if="canBatchOperate">
           {{ t('common.delete') }}
         </ElButton>
       </template>
 
       <template #operation="{ row }">
-        <ElButton
-          type="text"
-          @click="handleEdit(row)"
-        >
+        <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton
-          type="text"
-          @click="handleBatchDelete(row)"
-        >
+        <ElButton type="text" @click="handleBatchDelete()">
           {{ t('common.delete') }}
         </ElButton>
       </template>
@@ -45,11 +36,6 @@ defineOptions({
 
 const { t } = useI18n();
 
-const {
-  Grid,
-  Drawer,
-  handleEdit,
-  handleBatchDelete,
-  canBatchOperate,
-} = useCurrency();
+const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
+  useCurrency();
 </script>
