@@ -41,5 +41,7 @@
   "unitCodeRequired": "单位编码不能为空",
   "unitSymbolRequired": "单位符号不能为空",
   "unitCodeExists": "单位编码已存在",
-  "unitNameExists": "单位名称已存在"
+  "unitNameExists": "单位名称已存在",
+  "unit-name": "单位名称",
+  "please-enter-name": "请输入单位名称"
 }

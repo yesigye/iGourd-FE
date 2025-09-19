@@ -4,7 +4,7 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { deleteUnit, getUnitList } from '@@/inventory/apis';
+import { createUnit, deleteUnit, getUnitList } from '@@/inventory/apis';
 import { UnitDrawer } from '@@/inventory/components';
 
 import { useCrud } from '#/hooks';
@@ -61,9 +61,11 @@ export function useInventoryUnitList() {
     columns,
     searchFormSchema,
     batchOperate: true,
+    connectedComponent: UnitDrawer,
     service: {
       query: getUnitList,
       remove: deleteUnit,
+      create: createUnit,
     },
     connectedComponent: UnitDrawer,
   });

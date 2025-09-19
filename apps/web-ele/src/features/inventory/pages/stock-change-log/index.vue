@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-
 import { Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-
-import { ElButton, ElTooltip } from 'element-plus';
 
 import { useInventoryChangeLogList } from '../../hooks/change-log/list';
 
@@ -31,21 +27,7 @@ const { Grid, handleCreate, handleEdit, handleBatchDelete, Drawer } =
 
 <template>
   <Page auto-content-height>
-    <Grid>
-      <template #table-title>
-        <ElButton type="primary" @click="handleCreate()">
-          {{ t('common.add') }}
-        </ElButton>
-      </template>
-      <template #operation="{ row }">
-        <ElButton type="text" @click="handleEdit(row)">
-          {{ t('common.edit') }}
-        </ElButton>
-        <ElButton type="text" @click="handleBatchDelete()">
-          {{ t('common.delete') }}
-        </ElButton>
-      </template>
-    </Grid>
+    <Grid />
     <Drawer />
   </Page>
 </template>
