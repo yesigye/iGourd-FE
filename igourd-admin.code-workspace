@@ -5,16 +5,8 @@
       "path": "apps/backend-mock",
     },
     {
-      "name": "@igourd/web-antd",
-      "path": "apps/web-antd",
-    },
-    {
       "name": "@igourd/web-ele",
       "path": "apps/web-ele",
-    },
-    {
-      "name": "@igourd/web-naive",
-      "path": "apps/web-naive",
     },
     {
       "name": "@igourd/docs",
@@ -77,8 +69,8 @@
       "path": "packages/@core/preferences",
     },
     {
-              // "name": "@igourd-core/form-ui",
-        // "path": "packages/@core/ui-kit/form-ui",
+      "name": "@igourd-core/form-ui",
+      "path": "packages/@core/ui-kit/form-ui",
     },
     {
       "name": "@igourd-core/layout-ui",
