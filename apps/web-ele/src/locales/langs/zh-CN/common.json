@@ -138,7 +138,7 @@
   "fileDrop": "将文件拖动到此区域或选择文件",
   "clickUp": "选择上传",
   "Attachment": "附件",
-  "creator": "创建人:",
+  "creator": "创建人",
   "Reviewer": "审核人",
   "PurchasingStaff": "采购员",
   "validateSymbol": "不能包含特殊字符",

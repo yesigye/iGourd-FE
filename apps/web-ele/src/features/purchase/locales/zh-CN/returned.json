@@ -45,5 +45,14 @@
     "approved": "已审核",
     "returned": "已退货",
     "cancelled": "已取消"
-  }
+  },
+  "purchase-returned-no": "采购退单号",
+  "returned-date": "退单日期",
+  "vendor-name": "供应商名称",
+  "warehouse": "仓库名称",
+  "refund-amount": "退款金额",
+  "payment-information": "支付信息",
+  "payment-account": "支付账户",
+  "payment-method": "支付方式",
+  "prepayment-amount": "预支付金额"
 }

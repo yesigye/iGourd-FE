@@ -33,5 +33,12 @@
     "approved": "Approved",
     "received": "Received",
     "cancelled": "Cancelled"
-  }
+  },
+  "no": "No.",
+  "date": "Date",
+  "name": "Name",
+  "warehouse": "Warehouse",
+  "purchase-order-no": "Purchase Order No",
+  "pay-status": "Pay Status",
+  "vendor-name": "Vendor Name"
 }
