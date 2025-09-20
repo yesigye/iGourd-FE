@@ -20,13 +20,13 @@ export function useCountForm() {
         properties: {
           label: {
             type: 'string',
-            title: 'Creator',
+            title: "{{t('creator')}}",
             'x-decorator': 'FormItem',
             default: '',
           },
           warehouse: {
             type: 'string',
-            title: 'Warehouse',
+            title: "{{t('warehouse-name')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Select',

@@ -18,5 +18,6 @@
   "printInventoryCount": "Print Inventory Count",
   "productDetail": "Product Detail",
   "action": "Action",
-  "changeErr": "Status update failed"
+  "changeErr": "Status update failed",
+  "warehouse-name": "Warehouse Name"
 }
