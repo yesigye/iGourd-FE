@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 
-import { ColPage, ElButton, ElTree } from '@igourd/common-ui';
+import { ColPage, ElButton, ElTree, useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import folderClose from '../../../../assets/inventory/folder-close.svg';
 import folderOpen from '../../../../assets/inventory/folder-open.svg';
 import { getFirstGroupList } from '../../apis/product-group';
+import drawer from '../../components/product-group/drawer.vue';
 import { useProductGroupList } from '../../hooks/product-group/list';
 
 defineOptions({
@@ -38,6 +39,10 @@ const getFirstLevelCategory = async () => {
   productGroupData.value.total = result.total;
 };
 const { Grid, handleEdit } = useProductGroupList();
+const [Drawer, drawerApi] = useIgourdDrawer({
+  connectedComponent: drawer,
+  appendToMain: true,
+});
 onMounted(async () => {
   await getFirstLevelCategory();
 });
@@ -49,7 +54,7 @@ onMounted(async () => {
       <section class="bg-card h-full rounded p-2.5">
         <p class="flex justify-between text-sm font-medium">
           {{ t('product-group.product_category') }}
-          <ElButton type="primary" @click="handleEdit()">
+          <ElButton type="primary" @click="drawerApi.open()">
             {{ t('common.add') }}
           </ElButton>
         </p>
