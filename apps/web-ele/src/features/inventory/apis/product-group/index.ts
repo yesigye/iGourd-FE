@@ -10,7 +10,10 @@ export function getFirstGroupList(params: any) {
 
 // 获取二级分组列表
 export function getSecondGroupList(params: any) {
-  return requestClient.get('/inventory/product-group/second-list', { params });
+  return requestClient.get(
+    '/v1/merchant/basics/inventory/product-group/second-list',
+    { params },
+  );
 }
 
 // 创建分组

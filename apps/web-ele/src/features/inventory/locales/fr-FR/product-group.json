@@ -33,5 +33,6 @@
   "please-enter-category-name": "Veuillez entrer le nom du groupe de produits",
   "category-name": "Nom du Groupe de Produits",
   "please-select-previous-category": "Veuillez sélectionner le groupe de produits parent",
-  "please-select-level": "Veuillez sélectionner le niveau de groupe de produits"
+  "please-select-level": "Veuillez sélectionner le niveau de groupe de produits",
+  "product_category": "Groupe de Produits"
 }

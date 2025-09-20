@@ -33,5 +33,6 @@
   "please-enter-category-name": "请输入商品分类名称",
   "category-name": "商品分类名称",
   "please-select-previous-category": "请选择上一级商品分类",
-  "please-select-level": "请选择商品分类等级"
+  "please-select-level": "请选择商品分类等级",
+  "product_category": "商品分类"
 }
