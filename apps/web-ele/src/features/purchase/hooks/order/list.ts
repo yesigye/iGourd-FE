@@ -16,39 +16,92 @@ export function usePurchaseOrder() {
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<any>[] = [
     {
+      type: 'checkbox',
+      width: 80,
+      fixed: 'left',
+    },
+    {
       field: 'purchase_order_no',
       minWidth: 180,
       align: 'left',
       fixed: 'left',
-      title: t('purchase.purchaseorderno'),
+      title: t('order.purchase-order-no'),
     },
     {
       field: 'purchase_date',
       minWidth: 200,
       align: 'left',
-      title: t('purchase.purchaseDate'),
+      title: t('order.purchase-date'),
     },
     {
       field: 'vendor_name',
       minWidth: 200,
       align: 'left',
-      title: t('purchase.vendorName'),
+      title: t('order.vendor-name'),
     },
     {
       field: 'warehouse_name',
       minWidth: 150,
       align: 'center',
-      title: t('purchase.warehouse'),
+      title: t('order.warehouse'),
     },
     {
       field: 'status',
       minWidth: 150,
       align: 'center',
 
-      title: t('purchase.status'),
+      title: t('common.now-status'),
       formatter({ cellValue }) {
         return t(`purchase.${cellValue}`);
       },
+    },
+    {
+      field: 'total_amount',
+      minWidth: 150,
+      align: 'center',
+      title: t('order.total-amount'),
+    },
+    {
+      field: 'deposit',
+      minWidth: 150,
+      align: 'center',
+      title: t('purchase.deposit'),
+    },
+    {
+      field: 'cumulative_deposit',
+      minWidth: 150,
+      align: 'center',
+      title: t('order.cumulative-deposit'),
+    },
+    {
+      field: 'cumulative_deposit',
+      minWidth: 150,
+      align: 'center',
+      title: t('order.cumulative-deposit'),
+    },
+    {
+      field: 'balance',
+      minWidth: 150,
+      align: 'center',
+      title: t('order.balance'),
+    },
+    {
+      field: 'creator',
+      minWidth: 150,
+      align: 'center',
+      title: t('purchase.creator'),
+    },
+    {
+      field: 'creation_time',
+      minWidth: 150,
+      align: 'center',
+      title: t('order.creation-time'),
+    },
+    {
+      field: 'creation_time',
+      minWidth: 150,
+      align: 'center',
+      title: t('order.w/h-enter-status'),
     },
     {
       field: 'review_status',
@@ -61,30 +114,6 @@ export function usePurchaseOrder() {
       },
     },
     {
-      field: 'total_amount',
-      minWidth: 150,
-      align: 'right',
-      title: t('purchase.totalAmount'),
-    },
-    {
-      field: 'receipted_percentage',
-      minWidth: 120,
-      align: 'center',
-      title: t('purchase.receiptedPCT'),
-    },
-    {
-      field: 'creator_name',
-      minWidth: 150,
-      align: 'center',
-      title: t('purchase.creator'),
-    },
-    {
-      field: 'create_time',
-      minWidth: 180,
-      align: 'center',
-      title: t('purchase.creationTime'),
-    },
-    {
       field: 'operation',
       minWidth: 180,
       fixed: 'right',
@@ -94,7 +123,6 @@ export function usePurchaseOrder() {
       },
     },
   ];
-
   // 服务函数
   const service = {
     // 获取列表数据
@@ -114,7 +142,7 @@ export function usePurchaseOrder() {
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: t('purchase.searchPlaceholder'),
+            placeholder: t('order.search-placeholder'),
           },
         },
       },
