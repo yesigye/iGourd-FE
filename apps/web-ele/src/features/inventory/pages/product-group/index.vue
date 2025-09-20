@@ -1,69 +1,19 @@
 <script setup lang="ts">
-import type { Tree } from 'element-plus/es/components/tree-v2/src/types.mjs';
-
 import { onMounted, ref } from 'vue';
 
 import { ColPage, ElButton, ElTree } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
+import folderClose from '../../../../assets/inventory/folder-close.svg';
+import folderOpen from '../../../../assets/inventory/folder-open.svg';
 import { getFirstGroupList } from '../../apis/product-group';
-import { useInventoryProductGroupList } from '../../hooks/product-group/list';
+import { useProductGroupList } from '../../hooks/product-group/list';
 
 defineOptions({
   name: 'IInventoryProductGroup',
 });
 
 const { t } = useI18n();
-const dataSource = ref<Tree[]>([
-  {
-    id: 1,
-    label: 'Level one 1',
-    children: [
-      {
-        id: 4,
-        label: 'Level two 1-1',
-        children: [
-          {
-            id: 9,
-            label: 'Level three 1-1-1',
-          },
-          {
-            id: 10,
-            label: 'Level three 1-1-2',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 2,
-    label: 'Level one 2',
-    children: [
-      {
-        id: 5,
-        label: 'Level two 2-1',
-      },
-      {
-        id: 6,
-        label: 'Level two 2-2',
-      },
-    ],
-  },
-  {
-    id: 3,
-    label: 'Level one 3',
-    children: [
-      {
-        id: 7,
-        label: 'Level two 3-1',
-      },
-      {
-        id: 8,
-        label: 'Level two 3-2',
-      },
-    ],
-  },
-]);
 const productGroupData = ref({
   list: [],
   page_num: 1,
@@ -72,7 +22,10 @@ const productGroupData = ref({
 });
 // 获取一级分类
 const getFirstLevelCategory = async () => {
-  const result = await getFirstGroupList({ page_num: 1, page_size: 10 });
+  const result = await getFirstGroupList({
+    page_num: productGroupData.value.page_num,
+    page_size: 10,
+  });
   const list = result.list;
   let treeList = [];
   // 将list处理成element-plus的tree数据格式
@@ -84,8 +37,7 @@ const getFirstLevelCategory = async () => {
   productGroupData.value.list = treeList;
   productGroupData.value.total = result.total;
 };
-const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
-  useInventoryProductGroupList();
+const { Grid, handleEdit } = useProductGroupList();
 onMounted(async () => {
   await getFirstLevelCategory();
 });
@@ -95,14 +47,18 @@ onMounted(async () => {
   <ColPage auto-content-height>
     <template #left="{ isCollapsed, expand }">
       <section class="bg-card h-full rounded p-2.5">
-        <p class="text-sm font-medium">
+        <p class="flex justify-between text-sm font-medium">
           {{ t('product-group.product_category') }}
+          <ElButton type="primary" @click="handleEdit()">
+            {{ t('common.add') }}
+          </ElButton>
         </p>
         <!-- 分类树 -->
         <div class="mt-5">
           <ElTree :data="productGroupData.list" node-key="id">
             <template #default="{ node, data }">
-              <span>{{ node.label }}</span>
+              <img :src="node.isExpanded ? folderOpen : folderClose" alt="" />
+              <span class="pl-1">{{ node.label }}</span>
             </template>
           </ElTree>
           <p
@@ -115,25 +71,9 @@ onMounted(async () => {
       </section>
     </template>
     <Grid>
-      <template #table-title>
-        <ElButton type="primary" @click="handleEdit()">
-          {{ t('common.add') }}
-        </ElButton>
-        <ElButton
-          type="danger"
-          v-if="canBatchOperate"
-          @click="handleBatchDelete"
-        >
-          {{ t('common.delete') }}
-        </ElButton>
-      </template>
-
       <template #operation="{ row }">
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
-        </ElButton>
-        <ElButton type="text" @click="handleBatchDelete(row)">
-          {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>
