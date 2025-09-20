@@ -2,7 +2,6 @@ import type { Field } from '@formily/core';
 
 import type { Ref } from 'vue';
 
-import type { stylePrefix } from '../__builtins__/configs';
 import type { FormItemProps } from '../form-item';
 
 import { defineComponent, h, onBeforeUnmount, ref } from 'vue';
@@ -14,6 +13,7 @@ import { observer } from '@formily/reactive-vue';
 import { useField } from '@formily/vue';
 import { ElPopover } from 'element-plus';
 
+import { stylePrefix } from '../__builtins__/configs';
 import { composeExport } from '../__builtins__/shared';
 import { FormBaseItem } from '../form-item';
 

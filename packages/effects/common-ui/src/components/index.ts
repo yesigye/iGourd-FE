@@ -95,6 +95,7 @@ export {
   ElRadioGroup,
   ElRow,
   ElSelect,
+  ElSelectV2,
   ElSpace,
   ElTable,
   ElTableColumn,

@@ -12,6 +12,7 @@ import {
   ArrayItems,
   ArrayTable,
   ArrayTabs,
+  Card,
   Cascader,
   Checkbox,
   DatePicker,
@@ -34,7 +35,7 @@ import {
   PreviewText,
   Radio,
   Reset,
-  ScanCodeEntry,
+  // ScanCodeEntry,
   Select,
   setupIgourdForm,
   Space,
@@ -42,10 +43,10 @@ import {
   Switch,
   TimePicker,
   Transfer,
-  Card,
 } from '@igourd/common-ui';
 import '@igourd/common-ui/style';
-// import ProductArrayTable from './arrat-product-table';
+
+import { ProductSelect, ProductTable } from '#/components';
 
 import Upload from './upload';
 
@@ -58,8 +59,9 @@ async function initComponentAdapter() {
     ArrayTable,
     ArrayTabs,
     Cascader,
-    ScanCodeEntry,
-    // ProductArrayTable,
+    // ScanCodeEntry,
+    ProductSelect,
+    ProductTable,
     Editable,
     Checkbox,
     Upload,
