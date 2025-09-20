@@ -5,10 +5,8 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
-  getSettingPaymentPageListApi,
   deleteSettingPaymentApi,
-  togglePaymentStatusApi,
-  updatePaymentSortApi,
+  getSettingPaymentPageListApi,
 } from '@@/setting/apis';
 import { SettingPaymentDrawer } from '@@/setting/components';
 
@@ -163,23 +161,6 @@ export function useSettingPayment() {
       batchOperate: true, // 支持批量删除
       connectedComponent: SettingPaymentDrawer,
     });
-      {
-        type: 'select',
-        name: 'scene',
-        title: t('setting.scenes'),
-        options: [
-          { label: t('setting.scene.pos'), value: 'POS' },
-          { label: t('setting.scene.online'), value: 'ONLINE' },
-          { label: t('setting.scene.mobile'), value: 'MOBILE' },
-          { label: t('setting.scene.all'), value: 'ALL' },
-        ],
-      },
-    ],
-    batchOperate: true, // 支持批量删除
-    connectedComponent: false,
-  });
-
-
   return {
     Grid,
     Drawer,

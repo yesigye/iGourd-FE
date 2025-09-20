@@ -10,15 +10,18 @@ export function getFirstGroupList(params: any) {
 
 // 获取二级分组列表
 export function getSecondGroupList(params: any) {
-  return requestClient.get(
-    '/v1/merchant/basics/inventory/product-group/second-list',
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/product-group/second/page-list',
     { params },
   );
 }
 
 // 创建分组
 export function createGroup(data: any) {
-  return requestClient.post('/inventory/product-group/create', data);
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/product-group/create',
+    data,
+  );
 }
 
 // 更新分组
