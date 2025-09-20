@@ -5,9 +5,10 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
-  createOrUpdateCustomizedField,
-  deleteDynamicColumn,
-  getPurchaseCustomizedListApi,
+  createAdvancePaymentOrderApi,
+  deleteAdvancePaymentOrderApi,
+  getAdvancePaymentOrderPageListApi,
+  updateAdvancePaymentOrderApi,
 } from '@@/purchase/apis';
 import { CustomizedDrawerForm } from '@@/purchase/components';
 
@@ -23,7 +24,7 @@ export function useAdvancePaymentOrder() {
     },
     {
       field: 'name',
-      title: t('advance-payment-order.order-no'),
+      title: t('payment-order.order-no'),
       minWidth: 170,
       sortable: true,
       align: 'center',
@@ -31,7 +32,7 @@ export function useAdvancePaymentOrder() {
     },
     {
       field: 'type',
-      title: t('advance-payment-order.vendor-name'),
+      title: t('payment-order.vendor-name'),
       minWidth: 120,
       sortable: true,
       align: 'center',
@@ -42,7 +43,7 @@ export function useAdvancePaymentOrder() {
     },
     {
       field: 'is_fixed_option',
-      title: t('advance-payment-order.order-date'),
+      title: t('payment-order.order-date'),
       minWidth: 200,
       sortable: true,
       align: 'center',
@@ -53,7 +54,7 @@ export function useAdvancePaymentOrder() {
     },
     {
       field: 'is_compulsory',
-      title: t('advance-payment-order.payment-amount'),
+      title: t('payment-order.payment-amount'),
       minWidth: 150,
       sortable: true,
       align: 'center',
@@ -64,22 +65,14 @@ export function useAdvancePaymentOrder() {
     },
     {
       field: 'creator_name',
-      title: t('advance-payment-order.order-dir'),
+      title: t('payment-order.order-dir'),
       minWidth: 180,
       sortable: true,
       align: 'center',
     },
     {
       field: 'create_time',
-      title: t('advance-payment-order.business-type'),
-      sortable: true,
-      align: 'center',
-      minWidth: 180,
-      formatter: 'formatDateTime',
-    },
-    {
-      field: 'create_time',
-      title: t('advance-payment-order.account-type'),
+      title: t('payment-order.business-type'),
       sortable: true,
       align: 'center',
       minWidth: 180,
@@ -87,7 +80,7 @@ export function useAdvancePaymentOrder() {
     },
     {
       field: 'create_time',
-      title: t('advance-payment-order.data-source'),
+      title: t('payment-order.account-type'),
       sortable: true,
       align: 'center',
       minWidth: 180,
@@ -95,7 +88,7 @@ export function useAdvancePaymentOrder() {
     },
     {
       field: 'create_time',
-      title: t('advance-payment-order.service-fee'),
+      title: t('payment-order.data-source'),
       sortable: true,
       align: 'center',
       minWidth: 180,
@@ -103,7 +96,7 @@ export function useAdvancePaymentOrder() {
     },
     {
       field: 'create_time',
-      title: t('advance-payment-order.remarks'),
+      title: t('payment-order.service-fee'),
       sortable: true,
       align: 'center',
       minWidth: 180,
@@ -111,14 +104,22 @@ export function useAdvancePaymentOrder() {
     },
     {
       field: 'create_time',
-      title: t('advance-payment-order.payment-information'),
+      title: t('payment-order.remarks'),
+      sortable: true,
+      align: 'center',
+      minWidth: 180,
+      formatter: 'formatDateTime',
+    },
+    {
+      field: 'create_time',
+      title: t('payment-order.payment-information'),
       align: 'center',
       minWidth: 180,
       formatter: 'formatDateTime',
       children: [
         {
           field: 'payment_account',
-          title: t('advance-payment-order.payment-account'),
+          title: t('payment-order.payment-account'),
           sortable: true,
           align: 'center',
           minWidth: 180,
@@ -126,7 +127,7 @@ export function useAdvancePaymentOrder() {
         },
         {
           field: 'payment_method',
-          title: t('advance-payment-order.payment-method'),
+          title: t('payment-order.payment-method'),
           sortable: true,
           align: 'center',
           minWidth: 180,
@@ -134,7 +135,7 @@ export function useAdvancePaymentOrder() {
         },
         {
           field: 'payment_amount',
-          title: t('advance-payment-order.payment-amount'),
+          title: t('payment-order.payment-amount'),
           sortable: true,
           align: 'center',
           minWidth: 180,
@@ -142,7 +143,7 @@ export function useAdvancePaymentOrder() {
         },
         {
           field: 'service_fee',
-          title: t('advance-payment-order.service-fee'),
+          title: t('payment-order.service-fee'),
           sortable: true,
           align: 'center',
           minWidth: 180,
@@ -152,7 +153,7 @@ export function useAdvancePaymentOrder() {
     },
     {
       field: 'review',
-      title: t('advance-payment-order.review'),
+      title: t('payment-order.review'),
       sortable: true,
       align: 'center',
       minWidth: 180,
@@ -189,14 +190,14 @@ export function useAdvancePaymentOrder() {
     connectedComponent: CustomizedDrawerForm,
     service: {
       query: withEntityParam({ entity: 'VENDOR' })(
-        getPurchaseCustomizedListApi,
+        getAdvancePaymentOrderPageListApi,
       ),
-      drop: withEntityParam({ entity: 'VENDOR' })(deleteDynamicColumn),
+      drop: withEntityParam({ entity: 'VENDOR' })(deleteAdvancePaymentOrderApi),
       create: withEntityParam({ entity: 'VENDOR' })(
-        createOrUpdateCustomizedField,
+        createAdvancePaymentOrderApi,
       ),
       update: withEntityParam({ entity: 'VENDOR' })(
-        createOrUpdateCustomizedField,
+        updateAdvancePaymentOrderApi,
       ),
     },
   });

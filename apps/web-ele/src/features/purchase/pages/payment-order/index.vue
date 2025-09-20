@@ -2,7 +2,6 @@
 import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-// import { usePaymentOrder } from '@@/purchase/hooks';
 import { usePaymentOrder } from '@@/purchase/hooks';
 
 defineOptions({

@@ -5,9 +5,10 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
-  createOrUpdateCustomizedField,
-  deleteDynamicColumn,
-  getPurchaseCustomizedListApi,
+  createPaymentOrderApi,
+  deletePaymentOrderApi,
+  getPaymentOrderPageListApi,
+  updatePaymentOrderApi,
 } from '@@/purchase/apis';
 import { CustomizedDrawerForm } from '@@/purchase/components';
 
@@ -188,16 +189,10 @@ export function usePaymentOrder() {
     batchOperate: true,
     connectedComponent: CustomizedDrawerForm,
     service: {
-      query: withEntityParam({ entity: 'VENDOR' })(
-        getPurchaseCustomizedListApi,
-      ),
-      drop: withEntityParam({ entity: 'VENDOR' })(deleteDynamicColumn),
-      create: withEntityParam({ entity: 'VENDOR' })(
-        createOrUpdateCustomizedField,
-      ),
-      update: withEntityParam({ entity: 'VENDOR' })(
-        createOrUpdateCustomizedField,
-      ),
+      query: withEntityParam({ entity: 'VENDOR' })(getPaymentOrderPageListApi),
+      drop: withEntityParam({ entity: 'VENDOR' })(deletePaymentOrderApi),
+      create: withEntityParam({ entity: 'VENDOR' })(createPaymentOrderApi),
+      update: withEntityParam({ entity: 'VENDOR' })(updatePaymentOrderApi),
     },
   });
 }
