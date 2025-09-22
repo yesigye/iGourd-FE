@@ -31,6 +31,10 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "build:test": {
+      "dependsOn": ["^build", "^build:test"],
+      "outputs": ["dist/**"]
+    },
     "@igourd/backend-mock#build": {
       "dependsOn": ["^build"],
       "outputs": [".nitro/**", ".output/**"]
