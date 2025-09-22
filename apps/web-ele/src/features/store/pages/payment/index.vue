@@ -1,24 +1,27 @@
 <script setup lang="ts">
+// import { QuestionFilled, CirclePlus } from '@element-plus/icons-vue';
+import { onMounted } from 'vue';
+
 import { Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useStorePaymentList } from '../../hooks/payment/list';
+
+import payment from '@/assets/svg/payment.svg';
+import { themeVariables } from '@/styles/variables';
 import {
   ElButton,
+  ElCheckbox,
+  ElCheckboxGroup,
   ElDialog,
   ElForm,
   ElFormItem,
-  ElSelect,
-  ElOption,
-  ElCheckboxGroup,
-  ElCheckbox,
-  ElTooltip,
   ElIcon,
+  ElOption,
+  ElSelect,
+  ElTooltip,
 } from 'element-plus';
-import { QuestionFilled, CirclePlus } from '@element-plus/icons-vue';
-import { ref, onMounted, computed, watch } from 'vue';
-import { themeVariables } from '@/styles/variables';
 import draggable from 'vuedraggable';
-import payment from '@/assets/svg/payment.svg';
+
+import { useStorePaymentList } from '../../hooks/payment/list';
 
 defineOptions({
   name: 'IStorePayment',
@@ -96,7 +99,7 @@ onMounted(async () => {
 
                 <div>
                   <p class="text-sm font-bold">
-                    {{ index + 1 > 10 ? index + 1 : '0' + (index + 1) }}
+                    {{ index + 1 > 10 ? index + 1 : `0${index + 1}` }}
                     {{ element.payment_method_name }}
                   </p>
 
@@ -135,7 +138,7 @@ onMounted(async () => {
               <div
                 class="flex h-full w-full items-center justify-center gap-2.5"
                 :class="
-                  payMethodMarkListOption.length == 0
+                  payMethodMarkListOption.length === 0
                     ? 'cursor-not-allowed'
                     : 'cursor-pointer'
                 "
@@ -143,15 +146,16 @@ onMounted(async () => {
                 <div class="flex items-center justify-center gap-2.5">
                   <ElIcon
                     :color="
-                      payMethodMarkListOption.length == 0
+                      payMethodMarkListOption.length === 0
                         ? themeVariables['text-disabled']
-                        : themeVariables['primary']
+                        : themeVariables.primary
                     "
-                    ><CirclePlus
-                  /></ElIcon>
+                  >
+                    <CirclePlus />
+                  </ElIcon>
                   <p
                     :class="
-                      payMethodMarkListOption.length == 0
+                      payMethodMarkListOption.length === 0
                         ? 'text-textColor-disabled'
                         : 'text-primary'
                     "
@@ -204,9 +208,9 @@ onMounted(async () => {
         </div>
         <template #footer>
           <div class="dialog-footer">
-            <ElButton @click="addPaymentDialogVisible = false">{{
-              t('common.cancel')
-            }}</ElButton>
+            <ElButton @click="addPaymentDialogVisible = false">
+              {{ t('common.cancel') }}
+            </ElButton>
 
             <ElButton type="primary" @click="createPayMenthod">
               {{ t('common.confirm') }}
@@ -233,7 +237,7 @@ onMounted(async () => {
                         :value="item.value"
                         :disabled="isShowDel(selectedPayMethod).is_default"
                       >
-                        {{ t('settings.' + item.label.toLocaleLowerCase()) }}
+                        {{ t(`settings.${item.label.toLocaleLowerCase()}`) }}
                       </ElCheckbox>
                     </div>
                   </div>
@@ -244,9 +248,9 @@ onMounted(async () => {
         </div>
         <template #footer>
           <div class="dialog-footer">
-            <ElButton @click="addSceneDialogVisible = false">{{
-              t('common.cancel')
-            }}</ElButton>
+            <ElButton @click="addSceneDialogVisible = false">
+              {{ t('common.cancel') }}
+            </ElButton>
 
             <ElButton type="primary" @click="editPayMenthod">
               {{ t('common.confirm') }}
