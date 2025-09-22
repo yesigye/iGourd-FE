@@ -85,17 +85,17 @@
 
     <template #footer>
       <Space>
-        <Button @click="handleCancel">
+        <ElButton @click="handleCancel">
           {{ t('common.cancel') }}
-        </Button>
-        <Button
+        </ElButton>
+        <ElButton
           v-if="drawerData?.type !== 'detail'"
           type="primary"
           @click="handleSubmit"
           :loading="loading"
         >
           {{ t('common.confirm') }}
-        </Button>
+        </ElButton>
       </Space>
     </template>
   </BasicDrawer>
@@ -111,8 +111,7 @@ import {
   FormItem,
   Select,
   DatePicker,
-  Textarea,
-  Button,
+  ElButton,
   Space,
 } from '@igourd/common-ui';
 

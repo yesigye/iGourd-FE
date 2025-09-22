@@ -15,66 +15,86 @@ export function useSaleRefundOrder() {
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<SaleRefundOrderPageModel>[] = [
     {
-      field: 'refund_order_no',
+      field: 'order_returned_no',
       width: 180,
       align: 'left',
-      fixed: 'left',
-      title: t('sale.refundOrderNo'),
-    },
-    {
-      field: 'original_order_no',
-      width: 180,
-      align: 'left',
-      title: t('sale.originalOrderNo'),
+      title: t('refund-order.order-no'),
     },
     {
       field: 'customer_name',
+      width: 180,
+      align: 'left',
+      title: t('refund-order.customer'),
+    },
+    {
+      field: 'create_time',
       width: 150,
       align: 'left',
-      title: t('sale.customerName'),
+      title: t('refund-order.order-date'),
     },
     {
-      field: 'staff_name',
+      field: 'total_quantity',
       width: 120,
       align: 'left',
-      title: t('sale.staffName'),
+      title: t('refund-order.refund-qty'),
     },
     {
-      field: 'refund_method',
+      field: 'subtotal_amount',
       width: 120,
       align: 'center',
-      title: t('sale.refundMethod'),
+      title: t('refund-order.refund-product-value'),
     },
     {
-      field: 'status',
+      field: 'total_amount',
       width: 120,
       align: 'center',
-      title: t('sale.status'),
+      title: t('refund-order.actual-refund-amt'),
     },
     {
-      field: 'refund_reason',
+      field: 'promotion_discount_amount',
       width: 200,
       align: 'left',
-      title: t('sale.refundReason'),
+      title: t('refund-order.refund-difference'),
+    },
+    {
+      field: 'vat_amount',
+      width: 200,
+      align: 'left',
+      title: t('refund-order.tax'),
     },
     {
       field: 'refund_date',
       width: 150,
       align: 'center',
-      title: t('sale.refundDate'),
+      title: t('refund-order.refund-date'),
+    },
+    {
+      field: 'status',
+      width: 120,
+      align: 'left',
+      title: t('common.now-status'),
     },
     {
       field: 'creator_name',
-      width: 120,
-      align: 'left',
-      title: t('sale.creatorName'),
+      width: 180,
+      align: 'center',
+
+      title: t('common.creator'),
     },
     {
       field: 'create_time',
       width: 180,
       align: 'center',
+
+      title: t('common.creation-time'),
+    },
+    {
+      field: 'operation',
+      width: 180,
+      align: 'center',
       fixed: 'right',
-      title: t('sale.createTime'),
+      title: t('common.operation'),
+      slots: { default: 'operation' },
     },
   ];
 
@@ -90,19 +110,13 @@ export function useSaleRefundOrder() {
       const response = await getSaleRefundOrderPageListApi({
         page_num,
         page_size,
-           keywords: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('common.keywords')}}",
-        clearable: true,
-      },
-    },
+        is_shift_settlement: true,
+        keywords: '',
       });
+
       return {
-        data: response.data?.list || [],
-        total: response.data?.total || 0,
+        list: response.list || [],
+        total: response?.total || 0,
       };
     },
   };
@@ -116,9 +130,9 @@ export function useSaleRefundOrder() {
         keywords: {
           type: 'input',
           name: 'keywords',
-          title: t('sale.search'),
+          title: t('refund-order.search'),
           'x-component-props': {
-            placeholder: t('sale.searchPlaceholder'),
+            placeholder: t('refund-order.searchPlaceholder'),
           },
         },
       },

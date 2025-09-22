@@ -17,7 +17,7 @@ export function useSaleShifts() {
     {
       field: 'logout_pos_user_name',
       width: 180,
-      align: 'left',
+      align: 'center',
       fixed: 'left',
       title: t('shifts.employee'),
     },
@@ -120,14 +120,14 @@ export function useSaleShifts() {
           title: t('shifts.sales'),
         },
         {
-          field: 'payment',
+          field: 'cash_returned_amount',
           width: 180,
           align: 'center',
 
           title: t('shifts.payment'),
         },
         {
-          field: 'recharge',
+          field: 'cash_received_amount',
           width: 180,
           align: 'center',
 
@@ -136,19 +136,19 @@ export function useSaleShifts() {
       ],
     },
     {
-      field: 'mobile_money_rev',
+      field: 'payment_third_party_revenue_amount',
       width: 180,
       align: 'center',
       title: t('shifts.mobile-money-rev'),
     },
     {
-      field: 'mobile_money_exp',
+      field: 'payment_third_party_expenditure_amount',
       width: 180,
       align: 'center',
       title: t('shifts.mobile-money-exp'),
     },
     {
-      field: 'opening_cash',
+      field: 'opening_cash_amount',
       width: 180,
       align: 'center',
       title: t('shifts.opening-cash'),
@@ -160,17 +160,17 @@ export function useSaleShifts() {
       title: t('shifts.returned-cash'),
     },
     {
-      field: 'closing_cash',
+      field: 'closing_cash_amount',
       width: 180,
       align: 'center',
       title: t('shifts.closing-cash'),
     },
-    {
-      field: 'status',
-      width: 180,
-      align: 'center',
-      title: t('common.now-status'),
-    },
+    // {
+    //   field: 'status',
+    //   width: 180,
+    //   align: 'center',
+    //   title: t('common.now-status'),
+    // },
     {
       field: 'start_time',
       width: 180,
@@ -184,7 +184,7 @@ export function useSaleShifts() {
       title: t('shifts.end-time'),
     },
     {
-      field: 'creator',
+      field: 'creator_name',
       width: 180,
       align: 'center',
       title: t('shifts.creator'),
@@ -206,6 +206,7 @@ export function useSaleShifts() {
         is_shift_settlement: true,
         keywords: '',
       });
+
       return {
         list: response.list || [],
         total: response?.total || 0,
