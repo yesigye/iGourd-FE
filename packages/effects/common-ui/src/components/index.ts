@@ -105,13 +105,13 @@ export {
 
 export type { UploadFile, UploadProps, UploadUserFile } from 'element-plus';
 
-export {
-  ElButton as Button,
-  ElForm as Form,
-  ElOption as SelectOption,
-  ElSpace as Space,
-  ElSwitch as Switch,
-  ElTable as Table,
-  ElInput as Textarea,
-  ElTreeSelect as TreeSelect,
-} from 'element-plus';
+// export {
+//   // ElButton,
+//   // ElForm,
+//   // ElInput,
+//   // ElOption,
+//   // ElSpace,
+//   // ElSwitch,
+//   // ElTable,
+//   ElTreeSelect,
+// } from 'element-plus';
