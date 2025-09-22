@@ -15,78 +15,179 @@ export function useSaleShifts() {
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<SaleShiftsPageModel>[] = [
     {
-      field: 'shift_no',
+      field: 'logout_pos_user_name',
       width: 180,
       align: 'left',
       fixed: 'left',
-      title: t('sale.shiftNo'),
+      title: t('shifts.employee'),
     },
     {
-      field: 'staff_name',
+      field: 'shift_date',
       width: 120,
       align: 'left',
-      title: t('sale.staffName'),
+      title: t('shifts.shift-date'),
     },
     {
-      field: 'shift_type',
+      field: 'order_quantity',
       width: 100,
       align: 'center',
-      title: t('sale.shiftType'),
+      title: t('shifts.sales-order'),
     },
     {
-      field: 'status',
+      field: 'order_total_amount',
       width: 100,
       align: 'center',
-      title: t('sale.status'),
+      title: t('shifts.sales-amt'),
     },
     {
-      field: 'start_time',
+      field: 'on_credit_order_quantity',
       width: 150,
       align: 'center',
-      title: t('sale.startTime'),
+      title: t('shifts.credit-order'),
     },
     {
-      field: 'end_time',
+      field: 'on_credit_order_total_amount',
       width: 150,
       align: 'center',
-      title: t('sale.endTime'),
+      title: t('shifts.credit-amt'),
     },
     {
-      field: 'total_sales',
+      field: 'repayment_order_quantity',
       width: 120,
       align: 'right',
-      title: t('sale.totalSales'),
+      title: t('shifts.repayment-order'),
     },
     {
-      field: 'total_orders',
+      field: 'repayment_order_total_amount',
       width: 100,
       align: 'center',
-      title: t('sale.totalOrders'),
+      title: t('shifts.repayment-amt'),
+    },
+    {
+      field: 'order_returned_quantity',
+      width: 120,
+      align: 'right',
+      title: t('shifts.returned-order'),
+    },
+    {
+      field: 'order_returned_total_amount',
+      width: 100,
+      align: 'center',
+      title: t('shifts.returned-amt'),
+    },
+    {
+      field: 'order_holding_quantity',
+      width: 120,
+      align: 'right',
+      title: t('shifts.holding-order'),
+    },
+    {
+      field: 'order_holding_total_amount',
+      width: 120,
+      align: 'center',
+      title: t('shifts.holding-amt'),
+    },
+    {
+      field: 'customer_recharge_quantity',
+      width: 180,
+      align: 'center',
+      title: t('shifts.recharge-qty'),
+    },
+    {
+      field: 'customer_recharge_total_amount',
+      width: 180,
+      align: 'center',
+      title: t('shifts.recharge-amt'),
     },
     {
       field: 'cash_amount',
-      width: 120,
-      align: 'right',
-      title: t('sale.cashAmount'),
-    },
-    {
-      field: 'card_amount',
-      width: 120,
-      align: 'right',
-      title: t('sale.cardAmount'),
-    },
-    {
-      field: 'creator_name',
-      width: 120,
-      align: 'left',
-      title: t('sale.creatorName'),
-    },
-    {
-      field: 'create_time',
       width: 180,
       align: 'center',
-      fixed: 'right',
-      title: t('sale.createTime'),
+      title: t('shifts.cash-rev'),
+      children: [
+        {
+          field: 'cash_amount',
+          width: 180,
+          align: 'center',
+
+          title: t('shifts.total'),
+        },
+        {
+          field: 'cash_expenditure_amount',
+          width: 180,
+          align: 'center',
+
+          title: t('shifts.sales'),
+        },
+        {
+          field: 'payment',
+          width: 180,
+          align: 'center',
+
+          title: t('shifts.payment'),
+        },
+        {
+          field: 'recharge',
+          width: 180,
+          align: 'center',
+
+          title: t('shifts.recharge'),
+        },
+      ],
+    },
+    {
+      field: 'mobile_money_rev',
+      width: 180,
+      align: 'center',
+      title: t('shifts.mobile-money-rev'),
+    },
+    {
+      field: 'mobile_money_exp',
+      width: 180,
+      align: 'center',
+      title: t('shifts.mobile-money-exp'),
+    },
+    {
+      field: 'opening_cash',
+      width: 180,
+      align: 'center',
+      title: t('shifts.opening-cash'),
+    },
+    {
+      field: 'returned_cash',
+      width: 180,
+      align: 'center',
+      title: t('shifts.returned-cash'),
+    },
+    {
+      field: 'closing_cash',
+      width: 180,
+      align: 'center',
+      title: t('shifts.closing-cash'),
+    },
+    {
+      field: 'status',
+      width: 180,
+      align: 'center',
+      title: t('common.now-status'),
+    },
+    {
+      field: 'start_time',
+      width: 180,
+      align: 'center',
+      title: t('shifts.start-time'),
+    },
+    {
+      field: 'end_time',
+      width: 180,
+      align: 'center',
+      title: t('shifts.end-time'),
+    },
+    {
+      field: 'creator',
+      width: 180,
+      align: 'center',
+      title: t('shifts.creator'),
     },
   ];
 
@@ -102,19 +203,12 @@ export function useSaleShifts() {
       const response = await getSaleShiftsPageListApi({
         page_num,
         page_size,
-           keywords: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('common.keywords')}}",
-        clearable: true,
-      },
-    },
+        is_shift_settlement: true,
+        keywords: '',
       });
       return {
-        list: response.data?.list || [],
-        total: response.data?.total || 0,
+        list: response.list || [],
+        total: response?.total || 0,
       };
     },
   };
@@ -130,7 +224,7 @@ export function useSaleShifts() {
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: t('sale.keywordsPlaceholder'),
+            placeholder: t('shifts.keywordsPlaceholder'),
           },
         },
       },

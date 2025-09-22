@@ -27,6 +27,10 @@ const getFirstLevelCategory = async () => {
     page_num: productGroupData.value.page_num,
     page_size: 10,
   });
+<<<<<<< HEAD
+=======
+  // debugger;
+>>>>>>> 63de2a456faf37b4768ad48962c15cd660c6cc25
   const list = result.list;
   let treeList = [];
   // 将list处理成element-plus的tree数据格式
