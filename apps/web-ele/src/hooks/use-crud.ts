@@ -10,6 +10,8 @@ import { confirm, useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { omit } from '@igourd/utils';
 
+import { modifySaleOrderApi } from '@@/sale/apis/order';
+
 import { useIgourdVxeGrid } from '#/adapter/vxe-table';
 
 interface List<T> {
@@ -114,7 +116,7 @@ function useCrud<T extends object, P extends object>(
         page_num: page.currentPage,
         page_size: page.pageSize,
         ...form,
-        ...(options.params || {}),
+        ...options.params,
       });
     };
   }
@@ -138,6 +140,21 @@ function useCrud<T extends object, P extends object>(
   });
   const handleEdit = (dto?: T) => {
     drawerApi.setData(dto ?? {}).open();
+  };
+  const handleCancel = (row?: T) => {
+    confirm({
+      title: t('common.cancel-order'),
+      content: t('common.are-you-sure-cancel-order'),
+    })
+      .then(async () => {
+        // 取消订单
+        await modifySaleOrderApi({
+          id_list: [row.id],
+          status: 'CANCEL',
+        });
+        gridApi.reload();
+      })
+      .catch(() => {});
   };
 
   const handleBatchDelete = () => {
@@ -172,6 +189,7 @@ function useCrud<T extends object, P extends object>(
     handleEdit,
     handleBatchDelete,
     handleCreate: handleEdit,
+    handleCancel,
   };
 }
 

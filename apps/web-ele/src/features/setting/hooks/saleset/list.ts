@@ -5,11 +5,10 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
-  getSettingSalesetPageListApi,
   deleteSettingSalesetApi,
-  updateSalesetStatusApi,
+  getSettingSalesetPageListApi,
 } from '@@/setting/apis';
-import { SettingSalesetDrawer } from '@@/setting/components';
+import { SalesetDrawer } from '@@/setting/components';
 
 import { useCrud } from '#/hooks';
 
@@ -142,9 +141,8 @@ export function useSettingSaleset() {
         },
       },
       batchOperate: true, // 支持批量删除
-      connectedComponent: SettingSalesetDrawer,
+      connectedComponent: SalesetDrawer,
     });
-
 
   return {
     Grid,
