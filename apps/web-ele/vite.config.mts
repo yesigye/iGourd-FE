@@ -1,6 +1,6 @@
-import { defineConfig } from '@igourd/vite-config';
-
 import path from 'node:path';
+
+import { defineConfig } from '@igourd/vite-config';
 
 import ElementPlus from 'unplugin-element-plus/vite';
 
@@ -35,7 +35,7 @@ export default defineConfig(async () => {
             secure: false,
             rewrite: (path) => path.replace(/^\/api/, ''),
             // mock代理目标地址
-            target: 'https://test-api.seller100.com',
+            target: 'https://dev-api.seller100.com',
             ws: true,
           },
           // '/api/passport': {
