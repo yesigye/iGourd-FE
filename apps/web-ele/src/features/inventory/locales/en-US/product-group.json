@@ -34,5 +34,10 @@
   "category-name": "Product Group Name",
   "please-select-previous-category": "Please select previous product group",
   "please-select-level": "Please select product group level",
-  "product_category": "Product Group"
+  "product_category": "Product Group",
+  "product-grid-product-group-name": "分类名称",
+  "product-grid-product-code": "商品编码",
+  "product-grid-major-name": "商品名称",
+  "product-grid-status": "状态",
+  "product-grid-major-unit-name": "单位"
 }

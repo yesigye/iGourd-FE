@@ -56,7 +56,7 @@ const getFirstLevelCategory = async (resolve) => {
   }));
   productGroupData.value.list = treeList;
   productGroupData.value.total = result.total;
-  resolve(treeList);
+  resolve && resolve(treeList);
 };
 const loadNode = async (node, resolve) => {
   const { level } = node;
@@ -65,7 +65,7 @@ const loadNode = async (node, resolve) => {
     return;
   }
   const result = await getSecondGroupList({
-    parent_id: node.id,
+    parent_id: node.data.id,
     page_num: productGroupData.value.page_num,
     page_size: 10,
   });
@@ -112,9 +112,7 @@ const refreshTree = () => {
   getFirstLevelCategory();
 };
 
-onMounted(async () => {
-  await getFirstLevelCategory();
-});
+onMounted(async () => {});
 </script>
 
 <template>

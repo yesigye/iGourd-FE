@@ -1,26 +1,21 @@
 import type {
-  VxeGridListeners,
-  VxeGridProps,
-  VxeGridPropTypes,
-} from '#/adapter/vxe-table';
+  ProductLabelItem,
+  ProductLabelParams,
+} from '../../types/product-label';
 
-import { computed } from 'vue';
+import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
-import { confirm } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+import { deleteProductLabel, getProductList } from '@@/inventory/apis';
 
-// import settingCodeRulesDrawer from '../components/setting-code-rules-drawer.vue';
+import { useCrud } from '#/hooks';
 
 export function useProductGroupList() {
   const { t } = useI18n();
   const { currentLoginUserApp } = useUserStore();
-  // const [Drawer, drawerApi] = useIgourdDrawer({
-  //   connectedComponent: settingCodeRulesDrawer,
-  //   appendToMain: true,
-  // });
+
   // 表格列配置 - 基于原有的 columnsVisible 数组
   const columns: VxeGridPropTypes.Column<PurchaseCustomizedInfo>[] = [
     {
@@ -29,43 +24,43 @@ export function useProductGroupList() {
       fixed: 'left',
     },
     {
-      field: 'category_type',
-      title: t('code-rules.receipt-type'),
+      field: 'product_group_name',
+      title: t('product-group.product-grid-product-group-name'),
       minWidth: 170,
       sortable: true,
       align: 'left',
     },
     {
-      field: 'name',
-      title: t('code-rules.coding-rules'),
+      field: 'major_name',
+      title: t('product-group.product-grid-major-name'),
       minWidth: 170,
       sortable: true,
       align: 'left',
     },
     {
-      field: 'paragraph_break',
-      title: t('code-rules.paragraph-break'),
-      minWidth: 170,
-      sortable: true,
-      align: 'left',
-    },
-    {
-      field: 'code_section',
-      title: t('code-rules.code-section'),
+      field: 'product_code',
+      title: t('product-group.product-grid-product-code'),
       minWidth: 170,
       sortable: true,
       align: 'left',
     },
     {
       field: 'status',
-      title: t('code-rules.status'),
+      title: t('product-group.product-grid-status'),
+      minWidth: 170,
+      sortable: true,
+      align: 'left',
+    },
+    {
+      field: 'major_unit_name',
+      title: t('product-group.product-grid-major-unit-name'),
       minWidth: 170,
       sortable: true,
       align: 'left',
     },
     {
       field: 'operation',
-      title: t('code-rules.operation'),
+      title: t('common.operation'),
       sortable: true,
       minWidth: 180,
       slots: { default: 'operation' },
@@ -85,74 +80,17 @@ export function useProductGroupList() {
     },
   };
 
-  // Grid 事件配置
-  const gridEvents: VxeGridListeners<PurchaseCustomizedInfo> = {
-    checkboxChange(params) {
-      checkedKeys.value = params.records.map((item) => item.id);
-    },
-    checkboxAll(params) {
-      checkedKeys.value = params.records.map((item) => item.id);
-    },
-  };
-
-  // Grid 选项配置
-  const gridOptions: VxeGridProps<PurchaseCustomizedInfo> = {
-    columns,
-    height: 'auto',
-    keepSource: true,
-    proxyConfig: {
-      ajax: {
-        query: async ({ page }, form = {}) => {
-          return await codingCategoryList({
-            page_num: page.currentPage,
-            page_size: page.pageSize,
-            merchant_id: currentLoginUserApp.owner_id,
-            tree_type: type.value,
-            ...form,
-          });
-        },
-      },
-    },
-  };
-
-  // 使用 useIgourdVxeGrid
-  const [Grid, gridApi] = useIgourdVxeGrid({
-    gridEvents,
-    gridOptions,
-  });
-  async function handleEdit(row?: PurchaseCustomizedInfo) {
-    drawerApi.setData(row || {}).open();
-  }
-  const canBatchDelete = computed(() => checkedKeys.value.length > 0);
-  function batchDelete() {
-    confirm({
-      title: t('purchase.deleteConfirmTitle'),
-      content: t('purchase.deleteConfirmText'),
-    })
-      .then(() => {
-        // return deleteDynamicColumn({
-        //   dynamic_column_id_list: checkedKeys.value,
-        //   merchant_id: currentLoginUserApp.owner_id,
-        // });
-      })
-      .then(() => {
-        gridApi.reload();
-        // checkedKeys.value = [];
-      });
-  }
-  return {
-    // 组件
-    Grid,
-    // Drawer,
-    gridApi,
-    // drawerApi,
-    handleEdit,
-    // 配置
+  return useCrud<ProductLabelItem, ProductLabelParams>({
     columns,
     searchFormSchema,
-    gridEvents,
-    gridOptions,
-    canBatchDelete,
-    batchDelete,
-  };
+    batchOperate: true,
+    service: {
+      // @ts-ignore
+      query: getProductList,
+      // @ts-ignore
+      drop: deleteProductLabel,
+      create: '',
+      update: '',
+    },
+  });
 }
