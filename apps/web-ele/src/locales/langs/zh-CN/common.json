@@ -285,5 +285,7 @@
   "creation-time": "创建时间",
   "now-status": "状态",
   "alert": "提示",
-  "operation": "操作"
+  "operation": "操作",
+  "start-time": "开始时间",
+  "end-time": "结束时间"
 }
