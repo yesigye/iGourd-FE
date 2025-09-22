@@ -51,13 +51,13 @@ export function useSaleRefundOrder() {
       title: t('refund-order.actual-refund-amt'),
     },
     {
-      field: 'refund_difference',
+      field: 'promotion_discount_amount',
       width: 200,
       align: 'left',
       title: t('refund-order.refund-difference'),
     },
     {
-      field: 'refund_difference',
+      field: 'vat_amount',
       width: 200,
       align: 'left',
       title: t('refund-order.tax'),
@@ -75,7 +75,7 @@ export function useSaleRefundOrder() {
       title: t('common.now-status'),
     },
     {
-      field: 'creator',
+      field: 'creator_name',
       width: 180,
       align: 'center',
 
