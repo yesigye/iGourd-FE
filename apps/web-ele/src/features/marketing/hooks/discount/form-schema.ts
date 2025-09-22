@@ -1,15 +1,16 @@
+// form-schema.ts（不使用 FormGrid，仅 FormLayout）
 import type { ISchema } from '@igourd/common-ui';
 
-export default {
+const schema: ISchema = {
   type: 'object',
   properties: {
-    grid: {
+    layout: {
       type: 'void',
-      'x-component': 'FormGrid',
+      'x-component': 'FormLayout',
+      // Element Plus 推荐直接用 labelWidth/size 控制整体布局
       'x-component-props': {
-        maxColumns: [2, 2, 2],
-        minColumns: [1, 1, 1],
-        columnGap: 16,
+        labelWidth: 200,
+        size: 'default',
       },
       properties: {
         type: {
@@ -30,6 +31,7 @@ export default {
           ],
           required: true,
         },
+
         channel: {
           type: 'string',
           title: "{{t('discount.form.channel')}}",
@@ -45,6 +47,7 @@ export default {
           ],
           required: true,
         },
+
         name: {
           type: 'string',
           title: "{{t('discount.form.name')}}",
@@ -66,13 +69,16 @@ export default {
             },
           ],
         },
+
         apply_vip: {
           type: 'boolean',
           title: "{{t('discount.form.applyVip')}}",
+          default: false,
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
         },
 
+        // —— 满减 —— //
         minimum_amount: {
           type: 'number',
           title: "{{t('discount.form.minimumAmount')}}",
@@ -98,6 +104,7 @@ export default {
             },
           ],
         },
+
         reduce_amount: {
           type: 'number',
           title: "{{t('discount.form.reduceAmount')}}",
@@ -124,6 +131,7 @@ export default {
           ],
         },
 
+        // —— 折扣 —— //
         discount_percentage: {
           type: 'number',
           title: "{{t('discount.form.discountPercentage')}}",
@@ -155,6 +163,7 @@ export default {
             },
           ],
         },
+
         rounding_off: {
           type: 'string',
           title: "{{t('discount.form.roundingOff')}}",
@@ -182,6 +191,7 @@ export default {
             },
           ],
         },
+
         rounding_amount: {
           type: 'number',
           title: "{{t('discount.form.roundingAmount')}}",
@@ -217,11 +227,9 @@ export default {
           default: 'OPEN',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
-          'x-component-props': {
-            activeValue: 'OPEN',
-            inactiveValue: 'CLOSE',
-          },
+          'x-component-props': { activeValue: 'OPEN', inactiveValue: 'CLOSE' },
         },
+
         effective_time: {
           type: 'string',
           title: "{{t('discount.form.effectiveTime')}}",
@@ -239,6 +247,7 @@ export default {
             },
           ],
         },
+
         expiration_time: {
           type: 'string',
           title: "{{t('discount.form.expirationTime')}}",
@@ -254,13 +263,14 @@ export default {
               required: true,
               message: "{{t('discount.validate.expirationTime.required')}}",
             },
-            // {
-            //   validator:
-            //     "{{$self.value && $form.values.effective_time && new Date($self.value) < new Date($form.values.effective_time) ? t('discount.validate.expirationTime.gteEffective') : ''}}",
-            // },
+            {
+              validator:
+                "{{$self.value && $form.values.effective_time && new Date($self.value) < new Date($form.values.effective_time) ? t('discount.validate.expirationTime.gteEffective') : ''}}",
+            },
           ],
         },
 
+        // —— 关联范围选择 —— //
         relation_type: {
           type: 'string',
           title: "{{t('discount.form.relationType')}}",
@@ -284,6 +294,7 @@ export default {
           ],
         },
 
+        // —— 三个 ArrayTable（行结构为 { id }） —— //
         relation_product_group_id_list: {
           type: 'array',
           title: "{{t('discount.form.productGroups')}}",
@@ -416,38 +427,18 @@ export default {
           },
         },
 
+        // —— 有效时段 / 星期 / 日期 —— //
         active_day_hours: {
           type: 'array',
           title: "{{t('discount.form.activeHours')}}",
           'x-decorator': 'FormItem',
           'x-component': 'Checkbox.Group',
-          enum: [
-            { label: '00:00', value: 0 },
-            { label: '01:00', value: 1 },
-            { label: '02:00', value: 2 },
-            { label: '03:00', value: 3 },
-            { label: '04:00', value: 4 },
-            { label: '05:00', value: 5 },
-            { label: '06:00', value: 6 },
-            { label: '07:00', value: 7 },
-            { label: '08:00', value: 8 },
-            { label: '09:00', value: 9 },
-            { label: '10:00', value: 10 },
-            { label: '11:00', value: 11 },
-            { label: '12:00', value: 12 },
-            { label: '13:00', value: 13 },
-            { label: '14:00', value: 14 },
-            { label: '15:00', value: 15 },
-            { label: '16:00', value: 16 },
-            { label: '17:00', value: 17 },
-            { label: '18:00', value: 18 },
-            { label: '19:00', value: 19 },
-            { label: '20:00', value: 20 },
-            { label: '21:00', value: 21 },
-            { label: '22:00', value: 22 },
-            { label: '23:00', value: 23 },
-          ],
+          enum: Array.from({ length: 24 }, (_, h) => ({
+            label: `${h < 10 ? `0${h}` : `${h}`}:00`,
+            value: h,
+          })),
         },
+
         active_week_days: {
           type: 'array',
           title: "{{t('discount.form.activeWeekDays')}}",
@@ -463,45 +454,18 @@ export default {
             { label: "{{t('discount.enum.week.sun')}}", value: 7 },
           ],
         },
+
         active_month_days: {
           type: 'array',
           title: "{{t('discount.form.activeMonthDays')}}",
           'x-decorator': 'FormItem',
           'x-component': 'Checkbox.Group',
-          enum: [
-            { label: '1', value: 1 },
-            { label: '2', value: 2 },
-            { label: '3', value: 3 },
-            { label: '4', value: 4 },
-            { label: '5', value: 5 },
-            { label: '6', value: 6 },
-            { label: '7', value: 7 },
-            { label: '8', value: 8 },
-            { label: '9', value: 9 },
-            { label: '10', value: 10 },
-            { label: '11', value: 11 },
-            { label: '12', value: 12 },
-            { label: '13', value: 13 },
-            { label: '14', value: 14 },
-            { label: '15', value: 15 },
-            { label: '16', value: 16 },
-            { label: '17', value: 17 },
-            { label: '18', value: 18 },
-            { label: '19', value: 19 },
-            { label: '20', value: 20 },
-            { label: '21', value: 21 },
-            { label: '22', value: 22 },
-            { label: '23', value: 23 },
-            { label: '24', value: 24 },
-            { label: '25', value: 25 },
-            { label: '26', value: 26 },
-            { label: '27', value: 27 },
-            { label: '28', value: 28 },
-            { label: '29', value: 29 },
-            { label: '30', value: 30 },
-            { label: '31', value: 31 },
-          ],
+          enum: Array.from({ length: 31 }, (_, i) => ({
+            label: String(i + 1),
+            value: i + 1,
+          })),
         },
+
         exclude_dates: {
           type: 'array',
           title: "{{t('discount.form.excludeDates')}}",
@@ -549,9 +513,12 @@ export default {
           'x-component-props': { rows: 3 },
         },
 
+        // 隐藏字段
         merchant_id: { type: 'number', 'x-visible': false },
         creator_id: { type: 'number', default: 0, 'x-visible': false },
       },
     },
   },
-} as ISchema;
+};
+
+export default schema;

@@ -1,3 +1,4 @@
+/* eslint-disable vue/require-default-prop */
 import type { IGridOptions } from '@formily/grid';
 
 import type {
@@ -41,7 +42,8 @@ interface GridColumnProps {
 export const createFormGrid = (props: IFormGridProps): Grid<HTMLElement> => {
   return markRaw(new Grid(props));
 };
-
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 export const useFormGrid = (): Ref<Grid<HTMLElement>> => inject(FormGridSymbol);
 
 /**
