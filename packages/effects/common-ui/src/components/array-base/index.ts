@@ -253,10 +253,10 @@ const ArrayBaseAddition = defineComponent({
               array?.schema.value,
             );
             if (props.method === 'unshift') {
-              array?.field?.value.unshift(defaultValue);
+              array?.field?.value.value.unshift(defaultValue);
               array.attrs?.add?.(0);
             } else {
-              array?.field?.value.push(defaultValue);
+              array?.field?.value.value.push(defaultValue);
               array.attrs?.add?.(array?.field?.value?.value?.length - 1);
             }
             if (typeof attrs.onClick === 'function') {

@@ -1,12 +1,14 @@
-<template>
-  <div>
-    <!-- 价格表单抽屉组件 -->
-    <p>价格表单抽屉组件</p>
-  </div>
-</template>
-
 <script setup lang="ts">
+import { usePriceForm } from '../../hooks';
+
 defineOptions({
-  name: 'PriceDrawer',
+  name: 'DiscountDrawer',
 });
+const { Drawer, Form } = usePriceForm();
 </script>
+
+<template>
+  <Drawer>
+    <Form />
+  </Drawer>
+</template>
