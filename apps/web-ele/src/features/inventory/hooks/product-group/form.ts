@@ -7,9 +7,9 @@ import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
 import {
+  createGroup,
   getFirstGroupList,
   getSecondGroupList,
-  createGroup
 } from '../../apis/product-group';
 // getFirstGroupList
 // getSecondGroupList
@@ -35,18 +35,18 @@ export function useProductGroupForm() {
   const { t } = useI18n();
   const { currentLoginUserApp } = useUserStore();
   const codingRuleListData = ref<PurchaseCodeRulesFormData[]>([]);
-  // 数据数据处理
   // 表单提交处理
-  const handleSubmit = async (values: PurchaseCodeRulesFormData) => {
+  const handleSubmit = async (formData: PurchaseCodeRulesFormData) => {
     try {
-     
-
-      // 处理选项数据
-
+      let response = null;
       // 调用 API
-      const response = await createGroup({
-        ...values,
-      });
+      response = await (formData.id
+        ? createGroup({
+            ...formData,
+          })
+        : createGroup({
+            ...formData,
+          }));
       return response;
     } catch (error) {
       console.error('Purchase customized form submission error:', error);
@@ -95,8 +95,8 @@ export function useProductGroupForm() {
                 lazy: true,
                 lazyLoad: '{{loadData}}',
                 // 数据转换显示
-                label:'major_name',
-                value:'id'
+                label: 'major_name',
+                value: 'id',
               },
             },
           },
@@ -112,18 +112,17 @@ export function useProductGroupForm() {
             },
           },
         },
-      },t
+      },
+      t,
     },
   };
-  let id = 0;
+  const id = 0;
   const loadData = async (node, resolve) => {
-    const { value,level } = node;
-    let treeData = []
-    if(level === 0){
-      treeData = await getFirstGroupList({"parent_id":0});
-    }else {
-      treeData = await getSecondGroupList({"parent_id":value});
-    }
+    const { value, level } = node;
+    let treeData = [];
+    treeData = await (level === 0
+      ? getFirstGroupList({ parent_id: 0 })
+      : getSecondGroupList({ parent_id: value }));
     resolve(treeData.list);
   };
   // 使用 useIgourdForm

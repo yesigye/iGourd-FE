@@ -15,5 +15,7 @@
   "confirmButton": "Confirm",
   "cancelButton": "Cancel",
   "deleteSuccess": "Delete Success",
-  "cancelDelete": "Cancel Delete"
+  "cancelDelete": "Cancel Delete",
+  "product-label-name": "Product Label Name",
+  "add-product-label": "Add Product Label"
 }

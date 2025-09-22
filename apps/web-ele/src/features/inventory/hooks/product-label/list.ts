@@ -9,9 +9,10 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
-  createOrUpdateProductLabel,
+  createProductLabel,
   deleteProductLabel,
-  getProductLabelList,
+  getProductList,
+  updateProductLabel,
 } from '@@/inventory/apis';
 
 import { useCrud } from '#/hooks';
@@ -83,11 +84,11 @@ export function useInventoryProductLabelList() {
     batchOperate: true,
     service: {
       // @ts-ignore
-      query: getProductLabelList,
+      query: getProductList,
       // @ts-ignore
       drop: deleteProductLabel,
-      create: createOrUpdateProductLabel,
-      update: createOrUpdateProductLabel,
+      create: createProductLabel,
+      update: updateProductLabel,
     },
   });
 }
