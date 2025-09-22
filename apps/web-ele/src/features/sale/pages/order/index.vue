@@ -9,8 +9,14 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
-  useSaleOrder();
+const {
+  Grid,
+  Drawer,
+  handleEdit,
+  canBatchOperate,
+  handleBatchDelete,
+  handleCancel,
+} = useSaleOrder();
 </script>
 
 <template>
@@ -26,11 +32,23 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
         </ElButton>
       </template>
       <template #operation="{ row }">
-        <!-- <ElButton type="text" @click="handleEdit(row)">
-          {{ t('common.edit') }}
-        </ElButton> -->
         <ElButton type="text" @click="handleEdit(row)">
-          {{ t('common.detail') }}
+          {{ t('common.print') }}
+        </ElButton>
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.print-receipt') }}
+        </ElButton>
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.details') }}
+        </ElButton>
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.pay') }}
+        </ElButton>
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.refund') }}
+        </ElButton>
+        <ElButton type="text" @click="handleCancel(row)">
+          {{ t('common.cancel') }}
         </ElButton>
       </template>
     </Grid>

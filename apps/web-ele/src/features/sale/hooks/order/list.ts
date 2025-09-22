@@ -128,7 +128,7 @@ export function useSaleOrder() {
     {
       field: 'operation',
       title: t('common.operation'),
-      width: 150,
+      width: 300,
       fixed: 'right',
       slots: { default: 'operation' },
     },

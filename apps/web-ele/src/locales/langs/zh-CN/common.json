@@ -4,7 +4,6 @@
   "login": "登录",
   "logout": "退出登录",
   "prompt": "提示",
-  "cancel": "取消",
   "confirm": "确认",
   "reset": "重置",
   "noData": "暂无数据",
@@ -274,7 +273,6 @@
     "name128": "名称不能超过128个字符"
   },
   "file_not_exceeding": "文件数量不能超过{num}个",
-  "pay": "支付",
   "print_receipt": "打印小票",
   "prompt_message": "提示信息",
   "payment_method_delisting_reminder": "\"{pay_name}\" 支付方式已下架, 无法继续操作原路退回,若想继续进行退款,请在后台【设置】 - 【支付方式设置】中,将此支付方式加回！",
@@ -287,5 +285,12 @@
   "alert": "提示",
   "operation": "操作",
   "start-time": "开始时间",
-  "end-time": "结束时间"
+  "end-time": "结束时间",
+
+  "print-order": "打印订单",
+  "print-receipt": "打印小票",
+  "details": "详情",
+  "pay": "支付",
+  "refund": "退款",
+  "cancel": "取消"
 }
