@@ -14,6 +14,8 @@ import './components/style';
 
 export * from './components';
 
+export { useArray, useIndex, useRecord } from './components/array-base';
+
 export * from './formily';
 
 // export * from '@igourd-core/form-ui';

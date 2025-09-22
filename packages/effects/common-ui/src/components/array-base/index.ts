@@ -1,3 +1,4 @@
+/* eslint-disable vue/no-ref-as-operand */
 /* eslint-disable unicorn/prefer-spread */
 /* eslint-disable vue/require-default-prop */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
@@ -70,20 +71,20 @@ const ArrayBaseSymbol: InjectionKey<IArrayBaseContext> =
   Symbol('ArrayBaseContext');
 const ItemSymbol: InjectionKey<IArrayBaseItemProps> = Symbol('ItemContext');
 
-const useArray = () => {
+export const useArray = () => {
   return inject(ArrayBaseSymbol, null);
 };
 
-const useIndex = (index?: number) => {
+export const useIndex = (index?: number) => {
   const { index: indexRef } = toRefs(inject(ItemSymbol) as IArrayBaseItemProps);
   return indexRef ?? ref(index);
 };
 
-const useRecord = (record?: number) => {
+export const useRecord = (record?: number) => {
   const { record: recordRef } = toRefs(
     inject(ItemSymbol) as IArrayBaseItemProps,
   );
-  return recordRef.value ?? ref(record);
+  return recordRef ?? ref(record);
 };
 
 const isObjectValue: (schema: Schema) => boolean = (schema: Schema) => {
@@ -221,7 +222,7 @@ const ArrayBaseIndex = defineComponent({
         },
         {
           // @ts-ignore
-          default: () => [`#${index.value + 1}.`],
+          default: () => `${index.value + 1}.`,
         },
       );
     };
