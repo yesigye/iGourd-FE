@@ -1,22 +1,91 @@
 {
-  "discountName": "折扣名称",
-  "discountCode": "折扣编码",
-  "discountType": "折扣类型",
-  "discountValue": "折扣值",
-  "minAmount": "最小金额",
-  "maxAmount": "最大金额",
-  "startTime": "开始时间",
-  "endTime": "结束时间",
-  "status": "状态",
-  "addDiscount": "添加折扣",
-  "editDiscount": "编辑折扣",
-  "discountDetail": "折扣详情",
-  "typeOptions": {
-    "percentage": "百分比",
-    "fixed": "固定金额"
+  "form": {
+    "type": "促销类型",
+    "channel": "适用范围",
+    "name": "促销名称",
+    "applyVip": "会员折上折",
+    "minimumAmount": "消费门槛",
+    "reduceAmount": "立减金额",
+    "discountPercentage": "折扣（%）",
+    "roundingOff": "取整方式",
+    "roundingAmount": "取整数值",
+    "status": "启用状态",
+    "effectiveTime": "生效日期",
+    "expirationTime": "失效日期",
+    "relationType": "关联范围",
+    "productGroups": "商品组",
+    "productLabels": "商品标签",
+    "products": "商品",
+    "add": "新增",
+    "activeHours": "有效时段（小时）",
+    "activeWeekDays": "有效星期",
+    "activeMonthDays": "有效日期（日）",
+    "excludeDates": "暂停日",
+    "addDate": "新增日期",
+    "remark": "备注"
   },
-  "statusOptions": {
-    "active": "启用",
-    "inactive": "禁用"
+  "placeholder": {
+    "name": "请输入促销名称",
+    "minimumAmount": "请输入消费门槛",
+    "reduceAmount": "请输入立减金额",
+    "discountPercentage": "请输入折扣（0-100）",
+    "roundingOff": "请选择取整方式",
+    "roundingAmount": "请选择取整数值",
+    "effectiveTime": "请选择生效日期",
+    "expirationTime": "请选择失效日期",
+    "productGroup": "远程搜索商品组",
+    "productLabel": "远程搜索商品标签",
+    "product": "远程搜索商品",
+    "remark": "请输入备注"
+  },
+  "enum": {
+    "type": { "discount": "折扣", "reduction": "满减" },
+    "channel": { "store": "门店", "online": "网店" },
+    "rounding": {
+      "high": "四舍五入到高位",
+      "middle": "四舍五入",
+      "low": "四舍五入到低位"
+    },
+    "week": {
+      "mon": "周一",
+      "tue": "周二",
+      "wed": "周三",
+      "thu": "周四",
+      "fri": "周五",
+      "sat": "周六",
+      "sun": "周日"
+    },
+    "relation": {
+      "all": "全部商品",
+      "group": "商品组",
+      "label": "商品标签",
+      "product": "商品"
+    }
+  },
+  "table": {
+    "columns": {
+      "group": "商品组",
+      "label": "商品标签",
+      "product": "商品",
+      "date": "日期",
+      "ops": "操作"
+    }
+  },
+  "validate": {
+    "name": { "required": "请输入名称", "noSpecial": "不能包含特殊字符" },
+    "minimumAmount": { "required": "请输入消费门槛" },
+    "reduceAmount": { "required": "请输入立减金额" },
+    "discountPercentage": {
+      "required": "请输入折扣",
+      "max": "折扣不能大于 100"
+    },
+    "roundingOff": { "required": "请选择取整方式" },
+    "roundingAmount": { "required": "请选择取整数值" },
+    "effectiveTime": { "required": "请选择生效日期" },
+    "expirationTime": {
+      "required": "请选择失效日期",
+      "gteEffective": "失效日期必须不早于生效日期"
+    },
+    "number": { "nonNegative": "必须为非负数" }
   }
 }
