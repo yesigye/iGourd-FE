@@ -73,7 +73,7 @@ export function useProductLabelForm(func) {
         properties: {
           name: {
             type: 'string',
-            title: "{{t('product-label.product-label-name')}}",
+            title: "{{t('product-label.previous-category')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',

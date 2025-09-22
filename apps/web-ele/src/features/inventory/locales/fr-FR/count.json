@@ -18,5 +18,6 @@
   "productDetail": "Détail du Produit",
   "action": "Action",
   "changeErr": "Échec de la mise à jour du statut",
-  "warehouse-name": "Nom de l'Entrepôt"
+  "warehouse-name": "Nom de l'Entrepôt",
+  "physical-stock-take-date": "Date d'Inventaire"
 }

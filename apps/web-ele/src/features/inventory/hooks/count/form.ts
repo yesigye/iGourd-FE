@@ -20,13 +20,13 @@ export function useCountForm() {
         properties: {
           label: {
             type: 'string',
-            title: "{{t('creator')}}",
+            title: "{{t('count.creator')}}",
             'x-decorator': 'FormItem',
             default: '',
           },
           warehouse: {
             type: 'string',
-            title: "{{t('warehouse-name')}}",
+            title: "{{t('count.warehouse-name')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Select',
@@ -42,12 +42,12 @@ export function useCountForm() {
               },
             ],
           },
-          reason: {
+          date: {
             type: 'string',
-            title: 'Reason',
+            title: "{{t('count.physical-stock-take-date')}}",
             required: true,
             'x-decorator': 'FormItem',
-            'x-component': 'Select',
+            'x-component': 'DatePicker',
             'x-component-props': {
               maxLength: 32,
               placeholder: "{{t('common.select')}}",

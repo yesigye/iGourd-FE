@@ -39,6 +39,10 @@ export function useProductGroupForm() {
   const handleSubmit = async (formData: PurchaseCodeRulesFormData) => {
     try {
       let response = null;
+      // 父级分类 ID  组件数组中获取
+      if (formData.parent_id) {
+        formData.parent_id = formData.parent_id[0];
+      }
       // 调用 API
       response = await (formData.id
         ? createGroup({
@@ -55,11 +59,12 @@ export function useProductGroupForm() {
   };
 
   const [Drawer, drawerApi] = useIgourdDrawer({
-    title: t('code-rules.coding-rules'),
+    title: t('product-group.add-product-group'),
     appendToMain: true,
     class: 'w-1/2',
     async onOpenChange(isOpen) {
-      if (isOpen) {}
+      if (isOpen) {
+      }
     },
     onClosed() {
       formAPI.reset();
@@ -87,7 +92,8 @@ export function useProductGroupForm() {
         properties: {
           parent_id: {
             type: 'string',
-            title: 'paragraph break',
+            title: "{{t('product-group.previous-category')}}",
+            // required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Cascader',
             'x-component-props': {
@@ -102,7 +108,7 @@ export function useProductGroupForm() {
           },
           major_name: {
             type: 'string',
-            title: 'paragraph break',
+            title: "{{t('product-group.category-name')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
@@ -131,13 +137,8 @@ export function useProductGroupForm() {
     schema: formSchema,
     readPretty: false,
     initialValues: {
-      type: '',
-      paragraph_break: '',
-      code_section: '',
-      use_rule: '',
-      status: false,
-      setting_coding_rule_part_list: [],
-      id: '',
+      parent_id: '',
+      major_name: '',
     },
     effects() {
       // 使用 Formily 的 effects 监听表单值变化

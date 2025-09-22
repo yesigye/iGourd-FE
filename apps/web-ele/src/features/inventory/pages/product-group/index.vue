@@ -6,7 +6,10 @@ import { useI18n } from '@igourd/locales';
 
 import folderClose from '../../../../assets/inventory/folder-close.svg';
 import folderOpen from '../../../../assets/inventory/folder-open.svg';
-import { getFirstGroupList } from '../../apis/product-group';
+import {
+  getFirstGroupList,
+  getSecondGroupList,
+} from '../../apis/product-group';
 import drawer from '../../components/product-group/drawer.vue';
 import { useProductGroupList } from '../../hooks/product-group/list';
 
@@ -27,7 +30,6 @@ const getFirstLevelCategory = async () => {
     page_num: productGroupData.value.page_num,
     page_size: 10,
   });
-  // debugger;
   const list = result.list;
   let treeList = [];
   // 将list处理成element-plus的tree数据格式
@@ -35,9 +37,30 @@ const getFirstLevelCategory = async () => {
     id: item.id,
     label: item.major_name,
     children: [],
+    isLeaf: true,
   }));
   productGroupData.value.list = treeList;
   productGroupData.value.total = result.total;
+};
+const loadNode = async (node, resolve) => {
+  const { level } = node;
+  if (level == 0) {
+    return;
+  }
+  const result = await getSecondGroupList({
+    parent_id: node.id,
+    page_num: productGroupData.value.page_num,
+    page_size: 10,
+  });
+  const list = result.list;
+  const treeList = list.map((item) => ({
+    id: item.id,
+    label: item.major_name,
+    children: [],
+    isLeaf: true,
+  }));
+
+  resolve(treeList);
 };
 const { Grid, handleEdit } = useProductGroupList();
 const [Drawer, drawerApi] = useIgourdDrawer({
@@ -61,9 +84,14 @@ onMounted(async () => {
         </p>
         <!-- 分类树 -->
         <div class="mt-5">
-          <ElTree :data="productGroupData.list" node-key="id">
+          <ElTree
+            :data="productGroupData.list"
+            node-key="id"
+            :load="loadNode"
+            lazy
+          >
             <template #default="{ node, data }">
-              <img :src="node.isExpanded ? folderOpen : folderClose" alt="" />
+              <img :src="data.isLeaf ? folderOpen : folderClose" alt="" />
               <span class="pl-1">{{ node.label }}</span>
             </template>
           </ElTree>
