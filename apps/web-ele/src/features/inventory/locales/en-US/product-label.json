@@ -17,5 +17,6 @@
   "deleteSuccess": "Delete Success",
   "cancelDelete": "Cancel Delete",
   "product-label-name": "Product Label Name",
-  "add-product-label": "Add Product Label"
+  "add-product-label": "Add Product Label",
+  "please-enter-label-name": "Please enter the product label name"
 }

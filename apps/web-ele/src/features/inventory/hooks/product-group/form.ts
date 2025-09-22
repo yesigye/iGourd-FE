@@ -31,7 +31,7 @@ interface PurchaseCodeRulesFormData {
   id: string;
 }
 
-export function useProductGroupForm() {
+export function useProductGroupForm(func) {
   const { t } = useI18n();
   const { currentLoginUserApp } = useUserStore();
   const codingRuleListData = ref<PurchaseCodeRulesFormData[]>([]);
@@ -51,6 +51,7 @@ export function useProductGroupForm() {
         : createGroup({
             ...formData,
           }));
+      func('refresh-tree');
       return response;
     } catch (error) {
       console.error('Purchase customized form submission error:', error);
@@ -64,6 +65,10 @@ export function useProductGroupForm() {
     class: 'w-1/2',
     async onOpenChange(isOpen) {
       if (isOpen) {
+        formAPI.reset();
+        const data = drawerApi.getData();
+        data.parent_id = [data.parent_id];
+        formAPI.setValues(data);
       }
     },
     onClosed() {
@@ -113,7 +118,7 @@ export function useProductGroupForm() {
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-component-props': {
-              placeholder: 'enter',
+              placeholder: "{{t('product-group.please-enter-category-name')}}",
               clearable: true,
             },
           },
@@ -122,7 +127,6 @@ export function useProductGroupForm() {
       t,
     },
   };
-  const id = 0;
   const loadData = async (node, resolve) => {
     const { value, level } = node;
     let treeData = [];
@@ -137,7 +141,7 @@ export function useProductGroupForm() {
     schema: formSchema,
     readPretty: false,
     initialValues: {
-      parent_id: '',
+      parent_id: [],
       major_name: '',
     },
     effects() {

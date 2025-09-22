@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { defineEmits } from 'vue';
+
 import { useProductGroupForm } from '../../hooks/product-group/form';
 
-const { Drawer, Form } = useProductGroupForm();
+const emit = defineEmits(['refresh-tree']);
+const { Drawer, Form } = useProductGroupForm(emit);
 </script>
 
 <template>

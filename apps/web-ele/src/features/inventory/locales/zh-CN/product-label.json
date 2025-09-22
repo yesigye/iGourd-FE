@@ -18,5 +18,6 @@
   "cancelDelete": "取消删除",
   "product-label": "商品标签",
   "product-label-name": "商品标签名称",
-  "add-product-label": "添加商品标签"
+  "add-product-label": "添加商品标签",
+  "please-enter-label-name": "请输入商品标签名称"
 }
