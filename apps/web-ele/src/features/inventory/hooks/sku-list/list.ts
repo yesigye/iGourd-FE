@@ -135,7 +135,7 @@ export function useInventorySkuList() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       // @ts-ignore
-      service,
+      // service,
       columns,
       searchFormSchema,
       batchOperate: true,

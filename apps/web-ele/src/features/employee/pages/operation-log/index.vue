@@ -1,8 +1,23 @@
+<script setup lang="ts">
+import { Input, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useOperationLog } from '@@/employee/hooks';
+
+defineOptions({
+  name: 'IOperationLog',
+});
+
+const { t } = useI18n();
+
+const { Grid } = useOperationLog();
+</script>
+
 <template>
   <Page auto-content-height>
     <Grid>
       <template #search>
-        <div class="flex gap-4 items-center">
+        <div class="flex items-center gap-4">
           <Input
             v-model:value="keywords"
             :placeholder="t('employee.pleaseOperationLog')"
@@ -17,22 +32,3 @@
     </Grid>
   </Page>
 </template>
-
-<script setup lang="ts">
-import { Page, Input, Button } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-
-import { useOperationLog } from '@@/employee/hooks';
-
-defineOptions({
-  name: 'IOperationLog',
-});
-
-const { t } = useI18n();
-
-const {
-  Grid,
-  keywords,
-  handleSearch,
-} = useOperationLog();
-</script>

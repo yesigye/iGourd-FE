@@ -5,13 +5,10 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
-  getSettingTemplatePageListApi,
   deleteSettingTemplateApi,
-  updateTemplateStatusApi,
-  getTemplatePreviewApi,
-  copyTemplateApi,
+  getSettingTemplatePageListApi,
 } from '@@/setting/apis';
-import { SettingTemplateDrawer } from '@@/setting/components';
+import { TemplateDrawer } from '@@/setting/components';
 
 import { useCrud } from '#/hooks';
 
@@ -124,18 +121,26 @@ export function useSettingTemplate() {
             placeholder: t('setting.templateType'),
             options: [
               { label: t('setting.templateType.receipt'), value: 'RECEIPT' },
-              { label: t('setting.templateType.barcodeLabel'), value: 'BARCODE_LABEL' },
-              { label: t('setting.templateType.scanLabel'), value: 'SCAN_LABEL' },
-              { label: t('setting.templateType.scanReceipt'), value: 'SCAN_RECEIPT' },
+              {
+                label: t('setting.templateType.barcodeLabel'),
+                value: 'BARCODE_LABEL',
+              },
+              {
+                label: t('setting.templateType.scanLabel'),
+                value: 'SCAN_LABEL',
+              },
+              {
+                label: t('setting.templateType.scanReceipt'),
+                value: 'SCAN_RECEIPT',
+              },
               { label: t('setting.templateType.scanTag'), value: 'SCAN_TAG' },
             ],
           },
         },
       },
       batchOperate: true, // 支持批量删除
-      connectedComponent: SettingTemplateDrawer,
+      connectedComponent: TemplateDrawer,
     });
-
 
   return {
     Grid,

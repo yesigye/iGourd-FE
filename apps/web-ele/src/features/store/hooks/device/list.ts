@@ -2,13 +2,8 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import {
-  getStoreDevicePageListApi,
-  deleteStoreDeviceApi,
-  toggleDeviceStatusApi,
-  restartDeviceApi,
-} from '@@/store/apis';
-import { StoreDeviceDrawer } from '@@/store/components';
+import { deleteStoreDeviceApi, getStoreDevicePageListApi } from '@@/store/apis';
+import { DeviceDrawer } from '@@/store/components';
 
 import { useCrud } from '#/hooks';
 
@@ -98,7 +93,7 @@ export function useStoreDevice() {
         },
       },
       batchOperate: true,
-      connectedComponent: StoreDeviceDrawer,
+      connectedComponent: DeviceDrawer,
     });
 
   return {
