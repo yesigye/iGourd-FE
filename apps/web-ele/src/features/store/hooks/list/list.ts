@@ -101,15 +101,15 @@ export function useStoreList() {
     query: async (params: { page_num: number; page_size: number }) => {
       const response = await getStoreListPageListApi({
         ...params,
-           keywords: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('common.keywords')}}",
-        clearable: true,
-      },
-    },
+        keywords: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-component-props': {
+            placeholder: "{{t('common.keywords')}}",
+            clearable: true,
+          },
+        },
       });
       return {
         list: response.data?.list || [],

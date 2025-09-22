@@ -1,18 +1,13 @@
-<template>
-  <FormDrawer v-bind="getBindValue" :title="getTitle" @success="handleSuccess">
-    <Form />
-  </FormDrawer>
-</template>
-
 <script setup lang="ts">
-import { computed, unref, ref } from 'vue';
-import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-
 import type {
   AccountingNotePageModel,
   NotesDrawerTransferData,
 } from '@@/account/types';
+
+import { computed, ref, unref } from 'vue';
+
+import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
 
 defineOptions({
   name: 'NotesDrawerForm',
@@ -135,3 +130,9 @@ const handleSuccess = () => {
   closeDrawer();
 };
 </script>
+
+<template>
+  <FormDrawer v-bind="getBindValue" :title="getTitle" @success="handleSuccess">
+    <Form />
+  </FormDrawer>
+</template>

@@ -67,6 +67,5 @@ export function useInventoryUnitList() {
       remove: deleteUnit,
       create: createUnit,
     },
-    connectedComponent: UnitDrawer,
   });
 }

@@ -1,62 +1,64 @@
 <script setup lang="ts">
-import { Page } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-import { useStorePaymentList } from '../../hooks/payment/list';
-import {
-  ElButton,
-  ElDialog,
-  ElForm,
-  ElFormItem,
-  ElSelect,
-  ElOption,
-  ElCheckboxGroup,
-  ElCheckbox,
-  ElTooltip,
-  ElIcon,
-} from 'element-plus';
-import { QuestionFilled, CirclePlus } from '@element-plus/icons-vue';
-import { ref, onMounted, computed, watch } from 'vue';
-import { themeVariables } from '@/styles/variables';
-import draggable from 'vuedraggable';
-import payment from '@/assets/svg/payment.svg';
+// // import { QuestionFilled, CirclePlus } from '@element-plus/icons-vue';
+// import { onMounted } from 'vue';
 
-defineOptions({
-  name: 'IStorePayment',
-});
+// import { Page } from '@igourd/common-ui';
+// import { useI18n } from '@igourd/locales';
 
-const { t } = useI18n();
-const {
-  payMethodList,
-  payMethodMarkList,
-  payMethodMarkListOption,
-  addPaymentDialogVisible,
-  addSceneDialogVisible,
-  selectedPayMethod,
-  payScene,
-  payment_mark,
-  sceneList,
-  isShowDel,
-  sceneDesc,
-  handAddPaymentDialogVisible,
-  createPayMenthod,
-  delPayMenthod,
-  selectPaymet,
-  editPayMenthod,
-  getPayMenthodList,
-  getPayMenthodMarkList,
-  handleClose,
-} = useStorePaymentList();
+// import payment from '@/assets/svg/payment.svg';
+// // import { themeVariables } from '@/styles/variables';
+// import {
+//   ElButton,
+//   ElCheckbox,
+//   ElCheckboxGroup,
+//   ElDialog,
+//   ElForm,
+//   ElFormItem,
+//   ElIcon,
+//   ElOption,
+//   ElSelect,
+//   ElTooltip,
+// } from 'element-plus';
+// import draggable from 'vuedraggable';
 
-onMounted(async () => {
-  await getPayMenthodList();
-  await getPayMenthodMarkList();
-});
+// import { useStorePaymentList } from '../../hooks/payment/list';
+
+// defineOptions({
+//   name: 'IStorePayment',
+// });
+
+// const { t } = useI18n();
+// const {
+//   payMethodList,
+//   payMethodMarkList,
+//   payMethodMarkListOption,
+//   addPaymentDialogVisible,
+//   addSceneDialogVisible,
+//   selectedPayMethod,
+//   payScene,
+//   payment_mark,
+//   sceneList,
+//   isShowDel,
+//   sceneDesc,
+//   handAddPaymentDialogVisible,
+//   createPayMenthod,
+//   delPayMenthod,
+//   selectPaymet,
+//   editPayMenthod,
+//   getPayMenthodList,
+//   getPayMenthodMarkList,
+//   handleClose,
+// } = useStorePaymentList();
+
+// onMounted(async () => {
+//   await getPayMenthodList();
+//   await getPayMenthodMarkList();
+// });
 </script>
 
 <template>
   <Page auto-content-height>
-    <div class="setting-container">
-      <!-- 页面标题 -->
+    <!-- <div class="setting-container">
       <div class="top flex items-center gap-1 pb-2.5 pt-2.5">
         <div class="bg-primary h-2.5 w-1 rounded-sm"></div>
         <div class="top-title flex items-center gap-2">
@@ -73,7 +75,6 @@ onMounted(async () => {
         </div>
       </div>
 
-      <!-- 支付方式列表 -->
       <div class="payment-list mt-1 flex flex-wrap gap-5 overflow-auto">
         <draggable
           :list="payMethodList"
@@ -96,7 +97,7 @@ onMounted(async () => {
 
                 <div>
                   <p class="text-sm font-bold">
-                    {{ index + 1 > 10 ? index + 1 : '0' + (index + 1) }}
+                    {{ index + 1 > 10 ? index + 1 : `0${index + 1}` }}
                     {{ element.payment_method_name }}
                   </p>
 
@@ -135,7 +136,7 @@ onMounted(async () => {
               <div
                 class="flex h-full w-full items-center justify-center gap-2.5"
                 :class="
-                  payMethodMarkListOption.length == 0
+                  payMethodMarkListOption.length === 0
                     ? 'cursor-not-allowed'
                     : 'cursor-pointer'
                 "
@@ -143,15 +144,16 @@ onMounted(async () => {
                 <div class="flex items-center justify-center gap-2.5">
                   <ElIcon
                     :color="
-                      payMethodMarkListOption.length == 0
+                      payMethodMarkListOption.length === 0
                         ? themeVariables['text-disabled']
-                        : themeVariables['primary']
+                        : themeVariables.primary
                     "
-                    ><CirclePlus
-                  /></ElIcon>
+                  >
+                    <CirclePlus />
+                  </ElIcon>
                   <p
                     :class="
-                      payMethodMarkListOption.length == 0
+                      payMethodMarkListOption.length === 0
                         ? 'text-textColor-disabled'
                         : 'text-primary'
                     "
@@ -165,7 +167,6 @@ onMounted(async () => {
         </draggable>
       </div>
 
-      <!-- 添加支付方式弹窗 -->
       <ElDialog
         v-model="addPaymentDialogVisible"
         :title="t('settings.add_payment_method')"
@@ -204,9 +205,9 @@ onMounted(async () => {
         </div>
         <template #footer>
           <div class="dialog-footer">
-            <ElButton @click="addPaymentDialogVisible = false">{{
-              t('common.cancel')
-            }}</ElButton>
+            <ElButton @click="addPaymentDialogVisible = false">
+              {{ t('common.cancel') }}
+            </ElButton>
 
             <ElButton type="primary" @click="createPayMenthod">
               {{ t('common.confirm') }}
@@ -215,7 +216,6 @@ onMounted(async () => {
         </template>
       </ElDialog>
 
-      <!-- 添加场景 -->
       <ElDialog
         v-model="addSceneDialogVisible"
         :title="t('settings.payment_scenario_add')"
@@ -233,7 +233,7 @@ onMounted(async () => {
                         :value="item.value"
                         :disabled="isShowDel(selectedPayMethod).is_default"
                       >
-                        {{ t('settings.' + item.label.toLocaleLowerCase()) }}
+                        {{ t(`settings.${item.label.toLocaleLowerCase()}`) }}
                       </ElCheckbox>
                     </div>
                   </div>
@@ -244,9 +244,9 @@ onMounted(async () => {
         </div>
         <template #footer>
           <div class="dialog-footer">
-            <ElButton @click="addSceneDialogVisible = false">{{
-              t('common.cancel')
-            }}</ElButton>
+            <ElButton @click="addSceneDialogVisible = false">
+              {{ t('common.cancel') }}
+            </ElButton>
 
             <ElButton type="primary" @click="editPayMenthod">
               {{ t('common.confirm') }}
@@ -254,34 +254,6 @@ onMounted(async () => {
           </div>
         </template>
       </ElDialog>
-    </div>
+    </div> -->
   </Page>
 </template>
-
-<style lang="scss" scoped>
-.payment-item {
-  width: 360px;
-
-  &:hover {
-    box-shadow: 0 12px 32px 4px #0000000a;
-
-    .payment-option {
-      display: block;
-    }
-  }
-
-  .payment-option {
-    display: none;
-  }
-
-  .payment-item-left {
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-  }
-}
-
-.box-item {
-  margin-right: 8px;
-}
-</style>

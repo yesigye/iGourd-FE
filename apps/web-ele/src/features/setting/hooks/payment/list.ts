@@ -8,7 +8,7 @@ import {
   deleteSettingPaymentApi,
   getSettingPaymentPageListApi,
 } from '@@/setting/apis';
-import { SettingPaymentDrawer } from '@@/setting/components';
+import { PaymentDrawer } from '@@/setting/components';
 
 import { useCrud } from '#/hooks';
 
@@ -159,7 +159,7 @@ export function useSettingPayment() {
         },
       },
       batchOperate: true, // 支持批量删除
-      connectedComponent: SettingPaymentDrawer,
+      connectedComponent: PaymentDrawer,
     });
   return {
     Grid,

@@ -2,10 +2,11 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { storePaymentApi } from '../../apis/payment';
-import { StorePaymentDrawer } from '@@/store/components';
+import { PaymentDrawer } from '@@/store/components';
 
 import { useCrud } from '#/hooks';
+
+import * as storePaymentApi from '../../apis/payment';
 
 export function useStorePaymentList() {
   const { t } = useI18n();
@@ -87,7 +88,7 @@ export function useStorePaymentList() {
         },
       },
       batchOperate: true,
-      connectedComponent: StorePaymentDrawer,
+      connectedComponent: PaymentDrawer,
     });
 
   return {

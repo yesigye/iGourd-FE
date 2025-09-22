@@ -5,13 +5,10 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
-  getSettingStoresetPageListApi,
   deleteSettingStoresetApi,
-  updateStoresetStatusApi,
-  getStoreBasicInfoApi,
-  updateStoreBasicInfoApi,
+  getSettingStoresetPageListApi,
 } from '@@/setting/apis';
-import { SettingStoresetDrawer } from '@@/setting/components';
+import { StoresetDrawer } from '@@/setting/components';
 
 import { useCrud } from '#/hooks';
 
@@ -130,9 +127,8 @@ export function useSettingStoreset() {
         },
       },
       batchOperate: true, // 支持批量删除
-      connectedComponent: SettingStoresetDrawer,
+      connectedComponent: StoresetDrawer,
     });
-
 
   return {
     Grid,
