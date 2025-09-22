@@ -9,6 +9,7 @@ import { useUserStore } from '@igourd/stores';
 import {
   getFirstGroupList,
   getSecondGroupList,
+  createGroup
 } from '../../apis/product-group';
 // getFirstGroupList
 // getSecondGroupList
@@ -38,13 +39,13 @@ export function useProductGroupForm() {
   // 表单提交处理
   const handleSubmit = async (values: PurchaseCodeRulesFormData) => {
     try {
-      getFirstGroupList();
-      getSecondGroupList();
+     
+
       // 处理选项数据
 
       // 调用 API
-      const response = await codingCategoryModify({
-        ...parms,
+      const response = await createGroup({
+        ...values,
       });
       return response;
     } catch (error) {
@@ -93,6 +94,9 @@ export function useProductGroupForm() {
               props: {
                 lazy: true,
                 lazyLoad: '{{loadData}}',
+                // 数据转换显示
+                label:'major_name',
+                value:'id'
               },
             },
           },
@@ -101,33 +105,26 @@ export function useProductGroupForm() {
             title: 'paragraph break',
             required: true,
             'x-decorator': 'FormItem',
-            'x-component': 'Select',
+            'x-component': 'Input',
             'x-component-props': {
-              placeholder: 'purchase order',
+              placeholder: 'enter',
               clearable: true,
             },
           },
         },
-      },
+      },t
     },
   };
   let id = 0;
   const loadData = async (node, resolve) => {
-    const { level } = node;
-    setTimeout(() => {
-      const nodes = Array.from({ length: level + 1 }).map((item) => ({
-        value: ++id,
-        label: `Option - ${id}`,
-        leaf: level >= 2,
-      }));
-      // 最后补充一个加载更多
-      nodes.push({
-        value: ++id,
-        label: t('common.loadMore'),
-        leaf: false,
-      });
-      resolve(nodes);
-    }, 1000);
+    const { value,level } = node;
+    let treeData = []
+    if(level === 0){
+      treeData = await getFirstGroupList({"parent_id":0});
+    }else {
+      treeData = await getSecondGroupList({"parent_id":value});
+    }
+    resolve(treeData.list);
   };
   // 使用 useIgourdForm
   const { Form, formAPI } = useIgourdForm({
