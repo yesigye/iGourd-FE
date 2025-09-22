@@ -152,6 +152,7 @@ function useCrud<T extends object, P extends object>(
           id_list: [row.id],
           status: 'CANCEL',
         });
+        gridApi.reload();
       })
       .catch(() => {});
   };
