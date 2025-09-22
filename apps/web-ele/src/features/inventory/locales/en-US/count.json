@@ -18,5 +18,6 @@
   "productDetail": "Product Detail",
   "action": "Action",
   "changeErr": "Status update failed",
-  "warehouse-name": "Warehouse Name"
+  "warehouse-name": "Warehouse Name",
+  "physical-stock-take-date": "Count Date"
 }
