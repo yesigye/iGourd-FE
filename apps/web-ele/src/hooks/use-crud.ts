@@ -146,12 +146,10 @@ function useCrud<T extends object, P extends object>(
       title: t('common.cancel-order'),
       content: t('common.are-you-sure-cancel-order'),
     })
-      .then(() => {
-        console.log('取消订单', row);
-
+      .then(async () => {
         // 取消订单
-        modifySaleOrderApi({
-          id_list: [row?.id],
+        await modifySaleOrderApi({
+          id_list: [row.id],
           status: 'CANCEL',
         });
       })

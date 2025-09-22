@@ -32,6 +32,6 @@ export function getSaleOrderDetailApi(order_id: number | string) {
   return requestClient.get(`/v1/merchant/order/detail/${order_id}`);
 }
 // 获取销售订单详情
-export function modifySaleOrderApi(order_id: number | string) {
-  return requestClient.post(`merchant/order/status/modify`);
+export function modifySaleOrderApi(data: any) {
+  return requestClient.post(`/v1/merchant/order/status/modify`, data);
 }
