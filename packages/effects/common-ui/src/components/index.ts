@@ -2,7 +2,6 @@ export * from './api-component';
 export * from './array-cards';
 export * from './array-collapse';
 export * from './array-items';
-export { default as ProductArrayTable } from './array-product-form';
 export * from './array-table';
 export * from './array-tabs';
 export * from './captcha';

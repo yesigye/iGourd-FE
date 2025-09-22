@@ -1,20 +1,21 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { defineComponent, h, onBeforeMount, ref } from 'vue';
+import { defineComponent, h, onBeforeMount, ref, unref } from 'vue';
 
 import {
   connect,
-  ElSelectV2,
+  ElOption,
+  ElSelect,
   mapProps,
   mapReadPretty,
   PreviewText,
+  useRecord,
 } from '@igourd/common-ui';
 
-import { warehouseProductPageList } from '@@/inventory/apis';
-
 import { useProductConext } from '#/components/product-table';
+import { wareHouseProductSearch } from '#/features/inventory';
 
 const InnerSelectV2 = connect(
-  ElSelectV2,
+  ElSelect,
   mapProps({
     value: 'modelValue',
     readOnly: 'readonly',
@@ -41,56 +42,71 @@ const InnerProductSelect = defineComponent({
   },
   emits: ['update:modelValue', 'selectChanged'],
   setup(props, { attrs, slots, emit }) {
+    const loading = ref(false);
+    const record = unref(useRecord());
     const { useProductTableContext } = useProductConext();
-    const { warehouse_id } = useProductTableContext() as Record<string, any>;
+    const { warehouse_id, business_type } = useProductTableContext() as Record<
+      string,
+      any
+    >;
 
-    const options = ref<ListItem[]>([]);
+    const options = ref<any[]>([]);
     onBeforeMount(() => {
       if (props.label) {
         options.value = [{ label: props.label, value: props.modelValue }];
       }
     });
 
-    function remoteMethod(keyword?: string) {
-      warehouseProductPageList({
-        keyword,
+    function remoteMethod(keywords?: string) {
+      wareHouseProductSearch({
+        keywords,
         warehouse_id,
+        business_type,
+        page_num: 1,
+        page_size: 20,
         // @ts-ignore
-      }).then(({ list }) => {
-        // @ts-ignore
-        options.value =
-          list?.map((item) => {
-            return {
-              value: item.id,
-              label: [item.major_name, item.product_spec_kvmessage].join('-'),
-            };
-          }) || [];
-      });
+      })
+        .then(({ list }) => {
+          // @ts-ignore
+          options.value = list;
+        })
+        .finally(() => {
+          loading.value = false;
+        });
+    }
+
+    function onSelect(val: any) {
+      emit('update:modelValue', val);
+      const selectOption = options.value.find((i) => i.id === val);
+      emit('selectChanged', selectOption);
+      Object.assign(record, selectOption);
     }
 
     return () =>
       h(
-        InnerSelectV2,
+        ElSelect,
         {
           ...attrs,
           ...emit,
+          filterable: true,
           modelValue: props.modelValue,
           options: options.value,
           remote: true,
+          loading: loading.value,
           remoteMethod,
-          'onVisible-change': function (visible: boolean) {
-            if (!visible) return;
-            remoteMethod(props.label);
-          },
-          onChange(val) {
-            emit('update:modelValue', val);
-            emit(
-              'selectChanged',
-              options.value.find((i) => i.value === val),
-            );
-          },
+          remoteShowSuffix: true,
+          onChange: onSelect,
         },
-        slots,
+        {
+          default: () =>
+            options.value.map((item) => {
+              return h(ElOption, {
+                value: item.id,
+                label: [item.major_name, item.product_spec_kvmessage].join('-'),
+              });
+            }),
+          ...slots,
+        },
       );
   },
 });

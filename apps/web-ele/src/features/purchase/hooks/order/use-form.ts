@@ -1,26 +1,34 @@
-import { onFieldValueChange } from '@igourd/common-ui';
+import { observable } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+
+import { getWarehouseListApi } from '@@/inventory';
 
 import { useDrawerForm } from '#/hooks';
 
 export function useOrderForm() {
   const { t } = useI18n();
+  const warehouse = observable<{ ops: any }>({
+    ops: [],
+  });
 
   const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
     drawerOptions: {
       class: 'w-full',
       appendToMain: true,
       title: 'Hello',
+      onOpened: () => {
+        getWarehouseListApi({}).then(({ list }) => {
+          warehouse.ops = list.map((i) => ({
+            ...i,
+            label: i.name,
+            value: i.id,
+          }));
+        });
+      },
     },
     formOptions: {
-      effects(form) {
-        onFieldValueChange('warehouse_id', (field) => {
-          form.setValues({ purchase_order_item_model_list: [] });
-          // form.setFieldState('purchase_order_item_model_list', (state) => {
-          //   state.data = [];
-          //   state.dataSource = [];
-          // });
-        });
+      scope: {
+        warehouse,
       },
       schema: {
         type: 'void',
@@ -33,11 +41,21 @@ export function useOrderForm() {
         properties: {
           warehouse_id: {
             type: 'string',
-            'x-component': 'Input',
+            'x-component': 'Select',
+            'x-reactions': {
+              fulfill: {
+                state: {
+                  dataSource: '{{ warehouse.ops }}',
+                },
+              },
+            },
           },
           purchase_order_item_model_list: {
             type: 'void',
             'x-component': 'ProductTable',
+            'x-component-props': {
+              warehouse: '{{warehouse.ops}}',
+            },
             'x-reactions': {
               dependencies: ['warehouse_id'],
               fulfill: {
@@ -194,7 +212,17 @@ export function useOrderForm() {
       },
     },
   });
-
+  // onBeforeMount(() => {
+  //   getWarehouseListApi({}).then((res) => {
+  //     warehouse.value = res.list.map((i) => {
+  //       return {
+  //         ...i,
+  //         label: i.name,
+  //         value: i.id,
+  //       };
+  //     });
+  //   });
+  // });
   return {
     t,
     Drawer,

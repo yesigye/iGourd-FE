@@ -15,6 +15,10 @@ export function warehouseProductPageList(data) {
   );
 }
 
+export function wareHouseProductSearch(data) {
+  return requestClient.post('v1/merchant/basics/inventory/search', data);
+}
+
 // 创建仓库
 export function createWarehouseApi(data: any) {
   return requestClient.post(
