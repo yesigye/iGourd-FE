@@ -1,18 +1,14 @@
 {
-  "orderNo": "Order No.",
-  "customerName": "Customer Name",
-  "customerCode": "Customer Code",
-  "totalAmount": "Total Amount",
-  "status": "Status",
-  "addOrder": "Add Order",
-  "editOrder": "Edit Order",
-  "orderDetail": "Order Detail",
-  "statusOptions": {
-    "draft": "Draft",
-    "pending": "Pending",
-    "approved": "Approved",
-    "rejected": "Rejected",
-    "completed": "Completed",
-    "cancelled": "Cancelled"
-  }
+  "order-no": "Order No.",
+  "customer": "Customer",
+  "order-date": "Order Date",
+  "total-qty": "Total Quantity",
+  "total-amt": "Total Amount",
+  "discount": "Discount",
+  "tax": "Tax",
+  "wipe": "Wipe",
+  "paid": "Paid",
+  "tendered": "Tendered",
+  "give-change": "Give Change",
+  "status": "Status"
 }

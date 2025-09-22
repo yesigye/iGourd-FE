@@ -5,7 +5,6 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
-  approveSaleOrderApi,
   createSaleOrderApi,
   deleteSaleOrderApi,
   getSaleOrderListApi,
@@ -25,36 +24,86 @@ export function useSaleOrder() {
     },
     {
       field: 'order_no',
-      title: t('sale.orderNo'),
+      title: t('order.order-no'),
       minWidth: 150,
       sortable: true,
-      align: 'left',
+      align: 'center',
     },
     {
       field: 'customer_name',
-      title: t('sale.customerName'),
+      title: t('order.customer'),
       minWidth: 150,
       sortable: true,
-      align: 'left',
+      align: 'center',
     },
     {
-      field: 'customer_code',
-      title: t('sale.customerCode'),
+      field: 'order_create_time',
+      title: t('order.order-date'),
       minWidth: 150,
       sortable: true,
-      align: 'left',
+      align: 'center',
+    },
+    {
+      field: 'total_quantity',
+      title: t('order.total-qty'),
+      minWidth: 150,
+      sortable: true,
+      align: 'center',
     },
     {
       field: 'total_amount',
-      title: t('sale.totalAmount'),
+      title: t('order.total-amt'),
+      minWidth: 150,
+      sortable: true,
+      align: 'center',
+    },
+    {
+      field: 'promotion_discount_amount',
+      title: t('order.discount'),
+      minWidth: 150,
+      sortable: true,
+      align: 'center',
+    },
+    {
+      field: 'other_tax_amount',
+      title: t('order.tax'),
+      minWidth: 150,
+      sortable: true,
+      align: 'center',
+    },
+    {
+      field: 'round_down_amount',
+      title: t('order.wipe'),
       width: 120,
       align: 'right',
       cellRender: {
         name: 'ElText',
         props: {
-          formatter: '{{row.total_amount ? `¥${row.total_amount.toFixed(2)}` : "-"}}',
+          formatter:
+            '{{row.total_amount ? `¥${row.total_amount.toFixed(2)}` : "-"}}',
         },
       },
+    },
+    {
+      field: 'subtotal_amount',
+      title: t('order.actuaily_paid'),
+      minWidth: 150,
+      sortable: true,
+      align: 'center',
+    },
+    {
+      field: 'actuaily_received',
+      title: t('order.tendered'),
+      minWidth: 150,
+      sortable: true,
+      align: 'center',
+    },
+    {
+      field: 'cash_change_amount',
+      title: t('order.give-change'),
+      minWidth: 150,
+      sortable: true,
+      align: 'center',
     },
     {
       field: 'status',
@@ -71,7 +120,7 @@ export function useSaleOrder() {
     },
     {
       field: 'create_time',
-      title: t('common.createTime'),
+      title: t('common.creation-time'),
       width: 160,
       sortable: true,
       align: 'center',
