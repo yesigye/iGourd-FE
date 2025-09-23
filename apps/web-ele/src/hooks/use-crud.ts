@@ -266,7 +266,7 @@ function useCrud<T extends object, P extends object>(
 
     // 显示确认对话框
     confirm({
-      title: t('common.deleteConfirmTitle'),
+      title: t('common.delete-confirm-title'),
       content: t('common.delete-confirm-text'),
     })
       .then(() => {
