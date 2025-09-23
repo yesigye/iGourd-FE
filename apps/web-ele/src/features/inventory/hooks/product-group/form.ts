@@ -40,7 +40,6 @@ export function useProductGroupForm(func) {
   const handleSubmit = async (formData: PurchaseCodeRulesFormData) => {
     try {
       let response = null;
-      debugger;
       // 父级分类 ID  组件数组中获取
       if (formData.parent_id) {
         const len = formData.parent_id.length;

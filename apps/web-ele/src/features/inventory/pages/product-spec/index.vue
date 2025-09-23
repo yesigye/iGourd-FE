@@ -32,7 +32,8 @@ const [DrawerValue, drawerValueApi] = useIgourdDrawer({
   connectedComponent: drawerValue,
   appendToMain: true,
 });
-const { Grid, handleQueryTable } = useInventoryProductSpec();
+const { Grid, handleQueryTable, handleEdit, handleBatchDelete } =
+  useInventoryProductSpec();
 const productSpecList = ref<ProductLabelItem[]>([]);
 const selectedLabelId = ref<string>('');
 // 获取商品规格列表
@@ -73,11 +74,12 @@ const refreshTree = () => {
 };
 // 增加规格值
 const handleAddSpecValue = () => {
-  drawerValueApi
-    .setData({
-      product_spec_id: selectedLabelId.value,
-    })
-    .open();
+  // 根据 ID 查询数据
+  debugger;
+  const checkedItem = productSpecList.value.find(
+    (item) => item.id == selectedLabelId.value,
+  );
+  drawerValueApi.setData(checkedItem).open();
 };
 const handleChangeSpec = (value: String) => {
   handleQueryTable(value);
@@ -135,6 +137,14 @@ onMounted(() => {
       <template #table-title>
         <ElButton type="primary" @click="handleAddSpecValue">
           {{ t('common.add') }}
+        </ElButton>
+      </template>
+      <template #operation="{ row }">
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.edit') }}
+        </ElButton>
+        <ElButton type="text" @click="handleBatchDelete(row)">
+          {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>

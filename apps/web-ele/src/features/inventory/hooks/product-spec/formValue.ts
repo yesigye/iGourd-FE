@@ -41,11 +41,15 @@ export function useProductSpecValueForm(func) {
     appendToMain: true,
     class: 'w-1/2',
     async onOpenChange(isOpen, val) {
-      debugger;
       if (isOpen) {
         formAPI.reset();
         const data = drawerApi.getData();
-        formAPI.setValues(data);
+        // 如果存在数据，则设置表单值
+        const vals = {
+          product_spec_id: data.id,
+          product_spec_name: data.product_spec_name,
+        };
+        formAPI.setValues(vals);
       }
     },
     onClosed() {
@@ -74,17 +78,17 @@ export function useProductSpecValueForm(func) {
           product_spec_name: {
             type: 'string',
             title: "{{t('product-spec.product-spec-name')}}",
-            required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-component-props': {
               placeholder: "{{t('product-spec.product-spec-name')}}",
               clearable: true,
+              disabled: true,
             },
           },
           product_spec_code: {
             type: 'string',
-            title: "{{t('product-spec.product-spec-name')}}",
+            title: "{{t('product-spec.spec-value-code')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
@@ -95,12 +99,12 @@ export function useProductSpecValueForm(func) {
           },
           product_spec_value: {
             type: 'string',
-            title: "{{t('product-spec.product-spec-name')}}",
+            title: "{{t('product-spec.spec-value')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-component-props': {
-              placeholder: "{{t('product-spec.product-spec-name')}}",
+              placeholder: "{{t('product-spec.spec-value')}}",
               clearable: true,
             },
           },

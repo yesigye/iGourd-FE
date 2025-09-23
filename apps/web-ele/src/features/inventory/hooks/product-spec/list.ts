@@ -44,7 +44,7 @@ export function useInventoryProductSpec() {
       title: t('common.action'),
       minWidth: 150,
       slots: {
-        default: 'operate',
+        default: 'operation',
       },
     },
   ]);
