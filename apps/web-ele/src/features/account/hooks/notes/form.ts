@@ -11,6 +11,11 @@ export function useNotesForm() {
     },
     formOptions: {
       schema,
+      scope: {
+        receivingAccount: [],
+        receivingTargetAccount: [],
+        payRevenueOption: [],
+      },
     },
   });
 }

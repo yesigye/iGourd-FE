@@ -6,7 +6,7 @@ export default {
     __layout: {
       type: 'void',
       'x-component': 'FormLayout',
-      'x-component-props': { labelCol: 8, wrapperCol: 16, size: 'small' },
+      'x-component-props': { labelCol: 2, wrapperCol: 22, size: 'small' },
       properties: {
         /* ---------------- 隐藏/系统字段 ---------------- */
         __hidden: {
@@ -54,84 +54,71 @@ export default {
           },
         },
 
-        /* ---------------- 基本信息 ---------------- */
-        section_basic: {
-          type: 'void',
-          'x-component': 'FormGrid',
+        change_type: {
+          type: 'string',
+          title: "{{ t('account.revenueExpenditure') }}",
+          default: 'REVENUE',
+          'x-decorator': 'FormItem',
+          'x-component': 'Radio.Group',
+          enum: [
+            {
+              label: "{{ t('account.revenue') }}",
+              value: 'REVENUE',
+            },
+            {
+              label: "{{ t('account.expenditure') }}",
+              value: 'EXPENDITURE',
+            },
+          ],
+        },
+
+        finance_category_id: {
+          type: 'string',
+          title: "{{ t('account.finance_category') }}",
+          'x-decorator': 'FormItem',
+          'x-decorator-props': { required: true },
+          'x-component': 'ApiComponent',
           'x-component-props': {
-            maxColumns: [1, 2, 2],
-            minColumns: [1, 1, 1],
-            colGap: 16,
-            rowGap: 16,
+            filterable: true,
+            remote: true,
+            reserveKeyword: true,
+            remoteMethod: '{{ $self.handleFinanceCategorySearch }}',
+            placeholder: "{{ t('account.pleaseSelect') }}",
+            popperClass: 'finance-category-select-dropdown',
           },
-          properties: {
-            change_type: {
-              type: 'string',
-              title: "{{ t('account.revenueExpenditure') }}",
-              default: 'REVENUE',
-              'x-decorator': 'FormItem',
-              'x-component': 'Radio.Group',
-              enum: [
-                {
-                  label: "{{ t('account.revenue') }}",
-                  value: 'REVENUE',
+          'x-reactions': [
+            {
+              fulfill: {
+                state: {
+                  enum: '{{ ($self.financeCategoryOption || []).map(i => ({ label: i.name, value: i.id })) }}',
                 },
-                {
-                  label: "{{ t('account.expenditure') }}",
-                  value: 'EXPENDITURE',
-                },
-              ],
-            },
-
-            finance_category_id: {
-              type: 'string',
-              title: "{{ t('account.finance_category') }}",
-              'x-decorator': 'FormItem',
-              'x-decorator-props': { required: true },
-              'x-component': 'Select',
-              'x-component-props': {
-                filterable: true,
-                remote: true,
-                reserveKeyword: true,
-                remoteMethod: '{{ $self.handleFinanceCategorySearch }}',
-                placeholder: "{{ t('account.pleaseSelect') }}",
-                popperClass: 'finance-category-select-dropdown',
-              },
-              'x-reactions': [
-                {
-                  fulfill: {
-                    state: {
-                      enum: '{{ ($self.financeCategoryOption || []).map(i => ({ label: i.name, value: i.id })) }}',
-                    },
-                  },
-                },
-              ],
-            },
-
-            trading_time: {
-              type: 'string',
-              title: "{{ t('account.transactionDate') }}",
-              'x-decorator': 'FormItem',
-              'x-decorator-props': { required: true },
-              'x-component': 'DatePicker',
-              'x-component-props': {
-                type: 'date',
-                valueFormat: 'YYYY-MM-DD',
-                placeholder: "{{ t('account.pleaseSelectDate') }}",
-                defaultValue: '{{ $self.defaultTime }}',
-                disabledDate: '{{ $self.disabledDate }}',
               },
             },
+          ],
+        },
 
-            payer_name: {
-              type: 'string',
-              title: "{{ t('account.traderName') }}",
-              'x-decorator': 'FormItem',
-              'x-decorator-props': { required: true },
-              'x-component': 'Input',
-              'x-component-props': { placeholder: "{{ t('account.enter') }}" },
-            },
+        trading_time: {
+          type: 'string',
+          title: "{{ t('account.transactionDate') }}",
+          'x-decorator': 'FormItem',
+          'x-decorator-props': { required: true },
+          'x-component': 'DatePicker',
+          'x-component-props': {
+            type: 'date',
+            valueFormat: 'YYYY-MM-DD',
+            placeholder: "{{ t('account.pleaseSelectDate') }}",
+            defaultValue: '{{ $self.defaultTime }}',
+            disabledDate: '{{ $self.disabledDate }}',
           },
+        },
+
+        payer_name: {
+          type: 'string',
+          title: "{{ t('account.traderName') }}",
+          'x-decorator': 'FormItem',
+          'x-decorator-props': { required: true },
+          'x-component': 'Input',
+          'x-component-props': { placeholder: "{{ t('account.enter') }}" },
         },
 
         /* ---------------- 我方账户（最多2行） ---------------- */
@@ -159,128 +146,132 @@ export default {
               },
             },
           ],
-          'x-component-props': {
-            pagination: false,
-            sticky: true,
+          'x-component-props': { pagination: false, sticky: true },
+          items: {
+            type: 'object',
+            properties: {
+              col_index: {
+                type: 'void',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': { title: '#', width: 60, align: 'center' },
+                properties: {
+                  index: { type: 'void', 'x-component': 'ArrayTable.Index' },
+                },
+              },
+              col_account: {
+                type: 'void',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': { title: "{{ t('account.account') }}" },
+                properties: {
+                  account_id: {
+                    type: 'string',
+                    'x-decorator': 'FormItem',
+                    'x-decorator-props': { required: true },
+                    'x-component': 'Select',
+                    'x-component-props': {
+                      filterable: true,
+                      placeholder: "{{ t('account.pleaseSelect') }}",
+                    },
+                    'x-reactions': [
+                      {
+                        fulfill: {
+                          state: {
+                            enum: '{{ (receivingAccount || []).map(i => ({ label: i.name, value: i.node_id })) }}',
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+              col_pay_method: {
+                type: 'void',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': {
+                  title: "{{ t('account.paymentMethod') }}",
+                },
+                properties: {
+                  payment_method_id: {
+                    type: 'string',
+                    'x-decorator': 'FormItem',
+                    'x-decorator-props': { required: true },
+                    'x-component': 'Select',
+                    'x-component-props': {
+                      filterable: true,
+                      placeholder: "{{ t('account.pleaseSelect') }}",
+                    },
+                    'x-reactions': [
+                      {
+                        dependencies: ['change_type'],
+                        fulfill: {
+                          state: {
+                            enum: "{{ ($deps[0] === 'REVENUE' ? (payRevenueOption||[]) : (payPurchaseOption||[])).map(i => ({ label: i.payment_method_name, value: i.payment_method_id })) }}",
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+              col_amount: {
+                type: 'void',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': {
+                  title: "{{ t('account.amount') }}",
+                  width: 180,
+                },
+                properties: {
+                  amount: {
+                    type: 'number',
+                    'x-decorator': 'FormItem',
+                    'x-decorator-props': { required: true },
+                    'x-component': 'InputNumber',
+                    'x-component-props': {
+                      min: 0,
+                      placeholder: "{{ t('account.enter') }}",
+                    },
+                  },
+                },
+              },
+              col_actions: {
+                type: 'void',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': {
+                  title: "{{ t('account.actions') }}",
+                  width: 140,
+                  fixed: 'right',
+                },
+                properties: {
+                  remove: { type: 'void', 'x-component': 'ArrayTable.Remove' },
+                },
+              },
+              node_type: { type: 'string', 'x-hidden': true, default: '' },
+              account_ledger_id: {
+                type: 'string',
+                'x-hidden': true,
+                default: '',
+              },
+            },
           },
           properties: {
-            col_index: {
+            addition: {
               type: 'void',
-              'x-component': 'ArrayTable.Column',
-              'x-component-props': { title: '#', width: 60, align: 'center' },
-              properties: {
-                index: { type: 'void', 'x-component': 'ArrayTable.Index' },
-              },
-            },
-
-            col_account: {
-              type: 'void',
-              'x-component': 'ArrayTable.Column',
-              'x-component-props': { title: "{{ t('account.account') }}" },
-              properties: {
-                account_id: {
-                  type: 'string',
-                  'x-decorator': 'FormItem',
-                  'x-decorator-props': { required: true },
-                  'x-component': 'Select',
-                  'x-component-props': {
-                    filterable: true,
-                    placeholder: "{{ t('account.pleaseSelect') }}",
-                  },
-                  'x-reactions': [
-                    {
-                      fulfill: {
-                        state: {
-                          enum: '{{ ($self.receivingAccount || []).map(i => ({ label: i.name, value: i.node_id })) }}',
-                        },
-                      },
+              title: "{{ t('account.add') }}",
+              'x-component': 'ArrayTable.Addition',
+              'x-reactions': [
+                {
+                  fulfill: {
+                    state: {
+                      disabled:
+                        '{{ ($form.values.item_create_volist||[]).length >= 2 }}',
                     },
-                  ],
-                },
-                node_type: { type: 'string', 'x-hidden': true, default: '' },
-                account_ledger_id: {
-                  type: 'string',
-                  'x-hidden': true,
-                  default: '',
-                },
-              },
-            },
-
-            col_pay_method: {
-              type: 'void',
-              'x-component': 'ArrayTable.Column',
-              'x-component-props': {
-                title: "{{ t('account.paymentMethod') }}",
-              },
-              properties: {
-                payment_method_id: {
-                  type: 'string',
-                  'x-decorator': 'FormItem',
-                  'x-decorator-props': { required: true },
-                  'x-component': 'Select',
-                  'x-component-props': {
-                    filterable: true,
-                    placeholder: "{{ t('account.pleaseSelect') }}",
-                  },
-                  'x-reactions': [
-                    {
-                      dependencies: ['change_type'],
-                      fulfill: {
-                        state: {
-                          enum: "{{ ($deps[0] === 'REVENUE' ? ($self.payRevenueOption||[]) : ($self.payPurchaseOption||[])).map(i => ({ label: i.payment_method_name, value: i.payment_method_id })) }}",
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
-            },
-
-            col_amount: {
-              type: 'void',
-              'x-component': 'ArrayTable.Column',
-              'x-component-props': {
-                title: "{{ t('account.amount') }}",
-                width: 180,
-              },
-              properties: {
-                amount: {
-                  type: 'number',
-                  'x-decorator': 'FormItem',
-                  'x-decorator-props': { required: true },
-                  'x-component': 'InputNumber',
-                  'x-component-props': {
-                    min: 0,
-                    placeholder: "{{ t('account.enter') }}",
                   },
                 },
-              },
-            },
-
-            col_actions: {
-              type: 'void',
-              'x-component': 'ArrayTable.Column',
-              'x-component-props': {
-                title: "{{ t('account.actions') }}",
-                width: 140,
-                fixed: 'right',
-              },
-              properties: {
-                remove: { type: 'void', 'x-component': 'ArrayTable.Remove' },
-                add: {
-                  type: 'void',
-                  'x-component': 'ArrayTable.Addition',
-                  'x-component-props': {
-                    title: "{{ t('account.add') }}",
-                    disabled: '{{ ($self?.parent?.value || []).length >= 2 }}',
-                  },
-                },
-              },
+              ],
             },
           },
         },
 
-        /* ---------------- 对方账户（仅 1 行，金额自动等于合计） ---------------- */
         externalAccountData: {
           type: 'array',
           title: "{{ t('account.externalAccount') }}",
@@ -297,72 +288,72 @@ export default {
               },
             },
           ],
-          properties: {
-            col_t_account: {
-              type: 'void',
-              'x-component': 'ArrayTable.Column',
-              'x-component-props': { title: "{{ t('account.account') }}" },
-              properties: {
-                account_id: {
-                  type: 'string',
-                  'x-decorator': 'FormItem',
-                  'x-decorator-props': { required: true },
-                  'x-component': 'Select',
-                  'x-component-props': {
-                    filterable: true,
-                    placeholder: "{{ t('account.pleaseSelect') }}",
-                  },
-                  'x-reactions': [
-                    {
-                      fulfill: {
-                        state: {
-                          enum: '{{ ($self.receivingTargetAccount || []).map(i => ({ label: i.name, value: i.node_id })) }}',
+          items: {
+            type: 'object',
+            properties: {
+              col_t_account: {
+                type: 'void',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': { title: "{{ t('account.account') }}" },
+                properties: {
+                  account_id: {
+                    type: 'string',
+                    'x-decorator': 'FormItem',
+                    'x-decorator-props': { required: true },
+                    'x-component': 'Select',
+                    'x-component-props': {
+                      filterable: true,
+                      placeholder: "{{ t('account.pleaseSelect') }}",
+                    },
+                    'x-reactions': [
+                      {
+                        fulfill: {
+                          state: {
+                            enum: '{{ (receivingTargetAccount || []).map(i => ({ label: i.name, value: i.node_id })) }}',
+                          },
                         },
                       },
-                    },
-                  ],
-                },
-              },
-            },
-            col_t_amount: {
-              type: 'void',
-              'x-component': 'ArrayTable.Column',
-              'x-component-props': {
-                title: "{{ t('account.amount') }}",
-                width: 180,
-              },
-              properties: {
-                amount: {
-                  type: 'number',
-                  'x-decorator': 'FormItem',
-                  'x-component': 'InputNumber',
-                  'x-component-props': { disabled: true },
-                  'x-reactions': [
-                    {
-                      dependencies: ['revenue_amount'],
-                      fulfill: { state: { value: '{{ $deps[0] || 0 }}' } },
-                    },
-                  ],
-                },
-              },
-            },
-            col_t_actions: {
-              type: 'void',
-              'x-component': 'ArrayTable.Column',
-              'x-component-props': {
-                title: "{{ t('account.actions') }}",
-                width: 120,
-                fixed: 'right',
-              },
-              properties: {
-                remove: { type: 'void', 'x-component': 'ArrayTable.Remove' },
-                add: {
-                  type: 'void',
-                  'x-component': 'ArrayTable.Addition',
-                  'x-component-props': {
-                    title: "{{ t('account.add') }}",
-                    disabled: '{{ ($self?.parent?.value || []).length >= 1 }}',
+                    ],
                   },
+                },
+              },
+              col_t_amount: {
+                type: 'void',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': {
+                  title: "{{ t('account.amount') }}",
+                  width: 180,
+                },
+                properties: {
+                  amount: {
+                    type: 'number',
+                    'x-decorator': 'FormItem',
+                    'x-component': 'InputNumber',
+                    'x-component-props': { disabled: true },
+                    'x-reactions': [
+                      {
+                        dependencies: ['item_create_volist'],
+                        fulfill: {
+                          state: {
+                            value:
+                              '{{ ($deps[0]||[]).reduce((s,row)=> s + ((row?.amount||0)*1), 0) }}',
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+              col_t_actions: {
+                type: 'void',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': {
+                  title: "{{ t('account.actions') }}",
+                  width: 120,
+                  fixed: 'right',
+                },
+                properties: {
+                  remove: { type: 'void', 'x-component': 'ArrayTable.Remove' },
                 },
               },
             },

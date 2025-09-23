@@ -39,6 +39,7 @@ export interface CRUDOptions<T, P> extends VxeGridProps<T> {
   girdEvents: VxeGridListeners<T>;
   scope: Record<string, any>;
   connectedComponent: Component;
+  initialValues: Record<string, any>;
   params: Record<string, any>;
 }
 export function withEntityParam(parameters: object) {
@@ -114,13 +115,17 @@ function useCrud<T extends object, P extends object>(
         page_num: page.currentPage,
         page_size: page.pageSize,
         ...form,
-        ...(options.params || {}),
+        ...options.params,
       });
     };
   }
   const [Grid, gridApi] = useIgourdVxeGrid({
     gridEvents: { ...options.girdEvents, ...gridEvents },
-    formOptions: { schema: options.searchFormSchema, scope: options.scope },
+    formOptions: {
+      schema: options.searchFormSchema,
+      scope: options.scope,
+      initialValues: options.initialValues,
+    },
     gridOptions: {
       height: 'auto',
       ...gridOptions,
