@@ -37,7 +37,7 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
         <ElButton
           :disabled="row.status != 'PENDING'"
           type="text"
-          @click="handleBatchDelete(row)"
+          @click="handleBatchDelete()"
         >
           {{ t('common.refund') }}
         </ElButton>
