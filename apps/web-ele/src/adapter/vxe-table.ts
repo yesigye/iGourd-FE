@@ -8,6 +8,7 @@ import {
   setupIgourdVxeTable,
   useIgourdVxeGrid,
 } from '@igourd/plugins/vxe-table';
+
 import { formatNumber } from '#/utils';
 
 // import { useIgourdForm } from './form';
@@ -49,6 +50,9 @@ setupIgourdVxeTable({
           },
           showActiveMsg: true,
           showResponseMsg: false,
+        },
+        toolbarConfig: {
+          custom: true,
         },
         round: true,
         showOverflow: true,
@@ -132,7 +136,7 @@ setupIgourdVxeTable({
         const { t } = useI18n();
         const { row, column } = params;
         const cellValue = row[column.field];
-        //@ts-ignore
+        // @ts-ignore
         const { computedFn } = props || {};
         if (!computedFn) {
           return formatNumber(cellValue) as string;

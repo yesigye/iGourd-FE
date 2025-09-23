@@ -75,8 +75,12 @@ const baseColumns: ISchema[] = [
         type: 'string',
         'x-decorator': 'FormItem',
         'x-component': 'Select',
-        'x-component-props': {
-          options: '{{ warehouse }}',
+        'x-reactions': {
+          fulfill: {
+            state: {
+              dataSource: '{{ warehouse.value }}',
+            },
+          },
         },
       },
     },
