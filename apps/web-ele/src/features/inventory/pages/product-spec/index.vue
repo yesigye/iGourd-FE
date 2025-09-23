@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ProductLabelItem } from '../../types';
 
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import {
   ColPage,
@@ -33,8 +33,9 @@ const selectedLabelId = ref<string>('');
 // 获取商品规格列表
 const handleGetProductSpecList = async () => {
   const res = await getProductSpecList({});
+
   if (res) {
-    productSpecList.value = res.list || [];
+    productSpecList.value = res || [];
   }
 };
 
@@ -60,6 +61,9 @@ const handleRemove = async (item) => {
 const refreshTree = () => {
   handleGetProductSpecList();
 };
+onMounted(() => {
+  handleGetProductSpecList();
+});
 </script>
 
 <template>
@@ -84,7 +88,7 @@ const refreshTree = () => {
                 :value="item.id"
               >
                 <div class="inline-flex w-full items-center">
-                  <div class="flex-1">{{ item.name }}</div>
+                  <div class="flex-1">{{ item.product_spec_name }}</div>
                   <div class="show-opertion text-right">
                     <i
                       class="iconfont icon-icon_Edit mr-4"

@@ -31,6 +31,7 @@ const productGroupData = ref({
   page_size: 10,
   total: 0,
 });
+const treeRef = ref();
 
 const { Grid, handleEdit } = useProductGroupList();
 const [Drawer, drawerApi] = useIgourdDrawer({
@@ -56,7 +57,6 @@ const getFirstLevelCategory = async (resolve) => {
   }));
 
   productGroupData.value.list = treeList;
-  productGroupData.value.total = result.total;
   resolve && resolve(treeList);
 };
 const loadNode = async (node, resolve) => {
@@ -106,14 +106,13 @@ const handleRemove = async (node) => {
     },
   );
 };
-const handleNodeClick = (data) => {
-  debugger;
-};
 const refreshTree = () => {
   getFirstLevelCategory();
 };
 
-onMounted(async () => {});
+onMounted(async () => {
+  getFirstLevelCategory();
+});
 </script>
 
 <template>
@@ -129,7 +128,9 @@ onMounted(async () => {});
         <!-- 分类树 -->
         <div class="mt-5">
           <ElTree
+            ref="treeRef"
             node-key="id"
+            :data="productGroupData.list"
             :load="loadNode"
             lazy
             @node-click="handleNodeClick"
@@ -153,12 +154,6 @@ onMounted(async () => {});
               </div>
             </template>
           </ElTree>
-          <p
-            class="text-center"
-            v-if="productGroupData.total > productGroupData.list.length"
-          >
-            <ElButton type="primary" link>加载更多</ElButton>
-          </p>
         </div>
       </section>
     </template>

@@ -12,7 +12,7 @@ import { requestClient as request } from '#/api/request';
  */
 export function getProductSpecList(params: ProductSpecParams) {
   return request.post<ProductSpecResponse>(
-    '/v1/merchant/basics/inventory/product-spec-value/list',
+    '/v1/merchant/basics/inventory/product-spec/list',
     params,
   );
 }
