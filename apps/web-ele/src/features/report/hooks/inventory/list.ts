@@ -7,65 +7,173 @@ import { useI18n } from '@igourd/locales';
 import { getInventoryReportApi } from '@@/report/apis';
 
 import { useCrud } from '#/hooks';
+import dayjs from 'dayjs';
 
 export function useInventoryReport() {
   const { t } = useI18n();
   const columns: VxeGridPropTypes.Column<InventoryReportRow>[] = [
     {
-      field: 'product_name',
-      title: t('report.productName'),
+      field: 'warehouse_name',
+      title: t('inventory.warehouse'),
       minWidth: 150,
       sortable: true,
-      align: 'left',
+      align: 'center',
+    },
+    {
+      field: 'product_minor_name',
+      title: t('inventory.product-name'),
+      minWidth: 150,
+      sortable: true,
+      align: 'center',
     },
     {
       field: 'product_code',
-      title: t('report.productCode'),
+      title: t('inventory.product-code'),
       minWidth: 150,
       sortable: true,
-      align: 'left',
+      align: 'center',
     },
     {
-      field: 'warehouse_name',
-      title: t('report.warehouseName'),
-      minWidth: 150,
-      sortable: true,
-      align: 'left',
-    },
-    {
-      field: 'current_stock',
-      title: t('report.currentStock'),
-      width: 120,
-      align: 'right',
-    },
-    {
-      field: 'min_stock',
-      title: t('report.minStock'),
-      width: 120,
-      align: 'right',
-    },
-    {
-      field: 'max_stock',
-      title: t('report.maxStock'),
-      width: 120,
-      align: 'right',
-    },
-    {
-      field: 'stock_status',
-      title: t('report.stockStatus'),
+      field: 'product_group_name',
+      title: t('inventory.category'),
       width: 120,
       align: 'center',
-      cellRender: {
-        name: 'ElTag',
-        props: {
-          type: '{{getStockStatusTagType(row.stock_status)}}',
-          children: '{{getStockStatusText(row.stock_status)}}',
-        },
-      },
+    },
+    {
+      field: 'product_unit_name',
+      title: t('inventory.unit'),
+      width: 120,
+      align: 'center',
+    },
+    {
+      field: 'increased_quantity_desc',
+      title: t('inventory.qty-increased'),
+      width: 120,
+      align: 'center',
     },
     {
       field: 'last_update_time',
-      title: t('report.lastUpdateTime'),
+      title: t('inventory.qty-increased-details'),
+      width: 160,
+      sortable: true,
+      align: 'center',
+      children: [
+        {
+          field: 'receipted_quantity_desc',
+          title: t('inventory.purchase'),
+          width: 160,
+          sortable: true,
+          align: 'center',
+        },
+        {
+          field: 'increased_quantity_desc',
+          title: t('inventory.add-inventory'),
+          width: 160,
+          sortable: true,
+          align: 'center',
+        },
+        {
+          field: 'increased_edit_inventory_quantity_desc',
+          title: t('inventory.edit-inventory'),
+          width: 160,
+          sortable: true,
+          align: 'center',
+        },
+        {
+          field: 'increased_stock_take_quantity',
+          title: t('inventory.physical-stock-take'),
+          width: 160,
+          sortable: true,
+          align: 'center',
+        },
+        {
+          field: 'reduced_sale_quantity_desc',
+          title: t('inventory.sales-refund'),
+          width: 160,
+          sortable: true,
+          align: 'center',
+        },
+      ],
+    },
+    {
+      field: 'reduced_quantity_desc',
+      title: t('inventory.qty-reduced'),
+      minWidth: 150,
+      sortable: true,
+      align: 'center',
+    },
+    {
+      field: 'product_code',
+      title: t('inventory.qty-reduced-details'),
+      minWidth: 150,
+      sortable: true,
+      align: 'center',
+      children: [
+        {
+          field: 'reduced_sale_quantity_desc',
+          title: t('inventory.sales'),
+          minWidth: 150,
+          sortable: true,
+          align: 'center',
+        },
+        {
+          field: 'purchase_returned_quantity_desc',
+          title: t('inventory.purchase-refunded'),
+          minWidth: 150,
+          sortable: true,
+          align: 'center',
+        },
+        {
+          field: 'reduced_stock_take_quantity_desc',
+          title: t('inventory.physical-stock-take'),
+          minWidth: 150,
+          sortable: true,
+          align: 'center',
+        },
+        {
+          field: 'stock_consumption_quantity_desc',
+          title: t('inventory.consumption'),
+          minWidth: 150,
+          sortable: true,
+          align: 'center',
+        },
+        {
+          field: 'increased_edit_inventory_quantity_desc',
+          title: t('inventory.edit-inventory'),
+          minWidth: 150,
+          sortable: true,
+          align: 'center',
+        },
+      ],
+    },
+    {
+      field: 'stock_quantity',
+      title: t('inventory.remain-qty'),
+      minWidth: 150,
+      sortable: true,
+      align: 'center',
+    },
+    {
+      field: 'stock_value_amount_cost',
+      title: t('inventory.total-value-of-products-by-cost'),
+      width: 120,
+      align: 'center',
+    },
+    {
+      field: 'stock_value_amount',
+      title: t('inventory.total-value-of-products-by-selling'),
+      width: 120,
+      align: 'center',
+    },
+    {
+      field: 'creator_name',
+      title: t('common.creator'),
+      width: 120,
+      align: 'center',
+    },
+    {
+      field: 'create_time',
+      title: t('common.creation-time'),
       width: 160,
       sortable: true,
       align: 'center',
@@ -78,7 +186,7 @@ export function useInventoryReport() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('report.productName')}}",
+        placeholder: "{{t('inventory.productName')}}",
         clearable: true,
       },
     },
@@ -87,7 +195,7 @@ export function useInventoryReport() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('report.productCode')}}",
+        placeholder: "{{t('inventory.productCode')}}",
         clearable: true,
       },
     },
@@ -96,7 +204,7 @@ export function useInventoryReport() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('report.warehouseName')}}",
+        placeholder: "{{t('inventory.warehouseName')}}",
         clearable: true,
       },
     },
@@ -105,12 +213,12 @@ export function useInventoryReport() {
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
-        placeholder: "{{t('report.stockStatus')}}",
+        placeholder: "{{t('inventory.stockStatus')}}",
         clearable: true,
         options: [
-          { label: t('report.stockStatusOptions.normal'), value: 'normal' },
-          { label: t('report.stockStatusOptions.low'), value: 'low' },
-          { label: t('report.stockStatusOptions.out'), value: 'out' },
+          { label: t('inventory.stockStatusOptions.normal'), value: 'normal' },
+          { label: t('inventory.stockStatusOptions.low'), value: 'low' },
+          { label: t('inventory.stockStatusOptions.out'), value: 'out' },
         ],
       },
     },
@@ -121,7 +229,28 @@ export function useInventoryReport() {
     searchFormSchema,
     batchOperate: false,
     service: {
-      query: getInventoryReportApi,
+       query: async (params: {
+        page_num: number;
+        page_size: number;
+        start_date?: string;
+        end_date?: string;
+        tabKey: string;
+        time_range: string;
+      }) => {
+        // 开始时间默认是当前时间-一个月
+        params.end_date =
+          params.end_date || dayjs().format('YYYY-MM-DD') + ' 23:59:59';
+        params.start_date =
+          params.start_date ||
+          dayjs().subtract(1, 'months').format('YYYY-MM-DD') + ' 00:00:00';
+        params.tabKey = 'months';
+        params.time_range = 'MONTH';
+        let response = await getInventoryReportApi(params);
+        return {
+          list: response?.list || [],
+          total: response?.data?.total || 0,
+        };
+      },
     },
   });
 }

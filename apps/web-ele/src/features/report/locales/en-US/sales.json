@@ -1,8 +1,14 @@
 {
-  "date": "Date",
-  "orderCount": "Order Count",
-  "totalAmount": "Total Amount",
-  "avgOrderAmount": "Average Order Amount",
-  "productCount": "Product Count",
-  "exportReport": "Export Report"
+  "product-name": "Product Name",
+  "product-code": "Product Code",
+  "sku-barcode": "SKU Barcode",
+  "category": "Category",
+  "unit": "Unit",
+  "cost-price": "Cost Price",
+  "selling-price": "Selling Price",
+  "sales-qty": "Sales Quantity",
+  "remain-qty": "Remaining Quantity",
+  "sales-amount": "Sales Amount",
+  "sales-gross-margin": "Sales Gross Margin",
+  "sales-gross-margin-rate": "Sales Gross Margin Rate"
 }

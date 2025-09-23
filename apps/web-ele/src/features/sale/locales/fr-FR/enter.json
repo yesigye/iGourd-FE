@@ -1,15 +1,23 @@
 {
   "settlement-date": "Date de règlement",
-  "order-qty": "Order quantity",
-  "order-amount": "Order amount",
-  "returned-qty": "Returned quantity",
-  "refund-amount": "Refund amount",
-  "holding-order-qty": "Holding order quantity",
-  "holding-order-amount": "Holding order amount",
-  "recharge-qty": "Recharge quantity",
-  "recharge-amount": "Recharge amount",
-  "accounting-note-revenue-qty": "Accounting note revenue quantity",
-  "accounting-note-revenue-amount": "Accounting note revenue amount",
-  "accounting-note-expenditure-qty": "Accounting note expenditure quantity",
-  "accounting-note-expenditure-amount": "Accounting note expenditure amount"
+  "order-qty": "Quantité de commandes",
+  "order-amount": "Montant de la commande",
+  "returned-qty": "Quantité retournée",
+  "refund-amount": "Montant du remboursement",
+  "holding-order-qty": "Quantité de commandes en attente",
+  "holding-order-amount": "Montant des commandes en attente",
+  "recharge-qty": "Quantité de recharge",
+  "recharge-amount": "Montant de recharge",
+  "accounting-note-revenue-qty": "Quantité de notes comptables de revenus",
+  "accounting-note-revenue-amount": "Montant des notes comptables de revenus",
+  "accounting-note-expenditure-qty": "Quantité de notes comptables de dépenses",
+  "accounting-note-expenditure-amount": "Montant des notes comptables de dépenses",
+  "status": {
+    "draft": "Brouillon",
+    "confirmed": "Confirmé",
+    "processing": "En cours de traitement",
+    "completed": "Terminé",
+    "cancelled": "Annulé"
+  },
+  "search-placeholder": "Veuillez saisir un mot-clé"
 }

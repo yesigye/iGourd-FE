@@ -18,5 +18,6 @@
     "processing": "处理中",
     "completed": "已完成",
     "cancelled": "已取消"
-  }
+  },
+  "search-placeholder": "请输入关键词"
 }

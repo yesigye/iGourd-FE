@@ -26,5 +26,6 @@
   "closing-cash": "期末现金",
   "start-time": "开始时间",
   "end-time": "结束时间",
-  "creator": "创建人"
+  "creator": "创建人",
+  "keywords-placeholder": "请输入班次名称"
 }
