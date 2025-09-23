@@ -1,8 +1,14 @@
 {
-  "date": "Date",
-  "orderCount": "Nombre de Commandes",
-  "totalAmount": "Montant Total",
-  "avgOrderAmount": "Montant Moyen des Commandes",
-  "productCount": "Nombre de Produits",
-  "exportReport": "Exporter Rapport"
+  "product-name": "Nom du produit",
+  "product-code": "Code produit",
+  "sku-barcode": "Code-barres SKU",
+  "category": "Catégorie",
+  "unit": "Unité",
+  "cost-price": "Prix de revient",
+  "selling-price": "Prix de vente",
+  "sales-qty": "Quantité vendue",
+  "remain-qty": "Quantité restante",
+  "sales-amount": "Montant des ventes",
+  "sales-gross-margin": "Marge brute des ventes",
+  "sales-gross-margin-rate": "Taux de marge brute des ventes"
 }
