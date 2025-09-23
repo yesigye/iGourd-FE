@@ -71,11 +71,15 @@ const schema: ISchema = {
         },
 
         apply_vip: {
-          type: 'boolean',
+          type: 'number',
           title: "{{t('discount.form.applyVip')}}",
-          default: false,
+          default: 1,
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
+          'x-component-props': {
+            'active-value': 1,
+            'inactive-value': 0,
+          },
         },
 
         // —— 满减 —— //
@@ -220,16 +224,6 @@ const schema: ISchema = {
             },
           ],
         },
-
-        status: {
-          type: 'string',
-          title: "{{t('discount.form.status')}}",
-          default: 'OPEN',
-          'x-decorator': 'FormItem',
-          'x-component': 'Switch',
-          'x-component-props': { activeValue: 'OPEN', inactiveValue: 'CLOSE' },
-        },
-
         effective_time: {
           type: 'string',
           title: "{{t('discount.form.effectiveTime')}}",
@@ -237,7 +231,7 @@ const schema: ISchema = {
           'x-component': 'DatePicker',
           'x-component-props': {
             type: 'date',
-            valueFormat: 'YYYY-MM-DD',
+            valueFormat: 'YYYY-MM-DD 00:00:00',
             placeholder: "{{t('discount.placeholder.effectiveTime')}}",
           },
           'x-validator': [
@@ -255,7 +249,7 @@ const schema: ISchema = {
           'x-component': 'DatePicker',
           'x-component-props': {
             type: 'date',
-            valueFormat: 'YYYY-MM-DD',
+            valueFormat: 'YYYY-MM-DD 23:59:59',
             placeholder: "{{t('discount.placeholder.expirationTime')}}",
           },
           'x-validator': [

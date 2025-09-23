@@ -14,7 +14,6 @@ export function useDiscountForm() {
         apply_vip: 1,
       },
       schema,
-      handleSubmit() {},
     },
   });
 }
