@@ -15,7 +15,7 @@ export function useFinancialReport() {
     {
       field: 'financial_category_name',
       title: t('financial.financial-category'),
-      sortable: true,
+
       align: 'center',
     },
     {
@@ -55,7 +55,7 @@ export function useFinancialReport() {
     {
       field: 'time_period',
       title: t('financial.time-period'),
-      sortable: true,
+
       align: 'center',
     },
   ];

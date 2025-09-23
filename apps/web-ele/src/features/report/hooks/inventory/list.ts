@@ -16,21 +16,21 @@ export function useInventoryReport() {
       field: 'warehouse_name',
       title: t('inventory.warehouse'),
       minWidth: 150,
-      sortable: true,
+
       align: 'center',
     },
     {
       field: 'product_minor_name',
       title: t('inventory.product-name'),
       minWidth: 150,
-      sortable: true,
+
       align: 'center',
     },
     {
       field: 'product_code',
       title: t('inventory.product-code'),
       minWidth: 150,
-      sortable: true,
+
       align: 'center',
     },
     {
@@ -55,42 +55,42 @@ export function useInventoryReport() {
       field: 'last_update_time',
       title: t('inventory.qty-increased-details'),
       width: 160,
-      sortable: true,
+
       align: 'center',
       children: [
         {
           field: 'receipted_quantity_desc',
           title: t('inventory.purchase'),
           width: 160,
-          sortable: true,
+
           align: 'center',
         },
         {
           field: 'increased_quantity_desc',
           title: t('inventory.add-inventory'),
           width: 160,
-          sortable: true,
+
           align: 'center',
         },
         {
           field: 'increased_edit_inventory_quantity_desc',
           title: t('inventory.edit-inventory'),
           width: 160,
-          sortable: true,
+
           align: 'center',
         },
         {
           field: 'increased_stock_take_quantity',
           title: t('inventory.physical-stock-take'),
           width: 160,
-          sortable: true,
+
           align: 'center',
         },
         {
           field: 'reduced_sale_quantity_desc',
           title: t('inventory.sales-refund'),
           width: 160,
-          sortable: true,
+
           align: 'center',
         },
       ],
@@ -99,49 +99,47 @@ export function useInventoryReport() {
       field: 'reduced_quantity_desc',
       title: t('inventory.qty-reduced'),
       minWidth: 150,
-      sortable: true,
+
       align: 'center',
     },
     {
       field: 'product_code',
       title: t('inventory.qty-reduced-details'),
       minWidth: 150,
-      sortable: true,
+
       align: 'center',
       children: [
         {
           field: 'reduced_sale_quantity_desc',
           title: t('inventory.sales'),
           minWidth: 150,
-          sortable: true,
           align: 'center',
         },
         {
           field: 'purchase_returned_quantity_desc',
           title: t('inventory.purchase-refunded'),
           minWidth: 150,
-          sortable: true,
+
           align: 'center',
         },
         {
           field: 'reduced_stock_take_quantity_desc',
           title: t('inventory.physical-stock-take'),
           minWidth: 150,
-          sortable: true,
           align: 'center',
         },
         {
           field: 'stock_consumption_quantity_desc',
           title: t('inventory.consumption'),
           minWidth: 150,
-          sortable: true,
+
           align: 'center',
         },
         {
           field: 'increased_edit_inventory_quantity_desc',
           title: t('inventory.edit-inventory'),
           minWidth: 150,
-          sortable: true,
+
           align: 'center',
         },
       ],
@@ -150,7 +148,7 @@ export function useInventoryReport() {
       field: 'stock_quantity',
       title: t('inventory.remain-qty'),
       minWidth: 150,
-      sortable: true,
+
       align: 'center',
     },
     {
@@ -175,7 +173,7 @@ export function useInventoryReport() {
       field: 'create_time',
       title: t('common.creation-time'),
       width: 160,
-      sortable: true,
+
       align: 'center',
     },
   ];
