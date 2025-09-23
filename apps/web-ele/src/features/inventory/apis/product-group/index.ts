@@ -23,10 +23,12 @@ export function createGroup(data: any) {
     data,
   );
 }
-
 // 更新分组
 export function updateGroup(data: any) {
-  return requestClient.post('/inventory/product-group/update', data);
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/product-group/modify',
+    data,
+  );
 }
 
 // 删除分组

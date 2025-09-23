@@ -10,6 +10,7 @@ import {
   createGroup,
   getFirstGroupList,
   getSecondGroupList,
+  updateGroup,
 } from '../../apis/product-group';
 // getFirstGroupList
 // getSecondGroupList
@@ -39,14 +40,16 @@ export function useProductGroupForm(func) {
   const handleSubmit = async (formData: PurchaseCodeRulesFormData) => {
     try {
       let response = null;
+      debugger;
       // 父级分类 ID  组件数组中获取
       if (formData.parent_id) {
         const len = formData.parent_id.length;
         formData.parent_id = formData.parent_id[len - 1];
       }
+
       // 调用 API
       response = await (formData.id
-        ? createGroup({
+        ? updateGroup({
             ...formData,
           })
         : createGroup({
