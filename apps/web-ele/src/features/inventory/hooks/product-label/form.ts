@@ -46,6 +46,8 @@ export function useProductLabelForm(func) {
         formAPI.reset();
         const data = drawerApi.getData();
         formAPI.setValues(data);
+      } else {
+        formAPI.values = {};
       }
     },
     onClosed() {

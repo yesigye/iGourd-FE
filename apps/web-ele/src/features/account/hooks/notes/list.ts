@@ -37,14 +37,14 @@ export function useAccountNotes() {
       sortable: true,
       align: 'left',
     },
-    {
-      field: 'amount',
-      title: t('account.amount'),
-      minWidth: 120,
-      sortable: true,
-      align: 'left',
-      formatter: 'formatMoney',
-    },
+    // {
+    //   field: 'amount',
+    //   title: t('account.amount'),
+    //   minWidth: 120,
+    //   sortable: true,
+    //   align: 'left',
+    //   formatter: 'formatMoney',
+    // },
     {
       field: 'our_account',
       title: t('account.our_account'),

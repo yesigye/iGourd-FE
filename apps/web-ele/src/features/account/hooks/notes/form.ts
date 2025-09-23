@@ -2,7 +2,7 @@ import { useDrawerForm } from '#/hooks';
 
 import schema from './form-schema';
 
-export function useDiscountForm() {
+export function useNotesForm() {
   return useDrawerForm({
     drawerOptions: {
       title: 'ddd',
@@ -10,10 +10,12 @@ export function useDiscountForm() {
       appendToMain: true,
     },
     formOptions: {
-      initialValues: {
-        apply_vip: 1,
-      },
       schema,
+      scope: {
+        receivingAccount: [],
+        receivingTargetAccount: [],
+        payRevenueOption: [],
+      },
     },
   });
 }

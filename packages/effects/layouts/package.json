@@ -15,6 +15,9 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
+    },
+    "./style": {
+      "default": "./dist/index.css"
     }
   },
   "publishConfig": {

@@ -6,7 +6,8 @@
     "build": "pnpm vite build"
   },
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "sideEffects": [
     "**/*.scss",
@@ -19,6 +20,9 @@
       "development": "./src/scss-bem/bem.scss",
       "default": "./dist/bem.scss"
     },
+    "./token": {
+      "default": "./src/design-tokens/index.scss"
+    },
     ".": {
       "types": "./src/index.ts",
       "development": "./src/index.ts",
@@ -29,6 +33,9 @@
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
     "provenance": false,
     "exports": {
+      "./token": {
+        "default": "./src/design-tokens/index.scss"
+      },
       ".": {
         "default": "./dist/design.css"
       },

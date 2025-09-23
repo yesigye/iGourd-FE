@@ -12,10 +12,6 @@
     "**/*.css"
   ],
   "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
-    },
     "./es/tippy": {
       "types": "./src/components/tippy/index.ts",
       "default": "./src/components/tippy/index.ts"
@@ -24,14 +20,14 @@
       "types": "./src/components/loading/index.ts",
       "default": "./src/components/loading/index.ts"
     },
-    "./style": "./src/components/style.ts"
+    "./style": "./src/components/style.scss",
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
   },
   "publishConfig": {
     "exports": {
-      ".": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      },
       "./es/tippy": {
         "types": "./dist/es/tippy/index.d.ts",
         "default": "./dist/es/tippy/index.mjs"
@@ -40,7 +36,11 @@
         "types": "./dist/es/loading/index.d.ts",
         "default": "./dist/es/loading/index.mjs"
       },
-      "./style": "./dist/common-ui.css"
+      "./style": "./dist/common-ui.css",
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
     },
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",
     "provenance": false
@@ -60,7 +60,6 @@
   "devDependencies": {
     "@element-plus/icons-vue": "catalog:",
     "@formily/core": "catalog:",
-    "@igourd/utils": "workspace:^",
     "@formily/grid": "catalog:",
     "@formily/json-schema": "catalog:",
     "@formily/reactive": "catalog:",
@@ -77,6 +76,7 @@
     "@igourd/icons": "workspace:^",
     "@igourd/locales": "workspace:^",
     "@igourd/types": "workspace:^",
+    "@igourd/utils": "workspace:^",
     "@types/qrcode": "catalog:",
     "@vueuse/core": "catalog:",
     "@vueuse/integrations": "catalog:",

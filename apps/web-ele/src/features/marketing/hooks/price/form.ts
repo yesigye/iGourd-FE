@@ -10,11 +10,7 @@ export function usePriceForm() {
       appendToMain: true,
     },
     formOptions: {
-      initialValues: {
-        apply_vip: 1,
-      },
       schema,
-      handleSubmit() {},
     },
   });
 }

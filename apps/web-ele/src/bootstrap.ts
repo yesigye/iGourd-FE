@@ -2,6 +2,7 @@ import { createApp, watchEffect } from 'vue';
 
 import { registerAccessDirective } from '@igourd/access';
 import { ElLoading, registerLoadingDirective } from '@igourd/common-ui';
+// import '@igourd/common-ui/style';
 import { preferences } from '@igourd/preferences';
 import { initStores } from '@igourd/stores';
 import '@igourd/styles';

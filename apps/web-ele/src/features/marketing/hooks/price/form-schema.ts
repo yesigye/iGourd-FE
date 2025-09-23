@@ -320,7 +320,7 @@ export default {
           'x-component': 'DatePicker',
           'x-component-props': {
             type: 'date',
-            valueFormat: 'YYYY-MM-DD',
+            valueFormat: 'YYYY-MM-DD 00:00:00',
             placeholder: "{{t('priceLevel.placeholder.effectiveTime')}}",
           },
           'x-validator': [
@@ -331,14 +331,14 @@ export default {
           ],
         },
 
-        expiratoin_time: {
+        expiration_time: {
           type: 'string',
           title: "{{t('priceLevel.form.expirationTime')}}",
           'x-decorator': 'FormItem',
           'x-component': 'DatePicker',
           'x-component-props': {
             type: 'date',
-            valueFormat: 'YYYY-MM-DD',
+            valueFormat: 'YYYY-MM-DD 23:59:59',
             placeholder: "{{t('priceLevel.placeholder.expirationTime')}}",
           },
           'x-validator': [

@@ -21,13 +21,13 @@ import { useIgourdVxeGrid } from '#/adapter/vxe-table';
 interface List<T> {
   /** 查询参数接口，包含分页信息 */
   QueryParams: {
-    page_num: number;  // 当前页码
+    page_num: number; // 当前页码
     page_size: number; // 每页数据条数
   };
   /** 查询结果接口，包含数据列表和总数 */
   QueryResult: {
     list: Array<T> | null; // 数据列表，可能为null
-    total: number;         // 总数据条数
+    total: number; // 总数据条数
   };
 }
 
@@ -71,7 +71,7 @@ export interface CRUDOptions<T, P> extends VxeGridProps<T> {
   scope: Record<string, any>;
   /** 连接的组件，用于抽屉等UI组件 */
   connectedComponent: Component;
-  /** 额外的查询参数 */
+  initialValues: Record<string, any>;
   params: Record<string, any>;
   /** 用于标识记录的字段名，默认为'id' */
   idField?: string;
@@ -152,7 +152,7 @@ function useCrud<T extends object, P extends object>(
   const [checkedKeys, gridEvents, canBatchOperate] = useBatchOperate(
     options.girdEvents?.checkboxChange,
     options.girdEvents?.checkboxAll,
-    options.idField as string || 'id',
+    (options.idField as string) || 'id',
   );
 
   // 从选项中提取表格配置，排除非表格相关的属性
@@ -200,9 +200,11 @@ function useCrud<T extends object, P extends object>(
   const [Grid, gridApi] = useIgourdVxeGrid({
     // 合并事件处理器
     gridEvents: { ...options.girdEvents, ...gridEvents },
-    // 设置表单选项
-    formOptions: { schema: options.searchFormSchema, scope: options.scope },
-    // 设置表格选项
+    formOptions: {
+      schema: options.searchFormSchema,
+      scope: options.scope,
+      initialValues: options.initialValues,
+    },
     gridOptions: {
       height: 'auto',
       ...gridOptions,
@@ -295,16 +297,16 @@ function useCrud<T extends object, P extends object>(
 
   // 返回组件、API和处理函数
   return {
-    canBatchOperate,  // 是否可以批量操作
-    checkedKeys,      // 选中的键数组
-    gridApi,          // 表格API
-    Grid,             // 表格组件
-    Drawer,           // 抽屉组件
-    drawerApi,        // 抽屉API
-    handleEdit,       // 编辑处理函数
+    canBatchOperate, // 是否可以批量操作
+    checkedKeys, // 选中的键数组
+    gridApi, // 表格API
+    Grid, // 表格组件
+    Drawer, // 抽屉组件
+    drawerApi, // 抽屉API
+    handleEdit, // 编辑处理函数
     handleBatchDelete, // 批量删除处理函数
     handleCreate: handleEdit, // 创建处理函数（复用编辑函数）
-    handleCancel,     // 取消订单处理函数
+    handleCancel, // 取消订单处理函数
   };
 }
 
