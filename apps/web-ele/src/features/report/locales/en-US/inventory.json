@@ -1,16 +1,3 @@
 {
-  "productName": "Product Name",
-  "productCode": "Product Code",
-  "warehouseName": "Warehouse Name",
-  "currentStock": "Current Stock",
-  "minStock": "Minimum Stock",
-  "maxStock": "Maximum Stock",
-  "stockStatus": "Stock Status",
-  "lastUpdateTime": "Last Update Time",
-  "exportReport": "Export Report",
-  "stockStatusOptions": {
-    "normal": "Normal",
-    "low": "Low Stock",
-    "out": "Out of Stock"
-  }
+ "warehouse":"Warehouse"
 }
