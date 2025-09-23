@@ -3,7 +3,11 @@ export function useAccount() {
     const jumpLoginUrl = location.pathname.includes('/401')
       ? location.origin
       : location.href;
-    window.location.href = `${import.meta.env.VITE_APP_API_LOGIN_URL}?redirect=${encodeURIComponent(jumpLoginUrl)}`;
+    window.open(
+      `${import.meta.env.VITE_APP_API_LOGIN_URL}?redirect=${encodeURIComponent(jumpLoginUrl)}`,
+      '_self',
+    );
+    // window.location.href = `${import.meta.env.VITE_APP_API_LOGIN_URL}?redirect=${encodeURIComponent(jumpLoginUrl)}`;
   }
 
   return {
