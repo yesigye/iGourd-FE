@@ -26,13 +26,12 @@ export function createProductSpec(data: any) {
     data,
   );
 }
-
 /**
  * 更新商品规格
  */
 export function updateProductSpec(data: any) {
   return request.post(
-    '/v1/merchant/basics/inventory/product-spec/update',
+    '/v1/merchant/basics/inventory/product-spec/modify',
     data,
   );
 }
@@ -41,7 +40,10 @@ export function updateProductSpec(data: any) {
  * 删除商品规格
  */
 export function deleteProductSpec(params: { id: number; merchant_id: number }) {
-  return request.post('/inventory/product/spec/delete', params);
+  return request.post(
+    '/v1/merchant/basics/inventory/product-spec/remove',
+    params,
+  );
 }
 
 /**
@@ -49,7 +51,7 @@ export function deleteProductSpec(params: { id: number; merchant_id: number }) {
  */
 export function getProductSpecValueList(params: ProductSpecValueParams) {
   return request.post<ProductSpecValueResponse>(
-    '/inventory/product/spec/value/list',
+    '/v1/merchant/basics/inventory/product-spec-value/list',
     params,
   );
 }
@@ -58,14 +60,20 @@ export function getProductSpecValueList(params: ProductSpecValueParams) {
  * 创建商品规格值
  */
 export function createProductSpecValue(data: any) {
-  return request.post('/inventory/product/spec/value/create', data);
+  return request.post(
+    '/v1/merchant/basics/inventory/product-spec-value/create',
+    data,
+  );
 }
 
 /**
  * 更新商品规格值
  */
 export function updateProductSpecValue(data: any) {
-  return request.post('/inventory/product/spec/value/update', data);
+  return request.post(
+    '/v1/merchant/basics/inventory/product-spec-value/modify',
+    data,
+  );
 }
 
 /**
@@ -75,7 +83,10 @@ export function deleteProductSpecValue(params: {
   id: number;
   merchant_id: number;
 }) {
-  return request.post('/inventory/product/spec/value/delete', params);
+  return request.post(
+    '/v1/merchant/basics/inventory/product-spec-value/remove',
+    params,
+  );
 }
 
 /**

@@ -15,8 +15,9 @@ import { useI18n } from '@igourd/locales';
 
 import { useInventoryProductSpec } from '@@/inventory/hooks';
 
-import { getProductSpecList } from '../../apis/product-spec';
+import { deleteProductSpec, getProductSpecList } from '../../apis/product-spec';
 import drawer from '../../components/product-spec/drawer.vue';
+import drawerValue from '../../components/product-spec/drawerValue.vue';
 
 defineOptions({
   name: 'IInventoryProductSpec',
@@ -27,13 +28,16 @@ const [Drawer, drawerApi] = useIgourdDrawer({
   appendToMain: true,
 });
 
-const { Grid } = useInventoryProductSpec();
+const [DrawerValue, drawerValueApi] = useIgourdDrawer({
+  connectedComponent: drawerValue,
+  appendToMain: true,
+});
+const { Grid, handleQueryTable } = useInventoryProductSpec();
 const productSpecList = ref<ProductLabelItem[]>([]);
 const selectedLabelId = ref<string>('');
 // 获取商品规格列表
 const handleGetProductSpecList = async () => {
   const res = await getProductSpecList({});
-
   if (res) {
     productSpecList.value = res || [];
   }
@@ -52,7 +56,13 @@ const handleRemove = async (item) => {
       value: t('product-label.add-product-label'),
     }),
   }).then(
-    async () => {},
+    async () => {
+      deleteProductSpec({
+        id: item.id,
+      }).then(() => {
+        handleGetProductSpecList();
+      });
+    },
     () => {
       console.log('cancle');
     },
@@ -60,6 +70,17 @@ const handleRemove = async (item) => {
 };
 const refreshTree = () => {
   handleGetProductSpecList();
+};
+// 增加规格值
+const handleAddSpecValue = () => {
+  drawerValueApi
+    .setData({
+      product_spec_id: selectedLabelId.value,
+    })
+    .open();
+};
+const handleChangeSpec = (value: String) => {
+  handleQueryTable(value);
 };
 onMounted(() => {
   handleGetProductSpecList();
@@ -78,7 +99,11 @@ onMounted(() => {
         </p>
         <!-- 分类树 -->
         <div>
-          <ElRadioGroup v-model="selectedLabelId" class="label-box w-full">
+          <ElRadioGroup
+            v-model="selectedLabelId"
+            @change="handleChangeSpec"
+            class="label-box w-full"
+          >
             <div class="w-full">
               <ElRadio
                 label="1"
@@ -106,8 +131,15 @@ onMounted(() => {
         </div>
       </section>
     </template>
-    <Grid />
+    <Grid>
+      <template #table-title>
+        <ElButton type="primary" @click="handleAddSpecValue">
+          {{ t('common.add') }}
+        </ElButton>
+      </template>
+    </Grid>
     <Drawer @refresh-tree="refreshTree" />
+    <DrawerValue />
   </ColPage>
 </template>
 

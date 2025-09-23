@@ -12,7 +12,7 @@ export function getFirstGroupList(params: any) {
 export function getSecondGroupList(params: any) {
   return requestClient.post(
     '/v1/merchant/basics/inventory/product-group/second/page-list',
-    { params },
+    params,
   );
 }
 
