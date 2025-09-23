@@ -185,7 +185,7 @@ export function useSaleEnter() {
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: t('enter.searchPlaceholder'),
+            placeholder: t('enter.search-placeholder'),
           },
         },
       },

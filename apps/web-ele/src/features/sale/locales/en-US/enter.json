@@ -11,5 +11,13 @@
   "accounting-note-revenue-qty": "Accounting Note Revenue Quantity",
   "accounting-note-revenue-amount": "Accounting Note Revenue Amount",
   "accounting-note-expenditure-qty": "Accounting Note Expenditure Quantity",
-  "accounting-note-expenditure-amount": "Accounting Note Expenditure Amount"
+  "accounting-note-expenditure-amount": "Accounting Note Expenditure Amount",
+  "status": {
+    "draft": "Draft",
+    "confirmed": "Confirmed",
+    "processing": "Processing",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "search-placeholder": "Please enter keywords"
 }

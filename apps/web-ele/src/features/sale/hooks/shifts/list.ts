@@ -225,7 +225,20 @@ export function useSaleShifts() {
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: t('shifts.keywordsPlaceholder'),
+            placeholder: t('shifts.keywords-placeholder'),
+          },
+        },
+        date_range: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'DatePicker',
+          'x-component-props': {
+            type: 'daterange',
+            rangeSeparator: '至',
+            startPlaceholder: '开始日期',
+            endPlaceholder: '结束日期',
+            format: 'YYYY-MM-DD',
+            valueFormat: 'YYYY-MM-DD',
           },
         },
       },
