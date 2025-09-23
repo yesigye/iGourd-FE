@@ -75,6 +75,7 @@ function setupAccessGuard(router: Router) {
       // 没有访问权限，跳转登录页面
       if (to.fullPath !== LOGIN_PATH) {
         redirectToLogin();
+        return false;
       }
       return to;
     }

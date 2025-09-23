@@ -1,5 +1,5 @@
 export function useAccount() {
-  async function redirectToLogin() {
+  function redirectToLogin() {
     const jumpLoginUrl = location.pathname.includes('/401')
       ? location.origin
       : location.href;
