@@ -292,5 +292,8 @@
   "details": "详情",
   "pay": "支付",
   "refund": "退款",
-  "cancel": "取消"
+  "cancel": "取消",
+  "cancel-order": "取消订单",
+  "are-you-sure-cancel-order": "确定取消订单吗？"
+
 }

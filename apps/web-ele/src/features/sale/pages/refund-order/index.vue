@@ -27,25 +27,19 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
         <ElButton type="text">
           {{ t('common.detail') }}
         </ElButton>
-        <ElButton
-          v-if="row.status === 'PENDING'"
-          type="text"
-          @click="handleEdit(row)"
-        >
-          {{ t('common.edit') }}
-        </ElButton>
+
         <ElButton type="text">
           {{ t('sale.print') }}
         </ElButton>
-        <ElButton v-if="row.status === 'PENDING'" type="text">
-          {{ t('sale.cancelRefund') }}
+        <ElButton :disabled="row.status != 'PENDING'" type="text">
+          {{ t('common.cancel') }}
         </ElButton>
         <ElButton
-          v-if="['PENDING', 'PROCESSING'].includes(row.status)"
+          :disabled="row.status != 'PENDING'"
           type="text"
           @click="handleBatchDelete(row)"
         >
-          {{ t('common.delete') }}
+          {{ t('common.refund') }}
         </ElButton>
       </template>
     </Grid>

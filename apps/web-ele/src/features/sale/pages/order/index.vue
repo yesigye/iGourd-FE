@@ -32,22 +32,22 @@ const {
         </ElButton>
       </template>
       <template #operation="{ row }">
-        <ElButton type="text" @click="handleEdit(row)">
+        <ElButton type="text" v-if="row.status === 'PAID'" @click="handleEdit(row)">
           {{ t('common.print') }}
         </ElButton>
-        <ElButton type="text" @click="handleEdit(row)">
+        <ElButton type="text" v-if="row.status === 'PAID'" @click="handleEdit(row)">
           {{ t('common.print-receipt') }}
         </ElButton>
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.details') }}
         </ElButton>
-        <ElButton type="text" @click="handleEdit(row)">
+        <ElButton type="text" v-if="row.status === 'PENDING'" @click="handleEdit(row)">
           {{ t('common.pay') }}
         </ElButton>
-        <ElButton type="text" @click="handleEdit(row)">
+        <ElButton type="text" v-if="row.status !== 'PENDING'" @click="handleEdit(row)">
           {{ t('common.refund') }}
         </ElButton>
-        <ElButton type="text" @click="handleCancel(row)">
+        <ElButton type="text" v-if="row.status !== 'PENDING'" @click="handleCancel(row)">
           {{ t('common.cancel') }}
         </ElButton>
       </template>
