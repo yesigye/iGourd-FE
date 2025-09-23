@@ -263,10 +263,10 @@ const schema: ISchema = {
               required: true,
               message: "{{t('discount.validate.expirationTime.required')}}",
             },
-            {
-              validator:
-                "{{$self.value && $form.values.effective_time && new Date($self.value) < new Date($form.values.effective_time) ? t('discount.validate.expirationTime.gteEffective') : ''}}",
-            },
+            // {
+            //   validator:
+            //     "{{$self.value && $form.values.effective_time && new Date($self.value) < new Date($form.values.effective_time) ? t('discount.validate.expirationTime.gteEffective') : ''}}",
+            // },
           ],
         },
 
@@ -298,35 +298,60 @@ const schema: ISchema = {
         relation_product_group_id_list: {
           type: 'array',
           title: "{{t('discount.form.productGroups')}}",
+          default: [], // ✅ 必须
           'x-decorator': 'FormItem',
           'x-component': 'ArrayTable',
-          'x-reactions': {
-            dependencies: ['relation_type'],
-            fulfill: { state: { visible: "{{$deps[0]==='PRODUCT_GROUP'}}" } },
-          },
-          items: {
-            type: 'object',
-            properties: {
-              index: {
-                type: 'void',
-                'x-component': 'ArrayTable.Index',
-                'x-component-props': { width: 60, title: '#' },
-              },
-              id: {
-                type: 'number',
-                title: "{{t('discount.table.columns.group')}}",
-                'x-decorator': 'FormItem',
-                'x-component': 'Select',
-                'x-component-props': {
-                  filterable: true,
-                  placeholder: "{{t('discount.placeholder.productGroup')}}",
+          'x-reactions': [
+            {
+              dependencies: ['relation_type'],
+              fulfill: {
+                state: {
+                  display:
+                    "{{$deps[0]==='PRODUCT_GROUP' ? 'visible' : 'none'}}",
                 },
-                enum: [],
               },
-              remove: {
+            },
+          ],
+          items: {
+            type: 'object', // ✅ 必须
+            properties: {
+              colIndex: {
                 type: 'void',
-                title: "{{t('discount.table.columns.ops')}}",
-                'x-component': 'ArrayTable.Remove',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': { width: 60, title: '#' },
+                properties: {
+                  index: { type: 'void', 'x-component': 'ArrayTable.Index' },
+                },
+              },
+              colSel: {
+                type: 'void',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': {
+                  title: "{{t('discount.table.columns.group')}}",
+                },
+                properties: {
+                  id: {
+                    type: 'number',
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Select',
+                    'x-component-props': {
+                      filterable: true,
+                      placeholder: "{{t('discount.placeholder.productGroup')}}",
+                    },
+                    enum: [],
+                  },
+                },
+              },
+              colOps: {
+                type: 'void',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': {
+                  title: "{{t('discount.table.columns.ops')}}",
+                  width: 120,
+                },
+                properties: {
+                  remove: { type: 'void', 'x-component': 'ArrayTable.Remove' },
+                },
               },
             },
           },
@@ -335,6 +360,7 @@ const schema: ISchema = {
               type: 'void',
               title: "{{t('discount.form.add')}}",
               'x-component': 'ArrayTable.Addition',
+              'x-component-props': { defaultValue: {} }, // ✅ 关键
             },
           },
         },
@@ -342,35 +368,60 @@ const schema: ISchema = {
         relation_product_label_id_list: {
           type: 'array',
           title: "{{t('discount.form.productLabels')}}",
+          default: [],
           'x-decorator': 'FormItem',
           'x-component': 'ArrayTable',
-          'x-reactions': {
-            dependencies: ['relation_type'],
-            fulfill: { state: { visible: "{{$deps[0]==='PRODUCT_LABEL'}}" } },
-          },
+          'x-reactions': [
+            {
+              dependencies: ['relation_type'],
+              fulfill: {
+                state: {
+                  display:
+                    "{{$deps[0]==='PRODUCT_LABEL' ? 'visible' : 'none'}}",
+                },
+              },
+            },
+          ],
           items: {
             type: 'object',
             properties: {
-              index: {
+              colIndex: {
                 type: 'void',
-                'x-component': 'ArrayTable.Index',
+                'x-component': 'ArrayTable.Column',
                 'x-component-props': { width: 60, title: '#' },
-              },
-              id: {
-                type: 'number',
-                title: "{{t('discount.table.columns.label')}}",
-                'x-decorator': 'FormItem',
-                'x-component': 'Select',
-                'x-component-props': {
-                  filterable: true,
-                  placeholder: "{{t('discount.placeholder.productLabel')}}",
+                properties: {
+                  index: { type: 'void', 'x-component': 'ArrayTable.Index' },
                 },
-                enum: [],
               },
-              remove: {
+              colSel: {
                 type: 'void',
-                title: "{{t('discount.table.columns.ops')}}",
-                'x-component': 'ArrayTable.Remove',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': {
+                  title: "{{t('discount.table.columns.label')}}",
+                },
+                properties: {
+                  id: {
+                    type: 'number',
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Select',
+                    'x-component-props': {
+                      filterable: true,
+                      placeholder: "{{t('discount.placeholder.productLabel')}}",
+                    },
+                    enum: [],
+                  },
+                },
+              },
+              colOps: {
+                type: 'void',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': {
+                  title: "{{t('discount.table.columns.ops')}}",
+                  width: 120,
+                },
+                properties: {
+                  remove: { type: 'void', 'x-component': 'ArrayTable.Remove' },
+                },
               },
             },
           },
@@ -379,6 +430,7 @@ const schema: ISchema = {
               type: 'void',
               title: "{{t('discount.form.add')}}",
               'x-component': 'ArrayTable.Addition',
+              'x-component-props': { defaultValue: {} },
             },
           },
         },
@@ -386,35 +438,59 @@ const schema: ISchema = {
         relation_product_id_list: {
           type: 'array',
           title: "{{t('discount.form.products')}}",
+          default: [],
           'x-decorator': 'FormItem',
           'x-component': 'ArrayTable',
-          'x-reactions': {
-            dependencies: ['relation_type'],
-            fulfill: { state: { visible: "{{$deps[0]==='PRODUCT'}}" } },
-          },
+          'x-reactions': [
+            {
+              dependencies: ['relation_type'],
+              fulfill: {
+                state: {
+                  display: "{{$deps[0]==='PRODUCT' ? 'visible' : 'none'}}",
+                },
+              },
+            },
+          ],
           items: {
             type: 'object',
             properties: {
-              index: {
+              colIndex: {
                 type: 'void',
-                'x-component': 'ArrayTable.Index',
+                'x-component': 'ArrayTable.Column',
                 'x-component-props': { width: 60, title: '#' },
-              },
-              id: {
-                type: 'number',
-                title: "{{t('discount.table.columns.product')}}",
-                'x-decorator': 'FormItem',
-                'x-component': 'Select',
-                'x-component-props': {
-                  filterable: true,
-                  placeholder: "{{t('discount.placeholder.product')}}",
+                properties: {
+                  index: { type: 'void', 'x-component': 'ArrayTable.Index' },
                 },
-                enum: [],
               },
-              remove: {
+              colSel: {
                 type: 'void',
-                title: "{{t('discount.table.columns.ops')}}",
-                'x-component': 'ArrayTable.Remove',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': {
+                  title: "{{t('discount.table.columns.product')}}",
+                },
+                properties: {
+                  id: {
+                    type: 'number',
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Select',
+                    'x-component-props': {
+                      filterable: true,
+                      placeholder: "{{t('discount.placeholder.product')}}",
+                    },
+                    enum: [],
+                  },
+                },
+              },
+              colOps: {
+                type: 'void',
+                'x-component': 'ArrayTable.Column',
+                'x-component-props': {
+                  title: "{{t('discount.table.columns.ops')}}",
+                  width: 120,
+                },
+                properties: {
+                  remove: { type: 'void', 'x-component': 'ArrayTable.Remove' },
+                },
               },
             },
           },
@@ -423,84 +499,79 @@ const schema: ISchema = {
               type: 'void',
               title: "{{t('discount.form.add')}}",
               'x-component': 'ArrayTable.Addition',
+              'x-component-props': { defaultValue: {} },
             },
           },
         },
 
-        // —— 有效时段 / 星期 / 日期 —— //
-        active_day_hours: {
-          type: 'array',
-          title: "{{t('discount.form.activeHours')}}",
+        schedule_panel: {
+          type: 'void',
           'x-decorator': 'FormItem',
-          'x-component': 'Checkbox.Group',
-          enum: Array.from({ length: 24 }, (_, h) => ({
-            label: `${h < 10 ? `0${h}` : `${h}`}:00`,
-            value: h,
-          })),
-        },
-
-        active_week_days: {
-          type: 'array',
-          title: "{{t('discount.form.activeWeekDays')}}",
-          'x-decorator': 'FormItem',
-          'x-component': 'Checkbox.Group',
-          enum: [
-            { label: "{{t('discount.enum.week.mon')}}", value: 1 },
-            { label: "{{t('discount.enum.week.tue')}}", value: 2 },
-            { label: "{{t('discount.enum.week.wed')}}", value: 3 },
-            { label: "{{t('discount.enum.week.thu')}}", value: 4 },
-            { label: "{{t('discount.enum.week.fri')}}", value: 5 },
-            { label: "{{t('discount.enum.week.sat')}}", value: 6 },
-            { label: "{{t('discount.enum.week.sun')}}", value: 7 },
-          ],
-        },
-
-        active_month_days: {
-          type: 'array',
-          title: "{{t('discount.form.activeMonthDays')}}",
-          'x-decorator': 'FormItem',
-          'x-component': 'Checkbox.Group',
-          enum: Array.from({ length: 31 }, (_, i) => ({
-            label: String(i + 1),
-            value: i + 1,
-          })),
-        },
-
-        exclude_dates: {
-          type: 'array',
-          title: "{{t('discount.form.excludeDates')}}",
-          'x-decorator': 'FormItem',
-          'x-component': 'ArrayTable',
-          items: {
-            type: 'object',
-            properties: {
-              index: {
-                type: 'void',
-                'x-component': 'ArrayTable.Index',
-                'x-component-props': { width: 60, title: '#' },
-              },
-              date: {
-                type: 'string',
-                title: "{{t('discount.table.columns.date')}}",
-                'x-decorator': 'FormItem',
-                'x-component': 'DatePicker',
-                'x-component-props': {
-                  type: 'date',
-                  valueFormat: 'YYYY-MM-DD',
-                },
-              },
-              remove: {
-                type: 'void',
-                title: "{{t('discount.table.columns.ops')}}",
-                'x-component': 'ArrayTable.Remove',
-              },
-            },
+          title: '{{t("discount.form.activeSetting")}}',
+          'x-component': 'FormCollapse',
+          'x-component-props': {
+            defaultActiveKey: [],
+            accordion: false, // 允许多面板同时展开；如需手风琴，改为 true
           },
           properties: {
-            addition: {
+            tab1: {
               type: 'void',
-              title: "{{t('discount.form.addDate')}}",
-              'x-component': 'ArrayTable.Addition',
+              'x-component': 'FormCollapse.Item',
+              'x-component-props': {
+                title: '更多有效日期和时间设置 >>',
+              },
+              properties: {
+                // —— 有效时段 / 星期 / 日期 —— //
+                active_day_hours: {
+                  type: 'array',
+                  title: "{{t('discount.form.activeHours')}}",
+                  'x-decorator': 'FormItem',
+                  'x-component': 'Checkbox.Group',
+                  enum: Array.from({ length: 24 }, (_, h) => ({
+                    label: `${h < 10 ? `0${h}` : `${h}`}:00`,
+                    value: h,
+                  })),
+                },
+                active_week_days: {
+                  type: 'array',
+                  title: "{{t('discount.form.activeWeekDays')}}",
+                  'x-decorator': 'FormItem',
+                  'x-component': 'Checkbox.Group',
+                  enum: [
+                    { label: "{{t('discount.enum.week.mon')}}", value: 1 },
+                    { label: "{{t('discount.enum.week.tue')}}", value: 2 },
+                    { label: "{{t('discount.enum.week.wed')}}", value: 3 },
+                    { label: "{{t('discount.enum.week.thu')}}", value: 4 },
+                    { label: "{{t('discount.enum.week.fri')}}", value: 5 },
+                    { label: "{{t('discount.enum.week.sat')}}", value: 6 },
+                    { label: "{{t('discount.enum.week.sun')}}", value: 7 },
+                  ],
+                },
+
+                active_month_days: {
+                  type: 'array',
+                  title: "{{t('discount.form.activeMonthDays')}}",
+                  'x-decorator': 'FormItem',
+                  'x-component': 'Checkbox.Group',
+                  enum: Array.from({ length: 31 }, (_, i) => ({
+                    label: String(i + 1),
+                    value: i + 1,
+                  })),
+                },
+                exclude_dates: {
+                  type: 'array',
+                  title: "{{t('discount.form.excludeDates')}}",
+                  default: [], // ✅ 必须是数组
+                  'x-decorator': 'FormItem',
+                  'x-component': 'DatePicker',
+                  'x-component-props': {
+                    type: 'dates', // ✅ 多选单日
+                    valueFormat: 'YYYY-MM-DD', // 提交为 'YYYY-MM-DD' 字符串数组
+                    clearable: true,
+                    // placeholder: "{{t('discount.placeholder.excludeDates')}}", // 如你词典里有就放开
+                  },
+                },
+              },
             },
           },
         },
