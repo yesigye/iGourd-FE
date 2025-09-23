@@ -15,6 +15,7 @@ export function useNotesForm() {
         receivingAccount: [],
         receivingTargetAccount: [],
         payRevenueOption: [],
+        payPurchaseOption: [],
       },
     },
   });

@@ -77,7 +77,7 @@ export default {
           title: "{{ t('account.finance_category') }}",
           'x-decorator': 'FormItem',
           'x-decorator-props': { required: true },
-          'x-component': 'ApiComponent',
+          'x-component': 'Select',
           'x-component-props': {
             filterable: true,
             remote: true,
