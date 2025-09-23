@@ -1,10 +1,10 @@
-<template>
-  <Drawer />
-</template>
 <script lang="tsx" setup>
-import { useIgourdDrawer } from '@igourd/common-ui';
+import { useTransferForm } from '@@/inventory/hooks/transfer/form';
 
-const [Drawer] = useIgourdDrawer({
-  appendToMain: true,
-});
+const { Drawer, Form } = useTransferForm();
 </script>
+<template>
+  <Drawer>
+    <Form />
+  </Drawer>
+</template>

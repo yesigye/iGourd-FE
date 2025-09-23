@@ -45,6 +45,30 @@ export function useInventoryPriceLogList() {
       minWidth: 160,
     },
     {
+      field: 'sku_barcode',
+      title: t('inventory.sku_barcode'),
+      minWidth: 160,
+    },
+    {
+      field: 'product_unit_name',
+      title: t('inventory.units'),
+      minWidth: 160,
+    },
+    {
+      field: 'change_amount',
+      title: t('inventory.changeAmount'),
+      minWidth: 180,
+      cellRender: {
+        name: 'Amount',
+        // @ts-ignore
+        computedFn({ row }) {
+          return new Decimal(row.final_price || 0)
+            .minus(new Decimal(row.origin_price || 0))
+            .toNumber();
+        },
+      },
+    },
+    {
       field: 'origin_price',
       title: t('inventory.preChangePrice'),
       minWidth: 180,
@@ -56,20 +80,7 @@ export function useInventoryPriceLogList() {
       minWidth: 180,
       formatter: ({ cellValue }) => formatNumber(cellValue),
     },
-    {
-      field: 'change_amount',
-      title: t('inventory.changeAmount'),
-      minWidth: 180,
-      cellRender: {
-        name: 'Amount',
-        //@ts-ignore
-        computedFn({ row }) {
-          return new Decimal(row.final_price || 0)
-            .minus(new Decimal(row.origin_price || 0))
-            .toNumber();
-        },
-      },
-    },
+
     {
       field: 'remark',
       title: t('inventory.remarks'),
