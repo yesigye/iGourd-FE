@@ -1,59 +1,32 @@
 import type { ISchema } from '@igourd/common-ui';
 
-import { ref } from 'vue';
-
 import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
 import {
-  createGroup,
-  getFirstGroupList,
-  getSecondGroupList,
-  updateGroup,
-} from '../../apis/product-group';
-// getFirstGroupList
-// getSecondGroupList
-// import {
-//   codingCategoryDetail,
-//   codingCategoryModify,
-//   codingRuleList,
-// } from '../apis/rules';
-// import { createOrUpdateCustomizedField } from '../apis';
-
+  createProductSpecValue,
+  updateProductSpecValue,
+} from '../../apis/product-spec';
 // 定义表单数据类型
-interface PurchaseCodeRulesFormData {
-  type: string;
-  paragraph_break: string;
-  code_section: string;
-  use_rule: string;
-  status: boolean;
-  category_type: string;
-  id: string;
+interface ProductLabelFormData {
+  product_spec_name: string;
 }
 
-export function useProductGroupForm(func) {
+export function useProductSpecValueForm(func) {
   const { t } = useI18n();
   const { currentLoginUserApp } = useUserStore();
-  const codingRuleListData = ref<PurchaseCodeRulesFormData[]>([]);
   // 表单提交处理
-  const handleSubmit = async (formData: PurchaseCodeRulesFormData) => {
+  const handleSubmit = async (values: ProductLabelFormData) => {
     try {
       let response = null;
-      debugger;
-      // 父级分类 ID  组件数组中获取
-      if (formData.parent_id) {
-        const len = formData.parent_id.length;
-        formData.parent_id = formData.parent_id[len - 1];
-      }
-
       // 调用 API
-      response = await (formData.id
-        ? updateGroup({
-            ...formData,
+      response = await (values.id
+        ? updateProductSpecValue({
+            ...values,
           })
-        : createGroup({
-            ...formData,
+        : createProductSpecValue({
+            ...values,
           }));
       func('refresh-tree');
       return response;
@@ -64,14 +37,14 @@ export function useProductGroupForm(func) {
   };
 
   const [Drawer, drawerApi] = useIgourdDrawer({
-    title: t('product-group.add-product-group'),
+    title: t('product-spec.add-spec'),
     appendToMain: true,
     class: 'w-1/2',
-    async onOpenChange(isOpen) {
+    async onOpenChange(isOpen, val) {
+      debugger;
       if (isOpen) {
         formAPI.reset();
         const data = drawerApi.getData();
-        data.parent_id = [data.parent_id];
         formAPI.setValues(data);
       }
     },
@@ -81,7 +54,7 @@ export function useProductGroupForm(func) {
     async onConfirm() {
       await formAPI.validate();
       drawerApi.lock();
-      await handleSubmit(formAPI.values as PurchaseCodeRulesFormData)
+      await handleSubmit(formAPI.values as ProductLabelFormData)
         .then(() => {
           drawerApi.close();
         })
@@ -97,32 +70,37 @@ export function useProductGroupForm(func) {
       grid: {
         type: 'void',
         'x-component': 'FormLayout',
-
         properties: {
-          parent_id: {
+          product_spec_name: {
             type: 'string',
-            title: "{{t('product-group.previous-category')}}",
-            // required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Cascader',
-            'x-component-props': {
-              props: {
-                lazy: true,
-                lazyLoad: '{{loadData}}',
-                // 数据转换显示
-                label: 'major_name',
-                value: 'id',
-              },
-            },
-          },
-          major_name: {
-            type: 'string',
-            title: "{{t('product-group.category-name')}}",
+            title: "{{t('product-spec.product-spec-name')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-component-props': {
-              placeholder: "{{t('product-group.please-enter-category-name')}}",
+              placeholder: "{{t('product-spec.product-spec-name')}}",
+              clearable: true,
+            },
+          },
+          product_spec_code: {
+            type: 'string',
+            title: "{{t('product-spec.product-spec-name')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Input',
+            'x-component-props': {
+              placeholder: "{{t('product-spec.product-spec-name')}}",
+              clearable: true,
+            },
+          },
+          product_spec_value: {
+            type: 'string',
+            title: "{{t('product-spec.product-spec-name')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Input',
+            'x-component-props': {
+              placeholder: "{{t('product-spec.product-spec-name')}}",
               clearable: true,
             },
           },
@@ -131,27 +109,19 @@ export function useProductGroupForm(func) {
       t,
     },
   };
-  const loadData = async (node, resolve) => {
-    const { value, level } = node;
-    let treeData = [];
-    treeData = await (level === 0
-      ? getFirstGroupList({ parent_id: 0 })
-      : getSecondGroupList({ parent_id: value }));
-    resolve(treeData.list);
-  };
+
   // 使用 useIgourdForm
   const { Form, formAPI } = useIgourdForm({
     useI18n,
     schema: formSchema,
     readPretty: false,
     initialValues: {
-      parent_id: [],
-      major_name: '',
+      product_spec_name: '',
     },
     effects() {
       // 使用 Formily 的 effects 监听表单值变化
     },
-    scope: { loadData },
+    scope: {},
   });
   // 表单重置
   const resetForm = () => {

@@ -120,7 +120,7 @@ onMounted(async () => {
     <template #left="{ isCollapsed, expand }">
       <section class="bg-card h-full rounded p-2.5">
         <p class="flex justify-between text-sm font-medium">
-          {{ t('product-group.product_category') }}
+          {{ t('product-group.product-category') }}
           <ElButton type="primary" @click="handleAddGroup">
             {{ t('common.add') }}
           </ElButton>
