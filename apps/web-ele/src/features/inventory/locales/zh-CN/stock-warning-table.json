@@ -1,0 +1,20 @@
+{
+  "product-code": "产品编码",
+  "product-name": "产品名称",
+  "spec": "规格",
+  "category": "分类",
+  "major-unit": "主要单位",
+  "unit": "单位",
+  "min-stock": "最小库存",
+  "safety-stock": "安全库存",
+  "max-stock": "最大库存",
+  "immediate-stock": "当前库存",
+  "inbound-in-transit-stock": "在途库存",
+  "min-stock-shortage-qty": "最小库存短缺数量",
+  "safety-stock-shortage-qty": "安全库存短缺数量",
+  "max-stock-shortage-qty": "最大库存短缺数量",
+  "suggested-purchase-qty": "建议采购数量",
+  "stock-warning": "库存预警",
+  "enter-product-code-product-name": "请输入产品编码/产品名称",
+  "create-pruchase-order": "创建采购订单"
+}
