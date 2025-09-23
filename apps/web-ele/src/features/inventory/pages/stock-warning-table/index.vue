@@ -11,12 +11,12 @@ defineOptions({
 const router = useRouter();
 const { Grid, canBatchOperate,checkedKeys } = useStockWarningTable();
 const createPurchaseOrder = () => {
-  console.log(checkedKeys,'checkedKeys')
+  // console.log(checkedKeys,'checkedKeys')
 
-  let idList = canBatchOperate.value.map((item) => item.id);
+  // let idList = canBatchOperate.value.map((item) => item.id);
   router.push({
     path: '/purchase/order',
-    query: {  id_list: idList.join(',') },
+    // query: {  id_list: idList.join(',') },
   });
 };
 </script>
