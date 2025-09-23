@@ -294,6 +294,7 @@
   "refund": "退款",
   "cancel": "取消",
   "cancel-order": "取消订单",
-  "are-you-sure-cancel-order": "确定取消订单吗？"
-
+  "are-you-sure-cancel-order": "确定取消订单吗？",
+  "delete-confirm-title": "删除确认",
+  "delete-confirm-text": "您确定要删除此选项吗？"
 }
