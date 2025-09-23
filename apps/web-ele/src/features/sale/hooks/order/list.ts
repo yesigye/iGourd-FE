@@ -135,39 +135,13 @@ export function useSaleOrder() {
   ];
 
   const searchFormSchema = {
-    order_no: {
+    keywords: {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
         placeholder: "{{t('sale.orderNo')}}",
         clearable: true,
-      },
-    },
-    customer_name: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('sale.customerName')}}",
-        clearable: true,
-      },
-    },
-    status: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Select',
-      'x-component-props': {
-        placeholder: "{{t('sale.status')}}",
-        clearable: true,
-        options: [
-          { label: t('sale.statusOptions.draft'), value: 'draft' },
-          { label: t('sale.statusOptions.pending'), value: 'pending' },
-          { label: t('sale.statusOptions.approved'), value: 'approved' },
-          { label: t('sale.statusOptions.rejected'), value: 'rejected' },
-          { label: t('sale.statusOptions.completed'), value: 'completed' },
-          { label: t('sale.statusOptions.cancelled'), value: 'cancelled' },
-        ],
       },
     },
     date_range: {
@@ -184,14 +158,31 @@ export function useSaleOrder() {
       },
     },
   };
-
+  interface SaleOrderQueryParams {
+    page_num: number;
+    page_size: number;
+    date_range?: string[];
+    start_create_time?: string;
+    end_create_time?: string;
+  }
   return useCrud<SaleOrderRow, SaleOrderDTO>({
     columns,
     searchFormSchema,
     batchOperate: true,
     connectedComponent: SaleOrderDrawer,
     service: {
-      query: getSaleOrderListApi,
+      query: async (data: {
+        page_num: number;
+        page_size: number;
+        date_range?: string[];
+      }) => {
+        let params: SaleOrderQueryParams = { ...data };
+        if (data.date_range && data.date_range.length > 0) {
+          params.start_create_time = data.date_range[0] + ' 00:00:00';
+          params.end_create_time = data.date_range[1] + ' 23:59:59';
+        }
+        return await getSaleOrderListApi(params);
+      },
       drop: deleteSaleOrderApi,
       create: createSaleOrderApi,
       update: updateSaleOrderApi,
