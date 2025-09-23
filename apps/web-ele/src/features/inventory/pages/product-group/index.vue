@@ -54,6 +54,7 @@ const getFirstLevelCategory = async (resolve) => {
     children: [],
     leaf: true,
   }));
+
   productGroupData.value.list = treeList;
   productGroupData.value.total = result.total;
   resolve && resolve(treeList);
