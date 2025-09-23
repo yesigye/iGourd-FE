@@ -64,6 +64,11 @@ export function useInventoryChangeLogList() {
       minWidth: 150,
     },
     {
+      field: 'product_unit_name',
+      title: t('inventory.units'),
+      minWidth: 240,
+    },
+    {
       field: 'change_quantity',
       title: t('inventory.changeQuantity'),
       minWidth: 180,
@@ -88,6 +93,11 @@ export function useInventoryChangeLogList() {
       minWidth: 180,
       formatter: ({ row }) =>
         `${formatNumber(row.final_quantity)} ${row.product_unit_name}`,
+    },
+    {
+      field: 'remark',
+      title: t('inventory.remarks'),
+      minWidth: 240,
     },
     {
       field: 'creator_name',

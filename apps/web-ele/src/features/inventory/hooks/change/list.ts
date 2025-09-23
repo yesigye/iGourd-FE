@@ -7,9 +7,9 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { useCrud } from '#/hooks';
-
 import { getInventoryChangeLogList } from '@@/inventory/apis';
+
+import { useCrud } from '#/hooks';
 
 export function useInventoryChangeList() {
   const { t } = useI18n();
@@ -39,6 +39,11 @@ export function useInventoryChangeList() {
     },
     {
       field: 'warehouse_name',
+      title: t('inventory.warehouse'),
+      minWidth: 150,
+    },
+    {
+      field: 'product_unit_name',
       title: t('inventory.warehouse'),
       minWidth: 150,
     },
