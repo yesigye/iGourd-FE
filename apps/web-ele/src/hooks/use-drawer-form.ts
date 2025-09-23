@@ -97,7 +97,7 @@ export function useDrawerForm(options: DrawerFormOptions) {
         formAPI.setValues(drawerApi.getData());
       } else {
         // 关闭抽屉时，重置表单
-        formAPI.reset();
+        formAPI.values = {};
       }
     };
   }
