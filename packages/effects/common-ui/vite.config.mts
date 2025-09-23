@@ -16,7 +16,7 @@ export default defineLibraryConfig(async () => {
           },
           input: {
             index: './src/index.ts',
-            style: './src/components/style.ts',
+            style: './src/components/style.scss',
             'es/tippy/index': './src/components/tippy/index.ts',
             'es/loading/index': './src/components/loading/index.ts',
           },

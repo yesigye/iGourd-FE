@@ -3,6 +3,9 @@
   "version": "5.6.2-beta.10",
   "license": "UNLICENSED",
   "type": "module",
+  "scripts": {
+    "build": "vite build"
+  },
   "main": "./src/index.ts",
   "module": "./src/index.ts",
   "exports": {
@@ -26,9 +29,6 @@
     "./global": {
       "default": "./src/index.scss"
     }
-  },
-  "peerDependencies": {
-    "@igourd-core/design": "workspace:^"
   },
   "devDependencies": {
     "@igourd-core/design": "workspace:^"

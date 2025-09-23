@@ -10,7 +10,7 @@ import {
   useTableSearchForm as useCoreTableSearchForm,
 } from '@igourd-core/form-ui';
 
-import './components/style';
+// import './components/style.scss';
 
 export * from './components';
 
