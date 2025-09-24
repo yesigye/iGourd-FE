@@ -53,7 +53,7 @@ const getFirstLevelCategory = async (resolve) => {
     id: item.id,
     label: item.major_name,
     children: [],
-    leaf: true,
+    leaf: !item.has_children,
   }));
 
   productGroupData.value.list = treeList;
@@ -75,7 +75,7 @@ const loadNode = async (node, resolve) => {
     ...item,
     id: item.id,
     label: item.major_name,
-    leaf: true,
+    leaf: !item.has_children,
   }));
 
   resolve(treeList);
@@ -138,7 +138,7 @@ onMounted(async () => {
             <template #default="{ node, data }">
               <div class="inline-flex w-full items-center">
                 <div class="inline-flex flex-1">
-                  <img :src="data.isLeaf ? folderOpen : folderClose" alt="" />
+                  <img :src="data.expanded ? folderOpen : folderClose" alt="" />
                   <span class="pl-1">{{ node.label }}</span>
                 </div>
                 <div class="show-opertion">

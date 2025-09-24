@@ -98,6 +98,8 @@ export {
   ElSpace,
   ElTable,
   ElTableColumn,
+  ElTabPane,
+  ElTabs,
   ElTree,
   ElUpload,
   formContextKey,

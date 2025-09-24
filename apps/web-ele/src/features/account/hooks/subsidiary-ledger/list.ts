@@ -42,6 +42,20 @@ export function useSubsidiaryLedger() {
   const service = {
     // 获取列表数据
     query: getSubsidiaryLedgerPageListApi,
+    query: async (data: {
+      date_range?: string[];
+      page_num: number;
+      page_size: number;
+    }) => {
+      const params = {
+        ...data,
+        account_ledger_ids: ['1942547125471567979'],
+        account_set_id: '1942547124754341890',
+        start_accounting_period: '2025-07',
+        end_accounting_period: '2025-07',
+      };
+      return await getSubsidiaryLedgerPageListApi(params);
+    },
   };
 
   // 使用 CRUD Hook
@@ -50,6 +64,15 @@ export function useSubsidiaryLedger() {
       service,
       columns: baseColumns,
       searchFormSchema: {
+        date: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'DatePicker',
+          'x-component-props': {
+            type: 'monthrange',
+            placeholder: t('common.keywords'),
+          },
+        },
         keywords: {
           type: 'string',
           'x-decorator': 'FormItem',
