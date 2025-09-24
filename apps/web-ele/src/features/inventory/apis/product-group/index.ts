@@ -43,3 +43,9 @@ export function removeGroup(data: any) {
 export function getGroupDetail(id: string) {
   return requestClient.get(`/inventory/product-group/${id}`);
 }
+// 查询分类父节点
+export function getParentList(id: string) {
+  return requestClient.post(
+    `/v1/merchant/basics/inventory/product-group/getParentList/${id}`,
+  );
+}

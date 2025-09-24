@@ -9,6 +9,7 @@ import { useUserStore } from '@igourd/stores';
 import {
   createGroup,
   getFirstGroupList,
+  getParentList,
   getSecondGroupList,
   updateGroup,
 } from '../../apis/product-group';
@@ -70,8 +71,11 @@ export function useProductGroupForm(func) {
       if (isOpen) {
         formAPI.reset();
         const data = drawerApi.getData();
-        data.parent_id = [data.parent_id];
+        const pIdList = await getParentList(data.parent_id);
+        // pIdList.push(data.parent_id);
+        data.parent_id = pIdList;
         formAPI.setValues(data);
+        //  formAPI.setValuesIn('parent_id', pIdList);
       }
     },
     onClosed() {
@@ -111,6 +115,7 @@ export function useProductGroupForm(func) {
                 // 数据转换显示
                 label: 'major_name',
                 value: 'id',
+                checkStrictly: true,
               },
             },
           },
@@ -136,6 +141,12 @@ export function useProductGroupForm(func) {
     treeData = await (level === 0
       ? getFirstGroupList({ parent_id: 0 })
       : getSecondGroupList({ parent_id: value }));
+    treeData.list = treeData.list.map((item) => {
+      return {
+        ...item,
+        leaf: !item.has_children,
+      };
+    });
     resolve(treeData.list);
   };
   // 使用 useIgourdForm
