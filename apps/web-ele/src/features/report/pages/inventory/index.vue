@@ -15,11 +15,6 @@ const { Grid, Drawer } = useInventoryReport();
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-title>
-        <ElButton type="primary">
-          {{ t('report.exportReport') }}
-        </ElButton>
-      </template>
     </Grid>
     <Drawer />
   </Page>

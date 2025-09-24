@@ -1,16 +1,22 @@
 {
-  "productName": "商品名称",
-  "productCode": "商品编码",
-  "warehouseName": "仓库名称",
-  "currentStock": "当前库存",
-  "minStock": "最小库存",
-  "maxStock": "最大库存",
-  "stockStatus": "库存状态",
-  "lastUpdateTime": "最后更新时间",
-  "exportReport": "导出报表",
-  "stockStatusOptions": {
-    "normal": "正常",
-    "low": "库存不足",
-    "out": "缺货"
-  }
+  "warehouse": "仓库",
+  "product-name": "商品名称",
+  "product-code": "商品编码",
+  "category": "分类",
+  "unit": "单位",
+  "qty-increased": "增加数量",
+  "qty-increased-details": "增加数量详情",
+  "purchase": "采购",
+  "add-inventory": "增加库存",
+  "edit-inventory": "编辑库存",
+  "physical-stock-take": "物理库存盘点",
+  "sales-refund": "销售退货",
+  "qty-reduced": "减少数量",
+  "qty-reduced-details": "减少数量详情",
+  "sales": "销售",
+  "purchase-refunded": "采购退货",
+  "consumption": "消耗",
+  "remain-qty": "剩余数量",
+  "total-value-of-products-by-cost": "商品成本(总成本)",
+  "total-value-of-products-by-selling": "商品售价(总售价)"
 }

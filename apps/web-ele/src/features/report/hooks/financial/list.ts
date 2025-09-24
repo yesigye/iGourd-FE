@@ -7,46 +7,44 @@ import { useI18n } from '@igourd/locales';
 import { getFinancialReportApi } from '@@/report/apis';
 
 import { useCrud } from '#/hooks';
+import dayjs from 'dayjs';
 
 export function useFinancialReport() {
   const { t } = useI18n();
   const columns: VxeGridPropTypes.Column<FinancialReportRow>[] = [
     {
-      field: 'date',
-      title: t('report.date'),
-      width: 120,
-      sortable: true,
+      field: 'financial_category_name',
+      title: t('financial.financial-category'),
+
       align: 'center',
     },
     {
-      field: 'income',
-      title: t('report.income'),
-      width: 120,
-      align: 'right',
+      field: 'revenue_amount',
+      title: t('financial.revenue'),
+      align: 'center',
       cellRender: {
         name: 'ElText',
         props: {
           formatter: '{{row.income ? `¥${row.income.toFixed(2)}` : "-"}}',
+          type: 'primary',
         },
       },
     },
     {
-      field: 'expense',
-      title: t('report.expense'),
-      width: 120,
-      align: 'right',
+      field: 'expendityre_amount',
+      title: t('financial.expenditure'),
+      align: 'center',
       cellRender: {
         name: 'ElText',
         props: {
-          formatter: '{{row.expense ? `¥${row.expense.toFixed(2)}` : "-"}}',
+          formatter: '{{row.expendityre_amount ? `¥${row.expendityre_amount.toFixed(2)}` : "-"}}',
         },
       },
     },
     {
-      field: 'profit',
-      title: t('report.profit'),
-      width: 120,
-      align: 'right',
+      field: 'creator',
+      title: t('common.creator'),
+      align: 'center',
       cellRender: {
         name: 'ElText',
         props: {
@@ -55,22 +53,9 @@ export function useFinancialReport() {
       },
     },
     {
-      field: 'profit_margin',
-      title: t('report.profitMargin'),
-      width: 120,
-      align: 'right',
-      cellRender: {
-        name: 'ElText',
-        props: {
-          formatter: '{{row.profit_margin ? `${row.profit_margin.toFixed(2)}%` : "-"}}',
-        },
-      },
-    },
-    {
-      field: 'create_time',
-      title: t('common.createTime'),
-      width: 160,
-      sortable: true,
+      field: 'time_period',
+      title: t('financial.time-period'),
+
       align: 'center',
     },
   ];
@@ -96,7 +81,29 @@ export function useFinancialReport() {
     searchFormSchema,
     batchOperate: false,
     service: {
-      query: getFinancialReportApi,
+      query: async (params: {
+        page_num: number;
+        page_size: number;
+        start_date?: string;
+        end_date?: string;
+        tabKey: string;
+        time_range: string;
+      }) => {
+        // 开始时间默认是当前时间-一个月
+        params.end_date =
+          params.end_date || dayjs().format('YYYY-MM-DD') + ' 23:59:59';
+        params.start_date =
+          params.start_date ||
+          dayjs().subtract(1, 'months').format('YYYY-MM-DD') + ' 00:00:00';
+        params.tabKey = 'months';
+        params.time_range = 'MONTH';
+        let response = await getFinancialReportApi(params);
+        console.log('getFinancialReportApi', response);
+        return {
+          list: response || [],
+          total: response?.data?.total || 0,
+        };
+      },
     },
   });
 }

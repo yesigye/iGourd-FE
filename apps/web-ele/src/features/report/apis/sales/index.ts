@@ -2,7 +2,7 @@ import { requestClient } from '#/api/request';
 
 // 获取销售报表数据
 export function getSalesReportApi(data: any) {
-  return requestClient.post('/v1/merchant/report/sales', data);
+  return requestClient.post('/v1/merchant/basics/reports/report-product/page-list', data);
 }
 
 // 导出销售报表

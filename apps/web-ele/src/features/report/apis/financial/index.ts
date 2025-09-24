@@ -2,7 +2,7 @@ import { requestClient } from '#/api/request';
 
 // 获取财务报表数据
 export function getFinancialReportApi(data: any) {
-  return requestClient.post('/v1/merchant/report/financial', data);
+  return requestClient.post('/v1/merchant/basics/reports/report-finance/list', data);
 }
 
 // 导出财务报表

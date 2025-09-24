@@ -1,0 +1,1 @@
+export { useStockWarningTable } from './list';

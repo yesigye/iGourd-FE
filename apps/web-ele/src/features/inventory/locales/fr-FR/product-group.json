@@ -33,5 +33,11 @@
   "please-enter-category-name": "Veuillez entrer le nom du groupe de produits",
   "category-name": "Nom du Groupe de Produits",
   "please-select-previous-category": "Veuillez sélectionner le groupe de produits parent",
-  "please-select-level": "Veuillez sélectionner le niveau de groupe de produits"
+  "please-select-level": "Veuillez sélectionner le niveau de groupe de produits",
+  "product-category": "Groupe de Produits",
+  "product-grid-product-group-name": "分类名称",
+  "product-grid-product-code": "商品编码",
+  "product-grid-major-name": "商品名称",
+  "product-grid-status": "状态",
+  "product-grid-major-unit-name": "单位"
 }

@@ -1,9 +1,9 @@
 {
-  "product_spec": "商品规格",
-  "product_spec_value": "商品规格值",
-  "add_spec": "添加规格",
-  "spec_value": "规格值",
-  "spec_value_code": "规格值编码",
+  "product-spec": "商品规格",
+  "product-spec-value": "商品规格值",
+  "add-spec": "添加规格",
+  "spec-value": "规格值",
+  "spec-value-code": "规格值编码",
   "status": "状态",
   "creator": "创建人",
   "create_time": "创建时间",
@@ -21,5 +21,6 @@
   "deleteSpecSuccess": "删除规格成功",
   "deleteSpecFailed": "删除规格失败",
   "deleteSpecValueSuccess": "删除规格值成功",
-  "deleteSpecValueFailed": "删除规格值失败"
+  "deleteSpecValueFailed": "删除规格值失败",
+  "product-spec-name": "规格名称"
 }

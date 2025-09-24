@@ -33,5 +33,12 @@
     "approved": "Approuvé",
     "received": "Reçu",
     "cancelled": "Annulé"
-  }
+  },
+  "no": "Numéro de Réception",
+  "date": "Date",
+  "name": "Nom",
+  "warehouse": "Depôt",
+  "purchase-order-no": "Numéro de Commande d'Achat",
+  "pay-status": "Statut de Paiement",
+  "vendor-name": "Nom du Fournisseur"
 }

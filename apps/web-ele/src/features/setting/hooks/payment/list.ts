@@ -161,7 +161,6 @@ export function useSettingPayment() {
       batchOperate: true, // 支持批量删除
       connectedComponent: PaymentDrawer,
     });
-
   return {
     Grid,
     Drawer,

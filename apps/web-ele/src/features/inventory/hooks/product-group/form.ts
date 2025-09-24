@@ -1,101 +1,169 @@
 import type { ISchema } from '@igourd/common-ui';
 
+import { ref } from 'vue';
+
+import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+import { useUserStore } from '@igourd/stores';
 
-import { useDrawerForm } from '#/hooks/use-drawer-form';
+import {
+  createGroup,
+  getFirstGroupList,
+  getSecondGroupList,
+  updateGroup,
+} from '../../apis/product-group';
+// getFirstGroupList
+// getSecondGroupList
+// import {
+//   codingCategoryDetail,
+//   codingCategoryModify,
+//   codingRuleList,
+// } from '../apis/rules';
+// import { createOrUpdateCustomizedField } from '../apis';
 
-export function useGroupForm() {
+// 定义表单数据类型
+interface PurchaseCodeRulesFormData {
+  type: string;
+  paragraph_break: string;
+  code_section: string;
+  use_rule: string;
+  status: boolean;
+  category_type: string;
+  id: string;
+}
+
+export function useProductGroupForm(func) {
   const { t } = useI18n();
+  const { currentLoginUserApp } = useUserStore();
+  const codingRuleListData = ref<PurchaseCodeRulesFormData[]>([]);
+  // 表单提交处理
+  const handleSubmit = async (formData: PurchaseCodeRulesFormData) => {
+    try {
+      let response = null;
+      // 父级分类 ID  组件数组中获取
+      if (formData.parent_id) {
+        const len = formData.parent_id.length;
+        formData.parent_id = formData.parent_id[len - 1];
+      }
 
-  const schema: ISchema = {
+      // 调用 API
+      response = await (formData.id
+        ? updateGroup({
+            ...formData,
+          })
+        : createGroup({
+            ...formData,
+          }));
+      func('refresh-tree');
+      return response;
+    } catch (error) {
+      console.error('Purchase customized form submission error:', error);
+      throw error;
+    }
+  };
+
+  const [Drawer, drawerApi] = useIgourdDrawer({
+    title: t('product-group.add-product-group'),
+    appendToMain: true,
+    class: 'w-1/2',
+    async onOpenChange(isOpen) {
+      if (isOpen) {
+        formAPI.reset();
+        const data = drawerApi.getData();
+        data.parent_id = [data.parent_id];
+        formAPI.setValues(data);
+      }
+    },
+    onClosed() {
+      formAPI.reset();
+    },
+    async onConfirm() {
+      await formAPI.validate();
+      drawerApi.lock();
+      await handleSubmit(formAPI.values as PurchaseCodeRulesFormData)
+        .then(() => {
+          drawerApi.close();
+        })
+        .finally(() => {
+          drawerApi.unlock();
+        });
+    },
+  });
+  // 表单 Schema - 基于原有的自定义字段表单结构
+  const formSchema: ISchema = {
     type: 'object',
     properties: {
-      form: {
+      grid: {
         type: 'void',
         'x-component': 'FormLayout',
-        'x-component-props': {
-          labelCol: 6,
-          wrapperCol: 14,
-        },
+
         properties: {
-          common: {
-            type: 'void',
-            'x-component': 'FormLayout',
+          parent_id: {
+            type: 'string',
+            title: "{{t('product-group.previous-category')}}",
+            // required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Cascader',
             'x-component-props': {
-              header: 'Hello Card',
+              props: {
+                lazy: true,
+                lazyLoad: '{{loadData}}',
+                // 数据转换显示
+                label: 'major_name',
+                value: 'id',
+              },
             },
-            properties: {
-              level: {
-                type: 'string',
-                title: "{{t('product-group.level')}}",
-                required: true,
-                'x-decorator': 'FormItem',
-                'x-component': 'Select',
-                'x-component-props': {
-                  maxLength: 32,
-                  placeholder: "{{t('common.select')}}",
-                  clearable: true,
-                },
-                'x-validator': [
-                  {
-                    required: true,
-                    message: "{{t('product-group.please-select-level')}}",
-                  },
-                ],
-              },
-              previous_category: {
-                type: 'string',
-                title: "{{t('product-group.previous-category')}}",
-                required: true,
-                'x-decorator': 'FormItem',
-                'x-component': 'Select',
-                'x-component-props': {
-                  maxLength: 32,
-                  placeholder: "{{t('common.select')}}",
-                  clearable: true,
-                },
-                'x-validator': [
-                  {
-                    required: true,
-                    message:
-                      "{{t('product-group.please-select-previous-category')}}",
-                  },
-                ],
-              },
-              category_name: {
-                type: 'string',
-                title: "{{t('product-group.category-name')}}",
-                required: true,
-                'x-decorator': 'FormItem',
-                'x-component': 'Input',
-                'x-component-props': {
-                  maxLength: 32,
-                  placeholder: "{{t('common.enter')}}",
-                  clearable: true,
-                },
-                'x-validator': [
-                  {
-                    required: true,
-                    message:
-                      "{{t('product-group.please-enter-category-name')}}",
-                  },
-                ],
-              },
+          },
+          major_name: {
+            type: 'string',
+            title: "{{t('product-group.category-name')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Input',
+            'x-component-props': {
+              placeholder: "{{t('product-group.please-enter-category-name')}}",
+              clearable: true,
             },
           },
         },
       },
+      t,
     },
   };
-  return useDrawerForm({
-    drawerOptions: {
-      title: t('product-group.add-product-group'),
-      appendToMain: true,
-      class: 'w-1/2',
+  const loadData = async (node, resolve) => {
+    const { value, level } = node;
+    let treeData = [];
+    treeData = await (level === 0
+      ? getFirstGroupList({ parent_id: 0 })
+      : getSecondGroupList({ parent_id: value }));
+    resolve(treeData.list);
+  };
+  // 使用 useIgourdForm
+  const { Form, formAPI } = useIgourdForm({
+    useI18n,
+    schema: formSchema,
+    readPretty: false,
+    initialValues: {
+      parent_id: [],
+      major_name: '',
     },
-    formOptions: {
-      schema,
-      scope: {},
+    effects() {
+      // 使用 Formily 的 effects 监听表单值变化
     },
+    scope: { loadData },
   });
+  // 表单重置
+  const resetForm = () => {
+    formAPI.reset();
+  };
+
+  return {
+    Form,
+    formAPI,
+    Drawer,
+    drawerApi,
+    formSchema,
+    handleSubmit,
+    resetForm,
+  };
 }

@@ -9,15 +9,16 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { Grid, Drawer } = useSalesReport();
+const { Grid, Drawer,handleEdit } = useSalesReport();
 </script>
 
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-title>
-        <ElButton type="primary">
-          {{ t('report.exportReport') }}
+      <template #operation="{ row }">
+
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.detail') }}
         </ElButton>
       </template>
     </Grid>

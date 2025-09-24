@@ -9,17 +9,20 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
-  useSaleOrder();
+const {
+  Grid,
+  Drawer,
+  handleEdit,
+  canBatchOperate,
+  handleBatchDelete,
+  handleCancel,
+} = useSaleOrder();
 </script>
 
 <template>
   <Page auto-content-height>
     <Grid>
       <template #table-title>
-        <ElButton type="primary" @click="handleEdit()">
-          {{ t('sale.addOrder') }}
-        </ElButton>
         <ElButton
           type="danger"
           v-if="canBatchOperate"
@@ -29,11 +32,23 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
         </ElButton>
       </template>
       <template #operation="{ row }">
-        <ElButton type="text" @click="handleEdit(row)">
-          {{ t('common.edit') }}
+        <ElButton type="text" v-if="row.status === 'PAID'" @click="handleEdit(row)">
+          {{ t('common.print') }}
+        </ElButton>
+        <ElButton type="text" v-if="row.status === 'PAID'" @click="handleEdit(row)">
+          {{ t('common.print-receipt') }}
         </ElButton>
         <ElButton type="text" @click="handleEdit(row)">
-          {{ t('common.detail') }}
+          {{ t('common.details') }}
+        </ElButton>
+        <ElButton type="text" v-if="row.status === 'PENDING'" @click="handleEdit(row)">
+          {{ t('common.pay') }}
+        </ElButton>
+        <ElButton type="text" v-if="row.status !== 'PENDING'" @click="handleEdit(row)">
+          {{ t('common.refund') }}
+        </ElButton>
+        <ElButton type="text" v-if="row.status !== 'PENDING'" @click="handleCancel(row)">
+          {{ t('common.cancel') }}
         </ElButton>
       </template>
     </Grid>
