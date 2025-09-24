@@ -20,23 +20,16 @@ export function useCustomerLabel() {
     {
       field: 'name',
       minWidth: 200,
-      align: 'left',
+      align: 'center',
       fixed: 'left',
-      title: t('customer.customerLabelName'),
+      title: t('label.curtomer-label'),
       sortable: true,
     },
     {
       field: 'creator_name',
       minWidth: 150,
-      align: 'left',
-      title: t('customer.creator'),
-      sortable: true,
-    },
-    {
-      field: 'create_time',
-      minWidth: 100,
       align: 'center',
-      title: t('customer.creationTime'),
+      title: t('label.customer-qty'),
       sortable: true,
     },
     {
@@ -65,35 +58,7 @@ export function useCustomerLabel() {
     useCrud({
       service,
       columns: baseColumns,
-      searchFormSchema: {
-        keywords: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Input',
-          'x-component-props': {
-            placeholder: t('customer.searchPlaceholder'),
-          },
-        },
-        label_type: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Select',
-          'x-component-props': {
-            placeholder: t('customer.labelType'),
-            options: [
-              { label: t('customer.labelType.category'), value: 'CATEGORY' },
-              { label: t('customer.labelType.status'), value: 'STATUS' },
-              { label: t('customer.labelType.level'), value: 'LEVEL' },
-              { label: t('customer.labelType.behavior'), value: 'BEHAVIOR' },
-              {
-                label: t('customer.labelType.preference'),
-                value: 'PREFERENCE',
-              },
-              { label: t('customer.labelType.other'), value: 'OTHER' },
-            ],
-          },
-        },
-      },
+      searchFormSchema: "",
       batchOperate: true, // 支持批量删除
       connectedComponent: CustomerLabelDrawer,
     });

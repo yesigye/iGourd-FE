@@ -89,3 +89,9 @@ export interface CustomerLabelDetailModel {
   creator_name: string;
   create_time: string;
 }
+export interface CustomerLabelInfoModel {
+  list: CustomerLabelDetailModel[];
+  page_num: number;
+  page_size: number;
+  total: number;
+};
