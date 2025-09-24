@@ -1,21 +1,19 @@
 {
-  "customerName": "Nom du Client",
-  "customerCode": "Code du Client",
-  "customerType": "Type de Client",
-  "contactPerson": "Personne de Contact",
-  "contactPhone": "Téléphone de Contact",
-  "contactEmail": "Email de Contact",
+  "basic-information": "Informations de base",
+  "customer-name": "Nom du client",
+  "customer-label": "Étiquette client",
+  "salesman": "Commercial",
+  "image": "Image",
+  "contact-information": "Informations de contact",
+  "contact-name": "Nom du contact",
+  "contact-telephone": "Téléphone du contact",
+  "country": "Pays",
+  "email": "E-mail",
+  "zip-code": "Code postal",
   "address": "Adresse",
-  "status": "Statut",
-  "addCustomer": "Ajouter Client",
-  "editCustomer": "Modifier Client",
-  "customerDetail": "Détail du Client",
-  "customerTypeOptions": {
-    "individual": "Client Individuel",
-    "enterprise": "Client Entreprise"
-  },
-  "statusOptions": {
-    "active": "Actif",
-    "inactive": "Inactif"
-  }
+  "customized-information": "Informations personnalisées",
+  "financial-information": "Informations financières",
+  "price-level": "Niveau de prix",
+  "remarks": "Remarques",
+  "add-customer": "Ajouter un client"
 }

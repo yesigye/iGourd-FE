@@ -1,21 +1,19 @@
 {
-  "customerName": "Customer Name",
-  "customerCode": "Customer Code",
-  "customerType": "Customer Type",
-  "contactPerson": "Contact Person",
-  "contactPhone": "Contact Phone",
-  "contactEmail": "Contact Email",
+  "basic-information": "Basic Information",
+  "customer-name": "Customer Name",
+  "customer-label": "Customer Label",
+  "salesman": "Salesman",
+  "image": "Image",
+  "contact-information": "Contact Information",
+  "contact-name": "Contact Name",
+  "contact-telephone": "Contact Telephone",
+  "country": "Country",
+  "email": "Email",
+  "zip-code": "Zip Code",
   "address": "Address",
-  "status": "Status",
-  "addCustomer": "Add Customer",
-  "editCustomer": "Edit Customer",
-  "customerDetail": "Customer Detail",
-  "customerTypeOptions": {
-    "individual": "Individual Customer",
-    "enterprise": "Enterprise Customer"
-  },
-  "statusOptions": {
-    "active": "Active",
-    "inactive": "Inactive"
-  }
+  "customized-information": "Customized Information",
+  "financial-information": "Financial Information",
+  "price-level": "Price Level",
+  "remarks": "Remarks",
+  "add-customer": "Add Customer"
 }
