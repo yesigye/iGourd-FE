@@ -127,6 +127,8 @@ export default {
           title: "{{ t('account.ourAccount') }}",
           'x-decorator': 'FormItem',
           'x-component': 'ArrayTable',
+          maxItems: 2,
+          maxLength: 2,
           default: [
             {
               account_id: '',
