@@ -12,15 +12,7 @@ import {
   getParentList,
   getSecondGroupList,
   updateGroup,
-} from '../../apis/product-group';
-// getFirstGroupList
-// getSecondGroupList
-// import {
-//   codingCategoryDetail,
-//   codingCategoryModify,
-//   codingRuleList,
-// } from '../apis/rules';
-// import { createOrUpdateCustomizedField } from '../apis';
+} from '@@/inventory/apis';
 
 // 定义表单数据类型
 interface PurchaseCodeRulesFormData {

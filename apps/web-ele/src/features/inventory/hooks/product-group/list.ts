@@ -1,7 +1,4 @@
-import type {
-  ProductLabelItem,
-  ProductLabelParams,
-} from '../../types/product-label';
+import type { ProductLabelItem, ProductLabelParams } from '@@/inventory/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 

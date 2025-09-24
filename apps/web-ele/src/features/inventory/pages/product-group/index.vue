@@ -10,15 +10,16 @@ import {
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import folderClose from '../../../../assets/inventory/folder-close.svg';
-import folderOpen from '../../../../assets/inventory/folder-open.svg';
 import {
   getFirstGroupList,
   getSecondGroupList,
   removeGroup,
-} from '../../apis/product-group';
+} from '@@/inventory/apis';
+import { useProductGroupList } from '@@/inventory/hooks';
+
+import folderClose from '../../../../assets/inventory/folder-close.svg';
+import folderOpen from '../../../../assets/inventory/folder-open.svg';
 import drawer from '../../components/product-group/drawer.vue';
-import { useProductGroupList } from '../../hooks/product-group/list';
 
 defineOptions({
   name: 'IInventoryProductGroup',
