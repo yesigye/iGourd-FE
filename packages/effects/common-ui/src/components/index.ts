@@ -103,6 +103,7 @@ export {
   ElTree,
   ElUpload,
   formContextKey,
+  ElInfiniteScroll
 } from 'element-plus';
 
 export type { UploadFile, UploadProps, UploadUserFile } from 'element-plus';
