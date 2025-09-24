@@ -5,12 +5,13 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
-  getCustomerFeaturePageListApi,
-  deleteCustomerFeatureApi,
-} from '@@/customer/apis';
+  createOrUpdateCustomizedField,
+  deleteDynamicColumn,
+  getPurchaseCustomizedListApi,
+} from '@@/purchase/apis';
 import { CustomerFeatureDrawer } from '@@/customer/components';
 
-import { useCrud } from '#/hooks';
+import { useCrud, withEntityParam } from '#/hooks';
 
 export function useCustomerFeature() {
   const { t } = useI18n();
@@ -79,10 +80,16 @@ export function useCustomerFeature() {
 
   // 服务函数
   const service = {
-    query: getCustomerFeaturePageListApi,
-    remove: async (data: { feature_id_list: number[] }) => {
-      return await deleteCustomerFeatureApi(data);
-    },
+      query: withEntityParam({ entity: 'CUSTOMER' })(
+        getPurchaseCustomizedListApi,
+      ),
+      drop: withEntityParam({ entity: 'CUSTOMER' })(deleteDynamicColumn),
+      create: withEntityParam({ entity: 'CUSTOMER' })(
+        createOrUpdateCustomizedField,
+      ),
+      update: withEntityParam({ entity: 'CUSTOMER' })(
+        createOrUpdateCustomizedField,
+      ),
   };
 
   // 使用 CRUD Hook
