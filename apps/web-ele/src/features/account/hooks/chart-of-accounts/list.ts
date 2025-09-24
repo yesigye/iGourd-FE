@@ -1,15 +1,18 @@
-import { useI18n } from '@igourd/locales';
-import { useCrud } from '#/hooks';
-
 import type { AccountLedgerBalanceTreeModel } from '@@/account/types';
-import { ChartOfAccountsDrawer } from '@@/account/components';
+
+import type { VxeGridPropTypes } from '@igourd/plugins/vxe-table';
+
+import { useI18n } from '@igourd/locales';
+
 import {
   getChartOfAccountsTreeApi,
   modifyLedgerBalanceApi,
-  removeAccountLedgerApi,
   removeAccountApi,
+  removeAccountLedgerApi,
 } from '@@/account/apis';
-import type { VxeGridPropTypes } from '@igourd/plugins/vxe-table';
+import { ChartOfAccountsDrawer } from '@@/account/components';
+
+import { useCrud } from '#/hooks';
 
 export function useChartOfAccounts() {
   const { t } = useI18n();
@@ -79,10 +82,30 @@ export function useChartOfAccounts() {
     { label: t('account.profit_and_loss'), value: 'profitAndLoss' },
   ];
 
+  let queryParam = null;
+  // 查询数据
+  const handleQueryTable = (qParam) => {
+    queryParam = qParam;
+    gridApi.reload();
+  };
+
   // 服务函数
   const service = {
     // 获取列表数据
-    query: getChartOfAccountsTreeApi,
+    query: async (data: {
+      date_range?: string[];
+      page_num: number;
+      page_size: number;
+    }) => {
+      const params = {
+        ...data,
+        category: '',
+      };
+      if (queryParam && queryParam.category) {
+        params.category = queryParam.category;
+      }
+      return await getChartOfAccountsTreeApi(params);
+    },
     // 删除科目
     remove: async (data: { ledger_id_list: number[] }) => {
       return await removeAccountLedgerApi(data);
@@ -108,7 +131,7 @@ export function useChartOfAccounts() {
     canBatchOperate,
     handleBatchDelete,
   } = useCrud({
-    //@ts-ignore
+    // @ts-ignore
     service,
     columns,
     searchFormSchema: {
@@ -134,5 +157,6 @@ export function useChartOfAccounts() {
     canBatchOperate,
     handleBatchDelete,
     gridApi,
+    handleQueryTable,
   };
 }

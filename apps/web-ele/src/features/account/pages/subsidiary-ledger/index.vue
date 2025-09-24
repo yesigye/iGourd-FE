@@ -30,11 +30,26 @@ const pageData = ref({
   total: 0,
 });
 const treeRef = ref();
-const { Grid, handleEdit, handleBatchDelete, canBatchOperate } =
+const { Grid, handleEdit, handleBatchDelete, handleQueryTable } =
   useSubsidiaryLedger();
+// tree数据
 const treeList = ref([]);
+// 页签数据
 const tabsData = ref([]);
-
+// 当前页签
+const activeName = ref('');
+// 当前分类
+const currentCategoryEnum = ref();
+// tree当前节点
+const currentNode = ref();
+const handleTabClick = (tab) => {
+  currentCategoryEnum.value = tabsData.value[tab.index];
+  getTree();
+  handleQueryTable({
+    account_set_id: currentCategoryEnum.value.value,
+    account_ledger_ids: [],
+  });
+};
 // 转换算法实现
 const convertToElTreeFormat = (data) => {
   return data.map((item) => {
@@ -57,41 +72,53 @@ const getTree = async () => {
   const result = await getaccountLedgerBalanceApi({
     page_num: pageData.value.page_num,
     page_size: 10,
-    category: 'ASSET',
+    category: currentCategoryEnum.value.value,
   });
   treeList.value = convertToElTreeFormat(result);
 };
-
+// 获取分类数据及设置默认tab
 const accountLedgerCategoryEnum = async () => {
   const enumData = await getLanguageDict(
     'basics.accounting.account-ledger-category-enum',
   );
   tabsData.value = enumData;
+  activeName.value = enumData[0].value;
+  currentCategoryEnum.value = enumData[0];
+  getTree();
+};
+const handleNodeClick = (node) => {
+  currentNode.value = node;
+  handleQueryTable({
+    account_set_id: [node.id],
+    account_ledger_ids: [],
+  });
 };
 onMounted(async () => {
-  getTree();
   accountLedgerCategoryEnum();
 });
 </script>
 
 <template>
-  <ElTabs>
+  <ElTabs v-model="activeName" class="ml-10" @tab-click="handleTabClick">
     <ElTabPane
       v-for="item in tabsData"
       :key="item.value"
       :label="item.label"
       :name="item.value"
-    >
-      {{ item.label }}
-    </ElTabPane>
+    />
   </ElTabs>
   <ColPage auto-content-height>
     <template #left="{ isCollapsed, expand }">
       <section class="bg-card h-full rounded p-2.5">
         <!-- 分类树 -->
         <div class="mt-5">
-          <ElTree ref="treeRef" node-key="id" :data="treeList">
-            <template #default="{ node, data }">
+          <ElTree
+            ref="treeRef"
+            node-key="id"
+            :data="treeList"
+            @node-click="handleNodeClick"
+          >
+            <template #default="{ node }">
               <div class="inline-flex flex-1">
                 <img :src="node.expanded ? folderOpen : folderClose" alt="" />
                 <span class="pl-1">{{ node.label }}</span>
