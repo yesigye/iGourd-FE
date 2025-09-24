@@ -41,7 +41,6 @@ export function useSubsidiaryLedger() {
   // 服务函数
   const service = {
     // 获取列表数据
-    query: getSubsidiaryLedgerPageListApi,
     query: async (data: {
       date_range?: string[];
       page_num: number;
