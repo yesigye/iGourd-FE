@@ -1,3 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useCustomerFeatureForm } from '@@/customer/hooks';
 
-<template><div>ddd</div></template>
+const { Drawer, Form } = useCustomerFeatureForm();
+</script>
+
+<template>
+  <Drawer>
+    <Form />
+  </Drawer>
+</template>
