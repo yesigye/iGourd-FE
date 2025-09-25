@@ -24,11 +24,13 @@ export function useChartOfAccounts() {
       width: 165,
       fixed: 'left',
       title: t('account.account_code'),
+      treeNode: true,
     },
     {
       field: 'name',
       width: 220,
       title: t('account.account_ledger_name'),
+      editRender: { name: 'input' },
     },
     {
       field: 'balance_direction',
@@ -89,6 +91,25 @@ export function useChartOfAccounts() {
     gridApi.reload();
   };
 
+  // 转换算法实现
+  const convertToElTreeFormat = (data) => {
+    return data.map((item) => {
+      const node = {
+        ...item.account_ledger,
+        id: item.account_ledger.id,
+        label: item.account_ledger.name,
+        children: [],
+      };
+
+      // 递归处理子节点
+      if (item.sub_ledger_trees && item.sub_ledger_trees.length > 0) {
+        node.children = convertToElTreeFormat(item.sub_ledger_trees);
+      }
+
+      return node;
+    });
+  };
+
   // 服务函数
   const service = {
     // 获取列表数据
@@ -104,7 +125,14 @@ export function useChartOfAccounts() {
       if (queryParam && queryParam.category) {
         params.category = queryParam.category;
       }
-      return await getChartOfAccountsTreeApi(params);
+      const tableData = await getChartOfAccountsTreeApi(params);
+      const treeData = convertToElTreeFormat(tableData);
+      console.log(treeData, 'treeData');
+      return new Promise<void>((resolve) => {
+        resolve({
+          list: treeData,
+        });
+      });
     },
     // 删除科目
     remove: async (data: { ledger_id_list: number[] }) => {
@@ -134,6 +162,11 @@ export function useChartOfAccounts() {
     // @ts-ignore
     service,
     columns,
+    treeConfig: {
+      transform: true,
+      rowField: 'id',
+      parentField: 'parentId',
+    },
     searchFormSchema: {
       keywords: {
         type: 'string',
