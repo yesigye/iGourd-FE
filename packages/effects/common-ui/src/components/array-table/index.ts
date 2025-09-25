@@ -187,6 +187,7 @@ const getArrayTableColumns = (
       return (buf as any).concat({
         label: title,
         ...props,
+        header: schema['x-content']?.header,
         key,
         prop: name,
         asterisk: asterisk ?? required,
@@ -420,12 +421,14 @@ const ArrayTableInner = observer(
         const columns = getArrayTableColumns(sources);
 
         const renderColumns = (startIndex?: Ref<number>) => {
-          return columns.map(({ key, render, asterisk, ...props }) => {
+          return columns.map(({ key, render, asterisk, header, ...props }) => {
             const children = {} as Record<string, any>;
             if (render) {
               children.default = render(startIndex);
             }
-            if (asterisk) {
+            if (header) {
+              children.header = h(header);
+            } else if (asterisk) {
               children.header = ({ column }: { column: ElColumnProps }) =>
                 h('span', {}, [
                   h(

@@ -19,16 +19,19 @@ export const overridesPreferences = defineOverridesPreferences({
   },
   sidebar: {
     collapsed: true,
-    expandOnHover: false,
+    expandOnHover: true,
     collapsedShowTitle: true,
+    fixedButton: false,
   },
   tabbar: {
     postion: 'breadcrumb',
   },
   theme: {
-    builtinType: 'deep-green',
-    colorPrimary: 'hsl(181 84% 32%)',
     mode: 'auto',
+    builtinType: 'default',
+    colorPrimary: 'hsl(212 100% 45%)',
+    radius: '0',
+    semiDarkSidebar: true,
   },
   widget: {
     globalSearch: false,

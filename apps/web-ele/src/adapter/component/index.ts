@@ -36,7 +36,6 @@ import {
   PreviewText,
   Radio,
   Reset,
-  // ScanCodeEntry,
   Select,
   setupIgourdForm,
   Space,
@@ -47,7 +46,7 @@ import {
 } from '@igourd/common-ui';
 import '@igourd/common-ui/style';
 
-import { ProductSelect, ProductTable } from '#/components';
+import { ProductTable } from '#/components';
 
 import Upload from './upload';
 
@@ -61,8 +60,6 @@ async function initComponentAdapter() {
     ArrayTabs,
     Cascader,
     InputNumber,
-    // ScanCodeEntry,
-    ProductSelect,
     ProductTable,
     Editable,
     Checkbox,

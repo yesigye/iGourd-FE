@@ -1,7 +1,10 @@
 .el-card {
   --el-card-border-radius: var(--radius) !important;
 }
-
+.el-dropdown {
+  position: static;
+  vertical-align: middle;
+}
 .form-valid-error {
   /** select 选择器的样式 */
   .el-select .el-select__wrapper {

@@ -1,7 +1,11 @@
-import { Upload } from '@igourd/common-ui';
-import type { UploadProps } from '@igourd/common-ui';
 import type { SetupContext } from 'vue';
+
+import type { UploadProps } from '@igourd/common-ui';
+
 import { h, mergeProps } from 'vue';
+
+import { Upload } from '@igourd/common-ui';
+
 import { upload } from '#/api/upload';
 
 export function UploadFiles(

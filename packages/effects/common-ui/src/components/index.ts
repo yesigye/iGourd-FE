@@ -1,3 +1,14 @@
+// export {
+//   // ElButton,
+//   // ElForm,
+//   // ElInput,
+//   // ElOption,
+//   // ElSpace,
+//   // ElSwitch,
+//   // ElTable,
+//   ElTreeSelect,
+// } from 'element-plus';
+export { composeExport } from './__builtins__';
 export * from './api-component';
 export * from './array-cards';
 export * from './array-collapse';
@@ -41,6 +52,7 @@ export * from './submit';
 export * from './switch';
 export * from './time-picker';
 export * from './tippy';
+
 export * from './transfer';
 
 export { default as Upload } from './upload';
@@ -62,8 +74,8 @@ export {
   IgourdSpinner,
   IgourdTree,
 } from '@igourd-core/shadcn-ui';
-
 export type { FlattenedItem } from '@igourd-core/shadcn-ui';
+
 export { globalShareState } from '@igourd-core/shared/global-state';
 
 export {
@@ -83,6 +95,7 @@ export {
   ElImage,
   ElImageViewer,
   ElInput,
+  ElInputNumber,
   ElLink,
   ElLoading,
   ElMessage,
@@ -98,20 +111,10 @@ export {
   ElSpace,
   ElTable,
   ElTableColumn,
+  ElText,
   ElTree,
   ElUpload,
   formContextKey,
 } from 'element-plus';
 
 export type { UploadFile, UploadProps, UploadUserFile } from 'element-plus';
-
-// export {
-//   // ElButton,
-//   // ElForm,
-//   // ElInput,
-//   // ElOption,
-//   // ElSpace,
-//   // ElSwitch,
-//   // ElTable,
-//   ElTreeSelect,
-// } from 'element-plus';
