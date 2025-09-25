@@ -44,7 +44,7 @@ const handleGetProductSpecList = async () => {
   }
 };
 
-const handleAddLabel = (item) => {
+const handleAddLabel = () => {
   drawerApi.setData(null).open();
 };
 const handleEditLabel = (item) => {
@@ -75,9 +75,8 @@ const refreshTree = () => {
 // 增加规格值
 const handleAddSpecValue = () => {
   // 根据 ID 查询数据
-  debugger;
   const checkedItem = productSpecList.value.find(
-    (item) => item.id == selectedLabelId.value,
+    (item) => item.id === selectedLabelId.value,
   );
   drawerValueApi.setData(checkedItem).open();
 };
@@ -91,7 +90,7 @@ onMounted(() => {
 
 <template>
   <ColPage auto-content-height>
-    <template #left="{ isCollapsed, expand }">
+    <template #left="{}">
       <section class="bg-card mb-5 h-full rounded p-2.5">
         <p class="flex justify-between text-sm font-medium">
           {{ t('product-spec.product-spec') }}

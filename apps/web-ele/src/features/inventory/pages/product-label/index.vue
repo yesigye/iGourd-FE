@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ProductLabelItem } from '../../types';
+import type { ProductLabelItem } from '@@/inventory/types';
 
 import { onMounted, ref } from 'vue';
 
@@ -13,12 +13,10 @@ import {
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import {
-  getProductLabelList,
-  removeProductLabel,
-} from '../../apis/product-label';
+import { getProductLabelList, removeProductLabel } from '@@/inventory/apis';
+import { useInventoryProductLabelList } from '@@/inventory/hooks';
+
 import drawer from '../../components/product-label/drawer.vue';
-import { useInventoryProductLabelList } from '../../hooks/product-label/list';
 
 defineOptions({
   name: 'IInventoryProductLabel',
@@ -58,7 +56,7 @@ const handleProductDetail = async (row: any) => {
 const handleClose = () => {
   productShow.value = false;
 };
-const handleAddLabel = (item) => {
+const handleAddLabel = () => {
   drawerApi.setData(null).open();
 };
 const handleEditLabel = (item) => {
@@ -78,9 +76,7 @@ const handleRemove = async (item) => {
         handleGetProductLabelList();
       });
     },
-    () => {
-      console.log('cancle');
-    },
+    () => {},
   );
 };
 const refreshTree = () => {

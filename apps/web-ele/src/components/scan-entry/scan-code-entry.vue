@@ -1,85 +1,27 @@
-<template>
-  <div class="header-box">
-    <span>{{ $t(`common.purchase.major_name`) }}</span>
-    <el-popover
-      :visible="popoverVisible"
-      trigger="hover"
-      placement="top"
-      :width="450"
-    >
-      <!-- <el-popover placement="top" :width="450" v-model:visible="popoverVisible" @show="focusInput"> -->
-      <template #reference>
-        <el-button
-          @click.stop="showBarcodePopover"
-          type="primary"
-          size="small"
-          plain
-        >
-          {{ $t('common.scanCodeEntry') }}
-        </el-button>
-      </template>
-
-      <div class="barcode-popup">
-        <div class="barcode-input">
-          <div class="label">{{ $t('inventory.barcode') }}:</div>
-          <el-input
-            maxlength="23"
-            ref="barcodeInputRef"
-            v-model="barcodeForm.code"
-            placeholder="Enter"
-            clearable
-            style="width: 230px !important"
-            @keydown.enter.native.prevent.stop="handleSubmit"
-          />
-
-          <el-input
-            v-if="barcodeForm.enterQty"
-            v-model="barcodeForm.quantity"
-            placeholder="1.00"
-            type="number"
-            style="width: 100px !important; margin: 0 10px"
-            @keydown.enter.native.prevent.stop="handleSubmitQuantity"
-            @input="validateQuantityInput"
-          />
-          <el-checkbox style="margin-left: 10px" v-model="barcodeForm.enterQty"
-            >Enter Qty</el-checkbox
-          >
-          <el-icon
-            @click="closePopover"
-            class="styleVariant"
-            style="margin-left: 5px"
-            ><CircleX
-          /></el-icon>
-        </div>
-      </div>
-    </el-popover>
-  </div>
-</template>
-
 <script setup lang="ts">
 import {
-  ref,
-  onMounted,
-  onUnmounted,
-  defineProps,
   defineEmits,
   defineExpose,
+  defineProps,
+  onMounted,
+  onUnmounted,
+  ref,
   watch,
 } from 'vue';
-import { CircleX } from '@igourd/icons';
+
 import {
-  ElMessage,
-  ElPopover,
   ElButton,
-  ElInput,
   ElCheckbox,
   ElIcon,
+  ElInput,
+  ElMessage,
+  ElPopover,
 } from '@igourd/common-ui';
+import { CircleX } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
-import { InventoryService } from '@@/purchase/apis';
 import { debounce } from '@igourd/utils';
 
-const { t } = useI18n();
+import { warehouseProductPageList } from '@@/inventory/apis';
 
 const props = defineProps({
   initialQuantity: {
@@ -97,6 +39,9 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['scan-complete', 'close']);
+
+const { t } = useI18n();
+
 const popoverVisible = ref(false);
 const barcodeInputRef = ref<HTMLInputElement | null>(null);
 const scanBuffer = ref('');
@@ -154,7 +99,7 @@ const validateQuantityInput = () => {
   if (!barcodeForm.value.quantity) return;
   barcodeForm.value.quantity = barcodeForm.value.quantity
     .toString()
-    .replace(/[-\.]/g, '');
+    .replaceAll(/[-.]/g, '');
 
   if (!barcodeForm.value.quantity) {
     barcodeForm.value.quantity = 1;
@@ -207,7 +152,7 @@ const handleSubmitQuantity = debounce(() => {
 
 const searchProductsByWarehouseAndCode = async (
   code: string,
-  warehouseId: string | number,
+  warehouseId: number | string,
 ) => {
   try {
     const params = {
@@ -217,7 +162,7 @@ const searchProductsByWarehouseAndCode = async (
       page_size: 10,
       status: 'ON_SALE',
     };
-    const response = await InventoryService.warehouseProductPageList(params);
+    const response = await warehouseProductPageList(params);
 
     if (response?.data?.list && response.data.list.length > 0) {
       return response.data.list;
@@ -226,7 +171,7 @@ const searchProductsByWarehouseAndCode = async (
       barcodeForm.value.code = '';
       return null;
     }
-  } catch (error) {
+  } catch {
     ElMessage.error(t('inventory.errorFetchingProduct'));
     return null;
   }
@@ -234,8 +179,8 @@ const searchProductsByWarehouseAndCode = async (
 
 const searchProductsByCode = async (code: string) => {
   try {
-    //特定类型API
-    if (['transfer', 'spoilage', 'physical'].includes(props.type)) {
+    // 特定类型API
+    if (['physical', 'spoilage', 'transfer'].includes(props.type)) {
       if (!props.warehouseId) {
         ElMessage.warning(t('inventory.warehouseIdRequired'));
         return null;
@@ -245,7 +190,7 @@ const searchProductsByCode = async (code: string) => {
 
     // 其他类型API
     const params = {
-      business_type: ['receipt', 'purchase', 'return'].includes(props.type)
+      business_type: ['purchase', 'receipt', 'return'].includes(props.type)
         ? 'PURCHASE'
         : 'OTHER',
       status: 'ON_SALE',
@@ -282,6 +227,65 @@ defineExpose({
   close: closePopover,
 });
 </script>
+
+<template>
+  <div class="header-box">
+    <span>{{ $t(`common.purchase.major_name`) }}</span>
+    <ElPopover
+      :visible="popoverVisible"
+      trigger="hover"
+      placement="top"
+      :width="450"
+    >
+      <!-- <el-popover placement="top" :width="450" v-model:visible="popoverVisible" @show="focusInput"> -->
+      <template #reference>
+        <ElButton
+          @click.stop="showBarcodePopover"
+          type="primary"
+          size="small"
+          plain
+        >
+          {{ $t('common.scanCodeEntry') }}
+        </ElButton>
+      </template>
+
+      <div class="barcode-popup">
+        <div class="barcode-input">
+          <div class="label">{{ $t('inventory.barcode') }}:</div>
+          <ElInput
+            maxlength="23"
+            ref="barcodeInputRef"
+            v-model="barcodeForm.code"
+            placeholder="Enter"
+            clearable
+            style="width: 230px !important"
+            @keydown.enter.native.prevent.stop="handleSubmit"
+          />
+
+          <ElInput
+            v-if="barcodeForm.enterQty"
+            v-model="barcodeForm.quantity"
+            placeholder="1.00"
+            type="number"
+            style="width: 100px !important; margin: 0 10px"
+            @keydown.enter.native.prevent.stop="handleSubmitQuantity"
+            @input="validateQuantityInput"
+          />
+          <ElCheckbox style="margin-left: 10px" v-model="barcodeForm.enterQty">
+            Enter Qty
+          </ElCheckbox>
+          <ElIcon
+            @click="closePopover"
+            class="styleVariant"
+            style="margin-left: 5px"
+          >
+            <CircleX />
+          </ElIcon>
+        </div>
+      </div>
+    </ElPopover>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .header-box {

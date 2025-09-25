@@ -4,10 +4,7 @@ import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
-import {
-  createProductLabel,
-  updateProductLabel,
-} from '../../apis/product-label';
+import { createProductLabel, updateProductLabel } from '@@/inventory/apis';
 // 定义表单数据类型
 interface ProductLabelFormData {
   merchant_id: string;
@@ -41,7 +38,7 @@ export function useProductLabelForm(func) {
     title: t('product-label.add-product-label'),
     appendToMain: true,
     class: 'w-1/2',
-    async onOpenChange(isOpen, val) {
+    async onOpenChange(isOpen) {
       if (isOpen) {
         formAPI.reset();
         const data = drawerApi.getData();

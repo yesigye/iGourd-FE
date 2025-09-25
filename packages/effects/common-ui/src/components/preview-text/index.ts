@@ -31,7 +31,7 @@ export const usePlaceholder = (value?: Ref<any>) => {
   const placeholder = computed(() => {
     return isValid(value?.value) && value?.value !== ''
       ? value?.value
-      : resolveComponent(placeholderCtx.value) || 'N/A';
+      : resolveComponent(placeholderCtx.value) || '';
   });
   return placeholder;
 };
@@ -87,9 +87,9 @@ const Select = observer(
         const selected = getSelected();
         const dataSource: any[] = field?.dataSource?.length
           ? field.dataSource
-          : (props?.options?.length
+          : props?.options?.length
             ? props.options
-            : []);
+            : [];
         if (selected.length === 0) {
           return h(
             ElTag,
@@ -141,9 +141,9 @@ const Cascader = observer(
       const props = attrs as unknown as CascaderProps;
       const dataSource: any[] = field?.dataSource?.length
         ? field.dataSource
-        : (props?.options?.length
+        : props?.options?.length
           ? props.options
-          : []);
+          : [];
       const placeholder = usePlaceholder();
       const valueKey = props.props?.value || 'value';
       const labelKey = props.props?.label || 'label';

@@ -179,7 +179,7 @@
     "stock_warning_quantity": "库存预警",
     "stock_total_quantity": "库存(主单位)",
     "origin_quantity_message": "库存(主单位)",
-
+    "total_amount": "总量",
     "sale_warehouse_product_stock_quantity": "库存(主单位)",
     "sale_warehouse_product_stock_quantity_message": "库存",
     "stock_total_quantity_message": "库存",
@@ -281,6 +281,7 @@
   "productPriceCannotBeZero": "商品售价不能为0",
   "paySuccess": "支付成功",
   "creation-time": "创建时间",
+  "warehouse": "仓库",
   "now-status": "状态",
   "alert": "提示",
   "operation": "操作",
