@@ -427,7 +427,7 @@ const ArrayTableInner = observer(
               children.default = render(startIndex);
             }
             if (header) {
-              children.header = h(header);
+              children.header = () => h(header);
             } else if (asterisk) {
               children.header = ({ column }: { column: ElColumnProps }) =>
                 h('span', {}, [

@@ -28,11 +28,10 @@ const calculateTax = (baseAmount: number, taxConfig?: any): number => {
   }
 };
 
-export const PurchaseMode: ModePlugin = {
-  id: 'purchase',
+export const ReceiptMode: ModePlugin = {
+  id: 'receipt',
 
   quantityBridge: {
-    legacyKeys: ['enter_quantity'],
     getTotalAmount(value: number, row: LineItem, ctx: Ctx) {
       const { cost_price } = row;
       const subtotalAmount = value * cost_price;
@@ -138,11 +137,23 @@ export const PurchaseMode: ModePlugin = {
         required: true,
       },
       {
-        key: 'quantity',
+        key: 'received_quantity',
         type: 'number',
         title: '{{t("common.purchase.quantity")}}',
         width: 160,
-        component: 'ProductTable.QuantityCell',
+        component: 'InputNumber',
+        componentProps: {
+          min: 0,
+        },
+        reactions: {
+          fulfill: {
+            state: {
+              componentProps: {
+                max: '{{$values?.purchase_order_no ? $record?.purchase_quantity : Number.MAX_SAFE_INTEGER}}',
+              },
+            },
+          },
+        },
       },
 
       {
