@@ -63,12 +63,9 @@ export function buildSchema(
     showIndex = true,
     operations = {
       remove: true,
-      moveUp: false,
-      moveDown: false,
       title: '操作',
-      width: 120,
+      width: 170,
     },
-    addition = { title: '添加', method: 'push' },
     spanMethod,
   } = opts;
   // 过滤列（目前所有列都显示）
@@ -107,52 +104,35 @@ export function buildSchema(
         'x-component': 'ArrayTable.Column',
         'x-component-props': {
           title: operations.title ?? '操作',
-          width: operations.width ?? 120,
+          width: operations.width ?? 300,
           fixed: 'right',
           align: 'center',
         },
         properties: {
-          ...(operations.moveUp
-            ? {
-                up: {
-                  type: 'void',
-                  'x-component': 'ArrayTable.MoveUp',
-                  title: '上移',
-                },
-              }
-            : {}),
-          ...(operations.moveDown
-            ? {
-                down: {
-                  type: 'void',
-                  'x-component': 'ArrayTable.MoveDown',
-                  title: '下移',
-                },
-              }
-            : {}),
-          ...(operations.remove
-            ? {
-                remove: {
-                  type: 'void',
-                  'x-component': 'ArrayTable.Remove',
-                  title: '删除',
-                },
-              }
-            : {}),
+          create: {
+            type: 'void',
+            'x-component': 'ArrayTable.Addition',
+            title: '{{t("common.create")}}',
+          },
+          remove: {
+            type: 'void',
+            'x-component': 'ArrayTable.Remove',
+            title: '{{t("common.delete")}}',
+          },
         },
       }
     : undefined;
 
-  // 新增按钮
-  const additionNode: ISchema = {
-    type: 'void',
-    title: addition.title ?? '添加',
-    'x-component': 'ArrayTable.Addition',
-    'x-component-props': {
-      method: addition.method ?? 'push',
-      defaultValue: { warehouse_id: ctx.warehouseId },
-    },
-  };
+  // // 新增按钮
+  // const additionNode: ISchema = {
+  //   type: 'void',
+  //   title: addition.title ?? '添加',
+  //   'x-component': 'ArrayTable.Addition',
+  //   'x-component-props': {
+  //     method: addition.method ?? 'push',
+  //     defaultValue: { warehouse_id: ctx.warehouseId },
+  //   },
+  // };
 
   // 组装最终 schema（不再把字段折叠到 items.properties！）
   const schema: ISchema = {
@@ -169,10 +149,7 @@ export function buildSchema(
         ...colNodes,
         ...(opCol ? { operations: opCol } : {}),
       },
-    }, // 字段都挂在列下，不需要提前声明 properties
-    properties: {
-      addition: additionNode,
-    },
+    }, // 字段都挂在列下，不需要提前声明 propertie
   };
 
   return schema;

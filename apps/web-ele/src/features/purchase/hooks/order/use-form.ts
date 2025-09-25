@@ -15,7 +15,7 @@ export function useOrderForm() {
     },
     formOptions: {
       initialValues: {
-        purchase_order_item_model_list: [],
+        purchase_order_item_model_list: [{}],
       },
       scope: {
         warehouse,

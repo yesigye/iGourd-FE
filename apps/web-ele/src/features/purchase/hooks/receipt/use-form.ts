@@ -15,7 +15,7 @@ export function useReceiptForm() {
     },
     formOptions: {
       initialValues: {
-        purchase_order_item_model_list: [],
+        goods_receipt_note_item_model_list: [{}],
       },
       scope: {
         warehouse,
@@ -45,8 +45,7 @@ export function useReceiptForm() {
             },
           },
           goods_receipt_note_item_model_list: {
-            type: 'void',
-            title: '商品明细',
+            type: 'array',
             'x-component': 'ProductTable',
             'x-component-props': {
               mode: 'receipt',
