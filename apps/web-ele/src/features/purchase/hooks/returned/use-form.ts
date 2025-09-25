@@ -58,16 +58,6 @@ export function useReturnForm() {
               // 业务标记（用于单位禁用逻辑兼容旧条件）
               isReceiptMode: false,
               purchaseOrderSelected: false,
-              // 业务服务
-              fetchProductByBarcode: (...args: any[]) => {
-                // console.log(`fetchProductByBarcode`, ...args);
-              }, // 必填：条码转商品
-              listSkusByProduct: (...args: any[]) => {
-                // console.log(`fetchProductByBarcode`, ...args);
-              }, // 建议：商品->SKU
-              fetchStockBySku: (...args: any[]) => {
-                // console.log(`fetchProductByBarcode`, ...args);
-              },
               // 可选：展示/校验库存
               searchProducts: (keywors: string) => {
                 return wareHouseProductSearch({

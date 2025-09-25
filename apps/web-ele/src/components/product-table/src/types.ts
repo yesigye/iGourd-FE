@@ -1,3 +1,6 @@
+// 直接使用 Formily 的 ISchema 类型
+import type { ISchema } from '@igourd/common-ui';
+
 export type Id = number | string;
 
 export type VATMode = 'NOT_APPLICATION' | 'VAT_EXCLUSIVE' | 'VAT_INCLUSIVE';
@@ -127,24 +130,7 @@ export interface Ctx {
   };
 }
 
-export interface ColumnDescriptor {
-  key: string;
-  title: string;
-  width?: number | string;
-  align?: 'center' | 'left' | 'right';
-  component?: string; // x-component
-  decorator?: string; // 'FormItem'
-  props?: Record<string, any>;
-  reactions?: any;
-  type?: 'boolean' | 'number' | 'string';
-  required?: boolean;
-  validator?: any;
-  visibleWhen?: (ctx: Ctx) => boolean;
-  readonly?: boolean;
-  content?: any;
-  hidden?: boolean;
-  headerContent?: any;
-}
+export type ColumnDescriptor = ISchema;
 
 export type ColumnMap = Record<string, ColumnDescriptor>;
 
