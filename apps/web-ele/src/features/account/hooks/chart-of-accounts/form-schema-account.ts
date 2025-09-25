@@ -1,19 +1,19 @@
 import type { ISchema } from '@igourd/common-ui';
 
-import { action, useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
+import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
-import { createTaxApi, updateTaxApi } from '@@/account/apis';
-
-import { useLanguage } from '#/hooks';
-
+import {
+  getLeafLedgersApi,
+  modifyAccountApi,
+} from '../../apis/chart-of-accounts';
 // 定义表单数据类型
 interface ProductLabelFormData {
   product_spec_name: string;
 }
 
-export function useTaxForm(func) {
+export function useAccountForm(func) {
   const { t } = useI18n();
   const { currentLoginUserApp } = useUserStore();
   // 表单提交处理
@@ -22,10 +22,10 @@ export function useTaxForm(func) {
       let response = null;
       // 调用 API
       response = await (values.id
-        ? updateTaxApi({
+        ? modifyAccountApi({
             ...values,
           })
-        : createTaxApi({
+        : modifyAccountApi({
             ...values,
           }));
       func('refresh-tree');
@@ -37,7 +37,7 @@ export function useTaxForm(func) {
   };
 
   const [Drawer, drawerApi] = useIgourdDrawer({
-    title: t('tax.add-tax'),
+    title: t('chart-of-accounts.add-account-ledger'),
     appendToMain: true,
     class: 'w-1/2',
     async onOpenChange(isOpen, val) {
@@ -70,61 +70,60 @@ export function useTaxForm(func) {
         type: 'void',
         'x-component': 'FormLayout',
         properties: {
+          product_spec_name: {
+            type: 'string',
+            title: "{{t('chart-of-accounts.account-ledger')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Select',
+            'x-component-props': {
+              placeholder: "{{t('chart-of-accounts.account-ledger')}}",
+              clearable: true,
+            },
+            'x-reactions': ['{{useAsyncDataSource(getLeafLedgers)}}', {}],
+          },
+          code: {
+            type: 'string',
+            title: "{{t('chart-of-accounts.add-account-form.code')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Input',
+            'x-component-props': {
+              placeholder: "{{t('chart-of-accounts.add-account-form.code')}}",
+              clearable: true,
+            },
+          },
           name: {
             type: 'string',
-            title: "{{t('tax.tax-name')}}",
+            title: "{{t('chart-of-accounts.add-account-form.name')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-component-props': {
-              placeholder: "{{t('tax.tax-name')}}",
+              placeholder: "{{t('chart-of-accounts.add-account-form.name')}}",
               clearable: true,
             },
           },
-          tax_type: {
+          initial_balance: {
             type: 'string',
-            title: "{{t('tax.tax-type')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Select',
-            'x-component-props': {
-              placeholder: "{{t('tax.tax-type')}}",
-              clearable: true,
-            },
-            'x-reactions': ['{{useAsyncDataSource(loadTaxType)}}', {}],
-          },
-          taxation_office_tax_type: {
-            type: 'string',
-            title: "{{t('tax.taxation-office-tax-type')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Select',
-            'x-component-props': {
-              placeholder: "{{t('tax.taxation-office-tax-type')}}",
-              clearable: true,
-            },
-            'x-reactions': ['{{useAsyncDataSource(loadTaxationType)}}', {}],
-          },
-          calculation_type: {
-            type: 'string',
-            title: "{{t('tax.calculation-type')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Select',
-            'x-component-props': {
-              placeholder: "{{t('tax.calculation-type')}}",
-              clearable: true,
-            },
-            'x-reactions': ['{{useAsyncDataSource(loadCalculationType)}}', {}],
-          },
-          percentage: {
-            type: 'string',
-            title: "{{t('tax.percentage')}}",
-            required: true,
+            title:
+              "{{t('chart-of-accounts.add-account-form.initial-balance')}}",
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-component-props': {
-              placeholder: "{{t('tax.percentage')}}",
+              placeholder:
+                "{{t('chart-of-accounts.add-account-form.initial-balance')}}",
+              clearable: true,
+            },
+          },
+          end_balance: {
+            type: 'string',
+            title: "{{t('chart-of-accounts.add-account-form.end-balance')}}",
+            'x-decorator': 'FormItem',
+            'x-component': 'Input',
+            'x-component-props': {
+              placeholder:
+                "{{t('chart-of-accounts.add-account-form.end-balance')}}",
               clearable: true,
             },
           },
@@ -143,29 +142,12 @@ export function useTaxForm(func) {
       }),
     );
   };
-  const loadTaxType = async (field: { props: { name: string } }) => {
-    const enumData = await useLanguage('basics.accounting.tax-type-enum');
+  const getLeafLedgers = async (field: { props: { name: string } }) => {
+    const result = await getLeafLedgersApi();
     return new Promise((resolve) => {
-      resolve(enumData);
+      resolve(result);
     });
   };
-  const loadTaxationType = async (field: { props: { name: string } }) => {
-    const enumData = await useLanguage(
-      'basics.accounting.taxation-office-tax-type-enum',
-    );
-    return new Promise((resolve) => {
-      resolve(enumData);
-    });
-  };
-  const loadCalculationType = async (field: { props: { name: string } }) => {
-    const enumData = await useLanguage(
-      'basics.accounting.tax-calculation-type-enum',
-    );
-    return new Promise((resolve) => {
-      resolve(enumData);
-    });
-  };
-
   // 使用 useIgourdForm
   const { Form, formAPI } = useIgourdForm({
     useI18n,
@@ -177,12 +159,7 @@ export function useTaxForm(func) {
     effects() {
       // 使用 Formily 的 effects 监听表单值变化
     },
-    scope: {
-      useAsyncDataSource,
-      loadTaxType,
-      loadTaxationType,
-      loadCalculationType,
-    },
+    scope: { useAsyncDataSource, getLeafLedgers },
   });
   // 表单重置
   const resetForm = () => {

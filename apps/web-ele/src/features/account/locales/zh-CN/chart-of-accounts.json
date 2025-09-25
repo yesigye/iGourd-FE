@@ -23,9 +23,9 @@
   "is_enabled": "是否启用",
   "parent_ledger": "父级科目",
   "ledger_type": "科目类型",
-  "account_ledger": "科目",
+  "account-ledger": "科目",
   "sub_ledger": "子科目",
-  "add_account_ledger": "添加科目",
+  "add-account-ledger": "添加科目",
   "add_sub_ledger": "添加子科目",
   "edit_account_ledger": "编辑科目",
   "edit_sub_ledger": "编辑子科目",
@@ -52,5 +52,11 @@
   "balance_directions": {
     "debit": "借方",
     "credit": "贷方"
+  },
+  "add-account-form": {
+    "code": "账户号码",
+    "name": "账户名称",
+    "initial-balance": "期初余额",
+    "end-balance": "期末余额"
   }
 }

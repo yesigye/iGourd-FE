@@ -12,7 +12,7 @@ import { useI18n } from '@igourd/locales';
 
 import { useSubsidiaryLedger } from '@@/account/hooks';
 
-import { getLanguageDict } from '#/utils/language';
+import { useLanguage } from '#/hooks';
 
 import folderClose from '../../../../assets/inventory/folder-close.svg';
 import folderOpen from '../../../../assets/inventory/folder-open.svg';
@@ -78,7 +78,7 @@ const getTree = async () => {
 };
 // 获取分类数据及设置默认tab
 const accountLedgerCategoryEnum = async () => {
-  const enumData = await getLanguageDict(
+  const enumData = await useLanguage(
     'basics.accounting.account-ledger-category-enum',
   );
   tabsData.value = enumData;

@@ -1,12 +1,21 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 
-import { ElButton, ElTabPane, ElTabs, Page } from '@igourd/common-ui';
+import {
+  ElButton,
+  ElTabPane,
+  ElTabs,
+  Page,
+  useIgourdDrawer,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { useChartOfAccounts } from '@@/account/hooks';
 
-import { getLanguageDict } from '#/utils/language';
+import { useLanguage } from '#/hooks';
+
+import drawerSubject from '../../components/chart-of-accounts/drawer-subject.vue';
+import drawer from '../../components/chart-of-accounts/drawer.vue';
 
 defineOptions({
   name: 'IChartOfAccounts',
@@ -14,7 +23,16 @@ defineOptions({
 
 const { t } = useI18n();
 
-const { Grid, Drawer, handleEdit, handleBatchDelete, handleQueryTable } =
+const [Drawer, drawerApi] = useIgourdDrawer({
+  connectedComponent: drawer,
+  appendToMain: true,
+});
+const [DrawerSubject, drawerSubjectApi] = useIgourdDrawer({
+  connectedComponent: drawerSubject,
+  appendToMain: true,
+});
+
+const { Grid, handleEdit, handleBatchDelete, handleQueryTable } =
   useChartOfAccounts();
 
 // 页签数据
@@ -26,7 +44,7 @@ const currentCategoryEnum = ref();
 const isLoadGrid = ref(false);
 // 获取分类数据及设置默认tab
 const accountLedgerCategoryEnum = async () => {
-  const enumData = await getLanguageDict(
+  const enumData = await useLanguage(
     'basics.accounting.account-ledger-category-enum',
   );
   tabsData.value = enumData;
@@ -42,6 +60,12 @@ const handleTabClick = (tab) => {
   handleQueryTable({
     category: currentCategoryEnum.value.value,
   });
+};
+const handleAddAccount = () => {
+  drawerApi.setData(null).open();
+};
+const handleAddSubject = () => {
+  drawerSubjectApi.setData(null).open();
 };
 onMounted(async () => {
   accountLedgerCategoryEnum();
@@ -60,8 +84,11 @@ onMounted(async () => {
     </ElTabs>
     <Grid v-if="isLoadGrid">
       <template #table-title>
-        <ElButton type="primary" @click="handleEdit()">
+        <ElButton type="primary" @click="handleAddAccount()">
           {{ t('account.add_sub_ledger') }}
+        </ElButton>
+        <ElButton type="primary" @click="handleAddSubject()">
+          {{ t('chart-of-accounts.add-account-ledger') }}
         </ElButton>
       </template>
 
@@ -84,5 +111,6 @@ onMounted(async () => {
     </Grid>
 
     <Drawer />
+    <DrawerSubject />
   </Page>
 </template>
