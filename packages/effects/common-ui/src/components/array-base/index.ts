@@ -21,7 +21,13 @@ import {
 } from 'vue';
 
 // import { HandleDirective } from 'vue-slicksort'
-import { ArrowDown, ArrowUp, Delete, Rank } from '@element-plus/icons-vue';
+import {
+  ArrowDown,
+  ArrowUp,
+  Delete,
+  Plus,
+  Rank,
+} from '@element-plus/icons-vue';
 import { clone, isValid, uid } from '@formily/shared';
 import { FragmentComponent, useField, useFieldSchema } from '@formily/vue';
 import { ElButton } from 'element-plus';
@@ -235,7 +241,6 @@ const ArrayBaseAddition = defineComponent({
   setup(props, { attrs }) {
     const self = useField();
     const array = useArray();
-    const prefixCls = `${stylePrefix}-array-base`;
     return () => {
       if (!array) return null;
       if (array?.field.value.pattern !== 'editable') return null;
@@ -244,8 +249,9 @@ const ArrayBaseAddition = defineComponent({
         {
           ...attrs,
           ...props,
-          class: `${prefixCls}-addition`,
-          icon: 'qax-icon-Alone-Plus',
+          icon: Plus,
+          size: 'small',
+          type: 'text',
           onClick: (e) => {
             if (array.props?.disabled) return;
             const defaultValue = getDefaultValue(
@@ -281,6 +287,7 @@ const ArrayBaseRemove = defineComponent<
     const base = useArray();
     const prefixCls = `${stylePrefix}-array-base`;
     return () => {
+      const self = useField();
       if (base?.field.value.pattern !== 'editable') return null;
       return h(
         ElButton,
@@ -307,7 +314,7 @@ const ArrayBaseRemove = defineComponent<
           },
         },
         {
-          default: () => [props.title],
+          default: () => [self.value.title || props.title],
         },
       );
     };

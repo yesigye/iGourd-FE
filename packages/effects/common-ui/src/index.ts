@@ -21,6 +21,11 @@ export * from './formily';
 // export * from '@igourd-core/form-ui';
 
 export * from './ui';
+export {
+  onFieldChange,
+  onFieldInit,
+  onFieldInputValueChange,
+} from '@formily/core';
 export * from '@formily/reactive';
 export * from '@igourd-core/popup-ui';
 

@@ -3,19 +3,18 @@ import { useI18n } from '@igourd/locales';
 import { wareHouseProductSearch } from '#/features/inventory';
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
 
-export function useOrderForm() {
+export function useReturnForm() {
   const { t } = useI18n();
   const warehouse = useWarehouseSelect();
 
   const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
     drawerOptions: {
-      class: 'w-full',
-      appendToMain: true,
-      title: 'Hello',
+      class: 'w-80%',
+      title: t('returned.add-purchase-returned'),
     },
     formOptions: {
       initialValues: {
-        purchase_order_item_model_list: [{}],
+        purchase_order_item_model_list: [],
       },
       scope: {
         warehouse,
@@ -41,11 +40,11 @@ export function useOrderForm() {
             },
           },
           purchase_order_item_model_list: {
-            type: 'array',
+            type: 'void',
             title: '商品明细',
             'x-component': 'ProductTable',
             'x-component-props': {
-              mode: 'purchase',
+              mode: 'return',
               capabilities: [
                 'barcode',
                 'unit',
@@ -60,9 +59,9 @@ export function useOrderForm() {
               isReceiptMode: false,
               purchaseOrderSelected: false,
               // 可选：展示/校验库存
-              searchProducts: (keywords: string) => {
+              searchProducts: (keywors: string) => {
                 return wareHouseProductSearch({
-                  keywords,
+                  keywors,
                   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                   // @ts-ignore
                   warehouse_id: formAPI.values.warehouse_id,

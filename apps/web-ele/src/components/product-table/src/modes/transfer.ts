@@ -1,86 +1,70 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { ModePlugin } from '../types';
-
-import { calcLineAmounts } from '../core/calc-engine';
-import {
-  fromBaseQuantity,
-  handleQuantityChangeLocal,
-} from '../core/quantity-engine';
-
-const toNum = (v: any) =>
-  v === null || v === '' || Number.isNaN(+v) ? null : +v;
 
 export const TransferMode: ModePlugin = {
   id: 'transfer',
-  quantityBridge: {
-    legacyKeys: ['transfer_quantity'],
-    readDisplay(line, _ctx) {
-      if (toNum(line.display_quantity) !== null) return +line.display_quantity!;
-      const lv = toNum((line as any).transfer_quantity);
-      if (lv !== null) {
-        const unit = line.unit_code ?? 'minor';
-        const ratio = Math.max(+line.basic_unit_radio! || 1, 1);
-        return unit === 'major' ? lv / ratio : lv;
-      }
-      return fromBaseQuantity(line).display_quantity ?? null;
-    },
-    writeDisplayLocal(line, v, ctx) {
-      const next = handleQuantityChangeLocal({
-        ...line,
-        display_quantity: v ?? 0,
-      });
-      const unit = next.unit_code ?? 'minor';
-      const ratio = Math.max(+next.basic_unit_radio! || 1, 1);
-      const legacyVal =
-        unit === 'major'
-          ? +next.display_quantity! * ratio
-          : +next.display_quantity!;
-      (next as any).transfer_quantity = Number.isFinite(legacyVal)
-        ? legacyVal
-        : 0;
-      return calcLineAmounts(next, ctx.vatMode);
-    },
-  },
   columns(_ctx) {
     return [
       {
-        key: 'major_name',
+        name: 'major_name',
         title: '商品',
-        width: 260,
-        component: 'ProductTable.ProductCell',
-        decorator: 'FormItem',
-        required: true,
+        'x-component': 'ProductTable.ProductCell',
+        'x-decorator': 'FormItem',
+        'x-component-props': {
+          style: { width: 260 },
+        },
+        'x-decorator-props': {
+          required: true,
+        },
       },
       {
-        key: 'unit_select',
+        name: 'unit_select',
         title: '单位',
-        width: 160,
-        component: 'ProductTable.UnitCell',
-        decorator: 'FormItem',
+        'x-component': 'ProductTable.UnitCell',
+        'x-decorator': 'FormItem',
+        'x-component-props': {
+          style: { width: 160 },
+        },
       },
       {
-        key: 'sku_id',
+        name: 'sku_id',
         title: 'SKU',
-        width: 200,
-        component: 'ProductTable.SkuSelect',
-        decorator: 'FormItem',
+        'x-component': 'ProductTable.SkuSelect',
+        'x-decorator': 'FormItem',
+        'x-component-props': {
+          style: { width: 200 },
+        },
       },
       {
-        key: 'display_quantity',
+        name: 'display_quantity',
+        type: 'number',
         title: '调拨数量',
-        width: 140,
-        component: 'ProductTable.QuantityCell',
-        decorator: 'FormItem',
-        required: true,
-        props: { precision: 8 },
+        'x-component': 'ProductTable.QuantityCell',
+        'x-decorator': 'FormItem',
+        'x-component-props': {
+          style: { width: 140 },
+          precision: 8,
+        },
+        'x-decorator-props': {
+          required: true,
+        },
       },
       {
-        key: 'quantity_base',
+        name: 'quantity_base',
+        type: 'number',
         title: '基础数量',
-        width: 120,
-        component: 'ReadonlyNumber',
+        'x-component': 'ReadonlyNumber',
+        'x-component-props': {
+          style: { width: 120 },
+        },
       },
-      { key: 'remark', title: '备注', width: 180, component: 'Input' },
+      {
+        name: 'remark',
+        title: '备注',
+        'x-component': 'Input',
+        'x-component-props': {
+          style: { width: 180 },
+        },
+      },
     ];
   },
   handleEvent(_evt, data, _ctx) {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { Component, Ref } from 'vue';
 
 import type { ISchema } from '@igourd/common-ui';
@@ -43,7 +44,7 @@ export interface Service<T, P> {
     params: List<Partial<T>>['QueryParams'],
   ) => Promise<List<Partial<T>>['QueryResult']>;
   /** 获取详情方法，根据ID获取单条数据 */
-  detail: (id: number | string) => Promise<T>;
+  detail: (dto: T) => Promise<T>;
   /** 删除方法，批量删除数据 */
   drop: (ids: (number | string)[]) => {};
   /** 更新方法，更新单条数据 */
@@ -164,6 +165,7 @@ function useCrud<T extends object, P extends object>(
     'scope',
     'data',
     'connectedComponent',
+    'treeConfig',
   ]);
 
   // 确保代理配置存在
@@ -230,7 +232,13 @@ function useCrud<T extends object, P extends object>(
    * 打开抽屉并设置数据
    * @param dto - 要编辑的数据对象，可选
    */
-  const handleEdit = (dto?: T) => {
+  const handleEdit = async (dto?: T) => {
+    if (options.service?.detail && Reflect.ownKeys(dto ?? {}).length > 0) {
+      // @ts-ignore
+      const data = await options.service?.detail(dto);
+      drawerApi.setData(data ?? {}).open();
+      return;
+    }
     drawerApi.setData(dto ?? {}).open();
   };
 

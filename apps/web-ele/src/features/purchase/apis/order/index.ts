@@ -40,10 +40,7 @@ export function deletePurchaseOrderApi(data: PurchaseOrderRemoveVO) {
 }
 
 // 获取采购订单详情
-export function getPurchaseOrderDetailApi(data: {
-  merchant_id?: number;
-  order_id: number;
-}) {
+export function getPurchaseOrderDetailApi(data: { purchase_order_no: number }) {
   return requestClient.post(
     `/v1/merchant/purchase/purchase-order/detail`,
     data,

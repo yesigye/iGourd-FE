@@ -2,8 +2,8 @@ import type { Ctx, LineItem, ModePlugin, ProductTableEvent } from '../types';
 
 import { ScanCodeEntry } from '#/components';
 
-export const PurchaseMode: ModePlugin = {
-  id: 'purchase',
+export const ReceiptMode: ModePlugin = {
+  id: 'receipt',
 
   columns(_ctx) {
     return [
@@ -20,13 +20,6 @@ export const PurchaseMode: ModePlugin = {
         title: 'product_id',
         'x-component': 'PreviewText.Input',
         'x-hidden': true,
-        'x-reactions': {
-          fulfill: {
-            state: {
-              'x-hidden': true,
-            },
-          },
-        },
       },
       {
         name: 'major_name',
@@ -116,13 +109,22 @@ export const PurchaseMode: ModePlugin = {
         },
       },
       {
-        name: 'quantity',
+        name: 'received_quantity',
         type: 'number',
         title: '{{t("common.purchase.quantity")}}',
         'x-component': 'InputNumber',
         'x-decorator': 'FormItem',
         'x-component-props': {
           style: { width: 160 },
+          min: 0,
+        },
+        'x-reactions': {
+          fulfill: {
+            state: {
+              'x-component-props.max':
+                '{{$values?.purchase_order_no ? $record?.purchase_quantity : Number.MAX_SAFE_INTEGER}}',
+            },
+          },
         },
       },
       {
@@ -148,7 +150,6 @@ export const PurchaseMode: ModePlugin = {
   },
 
   mergeColumnsForRowSpan() {
-    // 复刻：按 product_barcode 合并某些列（示例用库存预警列）
     return [
       {
         columnKey: 'stock_warning_quantity',

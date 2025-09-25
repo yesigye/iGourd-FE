@@ -74,12 +74,6 @@ export function usePurchaseOrder() {
       title: t('order.cumulative-deposit'),
     },
     {
-      field: 'cumulative_deposit',
-      minWidth: 150,
-      align: 'center',
-      title: t('order.cumulative-deposit'),
-    },
-    {
       field: 'balance',
       minWidth: 150,
       align: 'center',
@@ -96,12 +90,6 @@ export function usePurchaseOrder() {
       minWidth: 150,
       align: 'center',
       title: t('order.creation-time'),
-    },
-    {
-      field: 'creation_time',
-      minWidth: 150,
-      align: 'center',
-      title: t('order.w/h-enter-status'),
     },
     {
       field: 'review_status',

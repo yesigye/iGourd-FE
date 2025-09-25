@@ -1,20 +1,25 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { Ctx, ProductTableEvent } from '../types';
+import type { Ctx } from '../types';
 
-import { defineComponent, h, onBeforeUnmount, provide } from 'vue';
+import { defineComponent, h, provide } from 'vue';
 
 import {
+  ArrayTable,
   composeExport,
-  onFieldInputValueChange,
-  onFieldValueChange,
   RecursionField,
   useField,
+  useFieldSchema,
+  useForm,
 } from '@igourd/common-ui';
 
 import { getMode, registerMode } from '../core/registry';
+import { createQuantityCalculationEffect } from '../effects/quantity-calculation-effect';
 import { PhysicalMode } from '../modes/physical';
 import { PurchaseMode } from '../modes/purchase';
+import { ReceiptMode } from '../modes/receipt';
+import { ReturnMode } from '../modes/return';
 import { SpoilageMode } from '../modes/spoilage';
+// import { StockMode } from '../modes/stock';
 import { TransferMode } from '../modes/transfer';
 import { ProductCell, QuantityCell, UnitCell } from './components';
 import SkuSelect from './components/sku-select.vue';
@@ -22,17 +27,20 @@ import { buildSchema } from './schema-builder';
 
 registerMode(PurchaseMode);
 registerMode(TransferMode);
+registerMode(ReceiptMode);
 registerMode(PhysicalMode);
 registerMode(SpoilageMode);
+registerMode(ReturnMode);
+// registerMode(StockMode);
 
-function addrToIndex(addr: any): number {
-  const segs = addr?.segments || [];
-  const idx =
-    typeof segs.at?.(-2) === 'number'
-      ? segs.at(-2)
-      : segs.findLast?.((s: any) => typeof s === 'number');
-  return typeof idx === 'number' ? idx : -1;
-}
+// function addrToIndex(addr: any): number {
+//   const segs = addr?.segments || [];
+//   const idx =
+//     typeof segs.at?.(-2) === 'number'
+//       ? segs.at(-2)
+//       : segs.findLast?.((s: any) => typeof s === 'number');
+//   return typeof idx === 'number' ? idx : -1;
+// }
 
 export const InnerProductTable = defineComponent({
   name: 'ProductTable',
@@ -53,6 +61,7 @@ export const InnerProductTable = defineComponent({
   } as any,
   setup(props: any) {
     const field = useField();
+    const form = useForm();
     const mode = getMode(props.mode);
     if (!mode) throw new Error(`Unknown ProductTable mode: ${props.mode}`);
     const ctx: Ctx = {
@@ -73,74 +82,39 @@ export const InnerProductTable = defineComponent({
       },
     };
     provide('ptCtx', ctx);
-
+    const filedSchema = useFieldSchema();
     // build schema
     const schema = buildSchema(mode.columns(ctx), ctx, {
       tableProps: {
         scrollbarAlwaysOn: true,
       },
     });
+    // @ts-ignore
+    filedSchema.value.setItems(schema.items);
+    // @ts-ignore
+    filedSchema.value.setProperties(schema.properties);
 
-    function dispatch(evt: ProductTableEvent) {
-      // @ts-ignore
-      const data = (field.value.form?.values?.[field.value.props.name] ??
-        []) as any[];
-      // @ts-ignore
-      const next = mode.handleEvent(evt, data, ctx);
-      if (next instanceof Promise) {
-        next.then((v) =>
-          field.value.form?.setValuesIn(field.value.props.name, v),
-        );
-      } else {
-        field.value.form?.setValuesIn(field.value.props.name, next);
-      }
-    }
-    const base = String(field.value.address);
-    const effectId = `PT-EFX-${base}`; // 保证唯一，避免重复注册
-
-    field.value.form?.addEffects(effectId, () => {
-      // 输入态：本地计算
-      onFieldInputValueChange(`${base}.*.quantity`, (f: any) => {
-        const i = addrToIndex(f.address);
-        if (i >= 0) {
-          // 注意：有的适配层把输入值放在 f.inputValue 或 f.inputValues，按你们库来
-          const val =
-            (f as any).inputValues ?? (f as any).inputValue ?? f.value;
-          dispatch({ type: 'QTY_CHANGE_LOCAL', index: i, value: val });
-        }
-      });
-
-      // 提交态：远端校验/补全
-      onFieldValueChange(`${base}.*.display_quantity`, (f: any) => {
-        const i = addrToIndex(f.address);
-        if (i >= 0)
-          dispatch({ type: 'QTY_CHANGE_COMMIT', index: i, value: f.value });
-      });
-
-      // 单位切换
-      onFieldValueChange(`${base}.*.unit_code`, (f: any) => {
-        const i = addrToIndex(f.address);
-        if (i >= 0) dispatch({ type: 'UNIT_CHANGE', index: i, unit: f.value });
-      });
-
-      // 价格变更
-      onFieldValueChange(`${base}.*.unit_price`, (f: any) => {
-        const i = addrToIndex(f.address);
-        if (i >= 0)
-          dispatch({ type: 'PRICE_CHANGE', index: i, value: f.value });
-      });
-    });
-
-    // 可选：组件卸载时清理（避免热更/多实例重复注册）
-    onBeforeUnmount(() => {
-      field.value.form?.removeEffects?.(effectId);
+    form.value.addEffects('0094ff', () => {
+      createQuantityCalculationEffect(
+        field.value.props.name as string,
+        ctx,
+        mode,
+      );
     });
 
     return () =>
-      h(RecursionField, {
-        schema,
-        name: field.value.props.name,
-      });
+      h(
+        ArrayTable as any,
+        {
+          scrollbarAlwaysOn: true,
+        },
+        {
+          default: () =>
+            h(RecursionField, {
+              schema: filedSchema.value,
+            }),
+        },
+      );
   },
 });
 export default InnerProductTable;

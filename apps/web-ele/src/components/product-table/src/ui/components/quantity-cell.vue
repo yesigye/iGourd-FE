@@ -1,23 +1,12 @@
 <script setup lang="ts">
-import { inject } from 'vue';
-
-import { ElInputNumber, useRecord } from '@igourd/common-ui';
-
-import { getMode } from '../../core/registry';
+import { ElInputNumber } from '@igourd/common-ui';
 
 const props = defineProps<{ modelValue: number | string }>();
 const emits = defineEmits(['update:modelValue']);
-const ctx = inject<any>('ptCtx', { services: {} });
-const mode = getMode(ctx.mode);
-const record = useRecord();
 
 function handleChange(val: number | undefined) {
   emits('update:modelValue', val);
-  record.value.total_amount = mode!.quantityBridge!.getTotalAmount?.(
-    val ?? 0,
-    record.value,
-    ctx,
-  );
+  // 金额计算现在由 Effect 系统自动处理，无需手动调用
 }
 </script>
 

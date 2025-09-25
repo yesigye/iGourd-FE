@@ -3,7 +3,7 @@ import { useI18n } from '@igourd/locales';
 import { wareHouseProductSearch } from '#/features/inventory';
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
 
-export function useOrderForm() {
+export function useReceiptForm() {
   const { t } = useI18n();
   const warehouse = useWarehouseSelect();
 
@@ -15,7 +15,7 @@ export function useOrderForm() {
     },
     formOptions: {
       initialValues: {
-        purchase_order_item_model_list: [{}],
+        goods_receipt_note_item_model_list: [{}],
       },
       scope: {
         warehouse,
@@ -29,6 +29,10 @@ export function useOrderForm() {
           layout: 'vertical',
         },
         properties: {
+          purchase_order_no: {
+            type: 'string',
+            'x-component': 'Input',
+          },
           warehouse_id: {
             type: 'string',
             'x-component': 'Select',
@@ -40,12 +44,11 @@ export function useOrderForm() {
               },
             },
           },
-          purchase_order_item_model_list: {
+          goods_receipt_note_item_model_list: {
             type: 'array',
-            title: '商品明细',
             'x-component': 'ProductTable',
             'x-component-props': {
-              mode: 'purchase',
+              mode: 'receipt',
               capabilities: [
                 'barcode',
                 'unit',
@@ -59,7 +62,6 @@ export function useOrderForm() {
               // 业务标记（用于单位禁用逻辑兼容旧条件）
               isReceiptMode: false,
               purchaseOrderSelected: false,
-              // 可选：展示/校验库存
               searchProducts: (keywords: string) => {
                 return wareHouseProductSearch({
                   keywords,

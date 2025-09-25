@@ -7,6 +7,8 @@ import type {
 
 import { requestClient } from '#/api/request';
 
+import { getPurchaseOrderDetailApi } from '..';
+
 const PURCHASE_RECEIPT_BASE_URL = '/v1/merchant/purchase/goods-receipt-note';
 
 // 获取收货单分页列表
@@ -32,11 +34,26 @@ export function deletePurchaseReceiptApi(data: PurchaseReceiptRemoveVO) {
 }
 
 // 获取收货单详情
-export function getPurchaseReceiptDetailApi(data: {
-  merchant_id?: number;
-  receipt_id: number;
-}) {
-  return requestClient.post(`${PURCHASE_RECEIPT_BASE_URL}/detail`, data);
+function receiptDetail(data: any) {
+  return requestClient
+    .post(`${PURCHASE_RECEIPT_BASE_URL}/list/detail`, data)
+    .then((res) => {
+      return res?.[0];
+    });
+}
+export function getPurchaseReceiptDetailApi({
+  goods_receipt_note_no,
+  purchase_order_no,
+}: any) {
+  return Promise.all([
+    receiptDetail({ goods_receipt_note_no, purchase_order_no }),
+    getPurchaseOrderDetailApi({ purchase_order_no }),
+  ]).then(([receipt, order]) => {
+    return {
+      ...order,
+      ...receipt,
+    };
+  });
 }
 
 // 审核收货单
