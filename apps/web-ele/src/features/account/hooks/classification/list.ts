@@ -9,8 +9,9 @@ import {
 import { ClassificationDrawer } from '@@/account/components';
 
 import { useCrud } from '#/hooks';
+import type { Ref } from 'vue';
 
-export function useClassification() {
+export function useClassification(filterType: Ref<string>) {
   const { t } = useI18n();
 
   // 基础列定义
@@ -63,33 +64,41 @@ export function useClassification() {
   // 服务函数
   const service = {
     // 获取列表数据
-    query: getFinanceCategoryListApi,
+    query: (params: { page_num: number; page_size: number; type: string }) =>
+      getFinanceCategoryListApi({ ...params, type: filterType.value }),
     // 删除分类
     remove: deleteFinanceCategoryApi,
   };
 
   // 使用 CRUD Hook
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
-    useCrud({
-      service,
-      columns: baseColumns,
-      searchFormSchema: {
-        keywords: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Input',
-          'x-component-props': {
-            placeholder: t('common.keywords'),
-          },
+  const {
+    Grid,
+    gridApi,
+    canBatchOperate,
+    Drawer,
+    handleEdit,
+    handleBatchDelete,
+  } = useCrud({
+    service,
+    columns: baseColumns,
+    searchFormSchema: {
+      keywords: {
+        type: 'string',
+        'x-decorator': 'FormItem',
+        'x-component': 'Input',
+        'x-component-props': {
+          placeholder: t('common.keywords'),
         },
       },
-      batchOperate: true,
-      connectedComponent: ClassificationDrawer,
-    });
+    },
+    batchOperate: true,
+    connectedComponent: ClassificationDrawer,
+  });
 
   return {
     // 组件
     Grid,
+    gridApi,
     Drawer,
 
     // 方法
