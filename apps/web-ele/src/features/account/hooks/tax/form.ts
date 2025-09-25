@@ -6,7 +6,8 @@ import { useUserStore } from '@igourd/stores';
 
 import { createTaxApi, updateTaxApi } from '@@/account/apis';
 
-import { getLanguageDict } from '#/utils/language';
+import { useLanguage } from '#/hooks';
+
 // 定义表单数据类型
 interface ProductLabelFormData {
   product_spec_name: string;
@@ -143,13 +144,13 @@ export function useTaxForm(func) {
     );
   };
   const loadTaxType = async (field: { props: { name: string } }) => {
-    const enumData = await getLanguageDict('basics.accounting.tax-type-enum');
+    const enumData = await useLanguage('basics.accounting.tax-type-enum');
     return new Promise((resolve) => {
       resolve(enumData);
     });
   };
   const loadTaxationType = async (field: { props: { name: string } }) => {
-    const enumData = await getLanguageDict(
+    const enumData = await useLanguage(
       'basics.accounting.taxation-office-tax-type-enum',
     );
     return new Promise((resolve) => {
@@ -157,7 +158,7 @@ export function useTaxForm(func) {
     });
   };
   const loadCalculationType = async (field: { props: { name: string } }) => {
-    const enumData = await getLanguageDict(
+    const enumData = await useLanguage(
       'basics.accounting.tax-calculation-type-enum',
     );
     return new Promise((resolve) => {
