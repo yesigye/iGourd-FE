@@ -9,12 +9,12 @@ export function useReturnForm() {
 
   const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
     drawerOptions: {
-      class: 'w-80%',
+      class: 'w-[80%]',
       title: t('returned.add-purchase-returned'),
     },
     formOptions: {
       initialValues: {
-        purchase_order_item_model_list: [],
+        purchase_returned_item_model_list: [{}],
       },
       scope: {
         warehouse,
@@ -39,9 +39,8 @@ export function useReturnForm() {
               },
             },
           },
-          purchase_order_item_model_list: {
-            type: 'void',
-            title: '商品明细',
+          purchase_returned_item_model_list: {
+            type: 'array',
             'x-component': 'ProductTable',
             'x-component-props': {
               mode: 'return',

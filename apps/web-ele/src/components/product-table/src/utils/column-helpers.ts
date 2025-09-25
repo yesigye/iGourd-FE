@@ -57,10 +57,8 @@ export const createBaseColumns = (): ColumnDescriptor[] => [
       dependencies: ['warehouse_id'],
       fulfill: {
         state: {
-          'x-component-props': {
-            dataSource: '{{ warehouse.value }}',
-            value: '{{$deps[0]}}',
-          },
+          dataSource: '{{ warehouse.value }}',
+          value: '{{$deps[0]}}',
         },
       },
     },

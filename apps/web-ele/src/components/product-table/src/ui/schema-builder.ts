@@ -34,7 +34,7 @@ function toSchemaColumn(desc: ColumnDescriptor): ISchema {
     'x-hidden': desc['x-hidden'],
     'x-component-props': {
       title: desc.title,
-      width: desc['x-component-props']?.style?.width,
+      width: desc['x-component-props']?.width,
       // 表头必填星标
       asterisk: desc['x-decorator-props']?.required,
     },

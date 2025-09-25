@@ -12,7 +12,7 @@ export const ReceiptMode: ModePlugin = {
         title: '{{t("common.purchase.product_code")}}',
         'x-component': 'PreviewText.Input',
         'x-component-props': {
-          style: { width: 160 },
+          width: 150,
         },
       },
       {
@@ -27,7 +27,7 @@ export const ReceiptMode: ModePlugin = {
         'x-component': 'ProductTable.ProductCell',
         'x-decorator': 'FormItem',
         'x-component-props': {
-          style: { width: 260 },
+          width: 260,
         },
         'x-decorator-props': {
           required: true,
@@ -41,7 +41,26 @@ export const ReceiptMode: ModePlugin = {
         title: '{{t("common.purchase.product_barcode")}}',
         'x-component': 'PreviewText.Input',
         'x-component-props': {
-          style: { width: 160 },
+          width: 160,
+        },
+      },
+      {
+        name: 'received_quantity',
+        type: 'number',
+        title: '{{t("common.purchase.quantity")}}',
+        'x-component': 'InputNumber',
+        'x-decorator': 'FormItem',
+        'x-component-props': {
+          width: 160,
+          min: 0,
+        },
+        'x-reactions': {
+          fulfill: {
+            state: {
+              'x-component-props.max':
+                '{{$values?.purchase_order_no ? $record?.purchase_quantity : Number.MAX_SAFE_INTEGER}}',
+            },
+          },
         },
       },
       {
@@ -50,7 +69,7 @@ export const ReceiptMode: ModePlugin = {
         'x-component': 'Select',
         'x-decorator': 'FormItem',
         'x-component-props': {
-          style: { width: 160 },
+          width: 160,
         },
         'x-reactions': {
           dependencies: ['warehouse_id'],
@@ -68,7 +87,7 @@ export const ReceiptMode: ModePlugin = {
         'x-component': 'ProductTable.UnitCell',
         'x-decorator': 'FormItem',
         'x-component-props': {
-          style: { width: 150 },
+          width: 150,
         },
       },
       {
@@ -77,7 +96,7 @@ export const ReceiptMode: ModePlugin = {
         'x-component': 'PreviewText.Input',
         'x-decorator': 'FormItem',
         'x-component-props': {
-          style: { width: 160 },
+          width: 160,
         },
         'x-reactions': {
           fulfill: {
@@ -92,7 +111,7 @@ export const ReceiptMode: ModePlugin = {
         title: '{{t("common.purchase.major_unit_name")}}',
         'x-component': 'PreviewText.Input',
         'x-component-props': {
-          style: { width: 100 },
+          width: 100,
         },
       },
       {
@@ -102,31 +121,13 @@ export const ReceiptMode: ModePlugin = {
         'x-component': 'PreviewText.Input',
         'x-decorator': 'FormItem',
         'x-component-props': {
-          style: { width: 140 },
+          width: 140,
         },
         'x-decorator-props': {
           required: true,
         },
       },
-      {
-        name: 'received_quantity',
-        type: 'number',
-        title: '{{t("common.purchase.quantity")}}',
-        'x-component': 'InputNumber',
-        'x-decorator': 'FormItem',
-        'x-component-props': {
-          style: { width: 160 },
-          min: 0,
-        },
-        'x-reactions': {
-          fulfill: {
-            state: {
-              'x-component-props.max':
-                '{{$values?.purchase_order_no ? $record?.purchase_quantity : Number.MAX_SAFE_INTEGER}}',
-            },
-          },
-        },
-      },
+
       {
         name: 'total_amount',
         type: 'number',
@@ -134,7 +135,7 @@ export const ReceiptMode: ModePlugin = {
         'x-component': 'PreviewText.Input',
         'x-decorator': 'FormItem',
         'x-component-props': {
-          style: { width: 200 },
+          width: 200,
         },
       },
       {
@@ -143,7 +144,7 @@ export const ReceiptMode: ModePlugin = {
         'x-component': 'PreviewText.Input',
         'x-decorator': 'FormItem',
         'x-component-props': {
-          style: { width: 200 },
+          width: 200,
         },
       },
     ];
