@@ -19,13 +19,7 @@ export const ReceiptMode: ModePlugin = {
         name: 'product_id',
         title: 'product_id',
         'x-component': 'PreviewText.Input',
-        'x-reactions': {
-          fulfill: {
-            state: {
-              'x-hidden': true,
-            },
-          },
-        },
+        'x-hidden': true,
       },
       {
         name: 'major_name',
@@ -62,7 +56,7 @@ export const ReceiptMode: ModePlugin = {
           dependencies: ['warehouse_id'],
           fulfill: {
             state: {
-              'x-component-props.dataSource': '{{ warehouse.value }}',
+              dataSource: '{{ warehouse.value }}',
               value: '{{$deps[0]}}',
             },
           },
@@ -156,7 +150,6 @@ export const ReceiptMode: ModePlugin = {
   },
 
   mergeColumnsForRowSpan() {
-    // 复刻：按 product_barcode 合并某些列（示例用库存预警列）
     return [
       {
         columnKey: 'stock_warning_quantity',
