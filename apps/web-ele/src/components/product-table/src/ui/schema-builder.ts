@@ -24,31 +24,28 @@ export type BuildSchemaOptions = {
 
 /** 单列 → Markup Schema：列 = ArrayTable.Column；列下挂实际字段组件 */
 function toSchemaColumn(desc: ColumnDescriptor): ISchema {
-  const component = desc.component ?? 'Input';
+  const fieldName = desc.name;
+
+  // 直接展开列定义，只添加 ArrayTable.Column 包装
   const node: ISchema = {
     type: 'void',
     'x-component': 'ArrayTable.Column',
-    'x-content': desc.headerContent,
-    'x-hidden': desc.hidden,
+    'x-content': desc['x-content'],
+    'x-hidden': desc['x-hidden'],
     'x-component-props': {
       title: desc.title,
-      width: desc.width,
-      align: desc.align,
-      // 表头必填星标（也可由内部 FormItem 的 required 自动控制）
-      asterisk: typeof desc.required === 'boolean' ? desc.required : undefined,
+      width: desc['x-component-props']?.style?.width,
+      // 表头必填星标
+      asterisk: desc['x-decorator-props']?.required,
     },
     properties: {
-      // 真正的单元格字段挂在列下面（官方 Markup Schema 风格）
+      // 直接展开字段定义，保持所有原有属性
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      [desc.key]: {
-        type: desc.type ?? 'string',
-        'x-decorator': desc.decorator ?? 'FormItem',
-        'x-component': component,
-        'x-component-props': desc.props ?? {},
-        'x-reactions': desc.reactions,
-        'x-validator': desc.validator,
-        'x-read-pretty': !!desc.readonly,
+      [fieldName]: {
+        ...desc, // 展开所有原始属性
+        name: fieldName,
+        title: undefined,
       },
     },
   };
@@ -74,10 +71,8 @@ export function buildSchema(
     addition = { title: '添加', method: 'push' },
     spanMethod,
   } = opts;
-  // 先按 visibleWhen 过滤列
-  const visCols = columns.filter((c) =>
-    c.visibleWhen ? !!c.visibleWhen(ctx) : true,
-  );
+  // 过滤列（目前所有列都显示）
+  const visCols = columns;
 
   // 构建列节点（每一列一个 ArrayTable.Column，列下即是字段）
   const colNodes: Record<string, ISchema> = {};
@@ -162,7 +157,6 @@ export function buildSchema(
   // 组装最终 schema（不再把字段折叠到 items.properties！）
   const schema: ISchema = {
     type: 'array',
-    'x-decorator': 'FormItem',
     'x-component': 'ArrayTable',
     'x-component-props': {
       ...tableProps,

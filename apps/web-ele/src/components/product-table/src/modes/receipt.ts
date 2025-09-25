@@ -2,118 +2,90 @@ import type { Ctx, LineItem, ModePlugin, ProductTableEvent } from '../types';
 
 import { ScanCodeEntry } from '#/components';
 
-const safeParseFloat = (value: number | string): number => {
-  if (typeof value === 'number') return value;
-  return Number.parseFloat(value) || 0;
-};
-
-const calculateTax = (baseAmount: number, taxConfig?: any): number => {
-  if (!taxConfig) return 0;
-
-  try {
-    switch (taxConfig.calculation_type) {
-      case 'FIXED_PER_UNIT': {
-        return safeParseFloat(taxConfig.tax_amount || 0);
-      }
-      case 'PERCENTAGE': {
-        return baseAmount * (safeParseFloat(taxConfig.percentage || 0) / 100);
-      }
-      default: {
-        return 0;
-      }
-    }
-  } catch (error) {
-    console.error('Tax calculation error:', error);
-    return 0;
-  }
-};
-
 export const ReceiptMode: ModePlugin = {
   id: 'receipt',
-
-  quantityBridge: {
-    getTotalAmount(value: number, row: LineItem, ctx: Ctx) {
-      const { cost_price } = row;
-      const subtotalAmount = value * cost_price;
-      let otherTaxAmount: number = 0;
-      let vatAmount: number = 0;
-      if (ctx.vatMode === 'VAT_EXCLUSIVE') {
-        vatAmount = calculateTax(subtotalAmount, row?.vat_tax);
-        otherTaxAmount = calculateTax(subtotalAmount, row?.other_tax);
-      }
-      const discountAmount =
-        subtotalAmount * (safeParseFloat(row.discount_percentage || 0) / 100);
-      const totalAmount =
-        subtotalAmount + vatAmount + otherTaxAmount - discountAmount;
-
-      return totalAmount.toFixed(2);
-    },
-  },
 
   columns(_ctx) {
     return [
       {
-        key: 'product_code',
-        type: 'string',
+        name: 'product_code',
         title: '{{t("common.purchase.product_code")}}',
-        width: 160,
-        component: 'PreviewText.Input',
+        'x-component': 'PreviewText.Input',
+        'x-component-props': {
+          style: { width: 160 },
+        },
       },
       {
-        key: 'product_id',
-        type: 'string',
+        name: 'product_id',
         title: 'product_id',
-        visibleWhen: (_ctx) => false,
+        'x-component': 'PreviewText.Input',
+        'x-reactions': {
+          fulfill: {
+            state: {
+              'x-hidden': true,
+            },
+          },
+        },
       },
       {
-        key: 'major_name',
-        type: 'string',
+        name: 'major_name',
         title: '{{t("common.purchase.major_name")}}',
-        width: 260,
-        component: 'ProductTable.ProductCell',
-        decorator: 'FormItem',
-        required: true,
-        headerContent: {
+        'x-component': 'ProductTable.ProductCell',
+        'x-decorator': 'FormItem',
+        'x-component-props': {
+          style: { width: 260 },
+        },
+        'x-decorator-props': {
+          required: true,
+        },
+        'x-content': {
           header: ScanCodeEntry,
         },
       },
       {
-        key: 'sku_barcode',
-        type: 'string',
+        name: 'sku_barcode',
         title: '{{t("common.purchase.product_barcode")}}',
-        width: 160,
-        component: 'PreviewText.Input',
+        'x-component': 'PreviewText.Input',
+        'x-component-props': {
+          style: { width: 160 },
+        },
       },
       {
-        key: 'ware_house',
+        name: 'ware_house',
         title: '{{t("common.warehouse")}}',
-        width: 160,
-        decorator: 'FormItem',
-        component: 'Select',
-        reactions: {
+        'x-component': 'Select',
+        'x-decorator': 'FormItem',
+        'x-component-props': {
+          style: { width: 160 },
+        },
+        'x-reactions': {
           dependencies: ['warehouse_id'],
           fulfill: {
             state: {
-              dataSource: '{{ warehouse.value }}',
+              'x-component-props.dataSource': '{{ warehouse.value }}',
               value: '{{$deps[0]}}',
             },
           },
         },
       },
       {
-        key: 'product_unit_code',
+        name: 'product_unit_code',
         title: '{{t("common.purchase.sub_product_stock_search_models")}}',
-        width: 150,
-        component: 'ProductTable.UnitCell',
-        decorator: 'FormItem',
+        'x-component': 'ProductTable.UnitCell',
+        'x-decorator': 'FormItem',
+        'x-component-props': {
+          style: { width: 150 },
+        },
       },
       {
-        key: 'basic_unit_radio',
+        name: 'basic_unit_radio',
         title: '{{t("common.purchase.basic_unit_radio")}}',
-        width: 160,
-        decorator: 'FormItem',
-        component: 'PreviewText.Input',
-        reactions: {
+        'x-component': 'PreviewText.Input',
+        'x-decorator': 'FormItem',
+        'x-component-props': {
+          style: { width: 160 },
+        },
+        'x-reactions': {
           fulfill: {
             state: {
               value: '{{$self.value ? "1:"+ $self.value: "" }}',
@@ -122,54 +94,63 @@ export const ReceiptMode: ModePlugin = {
         },
       },
       {
-        key: 'major_unit_name',
+        name: 'major_unit_name',
         title: '{{t("common.purchase.major_unit_name")}}',
-        width: 100,
-        component: 'PreviewText.Input',
+        'x-component': 'PreviewText.Input',
+        'x-component-props': {
+          style: { width: 100 },
+        },
       },
       {
-        key: 'cost_price',
+        name: 'cost_price',
         type: 'number',
         title: '{{t("common.purchase.cost_price")}}',
-        width: 140,
-        component: 'PreviewText.Input',
-        decorator: 'FormItem',
-        required: true,
+        'x-component': 'PreviewText.Input',
+        'x-decorator': 'FormItem',
+        'x-component-props': {
+          style: { width: 140 },
+        },
+        'x-decorator-props': {
+          required: true,
+        },
       },
       {
-        key: 'received_quantity',
+        name: 'received_quantity',
         type: 'number',
         title: '{{t("common.purchase.quantity")}}',
-        width: 160,
-        component: 'InputNumber',
-        componentProps: {
+        'x-component': 'InputNumber',
+        'x-decorator': 'FormItem',
+        'x-component-props': {
+          style: { width: 160 },
           min: 0,
         },
-        reactions: {
+        'x-reactions': {
           fulfill: {
             state: {
-              componentProps: {
-                max: '{{$values?.purchase_order_no ? $record?.purchase_quantity : Number.MAX_SAFE_INTEGER}}',
-              },
+              'x-component-props.max':
+                '{{$values?.purchase_order_no ? $record?.purchase_quantity : Number.MAX_SAFE_INTEGER}}',
             },
           },
         },
       },
-
       {
-        key: 'total_amount',
+        name: 'total_amount',
         type: 'number',
         title: '{{t("common.purchase.total_amount")}}',
-        width: 200,
-        component: 'PreviewText.Input',
-        decorator: 'FormItem',
+        'x-component': 'PreviewText.Input',
+        'x-decorator': 'FormItem',
+        'x-component-props': {
+          style: { width: 200 },
+        },
       },
       {
-        key: 'product_spec_kvmessage',
+        name: 'product_spec_kvmessage',
         title: '{{t("common.purchase.product_spec_kvmessage")}}',
-        width: 200,
-        component: 'PreviewText.Input',
-        decorator: 'FormItem',
+        'x-component': 'PreviewText.Input',
+        'x-decorator': 'FormItem',
+        'x-component-props': {
+          style: { width: 200 },
+        },
       },
     ];
   },

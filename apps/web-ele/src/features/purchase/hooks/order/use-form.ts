@@ -41,7 +41,7 @@ export function useOrderForm() {
             },
           },
           purchase_order_item_model_list: {
-            type: 'void',
+            type: 'array',
             title: '商品明细',
             'x-component': 'ProductTable',
             'x-component-props': {
@@ -59,20 +59,10 @@ export function useOrderForm() {
               // 业务标记（用于单位禁用逻辑兼容旧条件）
               isReceiptMode: false,
               purchaseOrderSelected: false,
-              // 业务服务
-              fetchProductByBarcode: (...args: any[]) => {
-                // console.log(`fetchProductByBarcode`, ...args);
-              }, // 必填：条码转商品
-              listSkusByProduct: (...args: any[]) => {
-                // console.log(`fetchProductByBarcode`, ...args);
-              }, // 建议：商品->SKU
-              fetchStockBySku: (...args: any[]) => {
-                // console.log(`fetchProductByBarcode`, ...args);
-              },
               // 可选：展示/校验库存
-              searchProducts: (keywors: string) => {
+              searchProducts: (keywords: string) => {
                 return wareHouseProductSearch({
-                  keywors,
+                  keywords,
                   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                   // @ts-ignore
                   warehouse_id: formAPI.values.warehouse_id,
