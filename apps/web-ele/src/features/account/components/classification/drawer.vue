@@ -1,5 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useClassificationForm } from '@@/account/hooks';
+
+const { Drawer, Form } = useClassificationForm();
+</script>
 
 <template>
-  <div>ddd</div>
+  <Drawer>
+    <Form />
+  </Drawer>
 </template>
