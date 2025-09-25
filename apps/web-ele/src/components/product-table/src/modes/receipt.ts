@@ -56,7 +56,7 @@ export const ReceiptMode: ModePlugin = {
           dependencies: ['warehouse_id'],
           fulfill: {
             state: {
-              'x-component-props.dataSource': '{{ warehouse.value }}',
+              dataSource: '{{ warehouse.value }}',
               value: '{{$deps[0]}}',
             },
           },
