@@ -6,6 +6,7 @@ import { useI18n } from '@igourd/locales';
 
 import {
   deletePurchaseReceiptApi,
+  getPurchaseReceiptDetailApi,
   getPurchaseReceiptPageListApi,
 } from '@@/purchase/apis';
 import { PurchaseReceiptDrawer } from '@@/purchase/components';
@@ -93,7 +94,7 @@ export function usePurchaseReceipt() {
   const service = {
     // 获取列表数据
     query: getPurchaseReceiptPageListApi,
-
+    detail: getPurchaseReceiptDetailApi,
     // 删除收货单
     remove: deletePurchaseReceiptApi,
   };

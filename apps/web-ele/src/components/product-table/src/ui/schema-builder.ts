@@ -29,6 +29,7 @@ function toSchemaColumn(desc: ColumnDescriptor): ISchema {
     type: 'void',
     'x-component': 'ArrayTable.Column',
     'x-content': desc.headerContent,
+    'x-hidden': desc.hidden,
     'x-component-props': {
       title: desc.title,
       width: desc.width,

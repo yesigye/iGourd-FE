@@ -142,6 +142,7 @@ export interface ColumnDescriptor {
   visibleWhen?: (ctx: Ctx) => boolean;
   readonly?: boolean;
   content?: any;
+  hidden?: boolean;
   headerContent?: any;
 }
 
