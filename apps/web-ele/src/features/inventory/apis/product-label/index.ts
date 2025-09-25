@@ -27,10 +27,31 @@ export function deleteProductLabel(params: {
 }
 
 /**
- * 创建或更新商品标签
+ * 创建商品标签
  */
-export function createOrUpdateProductLabel(params: any) {
-  return request.post('/inventory/product/label/create_or_update', params);
+export function createProductLabel(params: any) {
+  return request.post(
+    '/v1/merchant/basics/inventory/product-label/create',
+    params,
+  );
+}
+/**
+ * 修改商品标签
+ */
+export function updateProductLabel(params: any) {
+  return request.post(
+    '/v1/merchant/basics/inventory/product-label/modify',
+    params,
+  );
+}
+/**
+ * 删除商品标签
+ */
+export function removeProductLabel(params: any) {
+  return request.post(
+    '/v1/merchant/basics/inventory/product-label/remove',
+    params,
+  );
 }
 
 /**

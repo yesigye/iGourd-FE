@@ -1,10 +1,8 @@
 import type {
-  TaxQueryPageVO,
-  TaxPageModel,
   TaxCreateVO,
   TaxModifyVO,
+  TaxQueryPageVO,
   TaxRemoveVO,
-  TaxDetailModel,
 } from '@@/account/types';
 
 import { requestClient } from '#/api/request';
@@ -19,32 +17,23 @@ export function getTaxPageListApi(data: TaxQueryPageVO) {
 
 // 创建税务
 export function createTaxApi(data: TaxCreateVO) {
-  return requestClient.post(
-    `/v1/merchant/basics/accounting/tax/create`,
-    data,
-  );
+  return requestClient.post(`/v1/merchant/basics/accounting/tax/create`, data);
 }
 
 // 更新税务
 export function updateTaxApi(data: TaxModifyVO) {
-  return requestClient.post(
-    `/v1/merchant/basics/accounting/tax/modify`,
-    data,
-  );
+  return requestClient.post(`/v1/merchant/basics/accounting/tax/modify`, data);
 }
 
 // 删除税务
 export function deleteTaxApi(data: TaxRemoveVO) {
-  return requestClient.post(
-    `/v1/merchant/basics/accounting/tax/remove`,
-    data,
-  );
+  return requestClient.post(`/v1/merchant/basics/accounting/tax/remove`, data);
 }
 
 // 获取税务详情
-export function getTaxDetailApi(data: { tax_id: number; merchant_id?: number }) {
-  return requestClient.post(
-    `/v1/merchant/basics/accounting/tax/detail`,
-    data,
-  );
+export function getTaxDetailApi(data: {
+  merchant_id?: number;
+  tax_id: number;
+}) {
+  return requestClient.post(`/v1/merchant/basics/accounting/tax/detail`, data);
 }

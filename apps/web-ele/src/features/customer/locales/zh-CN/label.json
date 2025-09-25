@@ -1,42 +1,5 @@
 {
-  "labelName": "标签名称",
-  "labelCode": "标签编码",
-  "labelType": "标签类型",
-  "color": "颜色",
-  "sortOrder": "排序",
-  "customerCount": "客户数量",
-  "status": "状态",
-  "description": "描述",
-  "creatorName": "创建人",
-  "createTime": "创建时间",
-  "addCustomerLabel": "添加客户标签",
-  "editCustomerLabel": "编辑客户标签",
-  "customerLabelDetail": "客户标签详情",
-  "customerLabel": "客户标签",
-  "please_enter_label_name": "请输入标签名称",
-  "please_enter_label_code": "请输入标签编码",
-  "please_select_label_type": "请选择标签类型",
-  "please_select_color": "请选择颜色",
-  "please_enter_sort_order": "请输入排序",
-  "please_enter_description": "请输入描述",
-  "search": "搜索",
-  "searchPlaceholder": "请输入标签名称或编码",
-  "labelType": {
-    "category": "分类标签",
-    "status": "状态标签",
-    "level": "等级标签",
-    "behavior": "行为标签",
-    "preference": "偏好标签",
-    "other": "其他"
-  },
-  "color": {
-    "red": "红色",
-    "orange": "橙色",
-    "yellow": "黄色",
-    "green": "绿色",
-    "blue": "蓝色",
-    "purple": "紫色",
-    "pink": "粉色",
-    "gray": "灰色"
-  }
+  "curtomer-label": "客户标签",
+  "customer-qty": "客户数量",
+  "name": "客户名称"
 }

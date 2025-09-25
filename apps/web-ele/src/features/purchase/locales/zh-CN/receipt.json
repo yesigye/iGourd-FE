@@ -33,5 +33,13 @@
     "approved": "已审核",
     "received": "已收货",
     "cancelled": "已取消"
-  }
+  },
+
+  "no": "单号",
+  "date": "日期",
+  "name": "名称",
+  "warehouse": "仓库",
+  "purchase-order-no": "采购订单号",
+  "pay-status": "支付状态",
+  "vendor-name": "供应商名称"
 }

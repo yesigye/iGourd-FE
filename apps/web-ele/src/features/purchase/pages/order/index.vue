@@ -21,7 +21,11 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
         <ElButton type="primary" @click="handleEdit">
           {{ t('common.create') }}
         </ElButton>
-        <ElButton type="danger" v-if="canBatchOperate">
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          @click="handleBatchDelete"
+        >
           {{ t('common.delete') }}
         </ElButton>
       </template>

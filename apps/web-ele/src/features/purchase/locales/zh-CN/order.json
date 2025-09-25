@@ -43,5 +43,19 @@
     "received": "已收货",
     "settled": "已结算",
     "cancelled": "已取消"
-  }
+  },
+  "purchase-order-no": "采购订单号",
+  "purchase-date": "采购时间",
+  "vendor-name": "供应商名称",
+  "warehouse": "仓库",
+  "total-amount": "总金额",
+  "deposit": "定金",
+  "cumulative-deposit": "累计定金",
+  "balance": "余额",
+  "creator": "创建人",
+  "creation-time": "创建时间",
+  "w/h-enter-status": "仓库进入状态",
+  "review": "审核",
+  "search-placeholder": "请输入采购单号",
+  "confirm-delete": "确认删除选中的采购订单吗？"
 }

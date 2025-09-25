@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { ProductSpecValueItem } from '../../types/product-spec';
 
 import { computed } from 'vue';
 
 import { useI18n } from '@igourd/locales';
 
-import { getProductSpecList } from '@@/inventory/apis';
+import { getProductSpecValueList } from '@@/inventory/apis';
 
 import { useCrud } from '#/hooks';
 
@@ -45,12 +44,17 @@ export function useInventoryProductSpec() {
       title: t('common.action'),
       minWidth: 150,
       slots: {
-        default: 'operate',
+        default: 'operation',
       },
     },
   ]);
-
-  return useCrud({
+  let queryParam = '';
+  // 查询数据
+  const handleQueryTable = (qParam) => {
+    queryParam = qParam;
+    uCrud.gridApi.reload();
+  };
+  const uCrud = useCrud({
     // @ts-ignore
     columns: tableColumns.value,
     searchFormSchema: {
@@ -66,7 +70,15 @@ export function useInventoryProductSpec() {
       },
     },
     service: {
-      query: getProductSpecList,
+      query: async (data: {
+        date_range?: string[];
+        page_num: number;
+        page_size: number;
+      }) => {
+        const params = { ...data, product_spec_id: queryParam };
+        return await getProductSpecValueList(params);
+      },
     },
   });
+  return { ...uCrud, handleQueryTable };
 }

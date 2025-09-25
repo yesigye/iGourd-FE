@@ -1,86 +1,93 @@
-import type {
-  FirstGroupItem,
-  FirstGroupParams,
-} from '../../types/product-group';
+import type { ProductLabelItem, ProductLabelParams } from '@@/inventory/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
+import { useUserStore } from '@igourd/stores';
 
-import { getFirstGroupList } from '@@/inventory/apis';
-import { ProductGroupDrawer } from '@@/inventory/components';
+import { deleteProductLabel, getProductList } from '@@/inventory/apis';
 
 import { useCrud } from '#/hooks';
 
-export function useInventoryProductGroupList() {
+export function useProductGroupList() {
   const { t } = useI18n();
+  const { currentLoginUserApp } = useUserStore();
 
-  // 左侧表格列配置（一级分组）
-  const leftColumns: VxeGridPropTypes.Column<FirstGroupItem>[] = [
+  // 表格列配置 - 基于原有的 columnsVisible 数组
+  const columns: VxeGridPropTypes.Column<PurchaseCustomizedInfo>[] = [
     {
       type: 'checkbox',
       width: 80,
       fixed: 'left',
     },
     {
-      field: 'category',
-      title: t('product-group.category'),
-      minWidth: 150,
-      fixed: 'left',
+      field: 'product_group_name',
+      title: t('product-group.product-grid-product-group-name'),
+      minWidth: 170,
+      sortable: true,
+      align: 'left',
     },
     {
-      field: 'product',
-      title: t('product-group.product'),
-      minWidth: 150,
-      fixed: 'left',
+      field: 'major_name',
+      title: t('product-group.product-grid-major-name'),
+      minWidth: 170,
+      sortable: true,
+      align: 'left',
     },
     {
       field: 'product_code',
-      title: t('product-group.product_code'),
-      minWidth: 150,
-      fixed: 'left',
+      title: t('product-group.product-grid-product-code'),
+      minWidth: 170,
+      sortable: true,
+      align: 'left',
     },
     {
       field: 'status',
-      title: t('product-group.status'),
-      minWidth: 150,
-      fixed: 'left',
+      title: t('product-group.product-grid-status'),
+      minWidth: 170,
+      sortable: true,
+      align: 'left',
     },
     {
-      field: 'unit',
-      title: t('product-group.unit'),
-      minWidth: 150,
-      fixed: 'left',
+      field: 'major_unit_name',
+      title: t('product-group.product-grid-major-unit-name'),
+      minWidth: 170,
+      sortable: true,
+      align: 'left',
     },
     {
       field: 'operation',
-      title: t('common.action'),
-      minWidth: 135,
-      fixed: 'right',
-      slots: { default: 'leftOperation' },
+      title: t('common.operation'),
+      sortable: true,
+      minWidth: 180,
+      slots: { default: 'operation' },
     },
   ];
 
+  // 搜索表单配置 - 基于原有的 queryParams 对象
   const searchFormSchema = {
     keywords: {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('inventory.searchKeywords')}}",
+        placeholder: "{{t('common.keywords')}}",
         clearable: true,
       },
     },
   };
 
-  // 左侧表格 Hook
-  return useCrud<FirstGroupItem, FirstGroupParams>({
-    columns: leftColumns,
+  return useCrud<ProductLabelItem, ProductLabelParams>({
+    columns,
     searchFormSchema,
-    batchOperate: false,
-    connectedComponent: ProductGroupDrawer,
+    batchOperate: true,
     service: {
-      query: getFirstGroupList,
+      // @ts-ignore
+      query: getProductList,
+      // @ts-ignore
+      drop: deleteProductLabel,
+      create: '',
+      update: '',
     },
   });
 }

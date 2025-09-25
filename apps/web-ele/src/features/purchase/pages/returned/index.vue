@@ -19,7 +19,7 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
     <Grid>
       <template #table-title>
         <ElButton type="primary" @click="handleEdit()">
-          {{ t('purchase.addPurchaseReturned') }}
+          {{ t('returned.add-purchase-returned') }}
         </ElButton>
         <ElButton type="danger" v-if="canBatchOperate">
           {{ t('common.delete') }}

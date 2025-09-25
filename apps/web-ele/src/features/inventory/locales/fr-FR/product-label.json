@@ -15,5 +15,8 @@
   "confirmButton": "Confirmer",
   "cancelButton": "Annuler",
   "deleteSuccess": "Suppression Réussie",
-  "cancelDelete": "Annuler la Suppression"
+  "cancelDelete": "Annuler la Suppression",
+  "product-label-name": "Nom de l'Étiquette de Produit",
+  "add-product-label": "Ajouter Étiquette de Produit",
+  "please-enter-label-name": "Veuillez entrer le nom de l'étiquette de l'article"
 }

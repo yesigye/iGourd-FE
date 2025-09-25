@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { useIgourdDrawer } from '@igourd/common-ui';
+import { useCountForm } from '@@/inventory/hooks/count/form';
 
-const [Drawer, drawerApi] = useIgourdDrawer({
-  appendToMain: true,
-});
+const { Drawer, Form } = useCountForm();
 </script>
 <template>
-  <Drawer> dd </Drawer>
+  <Drawer>
+    <Form />
+  </Drawer>
 </template>

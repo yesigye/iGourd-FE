@@ -10,25 +10,42 @@ export function getFirstGroupList(params: any) {
 
 // 获取二级分组列表
 export function getSecondGroupList(params: any) {
-  return requestClient.get('/inventory/product-group/second-list', { params });
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/product-group/second/page-list',
+    params,
+  );
 }
 
 // 创建分组
 export function createGroup(data: any) {
-  return requestClient.post('/inventory/product-group/create', data);
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/product-group/create',
+    data,
+  );
 }
-
 // 更新分组
 export function updateGroup(data: any) {
-  return requestClient.put('/inventory/product-group/update', data);
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/product-group/modify',
+    data,
+  );
 }
 
 // 删除分组
-export function deleteGroup(data: any) {
-  return requestClient.delete('/inventory/product-group/delete', { data });
+export function removeGroup(data: any) {
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/product-group/remove',
+    data,
+  );
 }
 
 // 获取分组详情
 export function getGroupDetail(id: string) {
   return requestClient.get(`/inventory/product-group/${id}`);
+}
+// 查询分类父节点
+export function getParentList(id: string) {
+  return requestClient.post(
+    `/v1/merchant/basics/inventory/product-group/getParentList/${id}`,
+  );
 }

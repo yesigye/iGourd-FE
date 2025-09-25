@@ -1,21 +1,19 @@
 {
-  "customerName": "客户名称",
-  "customerCode": "客户编码",
-  "customerType": "客户类型",
-  "contactPerson": "联系人",
-  "contactPhone": "联系电话",
-  "contactEmail": "联系邮箱",
+  "basic-information": "基本信息",
+  "customer-name": "客户名称",
+  "customer-label": "客户标签",
+  "salesman": "业务员",
+  "image": "图片",
+  "contact-information": "联系人信息",
+  "contact-name": "联系人姓名",
+  "contact-telephone": "联系人电话",
+  "country": "国家",
+  "email": "邮箱",
+  "zip-code": "邮政编码",
   "address": "地址",
-  "status": "状态",
-  "addCustomer": "添加客户",
-  "editCustomer": "编辑客户",
-  "customerDetail": "客户详情",
-  "customerTypeOptions": {
-    "individual": "个人客户",
-    "enterprise": "企业客户"
-  },
-  "statusOptions": {
-    "active": "启用",
-    "inactive": "禁用"
-  }
+  "customized-information": "自定义信息",
+  "financial-information": "财务信息",
+  "price-level": "价格等级",
+  "remarks": "备注",
+  "add-customer": "添加客户"
 }

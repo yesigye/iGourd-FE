@@ -8,7 +8,12 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { getCustomerListApi, deleteCustomerApi } from '@@/customer/apis';
+import {
+  getCustomerPageListApi,
+  deleteCustomerDataApi,
+  createCustomerDataApi,
+  updateCustomerDataApi
+} from '@@/customer/apis';
 import { CustomerDrawerForm } from '@@/customer/components';
 
 import { useCrud } from '#/hooks';
@@ -187,8 +192,10 @@ export function useCustomerList() {
     batchOperate: true,
     connectedComponent: CustomerDrawerForm,
     service: {
-      query: getCustomerListApi,
-      drop: deleteCustomerApi,
+      query: getCustomerPageListApi,
+      drop: deleteCustomerDataApi,
+      create: createCustomerDataApi,
+      update: updateCustomerDataApi,
     },
   });
 }

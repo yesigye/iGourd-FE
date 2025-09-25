@@ -29,12 +29,15 @@ export function createWarehouseApi(data: any) {
 
 // 更新仓库
 export function updateWarehouseApi(data: any) {
-  return requestClient.post('/v1/merchant/warehouse/modify', data);
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/warehouse/modify',
+    data,
+  );
 }
 
 // 删除仓库
 export function deleteWarehouseApi(warehouse_id_list: (number | string)[]) {
-  return requestClient.post('/v1/merchant/warehouse/remove', {
+  return requestClient.post('/v1/merchant/basics/inventory/warehouse/remove', {
     warehouse_id_list,
   });
 }

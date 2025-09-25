@@ -1,18 +1,30 @@
 <script setup lang="ts">
-import type { ProductLabelItem } from '../../types';
+import type { ProductLabelItem } from '@@/inventory/types';
 
 import { onMounted, ref } from 'vue';
 
-import { ColPage, ElButton, ElRadio, ElRadioGroup } from '@igourd/common-ui';
+import {
+  ColPage,
+  confirm,
+  ElButton,
+  ElRadio,
+  ElRadioGroup,
+  useIgourdDrawer,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { getProductLabelList } from '../../apis/product-label';
-import { useInventoryProductLabelList } from '../../hooks/product-label/list';
+import { getProductLabelList, removeProductLabel } from '@@/inventory/apis';
+import { useInventoryProductLabelList } from '@@/inventory/hooks';
+
+import drawer from '../../components/product-label/drawer.vue';
 
 defineOptions({
   name: 'IInventoryProductLabel',
 });
-
+const [Drawer, drawerApi] = useIgourdDrawer({
+  connectedComponent: drawer,
+  appendToMain: true,
+});
 const { t } = useI18n();
 const { Grid, handleEdit, canBatchOperate, handleBatchDelete } =
   useInventoryProductLabelList();
@@ -44,6 +56,33 @@ const handleProductDetail = async (row: any) => {
 const handleClose = () => {
   productShow.value = false;
 };
+const handleAddLabel = () => {
+  drawerApi.setData(null).open();
+};
+const handleEditLabel = (item) => {
+  drawerApi.setData(item).open();
+};
+const handleRemove = async (item) => {
+  confirm({
+    title: t('common.prompt'),
+    content: t('common.confirmPrompt', {
+      value: t('product-label.add-product-label'),
+    }),
+  }).then(
+    async () => {
+      removeProductLabel({
+        product_label_ids: [item.id],
+      }).then(() => {
+        handleGetProductLabelList();
+      });
+    },
+    () => {},
+  );
+};
+const refreshTree = () => {
+  handleGetProductLabelList();
+};
+
 onMounted(() => {
   handleGetProductLabelList();
 });
@@ -53,19 +92,36 @@ onMounted(() => {
   <ColPage auto-content-height>
     <template #left="{ isCollapsed, expand }">
       <section class="bg-card mb-5 h-full rounded p-2.5">
-        <p class="mb-5 text-sm font-medium">
+        <p class="flex justify-between text-sm font-medium">
           {{ t('product-label.product-label') }}
+          <ElButton type="primary" @click="handleAddLabel">
+            {{ t('common.add') }}
+          </ElButton>
         </p>
         <!-- 分类树 -->
         <div>
-          <ElRadioGroup class="flex-col" v-model="selectedLabelId">
-            <div>
+          <ElRadioGroup v-model="selectedLabelId" class="label-box w-full">
+            <div class="w-full">
               <ElRadio
                 label="1"
                 v-for="item in productLabelList"
                 :key="item.id"
+                style="display: flex"
+                :value="item.id"
               >
-                {{ item.name }}
+                <div class="inline-flex w-full items-center">
+                  <div class="flex-1">{{ item.name }}</div>
+                  <div class="show-opertion text-right">
+                    <i
+                      class="iconfont icon-icon_Edit mr-4"
+                      @click="handleEditLabel(item)"
+                    ></i>
+                    <i
+                      class="iconfont icon-icon_del"
+                      @click="handleRemove(item)"
+                    ></i>
+                  </div>
+                </div>
               </ElRadio>
             </div>
           </ElRadioGroup>
@@ -74,6 +130,7 @@ onMounted(() => {
     </template>
     <Grid>
       <template #table-title>
+        <!--
         <ElButton
           v-auth="'inventory_product_label_add'"
           type="primary"
@@ -82,6 +139,7 @@ onMounted(() => {
           <i class="iconfont icon-tianjia-dianpu mr-1"></i>
           {{ t('employee.addButton') }}
         </ElButton>
+        -->
         <ElButton
           v-if="canBatchOperate"
           v-auth="'inventory_product_label_delete'"
@@ -116,6 +174,7 @@ onMounted(() => {
         </ElButton>
       </template>
     </Grid>
+    <Drawer @refresh-tree="refreshTree" />
 
     <!-- 商品详情弹窗 -->
     <el-dialog
@@ -134,5 +193,22 @@ onMounted(() => {
 <style scoped>
 .icon-buy {
   cursor: pointer;
+}
+
+:deep(.label-box .el-radio__label) {
+  display: block;
+  width: 100%;
+}
+
+:deep(.label-box .el-radio) {
+  margin-right: 0;
+}
+
+.show-opertion {
+  display: none;
+}
+
+.el-radio.is-checked .show-opertion {
+  display: flex;
 }
 </style>

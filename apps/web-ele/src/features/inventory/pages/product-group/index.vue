@@ -1,93 +1,118 @@
 <script setup lang="ts">
-import type { Tree } from 'element-plus/es/components/tree-v2/src/types.mjs';
-
 import { onMounted, ref } from 'vue';
 
-import { ColPage, ElButton, ElTree } from '@igourd/common-ui';
+import {
+  ColPage,
+  confirm,
+  ElButton,
+  ElTree,
+  useIgourdDrawer,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { getFirstGroupList } from '../../apis/product-group';
-import { useInventoryProductGroupList } from '../../hooks/product-group/list';
+import {
+  getFirstGroupList,
+  getSecondGroupList,
+  removeGroup,
+} from '@@/inventory/apis';
+import { useProductGroupList } from '@@/inventory/hooks';
+
+import folderClose from '../../../../assets/inventory/folder-close.svg';
+import folderOpen from '../../../../assets/inventory/folder-open.svg';
+import drawer from '../../components/product-group/drawer.vue';
 
 defineOptions({
   name: 'IInventoryProductGroup',
 });
 
 const { t } = useI18n();
-const dataSource = ref<Tree[]>([
-  {
-    id: 1,
-    label: 'Level one 1',
-    children: [
-      {
-        id: 4,
-        label: 'Level two 1-1',
-        children: [
-          {
-            id: 9,
-            label: 'Level three 1-1-1',
-          },
-          {
-            id: 10,
-            label: 'Level three 1-1-2',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 2,
-    label: 'Level one 2',
-    children: [
-      {
-        id: 5,
-        label: 'Level two 2-1',
-      },
-      {
-        id: 6,
-        label: 'Level two 2-2',
-      },
-    ],
-  },
-  {
-    id: 3,
-    label: 'Level one 3',
-    children: [
-      {
-        id: 7,
-        label: 'Level two 3-1',
-      },
-      {
-        id: 8,
-        label: 'Level two 3-2',
-      },
-    ],
-  },
-]);
 const productGroupData = ref({
   list: [],
   page_num: 1,
   page_size: 10,
   total: 0,
 });
+const treeRef = ref();
+
+const { Grid, handleEdit } = useProductGroupList();
+const [Drawer, drawerApi] = useIgourdDrawer({
+  connectedComponent: drawer,
+  appendToMain: true,
+});
+
 // 获取一级分类
-const getFirstLevelCategory = async () => {
-  const result = await getFirstGroupList({ page_num: 1, page_size: 10 });
+const getFirstLevelCategory = async (resolve) => {
+  const result = await getFirstGroupList({
+    page_num: productGroupData.value.page_num,
+    page_size: 10,
+  });
   const list = result.list;
   let treeList = [];
   // 将list处理成element-plus的tree数据格式
   treeList = list.map((item) => ({
+    ...item,
     id: item.id,
     label: item.major_name,
     children: [],
+    leaf: !item.has_children,
   }));
+
   productGroupData.value.list = treeList;
-  productGroupData.value.total = result.total;
+  resolve && resolve(treeList);
 };
-const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
-  useInventoryProductGroupList();
+const loadNode = async (node, resolve) => {
+  const { level } = node;
+  if (level == 0) {
+    getFirstLevelCategory(resolve);
+    return;
+  }
+  const result = await getSecondGroupList({
+    parent_id: node.data.id,
+    page_num: productGroupData.value.page_num,
+    page_size: 10,
+  });
+  const list = result.list;
+  const treeList = list.map((item) => ({
+    ...item,
+    id: item.id,
+    label: item.major_name,
+    leaf: !item.has_children,
+  }));
+
+  resolve(treeList);
+};
+const handleAddGroup = (item) => {
+  drawerApi.setData(null).open();
+};
+const handleEditGroup = (node) => {
+  drawerApi.setData(node.data).open();
+};
+const handleRemove = async (node) => {
+  confirm({
+    title: t('common.prompt'),
+    content: t('common.confirmPrompt', {
+      value: t('product-group.category'),
+    }),
+  }).then(
+    async () => {
+      const params = {
+        product_group_ids: [node.data.id],
+      };
+      removeGroup(params).then(() => {
+        getFirstLevelCategory();
+      });
+    },
+    () => {
+      console.log('cancle');
+    },
+  );
+};
+const refreshTree = () => {
+  getFirstLevelCategory();
+};
+
 onMounted(async () => {
-  await getFirstLevelCategory();
+  getFirstLevelCategory();
 });
 </script>
 
@@ -95,48 +120,60 @@ onMounted(async () => {
   <ColPage auto-content-height>
     <template #left="{ isCollapsed, expand }">
       <section class="bg-card h-full rounded p-2.5">
-        <p class="text-sm font-medium">
-          {{ t('product-group.product_category') }}
+        <p class="flex justify-between text-sm font-medium">
+          {{ t('product-group.product-category') }}
+          <ElButton type="primary" @click="handleAddGroup">
+            {{ t('common.add') }}
+          </ElButton>
         </p>
         <!-- 分类树 -->
         <div class="mt-5">
-          <ElTree :data="productGroupData.list" node-key="id">
+          <ElTree
+            ref="treeRef"
+            node-key="id"
+            :data="productGroupData.list"
+            :load="loadNode"
+            lazy
+            @node-click="handleNodeClick"
+          >
             <template #default="{ node, data }">
-              <span>{{ node.label }}</span>
+              <div class="inline-flex w-full items-center">
+                <div class="inline-flex flex-1">
+                  <img :src="data.expanded ? folderOpen : folderClose" alt="" />
+                  <span class="pl-1">{{ node.label }}</span>
+                </div>
+                <div class="show-opertion">
+                  <i
+                    class="iconfont icon-icon_Edit mr-4"
+                    @click.stop="handleEditGroup(node)"
+                  ></i>
+                  <i
+                    class="iconfont icon-icon_del"
+                    @click.stop="handleRemove(node)"
+                  ></i>
+                </div>
+              </div>
             </template>
           </ElTree>
-          <p
-            class="text-center"
-            v-if="productGroupData.total > productGroupData.list.length"
-          >
-            <ElButton type="primary" link>加载更多</ElButton>
-          </p>
         </div>
       </section>
     </template>
     <Grid>
-      <template #table-title>
-        <ElButton type="primary" @click="handleEdit()">
-          {{ t('common.add') }}
-        </ElButton>
-        <ElButton
-          type="danger"
-          v-if="canBatchOperate"
-          @click="handleBatchDelete"
-        >
-          {{ t('common.delete') }}
-        </ElButton>
-      </template>
-
       <template #operation="{ row }">
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleBatchDelete(row)">
-          {{ t('common.delete') }}
-        </ElButton>
       </template>
     </Grid>
-    <Drawer />
+    <Drawer @refresh-tree="refreshTree" />
   </ColPage>
 </template>
+<style scoped>
+.show-opertion {
+  display: none;
+}
+
+.el-tree-node:hover .show-opertion {
+  display: flex;
+}
+</style>

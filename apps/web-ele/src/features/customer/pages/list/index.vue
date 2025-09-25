@@ -5,7 +5,7 @@ import { useI18n } from '@igourd/locales';
 import { useCustomerList } from '@@/customer/hooks';
 
 defineOptions({
-  name: 'ICustomerList',
+  name: 'IPurchaseCustomized',
 });
 
 const { t } = useI18n();
@@ -18,7 +18,7 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
     <Grid>
       <template #table-title>
         <ElButton type="primary" @click="handleEdit()">
-          {{ t('customer.addCustomer') }}
+          {{ t('common.create') }}
         </ElButton>
         <ElButton
           type="danger"
@@ -32,11 +32,9 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleEdit(row)">
-          {{ t('common.detail') }}
-        </ElButton>
       </template>
     </Grid>
     <Drawer />
   </Page>
 </template>
+

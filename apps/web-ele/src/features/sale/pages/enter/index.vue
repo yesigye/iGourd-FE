@@ -1,18 +1,22 @@
+<script setup lang="ts">
+import { ElButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useSaleEnter } from '@@/sale/hooks';
+
+defineOptions({
+  name: 'ISaleEnter',
+});
+
+const { t } = useI18n();
+
+const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
+  useSaleEnter();
+</script>
+
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-title>
-        <ElButton type="primary">
-          {{ t('sale.addSaleEnter') }}
-        </ElButton>
-        <ElButton
-          type="danger"
-          v-if="canBatchOperate"
-        >
-          {{ t('common.delete') }}
-        </ElButton>
-      </template>
-
       <template #operation="{ row }">
         <ElButton type="text">
           {{ t('common.detail') }}
@@ -24,10 +28,7 @@
         >
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton
-          v-if="row.status === 'DRAFT'"
-          type="text"
-        >
+        <ElButton v-if="row.status === 'DRAFT'" type="text">
           {{ t('sale.confirm') }}
         </ElButton>
         <ElButton
@@ -43,24 +44,3 @@
     <Drawer />
   </Page>
 </template>
-
-<script setup lang="ts">
-import { ElButton, Page } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-
-import { useSaleEnter } from '@@/sale/hooks';
-
-defineOptions({
-  name: 'ISaleEnter',
-});
-
-const { t } = useI18n();
-
-const {
-  Grid,
-  Drawer,
-  handleEdit,
-  handleBatchDelete,
-  canBatchOperate,
-} = useSaleEnter();
-</script>
