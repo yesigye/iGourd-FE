@@ -298,6 +298,29 @@ function useCrud<T extends object, P extends object>(
         gridApi.reload();
       });
   };
+  // 行删除
+  const handleDelete = (ids) => {
+    // 设置表格加载状态
+    gridApi.setLoading(true);
+    // 显示确认对话框
+    confirm({
+      title: t('common.delete-confirm-title'),
+      content: t('common.delete-confirm-text'),
+    })
+      .then(() => {
+        // 调用服务的删除方法
+        return options.service?.drop(ids);
+      })
+      .then(() => {
+        // 重新加载表格数据
+        gridApi.reload();
+      })
+      .finally(() => {
+        // 无论成功失败，都取消加载状态并重新加载数据
+        gridApi.setLoading(false);
+        gridApi.reload();
+      });
+  };
 
   // 提供表格API和服务给子组件使用
   provide(Symbol.for('PageGrid'), { gridApi, service: options.service });
@@ -314,6 +337,7 @@ function useCrud<T extends object, P extends object>(
     handleBatchDelete, // 批量删除处理函数
     handleCreate: handleEdit, // 创建处理函数（复用编辑函数）
     handleCancel, // 取消订单处理函数
+    handleDelete,
   };
 }
 

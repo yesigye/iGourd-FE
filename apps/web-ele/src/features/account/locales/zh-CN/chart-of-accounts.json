@@ -57,7 +57,7 @@
     "code": "账户号码",
     "name": "账户名称",
     "initial-balance": "期初余额",
-    "end-balance": "期末余额"
+    "closing-balance": "期末余额"
   },
   "add-subject-form": {
     "ledger-type": "账户类别",

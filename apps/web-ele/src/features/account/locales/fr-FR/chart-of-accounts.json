@@ -52,5 +52,22 @@
   "balance_directions": {
     "debit": "Débit",
     "credit": "Crédit"
+  },
+  "add-account-form": {
+    "code": "Code de compte",
+    "name": "Nom du compte",
+    "initial-balance": "Solde d'ouverture",
+    "closing-balance": "Solde de fermeture"
+  },
+  "add-subject-form": {
+    "ledger-type": "Type de registre",
+    "parent-ledger": "Grand livre parent",
+    "balance-direction": "Sens du solde",
+    "account-status": "Statut du compte",
+    "account-type": "Type de comptabilité",
+    "quantity-accounting": "Comptabilité quantitative",
+    "auxiliary-accounting": "Comptabilité auxiliaire",
+    "foreign-currency-accounting": "Comptabilité en devises étrangères",
+    "auxiliary-accounting-required_child_message": "Configuration de la comptabilité auxiliaire"
   }
 }
