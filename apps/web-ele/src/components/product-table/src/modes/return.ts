@@ -19,7 +19,7 @@ export const ReturnMode: ModePlugin = {
 
     // 在cost_price列后插入数量列
     const costPriceIndex = baseColumns.findIndex(
-      (col) => col.name === 'cost_price',
+      (col) => col.name === 'sku_barcode',
     );
     const columns = [...baseColumns];
     columns.splice(costPriceIndex + 1, 0, quantityColumn);
@@ -28,7 +28,6 @@ export const ReturnMode: ModePlugin = {
   },
 
   mergeColumnsForRowSpan() {
-    // 复刻：按 product_barcode 合并某些列（示例用库存预警列）
     return [
       {
         columnKey: 'stock_warning_quantity',

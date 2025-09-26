@@ -3,7 +3,14 @@ import type { StyleValue } from 'vue';
 
 import type { PageProps } from './types';
 
-import { computed, nextTick, onMounted, ref, useTemplateRef } from 'vue';
+import {
+  computed,
+  nextTick,
+  onMounted,
+  provide,
+  ref,
+  useTemplateRef,
+} from 'vue';
 
 import { CSS_VARIABLE_LAYOUT_CONTENT_HEIGHT } from '@igourd-core/shared/constants';
 import { cn } from '@igourd-core/shared/utils';
@@ -18,6 +25,8 @@ const { autoContentHeight = false, heightOffset = 0 } =
 const headerHeight = ref(0);
 const footerHeight = ref(0);
 const shouldAutoHeight = ref(false);
+
+provide(Symbol.for('Page.FooterHeight'), footerHeight);
 
 const headerRef = useTemplateRef<HTMLDivElement>('headerRef');
 const footerRef = useTemplateRef<HTMLDivElement>('footerRef');

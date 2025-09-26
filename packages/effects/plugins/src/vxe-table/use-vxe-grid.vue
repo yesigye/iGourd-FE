@@ -14,9 +14,11 @@ import type { ExtendedVxeGridApi, VxeGridProps } from './types';
 
 import {
   computed,
+  inject,
   nextTick,
   onMounted,
   onUnmounted,
+  ref,
   toRaw,
   useSlots,
   useTemplateRef,
@@ -309,6 +311,7 @@ async function init() {
   // form 由 igourd-form 代替，所以需要保证query相关事件可以拿到参数
   extendProxyOptions(props.api, defaultGridOptions, () => formApi.values);
 }
+const footerHeight = inject(Symbol.for('Page.FooterHeight'), ref(0));
 
 // // formOptions支持响应式
 // watch(
@@ -348,7 +351,10 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div :class="cn('bg-card h-full rounded-md', className)">
+  <div
+    :class="cn('bg-card rounded-md', className)"
+    :style="{ height: `calc(100% - ${footerHeight}px)` }"
+  >
     <VxeGrid
       ref="gridRef"
       :class="

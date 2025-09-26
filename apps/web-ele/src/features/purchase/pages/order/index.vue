@@ -60,5 +60,8 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
       </template>
     </Grid>
     <Drawer />
+    <template #footer>
+      <div>总计：100T</div>
+    </template>
   </Page>
 </template>

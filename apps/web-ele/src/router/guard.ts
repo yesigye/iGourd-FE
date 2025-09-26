@@ -8,7 +8,7 @@ import { startProgress, stopProgress } from '@igourd/utils';
 
 import { loadFeatureLocal, loadRemoteLocale } from '#/locales';
 import { accessRoutes, coreRouteNames } from '#/router/routes';
-import { useAuthStore } from '#/store';
+import { useAppStore, useAuthStore } from '#/store';
 
 import { generateAccess } from './access';
 
@@ -50,9 +50,9 @@ function setupAccessGuard(router: Router) {
     const accessStore = useAccessStore();
     const userStore = useUserStore();
     const authStore = useAuthStore();
+    const appStore = useAppStore();
     const { token_id, user_id, owner_id, owner_type, language, ...other } =
       to.query;
-    const loginAgain = !!token_id;
     // 基本路由，这些路由不需要进入权限拦截
     if (coreRouteNames.includes(to.name as string)) {
       if (to.path === LOGIN_PATH && accessStore.accessToken) {
@@ -96,6 +96,7 @@ function setupAccessGuard(router: Router) {
     if (!userStore.userInfo) {
       await authStore.fetchUserInfo();
     }
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const userInfo = userStore.userInfo!;
     const userRoles = userInfo.roles ?? [];
     // 是否已经生成过动态路由
@@ -112,7 +113,7 @@ function setupAccessGuard(router: Router) {
     // 保存菜单信息和路由信息
     accessStore.setAccessMenus(accessibleMenus);
     accessStore.setAccessRoutes(accessibleRoutes);
-
+    await appStore.fetchApps();
     return {
       path: to.path,
       replace: true,
