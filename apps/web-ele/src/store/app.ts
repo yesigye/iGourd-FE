@@ -46,7 +46,7 @@ export const useAppStore = defineStore('store', {
       this.setApps(res);
       const merchantInfo = res.find(
         // @ts-ignore
-        (item) => item.owner_id === userStore.owner_id,
+        (item) => item.merchant_id === userStore.owner_id,
       );
       userStore.setMerchantInfo(merchantInfo);
     },
