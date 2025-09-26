@@ -1,20 +1,14 @@
 <script setup lang="ts">
-import type { CheckboxValueType } from 'element-plus';
-
-import type { Ref } from 'vue';
-
 import { computed, nextTick, reactive, ref, watch, watchEffect } from 'vue';
 
 import { ArrowRight, Filter } from '@igourd/icons';
 
 import {
   ElButton,
-  ElCheckbox,
   ElForm,
   ElFormItem,
   ElIcon,
   ElInput,
-  ElLink,
   ElMessage,
   ElOption,
   ElPagination,
@@ -53,7 +47,7 @@ export interface Column<T = KV> {
 export interface FetchParams {
   page_num: number;
   page_size: number;
-  keywords?: string;
+  keyword?: string;
   /** Popover filters */
   filters?: KV;
   /** Column header filters */
@@ -85,34 +79,25 @@ export interface TopFilterField {
  */
 const props = withDefaults(
   defineProps<{
-    /** columns used for both sides */
     columns: Column[];
     excludeSelectedFromLeft?: boolean;
-    /** fetch rows by ids (用于跨页全选批量拉取) */
-    // eslint-disable-next-line vue/require-default-prop
-    fetchByIds?: (ids: Array<number | string>) => Promise<KV[]>;
-    /** fetcher for LEFT table (available list) */
-    fetchLeft: (params: FetchParams) => Promise<PageResult>;
-    /** fetcher for RIGHT table (selected list) */
-    // eslint-disable-next-line vue/require-default-prop
-    fetchRight?: (params: FetchParams) => Promise<PageResult>;
-    /** 提供当前筛选条件下的全部 ID（用于跨页全选） */
-    // eslint-disable-next-line vue/require-default-prop
-    getAllIdsUnderFilter?: (
-      params: Omit<FetchParams, 'page' | 'pageSize'>,
-    ) => Promise<Array<number | string>>;
-    /** optional action column on LEFT */
-    // eslint-disable-next-line vue/require-default-prop
+    fetchLeft: (
+      params: FetchParams,
+    ) => Promise<
+      KV[] | PageResult | { count?: number; items: KV[]; total?: number }
+    >;
+    fetchRight?: (
+      params: FetchParams,
+    ) => Promise<
+      KV[] | PageResult | { count?: number; items: KV[]; total?: number }
+    >;
     leftActionColumn?: { label?: string; width?: number };
     leftTitle?: string;
-    /** v-model value: selected rows on the RIGHT table */
     modelValue: KV[];
     pageSize?: number;
     rightTitle?: string;
-    /** unique key in each row */
     rowKey: string;
     searchPlaceholder?: string;
-    /** top popover filter fields */
     topFilterFields?: TopFilterField[];
   }>(),
   {
@@ -154,7 +139,7 @@ watch(
   () => props.modelValue,
   (v) => {
     value.value = [...v];
-    right.refresh();
+    rightRefresh();
   },
 );
 const valueIds = computed(() => value.value.map((r) => r[props.rowKey]));
@@ -170,37 +155,22 @@ const leftSelection = ref<KV[]>([]);
 const leftTableRef = ref<any>();
 
 /** ****************************
- * Cross-page select state
- */
-const cross = reactive({
-  allSelected: false,
-  idSet: new Set<any>(),
-});
-
-function clearCrossSelected() {
-  cross.allSelected = false;
-  cross.idSet.clear();
-  // also clear visual selections
-  nextTick(() => syncLeftPageSelections());
-}
-
-/** ****************************
- * Composables: pagination/fetcher
+ * Pager helper (page_num/page_size)
  */
 function usePager(
-  fetcher: (p: FetchParams) => Promise<PageResult>,
+  fetcher: (p: FetchParams) => Promise<any>,
   getExtra: () => Partial<FetchParams> = () => ({}),
 ) {
-  const page: Ref<number> = ref(1);
+  const pageNum = ref(1);
   const pageSize = ref(props.pageSize);
-  const total: Ref<number> = ref<number>(0);
-  const data: Ref<KV[]> = ref<KV[]>([]);
-  const loading = ref<boolean>(false);
+  const total = ref(0);
+  const data = ref<KV[]>([]);
+  const loading = ref(false);
 
   const getParams = (): FetchParams => ({
-    page_num: page.value,
+    page_num: pageNum.value,
     page_size: pageSize.value,
-    keywords: debouncedKeyword.value,
+    keyword: debouncedKeyword.value,
     filters: topFilters,
     columnFilters,
     ...getExtra(),
@@ -209,25 +179,27 @@ function usePager(
   async function refresh() {
     loading.value = true;
     try {
-      const res = await fetcher(getParams());
-      data.value = res.list || [];
-      total.value = res.total || 0;
+      const raw = await fetcher(getParams());
+      const { list, total: ttl } = normalizePageResult(raw);
+      data.value = list;
+      total.value = ttl;
       await nextTick();
-      syncLeftPageSelections();
     } catch (error: any) {
       ElMessage.error(error?.message || '加载失败');
+      data.value = [];
+      total.value = 0;
     } finally {
       loading.value = false;
     }
   }
 
   function resetToFirstPageThenRefresh() {
-    page.value = 1;
+    pageNum.value = 1;
     refresh();
   }
 
   return {
-    page,
+    pageNum,
     pageSize,
     total,
     data,
@@ -238,7 +210,9 @@ function usePager(
   };
 }
 
-// debounce keyword
+/** ****************************
+ * debounce keyword
+ */
 const debouncedKeyword = ref('');
 let keywordTimer: any;
 watch(
@@ -247,16 +221,25 @@ watch(
     clearTimeout(keywordTimer);
     keywordTimer = setTimeout(() => {
       debouncedKeyword.value = v;
-      clearCrossSelected();
-      left.resetToFirstPageThenRefresh();
+      leftResetToFirstPageThenRefresh();
     }, 300);
   },
   { immediate: false },
 );
 
-// LEFT pager
-const left = usePager(async (params) => {
-  // optionally exclude selected from left list
+/** ****************************
+ * LEFT pager
+ */
+const {
+  pageNum: leftPageNum,
+  pageSize: leftPageSize,
+  total: leftTotal,
+  data: leftData,
+  loading: leftLoading,
+  refresh: leftRefresh,
+  resetToFirstPageThenRefresh: leftResetToFirstPageThenRefresh,
+  getParams: leftGetParams,
+} = usePager(async (params) => {
   const real = { ...params } as FetchParams;
   if (props.excludeSelectedFromLeft && valueIds.value.length > 0) {
     (real as any).excludeIds = valueIds.value;
@@ -264,31 +247,62 @@ const left = usePager(async (params) => {
   return props.fetchLeft(real);
 });
 
-// RIGHT pager (query by ids)
-const right = usePager(async (params) => {
+/** ****************************
+ * RIGHT pager (query by ids)
+ */
+const {
+  pageNum: rightPageNum,
+  pageSize: rightPageSize,
+  total: rightTotal,
+  data: rightData,
+  loading: rightLoading,
+  refresh: rightRefresh,
+  resetToFirstPageThenRefresh: rightResetToFirstPageThenRefresh,
+} = usePager(async (params) => {
   if (props.fetchRight) {
-    return props.fetchRight({ ...params, ids: valueIds.value });
+    const raw = await props.fetchRight({ ...params, ids: valueIds.value });
+    return normalizePageResult(raw);
   }
-  // fallback: simple local paging if no fetchRight provided
   const start = (params.page_num - 1) * params.page_size;
   const end = start + params.page_size;
   return { list: value.value.slice(start, end), total: value.value.length };
 });
 
-// 清空跨页选择：当筛选项变化时
+// 列内/顶部筛选变化时刷新
 watch(
   () => ({
     k: debouncedKeyword.value,
     tf: JSON.stringify(topFilters),
     cf: JSON.stringify(columnFilters),
   }),
-  () => clearCrossSelected(),
+  () => leftResetToFirstPageThenRefresh(),
 );
 
 watchEffect(() => {
-  left.refresh();
-  right.refresh();
+  leftRefresh();
+  rightRefresh();
 });
+
+/** ****************************
+ * Result normalizer
+ */
+function normalizePageResult(res: any): { list: any[]; total: number } {
+  if (Array.isArray(res)) return { list: res, total: res.length };
+  if (Array.isArray(res?.list))
+    return {
+      list: res.list,
+      total:
+        Number(res.total ?? res.count ?? res.list.length) || res.list.length,
+    };
+  if (Array.isArray(res?.items))
+    return {
+      list: res.items,
+      total:
+        Number(res.total ?? res.count ?? res.items.length) || res.items.length,
+    };
+  console.warn('[TransferTable] unexpected PageResult shape:', res);
+  return { list: [], total: 0 };
+}
 
 /** ****************************
  * Remote option loaders
@@ -316,64 +330,6 @@ async function loadColumnRemoteOptions(col: Column, q: string) {
 }
 
 /** ****************************
- * Cross-page select handlers
- */
-async function onToggleAllAcrossPages(val: CheckboxValueType) {
-  if (!val) {
-    clearCrossSelected();
-    return;
-  }
-  if (!props.getAllIdsUnderFilter) {
-    ElMessage.warning('请提供 getAllIdsUnderFilter 以启用跨页全选');
-    cross.allSelected = false;
-    return;
-  }
-  try {
-    const p = left.getParams();
-    // 取当前筛选条件（不需要分页）
-    const { keywords, filters, columnFilters } = p;
-    const ids = await props.getAllIdsUnderFilter({
-      keywords,
-      filters,
-      columnFilters,
-    } as any);
-    cross.idSet = new Set(ids);
-    // 视觉选中当前页
-    await nextTick();
-    syncLeftPageSelections();
-  } catch (error: any) {
-    cross.allSelected = false;
-    ElMessage.error(error?.message || '跨页全选失败');
-  }
-}
-
-function syncLeftPageSelections() {
-  if (!leftTableRef.value) return;
-  // 清空当前页选择，再根据 idSet 设置
-  leftTableRef.value.clearSelection();
-  if (!cross.allSelected || cross.idSet.size === 0) return;
-  (left.data as any).value?.forEach((row: KV) => {
-    const checked = cross.idSet.has(row[props.rowKey]);
-    if (checked) leftTableRef.value.toggleRowSelection(row, true);
-  });
-}
-
-async function addCrossSelected() {
-  const ids = [...cross.idSet];
-  const toAddIds = ids.filter((id) => !valueIds.value.includes(id));
-  if (toAddIds.length === 0) {
-    ElMessage.info('没有新的可添加项');
-    return;
-  }
-  if (!props.fetchByIds) {
-    ElMessage.warning('未提供 fetchByIds，无法根据 ID 批量拉取数据');
-    return;
-  }
-  const rows = await props.fetchByIds(toAddIds);
-  addRows(rows);
-}
-
-/** ****************************
  * Helpers & actions
  */
 function resetTopFilters() {
@@ -384,8 +340,7 @@ function clearAll() {
   keyword.value = '';
   resetTopFilters();
   Object.keys(columnFilters).forEach((k) => delete columnFilters[k]);
-  clearCrossSelected();
-  left.resetToFirstPageThenRefresh();
+  leftResetToFirstPageThenRefresh();
 }
 
 function renderCell(col: Column, row: KV, index: number) {
@@ -401,7 +356,6 @@ function leftRowClass({ row }: { row: KV }) {
 }
 
 function leftSelectable(row: KV) {
-  // 已在右侧选中的，左侧禁用勾选
   return !valueIds.value.includes(row[props.rowKey]);
 }
 
@@ -416,21 +370,20 @@ function addRows(rows: KV[]) {
   const merged = uniqByKey([...value.value, ...rows], props.rowKey);
   setValue(merged);
   leftSelection.value = [];
-  right.resetToFirstPageThenRefresh();
-  // 刷新左侧（以隐藏已选）
-  left.refresh();
+  rightResetToFirstPageThenRefresh();
+  leftRefresh();
 }
 
 function removeRow(row: KV) {
   const id = row[props.rowKey];
   const next = value.value.filter((r) => r[props.rowKey] !== id);
   setValue(next);
-  right.refresh();
-  left.refresh();
+  rightRefresh();
+  leftRefresh();
 }
 
 // expose refresh for parent if needed
-defineExpose({ refreshLeft: left.refresh, refreshRight: right.refresh });
+defineExpose({ leftRefresh, rightRefresh });
 </script>
 
 <template>
@@ -442,15 +395,16 @@ defineExpose({ refreshLeft: left.refresh, refreshRight: right.refresh });
         :placeholder="searchPlaceholder"
         class="w-[360px]"
         clearable
-        @keyup.enter="left.refresh()"
+        @keyup.enter="leftRefresh()"
       >
         <template #append>
-          <ElButton :loading="left.loading" @click="left.refresh()">
+          <ElButton :loading="leftLoading" @click="leftRefresh()">
             Search
           </ElButton>
         </template>
       </ElInput>
 
+      <!-- 顶部可选的高级筛选（保留 Popover，仅针对顶部，不影响列内筛选） -->
       <ElPopover placement="bottom-start" trigger="click" width="420">
         <template #reference>
           <ElButton text :icon="Filter">筛选</ElButton>
@@ -459,14 +413,12 @@ defineExpose({ refreshLeft: left.refresh, refreshRight: right.refresh });
           <ElForm label-width="96px" :model="topFilters">
             <template v-for="f in topFilterFields" :key="f.key as string">
               <ElFormItem :label="f.label">
-                <!-- input -->
                 <ElInput
                   v-if="f.type === 'input'"
                   v-model="topFilters[f.key]"
                   :placeholder="f.placeholder || '输入关键字'"
                   clearable
                 />
-                <!-- static select -->
                 <ElSelect
                   v-else-if="f.type === 'select'"
                   v-model="topFilters[f.key]"
@@ -483,7 +435,6 @@ defineExpose({ refreshLeft: left.refresh, refreshRight: right.refresh });
                     :value="opt.value"
                   />
                 </ElSelect>
-                <!-- remote select -->
                 <ElSelect
                   v-else-if="f.type === 'remote-select'"
                   v-model="topFilters[f.key]"
@@ -511,7 +462,7 @@ defineExpose({ refreshLeft: left.refresh, refreshRight: right.refresh });
             <ElButton
               size="small"
               type="primary"
-              @click="left.resetToFirstPageThenRefresh()"
+              @click="leftResetToFirstPageThenRefresh()"
             >
               应用
             </ElButton>
@@ -521,7 +472,7 @@ defineExpose({ refreshLeft: left.refresh, refreshRight: right.refresh });
 
       <ElButton text @click="clearAll">Clear</ElButton>
       <div class="flex-1"></div>
-      <div class="text-primary font-medium">
+      <div class="font-medium text-blue-600">
         已选择 {{ valueIds.length }} 项
       </div>
     </div>
@@ -535,45 +486,29 @@ defineExpose({ refreshLeft: left.refresh, refreshRight: right.refresh });
           {{ leftTitle }}
         </div>
 
-        <!-- Cross-page select bar -->
-        <div class="flex items-center gap-3 border-b px-3 py-2 text-sm">
-          <ElCheckbox
-            v-model="cross.allSelected"
-            @change="onToggleAllAcrossPages"
-          >
-            全选本次查询（共 {{ left.total }} 条）
-          </ElCheckbox>
-          <ElLink
-            v-if="cross.allSelected"
-            type="primary"
-            @click="addCrossSelected"
-          >
-            添加已全选
-          </ElLink>
-          <ElLink
-            v-if="cross.allSelected"
-            type="danger"
-            @click="clearCrossSelected"
-          >
-            取消全选
-          </ElLink>
-        </div>
         <ElTable
           ref="leftTableRef"
-          v-loading="left.loading"
-          :data="left.data"
-          :row-key="props.rowKey"
+          v-loading="leftLoading"
+          :data="leftData || []"
           border
           height="420"
+          :row-key="props.rowKey"
+          :reserve-selection="true"
           @selection-change="(rows: any[]) => (leftSelection = rows)"
           :row-class-name="leftRowClass"
         >
+          <!-- 选择列：不显示“本页全选”复选框 -->
           <ElTableColumn
             type="selection"
             width="48"
             :selectable="leftSelectable"
-          />
+          >
+            <template #header>
+              <span></span>
+            </template>
+          </ElTableColumn>
 
+          <!-- 动态列：表头下追加一行筛选控件（非 Popover） -->
           <template v-for="col in columns" :key="col.prop as string">
             <ElTableColumn
               :prop="col.prop as string"
@@ -583,85 +518,64 @@ defineExpose({ refreshLeft: left.refresh, refreshRight: right.refresh });
               :sortable="col.sortable || false"
             >
               <template #header>
-                <div class="flex items-center gap-1">
-                  <span>{{ col.label }}</span>
-                  <ElPopover
-                    v-if="col.filter"
-                    placement="bottom-start"
-                    trigger="click"
-                    width="260"
-                  >
-                    <template #reference>
-                      <ElButton text :icon="Filter" class="h-5 p-0" />
-                    </template>
-                    <div class="space-y-2">
-                      <!-- input filter -->
-                      <ElInput
-                        v-if="col.filter?.type === 'input'"
-                        v-model="columnFilters[col.prop as string]"
-                        :placeholder="col.filter?.placeholder || '输入关键字'"
-                        clearable
+                <div class="flex flex-col gap-1">
+                  <span class="truncate">{{ col.label }}</span>
+                  <div v-if="col.filter">
+                    <!-- input filter -->
+                    <ElInput
+                      v-if="col.filter?.type === 'input'"
+                      v-model="columnFilters[col.prop as string]"
+                      size="small"
+                      :placeholder="col.filter?.placeholder || '输入关键字'"
+                      clearable
+                      @input="leftResetToFirstPageThenRefresh()"
+                      @clear="leftResetToFirstPageThenRefresh()"
+                    />
+                    <!-- static select filter -->
+                    <ElSelect
+                      v-else-if="col.filter?.type === 'select'"
+                      v-model="columnFilters[col.prop as string]"
+                      filterable
+                      clearable
+                      :multiple="col.filter?.multiple"
+                      class="w-full"
+                      size="small"
+                      @change="leftResetToFirstPageThenRefresh()"
+                      @clear="leftResetToFirstPageThenRefresh()"
+                    >
+                      <ElOption
+                        v-for="opt in col.filter?.options || []"
+                        :key="opt.value"
+                        :label="opt.label"
+                        :value="opt.value"
                       />
-                      <!-- static select filter -->
-                      <ElSelect
-                        v-else-if="col.filter?.type === 'select'"
-                        v-model="columnFilters[col.prop as string]"
-                        filterable
-                        clearable
-                        :multiple="col.filter?.multiple"
-                        class="w-full"
-                      >
-                        <ElOption
-                          v-for="opt in col.filter?.options || []"
-                          :key="opt.value"
-                          :label="opt.label"
-                          :value="opt.value"
-                        />
-                      </ElSelect>
-                      <!-- remote select filter -->
-                      <ElSelect
-                        v-else-if="col.filter?.type === 'remote-select'"
-                        v-model="columnFilters[col.prop as string]"
-                        filterable
-                        remote
-                        clearable
-                        :multiple="col.filter?.multiple"
-                        :remote-method="
-                          (q: string) => loadColumnRemoteOptions(col, q)
-                        "
-                        :loading="columnRemoteLoading[col.prop as string]"
-                        class="w-full"
-                      >
-                        <ElOption
-                          v-for="opt in columnRemoteOptions[
-                            col.prop as string
-                          ] || []"
-                          :key="opt.value"
-                          :label="opt.label"
-                          :value="opt.value"
-                        />
-                      </ElSelect>
-                      <div class="flex justify-end gap-2">
-                        <ElButton
-                          size="small"
-                          @click="
-                            () => {
-                              columnFilters[col.prop as string] = undefined;
-                            }
-                          "
-                        >
-                          清除
-                        </ElButton>
-                        <ElButton
-                          size="small"
-                          type="primary"
-                          @click="left.resetToFirstPageThenRefresh()"
-                        >
-                          应用
-                        </ElButton>
-                      </div>
-                    </div>
-                  </ElPopover>
+                    </ElSelect>
+                    <!-- remote select filter -->
+                    <ElSelect
+                      v-else-if="col.filter?.type === 'remote-select'"
+                      v-model="columnFilters[col.prop as string]"
+                      filterable
+                      remote
+                      clearable
+                      :multiple="col.filter?.multiple"
+                      :remote-method="
+                        (q: string) => loadColumnRemoteOptions(col, q)
+                      "
+                      :loading="columnRemoteLoading[col.prop as string]"
+                      class="w-full"
+                      size="small"
+                      @change="leftResetToFirstPageThenRefresh()"
+                      @clear="leftResetToFirstPageThenRefresh()"
+                    >
+                      <ElOption
+                        v-for="opt in columnRemoteOptions[col.prop as string] ||
+                        []"
+                        :key="opt.value"
+                        :label="opt.label"
+                        :value="opt.value"
+                      />
+                    </ElSelect>
+                  </div>
                 </div>
               </template>
               <template #default="scope">
@@ -689,11 +603,11 @@ defineExpose({ refreshLeft: left.refresh, refreshRight: right.refresh });
           <ElPagination
             background
             layout="prev, pager, next, sizes, jumper"
-            :total="left.total"
-            v-model:current-page="left.page"
-            v-model:page-size="left.pageSize"
-            @current-change="left.refresh"
-            @size-change="left.resetToFirstPageThenRefresh"
+            :total="leftTotal"
+            v-model:current-page="leftPageNum"
+            v-model:page-size="leftPageSize"
+            @current-change="leftRefresh"
+            @size-change="leftResetToFirstPageThenRefresh"
           />
         </div>
       </div>
@@ -701,10 +615,8 @@ defineExpose({ refreshLeft: left.refresh, refreshRight: right.refresh });
       <!-- MIDDLE actions -->
       <div class="flex flex-col justify-center gap-2">
         <ElButton
-          :disabled="cross.allSelected ? false : leftSelection.length === 0"
-          @click="
-            cross.allSelected ? addCrossSelected() : addRows(leftSelection)
-          "
+          :disabled="leftSelection.length === 0"
+          @click="addRows(leftSelection)"
         >
           <ElIcon><ArrowRight /></ElIcon>
         </ElButton>
@@ -717,12 +629,13 @@ defineExpose({ refreshLeft: left.refresh, refreshRight: right.refresh });
         >
           {{ rightTitle }}
         </div>
+
         <ElTable
-          :row-key="props.rowKey"
-          v-loading="right.loading"
-          :data="right.data"
+          v-loading="rightLoading"
+          :data="rightData || []"
           border
           height="420"
+          :row-key="props.rowKey"
         >
           <template v-for="col in columns" :key="`r-${col.prop as string}`">
             <ElTableColumn
@@ -749,11 +662,11 @@ defineExpose({ refreshLeft: left.refresh, refreshRight: right.refresh });
           <ElPagination
             background
             layout="prev, pager, next, sizes, jumper"
-            :total="right.total"
-            v-model:current-page="right.page"
-            v-model:page-size="right.pageSize"
-            @current-change="right.refresh"
-            @size-change="right.resetToFirstPageThenRefresh"
+            :total="rightTotal"
+            v-model:current-page="rightPageNum"
+            v-model:page-size="rightPageSize"
+            @current-change="rightRefresh"
+            @size-change="rightResetToFirstPageThenRefresh"
           />
         </div>
       </div>
@@ -771,22 +684,13 @@ const components = { TransferTable }
 // 2) Provide scope actions for fetchers
 const scope = {
   async fetchProducts(params){
-    // params: { page, pageSize, keyword, filters, columnFilters, excludeIds? }
+    // params: { page_num, page_size, keyword, filters, columnFilters, excludeIds? }
     const { data } = await api.get('/products', { params })
     return { list: data.items, total: data.total }
   },
   async fetchSelectedProducts(params){
-    const { data } = await api.post('/products/query-by-ids', { ids: params.ids, page: params.page, pageSize: params.pageSize })
+    const { data } = await api.post('/products/query-by-ids', { ids: params.ids, page_num: params.page_num, page_size: params.page_size })
     return { list: data.items, total: data.total }
-  },
-  async fetchProductsByIds(ids){
-    const { data } = await api.post('/products/by-ids', { ids })
-    return data.items // KV[]
-  },
-  async getAllIdsUnderFilter(params){
-    // params: { keyword, filters, columnFilters }
-    const { data } = await api.post('/products/ids-under-filter', params)
-    return data.ids // (string|number)[]
   }
 }
 
@@ -804,8 +708,6 @@ const scope = {
     ],
     fetchLeft: '{{ $actions.fetchProducts }}',
     fetchRight: '{{ $actions.fetchSelectedProducts }}',
-    fetchByIds: '{{ $actions.fetchProductsByIds }}',
-    getAllIdsUnderFilter: '{{ $actions.getAllIdsUnderFilter }}',
     topFilterFields: [
       { key: 'vendor', label: '供应商', type: 'remote-select', remoteMethod: '{{ $actions.searchVendors }}' },
       { key: 'brand', label: '品牌', type: 'select', options: [ {label:'Nike',value:'nike'} ] }
@@ -816,8 +718,9 @@ const scope = {
   default: []
 }
 
-// 新增点：
-// - 全选跨页：通过 getAllIdsUnderFilter 拿到当前筛选条件下的所有 ID；
-// - 批量拉取：通过 fetchByIds(ids) 一次性将选中的 ID 实体化到右侧；
-// - Tailwind：布局/间距/强调都用 Tailwind 原子类，无额外样式表。
+// 变更：
+// - 修复无效结束标签，移除列头 Popover 残留，改为表头下第二行筛选
+// - 去掉跨页全选及相关 props/逻辑
+// - 顶部 Popover 仅保留用于全局筛选（可按需移除）
+// - 变量解构 & page_num/page_size & Tailwind 保持
 -->
