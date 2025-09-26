@@ -52,5 +52,22 @@
   "balance_directions": {
     "debit": "Debit",
     "credit": "Credit"
+  },
+  "add-account-form": {
+    "code": "Account Code",
+    "name": "Account Name",
+    "initial-balance": "Opening Balance",
+    "closing-balance": "Closing Balance"
+  },
+  "add-subject-form": {
+    "ledger-type": "Ledger Type",
+    "parent-ledger": "Parent Ledger",
+    "balance-direction": "Balance Direction",
+    "account-status": "Account Status",
+    "account-type": "Accounting Type",
+    "quantity-accounting": "Quantity Accounting",
+    "auxiliary-accounting": "Auxiliary Accounting",
+    "foreign-currency-accounting": "Foreign Currency Accounting",
+    "auxiliary-accounting-required_child_message": "Setting Auxiliary Accounting"
   }
 }

@@ -1,6 +1,6 @@
 import type { ISchema } from '@igourd/common-ui';
 
-import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
+import { action, useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
@@ -116,14 +116,15 @@ export function useAccountForm(func) {
               clearable: true,
             },
           },
-          end_balance: {
+          closing_balance: {
             type: 'string',
-            title: "{{t('chart-of-accounts.add-account-form.end-balance')}}",
+            title:
+              "{{t('chart-of-accounts.add-account-form.closing-balance')}}",
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-component-props': {
               placeholder:
-                "{{t('chart-of-accounts.add-account-form.end-balance')}}",
+                "{{t('chart-of-accounts.add-account-form.closing-balance')}}",
               clearable: true,
             },
           },

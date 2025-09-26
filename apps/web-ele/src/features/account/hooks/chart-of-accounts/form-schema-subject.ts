@@ -37,7 +37,7 @@ export function useSubjectForm(func) {
   };
 
   const [Drawer, drawerApi] = useIgourdDrawer({
-    title: t('product-spec.add-spec'),
+    title: t('chart-of-accounts.add-account-ledger'),
     appendToMain: true,
     class: 'w-1/2',
     async onOpenChange(isOpen, val) {
@@ -62,6 +62,7 @@ export function useSubjectForm(func) {
         });
     },
   });
+  // 记账类型字典数据
   const accountingTypeOptions = [
     {
       label: t('chart-of-accounts.add-subject-form.quantity-accounting'),
