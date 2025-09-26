@@ -6,6 +6,13 @@ export const basicsCurrencyList = (data: any) => {
 export const basicsCountryAreaList = (data: any) => {
   return requestClient.get(`/v1/passport/basics/country/areas/list`, data);
 };
+// 生成订单号
+export const orderNoGenerate = (data: any) => {
+  return requestClient.post(
+    `/v1/merchant/basics/settings/coding/order-no/generate`,
+    data,
+  );
+};
 
 export const languageTranslationEnumsList = (data: any) => {
   return requestClient.post(
