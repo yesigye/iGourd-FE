@@ -58,5 +58,16 @@
     "name": "账户名称",
     "initial-balance": "期初余额",
     "end-balance": "期末余额"
+  },
+  "add-subject-form": {
+    "ledger-type": "账户类别",
+    "parent-ledger": "上级分类账",
+    "balance-direction": "余额方向",
+    "account-status": "账户状态",
+    "account-type": "记账类型",
+    "quantity-accounting": "数量核算",
+    "auxiliary-accounting": "辅助核算",
+    "foreign-currency-accounting": "外币核算",
+    "auxiliary-accounting-required_child_message": "设置辅助核算"
   }
 }

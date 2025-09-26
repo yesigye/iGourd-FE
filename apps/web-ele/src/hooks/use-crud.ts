@@ -165,7 +165,6 @@ function useCrud<T extends object, P extends object>(
     'scope',
     'data',
     'connectedComponent',
-    'treeConfig',
   ]);
 
   // 确保代理配置存在
