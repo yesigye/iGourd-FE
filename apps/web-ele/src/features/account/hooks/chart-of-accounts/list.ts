@@ -30,7 +30,6 @@ export function useChartOfAccounts() {
       field: 'name',
       width: 220,
       title: t('account.account_ledger_name'),
-      editRender: { name: 'input' },
     },
     {
       field: 'balance_direction',
@@ -41,16 +40,19 @@ export function useChartOfAccounts() {
       field: 'initial_balance',
       width: 180,
       title: t('account.opening_balance'),
+      editRender: { name: 'input' },
     },
     {
       field: 'cumulative_debit_amount',
       width: 180,
       title: t('account.cumulative_debit'),
+      editRender: { name: 'input' },
     },
     {
       field: 'cumulative_credit_amount',
       width: 180,
       title: t('account.cumulative_credit'),
+      editRender: { name: 'input' },
     },
     {
       field: 'current_debit_amount',
@@ -163,9 +165,12 @@ export function useChartOfAccounts() {
     service,
     columns,
     treeConfig: {
-      transform: true,
       rowField: 'id',
-      parentField: 'parentId',
+      childrenField: 'children',
+    },
+    editConfig: {
+      trigger: 'click',
+      mode: 'cell',
     },
     searchFormSchema: {
       keywords: {

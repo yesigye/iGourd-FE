@@ -62,6 +62,25 @@ export function useSubjectForm(func) {
         });
     },
   });
+  const accountingTypeOptions = [
+    {
+      label: t('chart-of-accounts.add-subject-form.quantity-accounting'),
+      value: 'QTY',
+    },
+    {
+      label: t('chart-of-accounts.add-subject-form.auxiliary-accounting'),
+      value: 'AUX',
+      childRequiredMessage: t(
+        'chart-of-accounts.add-subject-form.auxiliary-accounting-required-child-message',
+      ),
+    },
+    {
+      label: t(
+        'chart-of-accounts.add-subject-form.foreign-currency-accounting',
+      ),
+      value: 'FOREIGN',
+    },
+  ];
   // 表单 Schema - 基于原有的自定义字段表单结构
   const formSchema: ISchema = {
     type: 'object',
@@ -70,25 +89,74 @@ export function useSubjectForm(func) {
         type: 'void',
         'x-component': 'FormLayout',
         properties: {
-          product_spec_name: {
+          ledger_type: {
             type: 'string',
-            title: "{{t('product-spec.product-spec-name')}}",
+            title: "{{t('chart-of-accounts.add-subject-form.ledger-type')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-component-props': {
-              placeholder: "{{t('product-spec.product-spec-name')}}",
+              placeholder:
+                "{{t('chart-of-accounts.add-subject-form.ledger-type')}}",
               clearable: true,
             },
           },
-          product_spec_name2: {
+          parent_ledger: {
             type: 'string',
-            title: "{{t('product-spec.product-spec-name')}}",
+            title: "{{t('chart-of-accounts.add-subject-form.parent-ledger')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-component-props': {
-              placeholder: "{{t('product-spec.product-spec-name')}}",
+              placeholder:
+                "{{t('chart-of-accounts.add-subject-form.parent-ledger')}}",
+              clearable: true,
+            },
+          },
+          code: {
+            type: 'string',
+            title: "{{t('chart-of-accounts.add-account-form.code')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Input',
+            'x-component-props': {
+              placeholder: "{{t('chart-of-accounts.add-account-form.code')}}",
+              clearable: true,
+            },
+          },
+          name: {
+            type: 'string',
+            title: "{{t('chart-of-accounts.add-account-form.name')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Input',
+            'x-component-props': {
+              placeholder: "{{t('chart-of-accounts.add-account-form.name')}}",
+              clearable: true,
+            },
+          },
+          account_status: {
+            type: 'string',
+            title: "{{t('chart-of-accounts.add-subject-form.account-status')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Switch',
+            'x-component-props': {
+              placeholder:
+                "{{t('chart-of-accounts.add-subject-form.account-status')}}",
+              clearable: true,
+            },
+          },
+          account_type: {
+            type: 'string',
+            title: "{{t('chart-of-accounts.add-subject-form.account-type')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Checkbox.Group',
+            enum: accountingTypeOptions,
+            'x-component-props': {
+              placeholder:
+                "{{t('chart-of-accounts.add-subject-form.account-type')}}",
               clearable: true,
             },
           },
