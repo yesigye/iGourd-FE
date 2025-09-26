@@ -81,9 +81,52 @@ export function useProductLabelForm(func) {
               clearable: true,
             },
           },
+          product_list: {
+            type: 'array',
+            title: '商品选择',
+            'x-decorator': 'FormItem',
+            'x-component': 'TransferTable',
+            'x-component-props': {
+              rowKey: 'id',
+              columns: [
+                { label: 'Product', prop: 'name', filter: { type: 'input' } },
+                {
+                  label: 'Product Code',
+                  prop: 'code',
+                  width: 140,
+                  filter: {
+                    type: 'select',
+                    options: [
+                      { label: 'A', value: 'A' },
+                      { label: 'B', value: 'B' },
+                    ],
+                  },
+                },
+              ],
+              fetchLeft: '{{ actions.fetchProducts }}',
+              fetchRight: '{{ actions.fetchSelectedProducts }}',
+              fetchByIds: '{{ actions.fetchProductsByIds }}',
+              getAllIdsUnderFilter: '{{ actions.getAllIdsUnderFilter }}',
+              topFilterFields: [
+                {
+                  key: 'vendor',
+                  label: '供应商',
+                  type: 'remote-select',
+                  remoteMethod: '{{ actions.searchVendors }}',
+                },
+                {
+                  key: 'brand',
+                  label: '品牌',
+                  type: 'select',
+                  options: [{ label: 'Nike', value: 'nike' }],
+                },
+              ],
+              searchPlaceholder: '输入采购单号/供应商/商品名',
+              excludeSelectedFromLeft: true,
+            },
+          },
         },
       },
-      t,
     },
   };
   const loadData = async (node, resolve) => {};
@@ -98,7 +141,16 @@ export function useProductLabelForm(func) {
     effects() {
       // 使用 Formily 的 effects 监听表单值变化
     },
-    scope: { loadData },
+    scope: {
+      loadData,
+      actions: {
+        fetchProducts: () => ({ list: [] }),
+        fetchSelectedProducts: () => [],
+        fetchProductsByIds: () => [],
+        getAllIdsUnderFilter: () => [],
+        searchVendors: () => [],
+      },
+    },
   });
   // 表单重置
   const resetForm = () => {

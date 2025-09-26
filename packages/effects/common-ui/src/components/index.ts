@@ -1,13 +1,3 @@
-// export {
-//   // ElButton,
-//   // ElForm,
-//   // ElInput,
-//   // ElOption,
-//   // ElSpace,
-//   // ElSwitch,
-//   // ElTable,
-//   ElTreeSelect,
-// } from 'element-plus';
 export { composeExport } from './__builtins__';
 export * from './api-component';
 export * from './array-cards';
@@ -51,9 +41,9 @@ export * from './space';
 export * from './submit';
 export * from './switch';
 export * from './time-picker';
-export * from './tippy';
-
 export * from './transfer';
+
+export { TransferTable } from './transfer-table';
 
 export { default as Upload } from './upload';
 
