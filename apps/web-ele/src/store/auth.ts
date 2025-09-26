@@ -13,12 +13,7 @@ import { resetAllStores, useAccessStore, useUserStore } from '@igourd/stores';
 
 import { defineStore } from 'pinia';
 
-import {
-  basicsMerchantList,
-  getAccessCodesApi,
-  getUserInfoApi,
-  loginApi,
-} from '#/api';
+import { getAccessCodesApi, getUserInfoApi, loginApi } from '#/api';
 import { $t } from '#/locales';
 
 export const useAuthStore = defineStore('auth', () => {
@@ -107,7 +102,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function fetchUserInfo() {
     let userInfo: null | UserInfo = null;
-    const currentInfo = userStore.userInfo!.current_login_user_app;
+    const currentInfo = userStore.userInfo?.current_login_user_app;
     userInfo = await getUserInfoApi({
       owner_id: currentInfo.owner_id,
       owner_type: currentInfo.owner_type,
@@ -123,44 +118,12 @@ export const useAuthStore = defineStore('auth', () => {
     if (!userInfo) {
       throw new TypeError('UserInfo is Null');
     }
-    // @ts-ignore
-    const userApps = userInfo.user_model?.user_apps || [];
-    // @ts-ignore
-    const merchant_ids = userApps.map((item) => item.owner_id);
-    // 所有微任务执行完以后，再去请求，否则可能token还没生效。后续需要挪到 router.after 的钩子中。
-    setTimeout(() => {
-      const res = basicsMerchantList({ merchant_ids });
-      // @ts-ignore
-      function customizerMerchantList(dataList, user_apps) {
-        if (dataList?.length && user_apps?.length) {
-          // @ts-ignore
-          return dataList.reduce((acc, cur) => {
-            // @ts-ignore
-            user_apps.forEach((item) => {
-              if (item.owner_id === cur.merchant_id) {
-                acc.push({ ...cur, ...item });
-              }
-            });
-            return acc;
-          }, []);
-        }
-        return [];
-      }
-      const merList = customizerMerchantList(res ?? [], userApps);
-
-      const merchantInfo = (merList || []).find(
-        // @ts-ignore
-        (item) => item.owner_id === userStore.merchantInfo.owner_id,
-      );
-      userStore.setMerchantInfo(merchantInfo);
-    }, 0);
 
     userStore.setTokenId(userInfo.jwt_token.token_id);
     userStore.setUserModel(userInfo.useModel);
     userStore.setUserInfo(userInfo);
     userStore.setLoginAccount(userInfo.login_account || '');
     userStore.setLoginType(userInfo.type || '');
-    // accessStore.set(userInfo.function_trees);
     accessStore.setFunctionTrees(userInfo.function_trees);
     accessStore.setAccessToken(userInfo.jwt_token.token_id);
     return userInfo;

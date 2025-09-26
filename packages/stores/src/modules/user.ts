@@ -36,17 +36,30 @@ interface BasicUserInfo {
   username: string;
 }
 
+interface CurrentLoginUserApp {
+  app_id: string;
+  app_key: string;
+  owner_id: string;
+  owner_name: string;
+  owner_type: string;
+  roles: any[];
+  user_app_id: null | string;
+  user_id: string;
+}
+
 interface AccessState {
-  currentLoginUserApp?: unknown;
+  currentLoginUserApp?: CurrentLoginUserApp;
   jwt_token?: Record<string, any>;
 
   login_account?: string;
   login_type?: string;
+  merchantInfo: any;
+  merchantList: any[];
   owner_id: string;
   owner_type: string;
   tokenId: string;
   user_id: string;
-  merchantList: any[];
+
   /**
    * 用户信息
    */
@@ -58,8 +71,6 @@ interface AccessState {
    * 用户角色
    */
   userRoles: string[];
-
-  merchantInfo: any;
 }
 
 /**
@@ -111,6 +122,15 @@ export const useUserStore = defineStore('core-user', {
     },
     currencySymbol(state) {
       return state.merchantInfo.currency_symbol ?? '';
+    },
+    user_model(state) {
+      return state.userInfo?.user_model;
+    },
+    user_apps(state) {
+      return state.userInfo?.user_model.user_apps;
+    },
+    owner_id(state) {
+      return state.currentLoginUserApp?.owner_id;
     },
   },
   state: (): AccessState => ({

@@ -1,26 +1,25 @@
 <script lang="ts" setup>
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 
-import { useWatermark } from '@igourd/hooks';
 import { BasicLayout, UserDropdown } from '@igourd/layouts';
 import { preferences } from '@igourd/preferences';
 import { useUserStore } from '@igourd/stores';
 
-import { useAuthStore } from '#/store';
+import { useAppStore, useAuthStore } from '#/store';
+
 // import LoginForm from '#/views/_core/authentication/login.vue';
 
 const userStore = useUserStore();
 const authStore = useAuthStore();
-const { destroyWatermark, updateWatermark } = useWatermark();
+const appStores = useAppStore();
 const menus = computed(() => []);
 
 const avatar = computed(() => {
   return userStore.userInfo?.avatar ?? preferences.app.defaultAvatar;
 });
 const { currentLoginUserApp } = userStore;
-
 async function handleLogout() {
-  await authStore.logout(false);
+  await authStore.logout();
 }
 const roleChar = computed(() => {
   return currentLoginUserApp.roles
@@ -29,21 +28,6 @@ const roleChar = computed(() => {
     })
     .join('/');
 });
-watch(
-  () => preferences.app.watermark,
-  async (enable) => {
-    if (enable) {
-      await updateWatermark({
-        content: `${userStore.userInfo?.username} - ${userStore.userInfo?.realName}`,
-      });
-    } else {
-      destroyWatermark();
-    }
-  },
-  {
-    immediate: true,
-  },
-);
 </script>
 
 <template>
