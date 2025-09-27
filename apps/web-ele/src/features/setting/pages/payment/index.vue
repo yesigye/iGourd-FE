@@ -10,7 +10,7 @@
       </div>
       <!-- 支付方式列表 -->
       <div class="payment-list mt-1 flex flex-wrap gap-5">
-        <draggable
+        <vuedraggable
           :list="payMethodList"
           ghost-class="ghost"
           chosen-class="chosenClass"
@@ -88,7 +88,7 @@
               </div>
             </div>
           </template>
-        </draggable>
+        </vuedraggable>
       </div>
       <!-- 添加支付方式弹窗 -->
       <el-dialog
@@ -185,7 +185,6 @@
 import { onMounted, ref, watch, computed } from 'vue';
 import { useI18n } from '@igourd/locales';
 import { ElButton, Page, ElMessage, ElCheckbox, ElDialog,vuedraggable } from '@igourd/common-ui';
-const { draggable } = vuedraggable;
 defineOptions({
   name: 'ISettingPayment',
 });
