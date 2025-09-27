@@ -39,7 +39,6 @@ const InnerSelect = defineComponent(
     }
     function onChange(val: string) {
       emit('change', val);
-      console.log(record);
       if (!record.value) {
         return;
       }
