@@ -33,6 +33,7 @@ export * from './page';
 export * from './password';
 export * from './preview-text';
 export * from './radio';
+export * from './remote-select';
 export * from './reset';
 export * from './resize';
 export { default as ScanCodeEntry } from './scan-code-entry';
