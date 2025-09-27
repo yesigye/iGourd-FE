@@ -83,6 +83,14 @@ export function useOrderForm() {
               },
             },
           },
+          files: {
+            type: 'array',
+            title: '拖拽上传',
+            'x-component': 'Upload',
+            'x-component-props': {
+              drag: true,
+            },
+          },
         },
       },
     },
