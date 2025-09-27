@@ -22,5 +22,9 @@
   "edit": "Modifier",
   "quick-tags-for-holding-orders": "Étiquettes rapides pour les commandes en attente",
   "unlimited": "Sans limite",
-  "minutes": "Minutes"
+  "minutes": "Minutes",
+  "quick-tags": "Étiquettes rapides",
+  "content": "Contenu",
+  "add-quick-tag": "Ajouter une étiquette rapide",
+  "edit-quick-tag": "Modifier une étiquette rapide"
 }

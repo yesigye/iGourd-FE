@@ -22,5 +22,10 @@
   "edit": "Edit",
   "quick-tags-for-holding-orders": "Quick Tags For Holding Orders",
   "unlimited": "Unlimited",
-  "minutes": "Minutes"
+  "minutes": "Minutes",
+  "quick-tags": "Quick Tags",
+  "content": "Content",
+  "add-quick-tag": "Add Quick Tag",
+  "edit-quick-tag": "Edit Quick Tag"
+
 }

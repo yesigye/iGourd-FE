@@ -6,12 +6,15 @@ import {
   ElSwitch,
   ElDatePicker,
   ElTimePicker,
+  useIgourdModal
 } from '@igourd/common-ui';
+import {ExtraModal} from '@@/setting/components/saleset';
 
 import { getSettingSalesetDetailApi,modifySettingSalesetApi } from '@@/setting/apis';
 import { onMounted, ref, watch } from 'vue';
 import { useUserStore } from '@igourd/stores';
 import { useI18n } from '@igourd/locales';
+
 const { t } = useI18n();
 const { currentLoginUserApp } = useUserStore();
 const storeInfo = ref({});
@@ -55,6 +58,15 @@ const handleAutomaticReviewChange = (val) => {
   }else{
     storeInfo.value.revenue_auto_approve_amount_limit = 1000;
   }
+}
+const [Modal, modalApi] = useIgourdModal({
+  // 连接抽离的组件
+  connectedComponent: ExtraModal,
+  class: 'w-[70%]',
+  footer:false
+});
+function openModal() {
+  modalApi.open();
 }
 //
 onMounted(() => {
@@ -159,7 +171,7 @@ onMounted(() => {
 
           <div class="flex min-w-[250px] justify-end">
             <ElButton type="primary"
-              @click="handleEditClick('contact_telephone')">
+              @click="openModal()">
               {{ t('saleset.edit') }}
             </ElButton>
           </div>
@@ -215,5 +227,6 @@ onMounted(() => {
 
       </section>
     </section>
+    <Modal></Modal>
   </Page>
 </template>
