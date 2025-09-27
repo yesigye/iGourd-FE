@@ -45,5 +45,12 @@
   "reviewSuccess": "审核成功",
   "reviewFail": "审核失败",
   "receiptPercentage": "收货百分比",
-  "productDetail": "商品详情"
+  "productDetail": "商品详情",
+  "add-transfer": "添加调拨单",
+  "edit-transfer": "编辑调拨单",
+  "transfer-detail": "调拨详情",
+  "transfer-type": "调拨类型",
+  "total-transfer-quantity": "商品总数",
+  "transfer-price": "调拨价",
+  "total-transfer-product-price": "调拨商品总价格"
 }

@@ -1,6 +1,6 @@
 {
   "stockTransfer": "Stock Transfer",
-  "transferType": "Transfer Type",
+  "transfer-type": "Transfer Type",
   "stock_transfer_no": "Transfer No.",
   "transfer_date": "Transfer Date",
   "total_transfer_quantity": "Total Transfer Quantity",
@@ -45,5 +45,11 @@
   "reviewSuccess": "Review Success",
   "reviewFail": "Review Failed",
   "receiptPercentage": "Receipt Percentage",
-  "productDetail": "Product Details"
+  "productDetail": "Product Details",
+  "add-transfer": "Add Stock Transfer",
+  "edit-transfer": "Edit Stock Transfer",
+  "transfer-detail": "Stock Transfer Detail",
+  "total-transfer-quantity": "Total Qty",
+  "transfer-price": "Ex-Warehouse Price",
+  "total-transfer-product-price": "Total Transfer Product Price"
 }

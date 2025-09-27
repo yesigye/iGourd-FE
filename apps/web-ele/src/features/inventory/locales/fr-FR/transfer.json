@@ -1,6 +1,6 @@
 {
   "stockTransfer": "Transfert de Stock",
-  "transferType": "Type de Transfert",
+  "transfer-type": "Type de Transfert",
   "stock_transfer_no": "N° de Transfert",
   "transfer_date": "Date de Transfert",
   "total_transfer_quantity": "Quantité Totale de Transfert",
@@ -45,5 +45,11 @@
   "reviewSuccess": "Révision Réussie",
   "reviewFail": "Échec de la Révision",
   "receiptPercentage": "Pourcentage de Réception",
-  "productDetail": "Détails du Produit"
+  "productDetail": "Détails du Produit",
+  "add-transfer": "Ajouter un transfert de stock",
+  "edit-transfer": "Modifier le transfert de stock",
+  "transfer-detail": "Détail du transfert de stock",
+  "total-transfer-quantity": "Quantité totale de transfert",
+  "transfer-price": "Prix total des produits transférés",
+  "total-transfer-product-price": "Quantité de transfert"
 }
