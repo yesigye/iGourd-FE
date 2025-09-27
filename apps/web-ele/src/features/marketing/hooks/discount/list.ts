@@ -7,6 +7,7 @@ import { useI18n } from '@igourd/locales';
 import {
   createDiscountApi,
   deleteDiscountApi,
+  getDiscountDetailApi,
   getDiscountListApi,
   updateDiscountApi,
 } from '@@/marketing/apis';
@@ -110,6 +111,9 @@ export function useDiscount() {
     service: {
       query: getDiscountListApi,
       drop: deleteDiscountApi,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      detail: getDiscountDetailApi,
       create: createDiscountApi,
       update: updateDiscountApi,
     },
