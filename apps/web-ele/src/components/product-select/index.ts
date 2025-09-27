@@ -8,13 +8,15 @@ function remoteMethod(keywords: string) {
     page_size: 15,
     keywords,
   }).then((res) => {
-    return res.list.map((item: any) => {
+    const ops = res.list.map((item: any) => {
       return {
         ...item,
+        product_code: [item.product_code, item.major_name].join('-'),
         label: item.major_name,
         value: item.id,
       };
     });
+    return ops;
   });
 }
 
@@ -30,8 +32,9 @@ export const productSelect: ISchema = {
   items: {
     type: 'object',
     properties: {
-      col1: {
+      col0: {
         type: 'void',
+        'x-visible': false,
         'x-component': 'ArrayTable.Column',
         'x-component-props': {
           title: "{{t('marketing.productCode')}}",
@@ -40,6 +43,19 @@ export const productSelect: ISchema = {
         properties: {
           id: {
             type: 'string',
+          },
+        },
+      },
+      col1: {
+        type: 'void',
+        'x-component': 'ArrayTable.Column',
+        'x-component-props': {
+          title: "{{t('marketing.productCode')}}",
+        },
+
+        properties: {
+          product_code: {
+            type: 'string',
             'x-component': 'RemoteSelect',
             'x-component-props': {
               remoteMethod(keywords: string) {
@@ -47,17 +63,11 @@ export const productSelect: ISchema = {
                   return res.map((item) => ({
                     ...item,
                     value: item.id,
-                    label: [item.product_code, item.major_name].join('-'),
+                    label: item.product_code,
                   }));
                 });
               },
             },
-            'x-reactions': [
-              {
-                dependencies: ['.major_name_spec'],
-                fulfill: { state: { value: '{{$deps[0]}}' } },
-              },
-            ],
           },
         },
       },
@@ -68,25 +78,12 @@ export const productSelect: ISchema = {
           title: "{{t('marketing.PRODUCT')}}",
         },
         properties: {
-          major_name_spec: {
+          major_name: {
             type: 'string',
             'x-component': 'RemoteSelect',
             'x-component-props': {
               remoteMethod,
             },
-            'x-reactions': [
-              {
-                dependencies: ['.id'],
-                fulfill: { state: { value: '{{$deps[0]}}' } },
-              },
-              // (field) => {
-              //   // if (!field.modified) return;
-              //   const v = field.value;
-              //   field.query('.id').take((target: any) => {
-              //     if (target && target.value !== v) target.setValue(v);
-              //   });
-              // },
-            ],
           },
         },
       },

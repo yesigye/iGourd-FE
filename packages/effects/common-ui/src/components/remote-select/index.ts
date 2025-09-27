@@ -5,6 +5,7 @@ import { defineComponent, h, ref } from 'vue';
 import { connect, mapProps, mapReadPretty } from '@formily/vue';
 import { ElOption, ElSelect } from 'element-plus';
 
+import { useRecord } from '../array-base';
 import PreviewText from '../preview-text';
 
 // type ElSelectProps = InstanceType<typeof ElSelect>;
@@ -21,7 +22,8 @@ type OptionItem = Pick<
 const InnerSelect = defineComponent(
   (props, { attrs, emit }) => {
     const loading = ref<boolean>(false);
-    const options = ref<OptionItem[]>([]);
+    const options = ref<OptionItem[]>(props.defaultOptions);
+    const record = useRecord();
     function remoteQuery(keywords: string) {
       if (props.remoteMethod) {
         loading.value = true;
@@ -35,6 +37,17 @@ const InnerSelect = defineComponent(
           });
       }
     }
+    function onChange(val: string) {
+      emit('change', val);
+      console.log(record);
+      if (!record.value) {
+        return;
+      }
+      Object.assign(
+        record.value,
+        options.value.find((i) => i.value === val) || {},
+      );
+    }
     return () => {
       return h(
         ElSelect,
@@ -42,7 +55,7 @@ const InnerSelect = defineComponent(
           ...attrs,
           ...props,
           'onUpdate:modelValue': (v: any) => emit('update:modelValue', v),
-          onChange: (v: any) => emit('change', v),
+          onChange,
           remote: true,
           filterable: true,
           loading: loading.value,
@@ -67,6 +80,10 @@ const InnerSelect = defineComponent(
       remoteMethod: {
         type: Function as PropType<(k: string) => Promise<OptionItem[]>>,
         required: true,
+      },
+      defaultOptions: {
+        type: Array as PropType<OptionItem[]>,
+        default: () => [],
       },
     },
     emits: ['update:modelValue', 'change'],
