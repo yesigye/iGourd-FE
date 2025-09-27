@@ -3,322 +3,216 @@ import {
   Page, ElButton, ElInput,
   ElSelect,
   ElOption,
+  ElSwitch,
+  ElDatePicker,
+  ElTimePicker,
 } from '@igourd/common-ui';
 
-import { getSettingStoresetDetailApi, getTimezoneListApi } from '@@/setting/apis';
-import { onMounted, ref } from 'vue';
+import { getSettingSalesetDetailApi,modifySettingSalesetApi } from '@@/setting/apis';
+import { onMounted, ref, watch } from 'vue';
 import { useUserStore } from '@igourd/stores';
 import { useI18n } from '@igourd/locales';
 const { t } = useI18n();
 const { currentLoginUserApp } = useUserStore();
 const storeInfo = ref({});
-
-const timezoneList = ref([]);
-/**
- * 时区列表
-*/
-const getTimezoneList = async () => {
-  const result = await getTimezoneListApi({});
-  timezoneList.value = result.map((item) => ({
-    label: item.zone_id_name_local + '/' + item.zone_id_name_cn,
-    value: item.zone_id,
-  }));
-}
-
+// 是否为首次加载
+const isFirstLoad = ref(true);
 // 获取门店设置
 const getStoreSetting = async () => {
-  const result = await getSettingStoresetDetailApi({
-    id: currentLoginUserApp.owner_id,
+  const result = await getSettingSalesetDetailApi({
+    port_type_enum: 'WEB',
   });
   storeInfo.value = result;
+  if(result.revenue_auto_approve_amount_limit){
+    isAutomaticReview.value = true;
+  }
+  isFirstLoad.value = false;
 };
-/**正在编辑的行*/
-const editKeyList = ref([]);
-/**判断当前行是否处于编辑状态*/
-const isEdit = (key: string) => editKeyList.value.includes(key);
-const handleEditClick = (key: string) => {
-  if (editKeyList.value.includes(key)) {
-    editKeyList.value = editKeyList.value.filter((item) => item !== key);
-  } else {
-    editKeyList.value.push(key);
+const isAutomaticReview = ref(true);
+const option = ref([
+  { value: 0, label: t('saleset.unlimited') },
+  { value: 10, label: '10' },
+  { value: 20, label: '20' },
+  { value: 30, label: '30' },
+  { value: 40, label: '40' },
+  { value: 50, label: '50' },
+  { value: 60, label: '60' },
+])
+watch(() => storeInfo.value, async (newVal) => {
+  if (newVal) {
+    // 首次加载不执行修改操作
+    if (isFirstLoad.value) {
+      return;
+    }
+    await modifySettingSalesetApi({
+      ...newVal,
+    });
+  }
+}, {deep:true});
+const handleAutomaticReviewChange = (val) => {
+  if(!val){
+    storeInfo.value.revenue_auto_approve_amount_limit = 0;
+  }else{
+    storeInfo.value.revenue_auto_approve_amount_limit = 1000;
   }
 }
 //
 onMounted(() => {
   getStoreSetting();
-  getTimezoneList();
 });
 </script>
 <template>
   <Page auto-content-height>
     <section class=" h-full text-xs">
       <p class="mb-4 flex items-center gap-2">
-      <div class="w-1 h-2.5 rounded-md bg-primary"></div> Basic Information</p>
+      <div class="w-1 h-2.5 rounded-md bg-primary"></div> {{ t('saleset.products-settings') }}</p>
       <!-- 设置项 -->
       <section class="pb-4 pl-5 pr-5 pt-4 bg-card">
         <!-- ----------设置------------ -->
         <div class="flex h-12 w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2">
-          <div class="w-[230px] font-bold">version</div>
+          <div class="w-[290px] font-bold">{{ t('saleset.use-product-specifications-settings') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
-              {{ storeInfo.version }}
-            </div>
-            <div class="w-[500px] text-[#999999]">
+            <div class="w-[673px] text-[#999999]">
+              {{ t('saleset.use-product-specifications-tip') }}
             </div>
           </div>
 
-          <div class="flex min-w-[120px] justify-end">
+          <div class="flex min-w-[250px] justify-end">
+            <ElSwitch v-model="storeInfo.is_product_spec_settings"   />
           </div>
         </div>
 
         <!-- ----------设置------------ -->
         <div class="flex h-12 w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2">
-          <div class="w-[230px] font-bold">Cash Register Receipt</div>
+          <div class="w-[290px] font-bold">{{ t('saleset.use-stock-warning-settings') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
-              {{ storeInfo.business_type }}
-            </div>
-            <div class="w-[500px] text-[#999999]">
+            <div class="w-[673px] text-[#999999]">
+              {{ t('saleset.use-stock-warning-tip') }}
             </div>
           </div>
 
-          <div class="flex min-w-[120px] justify-end">
-          </div>
-        </div>
-        <!-- ----------设置------------ -->
-        <div class="flex h-12 w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2">
-          <div class="w-[230px] font-bold">Validity</div>
-          <div class="flex gap-10">
-            <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
-              {{ storeInfo.validity }}
-            </div>
-            <div class="w-[500px] text-[#999999]">
-            </div>
-          </div>
-
-          <div class="flex min-w-[120px] justify-end">
-          </div>
-        </div>
-        <!-- ----------设置------------ -->
-        <div class="flex h-12 w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2">
-          <div class="w-[230px] font-bold">Registration Time</div>
-          <div class="flex gap-10">
-            <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
-              {{ storeInfo.create_time }}
-            </div>
-            <div class="w-[500px] text-[#999999]">
-            </div>
-          </div>
-
-          <div class="flex min-w-[120px] justify-end">
-          </div>
-        </div>
-        <!-- ----------设置------------ -->
-        <div class="flex h-12 w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2">
-          <div class="w-[230px] font-bold">Client Sideos</div>
-          <div class="flex gap-10">
-            <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
-            </div>
-            <div class="w-[500px] text-[#999999]">
-            </div>
-          </div>
-
-          <div class="flex min-w-[120px] justify-end">
+          <div class="flex min-w-[250px] justify-end">
+            <ElSwitch v-model="storeInfo.is_stock_warning_settings"   />
           </div>
         </div>
       </section>
       <p class="mb-4 mt-4  flex items-center gap-2">
-      <div class="w-1 h-2.5 rounded-md bg-primary"></div> Store Settings</p>
+      <div class="w-1 h-2.5 rounded-md bg-primary"></div> {{ t('saleset.store-settings') }}</p>
 
       <!-- 设置项 -->
       <section class="pb-4 pl-5 pr-5 pt-4 bg-card ">
         <!-- ----------门店全称设置------------ -->
         <div class="flex h-12 w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2">
-          <div class="w-[230px] font-bold">Store Name</div>
+          <div class="w-[290px] font-bold">{{ t('saleset.commodity-stock-less-than-zero-prohibited') }}</div>
           <div class="flex gap-10 items-center">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
-              <p v-if="!isEdit('full_name')">{{ storeInfo.full_name }}</p>
-              <ElInput v-model="storeInfo.full_name" v-else></ElInput>
-            </div>
-            <div class="w-[500px] text-[#999999]">
-              (Show store name)
+
+            <div class="w-[673px] text-[#999999]">
+             {{ t('saleset.commodity-stock-less-than-zero-tip') }}
             </div>
           </div>
 
-          <div class="flex min-w-[120px] justify-end">
-            <ElButton type="primary" :plain="!isEdit('full_name')" @click="handleEditClick('full_name')">
-              {{ !isEdit('country_id') ? t('common.edit') : t('common.save') }}
-            </ElButton>
+          <div class="flex min-w-[250px] justify-end">
+             <ElSwitch v-model="storeInfo.is_less_zero_prohibited"   />
           </div>
         </div>
         <!-- ----------门店简称设置------------ -->
         <div class="flex h-12 w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2">
-          <div class="w-[230px] font-bold">Store Short Name</div>
+          <div class="w-[290px] font-bold">{{ t('saleset.temporary-repricing-of-sales') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2 items-center">
-              <p v-if="!isEdit('short_name')">{{ storeInfo.short_name }}</p>
-              <ElInput v-model="storeInfo.short_name" v-else></ElInput>
-            </div>
-            <div class="w-[500px] text-[#999999]">
-              (You can use the abbreviation instead of the store name)
+            <div class="w-[673px] text-[#999999]">
+              {{ t('saleset.temporary-repricing-tip') }}
             </div>
           </div>
 
-          <div class="flex min-w-[120px] justify-end">
-            <ElButton type="primary" :plain="!isEdit('short_name')" @click="handleEditClick('short_name')">
-              {{ !isEdit('country_id') ? t('common.edit') : t('common.save') }}
-            </ElButton>
+          <div class="flex min-w-[250px] justify-end">
+            <ElSwitch v-model="storeInfo.is_price_modify_support" />
           </div>
         </div>
-        <!-- ----------门店logo设置------------ -->
         <div class="flex h-12 w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2">
-          <div class="w-[230px] font-bold">Store Logo</div>
+          <div class="w-[290px] font-bold">{{ t('saleset.delete-the-cancel-order') }}</div>
           <div class="flex gap-10">
-            <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
-              {{ storeInfo.profile_photo }}
-            </div>
-            <div class="w-[500px] text-[#999999]">
+
+            <div class="w-[673px] text-[#999999]">
+              {{ t('saleset.delete-cancel-order-tip') }}
             </div>
           </div>
 
-          <div class="flex min-w-[120px] justify-end">
+          <div class="flex min-w-[250px] justify-end">
+            <ElSwitch v-model="storeInfo.is_auto_remove_invalid_orders"   />
+
           </div>
         </div>
         <!-- ----------门店联系方式设置------------ -->
         <div class="flex h-12 w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2">
-          <div class="w-[230px] font-bold">Store No.</div>
+          <div class="w-[290px] font-bold">{{ t('saleset.quick-tags-for-holding-orders') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
-              {{ storeInfo.contact_country_area_code }}
-              {{ storeInfo.contact_telephone }}
-            </div>
-            <div class="w-[500px] text-[#999999]">
-              (Telephone number for guest to contact the store)
+
+            <div class="w-[673px] text-[#999999]">
+              {{ t('saleset.store-no-tip') }}
             </div>
           </div>
 
-          <div class="flex min-w-[120px] justify-end">
-            <ElButton type="primary" :plain="!isEdit('contact_telephone')"
+          <div class="flex min-w-[250px] justify-end">
+            <ElButton type="primary"
               @click="handleEditClick('contact_telephone')">
-              {{ !isEdit('contact_telephone') ? '编辑' : '保存' }}
+              {{ t('saleset.edit') }}
             </ElButton>
           </div>
         </div>
         <!-- ----------门店国家设置------------ -->
         <div class="flex h-12 w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2">
-          <div class="w-[230px] font-bold">Currency</div>
+          <div class="w-[290px] font-bold">{{ t('saleset.validity-time-of-pending-order') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
-              <p v-if="!isEdit('country_id')">{{ storeInfo.country_id }}</p>
-              <ElSelect v-model="storeInfo.country_id" v-else>
-                <ElOption v-for="item in timezoneList" :key="item.value" :value="item.value">
-                  {{ item.label }}
-                </ElOption>
-              </ElSelect>
-            </div>
-            <div class="w-[500px] text-[#999999]">
-              (Select the country to which the system belongs)
+
+            <div class="w-[673px] text-[#999999]">
+              {{ t('saleset.validity-time-tip') }}
             </div>
           </div>
 
-          <div class="flex min-w-[120px] justify-end">
-            <ElButton type="primary" :plain="!isEdit('country_id')" @click="handleEditClick('country_id')">
-              {{ !isEdit('country_id') ? t('common.edit') : t('common.save') }}
-            </ElButton>
+          <div class="flex min-w-[250px] justify-end">
+           <ElSelect v-model="storeInfo.hold_order_ttl_mins" type="number" value-format="number">
+             <ElOption v-for="item in option" :key="item.value" :label="item.value!=0 ? item.value + t('saleset.minutes') : t('saleset.unlimited')" :value="item.value">
+             </ElOption>
+           </ElSelect>
           </div>
         </div>
-        <!-- ----------门店时区设置------------ -->
+        <!-- ----------每日结算时间------------ -->
         <div class="flex h-12 w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2">
-          <div class="w-[230px] font-bold">Time Zone</div>
+          <div class="w-[290px] font-bold">{{ t('saleset.daily-settlement-time') }}</div>
           <div class="flex gap-10 items-center">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
-              <p v-if="!isEdit('time_zone_id')">{{ storeInfo.time_zone_id }}</p>
-              <ElSelect v-model="storeInfo.time_zone_id" v-else>
-                <ElOption v-for="item in timezoneList" :key="item.value" :value="item.value">
-                  {{ item.label }}
-                </ElOption>
-              </ElSelect>
-            </div>
-            <div class="w-[500px] text-[#999999]">
-              (Select the country to which the system belongs)
+
+            <div class="w-[673px] text-[#999999]">
+              {{ t('saleset.daily-settlement-tip') }}
             </div>
           </div>
 
-          <div class="flex min-w-[120px] justify-end">
-            <ElButton type="primary" :plain="!isEdit('time_zone_id')" @click="handleEditClick('time_zone_id')">
-              {{ !isEdit('country_id') ? t('common.edit') : t('common.save') }}
-            </ElButton>
+          <div class="flex min-w-[250px] justify-end">
+            <ElTimePicker format="HH:mm:ss" value-format="HH:mm:ss" v-model="storeInfo.daily_settlement_time"></ElTimePicker>
           </div>
         </div>
-        <!-- ----------门店语言设置------------ -->
+        <!-- ----------财会凭证自动审核------------ -->
         <div class="flex h-12 w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2">
-          <div class="w-[230px] font-bold">Language</div>
+          <div class="w-[290px] font-bold">{{ t('saleset.automatic-review-of-accounting-notes') }}</div>
           <div class="flex gap-10 items-center">
-            <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
-              <p v-if="!isEdit('language')">
-                {{ storeInfo.major_country_language_lang_code + '-' + storeInfo.minor_country_language_lang_code }}</p>
-              <div class="flex gap-2 w-full" v-else>
-                <ElSelect v-model="storeInfo.major_country_language_lang_code" class="w-full">
-                  <ElOption v-for="item in timezoneList" :key="item.value" :value="item.value">
-                    {{ item.label }}
-                  </ElOption>
-                </ElSelect>
-                <ElSelect v-model="storeInfo.minor_country_language_lang_code" class="w-full">
-                  <ElOption v-for="item in timezoneList" :key="item.value" :value="item.value">
-                    {{ item.label }}
-                  </ElOption>
-                </ElSelect>
-              </div>
 
-            </div>
-            <div class="w-[500px] text-[#999999]">
-              (Please select the language you want to use for entering information, such as the entry of product names)
+            <div class="w-[673px] text-[#999999]">
+              {{ t('saleset.automatic-review-tip') }}
             </div>
           </div>
 
-          <div class="flex min-w-[120px] justify-end">
-            <ElButton type="primary" :plain="!isEdit('language')" @click="handleEditClick('language')">
-              {{ !isEdit('country_id') ? t('common.edit') : t('common.save') }}
-            </ElButton>
+          <div class="flex min-w-[250px] justify-end gap-2">
+                <ElSwitch v-model="isAutomaticReview" @change="handleAutomaticReviewChange"   />
+                <ElInput v-model="storeInfo.revenue_auto_approve_amount_limit" :disabled="!isAutomaticReview" type="number"></ElInput>
           </div>
         </div>
-        <!-- ----------门店货币设置------------ -->
-        <div class="flex h-12 w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2">
-          <div class="w-[230px] font-bold">Currency</div>
-          <div class="flex gap-10 items-center">
-            <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
-              <p v-if="!isEdit('basic_currency_code')">{{ storeInfo.basic_currency_code }}</p>
-              <ElSelect v-model="storeInfo.basic_currency_code" v-else>
-                <ElOption v-for="item in timezoneList" :key="item.value" :value="item.value">
-                  {{ item.label }}
-                </ElOption>
-              </ElSelect>
-            </div>
-            <div class="w-[500px] text-[#999999]">
-              (Display store base currency)
-            </div>
-          </div>
 
-          <div class="flex min-w-[120px] justify-end">
-            <ElButton type="primary" :plain="!isEdit('basic_currency_code')"
-              @click="handleEditClick('basic_currency_code')">
-              {{ !isEdit('country_id') ? t('common.edit') : t('common.save') }}
-            </ElButton>
-          </div>
-        </div>
       </section>
     </section>
   </Page>
