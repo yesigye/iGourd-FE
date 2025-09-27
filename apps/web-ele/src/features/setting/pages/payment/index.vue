@@ -12,6 +12,8 @@ import {
   vuedraggable,
   ElIcon
 } from '@igourd/common-ui';
+import { CirclePlus } from '@element-plus/icons-vue';
+
 import { useI18n } from '@igourd/locales';
 import paymentIcon from '../../../../assets/setting/payment.svg';
 import {
@@ -287,7 +289,7 @@ onMounted(async () => {
                 "
               >
                 <div class="flex items-center justify-center gap-2.5">
-                  <el-icon><CirclePlus /></el-icon>
+                  <el-icon class="text-primary"><CirclePlus /></el-icon>
                   <p
                     :class="
                       payMethodMarkListOption.length === 0
