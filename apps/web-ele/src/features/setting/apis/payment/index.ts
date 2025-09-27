@@ -30,10 +30,7 @@ export function merchantPaymentMethodEdit(data) {
 }
 // 修改店铺设置
 export function merchantPaymentMethodList(data) {
-  return requestClient.post(
-    `/v1/merchant/order/payment-method/list`,
-    data,
-  );
+  return requestClient.post(`/v1/merchant/order/payment-method/list`, data);
 }
 // 修改店铺设置
 export function merchantPaymentMethodSort(data) {
@@ -44,8 +41,7 @@ export function merchantPaymentMethodSort(data) {
 }
 // 修改店铺设置
 export function listByEnumTypeUsing(data) {
-  return requestClient.post(
-    `/v1/merchant/common/enum/by-type`,
-    data,
-  );
+  return requestClient.post(`/v1/merchant/common/enum/by-type`, data);
 }
+
+// export function

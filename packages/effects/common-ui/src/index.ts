@@ -3,6 +3,7 @@ import type { ISchema } from '@formily/json-schema';
 import type { IGourdFormProps } from '@igourd-core/form-ui';
 
 import { useI18n } from '@igourd/locales';
+
 import {
   setupIgourdForm,
   useIgourdForm as useCoreIgourdForm,
@@ -27,7 +28,7 @@ export {
 export * from '@formily/reactive';
 
 export * from '@igourd-core/popup-ui';
-export { default as vuedraggable } from 'vuedraggable';
+export { default as vuedraggable } from 'vuedraggable/src/vuedraggable';
 
 export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
   if (!options.useI18n) {
