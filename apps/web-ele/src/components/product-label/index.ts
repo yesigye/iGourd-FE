@@ -1,11 +1,21 @@
 import type { ISchema } from '@igourd/common-ui';
 
+import { getSecondGroupList } from '@@/inventory';
+
 function remoteMethod(keywords: string) {
-  return Promise.resolve([
-    { label: '0094ff', value: '0094ff' },
-    { label: keywords, value: keywords },
-  ]);
-  return;
+  return getSecondGroupList({
+    page_num: 1,
+    page_size: 15,
+    keywords,
+  }).then((res) => {
+    return res.list.map((item: any) => {
+      return {
+        ...item,
+        label: item.parent_group_name,
+        value: item.id,
+      };
+    });
+  });
 }
 
 export const productLabelSelect: ISchema = {
@@ -32,8 +42,6 @@ export const productLabelSelect: ISchema = {
             type: 'string',
             'x-component': 'RemoteSelect',
             'x-component-props': {
-              filterable: true,
-              remote: true,
               remoteMethod,
             },
           },
