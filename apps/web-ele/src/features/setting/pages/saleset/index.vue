@@ -2,8 +2,6 @@
 import {
   Page, ElButton, ElInput,
   ElSelect,
-  ElUpload,
-  ElMessage,
   ElOption,
 } from '@igourd/common-ui';
 
