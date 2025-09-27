@@ -62,9 +62,7 @@ export function useAccountForm(func) {
         });
     },
   });
-  const handledChange = (a) => {
-    debugger;
-  };
+  const handledChange = (a) => {};
   // 表单 Schema - 基于原有的自定义字段表单结构
   const formSchema: ISchema = {
     type: 'object',
@@ -155,7 +153,6 @@ export function useAccountForm(func) {
     );
   };
   const getLeafLedgers = async (field: { props: { name: string } }) => {
-    debugger;
     const accountSetId = useUserStore().merchantInfo?.account_set_id;
     const result = await getLeafLedgersApi({
       account_set_id: accountSetId,
