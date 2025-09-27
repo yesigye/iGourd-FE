@@ -4,13 +4,16 @@ import { computed, onMounted, ref, watch } from 'vue';
 import {
   ElButton,
   ElCheckbox,
+  ElOption,
   ElDialog,
   ElMessage,
+  ElSelect,
   Page,
   vuedraggable,
+  ElIcon
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-
+import paymentIcon from '../../../../assets/setting/payment.svg';
 import {
   merchantPaymentMethodCreate,
   merchantPaymentMethodDel,
@@ -73,13 +76,13 @@ const getPayMenthodList = async () => {
  * @returns 用于采购&收款&还款&充值
  */
 const sceneDesc = (scene) => {
-  let desc = t('settings.pour');
+  let desc = t('payment.pour');
   scene.forEach((item, index) => {
     if (item.is_enabled) {
       desc +=
         index >= scene.length - 1
-          ? t(`settings.${item.payment_scene_type.toLocaleLowerCase()}`)
-          : `${t(`settings.${item.payment_scene_type.toLocaleLowerCase()}`)}&`;
+          ? item.payment_scene_type
+          : `${item.payment_scene_type}&`;
     }
   });
   return desc;
@@ -97,32 +100,24 @@ const handAddPaymentDialogVisible = () => {
 };
 
 const createPayMenthod = async () => {
-  const res = await merchantPaymentMethodCreate({
+  const result = await merchantPaymentMethodCreate({
     payment_method_mark: payment_mark.value,
     sort: 1,
   });
-  if (res.code == 'SUCCESS') {
-    addPaymentDialogVisible.value = false;
-    payment_mark.value = '';
-    getPayMenthodList();
-  } else {
-    ElMessage.error(res.message);
-  }
+  addPaymentDialogVisible.value = false;
+  payment_mark.value = '';
+  getPayMenthodList();
 };
 const delPayMenthod = async (event) => {
   if (event.payment_method_mark === 'CASH') {
-    ElMessage.error(t('settings.cash_payment_method_tips'));
+    ElMessage.error(t('payment.cash_payment_method_tips'));
     return;
   }
 
-  const res = await merchantPaymentMethodDel({
+  const result = await merchantPaymentMethodDel({
     payment_method_mark: event.payment_method_mark,
   });
-  if (res.code == 'SUCCESS') {
-    getPayMenthodList();
-  } else {
-    ElMessage.error(res.message);
-  }
+  getPayMenthodList();
 };
 const sceneList = ref([
   {
@@ -165,7 +160,7 @@ const editPayMenthod = async () => {
   const operate = {};
   const data = isShowDel(selectedPayMethod.value);
   if (data.is_default && payScene.value.length === 0) {
-    ElMessage.error(t('settings.please_select_payment_method_scene'));
+    ElMessage.error(t('payment.please_select_payment_method_scene'));
     return;
   }
 
@@ -173,12 +168,12 @@ const editPayMenthod = async () => {
     operate[item.value] = !!payScene.value.includes(item.value);
   });
 
-  const res = await merchantPaymentMethodEdit({
+  const result = await merchantPaymentMethodEdit({
     payment_method_mark: selectedPayMethod.value.payment_method_mark,
     payment_method_operate: operate,
   });
 
-  if (res.code == 'SUCCESS') {
+  if (result) {
     getPayMenthodList();
     addSceneDialogVisible.value = false;
   } else {
@@ -186,7 +181,7 @@ const editPayMenthod = async () => {
   }
 };
 const sortPayMethod = async (event) => {
-  const res = await merchantPaymentMethodSort({
+  const result = await merchantPaymentMethodSort({
     payment_method_sort_map: event,
   });
 };
@@ -222,7 +217,7 @@ onMounted(async () => {
       <div class="top flex items-center gap-1 pb-2.5 pt-2.5">
         <div class="bg-primary h-2.5 w-1 rounded-sm"></div>
         <div class="top-title">
-          <span>{{ t('set.payment_set') }}</span>
+          <span>{{ t('payment.payment-set') }}</span>
         </div>
       </div>
       <!-- 支付方式列表 -->
@@ -243,7 +238,7 @@ onMounted(async () => {
                 <div
                   class="payment-item-left bg-primary-50 flex flex-shrink-0 items-center justify-center"
                 >
-                  <img :src="payment" alt="" />
+                  <img :src="paymentIcon" alt="" />
                 </div>
 
                 <div>
@@ -271,6 +266,7 @@ onMounted(async () => {
                   <ElButton
                     v-if="!isShowDel(element).is_default"
                     @click.stop="delPayMenthod(element)"
+                    type="danger"
                   >
                     <span class="text-error">{{ t('common.del') }}</span>
                   </ElButton>
@@ -299,7 +295,7 @@ onMounted(async () => {
                         : 'text-primary'
                     "
                   >
-                    {{ t('settings.add_payment') }}
+                    {{ t('payment.add-payment-method') }}
                   </p>
                 </div>
               </div>
@@ -310,39 +306,37 @@ onMounted(async () => {
       <!-- 添加支付方式弹窗 -->
       <ElDialog
         v-model="addPaymentDialogVisible"
-        :title="t('settings.add_payment_method')"
+        :title="t('payment.add-payment-method')"
         width="500"
         :before-close="handleClose"
       >
         <div>
-          <el-form>
-            <div class="flex items-center justify-center">
-              <div class="w-[70%]">
-                <el-form-item
-                  :label="t('settings.payment_method')"
-                  prop="payment_mode"
-                  class="w-full"
-                >
-                  <div class="w-full">
-                    <el-select
-                      v-model="payment_mark"
-                      :placeholder="t('settings.please_select_payment_method')"
-                    >
-                      <el-option
-                        v-for="(item, index) in payMethodMarkListOption"
-                        :key="index"
-                        :label="item.name"
-                        :value="item.mark"
-                      />
-                    </el-select>
-                  </div>
-                </el-form-item>
-              </div>
+          <div class="flex items-center justify-center">
+            <div class="w-[70%]">
+              <el-form-item
+                :label="t('payment.payment_method')"
+                prop="payment_mode"
+                class="w-full"
+              >
+                <div class="w-full">
+                  <el-select
+                    v-model="payment_mark"
+                    :placeholder="t('payment.please-select-payment-method')"
+                  >
+                    <el-option
+                      v-for="(item, index) in payMethodMarkListOption"
+                      :key="index"
+                      :label="item.name"
+                      :value="item.mark"
+                    />
+                  </el-select>
+                </div>
+              </el-form-item>
             </div>
-            <p class="text-warning text-center">
-              {{ t('payment.payment_method_tips') }}
-            </p>
-          </el-form>
+          </div>
+          <p class="text-warning text-center mt-2">
+            {{ t('payment.payment-method-tips') }}
+          </p>
         </div>
         <template #footer>
           <div class="dialog-footer">
@@ -359,7 +353,7 @@ onMounted(async () => {
       <!-- 添加场景 -->
       <ElDialog
         v-model="addSceneDialogVisible"
-        :title="t('settings.payment_scenario_add')"
+        :title="t('payment.payment_scenario_add')"
         width="500"
         :before-close="handleClose"
       >
