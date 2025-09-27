@@ -4,7 +4,6 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-
 import { StoresetDrawer } from '@@/setting/components';
 
 import { useCrud } from '#/hooks';
@@ -90,7 +89,6 @@ export function useSettingStoreset() {
   // 服务函数
   const service = {
     // 获取列表数据
-
   };
 
   // 使用 CRUD Hook
