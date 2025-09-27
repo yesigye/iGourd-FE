@@ -4,10 +4,10 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import {
-  deleteSettingPaymentApi,
-  getSettingPaymentPageListApi,
-} from '@@/setting/apis';
+// import {
+//   deleteSettingPaymentApi,
+//   getSettingPaymentPageListApi,
+// } from '@@/setting/apis';
 import { PaymentDrawer } from '@@/setting/components';
 
 import { useCrud } from '#/hooks';
@@ -107,10 +107,9 @@ export function useSettingPayment() {
   // 服务函数
   const service = {
     // 获取列表数据
-    query: getSettingPaymentPageListApi,
-
-    // 删除支付设置
-    remove: deleteSettingPaymentApi,
+    // query: getSettingPaymentPageListApi,
+    // // 删除支付设置
+    // remove: deleteSettingPaymentApi,
   };
 
   // 使用 CRUD Hook

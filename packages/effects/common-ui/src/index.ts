@@ -15,9 +15,7 @@ import {
 export * from './components';
 
 export { useArray, useIndex, useRecord } from './components/array-base';
-
 export * from './formily';
-
 // export * from '@igourd-core/form-ui';
 
 export * from './ui';
@@ -26,8 +24,11 @@ export {
   onFieldInit,
   onFieldInputValueChange,
 } from '@formily/core';
+
 export * from '@formily/reactive';
+
 export * from '@igourd-core/popup-ui';
+export { default as vuedraggable } from 'vuedraggable/src/vuedraggable';
 
 export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
   if (!options.useI18n) {
