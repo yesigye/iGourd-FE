@@ -34,6 +34,9 @@ export function createQuantityCalculationEffect(
           `${basePath}.${rowIndex}.total_amount`,
           result.formattedTotalAmount,
         );
+        const diff = rowData.stock_total_quantity - field.value;
+        // 更新数据差
+        form?.setValuesIn(`${basePath}.${rowIndex}.variance_quantity`, diff);
       }
     }
   });

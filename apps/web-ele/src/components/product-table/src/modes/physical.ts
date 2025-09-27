@@ -16,6 +16,16 @@ export const PhysicalMode: ModePlugin = {
         title: '盘点数量',
       };
     }
+
+    columns.push({
+      name: 'variance_quantity',
+      title: '{{t("common.purchase.variance_quantity")}}',
+      'x-component-props': {
+        width: 200,
+      },
+      'x-component': 'PreviewText.Input',
+      'x-decorator': 'FormItem',
+    });
     return columns;
   },
   handleEvent(_evt, data) {

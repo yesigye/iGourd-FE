@@ -56,7 +56,7 @@ export interface InventoryCountDetail {
   review_status: CountStatus;
   creator_name: string;
   create_time: string;
-  physical_stock_take_item_models: InventoryCountItemDetail[];
+  physical_stock_take_item_list: InventoryCountItemDetail[];
 }
 
 // 库存盘点商品详情
