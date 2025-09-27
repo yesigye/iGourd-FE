@@ -10,6 +10,7 @@ import { dayjs } from 'element-plus';
 import { orderNoGenerate } from '#/api/common';
 import { useWarehouseSelect } from '#/hooks';
 import { useDrawerForm } from '#/hooks/use-drawer-form';
+import { retainDecimal8 } from '#/utils/eleValidate';
 
 import { wareHouseProductSearch } from '../../apis';
 
@@ -47,9 +48,50 @@ export function useCountForm() {
           formData.physical_stock_take_date,
         ).format('YYYY-MM-DD HH:mm:ss');
       }
-      formData.total_variance_cost = diffNum.value;
-      formData.total_variance_quantity = diffNum.value;
-      formData.total_variance_selling_price = diffNum.value;
+
+      const physical_stock_take_item_list =
+        formData.physical_stock_take_item_list;
+
+      // 盘点商品总成本差值金额 总成本差值金额 = 原数量 * 成本价 - 盘点数量 * 成本价
+      const total_variance_cost_origin = physical_stock_take_item_list.reduce(
+        (acc, item) =>
+          acc +
+          Number(item.origin_quantity || 0) * Number(item.cost_price || 0),
+        0,
+      );
+      const total_variance_cost = physical_stock_take_item_list.reduce(
+        (acc, item) =>
+          acc +
+          Number(item.returned_quantity || 0) * Number(item.cost_price || 0),
+        0,
+      );
+      // 计算total_variance_selling_price
+      const total_variance_selling_price_origin =
+        physical_stock_take_item_list.reduce(
+          (acc, item) =>
+            acc +
+            Number(item.origin_quantity || 0) * Number(item.selling_price || 0),
+          0,
+        );
+      const total_variance_selling_price = physical_stock_take_item_list.reduce(
+        (acc, item) =>
+          acc +
+          Number(item.returned_quantity || 0) * Number(item.selling_price || 0),
+        0,
+      );
+      // 点商品总成本差值金额
+      formData.total_variance_cost = retainDecimal8(
+        total_variance_cost - total_variance_selling_price_origin,
+        2,
+      );
+      // 盘点差额总数量
+      formData.total_variance_quantity = diffCost.value;
+      // 盘点商品总售价差值金额
+      formData.total_variance_selling_price = retainDecimal8(
+        total_variance_selling_price - total_variance_selling_price_origin,
+        2,
+      );
+
       const params = JSON.parse(JSON.stringify(formData));
       // 处理数据 basic_unit_radio
       params.physical_stock_take_item_list.forEach((item) => {
@@ -73,7 +115,6 @@ export function useCountForm() {
         : createCount({
             ...params,
           }));
-      func('refresh-tree');
       return response;
     } catch (error) {
       console.error('盘点单 customized form submission error:', error);
@@ -359,8 +400,12 @@ export function useCountForm() {
             });
             detail.physical_stock_take_item_list =
               detail.physical_stock_take_item_models;
+            detail.returned_quantity = detail.physical_total_quantity;
             formAPI.setValues(detail);
           }
+        } else {
+          // 关闭抽屉时，重置表单
+          formAPI.values = {};
         }
       },
       onClosed() {

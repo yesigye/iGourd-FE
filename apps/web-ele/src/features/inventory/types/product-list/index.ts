@@ -9,7 +9,7 @@ export interface ProductListItem {
   product_unit_names?: string;
   major_unit_name?: string;
   minor_name?: string;
-  status: 'ON_SALE' | 'OFF_SALE';
+  status: 'OFF_SALE' | 'ON_SALE';
   product_group_name?: string;
   product_label_list?: ProductLabel[];
   creator_name: string;
@@ -29,7 +29,6 @@ export interface ProductLabel {
 export interface ProductListParams {
   page_num: number;
   page_size: number;
-  merchant_id: number;
   keywords?: string;
   name?: string;
   status?: string;
@@ -51,11 +50,11 @@ export interface ProductListResponse {
 export interface ProductStatus {
   id: number;
   label: string;
-  value: 'ON_SALE' | 'OFF_SALE';
+  value: 'OFF_SALE' | 'ON_SALE';
 }
 
 export interface DeleteCheckResult {
-  remove_check_enum: string | null;
+  remove_check_enum: null | string;
   message?: string;
 }
 
