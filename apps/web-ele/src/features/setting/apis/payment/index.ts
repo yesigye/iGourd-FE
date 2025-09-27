@@ -10,7 +10,7 @@ export function paymentMethodListUsingPOST(data) {
 // 修改店铺设置
 export function merchantPaymentMethodCreate(data) {
   return requestClient.post(
-    `/merchant/order/merchant-payment-method-config/create`,
+    `/v1/merchant/order/merchant-payment-method-config/create`,
     data,
   );
 }

@@ -21,52 +21,44 @@ export function useCustomerFeature() {
     {
       field: 'name',
       minWidth: 200,
-      align: 'left',
+      align: 'center',
       fixed: 'left',
       title: t('customer.name'),
-      sortable: true,
     },
     {
       field: 'type',
       minWidth: 150,
-      align: 'left',
-      title: t('customer.type'),
-      sortable: true,
-    },
-    {
-      field: 'feature_type',
-      minWidth: 120,
       align: 'center',
-      title: t('customer.featureType'),
-      sortable: true,
+      title: t('customer.type'),
+      slots: { default: 'type' },
     },
+
     {
       field: 'is_fixed_option',
       minWidth: 100,
       align: 'center',
       title: t('customer.isFixedOption'),
-      sortable: true,
     },
     {
       field: 'is_compulsory',
       minWidth: 120,
       align: 'center',
       title: t('customer.isCompulsory'),
-      sortable: true,
+
     },
     {
       field: 'creator_name',
       minWidth: 100,
       align: 'center',
       title: t('customer.creator'),
-      sortable: true,
+
     },
     {
       field: 'create_time',
       minWidth: 100,
       align: 'center',
       title: t('customer.creationTime'),
-      sortable: true,
+
     },
     {
       field: 'operations',

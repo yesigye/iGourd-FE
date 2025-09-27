@@ -27,6 +27,9 @@
           {{ t('common.delete') }}
         </ElButton>
       </template>
+      <template #type="{ row }">
+        {{ row.type === 'INPUT' ?t('feature.input-box'):t('feature.select-box') }}
+      </template>
     </Grid>
 
     <Drawer />

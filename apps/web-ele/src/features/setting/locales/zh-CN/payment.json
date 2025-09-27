@@ -1,6 +1,10 @@
 {
-  "payment_method_tips": "最多添加7种支付方式",
+  "payment-method-tips": "最多添加7种支付方式",
   "purchase": "购买",
   "recharge": "充值",
-  "retail_sales": "零售销售"
+  "retail_sales": "零售销售",
+  "pour":"用于",
+  "add-payment-method":"添加支付方式",
+  "payment-set":"支付设置",
+  "please-select-payment-method":"请选择支付方式"
 }
