@@ -19,7 +19,7 @@ type OptionItem = Pick<
 // }
 
 const InnerSelect = defineComponent(
-  (props, { attrs }) => {
+  (props, { attrs, emit }) => {
     const loading = ref<boolean>(false);
     const options = ref<OptionItem[]>([]);
     function remoteQuery(keywords: string) {
@@ -41,8 +41,11 @@ const InnerSelect = defineComponent(
         {
           ...attrs,
           ...props,
+          'onUpdate:modelValue': (v: any) => emit('update:modelValue', v),
+          onChange: (v: any) => emit('change', v),
           remote: true,
           filterable: true,
+          loading: loading.value,
           remoteShowSuffix: true,
           remoteMethod: remoteQuery,
         },
@@ -66,6 +69,7 @@ const InnerSelect = defineComponent(
         required: true,
       },
     },
+    emits: ['update:modelValue', 'change'],
   },
 );
 
