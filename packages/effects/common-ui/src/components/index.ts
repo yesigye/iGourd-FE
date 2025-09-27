@@ -77,6 +77,7 @@ export {
   ElCol,
   ElConfigProvider,
   ElDatePicker,
+  ElDialog,
   ElDropdown,
   ElDropdownItem,
   ElDropdownMenu,
@@ -101,15 +102,16 @@ export {
   ElSelect,
   ElSelectV2,
   ElSpace,
+  ElSwitch,
   ElTable,
   ElTableColumn,
   ElTabPane,
   ElTabs,
   ElText,
+  ElTimePicker,
   ElTree,
   ElUpload,
   formContextKey,
-  ElDialog
 } from 'element-plus';
 export type { UploadFile, UploadProps, UploadUserFile } from 'element-plus';
 export { default as vuedraggable } from 'vuedraggable';

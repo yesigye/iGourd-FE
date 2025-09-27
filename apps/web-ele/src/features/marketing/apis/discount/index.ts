@@ -17,7 +17,12 @@ export function createDiscountApi(data: any) {
 }
 
 // 更新折扣
-export function updateDiscountApi(data: any) {
+export function updateDiscountApi(form: any) {
+  const data = {
+    ...form,
+    relation_product_id_list:
+      form.relation_product_id_list?.map((i: any) => i.id) || undefined,
+  };
   return requestClient.post(
     '/v1/merchant/basics/marketing/promotion/modify',
     data,
@@ -40,8 +45,11 @@ export function updateDiscountStatusApi(data: any) {
 }
 
 // 获取折扣详情
-export function getDiscountDetailApi(discount_id: number | string) {
-  return requestClient.get(
-    `/v1/merchant/basics/marketing/promotion/detail/${discount_id}`,
+export function getDiscountDetailApi(row: Record<string, any>) {
+  return requestClient.post(
+    `/v1/merchant/basics/marketing/price-level/detail`,
+    {
+      price_level_id: row.id,
+    },
   );
 }

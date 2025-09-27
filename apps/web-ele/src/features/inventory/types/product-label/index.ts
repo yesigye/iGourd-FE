@@ -12,7 +12,6 @@ export interface ProductLabelItem {
 export interface ProductLabelParams {
   page_num: number;
   page_size: number;
-  merchant_id: number;
   keywords?: string;
   name?: string;
 }

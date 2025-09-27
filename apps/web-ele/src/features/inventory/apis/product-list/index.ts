@@ -1,9 +1,10 @@
-import { requestClient as request } from '#/api/request';
 import type {
+  ProductListItem,
   ProductListParams,
   ProductListResponse,
-  ProductListItem,
 } from '../../types/product-list';
+
+import { requestClient as request } from '#/api/request';
 
 /**
  * 获取商品列表
@@ -64,9 +65,9 @@ export function copyProduct(params: { id: number; merchant_id: number }) {
  * 绑定商品标签
  */
 export function bindProductLabel(params: {
-  product_id: number;
   label_id_list: number[];
   merchant_id: number;
+  product_id: number;
 }) {
   return request.post('/inventory/product/bind-label', params);
 }
@@ -75,8 +76,8 @@ export function bindProductLabel(params: {
  * 获取所有商品标签
  */
 export function getAllProductLabels(params: {
-  merchant_id: number;
   keywords?: string;
+  merchant_id: number;
   name?: string;
   page_num: number;
   page_size: number;
