@@ -119,5 +119,5 @@ export {
   ElUpload,
   formContextKey,
 } from 'element-plus';
-
 export type { UploadFile, UploadProps, UploadUserFile } from 'element-plus';
+export { default as vuedraggable } from 'vuedraggable';

@@ -3,7 +3,6 @@ import type { ISchema } from '@formily/json-schema';
 import type { IGourdFormProps } from '@igourd-core/form-ui';
 
 import { useI18n } from '@igourd/locales';
-
 import {
   setupIgourdForm,
   useIgourdForm as useCoreIgourdForm,
@@ -15,9 +14,7 @@ import {
 export * from './components';
 
 export { useArray, useIndex, useRecord } from './components/array-base';
-
 export * from './formily';
-
 // export * from '@igourd-core/form-ui';
 
 export * from './ui';

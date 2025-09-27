@@ -22,3 +22,52 @@ export function updateSettingStoresetApi(data: SettingStoresetModifyVO) {
     data,
   );
 }
+/**
+ * 时区列表
+*/
+export function getTimezoneListApi(data) {
+  return requestClient.get(
+    `/v1/passport/basics/country/timezone/list`,
+    data,
+  );
+}
+/**
+ * 行业列表
+*/
+export function getIndustryListApi() {
+  return requestClient.post(
+    `/v1/merchant/basics/merchant/industry/list`,
+  );
+}
+/**
+ * 货币列表
+*/
+export function getCurrencyListApi() {
+  return requestClient.post(
+    `/v1/merchant/basics/currency/list`,
+  );
+}
+/**
+ * 国家列表
+*/
+export function getCountryListApi() {
+  return requestClient.get(
+    `/v1/passport/basics/country/areas/list`,
+  );
+}
+/**
+ * 店铺类型列表
+*/
+export function getBusinessTypeListApi() {
+  return requestClient.post(
+    `/v1/merchant/basics/merchant/business-type/list`,
+  );
+}
+/**
+ * 国家语言列表
+*/
+export function getCountryLanguageListApi() {
+  return requestClient.post(
+    `/v1/merchant/basics/merchant/country-language/list`,
+  );
+}
