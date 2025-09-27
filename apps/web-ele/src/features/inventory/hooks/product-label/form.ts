@@ -2,7 +2,6 @@ import type { ISchema } from '@igourd/common-ui';
 
 import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { useUserStore } from '@igourd/stores';
 
 import { createProductLabel, updateProductLabel } from '@@/inventory/apis';
 // 定义表单数据类型
@@ -13,7 +12,6 @@ interface ProductLabelFormData {
 
 export function useProductLabelForm(func) {
   const { t } = useI18n();
-  const { currentLoginUserApp } = useUserStore();
   // 表单提交处理
   const handleSubmit = async (values: ProductLabelFormData) => {
     try {
@@ -81,9 +79,52 @@ export function useProductLabelForm(func) {
               clearable: true,
             },
           },
+          // product_list: {
+          //   type: 'array',
+          //   title: '商品选择',
+          //   'x-decorator': 'FormItem',
+          //   'x-component': 'TransferTable',
+          //   'x-component-props': {
+          //     rowKey: 'id',
+          //     columns: [
+          //       { label: 'Product', prop: 'name', filter: { type: 'input' } },
+          //       {
+          //         label: 'Product Code',
+          //         prop: 'code',
+          //         width: 140,
+          //         filter: {
+          //           type: 'select',
+          //           options: [
+          //             { label: 'A', value: 'A' },
+          //             { label: 'B', value: 'B' },
+          //           ],
+          //         },
+          //       },
+          //     ],
+          //     fetchLeft: '{{ actions.fetchProducts }}',
+          //     fetchRight: '{{ actions.fetchSelectedProducts }}',
+          //     fetchByIds: '{{ actions.fetchProductsByIds }}',
+          //     getAllIdsUnderFilter: '{{ actions.getAllIdsUnderFilter }}',
+          //     topFilterFields: [
+          //       {
+          //         key: 'vendor',
+          //         label: '供应商',
+          //         type: 'remote-select',
+          //         remoteMethod: '{{ actions.searchVendors }}',
+          //       },
+          //       {
+          //         key: 'brand',
+          //         label: '品牌',
+          //         type: 'select',
+          //         options: [{ label: 'Nike', value: 'nike' }],
+          //       },
+          //     ],
+          //     searchPlaceholder: '输入采购单号/供应商/商品名',
+          //     excludeSelectedFromLeft: true,
+          //   },
+          // },
         },
       },
-      t,
     },
   };
   const loadData = async (node, resolve) => {};
@@ -98,7 +139,16 @@ export function useProductLabelForm(func) {
     effects() {
       // 使用 Formily 的 effects 监听表单值变化
     },
-    scope: { loadData },
+    scope: {
+      loadData,
+      // actions: {
+      //   fetchProducts: () => ({ list: [] }),
+      //   fetchSelectedProducts: () => [],
+      //   fetchProductsByIds: () => [],
+      //   getAllIdsUnderFilter: () => [],
+      //   searchVendors: () => [],
+      // },
+    },
   });
   // 表单重置
   const resetForm = () => {

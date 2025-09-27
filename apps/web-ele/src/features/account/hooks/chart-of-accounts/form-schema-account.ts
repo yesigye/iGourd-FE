@@ -62,6 +62,9 @@ export function useAccountForm(func) {
         });
     },
   });
+  const handledChange = (a) => {
+    debugger;
+  };
   // 表单 Schema - 基于原有的自定义字段表单结构
   const formSchema: ISchema = {
     type: 'object',
@@ -80,7 +83,7 @@ export function useAccountForm(func) {
               placeholder: "{{t('chart-of-accounts.account-ledger')}}",
               clearable: true,
             },
-            'x-reactions': ['{{useAsyncDataSource(getLeafLedgers)}}', {}],
+            'x-reactions': ['{{useAsyncDataSource(getLeafLedgers)}}'],
           },
           code: {
             type: 'string',
@@ -91,6 +94,14 @@ export function useAccountForm(func) {
             'x-component-props': {
               placeholder: "{{t('chart-of-accounts.add-account-form.code')}}",
               clearable: true,
+            },
+            'x-reactions': {
+              dependencies: ['source'],
+              fulfill: {
+                state: {
+                  value: '{{ $deps?.code }}',
+                },
+              },
             },
           },
           name: {
@@ -144,12 +155,18 @@ export function useAccountForm(func) {
     );
   };
   const getLeafLedgers = async (field: { props: { name: string } }) => {
-    const result = await getLeafLedgersApi({
-      account_set_id: '1942547124754341890',
-    });
     debugger;
+    const accountSetId = useUserStore().merchantInfo?.account_set_id;
+    const result = await getLeafLedgersApi({
+      account_set_id: accountSetId,
+    });
+    const options = result?.map((it) => ({
+      ...it,
+      label: `${it.name} - ${it.code}`,
+      value: it.id,
+    }));
     return new Promise((resolve) => {
-      resolve(result);
+      resolve(options);
     });
   };
   // 使用 useIgourdForm
@@ -163,7 +180,7 @@ export function useAccountForm(func) {
     effects() {
       // 使用 Formily 的 effects 监听表单值变化
     },
-    scope: { useAsyncDataSource, getLeafLedgers },
+    scope: { useAsyncDataSource, getLeafLedgers, handledChange },
   });
   // 表单重置
   const resetForm = () => {

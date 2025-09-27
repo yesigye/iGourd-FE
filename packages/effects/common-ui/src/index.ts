@@ -23,8 +23,11 @@ export {
   onFieldInit,
   onFieldInputValueChange,
 } from '@formily/core';
+
 export * from '@formily/reactive';
+
 export * from '@igourd-core/popup-ui';
+export { default as vuedraggable } from 'vuedraggable';
 
 export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
   if (!options.useI18n) {

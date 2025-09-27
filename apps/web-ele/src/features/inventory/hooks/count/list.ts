@@ -4,17 +4,22 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
+import { CountDrawer } from '@@/inventory/components';
+
 import { useCrud } from '#/hooks';
 import { formatNumber } from '#/utils/functions';
 
-import { getCountList } from '../../apis/count';
-
-import { CountDrawer } from '@@/inventory/components';
+import { getCountList, removeCount } from '../../apis/count';
 
 export function useInventoryCountList() {
   const { t } = useI18n();
 
   const columns: VxeGridPropTypes.Column<CountItem>[] = [
+    {
+      type: 'checkbox',
+      width: 80,
+      fixed: 'left',
+    },
     {
       field: 'physical_stock_take_no',
       title: t('inventory.physical_stock_take_no'),
@@ -94,25 +99,36 @@ export function useInventoryCountList() {
 
   const service = {
     query: getCountList,
+    drop: async (data) => {
+      debugger;
+      const params = { physical_stock_take_ids: data };
+      return await removeCount(params);
+    },
   };
 
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
-    useCrud({
-      service,
-      columns,
-      connectedComponent: CountDrawer,
-      searchFormSchema: {
-        keywords: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Input',
-          'x-component-props': {
-            placeholder: "{{t('common.keywords')}}",
-            clearable: true,
-          },
+  const {
+    Grid,
+    canBatchOperate,
+    Drawer,
+    handleEdit,
+    handleBatchDelete,
+    handleDelete,
+  } = useCrud({
+    service,
+    columns,
+    connectedComponent: CountDrawer,
+    searchFormSchema: {
+      keywords: {
+        type: 'string',
+        'x-decorator': 'FormItem',
+        'x-component': 'Input',
+        'x-component-props': {
+          placeholder: "{{t('common.keywords')}}",
+          clearable: true,
         },
       },
-    });
+    },
+  });
 
   return {
     Grid,
@@ -120,5 +136,6 @@ export function useInventoryCountList() {
     handleEdit,
     handleBatchDelete,
     canBatchOperate,
+    handleDelete,
   };
 }

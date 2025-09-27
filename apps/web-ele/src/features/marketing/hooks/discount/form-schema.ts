@@ -1,5 +1,7 @@
-// form-schema.ts（不使用 FormGrid，仅 FormLayout）
 import type { ISchema } from '@igourd/common-ui';
+
+// form-schema.ts（不使用 FormGrid，仅 FormLayout）
+import { productLabelSelect } from '#/components/product-label';
 
 const schema: ISchema = {
   type: 'object',
@@ -287,14 +289,8 @@ const schema: ISchema = {
             },
           ],
         },
-
-        // —— 三个 ArrayTable（行结构为 { id }） —— //
         relation_product_group_id_list: {
-          type: 'array',
-          title: "{{t('discount.form.productGroups')}}",
-          default: [], // ✅ 必须
-          'x-decorator': 'FormItem',
-          'x-component': 'ArrayTable',
+          ...productLabelSelect,
           'x-reactions': [
             {
               dependencies: ['relation_type'],
@@ -306,58 +302,77 @@ const schema: ISchema = {
               },
             },
           ],
-          items: {
-            type: 'object', // ✅ 必须
-            properties: {
-              colIndex: {
-                type: 'void',
-                'x-component': 'ArrayTable.Column',
-                'x-component-props': { width: 60, title: '#' },
-                properties: {
-                  index: { type: 'void', 'x-component': 'ArrayTable.Index' },
-                },
-              },
-              colSel: {
-                type: 'void',
-                'x-component': 'ArrayTable.Column',
-                'x-component-props': {
-                  title: "{{t('discount.table.columns.group')}}",
-                },
-                properties: {
-                  id: {
-                    type: 'number',
-                    'x-decorator': 'FormItem',
-                    'x-component': 'Select',
-                    'x-component-props': {
-                      filterable: true,
-                      placeholder: "{{t('discount.placeholder.productGroup')}}",
-                    },
-                    enum: [],
-                  },
-                },
-              },
-              colOps: {
-                type: 'void',
-                'x-component': 'ArrayTable.Column',
-                'x-component-props': {
-                  title: "{{t('discount.table.columns.ops')}}",
-                  width: 120,
-                },
-                properties: {
-                  remove: { type: 'void', 'x-component': 'ArrayTable.Remove' },
-                },
-              },
-            },
-          },
-          properties: {
-            addition: {
-              type: 'void',
-              title: "{{t('discount.form.add')}}",
-              'x-component': 'ArrayTable.Addition',
-              'x-component-props': { defaultValue: {} }, // ✅ 关键
-            },
-          },
         },
+        // —— 三个 ArrayTable（行结构为 { id }） —— //
+        // relation_product_group_id_list: {
+        //   type: 'array',
+        //   title: "{{t('discount.form.productGroups')}}",
+        //   default: [], // ✅ 必须
+        //   'x-decorator': 'FormItem',
+        //   'x-component': 'ArrayTable',
+        //   'x-reactions': [
+        //     {
+        //       dependencies: ['relation_type'],
+        //       fulfill: {
+        //         state: {
+        //           display:
+        //             "{{$deps[0]==='PRODUCT_GROUP' ? 'visible' : 'none'}}",
+        //         },
+        //       },
+        //     },
+        //   ],
+        //   items: {
+        //     type: 'object', // ✅ 必须
+        //     properties: {
+        //       colIndex: {
+        //         type: 'void',
+        //         'x-component': 'ArrayTable.Column',
+        //         'x-component-props': { width: 60, title: '#' },
+        //         properties: {
+        //           index: { type: 'void', 'x-component': 'ArrayTable.Index' },
+        //         },
+        //       },
+        //       colSel: {
+        //         type: 'void',
+        //         'x-component': 'ArrayTable.Column',
+        //         'x-component-props': {
+        //           title: "{{t('discount.table.columns.group')}}",
+        //         },
+        //         properties: {
+        //           id: {
+        //             type: 'number',
+        //             'x-decorator': 'FormItem',
+        //             'x-component': 'Select',
+        //             'x-component-props': {
+        //               filterable: true,
+        //               placeholder: "{{t('discount.placeholder.productGroup')}}",
+        //             },
+        //             enum: [],
+        //           },
+        //         },
+        //       },
+        //       colOps: {
+        //         type: 'void',
+        //         'x-component': 'ArrayTable.Column',
+        //         'x-component-props': {
+        //           title: "{{t('discount.table.columns.ops')}}",
+        //           width: 120,
+        //         },
+        //         properties: {
+        //           remove: { type: 'void', 'x-component': 'ArrayTable.Remove' },
+        //         },
+        //       },
+        //     },
+        //   },
+        //   properties: {
+        //     addition: {
+        //       type: 'void',
+        //       title: "{{t('discount.form.add')}}",
+        //       'x-component': 'ArrayTable.Addition',
+        //       'x-component-props': { defaultValue: {} }, // ✅ 关键
+        //     },
+        //   },
+        // },
 
         relation_product_label_id_list: {
           type: 'array',

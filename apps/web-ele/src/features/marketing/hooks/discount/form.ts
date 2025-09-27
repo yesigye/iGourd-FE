@@ -12,6 +12,7 @@ export function useDiscountForm() {
     formOptions: {
       initialValues: {
         apply_vip: 1,
+        relation_product_group_id_list: [{}],
       },
       schema,
     },
