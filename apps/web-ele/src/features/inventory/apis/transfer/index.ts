@@ -22,7 +22,7 @@ export function getTransferList(params: TransferParams) {
  */
 export function getTransferDetail(params: TransferDetailParams) {
   return request.post<TransferDetailResponse>(
-    '/inventory/transfer/detail',
+    '/v1/merchant/basics/inventory/stock-transfer/detail',
     params,
   );
 }
@@ -30,25 +30,36 @@ export function getTransferDetail(params: TransferDetailParams) {
 /**
  * 删除库存调拨
  */
-export function deleteTransfer(params: {
+export function removeTransfer(params: {
   merchant_id: number;
   stock_transfer_ids: number[];
 }) {
-  return request.post('/inventory/transfer/delete', params);
+  return request.post(
+    '/v1/merchant/basics/inventory/stock-transfer/remove',
+    params,
+  );
 }
 
 /**
  * 创建库存调拨
+ *
+ *
  */
 export function createTransfer(data: any) {
-  return request.post('/inventory/transfer/create', data);
+  return request.post(
+    '/v1/merchant/basics/inventory/stock-transfer/create',
+    data,
+  );
 }
 
 /**
  * 更新库存调拨
  */
-export function updateTransfer(data: any) {
-  return request.post('/inventory/transfer/update', data);
+export function modifyTransfer(data: any) {
+  return request.post(
+    '/v1/merchant/basics/inventory/stock-transfer/modify',
+    data,
+  );
 }
 
 /**
