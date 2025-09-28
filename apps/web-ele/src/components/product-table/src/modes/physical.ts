@@ -14,6 +14,7 @@ export const PhysicalMode: ModePlugin = {
       columns[quantityIndex] = {
         ...columns[quantityIndex],
         title: '盘点数量',
+        name: 'physical_quantity',
       };
     }
 

@@ -10,3 +10,6 @@ export const Close = createIconifyIcon('ep:close');
 export const EpArrayDown = createIconifyIcon('ep:arrow-down');
 export const ArrowRight = createIconifyIcon('ep:arrow-right');
 export const Filter = createIconifyIcon('ep:filter');
+export const SquareMousePointer = createIconifyIcon(
+  'lucide:square-mouse-pointer',
+);

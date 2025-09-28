@@ -207,7 +207,7 @@ export function useCountForm() {
             type: 'array',
             'x-component': 'ProductTable',
             'x-component-props': {
-              mode: 'return',
+              mode: 'physical',
               capabilities: [
                 'barcode',
                 'unit',
