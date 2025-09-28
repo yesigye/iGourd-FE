@@ -12,7 +12,6 @@ defineOptions({
 const { t } = useI18n();
 const { Grid, gridApi, Drawer, handleEdit } = useSalesReport();
 const getStaticsData = async () => {
-  console.log(gridApi);
   const res = await getProductSalesStatsApi({
     report_date: reportDate.value,
   });
