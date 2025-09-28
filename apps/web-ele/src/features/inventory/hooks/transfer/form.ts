@@ -74,6 +74,7 @@ export function useTransferForm() {
           labelCol: 6,
           wrapperCol: 14,
           layout: 'vertical',
+          'hide-required-asterisk': true,
         },
         properties: {
           label: {
@@ -136,7 +137,7 @@ export function useTransferForm() {
                   },
                 },
                 'x-component-props': {
-                  style: 'width: 300px;',
+                  style: { width: '300px', marginRight: '10px' },
                 },
               },
               source_warehouse_id: {
@@ -179,8 +180,11 @@ export function useTransferForm() {
                     },
                   },
                 },
+                'x-decorator-props': {
+                  class: 'abcd',
+                },
                 'x-component-props': {
-                  style: 'width: 300px;',
+                  style: { width: '300px', marginRight: '10px' },
                 },
               },
               destination_warehouse_id: {
@@ -297,15 +301,15 @@ export function useTransferForm() {
                             type: 'void',
                             'x-component': 'div',
                             'x-content':
-                              "{{t('transfer.total-transfer-quantity')}}",
+                              "{{t('transfer.total-transfer-quantity')}} ",
                             'x-component-props': {
                               style: { fontSize: '14px' },
                             },
                           },
-                          d: {
-                            type: 'void',
+                          total_transfer_quantity: {
+                            type: 'string',
                             'x-component': 'div',
-                            'x-content': '',
+                            'x-content': "{{$self.value?$self.value:'0'}}",
                             'x-component-props': {
                               style: {},
                             },
@@ -323,15 +327,15 @@ export function useTransferForm() {
                             type: 'void',
                             'x-component': 'div',
                             'x-content':
-                              "{{t('transfer.total-transfer-product-price')}}",
+                              "{{t('transfer.total-transfer-product-price')}} ",
                             'x-component-props': {
                               style: { fontSize: '14px' },
                             },
                           },
-                          d: {
-                            type: 'void',
+                          total_amount: {
+                            type: 'string',
                             'x-component': 'div',
-                            'x-content': '0',
+                            'x-content': "{{$self.value?$self.value:'0'}}",
                             'x-component-props': {
                               style: {},
                             },
@@ -358,10 +362,9 @@ export function useTransferForm() {
       },
     },
   };
-  const totalFun = (formData) => {
-    const items = formData.stock_transfer_item_list;
+  const totalFun = (items) => {
     // 计算调拨商品总数量
-    formData.total_transfer_quantity = items.reduce(
+    const totalTransferQuantity = items.reduce(
       (sum, item) =>
         floorDecimal(
           sum + Number(retainDecimal8(item.transfer_quantity, 0) || 0),
@@ -369,9 +372,10 @@ export function useTransferForm() {
         ),
       0,
     );
+    console.log(totalTransferQuantity, 'totalTransferQuantity');
 
     // 计算调拨商品总成本金额 = 调拨数量 * 成本价
-    formData.subtotal_amount = items
+    const subTotalAmount = items
       .reduce(
         (sum, item) =>
           sum +
@@ -382,7 +386,7 @@ export function useTransferForm() {
       .toFixed(2);
 
     // 计算调拨商品总金额(含税) = 调拨数量 * 销售价
-    formData.total_amount = items
+    const totalAmount = items
       .reduce(
         (sum, item) =>
           sum +
@@ -391,6 +395,11 @@ export function useTransferForm() {
         0,
       )
       .toFixed(2);
+    return {
+      totalTransferQuantity,
+      subTotalAmount,
+      totalAmount,
+    };
   };
   // 表单提交处理
   const handleSubmit = async (formData: PurchaseCodeRulesFormData) => {
@@ -408,7 +417,12 @@ export function useTransferForm() {
       formData.exchange_rate = 0.14;
       // 结算货币编码
       formData.currency_code = 'CNY';
-      totalFun(formData);
+      return ({ totalTransferQuantity, subTotalAmount, totalAmount } = totalFun(
+        formData.stock_transfer_item_list,
+      ));
+      formData.subtotal_amount = subTotalAmount;
+      formData.total_amount = totalAmount;
+      formData.total_transfer_quantity = totalTransferQuantity;
       const params = JSON.parse(JSON.stringify(formData));
 
       // 处理数据 basic_unit_radio
@@ -504,6 +518,7 @@ export function useTransferForm() {
         userLabel,
         merchantList,
         destinationWarehouse,
+        totalFun,
       },
       effects() {
         onFieldValueChange('transfer_type', (field, form: Form) => {
@@ -558,8 +573,17 @@ export function useTransferForm() {
             // No default
           }
         });
-        onFieldValueChange('physical_stock_take_item_list.*', (field) => {
-          console.log(`physical_stock_take_item_models值变化：${field.value}`);
+        onFieldValueChange('stock_transfer_item_list.*', (field, form) => {
+          const { totalTransferQuantity, totalAmount } = totalFun(
+            field.records,
+          );
+          console.log(totalAmount, totalTransferQuantity);
+
+          form.setValuesIn('total_amount', `${totalAmount} `);
+          form.setValuesIn(
+            'total_transfer_quantity',
+            `${totalTransferQuantity} `,
+          );
         });
         // 目标商家 仓库
         onFieldValueChange('destination_merchant_id', (field, form: Form) => {
