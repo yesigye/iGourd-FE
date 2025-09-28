@@ -20,7 +20,7 @@ export function useInventoryReport() {
       align: 'center',
     },
     {
-      field: 'product_minor_name',
+      field: 'product_major_name',
       title: t('inventory.product-name'),
       minWidth: 150,
 
