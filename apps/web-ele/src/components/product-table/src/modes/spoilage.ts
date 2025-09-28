@@ -14,6 +14,7 @@ export const SpoilageMode: ModePlugin = {
       columns[quantityIndex] = {
         ...columns[quantityIndex],
         title: '报损数量',
+        name: 'consumption_quantity',
       };
     }
     return columns;
