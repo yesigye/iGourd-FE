@@ -10,5 +10,6 @@
   "remain-qty": "Quantité restante",
   "sales-amount": "Montant des ventes",
   "sales-gross-margin": "Marge brute des ventes",
-  "sales-gross-margin-rate": "Taux de marge brute des ventes"
+  "sales-gross-margin-rate": "Taux de marge brute des ventes",
+  "cost-amount": "Montant des coûts"
 }

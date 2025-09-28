@@ -2,5 +2,8 @@
   "financial-category": "财务分类",
   "revenue": "收入",
   "expenditure": "支出",
-  "time-period": "时间周期"
+  "time-period": "时间周期",
+  "cash-balance": "现金余额",
+  "bank-balance": "银行余额",
+  "gross-profit": "毛利"
 }

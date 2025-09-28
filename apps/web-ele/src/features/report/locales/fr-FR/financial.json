@@ -4,5 +4,13 @@
   "expense": "Dépenses",
   "profit": "Profit",
   "profitMargin": "Marge de Profit",
-  "exportReport": "Exporter Rapport"
+  "exportReport": "Exporter Rapport",
+  "cash-balance": "Solde en espèces",
+  "bank-balance": "Solde en banque",
+  "gross-profit": "Marge brute",
+  "qty-increased": "Quantité augmentée",
+  "qty-reduced": "Quantité réduite",
+  "remain-qty": "Quantité restante",
+  "total-value-of-products-by-cost": "Valeur totale des produits (par coût)",
+  "total-value-of-products-by-selling": "Valeur totale des produits (par vente)"
 }
