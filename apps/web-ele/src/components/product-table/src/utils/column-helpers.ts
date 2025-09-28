@@ -126,15 +126,6 @@ export const createBaseColumns = (): ColumnDescriptor[] => [
     'x-component': 'PreviewText.Input',
     'x-decorator': 'FormItem',
   },
-  {
-    name: 'variance_quantity',
-    title: '{{t("common.purchase.variance_quantity")}}',
-    'x-component-props': {
-      width: 200,
-    },
-    'x-component': 'PreviewText.Input',
-    'x-decorator': 'FormItem',
-  },
 ];
 
 /**
