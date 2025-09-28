@@ -14,6 +14,29 @@ import { formatNumber } from '#/utils/functions';
 
 export function useInventorySpoilageList() {
   const { t } = useI18n();
+  // 枚举报损原因
+  const consumptionReason = [
+    {
+      value: 'EXPIRED_GOODS',
+      label: t('spoilage.consumption-reason-enum.expired-products'),
+    },
+    {
+      value: 'DAMAGED_GOODS',
+      label: t('spoilage.consumption-reason-enum.damaged-products'),
+    },
+    {
+      value: 'PERSONAL_USES',
+      label: t('spoilage.consumption-reason-enum.personal-use'),
+    },
+    {
+      value: 'RAW_MATERIALS',
+      label: t('spoilage.consumption-reason-enum.raw_materials'),
+    },
+    {
+      value: 'OTHERS',
+      label: t('spoilage.consumption-reason-enum.others'),
+    },
+  ];
 
   const columns: VxeGridPropTypes.Column<SpoilageItem>[] = [
     {
@@ -96,14 +119,9 @@ export function useInventorySpoilageList() {
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
-        placeholder: "{{t('inventory.consumption_reason')}}",
+        placeholder: "{{t('spoilage.consumption-reason')}}",
         clearable: true,
-        options: [
-          { label: t('inventory.EXPIRED'), value: 'EXPIRED' },
-          { label: t('inventory.DAMAGED'), value: 'DAMAGED' },
-          { label: t('inventory.LOST'), value: 'LOST' },
-          { label: t('inventory.OTHER'), value: 'OTHER' },
-        ],
+        options: consumptionReason,
       },
     },
     status: {

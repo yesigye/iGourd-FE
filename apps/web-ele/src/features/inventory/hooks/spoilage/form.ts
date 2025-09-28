@@ -9,14 +9,15 @@ import {
   modifySpoilage,
   wareHouseProductSearch,
 } from '@@/inventory/apis';
+import { dayjs } from 'element-plus';
 
 import { orderNoGenerate } from '#/api/common';
 import { useWarehouseSelect } from '#/hooks';
 import { useDrawerForm } from '#/hooks/use-drawer-form';
+import { floorDecimal } from '#/utils/eleValidate';
 
 export function useSpoilageForm() {
   const { t } = useI18n();
-
   // 枚举报损原因
   const consumptionReason = [
     {
@@ -40,6 +41,7 @@ export function useSpoilageForm() {
       label: t('spoilage.consumption-reason-enum.others'),
     },
   ];
+
   const warehouse = useWarehouseSelect();
   const userName = useUserStore().userInfo?.user_model.name;
   const userLabel = `${t('count.creator')}:`;
@@ -203,47 +205,46 @@ export function useSpoilageForm() {
         const result = await orderNoGenerate({
           category_type: 'INVENTORY_WRITE_OFF',
         });
-        formData.stock_transfer_no = result.order_no;
+        formData.stock_consumption_no = result.order_no;
       }
+      formData.consumption_date = dayjs().format('YYYY-MM-DD HH:mm:ss');
       // 	VAT配置
       formData.vat_configuration = 'NOT_APPLICATION';
       // 汇率(选择币种和系统币种的换算比例)
       formData.exchange_rate = 0.14;
       // 结算货币编码
       formData.currency_code = 'CNY';
-      totalFun(formData);
+      // 计算总数量
+      formData.total_spoilage_quantity =
+        formData.stock_consumption_item_list.reduce(
+          (acc, item) => acc + floorDecimal(item.consumption_quantity, 0),
+          0,
+        );
+      formData.stock_consumption_item_list.forEach((item) => {
+        item.subtotal_amount = (
+          item.consumption_quantity * item.cost_price
+        ).toFixed(0);
+      });
+      const total = formData.stock_consumption_item_list.reduce(
+        (acc, item) => acc + item.consumption_quantity * item.cost_price,
+        0,
+      );
+      formData.subtotal_amount = total.toFixed(0);
+      formData.total_amount = total.toFixed(0);
+      formData.stock_consumption_item_list.forEach((item) => {
+        item.consumption_quantity = floorDecimal(item.consumption_quantity, 0);
+      });
       const params = JSON.parse(JSON.stringify(formData));
-
       // 处理数据 basic_unit_radio
       params.stock_consumption_item_list.forEach((item) => {
         item.basic_unit_radio = 1;
         item.product_name = item.major_name;
         // 库存数量
         item.stock_quantity = item.stock_total_quantity;
-        // 考虑单位换算比例
-        const unitRatio = Number(item.basic_unit_radio || 1); // 获取单位比例，默认为1
-        const transferQty = floorDecimal(item.transfer_quantity, 0);
-        const stockQty = Number(item.stock_quantity);
 
-        // 将输入的调拨数量转换为基础单位数量进行比较
-        const convertedTransferQty = transferQty * unitRatio;
-        // 计算剩余数量 = 库存数量 - 调拨数量（基础单位）
-        item.remaining_quantity =
-          params.transfer_type === 'TRANSFER_IN_ONLY'
-            ? floorDecimal(stockQty + convertedTransferQty, 0)
-            : stayFloatSub(stockQty, convertedTransferQty);
         item.product_cost_price = item.cost_price;
         item.product_id = item.id;
       });
-      // 如果仅入库和仅出库 初始化id 0
-      if (params.transfer_type === 'TRANSFER_IN_ONLY') {
-        params.source_merchant_id = 0;
-        params.source_warehouse_id = 0;
-      }
-      if (params.transfer_type === 'TRANSFER_OUT_ONLY') {
-        params.destination_merchant_id = 0;
-        params.destination_warehouse_id = 0;
-      }
       // 调用 API
       response = await (params.id
         ? modifySpoilage({
@@ -270,7 +271,7 @@ export function useSpoilageForm() {
           // 编辑
           if (data.id) {
             const detail = await getSpoilageDetail({
-              physical_stock_take_id: data.id,
+              stock_consumption_id: data.id,
             });
             detail.physical_stock_take_item_list =
               detail.physical_stock_take_item_models;
