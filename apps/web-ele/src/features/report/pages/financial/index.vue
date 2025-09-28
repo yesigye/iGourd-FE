@@ -1,15 +1,24 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
+import { getFinancialStatsApi } from '@@/report/apis';
 import { useFinancialReport } from '@@/report/hooks';
 
 defineOptions({
   name: 'IFinancialReport',
 });
-
 const { t } = useI18n();
-const { Grid, Drawer } = useFinancialReport();
+const { Grid, Drawer, queryData } = useFinancialReport();
+const staticsData = ref({});
+const getStaticsData = async () => {
+  const res = await getFinancialStatsApi({
+    ...queryData,
+  });
+  staticsData.value = res || {};
+};
 </script>
 
 <template>
@@ -22,5 +31,38 @@ const { Grid, Drawer } = useFinancialReport();
       </template>
     </Grid>
     <Drawer />
+    <template #title>
+      <div class="flex items-center justify-between">
+        <div class="flex flex-wrap gap-2.5 text-xs">
+          <p class="flex flex-wrap gap-2.5">
+            <span>{{ t('financial.revenue') }}:</span>
+            <span class="text-success">+{{ staticsData.revenue_amount || 0 }}</span>
+          </p>
+          <p class="flex flex-wrap gap-2.5">
+            <span>{{ t('financial.expenditure') }}:</span>
+            <span class="text-[#F56C6C]">-{{ staticsData.advances_received_amount || 0 }}</span>
+          </p>
+          <p class="flex flex-wrap gap-2.5">
+            <span>{{ t('financial.cash-balance') }}:</span>
+            <span class="text-warning">{{
+              staticsData.customer_debt_amount || 0
+            }}</span>
+          </p>
+          <p class="flex flex-wrap gap-2.5">
+            <span>{{ t('financial.bank-balance') }}:</span>
+            <span class="text-warning">{{
+              staticsData.customer_debt_amount || 0
+            }}</span>
+          </p>
+          <p class="flex flex-wrap gap-2.5">
+            <span>{{ t('financial.gross-profit') }}:</span>
+            <span class="text-warning">{{
+              staticsData.gross_profit_amount || 0
+            }}</span>
+          </p>
+        </div>
+        <ElButton type="primary" @click="getStaticsData">总计</ElButton>
+      </div>
+    </template>
   </Page>
 </template>

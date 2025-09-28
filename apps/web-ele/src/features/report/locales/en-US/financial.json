@@ -1,8 +1,22 @@
 {
-  "date": "Date",
-  "income": "Income",
-  "expense": "Expense",
-  "profit": "Profit",
-  "profitMargin": "Profit Margin",
-  "exportReport": "Export Report"
+  "warehouse": "Warehouse",
+  "product-name": "Product Name",
+  "product-code": "Product Code",
+  "category": "Category",
+  "unit": "Unit",
+  "qty-increased": "Quantity Increased",
+  "qty-increased-details": "Quantity Increased Details",
+  "purchase": "Purchase",
+  "add-inventory": "Add Inventory",
+  "edit-inventory": "Edit Inventory",
+  "physical-stock-take": "Physical Stock Take",
+  "sales-refund": "Sales Refund",
+  "qty-reduced": "Quantity Reduced",
+  "qty-reduced-details": "Quantity Reduced Details",
+  "sales": "Sales",
+  "purchase-refunded": "Purchase Refunded",
+  "consumption": "Consumption",
+  "remain-qty": "Remain Quantity",
+  "total-value-of-products-by-cost": "Total Value of Products(By Cost)",
+  "total-value-of-products-by-selling": "Total Value of Products(By Selling)"
 }

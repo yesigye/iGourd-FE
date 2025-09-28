@@ -5,9 +5,9 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import { getInventoryReportApi } from '@@/report/apis';
+import dayjs from 'dayjs';
 
 import { useCrud } from '#/hooks';
-import dayjs from 'dayjs';
 
 export function useInventoryReport() {
   const { t } = useI18n();
@@ -184,7 +184,7 @@ export function useInventoryReport() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('inventory.productName')}}",
+        placeholder: "{{t('inventory.product-name')}}",
         clearable: true,
       },
     },
@@ -193,7 +193,7 @@ export function useInventoryReport() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('inventory.productCode')}}",
+        placeholder: "{{t('inventory.product-code')}}",
         clearable: true,
       },
     },
@@ -202,7 +202,7 @@ export function useInventoryReport() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('inventory.warehouseName')}}",
+        placeholder: "{{t('inventory.warehouse')}}",
         clearable: true,
       },
     },
@@ -211,12 +211,12 @@ export function useInventoryReport() {
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
-        placeholder: "{{t('inventory.stockStatus')}}",
+        placeholder: "{{t('inventory.stock-status')}}",
         clearable: true,
         options: [
-          { label: t('inventory.stockStatusOptions.normal'), value: 'normal' },
-          { label: t('inventory.stockStatusOptions.low'), value: 'low' },
-          { label: t('inventory.stockStatusOptions.out'), value: 'out' },
+          { label: t('inventory.normal'), value: 'normal' },
+          { label: t('inventory.low'), value: 'low' },
+          { label: t('inventory.out'), value: 'out' },
         ],
       },
     },
@@ -227,23 +227,23 @@ export function useInventoryReport() {
     searchFormSchema,
     batchOperate: false,
     service: {
-       query: async (params: {
+      query: async (params: {
+        end_date?: string;
         page_num: number;
         page_size: number;
         start_date?: string;
-        end_date?: string;
         tabKey: string;
         time_range: string;
       }) => {
         // 开始时间默认是当前时间-一个月
         params.end_date =
-          params.end_date || dayjs().format('YYYY-MM-DD') + ' 23:59:59';
+          params.end_date || `${dayjs().format('YYYY-MM-DD')} 23:59:59`;
         params.start_date =
           params.start_date ||
-          dayjs().subtract(1, 'months').format('YYYY-MM-DD') + ' 00:00:00';
+          `${dayjs().subtract(1, 'months').format('YYYY-MM-DD')} 00:00:00`;
         params.tabKey = 'months';
         params.time_range = 'MONTH';
-        let response = await getInventoryReportApi(params);
+        const response = await getInventoryReportApi(params);
         return {
           list: response?.list || [],
           total: response?.data?.total || 0,
