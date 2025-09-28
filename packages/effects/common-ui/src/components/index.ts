@@ -111,6 +111,7 @@ export {
   ElTabs,
   ElText,
   ElTimePicker,
+  ElTooltip,
   ElTree,
   ElUpload,
   formContextKey,

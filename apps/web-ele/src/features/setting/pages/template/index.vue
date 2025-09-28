@@ -135,6 +135,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
 });
 // 打开添加模板抽屉
 const handleOpenAddTemplateDrawer = () => {
+  drawerApi.setData({ templateType: selectedTemplateTypeItem.value.type });
   drawerApi.open();
 };
 </script>
