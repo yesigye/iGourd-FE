@@ -5,7 +5,7 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { deleteSpoilage, getSpoilageList } from '@@/inventory/apis';
+import { getSpoilageList, removeSpoilage } from '@@/inventory/apis';
 import { SpoilageDrawer } from '@@/inventory/components';
 
 import { useCrud } from '#/hooks';
@@ -14,6 +14,29 @@ import { formatNumber } from '#/utils/functions';
 
 export function useInventorySpoilageList() {
   const { t } = useI18n();
+  // 枚举报损原因
+  const consumptionReason = [
+    {
+      value: 'EXPIRED_GOODS',
+      label: t('spoilage.consumption-reason-enum.expired-products'),
+    },
+    {
+      value: 'DAMAGED_GOODS',
+      label: t('spoilage.consumption-reason-enum.damaged-products'),
+    },
+    {
+      value: 'PERSONAL_USES',
+      label: t('spoilage.consumption-reason-enum.personal-use'),
+    },
+    {
+      value: 'RAW_MATERIALS',
+      label: t('spoilage.consumption-reason-enum.raw_materials'),
+    },
+    {
+      value: 'OTHERS',
+      label: t('spoilage.consumption-reason-enum.others'),
+    },
+  ];
 
   const columns: VxeGridPropTypes.Column<SpoilageItem>[] = [
     {
@@ -96,14 +119,9 @@ export function useInventorySpoilageList() {
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
-        placeholder: "{{t('inventory.consumption_reason')}}",
+        placeholder: "{{t('spoilage.consumption-reason')}}",
         clearable: true,
-        options: [
-          { label: t('inventory.EXPIRED'), value: 'EXPIRED' },
-          { label: t('inventory.DAMAGED'), value: 'DAMAGED' },
-          { label: t('inventory.LOST'), value: 'LOST' },
-          { label: t('inventory.OTHER'), value: 'OTHER' },
-        ],
+        options: consumptionReason,
       },
     },
     status: {
@@ -127,22 +145,29 @@ export function useInventorySpoilageList() {
     // 获取列表数据
     query: getSpoilageList,
     // 删除损耗
-    remove: async (data: { stock_consumption_ids: number[] }) => {
+    drop: async (data) => {
       // @ts-ignore
-      return await deleteSpoilage(data);
+      const params = { stock_consumption_ids: data };
+      return await removeSpoilage(params);
     },
   };
 
   // 使用 CRUD Hook
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
-    useCrud({
-      // @ts-ignore
-      service,
-      columns,
-      searchFormSchema,
-      batchOperate: true,
-      connectedComponent: SpoilageDrawer,
-    });
+  const {
+    Grid,
+    canBatchOperate,
+    Drawer,
+    handleEdit,
+    handleBatchDelete,
+    handleDelete,
+  } = useCrud({
+    // @ts-ignore
+    service,
+    columns,
+    searchFormSchema,
+    batchOperate: true,
+    connectedComponent: SpoilageDrawer,
+  });
 
   return {
     Grid,
@@ -150,5 +175,6 @@ export function useInventorySpoilageList() {
     handleEdit,
     handleBatchDelete,
     canBatchOperate,
+    handleDelete,
   };
 }

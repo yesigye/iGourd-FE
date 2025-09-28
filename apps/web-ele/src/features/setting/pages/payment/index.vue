@@ -4,18 +4,17 @@ import { computed, onMounted, ref, watch } from 'vue';
 import {
   ElButton,
   ElCheckbox,
-  ElOption,
   ElDialog,
+  ElIcon,
   ElMessage,
+  ElOption,
   ElSelect,
   Page,
   vuedraggable,
-  ElIcon
 } from '@igourd/common-ui';
-import { CirclePlus } from '@element-plus/icons-vue';
-
+// import { CirclePlus } from '@element-plus/icons-vue';
 import { useI18n } from '@igourd/locales';
-import paymentIcon from '../../../../assets/setting/payment.svg';
+
 import {
   merchantPaymentMethodCreate,
   merchantPaymentMethodDel,
@@ -24,6 +23,8 @@ import {
   merchantPaymentMethodSort,
   paymentMethodListUsingPOST,
 } from '@@/setting/apis';
+
+import paymentIcon from '../../../../assets/setting/payment.svg';
 
 defineOptions({
   name: 'ISettingPayment',
@@ -235,7 +236,7 @@ onMounted(async () => {
           <template #item="{ element, index }">
             <div v-if="element.isDraggable">
               <div
-                class="payment-item border-primary relative flex h-40 cursor-pointer items-center gap-2.5 border-t-[2px] border-solid bg-card pl-4 pr-4"
+                class="payment-item border-primary bg-card relative flex h-40 cursor-pointer items-center gap-2.5 border-t-[2px] border-solid pl-4 pr-4"
               >
                 <div
                   class="payment-item-left bg-primary-50 flex flex-shrink-0 items-center justify-center"
@@ -277,7 +278,7 @@ onMounted(async () => {
             </div>
             <div
               v-else
-              class="payment-item payment-item-no-drag border-primary h-40 border-t-[2px] border-solid bg-card"
+              class="payment-item payment-item-no-drag border-primary bg-card h-40 border-t-[2px] border-solid"
               @click="handAddPaymentDialogVisible"
             >
               <div
@@ -289,7 +290,7 @@ onMounted(async () => {
                 "
               >
                 <div class="flex items-center justify-center gap-2.5">
-                  <el-icon class="text-primary"><CirclePlus /></el-icon>
+                  <ElIcon class="text-primary"><CirclePlus /></ElIcon>
                   <p
                     :class="
                       payMethodMarkListOption.length === 0
@@ -321,22 +322,22 @@ onMounted(async () => {
                 class="w-full"
               >
                 <div class="w-full">
-                  <el-select
+                  <ElSelect
                     v-model="payment_mark"
                     :placeholder="t('payment.please-select-payment-method')"
                   >
-                    <el-option
+                    <ElOption
                       v-for="(item, index) in payMethodMarkListOption"
                       :key="index"
                       :label="item.name"
                       :value="item.mark"
                     />
-                  </el-select>
+                  </ElSelect>
                 </div>
               </el-form-item>
             </div>
           </div>
-          <p class="text-warning text-center mt-2">
+          <p class="text-warning mt-2 text-center">
             {{ t('payment.payment-method-tips') }}
           </p>
         </div>

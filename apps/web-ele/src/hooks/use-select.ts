@@ -25,8 +25,9 @@ export function useSelect(option: Options) {
   return options;
 }
 
-export function useWarehouseSelect() {
+export function useWarehouseSelect(params) {
   return useSelect({
+    params,
     fetch: (params) =>
       getWarehouseListApi(params).then(({ list }) => {
         return list.map((i: any) => {

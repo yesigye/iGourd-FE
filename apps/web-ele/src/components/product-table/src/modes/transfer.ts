@@ -35,7 +35,7 @@ export const TransferMode: ModePlugin = {
         },
       },
       {
-        name: 'display_quantity',
+        name: 'transfer_quantity',
         type: 'number',
         title: '调拨数量',
         'x-component': 'ProductTable.QuantityCell',

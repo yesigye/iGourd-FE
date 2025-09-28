@@ -1,6 +1,6 @@
 import type { ISchema } from '@igourd/common-ui';
 
-import { observable, onFieldValueChange } from '@igourd/common-ui';
+import { onFieldValueChange } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
@@ -10,18 +10,56 @@ import { dayjs } from 'element-plus';
 import { orderNoGenerate } from '#/api/common';
 import { useWarehouseSelect } from '#/hooks';
 import { useDrawerForm } from '#/hooks/use-drawer-form';
-import { retainDecimal8 } from '#/utils/eleValidate';
+import { floorDecimal, retainDecimal8 } from '#/utils/eleValidate';
 
 import { wareHouseProductSearch } from '../../apis';
 
+const summary = (list) => {
+  // 盘点商品总成本差值金额 总成本差值金额 = 原数量 * 成本价 - 盘点数量 * 成本价
+  const totalVarianceCost = list.reduce(
+    (acc, item) =>
+      acc + Number(item.returned_quantity || 0) * Number(item.cost_price || 0),
+    0,
+  );
+  // 计算total_variance_selling_price
+  const totalVarianceSellingPriceOrigin = list.reduce(
+    (acc, item) =>
+      acc + Number(item.origin_quantity || 0) * Number(item.selling_price || 0),
+    0,
+  );
+  const totalVarianceSellingPrice = list.reduce(
+    (acc, item) =>
+      acc +
+      Number(item.physical_quantity || 0) * Number(item.selling_price || 0),
+    0,
+  );
+  // 点商品总成本差值金额
+  const totalVarianceCostChange = retainDecimal8(
+    totalVarianceCost - totalVarianceSellingPriceOrigin,
+    2,
+  );
+  // 盘点差额总数量
+  // 计算总数量差异 - 确保每次从0开始累加
+  const totalVarianceQuantity = floorDecimal(
+    list.reduce((sum, item) => sum + Number(item.variance_quantity || 0), 0),
+    8,
+  );
+  // 盘点商品总售价差值金额
+  const totalVarianceSellingPriceChange = retainDecimal8(
+    totalVarianceSellingPrice - totalVarianceSellingPriceOrigin,
+    2,
+  );
+  return {
+    totalVarianceCost: totalVarianceCostChange,
+    totalVarianceQuantity,
+    totalVarianceSellingPrice: totalVarianceSellingPriceChange,
+  };
+};
 export function useCountForm() {
   const { t } = useI18n();
   const warehouse = useWarehouseSelect();
   const userName = useUserStore().userInfo?.user_model.name;
   const userLabel = `${t('count.creator')}:`;
-  const diffNum = observable({ value: '0' });
-  const diffCost = observable({ value: '0' });
-  const diffSale = observable({ value: '0' });
 
   // 表单提交处理
   const handleSubmit = async (formData: PurchaseCodeRulesFormData) => {
@@ -49,49 +87,6 @@ export function useCountForm() {
         ).format('YYYY-MM-DD HH:mm:ss');
       }
 
-      const physical_stock_take_item_list =
-        formData.physical_stock_take_item_list;
-
-      // 盘点商品总成本差值金额 总成本差值金额 = 原数量 * 成本价 - 盘点数量 * 成本价
-      const total_variance_cost_origin = physical_stock_take_item_list.reduce(
-        (acc, item) =>
-          acc +
-          Number(item.origin_quantity || 0) * Number(item.cost_price || 0),
-        0,
-      );
-      const total_variance_cost = physical_stock_take_item_list.reduce(
-        (acc, item) =>
-          acc +
-          Number(item.returned_quantity || 0) * Number(item.cost_price || 0),
-        0,
-      );
-      // 计算total_variance_selling_price
-      const total_variance_selling_price_origin =
-        physical_stock_take_item_list.reduce(
-          (acc, item) =>
-            acc +
-            Number(item.origin_quantity || 0) * Number(item.selling_price || 0),
-          0,
-        );
-      const total_variance_selling_price = physical_stock_take_item_list.reduce(
-        (acc, item) =>
-          acc +
-          Number(item.returned_quantity || 0) * Number(item.selling_price || 0),
-        0,
-      );
-      // 点商品总成本差值金额
-      formData.total_variance_cost = retainDecimal8(
-        total_variance_cost - total_variance_selling_price_origin,
-        2,
-      );
-      // 盘点差额总数量
-      formData.total_variance_quantity = diffCost.value;
-      // 盘点商品总售价差值金额
-      formData.total_variance_selling_price = retainDecimal8(
-        total_variance_selling_price - total_variance_selling_price_origin,
-        2,
-      );
-
       const params = JSON.parse(JSON.stringify(formData));
       // 处理数据 basic_unit_radio
       params.physical_stock_take_item_list.forEach((item) => {
@@ -107,6 +102,14 @@ export function useCountForm() {
         item.product_id = item.id;
       });
 
+      const {
+        totalVarianceCost,
+        totalVarianceQuantity,
+        totalVarianceSellingPrice,
+      } = summary(params.physical_stock_take_item_list);
+      params.total_variance_cost = totalVarianceCost;
+      params.total_variance_quantity = totalVarianceQuantity;
+      params.total_variance_selling_price = totalVarianceSellingPrice;
       // 调用 API
       response = await (params.id
         ? updateCount({
@@ -129,6 +132,8 @@ export function useCountForm() {
         type: 'void',
         'x-component': 'FormLayout',
         'x-component-props': {
+          labelCol: 6,
+          wrapperCol: 14,
           layout: 'vertical',
         },
         properties: {
@@ -301,10 +306,10 @@ export function useCountForm() {
                               style: { fontSize: '14px' },
                             },
                           },
-                          d: {
-                            type: 'void',
+                          diffNum: {
+                            type: 'string',
                             'x-component': 'div',
-                            'x-content': '{{diffNum.value}}',
+                            'x-content': "{{$self.value?$self.value:'0'}}",
                             'x-component-props': {
                               style: {},
                             },
@@ -326,10 +331,10 @@ export function useCountForm() {
                               style: { fontSize: '14px' },
                             },
                           },
-                          d: {
-                            type: 'void',
+                          diffCost: {
+                            type: 'string',
                             'x-component': 'div',
-                            'x-content': '{{diffCost.value}}',
+                            'x-content': "{{$self.value?$self.value:'0'}}",
                             'x-component-props': {
                               style: {},
                             },
@@ -351,10 +356,10 @@ export function useCountForm() {
                               style: { fontSize: '14px' },
                             },
                           },
-                          d: {
-                            type: 'void',
+                          diffSale: {
+                            type: 'string',
                             'x-component': 'div',
-                            'x-content': '{{diffSale.value}}',
+                            'x-content': "{{$self.value?$self.value:'0'}}",
                             'x-component-props': {
                               style: {},
                             },
@@ -427,18 +432,21 @@ export function useCountForm() {
         userLabel,
         warehouse,
         userName,
-        diffNum,
-        diffCost,
-        diffSale,
       },
       effects() {
         onFieldValueChange('warehouse_id', (field) => {
           console.log(`target值变化：${field.value}`);
         });
-        onFieldValueChange('physical_stock_take_item_list.*', (field) => {
-          console.log(`physical_stock_take_item_models值变化：${field.value}`);
-          diffNum.value = field.record.returned_quantity;
-          console.log(diffNum.value, 'diffNum.value');
+        onFieldValueChange('physical_stock_take_item_list.*', (field, form) => {
+          const {
+            totalVarianceCost,
+            totalVarianceQuantity,
+            totalVarianceSellingPrice,
+          } = summary(field.records);
+
+          form.setValuesIn('diffNum', totalVarianceQuantity);
+          form.setValuesIn('diffCost', totalVarianceCost);
+          form.setValuesIn('diffSale', totalVarianceSellingPrice);
         });
       },
     },

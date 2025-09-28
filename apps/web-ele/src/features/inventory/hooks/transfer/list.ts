@@ -5,7 +5,7 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { deleteTransfer, getTransferList } from '@@/inventory/apis';
+import { getTransferList, removeTransfer } from '@@/inventory/apis';
 import { TransferDrawer } from '@@/inventory/components';
 
 import { useCrud } from '#/hooks';
@@ -125,9 +125,10 @@ export function useInventoryTransferList() {
     query: getTransferList,
 
     // 删除调拨
-    remove: async (data: { stock_transfer_ids: number[] }) => {
+    drop: async (data) => {
+      const params = { stock_transfer_ids: data };
       // @ts-ignore
-      return await deleteTransfer(data);
+      return await removeTransfer(params);
     },
   };
 
@@ -139,6 +140,7 @@ export function useInventoryTransferList() {
     Drawer,
     handleEdit,
     handleBatchDelete,
+    handleDelete,
   } = useCrud({
     // @ts-ignore
     service,
@@ -155,5 +157,6 @@ export function useInventoryTransferList() {
     handleBatchDelete,
     canBatchOperate,
     handleCreate,
+    handleDelete,
   };
 }

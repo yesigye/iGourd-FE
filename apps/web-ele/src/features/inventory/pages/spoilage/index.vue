@@ -10,8 +10,14 @@ defineOptions({
 
 const { t } = useI18n();
 
-const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
-  useInventorySpoilageList();
+const {
+  Grid,
+  Drawer,
+  handleEdit,
+  handleBatchDelete,
+  canBatchOperate,
+  handleDelete,
+} = useInventorySpoilageList();
 </script>
 
 <template>
@@ -34,7 +40,7 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleBatchDelete()">
+        <ElButton type="text" @click="handleDelete([row.id])">
           {{ t('common.delete') }}
         </ElButton>
       </template>
