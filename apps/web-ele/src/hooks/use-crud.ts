@@ -5,7 +5,7 @@ import type { ISchema } from '@igourd/common-ui';
 
 import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
 
-import { computed, provide, ref } from 'vue';
+import { computed, provide, reactive, ref } from 'vue';
 
 import { confirm, useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
@@ -31,7 +31,7 @@ interface List<T> {
     total: number; // 总数据条数
   };
 }
-
+type QueryForm = List<any>['QueryParams'];
 /**
  * 服务接口定义
  * 包含CRUD操作的方法集合
@@ -46,7 +46,7 @@ export interface Service<T, P> {
   /** 获取详情方法，根据ID获取单条数据 */
   detail: (dto: T) => Promise<T>;
   /** 删除方法，批量删除数据 */
-  drop: (ids: (number | string)[]) => {};
+  drop: (ids: (number | string)[]) => any;
   /** 更新方法，更新单条数据 */
   update: (dto: P) => Promise<number | string>;
   /** 创建方法，创建单条数据 */
@@ -143,12 +143,15 @@ function useBatchOperate<T>(
  * @param options - CRUD配置选项
  * @returns 返回CRUD相关的组件、API和处理函数
  */
-function useCrud<T extends object, P extends object>(
+function useCrud<T extends { id?: number | string }, P extends object>(
   options: Partial<CRUDOptions<T, P>>,
 ) {
   // 获取国际化函数
   const { t } = useI18n();
-
+  const queryData = reactive<QueryForm>({
+    page_num: 1,
+    page_size: 10,
+  });
   // 初始化批量操作相关功能
   const [checkedKeys, gridEvents, canBatchOperate] = useBatchOperate(
     options.girdEvents?.checkboxChange,
@@ -187,13 +190,12 @@ function useCrud<T extends object, P extends object>(
           list: [],
         };
       }
-      // 调用服务的查询方法，传入分页参数、表单数据和额外参数
-      return await options.service.query({
+      Object.assign(queryData, form, {
         page_num: page.currentPage,
         page_size: page.pageSize,
-        ...form,
-        ...options.params,
       });
+      // 调用服务的查询方法，传入分页参数、表单数据和额外参数
+      return await options.service.query(queryData);
     };
   }
 
@@ -246,7 +248,7 @@ function useCrud<T extends object, P extends object>(
    * 显示确认对话框，确认后调用API取消订单
    * @param row - 要取消的订单数据行
    */
-  const handleCancel = (row?: T) => {
+  const handleCancel = (row: any) => {
     confirm({
       title: t('common.cancel-order'),
       content: t('common.are-you-sure-cancel-order'),
@@ -254,7 +256,7 @@ function useCrud<T extends object, P extends object>(
       .then(async () => {
         // 取消订单，调用API修改订单状态
         await modifySaleOrderApi({
-          id_list: [row.id],
+          id_list: [row?.id],
           status: 'CANCEL',
         });
         // 重新加载表格数据
@@ -299,7 +301,7 @@ function useCrud<T extends object, P extends object>(
       });
   };
   // 行删除
-  const handleDelete = (ids) => {
+  const handleDelete = (ids: string[]) => {
     // 设置表格加载状态
     gridApi.setLoading(true);
     // 显示确认对话框
@@ -309,7 +311,7 @@ function useCrud<T extends object, P extends object>(
     })
       .then(() => {
         // 调用服务的删除方法
-        return options.service?.drop(ids);
+        return options.service?.drop?.(ids);
       })
       .then(() => {
         // 重新加载表格数据
@@ -327,6 +329,7 @@ function useCrud<T extends object, P extends object>(
 
   // 返回组件、API和处理函数
   return {
+    queryData,
     canBatchOperate, // 是否可以批量操作
     checkedKeys, // 选中的键数组
     gridApi, // 表格API
