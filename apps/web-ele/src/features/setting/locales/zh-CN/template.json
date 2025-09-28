@@ -17,5 +17,6 @@
   "default-template": "默认模板",
   "other-template": "其他模板",
   "add-template": "添加模板",
-  "edit-template": "编辑模板"
+  "edit-template": "编辑模板",
+  "other": "其他"
 }

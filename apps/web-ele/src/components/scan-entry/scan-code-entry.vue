@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-  defineExpose,
-  defineProps,
-  onMounted,
-  onUnmounted,
-  ref,
-  watch,
-} from 'vue';
+import { defineProps, onMounted, onUnmounted, ref, watch } from 'vue';
 
 import {
   ElButton,
