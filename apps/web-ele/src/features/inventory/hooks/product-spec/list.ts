@@ -4,12 +4,24 @@ import { computed } from 'vue';
 
 import { useI18n } from '@igourd/locales';
 
-import { getProductSpecValueList } from '@@/inventory/apis';
+import {
+  deleteProductSpecValue,
+  getProductSpecValueList,
+} from '@@/inventory/apis';
 
 import { useCrud } from '#/hooks';
 
 export function useInventoryProductSpec() {
   const { t } = useI18n();
+
+  const sourceTypeOptions = [
+    {
+      label: t('product-spec.source-type.manual-entry'),
+      value: 'MANUAL_ENTRY',
+    },
+    { label: t('product-spec.source-type.system'), value: 'SYSTEM' },
+    { label: t('product-spec.source-type.bulk-import'), value: 'BULK_IMPORT' },
+  ];
 
   // 表格列配置
   const tableColumns = computed(() => [
@@ -38,6 +50,12 @@ export function useInventoryProductSpec() {
       field: 'source_type',
       title: t('inventory.product_spec.source_type'),
       minWidth: 150,
+      formatter: ({ cellValue }) => {
+        const option = sourceTypeOptions.find((opt) => {
+          return opt.value === cellValue;
+        });
+        return option ? option.label : row.source_type;
+      },
     },
     {
       field: 'operation',
@@ -78,6 +96,7 @@ export function useInventoryProductSpec() {
         const params = { ...data, product_spec_id: queryParam };
         return await getProductSpecValueList(params);
       },
+      drop: deleteProductSpecValue,
     },
   });
   return { ...uCrud, handleQueryTable };

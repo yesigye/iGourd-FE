@@ -22,5 +22,10 @@
   "deleteSpecFailed": "Échec de la suppression de la spécification",
   "deleteSpecValueSuccess": "Suppression de la valeur de spécification réussie",
   "deleteSpecValueFailed": "Échec de la suppression de la valeur de spécification",
-  "product-spec-name": "规格名称"
+  "product-spec-name": "Nom de Spécification",
+  "source-type": {
+    "manual-entry": "Entrer par manuel",
+    "system": "Génération du système",
+    "bulk-import": "importer en bloc"
+  }
 }
