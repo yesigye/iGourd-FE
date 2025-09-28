@@ -129,6 +129,8 @@ export function useCountForm() {
         type: 'void',
         'x-component': 'FormLayout',
         'x-component-props': {
+          labelCol: 6,
+          wrapperCol: 14,
           layout: 'vertical',
         },
         properties: {

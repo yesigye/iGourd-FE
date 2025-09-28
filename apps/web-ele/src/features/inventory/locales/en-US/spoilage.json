@@ -4,7 +4,7 @@
   "stockConsumptionDate": "Spoilage Date",
   "total_spoilage_quantity": "Total Spoilage Quantity",
   "warehouse_name": "Warehouse Name",
-  "consumption_reason": "Spoilage Reason",
+  "consumption-reason": "Spoilage Reason",
   "review": "Review Status",
   "creator": "Creator",
   "creationTime": "Creation Time",
@@ -31,5 +31,14 @@
   "LOST": "Lost",
   "OTHER": "Other",
   "status": "Status",
-  "productDetail": "Product Details"
+  "productDetail": "Product Details",
+  "consumption-reason-enum": {
+    "expired-products": "Expired Products",
+    "damaged-products": "Damaged Products",
+    "personal-use": "Personal Use",
+    "raw_materials": "Raw Materials",
+    "others": "Others"
+  },
+  "warehouse-name-validate": "Please Select Warehouse",
+  "consumption-reason-validate": "Please Select Consumption Reason"
 }

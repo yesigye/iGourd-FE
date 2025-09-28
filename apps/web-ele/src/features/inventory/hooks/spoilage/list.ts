@@ -5,7 +5,7 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { deleteSpoilage, getSpoilageList } from '@@/inventory/apis';
+import { getSpoilageList, removeSpoilage } from '@@/inventory/apis';
 import { SpoilageDrawer } from '@@/inventory/components';
 
 import { useCrud } from '#/hooks';
@@ -127,22 +127,29 @@ export function useInventorySpoilageList() {
     // 获取列表数据
     query: getSpoilageList,
     // 删除损耗
-    remove: async (data: { stock_consumption_ids: number[] }) => {
+    drop: async (data) => {
       // @ts-ignore
-      return await deleteSpoilage(data);
+      const params = { stock_consumption_ids: data };
+      return await removeSpoilage(params);
     },
   };
 
   // 使用 CRUD Hook
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
-    useCrud({
-      // @ts-ignore
-      service,
-      columns,
-      searchFormSchema,
-      batchOperate: true,
-      connectedComponent: SpoilageDrawer,
-    });
+  const {
+    Grid,
+    canBatchOperate,
+    Drawer,
+    handleEdit,
+    handleBatchDelete,
+    handleDelete,
+  } = useCrud({
+    // @ts-ignore
+    service,
+    columns,
+    searchFormSchema,
+    batchOperate: true,
+    connectedComponent: SpoilageDrawer,
+  });
 
   return {
     Grid,
@@ -150,5 +157,6 @@ export function useInventorySpoilageList() {
     handleEdit,
     handleBatchDelete,
     canBatchOperate,
+    handleDelete,
   };
 }

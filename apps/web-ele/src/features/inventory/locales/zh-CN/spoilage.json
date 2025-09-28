@@ -3,7 +3,7 @@
   "stockConsumptionNo": "损耗单号",
   "stockConsumptionDate": "损耗日期",
   "total_spoilage_quantity": "总损耗数量",
-  "warehouse_name": "仓库名称",
+  "warehouse-name": "仓库",
   "consumption_reason": "损耗原因",
   "review": "审核状态",
   "creator": "创建人",
@@ -19,8 +19,8 @@
   "deleteFailed": "删除失败",
   "deleteOperationFailed": "删除操作失败",
   "deleteCanceled": "已取消删除",
-  "addStockConsumptionSave": "添加库存损耗",
-  "editStockConsumptionSave": "编辑库存损耗",
+  "add-stock-consumption-save": "添加库存损耗",
+  "edit-stock-consumption-save": "编辑库存损耗",
   "stockConsumptionDetails": "库存损耗详情",
   "printInventorySpoilage": "打印库存损耗单",
   "PENDING": "待审核",
@@ -31,5 +31,15 @@
   "LOST": "丢失",
   "OTHER": "其他",
   "status": "状态",
-  "productDetail": "商品详情"
+  "productDetail": "商品详情",
+  "consumption-reason": "报损原因",
+  "consumption-reason-enum": {
+    "expired-products": "过期商品",
+    "damaged-products": "损坏商品",
+    "personal-use": "个人用途",
+    "raw_materials": "原材料",
+    "others": "其他"
+  },
+  "warehouse-name-validate": "请选择仓库",
+  "consumption-reason-validate": "请选择报损原因"
 }

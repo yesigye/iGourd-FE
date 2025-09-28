@@ -4,7 +4,7 @@
   "stockConsumptionDate": "Date de Détérioration",
   "total_spoilage_quantity": "Quantité Totale de Détérioration",
   "warehouse_name": "Nom de l'Entrepôt",
-  "consumption_reason": "Raison de Détérioration",
+  "consumption-reason": "Raison de Détérioration",
   "review": "Statut de Révision",
   "creator": "Créateur",
   "creationTime": "Heure de Création",
@@ -31,5 +31,14 @@
   "LOST": "Perdu",
   "OTHER": "Autre",
   "status": "Statut",
-  "productDetail": "Détails du Produit"
+  "productDetail": "Détails du Produit",
+  "consumption-reason-enum": {
+    "expired-products": "Produits expirés",
+    "damaged-products": "Produits endommagés",
+    "personal-use": "Usage personnel",
+    "raw_materials": "Matières premières",
+    "others": "Autres"
+  },
+  "warehouse-name-validate": "Veuillez sélectionner l'entrepôt",
+  "consumption-reason-validate": "Veuillez sélectionner une raison de consommation"
 }
