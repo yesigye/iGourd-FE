@@ -1,1 +1,1 @@
-export { useSettingTemplate } from './list';
+export { useAddTemplateDrawer } from './drawer';
