@@ -2,13 +2,14 @@ import type { SalesReportRow } from '@@/report/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
+import { ref } from 'vue';
+
 import { useI18n } from '@igourd/locales';
 
 import { getSalesReportApi } from '@@/report/apis';
+import dayjs from 'dayjs';
 
 import { useCrud } from '#/hooks';
-import dayjs from 'dayjs';
-import { ref } from 'vue';
 
 export function useSalesReport() {
   const { t } = useI18n();
@@ -126,27 +127,28 @@ export function useSalesReport() {
     scope: {
       initialValues: {
         date_range: [
-          dayjs().subtract(1, 'months').format('YYYY-MM-DD'),
-          dayjs().format('YYYY-MM-DD'),
+          `${dayjs().subtract(1, 'months').format('YYYY-MM-DD')} `,
+          `${dayjs().format('YYYY-MM-DD')} `,
         ],
       },
     },
     batchOperate: false,
     service: {
       query: async (params: {
+        end_date?: string;
         page_num: number;
         page_size: number;
         start_date?: string;
-        end_date?: string;
         tabKey: string;
         time_range: string;
       }) => {
         // 开始时间默认是当前时间-一个月
-        params.end_date =
-          params.end_date || dayjs().format('YYYY-MM-DD') + ' 23:59:59';
-        params.start_date =
-          params.start_date ||
-          dayjs().subtract(1, 'months').format('YYYY-MM-DD') + ' 00:00:00';
+        params.end_date = params.date_range?.[1]
+          ? `${params.date_range?.[1]} 23:59:59`
+          : `${dayjs().format('YYYY-MM-DD')} 23:59:59`;
+        params.start_date = params.date_range?.[0]
+          ? `${params.date_range?.[0]} 00:00:00`
+          : `${dayjs().subtract(1, 'months').format('YYYY-MM-DD')} 00:00:00`;
         params.tabKey = 'months';
         params.time_range = 'MONTH';
         return await getSalesReportApi(params);
