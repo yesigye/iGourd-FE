@@ -1,6 +1,13 @@
 import type { ISchema } from '@igourd/common-ui';
 
-import { action, useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
+import { ref } from 'vue';
+
+import {
+  action,
+  onFieldValueChange,
+  useIgourdDrawer,
+  useIgourdForm,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
@@ -16,6 +23,7 @@ interface ProductLabelFormData {
 export function useAccountForm(func) {
   const { t } = useI18n();
   const { currentLoginUserApp } = useUserStore();
+  const loeafLedgers = ref([]);
   // 表单提交处理
   const handleSubmit = async (values: ProductLabelFormData) => {
     try {
@@ -40,7 +48,7 @@ export function useAccountForm(func) {
     title: t('chart-of-accounts.add-account-ledger'),
     appendToMain: true,
     class: 'w-1/2',
-    async onOpenChange(isOpen, val) {
+    async onOpenChange(isOpen) {
       if (isOpen) {
         formAPI.reset();
         const data = drawerApi.getData();
@@ -62,7 +70,7 @@ export function useAccountForm(func) {
         });
     },
   });
-  const handledChange = (a) => {};
+  const handledChange = () => {};
   // 表单 Schema - 基于原有的自定义字段表单结构
   const formSchema: ISchema = {
     type: 'object',
@@ -162,6 +170,7 @@ export function useAccountForm(func) {
       label: `${it.name} - ${it.code}`,
       value: it.id,
     }));
+    loeafLedgers.value = options;
     return new Promise((resolve) => {
       resolve(options);
     });
@@ -175,7 +184,12 @@ export function useAccountForm(func) {
       product_spec_name: '',
     },
     effects() {
-      // 使用 Formily 的 effects 监听表单值变化
+      onFieldValueChange('product_spec_name', (field, form) => {
+        const currentItem = loeafLedgers.value.find(
+          (item) => item.id === field.value,
+        );
+        form.setValuesIn('code', currentItem.code);
+      });
     },
     scope: { useAsyncDataSource, getLeafLedgers, handledChange },
   });
