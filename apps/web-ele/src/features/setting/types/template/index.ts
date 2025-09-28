@@ -97,3 +97,42 @@ export interface PrintTemplate {
   /** 版本 */
   version: string;
 }
+export type IdString = `${number}`;
+
+/** 字段分组类型 */
+export enum OptionGroupType {
+  BasicInfo = 'basic information',
+  CustomerInfo = 'customer information',
+  PaymentInfo = 'payment information',
+  ProductInfo = 'product information',
+}
+export interface PrintTemplateOption {
+  id: IdString;
+  create_time: null | string;
+  modify_time: null | string;
+  time_zone: string;
+  version: string;
+  creator_id: string;
+  remark: string;
+  name: string;
+  type: 'COLUMN';
+  template_type: 'RECEIPT';
+  column_option_code: string;
+  default_value: string;
+  option_group_type: OptionGroupType;
+  component_type: string;
+  /** 多语言key */
+  column_key: string;
+  is_selected: boolean;
+  /** 要渲染的组件 */
+  com: any;
+}
+export type ColumnOptionCode = {
+  column_option_code: string;
+  i18nKey: string;
+  id: IdString;
+  name: string;
+  prefix: string;
+  storeInfo: any;
+  suffix: string;
+};

@@ -29,3 +29,12 @@ export function setDefaultPrintTemplate(data: {
     data,
   );
 }
+// 获取备选项字段
+export function getPrintTemplateOptionList(data: {
+  business_type: keyof typeof PrintTemplateBusinessTypeEnum;
+}) {
+  return requestClient.post(
+    `v1/merchant/basics/settings/print-template-merchant/option/list`,
+    data,
+  );
+}
