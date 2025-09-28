@@ -23,5 +23,9 @@
   "hideSearchPanel": "Hide search panel",
   "creator": "Creator",
   "creation-time": "Creation Time",
-  "alert": "Alert"
+  "alert": "Alert",
+  "detele": "Delete",
+  "select": "Select",
+  "add": "Add",
+  "system-prompt": "System Prompt"
 }

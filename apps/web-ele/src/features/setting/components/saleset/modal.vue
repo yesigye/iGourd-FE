@@ -1,26 +1,28 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
 import {
-  useIgourdModal,
-  ElRow,
+  confirm,
+  ElButton,
   ElCol,
   ElIcon,
-  ElButton,
   ElMessage,
-  ElMessageBox,
-  confirm,
+  ElRow,
+  useIgourdModal,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import tableEmpty from '../../../../assets/setting/table-empty.svg';
-import { Plus } from '@element-plus/icons-vue';
-import { AddTag, AddTagValue } from '@@/setting/components/saleset';
+
 import {
   getQuickTagsApi,
-  removeQuickTagsApi,
   getQuickTagsValueApi,
+  removeQuickTagsApi,
   removeQuickTagsValueApi,
 } from '@@/setting/apis/saleset';
+// import { Plus } from '@element-plus/icons-vue';
+import { AddTag, AddTagValue } from '@@/setting/components/saleset';
+
+import tableEmpty from '../../../../assets/setting/table-empty.svg';
+
 const { t } = useI18n();
 const list = ref<number[]>([]);
 
@@ -46,7 +48,7 @@ const handleAddQuickTag = () => {
 
 // 编辑标签
 const handleEditQuickTag = (item) => {
-  addTagModalApi.setData({ id: item.id,value: item.order_holding_tag_name });
+  addTagModalApi.setData({ id: item.id, value: item.order_holding_tag_name });
   addTagModalApi.open();
 };
 const deleteQuickTag = async (item: { id: string }) => {
@@ -80,7 +82,7 @@ const orderHoldingTagValueName = ref('');
 const isEditModeValue = ref(false);
 const QuickTagsValueId = ref('');
 const addQuickTagsValue = async (type: string) => {
-  let mode = isEditModeValue.value
+  const mode = isEditModeValue.value
     ? 'modifyQuickTagsValue'
     : 'createQuickTagsValue';
   const { code } = await Quick_Tags_Service[mode]({
@@ -156,18 +158,19 @@ const [Modal, modalApi] = useIgourdModal({
 <template>
   <Modal :title="t('saleset.quick-tags')">
     <section class="min-h-[468px] text-xs">
-      <el-row>
-        <el-col :span="8">
+      <ElRow>
+        <ElCol :span="8">
           <div
             class="quick-tag-list bg-cloud-white border-gray-pale h-full border border-solid"
           >
             <div class="add-quick-tag-item">
               <span>{{ t('saleset.quick-tags') }}</span>
-              <el-icon
+              <ElIcon
                 class="add-quick-tags-icon text-azure-bright"
                 @click="handleAddQuickTag"
-                ><Plus
-              /></el-icon>
+              >
+                <Plus />
+              </ElIcon>
             </div>
             <div class="mt-2">
               <div
@@ -183,18 +186,20 @@ const [Modal, modalApi] = useIgourdModal({
               >
                 <span>{{ item.order_holding_tag_name }}</span>
                 <p class="flex gap-2 text-xs">
-                  <el-button
+                  <ElButton
                     link
                     type="primary"
                     @click.stop="handleEditQuickTag(item)"
-                    >{{ t('common.edit') }}</el-button
                   >
-                  <el-button
+                    {{ t('common.edit') }}
+                  </ElButton>
+                  <ElButton
                     link
                     type="danger"
                     @click.stop="deleteQuickTag(item)"
-                    >{{ t('common.delete') }}</el-button
                   >
+                    {{ t('common.delete') }}
+                  </ElButton>
                 </p>
               </div>
               <div
@@ -208,18 +213,18 @@ const [Modal, modalApi] = useIgourdModal({
               </div>
             </div>
           </div>
-        </el-col>
-        <el-col :span="16">
+        </ElCol>
+        <ElCol :span="16">
           <div class="quick-tag-content">
             <div class="quick-tag-content-title">
               <span>{{ t('saleset.content') }}</span>
-              <el-button
+              <ElButton
                 type="primary"
                 icon="Plus"
                 @click="handleAddQuickTagContEnd"
               >
                 {{ t('common.add') }}
-              </el-button>
+              </ElButton>
             </div>
             <div class="quick-tag-content-list mt-2">
               <el-scrollbar height="400px" class="">
@@ -232,18 +237,20 @@ const [Modal, modalApi] = useIgourdModal({
                     {{ item.order_holding_tag_value }}
                   </span>
                   <p class="flex gap-2 text-xs">
-                    <el-button
+                    <ElButton
                       link
                       type="primary"
                       @click="handleEditQuickTagValue(item)"
-                      >{{ t('common.edit') }}</el-button
                     >
-                    <el-button
+                      {{ t('common.edit') }}
+                    </ElButton>
+                    <ElButton
                       link
                       type="danger"
                       @click="handleDelQuickTagValue(item)"
-                      >{{ t('common.delete') }}</el-button
                     >
+                      {{ t('common.delete') }}
+                    </ElButton>
                   </p>
                 </div>
                 <div
@@ -258,8 +265,8 @@ const [Modal, modalApi] = useIgourdModal({
               </el-scrollbar>
             </div>
           </div>
-        </el-col>
-      </el-row>
+        </ElCol>
+      </ElRow>
     </section>
     <AddTagModal @confirm="getQuickTagsList" />
     <AddTagValueModal @confirm="getQuickTagsValueList(quickTagsId)" />

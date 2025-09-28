@@ -1,76 +1,31 @@
-import type {
-  SettingTemplateQueryPageVO,
-  SettingTemplatePageModel,
-  SettingTemplateCreateVO,
-  SettingTemplateModifyVO,
-  SettingTemplateRemoveVO,
-  SettingTemplateDetailModel,
-} from '@@/setting/types';
+import { PrintTemplateBusinessTypeEnum } from '@@/setting/types';
 
 import { requestClient } from '#/api/request';
-
-const SETTING_TEMPLATE_BASE_URL = '/v1/merchant/setting/template';
-
-// 获取模板设置分页列表
-export function getSettingTemplatePageListApi(data: SettingTemplateQueryPageVO) {
+// 获取打印模板列表
+export function getPrintTemplateList(data: {
+  type: keyof typeof PrintTemplateBusinessTypeEnum;
+}) {
   return requestClient.post(
-    `${SETTING_TEMPLATE_BASE_URL}/page-list`,
+    `v1/merchant/basics/settings/print-template-merchant/list`,
     data,
   );
 }
-
-// 创建模板设置
-export function createSettingTemplateApi(data: SettingTemplateCreateVO) {
+// 删除模板
+export function deletePrintTemplate(data: {
+  print_template_merchant_id_list: string[];
+}) {
   return requestClient.post(
-    `${SETTING_TEMPLATE_BASE_URL}/create`,
+    `v1/merchant/basics/settings/print-template-merchant/remove`,
     data,
   );
 }
-
-// 更新模板设置
-export function updateSettingTemplateApi(data: SettingTemplateModifyVO) {
+// 设置默认模板
+export function setDefaultPrintTemplate(data: {
+  business_type: keyof typeof PrintTemplateBusinessTypeEnum;
+  id: string;
+}) {
   return requestClient.post(
-    `${SETTING_TEMPLATE_BASE_URL}/modify`,
-    data,
-  );
-}
-
-// 删除模板设置
-export function deleteSettingTemplateApi(data: SettingTemplateRemoveVO) {
-  return requestClient.post(
-    `${SETTING_TEMPLATE_BASE_URL}/remove`,
-    data,
-  );
-}
-
-// 获取模板设置详情
-export function getSettingTemplateDetailApi(data: { template_id: number; merchant_id?: number }) {
-  return requestClient.post(
-    `${SETTING_TEMPLATE_BASE_URL}/detail`,
-    data,
-  );
-}
-
-// 更新模板设置状态
-export function updateTemplateStatusApi(data: { template_id: number; status: string; merchant_id?: number }) {
-  return requestClient.post(
-    `${SETTING_TEMPLATE_BASE_URL}/update-status`,
-    data,
-  );
-}
-
-// 获取模板预览
-export function getTemplatePreviewApi(data: { template_id: number; merchant_id?: number }) {
-  return requestClient.post(
-    `${SETTING_TEMPLATE_BASE_URL}/preview`,
-    data,
-  );
-}
-
-// 复制模板
-export function copyTemplateApi(data: { template_id: number; merchant_id?: number }) {
-  return requestClient.post(
-    `${SETTING_TEMPLATE_BASE_URL}/copy`,
+    `v1/merchant/basics/settings/print-template-merchant/default/modify`,
     data,
   );
 }
