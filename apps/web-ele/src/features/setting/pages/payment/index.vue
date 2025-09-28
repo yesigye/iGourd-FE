@@ -235,7 +235,7 @@ onMounted(async () => {
           <template #item="{ element, index }">
             <div v-if="element.isDraggable">
               <div
-                class="payment-item border-primary relative flex h-40 cursor-pointer items-center gap-2.5 border-t-[2px] border-solid bg-white pl-4 pr-4"
+                class="payment-item border-primary relative flex h-40 cursor-pointer items-center gap-2.5 border-t-[2px] border-solid bg-card pl-4 pr-4"
               >
                 <div
                   class="payment-item-left bg-primary-50 flex flex-shrink-0 items-center justify-center"
@@ -277,7 +277,7 @@ onMounted(async () => {
             </div>
             <div
               v-else
-              class="payment-item payment-item-no-drag border-primary h-40 border-t-[2px] border-solid bg-white"
+              class="payment-item payment-item-no-drag border-primary h-40 border-t-[2px] border-solid bg-card"
               @click="handAddPaymentDialogVisible"
             >
               <div
@@ -355,7 +355,7 @@ onMounted(async () => {
       <!-- 添加场景 -->
       <ElDialog
         v-model="addSceneDialogVisible"
-        :title="t('payment.payment_scenario_add')"
+        :title="t('payment.payment-scenario-add')"
         width="500"
         :before-close="handleClose"
       >

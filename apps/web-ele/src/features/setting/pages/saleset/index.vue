@@ -6,17 +6,15 @@ import {
   ElSwitch,
   ElDatePicker,
   ElTimePicker,
-  useIgourdModal
+  useIgourdModal,ElMessage
 } from '@igourd/common-ui';
 import {ExtraModal} from '@@/setting/components/saleset';
 
 import { getSettingSalesetDetailApi,modifySettingSalesetApi } from '@@/setting/apis';
 import { onMounted, ref, watch } from 'vue';
-import { useUserStore } from '@igourd/stores';
 import { useI18n } from '@igourd/locales';
 
 const { t } = useI18n();
-const { currentLoginUserApp } = useUserStore();
 const storeInfo = ref({});
 // 是否为首次加载
 const isFirstLoad = ref(true);
@@ -50,6 +48,9 @@ watch(() => storeInfo.value, async (newVal) => {
     await modifySettingSalesetApi({
       ...newVal,
     });
+
+    ElMessage.success('修改成功');
+
   }
 }, {deep:true});
 const handleAutomaticReviewChange = (val) => {

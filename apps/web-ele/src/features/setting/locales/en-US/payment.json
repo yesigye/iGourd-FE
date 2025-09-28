@@ -6,5 +6,6 @@
   "pour":"For",
   "add-payment-method":"Add Payment Method",
   "payment-set":"Payment Settings",
-  "please-select-payment-method":"Please select a payment method"
+  "please-select-payment-method":"Please select a payment method",
+  "payment-scenario-add": "Add Payment Scenario"
 }

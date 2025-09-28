@@ -19,5 +19,7 @@
   "language": "Language",
   "language-tip": "Please select the language you want to use for entering information, such as the entry of product names",
   "currency": "Currency",
-  "currency-tip": "Display store base currency"
+  "currency-tip": "Display store base currency",
+  "please-fill-in-full-information": "Please fill in full information",
+  "payment-scenario-add": "Add payment scenario"
 }
