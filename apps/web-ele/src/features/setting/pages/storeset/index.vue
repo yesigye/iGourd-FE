@@ -83,8 +83,8 @@ const countryLanguageList = ref<Options[]>([]);
 const getCountryLanguageList = async () => {
   const result = await getCountryLanguageListApi({});
   countryLanguageList.value = result.map((item) => ({
-    label: item.lang_tag,
-    value: item.id,
+    label: item.lang_name_local,
+    value: item.lang_name_local,
   }));
 }
 
@@ -105,16 +105,17 @@ const editKeyList = ref<string[]>([]);
 const isEdit = (key: string) => editKeyList.value.includes(key);
 const handleEditClick = async (key: string,multiple: boolean = false,keys: string[] = []) => {
   if (editKeyList.value.includes(key)) {
+
     if(multiple){
       keys.forEach(item=>{
         if(!storeInfo.value[item]){
-          ElMessage.error('请填写完整信息');
+          ElMessage.error(t('storeset.please-fill-in-full-information'));
           return false;
         }
       })
     }else{
     if(!storeInfo.value[key]){
-      ElMessage.error('请填写完整信息');
+      ElMessage.error(t('storeset.please-fill-in-full-information'));
       return false;
     }
     }
@@ -126,6 +127,7 @@ const handleEditClick = async (key: string,multiple: boolean = false,keys: strin
       keys.forEach(item=>{
         newParms[item]=storeInfo.value[item];
       })
+
       params = {
         ...backUpInfo.value,
         ...newParms,
@@ -166,7 +168,7 @@ onMounted(() => {
           <div class="w-[230px] font-bold">{{ t('storeset.version') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
+            <div class="flex w-[173px] gap-2 items-center">
               {{ storeInfo.version }}
             </div>
             <div class="w-[500px] text-[#999999]">
@@ -182,7 +184,7 @@ onMounted(() => {
           <div class="w-[230px] font-bold">{{ t('storeset.cash-register-receipt') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
+            <div class="flex w-[173px] gap-2 items-center">
               {{ storeInfo.business_type }}
             </div>
             <div class="w-[500px] text-[#999999]">
@@ -197,7 +199,7 @@ onMounted(() => {
           <div class="w-[230px] font-bold">{{ t('storeset.validity') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
+            <div class="flex w-[173px] gap-2 items-center">
               {{ storeInfo.validity }}
             </div>
             <div class="w-[500px] text-[#999999]">
@@ -212,7 +214,7 @@ onMounted(() => {
           <div class="w-[230px] font-bold">{{ t('storeset.registration-time') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
+            <div class="flex w-[173px] gap-2 items-center">
               {{ storeInfo.create_time }}
             </div>
             <div class="w-[500px] text-[#999999]">
@@ -227,7 +229,7 @@ onMounted(() => {
           <div class="w-[230px] font-bold">{{ t('storeset.client-sideos') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
+            <div class="flex w-[173px] gap-2 items-center">
             </div>
             <div class="w-[500px] text-[#999999]">
             </div>
@@ -247,7 +249,7 @@ onMounted(() => {
           <div class="w-[230px] font-bold">{{ t('storeset.store-name') }}</div>
           <div class="flex gap-10 items-center">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
+            <div class="flex w-[173px] gap-2 items-center">
               <p v-if="!isEdit('full_name')">{{ storeInfo.full_name }}</p>
               <ElInput v-model="storeInfo.full_name" v-else></ElInput>
             </div>
@@ -267,7 +269,7 @@ onMounted(() => {
           <div class="w-[230px] font-bold">{{ t('storeset.store-short-name') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2 items-center">
+            <div class="flex w-[173px] gap-2 items-center items-center">
               <p v-if="!isEdit('short_name')">{{ storeInfo.short_name }}</p>
               <ElInput v-model="storeInfo.short_name" v-else></ElInput>
             </div>
@@ -287,7 +289,7 @@ onMounted(() => {
           <div class="w-[230px] font-bold">{{ t('storeset.store-logo') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
+            <div class="flex w-[173px] gap-2 items-center">
               {{ storeInfo.profile_photo }}
             </div>
             <div class="w-[500px] text-[#999999]">
@@ -302,9 +304,15 @@ onMounted(() => {
           <div class="w-[230px] font-bold">{{ t('storeset.store-no') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
+            <div class="flex w-[173px] gap-2 items-center">
+              <div v-if="!isEdit('contact_telephone')">
               {{ storeInfo.contact_country_area_code }}
               {{ storeInfo.contact_telephone }}
+              </div>
+              <div class="flex gap-2 items-center" v-else>
+                <ElSelect></ElSelect><ElInput></ElInput>
+              </div>
+
             </div>
             <div class="w-[500px] text-[#999999]">
               ({{ t('storeset.store-no-tip') }})
@@ -323,11 +331,10 @@ onMounted(() => {
           <div class="w-[230px] font-bold">{{ t('storeset.country') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
+            <div class="flex w-[173px] gap-2  items-center">
               <p v-if="!isEdit('country_id')">{{ storeInfo.country_info?.name }}</p>
               <ElSelect key="country_id" v-model="storeInfo.country_id" v-else>
-                <ElOption v-for="item in countryList" :key="item.value" :value="item.value">
-                  {{ item.label }}
+                <ElOption v-for="item in countryList" :key="item.value" :label="item.label" :value="item.value">
                 </ElOption>
               </ElSelect>
             </div>
@@ -347,11 +354,10 @@ onMounted(() => {
           <div class="w-[230px] font-bold">{{ t('storeset.time-zone') }}</div>
           <div class="flex gap-10 items-center">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
+            <div class="flex w-[173px] gap-2 items-center">
               <p v-if="!isEdit('time_zone_id')">{{ storeInfo.time_zone_id }}</p>
               <ElSelect v-model="storeInfo.time_zone_id" v-else>
-                <ElOption v-for="item in timezoneList" :key="item.value" :value="item.value">
-                  {{ item.label }}
+                <ElOption v-for="item in timezoneList" :key="item.value" :label="item.label" :value="item.value">
                 </ElOption>
               </ElSelect>
             </div>
@@ -371,18 +377,16 @@ onMounted(() => {
           <div class="w-[230px] font-bold">{{ t('storeset.language') }}</div>
           <div class="flex gap-10 items-center">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
+            <div class="flex w-[173px] gap-2 items-center">
               <p v-if="!isEdit('language')">
-                {{ storeInfo.major_country_language_lang_code + '-' + storeInfo.minor_country_language_lang_code }}</p>
+                {{ storeInfo.major_country_language_lang_code + '--' + storeInfo.minor_country_language_lang_code }}</p>
               <div class="flex gap-2 w-full" v-else>
                 <ElSelect v-model="storeInfo.major_country_language_lang_code" class="w-full">
-                  <ElOption v-for="item in countryLanguageList" :key="item.value" :value="item.value">
-                    {{ item.label }}
+                  <ElOption v-for="item in countryLanguageList" :key="item.value" :label="item.label" :value="item.value">
                   </ElOption>
                 </ElSelect>
                 <ElSelect v-model="storeInfo.minor_country_language_lang_code" class="w-full">
-                  <ElOption v-for="item in countryLanguageList" :key="item.value" :value="item.value">
-                    {{ item.label }}
+                  <ElOption v-for="item in countryLanguageList" :key="item.value" :label="item.label" :value="item.value">
                   </ElOption>
                 </ElSelect>
               </div>
@@ -404,11 +408,10 @@ onMounted(() => {
           <div class="w-[230px] font-bold">{{ t('storeset.currency') }}</div>
           <div class="flex gap-10 items-center">
             <!-- 插槽label -->
-            <div class="flex w-[173px] gap-2">
+            <div class="flex w-[173px] gap-2 items-center">
               <p v-if="!isEdit('basic_currency_code')">{{ storeInfo.basic_currency_code }}</p>
               <ElSelect v-model="storeInfo.basic_currency_code" v-else>
-                <ElOption v-for="item in currencyList" :key="item.value" :value="item.value">
-                  {{ item.label }}
+                <ElOption v-for="item in currencyList" :key="item.value" :label="item.label" :value="item.value">
                 </ElOption>
               </ElSelect>
             </div>

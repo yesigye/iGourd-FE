@@ -6,5 +6,7 @@
   "pour":"用于",
   "add-payment-method":"添加支付方式",
   "payment-set":"支付设置",
-  "please-select-payment-method":"请选择支付方式"
+  "please-select-payment-method":"请选择支付方式",
+  "payment-scenario-add": "添加支付场景"
+
 }

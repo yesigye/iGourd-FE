@@ -22,5 +22,9 @@
   "edit": "编辑",
   "quick-tags-for-holding-orders": "挂单快速标签",
   "unlimited": "无限制",
-  "minutes": "分钟"
+  "minutes": "分钟",
+  "quick-tags": "快捷标签",
+  "content":"内容",
+  "add-quick-tag": "添加快捷标签",
+  "edit-quick-tag": "编辑快捷标签"
 }

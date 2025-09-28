@@ -129,8 +129,6 @@ export function useCountForm() {
         type: 'void',
         'x-component': 'FormLayout',
         'x-component-props': {
-          labelCol: 6,
-          wrapperCol: 14,
           layout: 'vertical',
         },
         properties: {
@@ -376,7 +374,6 @@ export function useCountForm() {
             'x-component': 'Upload',
             'x-component-props': {
               action: 'https://formily-vue.free.beeceptor.com/file',
-              textContent: '将文件拖到此处，或者点击上传',
               drag: true,
             },
           },

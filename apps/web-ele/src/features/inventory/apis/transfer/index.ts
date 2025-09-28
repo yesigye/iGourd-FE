@@ -1,24 +1,39 @@
+import type {
+  TransferDetailParams,
+  TransferDetailResponse,
+  TransferParams,
+  TransferResponse,
+} from '../../types/transfer';
+
 import { requestClient as request } from '#/api/request';
-import type { TransferParams, TransferResponse, TransferItem, TransferDetailParams, TransferDetailResponse } from '../../types/transfer';
 
 /**
  * 获取库存调拨列表
  */
 export function getTransferList(params: TransferParams) {
-  return request.post<TransferResponse>('/v1/merchant/basics/inventory/stock-transfer/page-list', params);
+  return request.post<TransferResponse>(
+    '/v1/merchant/basics/inventory/stock-transfer/page-list',
+    params,
+  );
 }
 
 /**
  * 获取库存调拨详情
  */
 export function getTransferDetail(params: TransferDetailParams) {
-  return request.post<TransferDetailResponse>('/inventory/transfer/detail', params);
+  return request.post<TransferDetailResponse>(
+    '/inventory/transfer/detail',
+    params,
+  );
 }
 
 /**
  * 删除库存调拨
  */
-export function deleteTransfer(params: { stock_transfer_ids: number[]; merchant_id: number }) {
+export function deleteTransfer(params: {
+  merchant_id: number;
+  stock_transfer_ids: number[];
+}) {
   return request.post('/inventory/transfer/delete', params);
 }
 
@@ -40,11 +55,11 @@ export function updateTransfer(data: any) {
  * 更新调拨状态
  */
 export function updateTransferStatus(params: {
+  destination_status?: string;
+  handler_type: string;
   id: number;
   merchant_id: number;
   status?: string;
-  destination_status?: string;
-  handler_type: string;
 }) {
   return request.post('/inventory/transfer/update-status', params);
 }
@@ -53,12 +68,12 @@ export function updateTransferStatus(params: {
  * 审核调拨状态
  */
 export function reviewTransferStatus(params: {
+  destination_review_status?: string;
+  handler_type: string;
   id: number;
   merchant_id: number;
-  review_status?: string;
-  destination_review_status?: string;
   review_opinion?: string;
-  handler_type: string;
+  review_status?: string;
   stock_transfer_review_item?: any[];
 }) {
   return request.post('/inventory/transfer/review-status', params);
@@ -67,6 +82,19 @@ export function reviewTransferStatus(params: {
 /**
  * 打印调拨单
  */
-export function printTransfer(params: { stock_transfer_id: number; merchant_id: number }) {
+export function printTransfer(params: {
+  merchant_id: number;
+  stock_transfer_id: number;
+}) {
   return request.post('/inventory/transfer/print', params);
+}
+
+/**
+ * 基于商户ID查询商户列表
+ */
+export function getSameMerchantApi(params: { id: number }) {
+  return request.post(
+    `/v1/merchant/basics/merchant/list/same-merchant/${params.id}`,
+    params,
+  );
 }
