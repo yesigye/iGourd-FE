@@ -1535,6 +1535,9 @@ importers:
       '@igourd-core/composables':
         specifier: workspace:^
         version: link:../../@core/composables
+      '@igourd/locales':
+        specifier: workspace:^
+        version: link:../../locales
       '@igourd/preferences':
         specifier: workspace:^
         version: link:../../preferences

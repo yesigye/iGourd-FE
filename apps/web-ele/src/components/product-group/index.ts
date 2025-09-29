@@ -1,9 +1,9 @@
 import type { ISchema } from '@igourd/common-ui';
 
-import { getProductLabelList } from '@@/inventory';
+import { getSecondGroupList } from '@@/inventory';
 
 function remoteMethod(keywords: string) {
-  return getProductLabelList({
+  return getSecondGroupList({
     page_num: 1,
     page_size: 15,
     keywords,
@@ -34,7 +34,7 @@ export const productGroupSelect: ISchema = {
         type: 'void',
         'x-component': 'ArrayTable.Column',
         'x-component-props': {
-          title: "{{t('discount.form.productLabels')}}",
+          title: "{{t('discount.form.productGroups')}}",
         },
 
         properties: {

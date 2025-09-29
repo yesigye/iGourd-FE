@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@igourd-core/composables": "workspace:^",
+    "@igourd/locales": "workspace:^",
     "@igourd/preferences": "workspace:^",
     "@igourd/stores": "workspace:^",
     "@igourd/types": "workspace:^",
