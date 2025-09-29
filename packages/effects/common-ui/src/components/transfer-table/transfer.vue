@@ -138,8 +138,7 @@ const value = ref<KV[]>([...props.modelValue]);
 watch(
   () => props.modelValue,
   (v) => {
-    value.value = [...v];
-    rightRefresh();
+    rightData.value = [...v];
   },
 );
 const valueIds = computed(() => value.value.map((r) => r[props.rowKey]));
@@ -280,7 +279,6 @@ watch(
 
 watchEffect(() => {
   leftRefresh();
-  rightRefresh();
 });
 
 /** ****************************
@@ -370,7 +368,6 @@ function addRows(rows: KV[]) {
   const merged = uniqByKey([...value.value, ...rows], props.rowKey);
   setValue(merged);
   leftSelection.value = [];
-  rightResetToFirstPageThenRefresh();
   leftRefresh();
 }
 
@@ -378,8 +375,6 @@ function removeRow(row: KV) {
   const id = row[props.rowKey];
   const next = value.value.filter((r) => r[props.rowKey] !== id);
   setValue(next);
-  rightRefresh();
-  leftRefresh();
 }
 
 // expose refresh for parent if needed
@@ -399,7 +394,7 @@ defineExpose({ leftRefresh, rightRefresh });
       >
         <template #append>
           <ElButton :loading="leftLoading" @click="leftRefresh()">
-            Search
+            {{ $t('common.search') }}
           </ElButton>
         </template>
       </ElInput>
