@@ -12,6 +12,7 @@ import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
 import {
+  createAccountApi,
   getLeafLedgersApi,
   modifyAccountApi,
 } from '../../apis/chart-of-accounts';
@@ -25,15 +26,20 @@ export function useAccountForm(func) {
   const { currentLoginUserApp } = useUserStore();
   const loeafLedgers = ref([]);
   // 表单提交处理
-  const handleSubmit = async (values: ProductLabelFormData) => {
+  const handleSubmit = async (formData: ProductLabelFormData) => {
     try {
       let response = null;
+
+      formData.belong_type = 'NONE';
+      formData.account_ledger_id = '';
+      formData.current_balance = '';
+
       // 调用 API
       response = await (values.id
         ? modifyAccountApi({
             ...values,
           })
-        : modifyAccountApi({
+        : createAccountApi({
             ...values,
           }));
       func('refresh-tree');
@@ -78,6 +84,10 @@ export function useAccountForm(func) {
       grid: {
         type: 'void',
         'x-component': 'FormLayout',
+        'x-component-props': {
+          labelCol: 6,
+          wrapperCol: 14,
+        },
         properties: {
           product_spec_name: {
             type: 'string',

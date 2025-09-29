@@ -1,22 +1,13 @@
 import type {
-  AccountLedgerBalanceTreeQueryVO,
-  AccountLedgerBalanceTreeModel,
+  AccountingPeriodCurrentQueryVO,
   AccountLedgerBalanceModifyVO,
-  AccountLedgerRemoveVO,
-  AccountRemoveVO,
+  AccountLedgerBalanceTreeQueryVO,
   AccountLedgerCreateVO,
   AccountLedgerModifyVO,
-  AccountLedgerDetailModel,
-  AccountDetailModel,
-  AccountCreateVO,
+  AccountLedgerRemoveVO,
   AccountModifyVO,
-  AccountLedgerModel,
-  AccountSetDetailModel,
-  SubsidiaryLedgerQueryPageVO,
-  SubsidiaryLedgerPageModel,
-  AccountingPeriodCurrentQueryVO,
-  AccountingPeriodModel,
   FindCurrentPeriodPayload,
+  SubsidiaryLedgerQueryPageVO,
 } from '@@/account/types';
 
 import { requestClient } from '#/api/request';
@@ -70,10 +61,20 @@ export function modifyAccountLedgerApi(data: AccountLedgerModifyVO) {
     data,
   );
 }
+// 创建账户
+export function createAccountApi(data: AccountModifyVO) {
+  return requestClient.post(
+    `/v1/merchant/basics/accounting/account/create`,
+    data,
+  );
+}
 
 // 修改账户
 export function modifyAccountApi(data: AccountModifyVO) {
-  return requestClient.post(`/v1/merchant/basics/accounting/account/modify`, data);
+  return requestClient.post(
+    `/v1/merchant/basics/accounting/account/modify`,
+    data,
+  );
 }
 
 // 查询叶子节点科目

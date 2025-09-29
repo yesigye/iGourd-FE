@@ -89,6 +89,10 @@ export function useSubjectForm(func) {
       grid: {
         type: 'void',
         'x-component': 'FormLayout',
+        'x-component-props': {
+          labelCol: 6,
+          wrapperCol: 14,
+        },
         properties: {
           ledger_type: {
             type: 'string',
