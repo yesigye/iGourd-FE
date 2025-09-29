@@ -32,7 +32,7 @@ const [DrawerValue, drawerValueApi] = useIgourdDrawer({
   connectedComponent: drawerValue,
   appendToMain: true,
 });
-const { Grid, handleQueryTable, handleEdit, handleBatchDelete } =
+const { Grid, handleQueryTable, handleEdit, handleBatchDelete, handleDelete } =
   useInventoryProductSpec();
 const productSpecList = ref<ProductLabelItem[]>([]);
 const selectedLabelId = ref<string>('');
@@ -78,8 +78,19 @@ const handleAddSpecValue = () => {
   const checkedItem = productSpecList.value.find(
     (item) => item.id === selectedLabelId.value,
   );
-  drawerValueApi.setData(checkedItem).open();
+
+  drawerValueApi
+    .setData({
+      product_spec_id: checkedItem.id,
+      product_spec_name: checkedItem.product_spec_name,
+    })
+    .open();
 };
+// 编辑
+const handleEditSpecValue = (row) => {
+  drawerValueApi.setData(row).open();
+};
+
 const handleChangeSpec = (value: String) => {
   handleQueryTable(value);
 };
@@ -139,10 +150,10 @@ onMounted(() => {
         </ElButton>
       </template>
       <template #operation="{ row }">
-        <ElButton type="text" @click="handleEdit(row)">
+        <ElButton type="text" @click="handleEditSpecValue(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleBatchDelete(row)">
+        <ElButton type="text" @click="handleDelete(row)">
           {{ t('common.delete') }}
         </ElButton>
       </template>

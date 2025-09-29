@@ -22,5 +22,10 @@
   "deleteSpecFailed": "删除规格失败",
   "deleteSpecValueSuccess": "删除规格值成功",
   "deleteSpecValueFailed": "删除规格值失败",
-  "product-spec-name": "规格名称"
+  "product-spec-name": "规格名称",
+  "source-type": {
+    "manual-entry": "手动输入",
+    "system": "系统生成",
+    "bulk-import": "批量导入"
+  }
 }

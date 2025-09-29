@@ -1475,6 +1475,9 @@ importers:
       '@igourd/locales':
         specifier: workspace:^
         version: link:../../locales
+      '@igourd/stores':
+        specifier: workspace:^
+        version: link:../../stores
       '@igourd/types':
         specifier: workspace:^
         version: link:../../types
@@ -1496,6 +1499,9 @@ importers:
       element-plus:
         specifier: 'catalog:'
         version: 2.11.1(vue@3.5.17(typescript@5.8.3))
+      jsbarcode:
+        specifier: ^3.12.1
+        version: 3.12.1
       json-bigint:
         specifier: 'catalog:'
         version: 1.0.0
@@ -1529,6 +1535,9 @@ importers:
       '@igourd-core/composables':
         specifier: workspace:^
         version: link:../../@core/composables
+      '@igourd/locales':
+        specifier: workspace:^
+        version: link:../../locales
       '@igourd/preferences':
         specifier: workspace:^
         version: link:../../preferences
@@ -8097,6 +8106,9 @@ packages:
   js-yaml@4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
     hasBin: true
+
+  jsbarcode@3.12.1:
+    resolution: {integrity: sha512-QZQSqIknC2Rr/YOUyOkCBqsoiBAOTYK+7yNN3JsqfoUtJtkazxNw1dmPpxuv7VVvqW13kA3/mKiLq+s/e3o9hQ==}
 
   jsbn@1.1.0:
     resolution: {integrity: sha512-4bYVV3aAMtDTTu4+xsDYa6sy9GyJ69/amsu9sYF2zqjiEoZA5xJi3BrfX3uY+/IekIu7MwdObdbDWpoZdBv3/A==}
@@ -18749,6 +18761,8 @@ snapshots:
   js-yaml@4.1.0:
     dependencies:
       argparse: 2.0.1
+
+  jsbarcode@3.12.1: {}
 
   jsbn@1.1.0: {}
 

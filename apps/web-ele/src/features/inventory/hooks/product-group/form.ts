@@ -92,7 +92,10 @@ export function useProductGroupForm(func) {
       grid: {
         type: 'void',
         'x-component': 'FormLayout',
-
+        'x-component-props': {
+          labelCol: 4,
+          wrapperCol: 20,
+        },
         properties: {
           parent_id: {
             type: 'string',

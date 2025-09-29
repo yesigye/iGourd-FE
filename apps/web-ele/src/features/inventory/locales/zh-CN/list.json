@@ -10,5 +10,8 @@
   "lastUpdateTime": "最后更新时间",
   "updateInventory": "更新库存",
   "editInventory": "编辑库存",
-  "inventoryDetail": "库存详情"
+  "inventoryDetail": "库存详情",
+  "add-inventory-reason": "添加库存原因",
+  "warehouse-name": "仓库",
+  "add-stock": "添加库存"
 }

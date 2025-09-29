@@ -1,5 +1,7 @@
 export * from './helpers';
 export * from './helpers/decimal';
+export * from './helpers/service';
+export * from './print';
 export * from '@igourd-core/shared/cache';
 export * from '@igourd-core/shared/color';
 
