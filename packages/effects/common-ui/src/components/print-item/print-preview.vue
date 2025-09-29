@@ -1,12 +1,12 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref, watchEffect } from 'vue';
 
-import { processAffixedValue } from '@/utils/print/index';
+import { processAffixedValue } from '@igourd/utils';
 
-import PrintBarcode from './print-barcode';
-import PrintDivider from './print-divider';
-import PrintImage from './print-image';
-import PrintLabel from './print-label';
+import PrintBarcode from './print-barcode.vue';
+import PrintDivider from './print-divider.vue';
+import PrintImage from './print-image.vue';
+import PrintLabel from './print-label.vue';
 import PrintRichText from './print-rich-text.vue';
 import PrintTable from './print-table.vue';
 import PrintText from './print-text.vue';
