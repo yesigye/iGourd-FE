@@ -4,6 +4,7 @@ export * from './use-design-tokens';
 export * from './use-hover-toggle';
 export * from './use-language';
 export * from './use-pagination';
+export * from './use-receipt-template';
 export * from './use-refresh';
 export * from './use-tabs';
 export * from './use-watermark';
