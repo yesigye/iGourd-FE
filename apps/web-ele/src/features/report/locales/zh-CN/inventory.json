@@ -18,5 +18,9 @@
   "consumption": "消耗",
   "remain-qty": "剩余数量",
   "total-value-of-products-by-cost": "商品成本(总成本)",
-  "total-value-of-products-by-selling": "商品售价(总售价)"
+  "total-value-of-products-by-selling": "商品售价(总售价)",
+  "stock-status": "库存状态",
+  "normal": "正常",
+  "low": "低库存",
+  "out": "缺货"
 }

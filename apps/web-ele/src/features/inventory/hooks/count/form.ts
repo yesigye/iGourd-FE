@@ -94,11 +94,11 @@ export function useCountForm() {
         item.product_name = item.major_name;
         // 盘点差额数量
         item.variance_quantity =
-          item.stock_total_quantity - item.returned_quantity;
+          item.stock_total_quantity - item.physical_quantity;
         // 盘点商品原有数量
         item.origin_quantity = item.stock_total_quantity;
         // 盘点商品数量
-        item.physical_quantity = item.returned_quantity;
+        // item.physical_quantity = item.physical_quantity;
         item.product_id = item.id;
       });
 

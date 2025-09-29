@@ -40,16 +40,22 @@ export function useProductSpecValueForm(func) {
     title: t('product-spec.add-spec'),
     appendToMain: true,
     class: 'w-1/2',
-    async onOpenChange(isOpen, val) {
+    async onOpenChange(isOpen) {
       if (isOpen) {
         formAPI.reset();
         const data = drawerApi.getData();
         // 如果存在数据，则设置表单值
-        const vals = {
-          product_spec_id: data.id,
-          product_spec_name: data.product_spec_name,
-        };
-        formAPI.setValues(vals);
+        if (data.id) {
+          formAPI.setValues(data);
+        } else {
+          const vals = {
+            product_spec_id: data.product_spec_id,
+            product_spec_name: data.product_spec_name,
+          };
+          formAPI.setValues(vals);
+        }
+      } else {
+        formAPI.values = {};
       }
     },
     onClosed() {
@@ -95,6 +101,7 @@ export function useProductSpecValueForm(func) {
             'x-component-props': {
               placeholder: "{{t('product-spec.product-spec-name')}}",
               clearable: true,
+              maxlength: 2,
             },
           },
           product_spec_value: {

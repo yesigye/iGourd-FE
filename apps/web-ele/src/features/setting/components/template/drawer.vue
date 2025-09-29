@@ -15,7 +15,7 @@ import { getPrintTemplateOptionList } from '@@/setting/apis';
 
 import { PageTitle } from '#/components';
 
-import { getTableTreeId } from './utils';
+import { getTableTreeId, processAffixedValue, StyleInt } from './utils';
 
 const printComponents = ref({
   PrintText: 'PrintText',
@@ -34,8 +34,12 @@ const [Drawer, drawerApi] = useIgourdDrawer({
   class: 'w-full',
   async onOpenChange(isOpen) {
     if (isOpen) {
-      const type = drawerApi.getData().templateType;
-      templateType.value = type;
+      const event = drawerApi.getData();
+      templateType.value = event.templateType;
+      isNewTemplate.value = event.currentTemplateData
+        ? Object.keys(event.currentTemplateData).length > 0
+        : false;
+
       fetchTemplateColumnList();
     }
   },
@@ -57,7 +61,7 @@ const printForm = ref({
 });
 const apiTreeData = ref([]);
 const tableDefault = ref([]);
-
+const isNewTemplate = ref(true);
 /**
  * 构建树形结构的辅助函数
  * @param {Array} apiData - 从API获取的原始数据
@@ -118,12 +122,11 @@ const buildTreeStructure = (apiData: any[]) => {
     // 特殊处理标题类型字段
     if (item.component_type === 'PrintTitle') {
       // 根据是否为新模板决定标题值来源
-      const titleValue = props.isNewTemplate
+      const titleValue = isNewTemplate.value
         ? item.default_value // 编辑模式：使用已保存的标题
-        : props.currentTemplateData.title_name; // 新建模式：使用默认值
+        : '结算模式'; // 新建模式：使用默认值
 
       // 更新全局标题名称
-      titleName.value = titleValue;
 
       return {
         ...baseNode,
@@ -135,12 +138,11 @@ const buildTreeStructure = (apiData: any[]) => {
     } else {
       // 处理其他类型字段的默认值
       // processAffixedValue函数用于处理前缀、后缀等格式化
-      // const defaultValue = processAffixedValue(
-      //   item.default_value, // 原始默认值
-      //   item.prefix, // 前缀
-      //   false, // 是否为后缀
-      //   merchantInfo, // 商户信息，用于动态替换
-      // );
+      const defaultValue = processAffixedValue(
+        item.default_value, // 原始默认值
+        item.prefix, // 前缀
+        false, // 是否为后缀
+      );
 
       return {
         ...baseNode,
@@ -203,20 +205,21 @@ const fetchTemplateColumnList = async () => {
 
     // // 更新左侧树形结构数据
     data.value = [...treeData];
+    console.log(data.value, 'data.value');
 
-    // // 如果不是新建模板（即编辑模式），需要回显已保存的数据
-    // if (props.isNewTemplate) {
-    //   // 新建模板的话，获取系统初始化模板，选中数据
-    //   // TODO 因为tree组件获取默认值后会触发 check-change 事件，所以需要加一个标记来控制是否执行逻辑
-    //   isAddNewTemplate.value = true;
-    //   await getTemplateInit(apiData);
-    //   isAddNewTemplate.value = false;
-    // } else {
-    //   await handleExistingTemplateData(apiData);
-    // }
+    // 如果不是新建模板（即编辑模式），需要回显已保存的数据
+    if (isNewTemplate.value) {
+      // 新建模板的话，获取系统初始化模板，选中数据
+      // TODO 因为tree组件获取默认值后会触发 check-change 事件，所以需要加一个标记来控制是否执行逻辑
+      isAddNewTemplate.value = true;
+      await getTemplateInit(apiData);
+      isAddNewTemplate.value = false;
+    } else {
+      await handleExistingTemplateData(apiData);
+    }
 
-    // // 获取模板列表（可能是获取其他相关模板信息）
-    // fetchTemplateList();
+    // 获取模板列表（可能是获取其他相关模板信息）
+    fetchTemplateList();
   } catch (error: any) {
     console.error('获取模板列表失败:', error);
   }
@@ -258,7 +261,7 @@ const fetchTemplateColumnList = async () => {
               <template #default="{ node }">
                 <div class="custom-tree-node">
                   <span v-if="node.data.id === 'type-other'">
-                    {{ t(`printTemp.printReceipt.${node.data.name}`) }}</span>
+                    {{ t(`template.${node.data.name}`) }}</span>
                   <span v-else>{{ node.data.name }}</span>
                 </div>
               </template>

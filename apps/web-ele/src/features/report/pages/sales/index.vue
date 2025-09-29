@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import { ElButton, ElTooltip, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
@@ -10,12 +12,13 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { Grid, gridApi, Drawer, handleEdit } = useSalesReport();
+const { Grid, gridApi, Drawer, handleEdit, queryData } = useSalesReport();
+const staticsData = ref<ProductSalesStatsResponse>({});
 const getStaticsData = async () => {
-  console.log(gridApi);
   const res = await getProductSalesStatsApi({
-    report_date: reportDate.value,
+    ...queryData,
   });
+  staticsData.value = res || {};
 };
 </script>
 
@@ -33,13 +36,20 @@ const getStaticsData = async () => {
       <div class="flex items-center justify-between">
         <div class="flex flex-wrap gap-2.5 text-xs">
           <p class="flex flex-wrap gap-2.5">
-            <span>Sales Qty:</span> <span class="text-warning">2345</span>
+            <span>{{ t('sales.sales-qty') }}:</span>
+            <span class="text-warning">{{
+              staticsData.sale_quantity || 0
+            }}</span>
           </p>
           <p class="flex flex-wrap gap-2.5">
-            <span>Remain Qty:</span> <span class="text-warning">2345</span>
+            <span>{{ t('sales.remain-qty') }}:</span>
+            <span class="text-warning">{{
+              staticsData.remain_quantity || 0
+            }}</span>
           </p>
           <p class="flex flex-wrap gap-2.5">
-            <span>Cost Amount:</span> <span class="text-warning">2345</span>
+            <span>{{ t('sales.cost-amount') }}:</span>
+            <span class="text-warning">{{ staticsData.cost_amount || 0 }}</span>
             <ElTooltip
               class="box-item"
               effect="dark"
@@ -50,7 +60,8 @@ const getStaticsData = async () => {
             </ElTooltip>
           </p>
           <p class="flex flex-wrap gap-2.5">
-            <span>Sales Amount:</span> <span class="text-warning">2345</span>
+            <span>{{ t('sales.sales-amount') }}:</span>
+            <span class="text-warning">{{ staticsData.sale_amount || 0 }}</span>
             <ElTooltip
               class="box-item"
               effect="dark"
@@ -61,7 +72,10 @@ const getStaticsData = async () => {
             </ElTooltip>
           </p>
           <p class="flex flex-wrap gap-2.5">
-            <span>Gross Margin::</span> <span class="text-warning">2345</span>
+            <span>{{ t('sales.sales-gross-margin-rate') }}:</span>
+            <span class="text-warning">{{
+              staticsData.gross_margin_amount || 0
+            }}</span>
           </p>
         </div>
         <ElButton type="primary" @click="getStaticsData">总计</ElButton>
