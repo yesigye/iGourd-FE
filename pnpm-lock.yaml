@@ -1475,6 +1475,9 @@ importers:
       '@igourd/locales':
         specifier: workspace:^
         version: link:../../locales
+      '@igourd/stores':
+        specifier: workspace:^
+        version: link:../../stores
       '@igourd/types':
         specifier: workspace:^
         version: link:../../types

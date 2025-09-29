@@ -43,7 +43,7 @@ const orderList = computed(() => {
   ];
 });
 // 获取表头样式
-const getHeaderItemStyle = (item) => {
+const getHeaderItemStyle = (item: any) => {
   return {
     width: item?.width || 'auto',
     textAlign: item?.align || 'center',
@@ -51,7 +51,7 @@ const getHeaderItemStyle = (item) => {
 };
 
 // 获取单元格样式
-const getCellStyle = (col) => {
+const getCellStyle = (col: any) => {
   return {
     width: col?.width || 'auto',
     textAlign: col?.align || 'center',
