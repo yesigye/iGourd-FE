@@ -40,7 +40,7 @@ export function useProductLabelForm(func) {
   const [Drawer, drawerApi] = useIgourdDrawer({
     title: t('product-label.add-product-label'),
     appendToMain: true,
-    class: 'w-1/2',
+    class: 'w-full',
     async onOpenChange(isOpen) {
       if (isOpen) {
         formAPI.reset();
@@ -155,10 +155,7 @@ export function useProductLabelForm(func) {
     scope: {
       loadData,
       actions: {
-        fetchProducts: async () => {
-          const pageList = await wareHouseProductSearch();
-          return pageList;
-        },
+        fetchProducts: wareHouseProductSearch,
         fetchSelectedProducts: () => [],
         fetchProductsByIds: () => [],
         getAllIdsUnderFilter: () => [],
