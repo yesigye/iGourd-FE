@@ -46,6 +46,7 @@ import {
   TransferTable,
 } from '@igourd/common-ui';
 import '@igourd/common-ui/style';
+import ModalTable from '@igourd/plugins/modal-table';
 
 import { ProductTable } from '#/components';
 
@@ -57,6 +58,7 @@ async function initComponentAdapter() {
     ArrayCards,
     ArrayCollapse,
     ArrayItems,
+    ModalTable,
     ArrayTable,
     ArrayTabs,
     Cascader,
