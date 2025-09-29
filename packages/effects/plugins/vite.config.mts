@@ -20,6 +20,7 @@ export default defineLibraryConfig(async () => {
             'echarts/index': './src/echarts/index.ts',
             'vxe-table/index': './src/vxe-table/index.ts',
             'motion/index': './src/motion/index.ts',
+            'modal-table/index': './src/modal-table/index.ts',
           },
           external: [
             '@igourd/common-ui',

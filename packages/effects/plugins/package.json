@@ -20,6 +20,10 @@
       "types": "./src/vxe-table/index.ts",
       "default": "./src/vxe-table/index.ts"
     },
+    "./modal-table": {
+      "types": "./src/modal-table/index.ts",
+      "default": "./src/modal-table/index.ts"
+    },
     "./motion": {
       "types": "./src/motion/index.ts",
       "default": "./src/motion/index.ts"
@@ -34,6 +38,10 @@
       "./vxe-table": {
         "types": "./dist/vxe-table/index.d.ts",
         "default": "./dist/vxe-table/index.mjs"
+      },
+      "./modal-table": {
+        "types": "./dist/modal-table/index.d.ts",
+        "default": "./dist/modal-table/index.mjs"
       },
       "./motion": {
         "types": "./dist/motion/index.d.ts",
