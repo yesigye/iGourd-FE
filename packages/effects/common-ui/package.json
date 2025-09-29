@@ -82,6 +82,7 @@
     "@vueuse/integrations": "catalog:",
     "dayjs": "catalog:",
     "element-plus": "catalog:",
+    "jsbarcode": "^3.12.1",
     "json-bigint": "catalog:",
     "qrcode": "catalog:",
     "radix-vue": "catalog:",

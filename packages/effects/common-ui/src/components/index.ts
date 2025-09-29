@@ -32,6 +32,7 @@ export * from './loading';
 export * from './page';
 export * from './password';
 export * from './preview-text';
+export * from './print-item';
 export * from './radio';
 export * from './remote-select';
 export * from './reset';

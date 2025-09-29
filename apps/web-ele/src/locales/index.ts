@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable unicorn/no-array-reduce */
+
 import type { Language } from 'element-plus/es/locale';
 
 import type { App } from 'vue';
@@ -23,8 +23,8 @@ import { useUserStore } from '@igourd/stores';
 // import { useAccessStore } from "@igourd/stores"
 import dayjs from 'dayjs';
 import enLocale from 'element-plus/es/locale/lang/en';
-import defaultLocale from 'element-plus/es/locale/lang/zh-cn';
 import frLocal from 'element-plus/es/locale/lang/fr';
+import defaultLocale from 'element-plus/es/locale/lang/zh-cn';
 
 import { getLocaleApi } from '#/api';
 
@@ -95,12 +95,12 @@ async function loadDayjsLocale(lang: SupportedLanguagesType) {
       locale = await import('dayjs/locale/en');
       break;
     }
-    case 'zh-CN': {
-      locale = await import('dayjs/locale/zh-cn');
-      break;
-    }
     case 'fr-FR': {
       locale = await import('dayjs/locale/fr');
+      break;
+    }
+    case 'zh-CN': {
+      locale = await import('dayjs/locale/zh-cn');
       break;
     }
     // 默认使用英语
@@ -125,12 +125,12 @@ async function loadElementLocale(lang: SupportedLanguagesType) {
       elementLocale.value = enLocale;
       break;
     }
-    case 'zh-CN': {
-      elementLocale.value = defaultLocale;
-      break;
-    }
     case 'fr-FR': {
       elementLocale.value = frLocal;
+      break;
+    }
+    case 'zh-CN': {
+      elementLocale.value = defaultLocale;
       break;
     }
   }
@@ -155,4 +155,4 @@ async function loadFeatureLocal(moduleName: string) {
   });
 }
 
-export { $t, elementLocale, loadRemoteLocale, setupI18n, loadFeatureLocal };
+export { $t, elementLocale, loadFeatureLocal, loadRemoteLocale, setupI18n };
