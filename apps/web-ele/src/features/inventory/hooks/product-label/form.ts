@@ -3,7 +3,12 @@ import type { ISchema } from '@igourd/common-ui';
 import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { createProductLabel, updateProductLabel } from '@@/inventory/apis';
+import {
+  createProductLabel,
+  updateProductLabel,
+  wareHouseProductSearch,
+} from '@@/inventory/apis';
+
 // 定义表单数据类型
 interface ProductLabelFormData {
   merchant_id: string;
@@ -67,6 +72,10 @@ export function useProductLabelForm(func) {
       grid: {
         type: 'void',
         'x-component': 'FormLayout',
+        'x-component-props': {
+          labelCol: 4,
+          wrapperCol: 20,
+        },
         properties: {
           name: {
             type: 'string',
@@ -79,50 +88,54 @@ export function useProductLabelForm(func) {
               clearable: true,
             },
           },
-          // product_list: {
-          //   type: 'array',
-          //   title: '商品选择',
-          //   'x-decorator': 'FormItem',
-          //   'x-component': 'TransferTable',
-          //   'x-component-props': {
-          //     rowKey: 'id',
-          //     columns: [
-          //       { label: 'Product', prop: 'name', filter: { type: 'input' } },
-          //       {
-          //         label: 'Product Code',
-          //         prop: 'code',
-          //         width: 140,
-          //         filter: {
-          //           type: 'select',
-          //           options: [
-          //             { label: 'A', value: 'A' },
-          //             { label: 'B', value: 'B' },
-          //           ],
-          //         },
-          //       },
-          //     ],
-          //     fetchLeft: '{{ actions.fetchProducts }}',
-          //     fetchRight: '{{ actions.fetchSelectedProducts }}',
-          //     fetchByIds: '{{ actions.fetchProductsByIds }}',
-          //     getAllIdsUnderFilter: '{{ actions.getAllIdsUnderFilter }}',
-          //     topFilterFields: [
-          //       {
-          //         key: 'vendor',
-          //         label: '供应商',
-          //         type: 'remote-select',
-          //         remoteMethod: '{{ actions.searchVendors }}',
-          //       },
-          //       {
-          //         key: 'brand',
-          //         label: '品牌',
-          //         type: 'select',
-          //         options: [{ label: 'Nike', value: 'nike' }],
-          //       },
-          //     ],
-          //     searchPlaceholder: '输入采购单号/供应商/商品名',
-          //     excludeSelectedFromLeft: true,
-          //   },
-          // },
+          product_list: {
+            type: 'array',
+            title: '商品选择',
+            'x-decorator': 'FormItem',
+            'x-component': 'TransferTable',
+            'x-component-props': {
+              rowKey: 'id',
+              columns: [
+                {
+                  label: 'Product',
+                  prop: 'major_name',
+                  filter: { type: 'input' },
+                },
+                {
+                  label: 'Product Code',
+                  prop: 'product_code',
+                  width: 140,
+                  filter: {
+                    type: 'select',
+                    options: [
+                      { label: 'A', value: 'A' },
+                      { label: 'B', value: 'B' },
+                    ],
+                  },
+                },
+              ],
+              fetchLeft: '{{ actions.fetchProducts }}',
+              fetchRight: '{{ actions.fetchSelectedProducts }}',
+              fetchByIds: '{{ actions.fetchProductsByIds }}',
+              getAllIdsUnderFilter: '{{ actions.getAllIdsUnderFilter }}',
+              topFilterFields: [
+                {
+                  key: 'vendor',
+                  label: '供应商',
+                  type: 'remote-select',
+                  remoteMethod: '{{ actions.searchVendors }}',
+                },
+                {
+                  key: 'brand',
+                  label: '品牌',
+                  type: 'select',
+                  options: [{ label: 'Nike', value: 'nike' }],
+                },
+              ],
+              searchPlaceholder: '输入采购单号/供应商/商品名',
+              excludeSelectedFromLeft: true,
+            },
+          },
         },
       },
     },
@@ -141,13 +154,16 @@ export function useProductLabelForm(func) {
     },
     scope: {
       loadData,
-      // actions: {
-      //   fetchProducts: () => ({ list: [] }),
-      //   fetchSelectedProducts: () => [],
-      //   fetchProductsByIds: () => [],
-      //   getAllIdsUnderFilter: () => [],
-      //   searchVendors: () => [],
-      // },
+      actions: {
+        fetchProducts: async () => {
+          const pageList = await wareHouseProductSearch();
+          return pageList;
+        },
+        fetchSelectedProducts: () => [],
+        fetchProductsByIds: () => [],
+        getAllIdsUnderFilter: () => [],
+        searchVendors: () => [],
+      },
     },
   });
   // 表单重置
