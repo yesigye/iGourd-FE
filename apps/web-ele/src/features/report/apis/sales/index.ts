@@ -24,3 +24,6 @@ export function getProductSalesStatsApi(data: any) {
     data,
   );
 }
+//  public static getOrderList(data: any) {
+//     return request.post(`${ORDER_BASE_URL}/page-list`, data)
+//   }

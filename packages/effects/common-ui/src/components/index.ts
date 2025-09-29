@@ -70,6 +70,7 @@ export type { FlattenedItem } from '@igourd-core/shadcn-ui';
 export { globalShareState } from '@igourd-core/shared/global-state';
 
 export {
+  ElBadge,
   ElButton,
   ElCalendar,
   ElCard,
