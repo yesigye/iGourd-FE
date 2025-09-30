@@ -3,7 +3,6 @@ import type {
   MerchantPaymentMethodConfigModelAddPayField,
   PaymentInputType,
   PaymentInputTypeKey,
-  PaymentWay,
   WIPED_AMOUNT_INPUT_KEY,
 } from '@@/sale/types';
 
@@ -27,7 +26,7 @@ import {
   getOrderPaymentMethodConfigListApi,
   offlinePayApi,
 } from '@@/sale/apis';
-import { PaymentMethodEnum } from '@@/sale/types';
+import { PaymentMethodEnum, PaymentWay } from '@@/sale/types';
 import Decimal from 'decimal.js';
 import { ElMessage } from 'element-plus';
 
@@ -93,8 +92,8 @@ const getPaymentMethods = async () => {
   const res = await getOrderPaymentMethodConfigListApi({
     payment_scene_type: 'RETAIL_SALES',
   });
-  const data = res?.data || [];
-  if (res?.data) {
+  const data = res || [];
+  if (res) {
     const newData = data.map((item) => {
       return {
         ...item,
@@ -583,7 +582,7 @@ watchEffect(() => {
 const handleSettlement = async () => {
   // 1. 验证是否选择了支付方式
   if (selectedPayments.value.length === 0) {
-    ElMessage.warning(t('sales.paymentMethodError'));
+    ElMessage.warning(t('scan.paymentMethodError'));
     return;
   }
   const other = {
@@ -650,7 +649,7 @@ const handleSettlement = async () => {
 
     // 5. 验证混合支付规则
     if (paymentMethod.value && selectedPayments.value.length < 2) {
-      ElMessage.error(t('sales.mixtPaymentError'));
+      ElMessage.error(t('scan.mixtPaymentError'));
       return;
     }
 
@@ -666,10 +665,10 @@ const handleSettlement = async () => {
 
       emit('close-drawer');
     } else {
-      ElMessage.error(res.message || t('sales.settlementError'));
+      ElMessage.error(res.message || t('scan.settlementError'));
     }
   } catch (error: any) {
-    ElMessage.error(error.message || t('sales.settlementError'));
+    ElMessage.error(error.message || t('scan.settlementError'));
   }
 };
 async function handleSettleAccount() {
@@ -710,7 +709,7 @@ async function handleSettleAccount() {
   // 如果赊账金额小于等于total_amount，则不允许创建赊账订单
   if (total_paid_amount <= 0 || total_paid_amount <= total_amount) {
     return ElMessage.warning(
-      t('sales.validate_payment_amount_credit_cannot_gte_amount'),
+      t('scan.validate_payment_amount_credit_cannot_gte_amount'),
     );
   }
 
@@ -728,23 +727,17 @@ async function handleSettleAccount() {
       receipt_order_item_list: receiptOrderItemList, // 支付创建列表 同客户列表一样
     });
 
-    if (res?.code === 'SUCCESS') {
-      const result = await getOrderDetailApi({
-        order_no: orderData.value.order_no,
-      });
-      if (String(result.code) === 'SUCCESS') {
-        ElMessage.success(result.message);
-        // settlementData.value = params as never
-        // emit('settlement-success', params)
-        isPrintEnabled.value = true;
-        isSettlementCompleted.value = true;
-        emit('handleEmpty');
-        emit('settlement-success', result);
-        emit('close-drawer');
-      } else {
-        ElMessage.error(res.message || t('sales.settlementError'));
-      }
-    }
+    const result = await getOrderDetailApi({
+      order_no: orderData.value.order_no,
+    });
+    // ElMessage.success(result.message);
+    // settlementData.value = params as never
+    // emit('settlement-success', params)
+    isPrintEnabled.value = true;
+    isSettlementCompleted.value = true;
+    emit('handleEmpty');
+    emit('settlement-success', result);
+    emit('close-drawer');
   } catch (error) {
     console.log('=============>handleSettleAccount', error);
   }
@@ -770,7 +763,7 @@ defineExpose({
       class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
       <span class="scan-cash-settlement-header-title"
-        >{{ t('sales.accounts_receivable') }}:</span
+        >{{ t('scan.accounts_receivable') }}:</span
       >
 
       <span class="">{{ totalAmount }} {{ currentSymbol }}</span>
@@ -780,7 +773,7 @@ defineExpose({
       class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
       <span class="scan-cash-settlement-header-title"
-        >{{ t('sales.amountTendered') }}:</span
+        >{{ t('scan.amountTendered') }}:</span
       >
 
       <span class="scan-cash-settlement-header-amount"
@@ -792,7 +785,7 @@ defineExpose({
       class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
       <span class="scan-cash-settlement-header-title"
-        >{{ t('sales.amountChange') }}:</span
+        >{{ t('scan.amountChange') }}:</span
       >
       <div class="flex-1">
         <el-input-number
@@ -888,7 +881,7 @@ defineExpose({
     <div
       class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
-      <span class="text-status-partial">{{ t('sales.change') }}:</span>
+      <span class="text-status-partial">{{ t('scan.change') }}:</span>
       <span class="text-status-terminated"
         >{{ changeAmount }} {{ currentSymbol }}</span
       >
@@ -902,7 +895,7 @@ defineExpose({
         :disabled="!isPrintEnabled"
         class="scan-cash-settlement-button-print"
       >
-        {{ t('sales.print') }}
+        {{ t('scan.print') }}
       </el-button>
 
       <el-button
@@ -919,7 +912,7 @@ defineExpose({
         @click="handleSettlement"
       >
         <span class="text-white">
-          {{ t('sales.settlement') }}
+          {{ t('scan.settlement') }}
         </span>
       </el-button>
     </div>

@@ -73,6 +73,7 @@ export type { FlattenedItem } from '@igourd-core/shadcn-ui';
 export { globalShareState } from '@igourd-core/shared/global-state';
 
 export {
+  ElAutocomplete,
   ElBadge,
   ElButton,
   ElCalendar,
@@ -82,6 +83,7 @@ export {
   ElConfigProvider,
   ElDatePicker,
   ElDialog,
+  ElDrawer,
   ElDropdown,
   ElDropdownItem,
   ElDropdownMenu,

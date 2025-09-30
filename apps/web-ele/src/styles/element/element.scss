@@ -1,0 +1,103 @@
+// 全局表格字体大小
+$fontSize16: 16px;
+$fontSize14: 14px;
+.el-table {
+    .el-table__header {
+        font-size: $fontSize16;
+    }
+    .el-table__body {
+        font-size: $fontSize14;
+    }
+}
+
+// 标签页
+.el-tabs__header {
+    position: static !important;
+    margin: 0 !important;
+}
+
+.el-tabs__nav-wrap {
+    position: static !important;
+}
+
+.el-tabs__content {
+    margin-top: 5px !important;
+}
+
+// 消息框
+.el-message-box.custom-reset {
+    width: 520px;
+    height: 210px;
+    font-size: $fontSize16;
+    .el-message-box__container {
+        text-align: center;
+    }
+    .el-button {
+        width: 160px;
+        height: 50px;
+    }
+    .el-button--default {
+        background-color: #dfdfdf;
+        color: #606266;
+    }
+    .el-button--primary {
+        background-color: #f56c6c;
+        color: #ffffff;
+        --el-button-border-color: #f56c6c;
+    }
+    .el-message-box__message {
+        font-size: $fontSize16;
+    }
+    .el-message-box__btns {
+        justify-content: center;
+        margin-top: 25px;
+    }
+}
+.my-custom-message-box {
+   
+  .el-button--default {
+    color: #fff;
+    background-color: #4a9ffc !important;
+    --el-button-border-color: #4a9ffc !important;
+  }
+
+}
+.page-table {
+    .el-table__header {
+        .el-table__cell,
+        .el-table-fixed-column--right {
+            background-color: #F6F8FC !important;
+            color: #323232;
+            height: 30px;
+            padding: 4px 0px;
+        }
+    }
+}
+
+.el-date-editor {
+    // width: 233px !important;
+    // height: 36px !important;
+}
+.el-table__header {
+  width: 100% !important;
+}
+.el-table__body {
+  width: 100% !important;
+}
+// 全局图片居中
+.el-image {
+  display: block !important;
+}
+
+.el-select__tags-text .el-select .el-select__wrapper {
+  // width: 160px !important;
+  height: 36px !important;
+}
+.unit-dropdown.el-dropdown__popper{
+    max-height: 200px !important;
+    overflow: scroll !important;
+}
+//
+// .el-table__cell {
+//   padding:5px 0px !important;
+// }

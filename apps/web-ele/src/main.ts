@@ -2,7 +2,9 @@ import { initPreferences } from '@igourd/preferences';
 import { unmountGlobalLoading } from '@igourd/utils';
 
 import { overridesPreferences } from './preferences';
+
 // import "@igourd-core/design/dist/design.css"
+import '#/styles/index.scss';
 
 /**
  * 应用初始化完成之后再进行页面加载渲染

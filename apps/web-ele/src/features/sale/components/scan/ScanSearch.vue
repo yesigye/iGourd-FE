@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, nextTick, reactive, ref, toRefs, watch } from 'vue';
 
-import { ElMessage } from '@igourd/common-ui';
+import { ElAutocomplete, ElButton, ElMessage } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { debounce } from '@igourd/utils';
 
@@ -24,7 +24,6 @@ const props = defineProps({
     default: false,
   },
 });
-
 const emit = defineEmits([
   'handleHangOrder:show',
   'handlePickOrder',
@@ -102,7 +101,7 @@ function isStockLessThanZero(item: any) {
     item.is_basic &&
     isLessZeroProhibited.value
   ) {
-    ElMessage.warning(t('sales.stockLessThanZero'));
+    ElMessage.warning(t('scan.stockLessThanZero'));
     return true;
   }
   return false;
@@ -191,7 +190,7 @@ function handleSelect(item: any) {
   // 检查商品是否有在售的SKU并获取所有在售SKU
   const onSaleSkus = getOnSaleSkus(item);
   if (!onSaleSkus || onSaleSkus.length === 0) {
-    ElMessage.warning(t('sales.productOffSale'));
+    ElMessage.warning(t('scan.productOffSale'));
     return;
   }
 
@@ -233,7 +232,7 @@ const handleHangOrder = () => {
 
 const handlePickOrder = () => {
   isShowDialog.value = true;
-  takeTitle.value = t('sales.take');
+  takeTitle.value = t('scan.take');
 };
 
 const handleTakeOrder = async (selectedOrder) => {
@@ -266,10 +265,7 @@ async function getQueryProduct() {
       page_num: 1,
       page_size: 10,
     });
-    if (res.code === 'SUCCESS') {
-      return res?.data?.list || [];
-    }
-    return [];
+    return res?.list || [];
   } finally {
     autocompleteRef.value.loading = false;
   }
@@ -320,7 +316,7 @@ defineExpose({ handlePickOrder });
   <div class="scan-search">
     <!-- <div class="top-title">
       <p class="empl-input-p">
-        {{ t('sales.scanCodeRetail') }}&nbsp;
+        {{ t('scan.scanCodeRetail') }}&nbsp;
         <i class="iconfont icon-bangzhu"></i>
       </p>
     </div> -->
@@ -329,7 +325,7 @@ defineExpose({ handlePickOrder });
       <!-- v-auth="'sale_scan_code_holdx'" -->
 
       <div class="Sh-search">
-        <el-autocomplete
+        <ElAutocomplete
           ref="autocompleteRef"
           v-model="searchValue"
           class="Sh-search-input"
@@ -340,7 +336,7 @@ defineExpose({ handlePickOrder });
           :trigger-on-focus="false"
           :fetch-suggestions="[]"
           :select-when-unmatched="false"
-          :placeholder="$t('sales.barcode_product_code_product_name')"
+          :placeholder="$t('scan.barcode-product-code-product-name')"
           @blur="handleBlur"
           @focus="handleFocus"
           @select="handleSelect"
@@ -403,10 +399,11 @@ defineExpose({ handlePickOrder });
               </span>
             </div>
           </template>
-        </el-autocomplete>
+        </ElAutocomplete>
       </div>
-      <el-button
-        class="sale-btn sale-common custom-item sale-w"
+      <ElButton
+        type="primary"
+        class="mt-[5px] h-full"
         @click="handleEnterKeyDebounced()"
       >
         <div class="sale">
@@ -417,7 +414,7 @@ defineExpose({ handlePickOrder });
             <span>{{ t('common.searchBtn') }}</span>
           </div>
         </div>
-      </el-button>
+      </ElButton>
     </div>
     <!-- 挂单列表 -->
     <TakeDetail

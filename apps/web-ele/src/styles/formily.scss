@@ -1,0 +1,16 @@
+.formily-element-plus-form-item .formily-element-plus-form-item-label-content {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.formily-array-add-btn.formily-array-add-btn.formily-array-add-btn {
+  border: 1px solid #707070;
+  padding: 2px;
+  height: 20px;
+
+  &.hideTitle {
+    span {
+      display: none;
+    }
+  }
+}

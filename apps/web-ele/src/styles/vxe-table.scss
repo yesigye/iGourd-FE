@@ -1,0 +1,46 @@
+
+html[data-vxe-ui-theme="light"] {
+  --vxe-ui-table-border-color: #EBEEF5;
+  --vxe-ui-table-header-font-color: #666666; // 表头字体颜色
+  --vxe-ui-font-color: #606266; // 表格内容颜色
+}
+
+
+.vxe-grid--layout-header-wrapper {
+
+  .vxe-grid--form-wrapper {
+    padding: 8px 10px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #EEEEEE;
+
+
+    .vxe-keyword {
+      display: flex;
+      justify-content: space-between;
+      .vxe-keyword-left {
+        flex: 1;
+      }
+      .vxe-keyword-input {
+        width: 40%;
+      }
+      .el-button {
+        height: 32px !important;
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.vxe-grid--layout-body-wrapper {
+  .vxe-toolbar {
+    padding-block: 3px;
+    padding-inline: 10px;
+    .el-button {
+      height: 32px !important;
+      margin-left: 10px;
+    }
+  }
+  .vxe-table-custom--panel-list > li.level--2 {
+    display: none;
+  }
+}
