@@ -33,8 +33,8 @@ import ScanDialog from '@@/sale/components/scan/ScanDialog.vue';
 import ScanOrderSettle from '@@/sale/components/scan/ScanOrderSettle.vue';
 import ScanSearch from '@@/sale/components/scan/ScanSearch.vue';
 import ScanTable from '@@/sale/components/scan/ScanTable.vue';
-import SelectCustomersDrawer from '@@/sale/components/scan/SelectCustomersDrawer.vue';
 import SelectGuiderDrawer from '@@/sale/components/scan/SelectGuiderDrawer.vue';
+import { useSelectCustomer } from '@@/sale/hooks';
 import { storeToRefs } from 'pinia';
 
 import { useOrderStore } from '#/store/sale/order';
@@ -51,7 +51,7 @@ defineOptions({
 });
 // const { merchantInfo } = useUserStore();
 const { setInfo } = storeToRefs(useSetStore());
-
+const { Drawer: SelectCustomer, drawerApi } = useSelectCustomer();
 const { t } = useI18n();
 
 const state = reactive({
@@ -225,7 +225,6 @@ const calculateOrderPrice = async () => {
       goodsList.value,
       orderCaclProductList.value,
     );
-    // if (String(res.code) === 'SUCCESS') {
     calculateOrderList.value = res || [];
     orderParams.value.pos_user_id = res?.pos_user_id || '';
     orderParams.value.order_item_volist = [
@@ -401,10 +400,7 @@ const getHoldListNum = async () => {
   const orderSuspendParam = {};
   try {
     const res = await orderSuspendListApi({ ...orderSuspendParam });
-
-    if (String(res.code) === 'SUCCESS') {
-      badgeCount.value = res.data.total;
-    }
+    badgeCount.value = res.total;
   } catch (error) {
     console.log('获取挂单数:', error);
     ElMessage.error(error.message);
@@ -434,10 +430,9 @@ const updateGoodsList = (selectedOrder) => {
     selectedOrder.order_holding.forEach((item) => {
       promises.push(
         ...item.order_holding_item_list.map((item) => {
-          console.log(item, 'item');
           return getProduct(item.product_id).then((res) => {
-            if (res.code === 'SUCCESS') {
-              const product = res.data;
+            {
+              const product = res;
               return {
                 id: product.id,
                 code: product.product_code,
@@ -468,7 +463,6 @@ const updateGoodsList = (selectedOrder) => {
                   product.sub_product_stock_search_models,
               };
             }
-            return null;
           });
         }),
       );
@@ -502,8 +496,9 @@ const updateGoodsList = (selectedOrder) => {
 };
 
 const handleSelectCustomer = () => {
-  drawerDialogCustomers.value.title = t('scan.select-customers');
-  drawerDialogCustomers.value.visible = true;
+  // drawerDialogCustomers.value.title = t('scan.select-customers');
+  // drawerDialogCustomers.value.visible = true;
+  drawerApi.open();
 };
 const clearCustomerInfo = () => {
   customerInfo.value = {};
@@ -605,15 +600,11 @@ const handleSettleEmpty = () => {
 };
 
 // 查询订单详情
-const getOrderDetail = async () => {
+const getOrderDetail = async (order_no: string) => {
   const res = await orderDetailApi({
-    order_no: orderData.value?.order_no,
+    order_no,
   });
-  if (String(res.code) === 'SUCCESS') {
-    orderData.value = res?.data;
-  } else {
-    ElMessage.error(res?.message);
-  }
+  orderData.value = res;
 };
 
 // 添加订单
@@ -664,14 +655,11 @@ const addOrder = async () => {
   });
   try {
     const res = await orderCreateApi(orderParams.value);
-    if (String(res.code) === 'SUCCESS') {
-      ElMessage.success(t('scan.order-created-successfully'));
-      console.log(res?.data);
-      orderData.value = res?.data;
-      getOrderDetail();
-      orderInfo.value.serialNo++;
-      // handleSettleEmpty();
-    }
+    ElMessage.success(t('scan.order-created-successfully'));
+    // orderData.value = res;
+    await getOrderDetail(res.order_no);
+    orderInfo.value.serialNo++;
+    // handleSettleEmpty();
   } catch (error) {
     ElMessage.error(error?.message);
   }
@@ -705,7 +693,7 @@ watch(isSuspendSuccess, async (newValue) => {
       const res = await productPageListApi({
         page_size: 20,
       });
-      newGoods = res.data.list[0];
+      newGoods = res.list[0];
       getHoldListNum();
       console.log(newGoods);
     } catch (error) {
@@ -851,7 +839,8 @@ onMounted(async () => {
                     >
                       <span
                         class="scan-order-action-primary text-blue-primary"
-                        >{{ t('scan.take') }}</span>
+                        >{{ t('scan.take') }}</span
+                      >
                     </ElButton>
                   </ElBadge>
                   <!-- 清空 -->
@@ -866,7 +855,9 @@ onMounted(async () => {
                 </div>
                 <div class="scan-action-box-settle-info bg-card">
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray">{{ t('scan.total-amount') }}:</span>
+                    <span class="settle-info-lable text-light-gray"
+                      >{{ t('scan.total-amount') }}:</span
+                    >
                     <span class="settle-info-val text-gray-dark">
                       {{ currentSymbol }}
                       {{
@@ -875,24 +866,31 @@ onMounted(async () => {
                               calculateOrderList.subtotal_amount,
                             )
                           : '--'
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray">{{ t('scan.tax') }}:</span>
+                    <span class="settle-info-lable text-light-gray"
+                      >{{ t('scan.tax') }}:</span
+                    >
                     <span class="settle-info-val text-gray-dark">
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.vat_amount >= 0
                           ? thousandSeparator(calculateOrderList.vat_amount)
                           : '--'
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray">{{ t('scan.discount') }}:</span>
+                    <span class="settle-info-lable text-light-gray"
+                      >{{ t('scan.discount') }}:</span
+                    >
                     <span class="settle-info-val text-gray-dark">
                       <span
                         v-if="calculateOrderList.promotion_discount_amount >= 0"
-                        >-</span>
+                        >-</span
+                      >
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.promotion_discount_amount >= 0
@@ -900,20 +898,23 @@ onMounted(async () => {
                               calculateOrderList.promotion_discount_amount,
                             )
                           : '--'
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                 </div>
                 <div class="scan-action-box-settle-payment">
                   <div class="flex items-center justify-between gap-5">
                     <span class="total-title text-orange-medium">
-                      {{ t('scan.actual-amount') }}:</span>
+                      {{ t('scan.actual-amount') }}:</span
+                    >
                     <span class="total-price text-red-primary">
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.total_amount >= 0
                           ? thousandSeparator(calculateOrderList.total_amount)
                           : '--'
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                 </div>
               </div>
@@ -935,7 +936,6 @@ onMounted(async () => {
                   <ElButton
                     color="#F8E3C5"
                     class="w-25"
-                    :dark="isDark"
                     @click="handleSelectCustomer"
                   >
                     <span class="text-goldenrod">{{ t('scan.customer') }}</span>
@@ -946,25 +946,33 @@ onMounted(async () => {
                 </div>
                 <div v-if="Object.keys(customerInfo).length > 0">
                   <div class="mt-3 flex items-center justify-between">
-                    <span class="text-gray-mid">{{ t('scan.contact-telephone') }}:</span>
+                    <span class="text-gray-mid"
+                      >{{ t('scan.contact-telephone') }}:</span
+                    >
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.phone_number || '-'
                     }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid">{{ t('scan.points') }}:</span>
+                    <span class="customer-title text-gray-mid"
+                      >{{ t('scan.points') }}:</span
+                    >
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.points || '-'
                     }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid">{{ t('scan.balance') }}:</span>
+                    <span class="customer-title text-gray-mid"
+                      >{{ t('scan.balance') }}:</span
+                    >
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.balance || '0'
                     }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid">{{ t('scan.salesman') }}:</span>
+                    <span class="customer-title text-gray-mid"
+                      >{{ t('scan.salesman') }}:</span
+                    >
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.salesman_name || '0'
                     }}</span>
@@ -1009,12 +1017,7 @@ onMounted(async () => {
         </ElRow>
       </div>
       <!-- 弹窗部分 -->
-      <!-- 选择顾客 -->
-      <SelectCustomersDrawer
-        key="CustomersDrawer"
-        :title="drawerDialogCustomers.title"
-        :show-dialog="drawerDialogCustomers.visible"
-        :inner-drawer-show="drawerDialog.innerDrawerShow"
+      <SelectCustomer
         @close-tkr="confirmClose"
         @select-customer-row:row="handleSelectCustomerRow"
       />

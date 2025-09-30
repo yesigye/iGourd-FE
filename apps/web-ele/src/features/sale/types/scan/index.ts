@@ -78,6 +78,7 @@ export type PaymentInputType = {
 export type PaymentInputTypeKey =
   | keyof PaymentMethodEnum
   | typeof WIPED_AMOUNT_INPUT_KEY;
+
 export enum PaymentMethodEnum {
   /** 余额 */
   BALANCE = 'BALANCE',

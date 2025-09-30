@@ -13,4 +13,5 @@ export const Filter = createIconifyIcon('ep:filter');
 export const SquareMousePointer = createIconifyIcon(
   'lucide:square-mouse-pointer',
 );
+export const Tickets = createIconifyIcon('ep:tickets');
 export const Warning = createIconifyIcon('ep:warning');

@@ -1,13 +1,15 @@
 <script setup>
-import { inject, onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 
 import {
   ElButton,
-  ElDrawer,
   ElImage,
   ElInput,
+  ElPagination,
   ElTable,
   ElTableColumn,
+  Page,
+  useIgourdDrawer,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { debounce } from '@igourd/utils';
@@ -15,6 +17,10 @@ import { debounce } from '@igourd/utils';
 import { storeToRefs } from 'pinia';
 
 import { useCustomerStore } from '#/store/sale/customer';
+
+defineOptions({
+  name: 'SelectCustomersDrawer',
+});
 
 const props = defineProps({
   showDialog: {
@@ -26,18 +32,17 @@ const props = defineProps({
     default: '',
   },
 });
+
 const emit = defineEmits(['close-tkr', 'select-customer-row:row']);
+
 const { t } = useI18n();
 const keywords = ref('');
 const isReturnShow = ref(false);
-const mergeGoodsList = inject('mergeGoodsList');
-
 const customerStore = useCustomerStore();
 const { customerList } = storeToRefs(customerStore);
-const customerInfo = ref({});
 
 const handleClose = () => {
-  isReturnShow.value = false;
+  drawerApi.close();
   emit('close-tkr');
 };
 const fetchGoodsList = debounce(async () => {
@@ -50,8 +55,13 @@ const handleRowClick = (row) => {
   emit('select-customer-row:row', row);
   handleClose();
 };
-onMounted(() => {
-  fetchGoodsList();
+
+const [Drawer, drawerApi] = useIgourdDrawer({
+  onOpenChange: (val) => {
+    if (val) {
+      fetchGoodsList();
+    }
+  },
 });
 watch(
   () => props.showDialog,
@@ -64,30 +74,10 @@ watch(
 </script>
 
 <template>
-  <div class="coupon-send">
-    <ElDrawer
-      v-model="isReturnShow"
-      :model-value="props.showDialog"
-      :with-header="false"
-      direction="rtl"
-      size="86%"
-      custom-class="coupon-drawer-prevent-send"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-      :append-to-body="true"
-    >
-      <!-- 列表关闭栏 -->
-      <div class="close86" @click="handleClose">
-        <i class="iconfont icon-guanbi"></i>
-      </div>
-      <div class="drawer-title">
-        <p class="title">
-          {{ props.title }}&nbsp;&nbsp;
-          <!-- <i class="iconfont icon-bangzhu"></i> -->
-        </p>
-      </div>
-      <div class="drawer-content">
-        <div class="top">
+  <Drawer>
+    <Page class="bg-primary-50 h-full">
+      <div class="">
+        <div class="flex gap-1">
           <ElInput
             v-model="keywords"
             style="height: 36px"
@@ -97,6 +87,7 @@ watch(
           />
           <ElButton
             class="outer-btn right-box search-btn blue-btn"
+            type="primary"
             @click="fetchGoodsList"
           >
             <div class="outer">
@@ -167,17 +158,30 @@ watch(
               align="center"
             >
               <template #default="{ row }">
-                <span><i
+                <span
+                  ><i
                     class="iconfont icon-31jifen"
                     style="margin-right: 5px"
-                  ></i>{{ row.balance }}</span>
+                  ></i
+                  >{{ row.balance }}</span
+                >
               </template>
             </ElTableColumn>
           </ElTable>
         </div>
+        <div>
+          <ElPagination
+            :small="true"
+            v-model:current-page="currentPage"
+            :page-sizes="[10, 20, 50, 100]"
+            v-model:page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total"
+          />
+        </div>
       </div>
-    </ElDrawer>
-  </div>
+    </Page>
+  </Drawer>
 </template>
 
 <style lang="scss" scoped>

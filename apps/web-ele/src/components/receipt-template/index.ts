@@ -21,3 +21,5 @@ export function ReceiptTemplate(
   // @ts-ignore
   return h(InnerReceiptTemplate, merged, slots);
 }
+
+export { useReceiptTemplate } from '@igourd/hooks';

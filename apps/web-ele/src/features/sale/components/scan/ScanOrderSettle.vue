@@ -8,7 +8,7 @@ import { getCustomTemplateListApi } from '@@/sale/apis';
 import {
   ReceiptTemplate,
   useReceiptTemplate,
-} from '#/components/ReceiptTemplateNew'; // 生成小票模板
+} from '#/components/receipt-template'; // 生成小票模板
 import { initializeCurrencySymbol } from '#/utils/sale';
 
 import ScanCashSettlement from './ScanCashSettlement.vue';
@@ -143,7 +143,7 @@ watch(
         <i class="iconfont icon-guanbi"></i>
       </div>
       <div class="innerDrawer">
-        <div class="innerLeft">
+        <div class="innerLeft overflow-y-auto">
           <ReceiptTemplate
             :print-id="printParams.id"
             :option-content="printTemplate.option_content"

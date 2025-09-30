@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 
-import { ElDialog, ElMessage } from '@igourd/common-ui';
+import {
+  ElButton,
+  ElDialog,
+  ElForm,
+  ElFormItem,
+  ElInput,
+  ElMessage,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { orderSuspendApi, quickTagsAllApi } from '@@/sale/apis';
@@ -159,13 +166,13 @@ watch(
         <h1 class="scan-dialog-title">{{ t('scan.remark') }}</h1>
       </template>
       <div class="scan-dialog-content">
-        <el-input
+        <ElInput
           v-model="params.remark"
           type="textarea"
           placeholder="Please enter remark"
         />
-        <el-form>
-          <el-form-item
+        <ElForm>
+          <ElFormItem
             v-for="item in quickTagsList"
             :key="item.id"
             :label="`${item.name}:`"
@@ -185,16 +192,16 @@ watch(
                 {{ tagItem.order_holding_tag_value }}
               </div>
             </div>
-          </el-form-item>
-        </el-form>
+          </ElFormItem>
+        </ElForm>
       </div>
       <div class="scan-dialog-btn">
-        <el-button class="btn-common bg-gray-pale" @click="handleClose">
+        <ElButton class="btn-common bg-gray-pale" @click="handleClose">
           {{ t('set.cancel') }}
-        </el-button>
-        <el-button class="btn-common bg-azure text-white" @click="handleSave">
+        </ElButton>
+        <ElButton class="btn-common bg-azure text-white" @click="handleSave">
           {{ t('set.confirm') }}
-        </el-button>
+        </ElButton>
       </div>
     </ElDialog>
   </div>

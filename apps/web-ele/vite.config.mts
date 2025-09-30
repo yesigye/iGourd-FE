@@ -10,7 +10,7 @@ export default defineConfig(async () => {
     vite: {
       resolve: {
         alias: {
-          '@@': path.resolve(__dirname, 'src/features'),
+          '@@': path.resolve('./src/features'),
         },
       },
       plugins: [

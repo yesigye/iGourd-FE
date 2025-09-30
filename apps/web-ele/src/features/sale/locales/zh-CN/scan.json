@@ -75,5 +75,9 @@
   "product-details": "商品详情",
   "balance": "余额",
   "please-input-quantity": "请输入数量",
-  "validate-payment-amount-credit-cannot-gte-amount": "赊账时支付金额不能大于等于订单金额"
+  "validate-payment-amount-credit-cannot-gte-amount": "赊账时支付金额不能大于等于订单金额",
+  "select-customer": "选择客户",
+  "pay": {
+    "success": "支付成功"
+  }
 }

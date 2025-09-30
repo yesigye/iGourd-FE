@@ -101,6 +101,7 @@ export {
   ElMessageBox,
   ElNotification,
   ElOption,
+  ElPagination,
   ElPopover,
   ElRadio,
   ElRadioButton,
