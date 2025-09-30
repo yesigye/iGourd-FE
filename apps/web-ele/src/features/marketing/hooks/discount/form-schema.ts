@@ -1,7 +1,7 @@
 import type { ISchema } from '@igourd/common-ui';
 
-import { productGroupSelect } from '#/components/product-group';
 // form-schema.ts（不使用 FormGrid，仅 FormLayout）
+import { productGroupSelect } from '#/components/product-group';
 import { productLabelSelect } from '#/components/product-label';
 import { productSelect } from '#/components/product-select';
 

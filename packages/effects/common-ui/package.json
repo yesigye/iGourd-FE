@@ -75,6 +75,7 @@
     "@igourd/hooks": "workspace:^",
     "@igourd/icons": "workspace:^",
     "@igourd/locales": "workspace:^",
+    "@igourd/stores": "workspace:^",
     "@igourd/types": "workspace:^",
     "@igourd/utils": "workspace:^",
     "@types/qrcode": "catalog:",

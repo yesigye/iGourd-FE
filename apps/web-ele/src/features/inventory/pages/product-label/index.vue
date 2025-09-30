@@ -98,8 +98,8 @@ onMounted(() => {
 
 <template>
   <ColPage auto-content-height>
-    <template #left="{ isCollapsed, expand }">
-      <section class="bg-card mb-5 h-full rounded p-2.5">
+    <template #left>
+      <section class="bg-card mr-2 h-full rounded p-2.5">
         <p class="flex justify-between text-sm font-medium">
           {{ t('product-label.product-label') }}
           <ElButton type="primary" @click="handleAddLabel">
@@ -187,7 +187,7 @@ onMounted(() => {
       </template>
     </Grid>
     <Drawer @refresh-tree="refreshTree" />
-
+    <!--TODO Move TO Formily-->
     <!-- 商品详情弹窗 -->
     <el-dialog
       v-model="productShow"

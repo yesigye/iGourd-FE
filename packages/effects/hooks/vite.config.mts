@@ -19,6 +19,7 @@ export default defineLibraryConfig(async () => {
             'vue',
             'vue-router',
             '@igourd/preferences',
+            '@igourd/locales',
             '@igourd/stores',
             '@igourd/types',
             '@igourd/utils',

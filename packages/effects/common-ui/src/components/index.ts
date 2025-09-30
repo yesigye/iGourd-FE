@@ -34,6 +34,8 @@ export * from './password';
 export * from './preview-text';
 export * from './print-item';
 export * from './radio';
+export { default as ReceiptTemplate } from './receipt-template/index.vue';
+export type { PropsType as ReceiptTemplateProps } from './receipt-template/types';
 export * from './remote-select';
 export * from './reset';
 export * from './resize';
@@ -71,6 +73,7 @@ export type { FlattenedItem } from '@igourd-core/shadcn-ui';
 export { globalShareState } from '@igourd-core/shared/global-state';
 
 export {
+  ElBadge,
   ElButton,
   ElCalendar,
   ElCard,
