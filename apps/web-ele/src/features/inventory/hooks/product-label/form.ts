@@ -2,11 +2,12 @@ import type { ISchema } from '@igourd/common-ui';
 
 import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+import { useUserStore } from '@igourd/stores';
 
 import {
-  createProductLabel,
+  createLabelBind,
+  inventoryProductProfilePageList,
   updateProductLabel,
-  wareHouseProductSearch,
 } from '@@/inventory/apis';
 
 // 定义表单数据类型
@@ -17,17 +18,31 @@ interface ProductLabelFormData {
 
 export function useProductLabelForm(func) {
   const { t } = useI18n();
+  const { currentLoginUserApp } = useUserStore();
+
   // 表单提交处理
-  const handleSubmit = async (values: ProductLabelFormData) => {
+  const handleSubmit = async (formData: ProductLabelFormData) => {
     try {
       let response = null;
+      const productProfileIds = formData.product_list.map((item) => item.id);
+      // 增加标签和绑定商品
+      const params = {
+        product_label_create_vo: {
+          name: formData.name,
+          merchant_id: currentLoginUserApp.owner_id,
+        },
+        product_label_product_bind_vo: {
+          merchant_id: currentLoginUserApp.owner_id,
+          product_profile_ids: productProfileIds,
+        },
+      };
       // 调用 API
-      response = await (values.id
+      response = await (formData.id
         ? updateProductLabel({
-            ...values,
+            ...params,
           })
-        : createProductLabel({
-            ...values,
+        : createLabelBind({
+            ...params,
           }));
       func('refresh-tree');
       return response;
@@ -155,7 +170,7 @@ export function useProductLabelForm(func) {
     scope: {
       loadData,
       actions: {
-        fetchProducts: wareHouseProductSearch,
+        fetchProducts: inventoryProductProfilePageList,
         fetchSelectedProducts: () => [],
         fetchProductsByIds: () => [],
         getAllIdsUnderFilter: () => [],

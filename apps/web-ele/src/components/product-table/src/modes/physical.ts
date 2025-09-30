@@ -1,11 +1,12 @@
 import type { ModePlugin } from '../types';
 
-import { createSimpleColumns } from '../utils/column-helpers';
+import { createBaseColumns } from '../utils/column-helpers';
 
 export const PhysicalMode: ModePlugin = {
   id: 'physical',
   columns() {
-    const columns = createSimpleColumns();
+    const columns = createBaseColumns();
+    // console.log(createBaseColumns());
     // 修改数量列的标题
     const quantityIndex = columns.findIndex(
       (col) => col.name === 'display_quantity',

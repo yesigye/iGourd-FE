@@ -211,15 +211,15 @@ export function useCountForm() {
             'x-component': 'ProductTable',
             'x-component-props': {
               mode: 'physical',
-              capabilities: [
-                'barcode',
-                'unit',
-                'vat',
-                'discount',
-                'stock',
-                'image',
-                'remark',
-              ],
+              // capabilities: [
+              //   'barcode',
+              //   'unit',
+              //   'vat',
+              //   'discount',
+              //   'stock',
+              //   'image',
+              //   'remark',
+              // ],
               vatMode: 'VAT_EXCLUSIVE',
               // 业务标记（用于单位禁用逻辑兼容旧条件）
               isReceiptMode: false,
