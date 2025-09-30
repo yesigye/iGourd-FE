@@ -46,6 +46,17 @@ export const createBaseColumns = (): ColumnDescriptor[] => [
     'x-component': 'PreviewText.Input',
   },
   {
+    name: 'display_quantity',
+    title: '数量',
+    'x-component-props': {
+      width: 140,
+      precision: 8,
+    },
+    'x-component': 'ProductTable.QuantityCell',
+    'x-decorator': 'FormItem',
+    required: true,
+  },
+  {
     name: 'ware_house',
     title: '{{t("common.warehouse")}}',
     'x-component-props': {
@@ -181,15 +192,17 @@ export const createSimpleColumns = (): ColumnDescriptor[] => [
     'x-component': 'ProductTable.UnitCell',
     'x-decorator': 'FormItem',
   },
+  /*
   {
     name: 'sku_id',
     title: 'SKU',
     'x-component-props': {
       width: 200,
     },
-    'x-component': 'ProductTable.SkuSelect',
+    'x-component': 'PreviewText.Input',
     'x-decorator': 'FormItem',
   },
+  */
   {
     name: 'display_quantity',
     title: '数量',

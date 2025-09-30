@@ -14,6 +14,7 @@ import {
 
 import { getMode, registerMode } from '../core/registry';
 import { createQuantityCalculationEffect } from '../effects/quantity-calculation-effect';
+import { InventoryMode } from '../modes/inventory';
 import { PhysicalMode } from '../modes/physical';
 import { PurchaseMode } from '../modes/purchase';
 import { ReceiptMode } from '../modes/receipt';
@@ -31,6 +32,8 @@ registerMode(ReceiptMode);
 registerMode(PhysicalMode);
 registerMode(SpoilageMode);
 registerMode(ReturnMode);
+registerMode(InventoryMode);
+
 // registerMode(StockMode);
 
 // function addrToIndex(addr: any): number {

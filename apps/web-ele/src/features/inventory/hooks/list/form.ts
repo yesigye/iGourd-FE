@@ -4,17 +4,14 @@ import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
 import {
-  createSpoilage,
-  getSpoilageDetail,
-  modifySpoilage,
+  createInventoryStock,
+  getInventoryStockDetail,
+  modifyInventoryStock,
   wareHouseProductSearch,
 } from '@@/inventory/apis';
-import { dayjs } from 'element-plus';
 
-import { orderNoGenerate } from '#/api/common';
 import { useWarehouseSelect } from '#/hooks';
 import { useDrawerForm } from '#/hooks/use-drawer-form';
-import { floorDecimal } from '#/utils/eleValidate';
 
 import { inventoryReasonList } from './enum';
 
@@ -91,7 +88,7 @@ export function useListForm() {
               },
             ],
           },
-          consumption_reason: {
+          last_add_stock_reason: {
             type: 'string',
             title: "{{t('list.add-inventory-reason')}}",
             required: true,
@@ -110,11 +107,11 @@ export function useListForm() {
               },
             ],
           },
-          stock_consumption_item_list: {
+          product: {
             type: 'array',
             'x-component': 'ProductTable',
             'x-component-props': {
-              mode: 'spoilage',
+              mode: 'inventory',
               capabilities: [
                 'barcode',
                 'unit',
@@ -184,58 +181,42 @@ export function useListForm() {
   const handleSubmit = async (formData: PurchaseCodeRulesFormData) => {
     try {
       let response = null;
-      if (!formData.id) {
-        const result = await orderNoGenerate({
-          category_type: 'INVENTORY_WRITE_OFF',
-        });
-        formData.stock_consumption_no = result.order_no;
-      }
-      formData.consumption_date = dayjs().format('YYYY-MM-DD HH:mm:ss');
-      // 	VAT配置
-      formData.vat_configuration = 'NOT_APPLICATION';
-      // 汇率(选择币种和系统币种的换算比例)
-      formData.exchange_rate = 0.14;
-      // 结算货币编码
-      formData.currency_code = 'CNY';
-      // 计算总数量
-      formData.total_spoilage_quantity =
-        formData.stock_consumption_item_list.reduce(
-          (acc, item) => acc + floorDecimal(item.consumption_quantity, 0),
-          0,
-        );
-      formData.stock_consumption_item_list.forEach((item) => {
-        item.subtotal_amount = (
-          item.consumption_quantity * item.cost_price
-        ).toFixed(0);
-      });
-      const total = formData.stock_consumption_item_list.reduce(
-        (acc, item) => acc + item.consumption_quantity * item.cost_price,
-        0,
-      );
-      formData.subtotal_amount = total.toFixed(0);
-      formData.total_amount = total.toFixed(0);
-      formData.stock_consumption_item_list.forEach((item) => {
-        item.consumption_quantity = floorDecimal(item.consumption_quantity, 0);
-      });
+      // 仓位ID(暂时默认传个1)
+      formData.warehouse_location_id = 1;
       const params = JSON.parse(JSON.stringify(formData));
-      // 处理数据 basic_unit_radio
-      params.stock_consumption_item_list.forEach((item) => {
-        item.basic_unit_radio = 1;
-        item.product_name = item.major_name;
-        // 库存数量
-        item.stock_quantity = item.stock_total_quantity;
-
-        item.product_cost_price = item.cost_price;
-        item.product_id = item.id;
+      const keysToCopy = [
+        'product_code',
+        'product_id',
+        'product_name',
+        'product_group_id',
+        'product_unit_name',
+        'merchant_id',
+        'basic_product_id',
+        'sku_group_code',
+        'stock_quantity',
+        'basic_unit_radio',
+      ];
+      const list = params.product.map((item) => {
+        const partialCopy = keysToCopy.reduce((obj, key) => {
+          obj[key] = item[key];
+          return obj;
+        }, {});
+        partialCopy.product_id = item.id;
+        partialCopy.basic_unit_radio = 1;
+        partialCopy.product_name = item.major_name;
+        return partialCopy;
       });
-      // 调用 API
-      response = await (params.id
-        ? modifySpoilage({
-            ...params,
-          })
-        : createSpoilage({
-            ...params,
-          }));
+      params.product = list;
+      if (params.id) {
+        response = await modifyInventoryStock({
+          ...params,
+        });
+      } else {
+        // 调用 API
+        response = await createInventoryStock({
+          ...params,
+        });
+      }
       return response;
     } catch (error) {
       console.error('调拨单 customized form submission error:', error);
@@ -253,12 +234,12 @@ export function useListForm() {
           const data = drawerApi.getData();
           // 编辑
           if (data.id) {
-            const detail = await getSpoilageDetail({
-              stock_consumption_id: data.id,
+            const detail = await getInventoryStockDetail({
+              stock_id: data.id,
             });
-            detail.physical_stock_take_item_list =
-              detail.physical_stock_take_item_models;
-            detail.returned_quantity = detail.physical_total_quantity;
+            detail.product_model.stock_quantity = detail.stock_quantity;
+            detail.product = [detail.product_model];
+            // detail.returned_quantity = detail.physical_total_quantity;
             formAPI.setValues(detail);
           }
         } else {
@@ -283,7 +264,7 @@ export function useListForm() {
     },
     formOptions: {
       initialValues: {
-        stock_consumption_item_list: [{}],
+        product: [{}],
       },
       schema,
       scope: {

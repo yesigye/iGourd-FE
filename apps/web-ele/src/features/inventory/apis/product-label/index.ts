@@ -78,3 +78,32 @@ export function getProductLabelProductCount(params: {
 }) {
   return request.post('/inventory/product/label/product-count', params);
 }
+
+/**
+ * 创建标签并绑定商品
+ */
+export function createLabelBind(params) {
+  return request.post(
+    '/v1/merchant/basics/inventory/product-label/create-label/bind',
+
+    params,
+  );
+}
+
+/**
+ * 创建标签并绑定商品
+ */
+export function getProductlabelProductPage(params) {
+  return request.post(
+    '/v1/merchant/basics/inventory/product-label/product-profile/page-list',
+    params,
+  );
+}
+
+// 获取商品列表
+export const inventoryProductProfilePageList = (data) => {
+  return request.post<PageResult<AnyObject[]>>(
+    `/v1/merchant/basics/inventory/product-profile/page-list`,
+    data,
+  );
+};

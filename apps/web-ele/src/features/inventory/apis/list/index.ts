@@ -2,7 +2,10 @@ import { requestClient } from '#/api/request';
 
 // 获取库存分页列表
 export function getInventoryListApi(data: any) {
-  return requestClient.post('/v1/merchant/basics/inventory/stock-info/page-list', data);
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/stock-info/page-list',
+    data,
+  );
 }
 
 // 更新库存
@@ -23,4 +26,28 @@ export function getInventoryDetailApi(inventory_id: number | string) {
 // 获取库存统计
 export function getInventoryStatsApi(data: any) {
   return requestClient.post('/v1/merchant/inventory/stats', data);
+}
+
+// 创建库存
+export function createInventoryStock(params) {
+  return requestClient.post(
+    `/v1/merchant/basics/inventory/stock-info/create/batch`,
+    params,
+  );
+}
+
+// 获取库存详情
+export function getInventoryStockDetail(params) {
+  return requestClient.post(
+    `/v1/merchant/basics/inventory/stock/detail`,
+    params,
+  );
+}
+
+// 修改库存详情
+export function modifyInventoryStock(params) {
+  return requestClient.post(
+    `/v1/merchant/basics/inventory/stock/modify`,
+    params,
+  );
 }
