@@ -1,12 +1,9 @@
-<template>
-  <p :style="props.itemStyle">{{ props.value }}</p>
-</template>
 <script setup lang="ts">
 const props = defineProps({
   itemStyle: {
     type: Object,
     default: () => {
-      return {}
+      return {};
     },
   },
   value: {
@@ -17,8 +14,11 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
-})
+});
 </script>
+<template>
+  <p :style="props.itemStyle">{{ props.value }}</p>
+</template>
 <style scoped>
 p {
   font-size: 24px;
