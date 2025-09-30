@@ -28,6 +28,9 @@ export {
 export * from '@formily/reactive';
 
 export * from '@igourd-core/popup-ui';
+
+export { IgourdIcon, IgourdIconButton } from '@igourd-core/shadcn-ui';
+
 export { default as vuedraggable } from 'vuedraggable/src/vuedraggable';
 
 export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
