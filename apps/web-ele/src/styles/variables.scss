@@ -1,0 +1,715 @@
+@use 'sass:map';
+// ==========================================
+// 1. 核心基础色 (Core Base Colors)
+// 最常用的基准色，命名简洁直观
+// ==========================================
+$primary: #0d9eff !default; // 主色基准 - 更新自 uno.config.ts
+$success: #67c23a !default; // 成功色基准 - 保持不变（与 uno.config.ts 一致）
+$warning: #e6a23c !default; // 警告色基准 - 保持不变（与 uno.config.ts 一致）
+$error: #f56c6c !default; // 错误色基准 - 更新自 uno.config.ts
+$info: #909399 !default; // 信息色基准 - 保持不变（与 uno.config.ts 一致）
+
+// ==========================================
+// 2. 扩展色阶 (Extended Color Gradients)
+// 基于基准色的衍生色，数字越小越浅
+// ==========================================
+// 主色扩展
+$primary-50: #ecf5ff !default; // 主色-最浅 - 更新自 uno.config.ts
+$primary-100: #d9ecff !default; // 主色-较浅 - 保持不变（与 uno.config.ts 一致）
+$primary-200: #c6e2ff !default; // 主色-浅 - 更新自 uno.config.ts
+$primary-300: #9fceff !default; // 主色- hover态 - 更新自 uno.config.ts
+$primary-700: #79bbff !default; // 主色-加深 - 更新自 uno.config.ts
+$primary-900: #0084e3 !default; // 主色-最深 - 更新自 uno.config.ts
+
+// 成功色扩展
+$success-50: #f0f9eb !default; // 成功-最浅 - 保持不变（与 uno.config.ts 一致）
+$success-100: #e1f3d8 !default; // 成功-较浅 - 保持不变（与 uno.config.ts 一致）
+$success-200: #d1edc4 !default; // 成功-浅 - 更新自 uno.config.ts
+$success-300: #b3e09c !default; // 成功- hover态 - 更新自 uno.config.ts
+$success-700: #95d475 !default; // 成功-加深 - 更新自 uno.config.ts
+$success-900: #529b2e !default; // 成功-最深 - 更新自 uno.config.ts
+
+// 警告色扩展
+$warning-50: #e6a23c !default; // 警告-最浅 - 更新自 uno.config.ts（注意：uno.config.ts 中 50 和 DEFAULT 值相同）
+$warning-100: #faecd8 !default; // 警告-较浅 - 更新自 uno.config.ts
+$warning-200: #f8e3c5 !default; // 警告-浅 - 更新自 uno.config.ts
+$warning-300: #f2d09d !default; // 警告- hover态 - 更新自 uno.config.ts
+$warning-700: #eebe77 !default; // 警告-加深 - 更新自 uno.config.ts
+$warning-900: #b88230 !default; // 警告-最深 - 更新自 uno.config.ts
+
+// 错误色扩展
+$error-50: #fef0f0 !default; // 错误-最浅 - 保持不变（与 uno.config.ts 一致）
+$error-100: #fde2e2 !default; // 错误-较浅 - 更新自 uno.config.ts
+$error-200: #fcd3d3 !default; // 错误-浅 - 更新自 uno.config.ts
+$error-300: #fab5b5 !default; // 错误- hover态 - 更新自 uno.config.ts
+$error-700: #f89898 !default; // 错误-加深 - 更新自 uno.config.ts
+$error-900: #c45656 !default; // 错误-最深 - 更新自 uno.config.ts
+
+// 信息色扩展
+$info-50: #f4f4f5 !default; // 信息-最浅 - 保持不变（与 uno.config.ts 一致）
+$info-100: #e9e9eb !default; // 信息-较浅 - 保持不变（与 uno.config.ts 一致）
+$info-200: #dedfe0 !default; // 信息-浅 - 更新自 uno.config.ts
+$info-300: #c7c9cc !default; // 信息- hover态 - 更新自 uno.config.ts
+$info-700: #b1b3b8 !default; // 信息-加深 - 保持不变（与 uno.config.ts 一致）
+$info-900: #73767a !default; // 信息-最深 - 更新自 uno.config.ts
+
+// ==========================================
+// 3. 状态指示色 (Status Indicators)
+// 业务流程状态专用色
+// ==========================================
+$status-pending: #2196f3 !default; // 待处理/激活 - 保持不变（与 uno.config.ts 一致）
+$status-completed: #4caf50 !default; // 完成/终结 - 保持不变（与 uno.config.ts 一致）
+$status-partial: #ff9800 !default; // 部分异常 - 保持不变（与 uno.config.ts 一致）
+$status-terminated: #d32f2f !default; // 流程终止 - 保持不变（与 uno.config.ts 一致）
+$status-blocked: #d32f2f !default; // 受阻可恢复 - 更新自 uno.config.ts
+$status-disabled: #9e9e9e !default; // 关闭/失效 - 保持不变（与 uno.config.ts 一致）
+
+// ==========================================
+// 4. 中性色系 (Neutral Palette)
+// 文本、背景等基础元素色彩
+// ==========================================
+// 文本色彩
+$text-primary: #303133 !default; // 主要文本 - 保持不变（与 uno.config.ts 一致）
+$text-secondary: #606266 !default; // 次要文本 - 保持不变（与 uno.config.ts 一致）
+$text-tertiary: #909399 !default; // 第三级文本 - 保持不变（与 uno.config.ts 一致）
+$text-placeholder: #a8abb2 !default; // 占位文本 - 更新自 uno.config.ts
+$text-disabled: #c0c4cc !default; // 禁用文本 - 保持不变（与 uno.config.ts 一致）
+
+// 填充色彩
+$fill-ultra-light: #fafafa !default; // 超浅填充 - 更新自 uno.config.ts（对应 Lighter）
+$fill-light: #f5f7fa !default; // 浅填充 - 保持不变（与 uno.config.ts 一致）
+$fill-regular: #fafcff !default; // 常规填充 - 更新自 uno.config.ts
+$fill-medium: #ebedf0 !default; // 中等填充 - 更新自 uno.config.ts（对应 dark）
+$fill-dark: #e6e8eb !default; // 深色填充 - 更新自 uno.config.ts（对应 darker）
+
+// 边框色彩
+$border-light: #ededed !default; // 浅色边框 - 保持不变（与 uno.config.ts 一致）
+$border-regular: #dcdde0 !default; // 常规边框 - 保持不变（与 uno.config.ts 一致）
+$border-dark: #c9cdd4 !default; // 深色边框 - 保持不变（与 uno.config.ts 一致）
+$border-hover: #009eff !default; // 交互边框 - 更新自 uno.config.ts
+$border-disabled: #e5e6eb !default; // 禁用边框 - 保持不变（与 uno.config.ts 一致）
+
+// 背景色彩
+$bg-page: #f2f3f5 !default; // 页面背景 - 更新自 uno.config.ts
+$bg-card: #ffffff !default; // 卡片背景 - 保持不变
+$bg-selected: #e6e6e6 !default; // 选中背景 - 更新自 uno.config.ts
+$bg-hover: #f5f7fa !default; // 悬浮背景 - 保持不变（与 uno.config.ts table 背景一致）
+$bg-mask: rgba(0, 0, 0, 0.5) !default; // 遮罩背景 - 保持不变
+
+// ==========================================
+// 5. 组件样式 (Component Styles)
+// 基于基础变量的组件专用样式
+// ==========================================
+// 按钮样式
+$btn-primary-bg: $primary !default;
+$btn-primary-hover: $primary-300 !default;
+$btn-primary-active: $primary-700 !default;
+$btn-primary-disabled: $text-disabled !default;
+
+// 表单样式
+$form-label-color: $text-secondary !default;
+$form-input-border: $border-regular !default;
+$form-input-focus: $primary !default;
+$form-error: $error !default;
+
+// 表格样式
+$table-header-bg: $fill-light !default;
+$table-header-color: $text-secondary !default;
+$table-row-hover: $bg-selected !default;
+$table-stripe: $fill-ultra-light !default;
+$table-border: $border-regular !default;
+
+// ==========================================
+// 6. 形态样式 (Shape Properties)
+// 边框、圆角、阴影等形态定义
+// ==========================================
+// 圆角半径
+$radius-xs: 2px !default; // 极小圆角
+$radius-sm: 4px !default; // 小圆角
+$radius-md: 6px !default; // 中等圆角
+$radius-lg: 8px !default; // 大圆角
+$radius-xl: 12px !default; // 超大圆角
+$radius-full: 9999px !default; // 全圆角
+
+// 阴影效果
+$shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03) !default; // 极浅阴影
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05) !default; // 浅阴影
+$shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08) !default; // 中等阴影
+$shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12) !default; // 深阴影
+$shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.16) !default; // 极深阴影
+$shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.05) !default; // 内阴影
+
+// 边框宽度
+$border-width-hairline: 1px !default; // 极细边框
+$border-width-thin: 2px !default; // 细边框
+$border-width-regular: 3px !default; // 常规边框
+
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'primary': (
+      'base': #4080ff,
+    ),
+    'success': (
+      'base': #23c343,
+    ),
+    'warning': (
+      'base': #ff9a2e,
+    ),
+    'danger': (
+      'base': #f76560,
+    ),
+    'info': (
+      'base': #a9aeb8,
+    ),
+  ),
+
+  $bg-color: (
+    'page': #f6f8fc,
+  )
+);
+
+/** 全局SCSS变量 */
+
+:root {
+  --menu-background: #384348;
+  --menu-text: #fff;
+  --menu-active-text: #fff;
+  --menu-active-background: #0d99ff;
+  --menu-hover: #0d99ff;
+  --sidebar-logo-background: #384348;
+  --el-menu-item-height: 40px;
+  --el-menu-hover-bg-color: #0d99ff !important;
+  --el-menu-sub-item-height: 40px;
+  // 修复表格 fixed 列被选中后由于透明色导致叠字的 bug
+  .el-table {
+    --el-table-current-row-bg-color: rgb(235 243 250);
+  }
+}
+
+/** 暗黑主题 */
+// html.dark {
+//   --menu-background: var(--el-bg-color-overlay);
+//   --menu-text: #fff;
+//   --menu-active-text: var(--el-menu-active-color);
+//   --menu-hover: rgb(0 0 0 / 20%);
+//   --menu-active-background: rgb(0 0 0 / 20%);
+//   --sidebar-logo-background: rgb(0 0 0 / 20%);
+//   --el-menu-item-height: 48px;
+// }
+
+$menu-background: var(--menu-background); // 菜单背景色
+$menu-text: var(--menu-text); // 菜单文字颜色
+$menu-active-text: var(--menu-active-text); // 菜单激活文字颜色
+$menu-hover: var(--menu-hover); // 菜单悬停背景色
+$menu-active-background: var(--menu-active-background); // 菜单激活背景色
+$sidebar-logo-background: var(--sidebar-logo-background); // 侧边栏 Logo 背景色
+
+$color-warn-01: #ff8642;
+$color-success-01: #00c67a;
+$color-error-03: #e33d3d;
+$color-light-warn: #ffecd0;
+
+$sidebar-width: 250px; // 侧边栏宽度
+$sidebar-width-collapsed: 54px; // 侧边栏收缩宽度
+$navbar-height: 50px; //30px; // 导航栏高度
+$navbar-font-size-left: 14px; // 导航栏左侧字体大小
+$navbar-font-size-right: 16px; // 导航栏右侧字体大小
+$service-icon-size: 20px; // 服务图标大小
+$tags-view-height: 48px; //30px; // 34px TagsView 高度
+
+$background-white: #fff;
+$color-primary-light-5: #9fceff;
+$color-primary-light-8: #d9ecff;
+
+/** 自定义月份选择器样式 */
+$font-size-month: 14px;
+$content-gap: 10px;
+$wrapper-padding: 5px 7px;
+
+/** 金钱涉及到颜色 */
+$font-color-money: (
+  warn: $color-warn-01,
+  success: $color-success-01,
+  error: $color-error-03,
+);
+
+$font-color: (
+  color02: #666,
+  white: #fff,
+  primary: #0d99ff,
+  text-color-regular: #606266,
+  text-color-primary: #303133,
+  text-color-secondary: #909399,
+  red: $color-error-03,
+  color-warning: #e6a23c,
+  color-error: #f56c6c,
+);
+
+$font-size: (
+  min: 12px,
+  normal: 14px,
+  16px: 16px,
+  large-number: 20px,
+  large: 20px,
+  small-title: 16px,
+);
+
+$bg-color: (
+  primary-01: #0d99ff,
+  yellow-green-light: #fefff6,
+  green-light: #f4fcf5,
+  blue-light: #f6f9ff,
+  orange-light: #fffaf6,
+  red-light: #fef5f6,
+  color-primary-light-9: #ecf5ff,
+  white: #fff,
+  yellow: #ffd600,
+  color-error: #f56c6c,
+
+  /** 饼图色号 */ light-green: #b7e3a0,
+  light-blue: #bad7f5,
+  light-purple: #b7b5e5,
+  light-orange: #f4bfbf,
+  light-blue-2: #d9ecff,
+  light-purple-2: #e3e2ff,
+);
+
+$border-color: (
+  gray: #eee,
+  warn: #ffd9b4,
+  color-tip01: #ff8642,
+  light-gray: #f2f2f2,
+  color-primary-light-3: #79bbff,
+);
+
+$space-gap: (
+  min: 2px,
+  small: 5px,
+  normal: 8px,
+  medium: 10px,
+  large: 20px,
+);
+
+$font-weight: (
+  bold: 700,
+);
+
+$line-height: (
+  normal: 100%,
+);
+
+/** 明细账 */
+$account-subsidiary: (
+  search-input-width: 300px,
+  top-search-gap: map.get(
+      $map: $space-gap,
+      $key: normal,
+    ),
+  top-search-margin: 8px 0 14px 0,
+  border-color: #dfdfdf,
+  border-width: 1px,
+  main-content-gap: map.get(
+      $map: $space-gap,
+      $key: medium,
+    ),
+  tree-padding: 6px,
+  tree-container-width: 270px,
+  tree-label-font-size: 14px,
+  tree-label-gap: map.get(
+      $map: $space-gap,
+      $key: normal,
+    ),
+  account-title-padding: 12px 17px 7px,
+);
+
+/** 销售流水报表 和 财务报表共用 */
+$report-sales: (
+  bottom-count-gap: map.get(
+      $map: $space-gap,
+      $key: small,
+    ),
+  bottom-count-height: 51px,
+  table-padding: 5px 10px 6px,
+  bottom-count-padding: 0 15px,
+  font-size-small: 12px,
+  bottom-info-key-value-gap: map.get(
+      $map: $space-gap,
+      $key: medium,
+    ),
+  bottom-info-gap: map.get(
+      $map: $space-gap,
+      $key: medium,
+    ),
+);
+
+$account: (
+  drawer-padding-right: 20px,
+  balance-form-gap: map.get($space-gap, normal),
+  /* form title */ title-font-size: 14px,
+  title-font-weight: 400,
+  title-line-height: 21px,
+  title-border: 1px solid
+    map.get(
+      $map: $border-color,
+      $key: gray,
+    ),
+  title-icon-gap: map.get(
+      $map: $space-gap,
+      $key: small,
+    ),
+  title-padding: 0 10px,
+  icon-width: 4px,
+  icon-height: 10px,
+  icon-radius: 10px,
+  icon-bg-color: map.get(
+      $map: $bg-color,
+      $key: primary-01,
+    ),
+);
+
+$home-time: (
+  picker-width: 258px,
+  picker-height: 28px,
+);
+
+$home-card: (
+  alert-card-padding: 20px,
+  alert-number-margin-right: 4px,
+  alert-number-margin-top: 6px,
+  alert-dashed-line-margin-vertical: 16px,
+  icon-align-width: 19px,
+  iconfont-size: 19px,
+  half-card-padding-vertical: 11px,
+  half-card-padding-horizontal: 13px,
+  half-card-separator-width: 1px,
+  half-card-separator-after-height: 23px,
+  key-value-wrapper-min-width: 180px,
+  key-value-row-min-height: 12px,
+  item-num-affix-font-size: 14px,
+  arrow-border-size: 5px,
+  arrow-bottom-border-size: 7px,
+  dashed-line-margin-vertical: 6px,
+  item-margin-bottom: 20px,
+  note-number-margin-horizontal: 5px,
+);
+
+$home-default-cash-flow-analysis: (
+  wrapper-padding-bottom: 16px,
+);
+
+$presentation-home-data-colors: (
+  item-num-affix-color: map.get(
+      $map: $font-color,
+      $key: color02,
+    ),
+  arrow-up-border-color: map.get(
+      $map: $font-color,
+      $key: red,
+    ),
+  dashed-line-color1: #ffe2d2,
+  dashed-line-color2: #c3f2e1,
+  dashed-line-color3: #9fceff,
+  note-text-color: #fc5c65,
+  note-text-hover-color: #ecc3c7,
+  icon-a-color: #fee9eb,
+  icon-b-color: #fdecdc,
+  icon-c-color: #d6fbdb,
+  icon-d-color: #e0ebff,
+  first-card-bg: map.get(
+      $map: $bg-color,
+      $key: red-light,
+    ),
+);
+
+$home-default: (
+  small-card-title-margin: 15px,
+  title-left-icon-width: 4px,
+  title-left-icon-height: 10px,
+  title-font-weight: 600,
+  key-font-weight: normal,
+  chart-content-padding: 14px 0px 0px 0px,
+  legend-item-width: 50%,
+  legend-item-margin-bottom: 30px,
+  legend-color-width: 12px,
+  legend-color-height: 12px,
+  legend-color-radius: 50%,
+  empty-line-height: 8px,
+  empty-line-radius: 2px,
+  home-time-height: 56px,
+  home-time-line-height: 56px,
+  home-time-input-height: 36px,
+);
+
+$balance-item: (
+  wrapper-max-width: 259px,
+  wrapper-height: 150px,
+  top-margin-bottom: 10px,
+  center-margin-bottom: 13px,
+  circle-width: 50px,
+  circle-height: 50px,
+  circle-margin-top: 4px,
+  font-weight: 700,
+  font-size: map.get(
+      $map: $font-size,
+      $key: min,
+    ),
+  line-height: 100%,
+  circle-left-bg-color: map.get(
+      $map: $bg-color,
+      $key: yellow,
+    ),
+  circle-right-bg-color: map.get(
+      $map: $bg-color,
+      $key: primary-01,
+    ),
+  circle-text-color: map.get(
+      $map: $font-color,
+      $key: white,
+    ),
+  small-transform-scale: 0.7,
+  balance-info-transform: 39px,
+);
+
+$chart-of-accounts-del-box-content: (
+  title-font-size: 16px,
+);
+
+$chart-of-accounts-add-tip-modal: (
+  wrapper-padding: 10px 16px,
+  table-gap: 30px,
+  arrow-width: 39px,
+);
+
+$line-none-bg-color: '#e4e7ed'; // 公共类名
+//对话框错误样式
+.message-box-error-confirm-button {
+  background-color: #f56c6c;
+  border: none;
+}
+.message-box-error-confirm-button:hover {
+  background-color: #ffe2d2;
+  color: #666;
+}
+// 警告
+.message-box-warn-confirm-button {
+  background-color: #ff8642;
+  color: #fff;
+  border: none;
+}
+.message-box-warn-confirm-button:hover {
+  background-color: #ffe2d2;
+  color: #666;
+}
+// link
+.el-button.is-link.warnLinkColor {
+  color: #ff8642;
+}
+:deep(.el-table__body-wrapper) {
+  scrollbar-width: auto; /* Firefox */
+  -ms-overflow-style: auto; /* IE/Edge */
+
+  &::-webkit-scrollbar {
+    width: 16px; /* 原生滚动条宽度 */
+    height: 16px;
+  }
+}
+// 滚动条样式
+/* 全局样式或组件的<style>标签中 */
+//强制显示横向滚动条
+.el-scrollbar__bar.is-horizontal {
+  display: block !important;
+}
+
+//强制显示纵向滚动条
+.el-scrollbar__bar.is-vertical {
+  display: block !important;
+}
+/* 全局样式或组件的<style>标签中 */
+// 新版主题下上传组件背景色
+.new-theme {
+  .el-upload-dragger {
+    background-color: #ecf5ff;
+  }
+}
+
+// 扫码页面相关变量
+$scan-shadow-color: #dedede; // 表格阴影颜色
+$scan-header-bg: #183f8f; // 表格头部背景色
+$scan-icon-color: #5e7987; // 图标颜色
+$scan-white-bg: #ffffff; // 白色背景
+$scan-font-size-xs: 12px; // 超小字体
+$scan-font-size-sm: 14px; // 小字体
+$scan-font-size-md: 16px; // 中等字体
+$scan-font-size-lg: 24px; // 大字体
+$scan-font-weight-normal: 400; // 正常字重
+$scan-font-weight-bold: 700; // 粗体字重
+$scan-icon-size: 20px; // 图标尺寸
+$scan-btn-width: 80px; // 按钮宽度
+$scan-btn-height: 32px; // 按钮高度
+$scan-settle-btn-height: 60px; // 结算按钮高度
+
+// SelectProducts 组件相关变量
+$select-border-color: #eeeeee; // 边框颜色
+$select-primary-color: #0d99ff; // 主色调
+$select-white-color: #ffffff; // 白色
+$select-bg-light: #f5f7fa; // 浅色背景
+$select-shadow-color: #d1e2ff; // 阴影颜色
+$select-divider-color: #dfdfdf; // 分隔线颜色
+$select-font-size-xs: 12px; // 超小字体
+$select-font-size-sm: 14px; // 小字体
+$select-font-weight-normal: 400; // 正常字重
+$select-font-weight-bold: 700; // 粗体字重
+$select-border-radius: 4px; // 圆角大小
+$select-item-height: 30px; // 项目高度
+$select-group-height: 44px; // 分组高度
+$select-img-size: 48px; // 图片尺寸
+$select-z-index: 2399; // z-index 值
+
+// SelectProductsable 组件相关变量
+$scan-error-bg-color: #ffd8d8; // 扫码错误背景色（深色）
+$scan-error-bg-light: #fff3f3; // 扫码错误背景色（浅色）
+$scan-primary-color: #0d99ff; // 主色调（蓝色）
+$scan-input-font-size: 18px; // 输入框字体大小
+$scan-input-font-weight: bold; // 输入框字体粗细
+$scan-input-size: 30px; // 输入框尺寸
+$scan-transparent: transparent; // 透明背景
+
+// TakeDetail 组件相关变量
+$take-detail-primary-color: #0d99ff; // 主色调（蓝色）
+$take-detail-border-color: #eeeeee; // 边框颜色
+$take-detail-white-bg: #ffffff; // 白色背景
+$take-detail-gray-bg: #dfdfdf; // 灰色背景
+$take-detail-help-color: #7d90b2; // 帮助图标颜色
+$take-detail-text-color: #6b778c; // 文本颜色
+$take-detail-border-light: #eee; // 浅色边框
+$take-detail-radio-border: #ebf5ff; // 单选框边框
+$take-detail-radio-shadow: #d6edff; // 单选框阴影
+$take-detail-radio-active-bg: #c6e2ff; // 单选框激活背景
+
+// 字体相关变量
+$take-detail-font-size-xs: 12px; // 超小字体
+$take-detail-font-size-sm: 14px; // 小字体
+$take-detail-font-size-lg: 24px; // 大字体
+$take-detail-font-size-xl: 32px; // 超大字体
+$take-detail-font-weight-normal: 400; // 正常字重
+$take-detail-font-weight-bold: 700; // 粗体字重
+$take-detail-font-weight-600: 600; // 中粗字重
+
+// 尺寸相关变量
+$take-detail-z-index: 2399; // z-index值
+$take-detail-header-height: 112px; // 头部高度
+$take-detail-table-height: 511px; // 表格高度
+$take-detail-btn-width: 160px; // 按钮宽度
+$take-detail-btn-height: 50px; // 按钮高度
+$take-detail-border-radius: 4px; // 圆角半径
+$take-detail-accent-width: 4px; // 强调线宽度
+$take-detail-accent-height: 10px; // 强调线高度
+
+// Template 组件相关变量
+$template-white-color: #ffffff; // 白色
+$template-primary-color: #0d99ff; // 主色调（蓝色）
+$template-edit-btn-color: #409eff; // 编辑按钮颜色
+$template-save-btn-color: rgba(252, 92, 101, 1); // 保存按钮颜色
+$template-title-color: #323232; // 标题颜色
+$template-help-color: #7d90b2; // 帮助图标颜色
+$template-role-btn-color: #4a9ffc; // 角色按钮颜色
+$template-role-add-color: #005cff; // 添加角色按钮颜色
+$template-black-color: #000; // 黑色
+$template-item-bg: rgba(240, 249, 255, 1); // 项目背景色
+$template-gray-color: rgba(153, 153, 153, 1); // 灰色文本
+$template-border-color: rgba(13, 153, 255, 0.3); // 边框颜色（带透明度）
+
+// 字体相关变量
+$template-font-size-xs: 12px; // 超小字体
+$template-font-size-sm: 14px; // 小字体
+$template-font-size-md: 16px; // 中等字体
+$template-font-size-lg: 20px; // 大字体图标
+$template-font-size-xl: 24px; // 超大字体
+$template-font-size-xxl: 50px; // 超超大字体（图标）
+$template-font-size-2em: 2em; // 2倍字体
+$template-font-size-1-2em: 1.2em; // 1.2倍字体
+$template-font-weight-normal: 400; // 正常字重
+$template-font-weight-bold: 700; // 粗体字重
+$template-font-weight-bold-alt: bold; // 粗体（关键字）
+
+// 尺寸相关变量
+$template-border-width: 3px; // 边框宽度
+$template-item-width: 200px; // 项目最小宽度
+$template-item-height: 132px; // 项目高度
+$template-avatar-size: 140px; // 头像尺寸
+$template-avatar-box-width: 900px; // 头像容器宽度
+$template-avatar-box-height: 187px; // 头像容器高度
+$template-box-item-height: 438px; // 盒子项目高度
+$template-button-height: 41px; // 按钮高度
+$template-name-width: 252px; // 名称宽度
+$template-title-height: 34px; // 标题高度
+$template-content-width: 321px; // 内容宽度
+
+// ScanDialog 组件相关变量
+// AddQuickTags 组件相关变量
+$add-quick-tags-primary-color: #0094ff; // 对话框顶部边框颜色（蓝色）
+$add-quick-tags-header-bg: #f5f7fa; // 头部背景色（浅灰蓝）
+$add-quick-tags-border-color: #dfdfdf; // 边框颜色（浅灰）
+$add-quick-tags-border-width: 4px; // 对话框顶部边框宽度
+$add-quick-tags-border-bottom-width: 1px; // 头部底部边框宽度
+$add-quick-tags-header-padding: 16px; // 头部内边距
+$add-quick-tags-header-min-height: 44px; // 头部最小高度
+$add-quick-tags-z-index-warning: 3099; // 警告消息框层级
+$add-quick-tags-z-index-error: 3099; // 错误消息框层级
+$add-quick-tags-z-index-warning1: 4099; // 高优先级警告消息框层级
+$scan-dialog-border-color: #bef0f3; // 对话框顶部边框颜色（浅青色）
+$scan-dialog-success-color: #2bd002; // 成功图标颜色（绿色）
+$scan-dialog-border-width: 5px; // 对话框顶部边框宽度
+$scan-dialog-icon-size: 50px; // 图标字体大小
+//
+$el-input-group__append-bg-color: #f0f9ff;
+$el-input-group__append-bg-active: #d9efff;
+
+// AddBillTemplate 组件相关变量
+$add-bill-template-primary-color: #0d99ff; // 主色调（蓝色）
+$add-bill-template-border-color: #e5e5e5; // 边框颜色（浅灰）
+$add-bill-template-shadow-color: #afafaf; // 阴影颜色
+$add-bill-template-bg-color: #f2f5fc; // 背景色（浅蓝灰）
+$add-bill-template-shadow-rgba: #908b8b40; // 阴影颜色（带透明度）
+$add-bill-template-white-bg: #fff; // 白色背景
+$add-bill-template-icon-color: #8c939d; // 图标颜色（灰色）
+$add-bill-template-upload-bg: #ecf5ff; // 上传区域背景色（浅蓝）
+
+// 字体相关变量
+$add-bill-template-font-size-lg: 20px; // 大字体（标题）
+$add-bill-template-font-size-xl: 28px; // 超大字体（图标）
+$add-bill-template-font-weight-bold: 700; // 粗体字重
+$add-bill-template-font-weight-normal: 400; // 正常字重
+
+// 尺寸相关变量
+$add-bill-template-viewport-offset: 128px; // 视口偏移量
+$add-bill-template-drawer-offset: 67px; // 抽屉偏移量
+$add-bill-template-container-offset: 5px; // 容器偏移量
+$add-bill-template-border-radius-sm: 4px; // 小圆角
+$add-bill-template-border-radius-md: 6px; // 中等圆角
+$add-bill-template-border-radius-lg: 8px; // 大圆角
+$add-bill-template-padding-sm: 10px; // 小内边距
+$add-bill-template-padding-md: 12.5px; // 中等内边距
+$add-bill-template-padding-lg: 20px; // 大内边距
+$add-bill-template-header-height: 45px; // 头部高度
+$add-bill-template-preview-min-height: 230px; // 预览区最小高度
+$add-bill-template-line-width: 4px; // 强调线宽度
+$add-bill-template-line-height: 10px; // 强调线高度
+$add-bill-template-icon-size: 20px; // 小图标尺寸
+$add-bill-template-upload-icon-size: 120px; // 上传图标尺寸
+$add-bill-template-gap: 5px; // 间距
+$add-bill-template-border-width: 1px; // 边框宽度
+$add-bill-template-shadow-blur: 10px; // 阴影模糊度
+$add-bill-template-shadow-spread: 7.7px; // 阴影扩散
+$add-bill-template-z-index: 2199; // z-index值
+$add-bill-template-transition: all 0.3s; // 过渡动画
+$add-quick-tags-z-index-error: 3099; // 错误消息框层级
+$add-quick-tags-z-index-warning1: 4099; // 高优先级警告消息框层级
+$scan-dialog-border-color: #bef0f3; // 对话框顶部边框颜色（浅青色）
+$scan-dialog-success-color: #2bd002; // 成功图标颜色（绿色）
+$scan-dialog-border-width: 5px; // 对话框顶部边框宽度
+$scan-dialog-icon-size: 50px; // 图标字体大小
+//
+$el-input-group__append-bg-color: #f0f9ff;
+$el-input-group__append-bg-active: #d9efff;
+$tag-hover-bg-color: #9fceff;

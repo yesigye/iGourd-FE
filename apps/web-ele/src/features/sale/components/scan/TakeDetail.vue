@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inject, onMounted, ref, watch } from 'vue';
 
-import { ElMessage, ElMessageBox } from '@igourd/common-ui';
+import { ElDrawer, ElMessage, ElMessageBox } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import {
@@ -67,44 +67,44 @@ const handleCloseSelectProducts = () => {
 const columnsVisible = ref([
   {
     prop: 'id',
-    label: t('sales.hold_no'),
+    label: t('scan.hold_no'),
     width: '200px',
     align: 'left',
     fixed: 'left',
   },
   {
     prop: 'totalQuantity',
-    label: t('sales.product_qty'),
+    label: t('scan.product_qty'),
     width: '161px',
     align: 'left',
   },
   {
     prop: 'customer_name',
-    label: t('sales.customer_name'),
+    label: t('scan.customer_name'),
     width: '161px',
     align: 'left',
   },
   {
     prop: 'create_time',
-    label: t('sales.hold_date'),
+    label: t('scan.hold_date'),
     width: '161px',
     align: 'left',
   },
   {
     prop: 'origin_quantity',
-    label: t('sales.salesman'),
+    label: t('scan.salesman'),
     width: '190px',
     align: 'left',
   },
   {
     prop: 'total_amount',
-    label: t('sales.total_amount'),
+    label: t('scan.total_amount'),
     width: '161px',
     align: 'left',
   },
   {
     prop: 'remark',
-    label: t('sales.remark'),
+    label: t('scan.remark'),
     width: '200px',
     align: 'left',
     fixed: 'right',
@@ -135,23 +135,21 @@ const fetchOrderSuspendList = async () => {
   orderSuspendParams.value.customer_keywords = customerName.value;
   try {
     const res = await orderSuspendListApi(orderSuspendParams.value);
-    if (String(res.code) === 'SUCCESS') {
-      suspendList.value = res?.data?.list;
-      suspendList.value.forEach((item) => {
-        item.totalQuantity = '';
-        item.order_holding.forEach((holdItem) => {
-          item.totalQuantity += holdItem.order_holding_item_list.reduce(
-            (acc, curr) => {
-              return acc + curr.quantity;
-            },
-            0,
-          );
-        });
-        // .order_holding_item_list.reduce((acc, curr) => {
-        //   return acc + curr.quantity;
-        // }, 0);
+    suspendList.value = res?.list;
+    suspendList.value.forEach((item) => {
+      item.totalQuantity = '';
+      item.order_holding.forEach((holdItem) => {
+        item.totalQuantity += holdItem.order_holding_item_list.reduce(
+          (acc, curr) => {
+            return acc + curr.quantity;
+          },
+          0,
+        );
       });
-    }
+      // .order_holding_item_list.reduce((acc, curr) => {
+      //   return acc + curr.quantity;
+      // }, 0);
+    });
   } catch (error: any) {
     ElMessage.error(error.message);
   }
@@ -176,27 +174,23 @@ const getDetail = async () => {
   const res = await orderHoldingDetailApi({
     id: currentId.value,
   });
-  if (res.code === 'SUCCESS') {
-    currentInfo.value = res.data;
-  }
+  currentInfo.value = res;
 };
 const removeHandler = () => {
-  ElMessageBox.confirm(t('sales.deleteConfirm'), t('sales.tips'), {
-    confirmButtonText: t('sales.confirm'),
-    cancelButtonText: t('sales.cancel'),
+  ElMessageBox.confirm(t('scan.deleteConfirm'), t('scan.tips'), {
+    confirmButtonText: t('scan.confirm'),
+    cancelButtonText: t('scan.cancel'),
     type: 'warning',
   }).then(async (event) => {
     if (event === 'confirm') {
       const res = await orderHoldingRemoveApi({
         order_holding_id_list: [currentInfo.value.id],
       });
-      if (res.code === 'SUCCESS') {
-        fetchOrderSuspendList();
-        currentId.value = '';
-        currentInfo.value = {};
-        handleClose();
-        emit('calculationBadgeCount', true);
-      }
+      fetchOrderSuspendList();
+      currentId.value = '';
+      currentInfo.value = {};
+      handleClose();
+      emit('calculationBadgeCount', true);
     }
   });
 };
@@ -208,16 +202,12 @@ const handleTakeOrder = async (row) => {
       const res = await orderHoldingRemoveApi({
         order_holding_id_list: [row.id],
       });
-      if (String(res.code) === 'SUCCESS') {
-        currentId.value = '';
-        currentInfo.value = {};
-        ElMessage.success(t('sales.takeSuccess'));
-        fetchOrderSuspendList();
-        handleClose();
-        emit('calculationBadgeCount', true);
-      } else {
-        ElMessage.warning(res.message);
-      }
+      currentId.value = '';
+      currentInfo.value = {};
+      ElMessage.success(t('scan.takeSuccess'));
+      fetchOrderSuspendList();
+      handleClose();
+      emit('calculationBadgeCount', true);
     }
   } catch (error) {
     console.log(error);
@@ -255,7 +245,7 @@ const confirmHandler = async (data) => {
         ) {
           orderHoldingitemList.push(item);
         } else {
-          ElMessage.warning(t('sales.productPriceOrWarehouseNotSame'));
+          ElMessage.warning(t('scan.product-price-or-warehouse-not-same'));
         }
       }
     });
@@ -271,17 +261,16 @@ const confirmHandler = async (data) => {
   isSelectProductDialog.value = false;
   getDetail();
   fetchOrderSuspendList();
-  if (res.code != 'SUCCESS') return;
 };
 const handleReplaceCustomer = () => {
   drawerDetailsCustomers.value = {
-    title: t('sales.selectCustomers'),
+    title: t('scan.selectCustomers'),
     visible: true,
   };
 };
 const handleEditGuider = () => {
   drawerDetailsGuider.value = {
-    title: t('sales.selectGuider'),
+    title: t('scan.selectGuider'),
     visible: true,
   };
 };
@@ -301,10 +290,8 @@ const confirmClose = () => {
 const handleSelectGuiderRow = async (row) => {
   currentInfo.value.guider_id = row.user_id;
   const res = await orderHoldingModifyApi(currentInfo.value);
-  if (res.code === 'SUCCESS') {
-    getDetail();
-    drawerDetailsGuider.value.visible = false;
-  }
+  getDetail();
+  drawerDetailsGuider.value.visible = false;
 };
 const confirmGuiderClose = () => {
   drawerDetailsGuider.value.visible = false;
@@ -335,7 +322,6 @@ const handleDelete = async (row, index) => {
     order_holding: currentInfo.value.order_holding,
   };
   const res = await orderHoldingModifyApi(params);
-  if (res.code != 'SUCCESS') return;
   if (currentInfo.value.order_holding[index].length === 0) {
     currentInfo.value = {};
     currentId.value = '';
@@ -358,9 +344,7 @@ const handlePrintTakeAll = async () => {
     type: 'PRELIMINARY_BILL_RECEIPT',
   };
   const res = await getCustomTemplateListApi(params);
-  if (res.code === 'SUCCESS') {
-    printTemplate.value = res.data.find((item) => item.is_default) || {};
-  }
+  printTemplate.value = res.find((item) => item.is_default) || {};
 
   if (Object.keys(printTemplate.value).length > 0) {
     const order_item_model_list = [];
@@ -384,9 +368,7 @@ const handlePrintTake = async (index) => {
     type: 'PRELIMINARY_BILL_RECEIPT',
   };
   const res = await getCustomTemplateListApi(params);
-  if (res.code === 'SUCCESS') {
-    printTemplate.value = res.data.find((item) => item.is_default) || {};
-  }
+  printTemplate.value = res.find((item) => item.is_default) || {};
 
   // advanceStatement.value = data.find(item => item.is_default) || {}
   const order_item_model_list = [];
@@ -420,7 +402,7 @@ const handlePrintTake = async (index) => {
 //       merchant_id: Local.get('userinfo')?.current_login_user_app?.owner_id
 //     });
 //     if (String(res.code) === 'SUCCESS') {
-//       ElMessage.success(t('sales.takeSuccess'));
+//       ElMessage.success(t('scan.takeSuccess'));
 //       fetchOrderSuspendList();
 //       handleClose();
 //       emit('calculationBadgeCount', true);
@@ -452,7 +434,7 @@ defineExpose({
 
 <template>
   <div class="coupon-send">
-    <el-drawer
+    <ElDrawer
       v-model="isReturnShow"
       class="bg-porcelain"
       :model-value="props.drawerReturnShow"
@@ -490,18 +472,18 @@ defineExpose({
                         :clearable="true"
                         class="h-13"
                         :placeholder="
-                          $t('sales.please_enter_the_customer_name')
+                          $t('scan.please-enter-the-customer-name')
                         "
                       />
                       <el-button
                         class="w-25 h-full text-white"
                         @click="handleSearchClick"
                       >
-                        {{ t('sales.search') }}
+                        {{ t('scan.search') }}
                       </el-button>
                     </div>
                   </div>
-                  <div class="drawer-content-left h-full bg-white">
+                  <div class="drawer-content-left bg-white">
                     <!-- 挂单选择 -->
                     <el-radio-group
                       v-model="currentId"
@@ -531,12 +513,12 @@ defineExpose({
                 >
                   <div class="basic-details bg-white">
                     <div class="basic-details-title">
-                      {{ t('sales.basic_details') }}
+                      {{ t('scan.basic-details') }}
                     </div>
                     <div
                       class="basic-details-info mt-2.5 flex items-center gap-1"
                     >
-                      <span>{{ t('sales.customer') }}:</span>
+                      <span>{{ t('scan.customer') }}:</span>
                       <p>
                         {{ currentInfo?.customer_name || '-' }}/{{
                           currentInfo?.phone_number || '-'
@@ -550,8 +532,8 @@ defineExpose({
                         <span class="text-blue-primary">{{
                           currentInfo.customer_id &&
                           currentInfo.customer_id != '0'
-                            ? t('sales.replace')
-                            : t('sales.select')
+                            ? t('scan.replace')
+                            : t('scan.select')
                         }}</span>
                       </el-button>
                     </div>
@@ -559,7 +541,7 @@ defineExpose({
                       v-if="currentInfo.remark"
                       class="basic-details-info mt-2.5 flex items-center gap-1"
                     >
-                      <span>{{ t('sales.remarks') }}:</span>
+                      <span>{{ t('scan.remarks') }}:</span>
                       <p>
                         {{ currentInfo?.remark || '' }}
                       </p>
@@ -567,7 +549,7 @@ defineExpose({
                   </div>
                   <div class="basic-details mt-[5px] bg-white">
                     <div class="basic-details-title">
-                      {{ t('sales.product_details') }}
+                      {{ t('scan.product_details') }}
                     </div>
                     <el-scrollbar class="scrollbar-box">
                       <div
@@ -591,8 +573,7 @@ defineExpose({
                               >
                                 <i
                                   class="icon iconfont icon-icon_Edit ml-[10px]"
-                                ></i></el-button
-                            ></span>
+                                ></i></el-button></span>
                           </div>
                           <div class="order-take-print-btn-group">
                             <el-button
@@ -602,8 +583,7 @@ defineExpose({
                               @click="handlePrintTakeAll"
                             >
                               <span class="text-blue-primary">
-                                {{ $t('sales.holdTake.printTakeAll') }}</span
-                              >
+                                {{ $t('scan.hold-take.print-take-all') }}</span>
                             </el-button>
 
                             <el-button
@@ -612,7 +592,7 @@ defineExpose({
                               @click="handlePrintTake(holdIndex)"
                             >
                               <span class="text-blue-primary">
-                                {{ $t('sales.holdTake.printTake') }}
+                                {{ $t('scan.hold-take.print-take') }}
                               </span>
                             </el-button>
                           </div>
@@ -651,14 +631,12 @@ defineExpose({
                   <div
                     class="bg-linen text-dark-gray mt-2 flex h-11 items-center justify-end gap-2 pl-2 pr-2 text-[12px]"
                   >
-                    <span
-                      >{{ t('sales.columns.QTY') }}:
+                    <span>{{ t('scan.columns.QTY') }}:
                       <span class="text-orange-medium">{{
                         currentInfo?.quantity || 0
                       }}</span>
                     </span>
-                    <span
-                      >{{ t('printTemp.total_amount') }}:
+                    <span>{{ t('printTemp.total_amount') }}:
                       <span class="text-coral-light">
                         {{ currentInfo?.total_amount || '' }}
                       </span>
@@ -673,7 +651,7 @@ defineExpose({
                           class="mr-[10px] h-11 text-white"
                           @click.stop="removeHandler"
                         >
-                          {{ t('sales.holdTake.delete') }}
+                          {{ t('scan.hold-take.delete') }}
                         </el-button>
                       </div>
 
@@ -684,13 +662,12 @@ defineExpose({
                           @click="handleSelectProducts"
                         >
                           <span class="text-grass-green">{{
-                            t('sales.holdTake.add')
+                            t('scan.hold-take.add')
                           }}</span>
                         </el-button>
                         <el-button class="h-11" @click="handleCellClick">
                           <span class="text-white">
-                            {{ t('sales.holdTake.take') }}</span
-                          >
+                            {{ t('scan.hold-take.take') }}</span>
                         </el-button>
                       </div>
                     </div>
@@ -781,7 +758,7 @@ defineExpose({
               >
               </el-table-column>
             </template>
-            <el-table-column :label="t('sales.action')" width="100" align="center" fixed="right">
+            <el-table-column :label="t('scan.action')" width="100" align="center" fixed="right">
               <template #default="scope">
                 <el-button link type="primary" size="small" @click.stop="handleDelete(scope.row.id)">
                   <i class="iconfont icon-shanchu2 shanchu"></i>
@@ -807,7 +784,7 @@ defineExpose({
           </el-button>
         </div>
       </div>
-    </el-drawer>
+    </ElDrawer>
   </div>
 </template>
 
@@ -925,7 +902,7 @@ defineExpose({
 
   .down-table-list {
     //width: 1123px;
-    height:511px;
+    height: 511px;
   }
 
   :deep(.el-table .el-table__header) {

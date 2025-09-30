@@ -1,36 +1,16 @@
-<template>
-  <div class="scan-settle-content">
-    <div class="scan-settle-content-item">
-      <p>{{ t('sales.customerName') + ':' }}</p>
-      <p>{{ customerName ? customerName : '-' }}</p>
-    </div>
-    <div class="scan-settle-content-item">
-      <p>{{ t('sales.contactPhone') + ':' }}</p>
-      <p>{{ customerPhone ? customerPhone : '-' }}</p>
-    </div>
-    <div class="scan-settle-content-item">
-      <p>{{ t('sales.points') + ':' }}</p>
-      <p>{{ customerPoints ? customerPoints : '-' }}</p>
-    </div>
-    <div class="scan-settle-content-item">
-      <p>{{ t('sales.balance') + ':' }}</p>
-      <p>{{ customerBalance ? customerBalance : '-' }}</p>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 // import
 import { computed } from 'vue';
-import { useI18n } from 'vue-i18n';
+
+import { useI18n } from '@igourd/locales';
 
 interface Props {
-  customerInfo?: {
+  customerInfo?: null | {
+    balance?: number;
     name?: string;
     phone_number?: string;
     points?: number;
-    balance?: number;
-  } | null;
+  };
 }
 
 // props
@@ -54,17 +34,39 @@ const customerBalance = computed(() => props.customerInfo?.balance ?? 0);
 // events
 </script>
 
+<template>
+  <div class="scan-settle-content">
+    <div class="scan-settle-content-item">
+      <p>{{ `${t('scan.customerName')}:` }}</p>
+      <p>{{ customerName ? customerName : '-' }}</p>
+    </div>
+    <div class="scan-settle-content-item">
+      <p>{{ `${t('scan.contactPhone')}:` }}</p>
+      <p>{{ customerPhone ? customerPhone : '-' }}</p>
+    </div>
+    <div class="scan-settle-content-item">
+      <p>{{ `${t('scan.points')}:` }}</p>
+      <p>{{ customerPoints ? customerPoints : '-' }}</p>
+    </div>
+    <div class="scan-settle-content-item">
+      <p>{{ `${t('scan.balance')}:` }}</p>
+      <p>{{ customerBalance ? customerBalance : '-' }}</p>
+    </div>
+  </div>
+</template>
+
 <style scoped lang="scss">
 .scan-settle-content {
   padding: 7px 14px;
   font-size: 14px;
   background-color: #fff;
+
   .scan-settle-content-item {
     display: flex;
-    height: 25px;
-    width: 100%;
-    line-height: 25px;
     justify-content: space-between;
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
     border-bottom: 1px solid #e6e6e6;
   }
 }

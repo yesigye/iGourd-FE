@@ -2,7 +2,15 @@
 import { inject, onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { debounce, Local } from '@igourd/utils';
+import {
+  ElButton,
+  ElDrawer,
+  ElImage,
+  ElInput,
+  ElTable,
+  ElTableColumn,
+} from '@igourd/common-ui';
+import { debounce } from '@igourd/utils';
 
 import { storeToRefs } from 'pinia';
 
@@ -24,7 +32,6 @@ const keywords = ref('');
 const isReturnShow = ref(false);
 const mergeGoodsList = inject('mergeGoodsList');
 
-const userInfo = Local.get('userinfo') || {};
 const customerStore = useCustomerStore();
 const { customerList } = storeToRefs(customerStore);
 const customerInfo = ref({});
@@ -35,7 +42,6 @@ const handleClose = () => {
 };
 const fetchGoodsList = debounce(async () => {
   await customerStore.getCustomerList({
-    merchant_id: userInfo?.current_login_user_app?.owner_id,
     page_size: 100,
     keywords: keywords.value,
   });
@@ -59,7 +65,7 @@ watch(
 
 <template>
   <div class="coupon-send">
-    <el-drawer
+    <ElDrawer
       v-model="isReturnShow"
       :model-value="props.showDialog"
       :with-header="false"
@@ -82,14 +88,14 @@ watch(
       </div>
       <div class="drawer-content">
         <div class="top">
-          <el-input
+          <ElInput
             v-model="keywords"
             style="height: 36px"
             :placeholder="$t('customers.searchPlaceholder')"
             clearable
             @clear="fetchGoodsList"
           />
-          <el-button
+          <ElButton
             class="outer-btn right-box search-btn blue-btn"
             @click="fetchGoodsList"
           >
@@ -101,10 +107,10 @@ watch(
                 <span> {{ $t('employee.searchButton') }}</span>
               </div>
             </div>
-          </el-button>
+          </ElButton>
         </div>
         <div class="person">
-          <el-table
+          <ElTable
             :data="customerList || []"
             class="down-table-list"
             :show-header="false"
@@ -116,7 +122,7 @@ watch(
             @row-click="handleRowClick"
           >
             <!-- <el-table-column type="selection" align="center" :width="55"> </el-table-column> -->
-            <el-table-column
+            <ElTableColumn
               prop="profilePhoto"
               width="80"
               fixed="left"
@@ -124,7 +130,7 @@ watch(
             >
               <template #default="scope">
                 <div class="profile-photo-box">
-                  <el-image
+                  <ElImage
                     :src="scope.row.profile_photo"
                     alt=""
                     class="product-pic"
@@ -140,11 +146,11 @@ watch(
                         class="product-pic"
                       />
                     </template>
-                  </el-image>
+                  </ElImage>
                 </div>
               </template>
-            </el-table-column>
-            <el-table-column prop="name">
+            </ElTableColumn>
+            <ElTableColumn prop="name">
               <template #default="{ row }">
                 <div class="name-box">
                   <span class="name">{{ row.name ? row.name : '-' }}</span>
@@ -153,8 +159,8 @@ watch(
                   }}</span>
                 </div>
               </template>
-            </el-table-column>
-            <el-table-column
+            </ElTableColumn>
+            <ElTableColumn
               prop="balance"
               fixed="right"
               width="150"
@@ -169,11 +175,11 @@ watch(
                   >{{ row.balance }}</span
                 >
               </template>
-            </el-table-column>
-          </el-table>
+            </ElTableColumn>
+          </ElTable>
         </div>
       </div>
-    </el-drawer>
+    </ElDrawer>
   </div>
 </template>
 

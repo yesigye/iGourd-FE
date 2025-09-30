@@ -1,3 +1,5 @@
+import { useUserStore } from '@igourd/stores';
+
 export function isDef(val: any) {
   return (
     val !== undefined && val !== null && val !== 'null' && val !== 'undefined'
@@ -34,8 +36,8 @@ export const mergeByIdArray = (arr1: any[], arr2: any[]) => {
 export async function initializeCurrencySymbol() {
   try {
     const useStore = useUserStore();
-    const { currencySymbol } = useStore;
-
+    const { merchantInfo } = useStore;
+    const currencySymbol = merchantInfo?.currency_symbol || '';
     return currencySymbol;
   } catch (error) {
     console.error('获取货币符号失败:', error);

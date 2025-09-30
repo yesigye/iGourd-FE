@@ -2,7 +2,7 @@
 // import
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 
-import { ElMessage } from '@igourd/common-ui';
+import { ElButton, ElMessage, ElTable, ElTableColumn } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { debounce, get } from '@igourd/utils';
 
@@ -95,7 +95,7 @@ const handleInputDebounced = debounce((row) => handleQuantityChange(row), 1000);
 const handleQuantityChangeOriginal = (item: any) => {
   if (item.stock_total_quantity === null || item.stock_total_quantity === '') {
     item.stock_total_quantity = 0; // 默认值为0
-    ElMessage.error(t('sales.pleaseInputQuantity'));
+    ElMessage.error(t('scan.pleaseInputQuantity'));
   } else {
     const decimalQuantity = new Decimal(item.stock_total_quantity);
     item.stock_total_quantity = retainDecimal8(decimalQuantity, 8);
@@ -121,11 +121,7 @@ const handlePriceChange = debounce(handlePriceChangeOriginal, 500);
 
 const getDetail = async () => {
   const res = await getSystemConfigurationDetailApi({});
-  if (res.code === 'SUCCESS') {
-    ableEdit.value = res.data.is_price_modify_support;
-  } else {
-    ElMessage.error(res.message);
-  }
+  ableEdit.value = res.is_price_modify_support;
 };
 const handleSelectionChange = (val: any) => {
   console.log(val);
@@ -194,7 +190,7 @@ defineExpose({
 <template>
   <div class="scan-content" style="height: 100%; overflow-y: auto">
     <!-- <p v-for="item in mergeGoodsList" style="color: aqua">{{ item }}</p> -->
-    <el-table
+    <ElTable
       ref="tableRef"
       :data="mergeGoodsList || []"
       style="width: 100%"
@@ -210,11 +206,11 @@ defineExpose({
       @selection-change="handleSelectionChange"
       @select="handleSelect"
     >
-      <el-table-column
+      <ElTableColumn
         v-for="(item, index) in allColumns"
         :key="index"
         :prop="item.prop"
-        :label="t(`sales.${item.localKey}`)"
+        :label="t(`scan.${item.localKey}`)"
         :min-width="item.width || 'auto'"
         :align="item.align || 'left'"
         :fixed="item.fixed"
@@ -222,9 +218,9 @@ defineExpose({
         <template #default="{ column, row }">
           <template v-if="['stock_total_quantity'].includes(item.prop)">
             <div class="Inum">
-              <el-button class="Inum-input" @click="decreaseEvent(row)">
+              <ElButton class="Inum-input" @click="decreaseEvent(row)">
                 -
-              </el-button>
+              </ElButton>
               <el-input
                 v-model="row[item.prop]"
                 v-input-number="8"
@@ -236,9 +232,9 @@ defineExpose({
                   }
                 "
               />
-              <el-button class="Inum-input" @click="increaseEvent(row)">
+              <ElButton class="Inum-input" @click="increaseEvent(row)">
                 +
-              </el-button>
+              </ElButton>
             </div>
           </template>
           <template v-else-if="ableEdit && item.prop === 'selling_price'">
@@ -266,26 +262,26 @@ defineExpose({
           </template>
         </template>
         <template #empty> </template>
-      </el-table-column>
-      <el-table-column
+      </ElTableColumn>
+      <ElTableColumn
         v-auth="'sale_scan_code_delete'"
-        :label="t('sales.action')"
+        :label="t('scan.action')"
         width="85"
         fixed="right"
         align="center"
       >
         <template #default="scope">
-          <el-button
+          <ElButton
             link
             type="primary"
             size="small"
             @click="handleDelete(scope.row.id)"
           >
             <i class="iconfont icon-shanchu2 shanchu"></i>
-          </el-button>
+          </ElButton>
         </template>
-      </el-table-column>
-    </el-table>
+      </ElTableColumn>
+    </ElTable>
   </div>
 </template>
 

@@ -18,7 +18,7 @@ export const useCustomerStore = defineStore('customer', {
      */
     async getCustomerList(params: any) {
       try {
-        const { data } = await getCustomerPageListApi(params);
+        const data = await getCustomerPageListApi(params);
         this.customerList = data?.list || [];
       } catch (error) {
         console.error(error);

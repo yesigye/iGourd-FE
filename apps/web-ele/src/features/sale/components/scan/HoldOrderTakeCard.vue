@@ -12,7 +12,8 @@ const emits = defineEmits<{
   (e: 'select-item', info: any): void; // 增加商品到列表
 }>();
 const useStore = useUserStore();
-const { currencySymbol, merchantInfo, merchantId } = useStore;
+const { merchantInfo } = useStore;
+const { currencySymbol } = merchantInfo;
 type PropsType = { active?: boolean; itemInfo: any };
 
 function handleClick() {

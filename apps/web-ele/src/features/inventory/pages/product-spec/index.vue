@@ -32,8 +32,7 @@ const [DrawerValue, drawerValueApi] = useIgourdDrawer({
   connectedComponent: drawerValue,
   appendToMain: true,
 });
-const { Grid, handleQueryTable, handleEdit, handleBatchDelete, handleDelete } =
-  useInventoryProductSpec();
+const { Grid, handleQueryTable, handleDelete } = useInventoryProductSpec();
 const productSpecList = ref<ProductLabelItem[]>([]);
 const selectedLabelId = ref<string>('');
 // 获取商品规格列表

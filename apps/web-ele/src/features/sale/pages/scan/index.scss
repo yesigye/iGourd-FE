@@ -1,0 +1,147 @@
+.scancode-container {
+  width: 100%;
+  overflow: hidden;
+  .top {
+    // height: 100px;
+    padding: 10px 0px;
+  }
+  .down {
+    //width: 1195px;
+    margin-top: 6px;
+    height: calc(100vh - 265px);
+    display: flex;
+    flex-direction: column;
+    .down-table {
+      flex-grow: 1;
+      overflow: hidden;
+      margin: 10px 15px 0px 15px;
+      overflow-y: auto;
+      .role-page {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+      }
+      .table {
+        box-shadow: 5px 5px 5px #dedede;
+      }
+      .custom-header {
+        background-color: #183f8f;
+      }
+      .icon-bianji1,
+      .icon-chakan,
+      .icon-icon_printer {
+        width:20px;
+        height:20px;
+        color: #5e7987;
+      }
+    }
+    .down-btn {
+      .total {
+        margin-top: 20px;
+      }
+    }
+    .action-bottom {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 49px;
+    }
+  }
+  .scan-settle {
+    display: flex;
+    // justify-content: space-between;
+    height: auto;
+    margin-top: 10px;
+    .scan-settle-content-left {
+      width: 25%;
+      background-color: #ffffff;
+    }
+    .scan-settle-content-right {
+      width: 75%;
+      background-color: #ffffff;
+      margin-left: 10px;
+      padding: 10px 0px;
+    }
+  }
+  .scan-action-box-settle-info {
+    width: 140px;
+    font-size: 12px;
+    .total-title {
+      font-size: 14px;
+      font-weight: 400;
+    }
+    .total-price {
+      font-size: 24px;
+    }
+
+    .settle-info-val {
+    }
+  }
+  .scan-action-box-settle-payment {
+    // width: 240px;
+    .total-title {
+      font-size: 16px;
+    }
+    .total-price {
+      font-size: 24px;
+    }
+  }
+  .scan-action-box {
+    font-size: 12px;
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 98px);
+    gap: 5px;
+
+    &-customer {
+      padding: 7px 10px;
+      height: 150px;
+      box-sizing: border-box;
+      .customer-title {
+      }
+      .customer-name {
+        font-weight: 700;
+      }
+    }
+    .scan-action-box-guider-settle {
+      height: calc(100% - 150px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    &-guider {
+      padding: 10px;
+      height: calc(100% - 85px);
+
+      .guider-val {
+        font-weight: 700;
+        // 溢出显示省略号
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    &-settle {
+      height: 70px;
+      padding: 0 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    .settle-button {
+      height: 60px;
+    }
+  }
+  .scan-order-action {
+    padding: 10px;
+    margin-top: 5px;
+    .el-badge {
+      margin-right: 0;
+    }
+  }
+}
+
+.common-btn {
+  width: 80px;
+  height: 32px;
+  color: #ffffff;
+}

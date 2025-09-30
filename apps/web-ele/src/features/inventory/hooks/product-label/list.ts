@@ -11,7 +11,7 @@ import { useI18n } from '@igourd/locales';
 import {
   createProductLabel,
   deleteProductLabel,
-  getProductList,
+  getProductlabelProductPage,
   updateProductLabel,
 } from '@@/inventory/apis';
 
@@ -26,24 +26,29 @@ export function useInventoryProductLabelList() {
       width: 80,
       fixed: 'left',
     },
+
     {
-      field: 'name',
+      field: 'product_label_name',
       title: t('inventory.productLabelName'),
       minWidth: 220,
-      fixed: 'left',
     },
     {
-      field: 'product_number',
-      title: t('inventory.productNumber'),
-      minWidth: 200,
-    },
-    {
-      field: 'product',
-      title: t('inventory.productsDetail'),
+      field: 'major_name',
+      title: t('common.product'),
       minWidth: 85,
-      fixed: 'right',
-      slots: { default: 'productDetail' },
     },
+
+    {
+      field: 'major_unit_name',
+      title: t('inventory.product_unit_name'),
+      minWidth: 85,
+    },
+    {
+      field: 'status',
+      title: t('inventory.status'),
+      minWidth: 85,
+    },
+
     {
       field: 'creator_name',
       title: t('inventory.creator'),
@@ -77,18 +82,38 @@ export function useInventoryProductLabelList() {
       },
     },
   };
+  let queryParam = '';
+  // 查询数据
+  const handleQueryTable = (qParam) => {
+    queryParam = qParam;
+    uCrud.gridApi.reload();
+  };
 
-  return useCrud<ProductLabelItem, ProductLabelParams>({
+  const uCrud = useCrud<ProductLabelItem, ProductLabelParams>({
     columns,
     searchFormSchema,
     batchOperate: true,
     service: {
       // @ts-ignore
-      query: getProductList,
+      query: async (params) => {
+        if (!queryParam) {
+          return;
+        }
+        const resultList = await getProductlabelProductPage({
+          ...params,
+          product_label_id: queryParam,
+        });
+        resultList.list.forEach((item) => {
+          item.product_label_name = item.product_label_list[0].name;
+        });
+        return resultList;
+      },
       // @ts-ignore
       drop: deleteProductLabel,
       create: createProductLabel,
       update: updateProductLabel,
     },
   });
+
+  return { ...uCrud, handleQueryTable };
 }

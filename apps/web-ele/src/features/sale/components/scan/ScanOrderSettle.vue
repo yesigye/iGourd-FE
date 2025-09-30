@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { reactive, ref, toRefs, watch } from 'vue';
 
+import { ElDrawer } from '@igourd/common-ui';
+
 import { getCustomTemplateListApi } from '@@/sale/apis';
 
 import {
@@ -89,9 +91,9 @@ const getTemplateList = async (type: string) => {
     is_default: true,
   };
   const res = await getCustomTemplateListApi(params);
-  if (String(res.code) === 'SUCCESS' && type === 'RECEIPT') {
-    printTemplate.value = res?.data.find((item) => item.is_default) || {};
-  }
+  // if (String(res.code) === 'SUCCESS' && type === 'RECEIPT') {
+  printTemplate.value = res.find((item) => item.is_default) || {};
+  // }
 };
 async function initMounted() {
   currentSymbol.value = await initializeCurrencySymbol();
@@ -127,7 +129,7 @@ watch(
 
 <template>
   <div class="coupon-send">
-    <el-drawer
+    <ElDrawer
       v-model="isModalShow"
       :append-to-body="true"
       :with-header="false"
@@ -164,7 +166,7 @@ watch(
           />
         </div>
       </div>
-    </el-drawer>
+    </ElDrawer>
   </div>
 </template>
 

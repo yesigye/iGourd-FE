@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
+
+import { ElDialog, ElMessage } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
 
 import { orderSuspendApi, quickTagsAllApi } from '@@/sale/apis';
-import { ElMessage } from 'element-plus';
 
 const props = defineProps<Props>();
 const emit = defineEmits(['update:visible', 'update:Suspend']);
@@ -45,7 +46,7 @@ const handleClose = () => {
 };
 const quickTagsList = ref([]);
 const getQuickTagAll = async () => {
-  const { data } = await quickTagsAllApi({});
+  const data = await quickTagsAllApi({});
   if (data) {
     // quickTagsList.value = res.data;
     quickTagsList.value = [];
@@ -123,17 +124,13 @@ const handleSave = async () => {
   }, 0);
   try {
     const res = await orderSuspendApi(params.value);
-    if (String(res.code) === 'SUCCESS') {
-      // 挂单成功
-      ElMessage.success(t('sales.suspendSuccess'));
-      isShowDialog.value = false;
-      activeTag.value = [];
+    // 挂单成功
+    ElMessage.success(t('scan.suspendSuccess'));
+    isShowDialog.value = false;
+    activeTag.value = [];
 
-      emit('update:Suspend', true);
-      handleClose();
-    } else {
-      ElMessage.info(res.message);
-    }
+    emit('update:Suspend', true);
+    handleClose();
   } catch (error: any) {
     ElMessage.error(error);
   }
@@ -152,14 +149,14 @@ watch(
 
 <template>
   <div class="scan-dialog">
-    <el-dialog
+    <ElDialog
       v-model="isShowDialog"
       width="799"
       align-center
       :before-close="handleClose"
     >
       <template #header>
-        <h1 class="scan-dialog-title">{{ t('sales.remark') }}</h1>
+        <h1 class="scan-dialog-title">{{ t('scan.remark') }}</h1>
       </template>
       <div class="scan-dialog-content">
         <el-input
@@ -199,7 +196,7 @@ watch(
           {{ t('set.confirm') }}
         </el-button>
       </div>
-    </el-dialog>
+    </ElDialog>
   </div>
 </template>
 

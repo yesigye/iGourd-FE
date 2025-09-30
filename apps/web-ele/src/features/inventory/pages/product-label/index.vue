@@ -26,8 +26,13 @@ const [Drawer, drawerApi] = useIgourdDrawer({
   appendToMain: true,
 });
 const { t } = useI18n();
-const { Grid, handleEdit, canBatchOperate, handleBatchDelete } =
-  useInventoryProductLabelList();
+const {
+  Grid,
+  handleEdit,
+  canBatchOperate,
+  handleBatchDelete,
+  handleQueryTable,
+} = useInventoryProductLabelList();
 const productLabelList = ref<ProductLabelItem[]>([]);
 const selectedLabelId = ref<string>('');
 // 获取商品标签列表
@@ -82,6 +87,9 @@ const handleRemove = async (item) => {
 const refreshTree = () => {
   handleGetProductLabelList();
 };
+const handleChangeLabel = (value: String) => {
+  handleQueryTable(value);
+};
 
 onMounted(() => {
   handleGetProductLabelList();
@@ -100,7 +108,11 @@ onMounted(() => {
         </p>
         <!-- 分类树 -->
         <div>
-          <ElRadioGroup v-model="selectedLabelId" class="label-box w-full">
+          <ElRadioGroup
+            v-model="selectedLabelId"
+            @change="handleChangeLabel"
+            class="label-box w-full"
+          >
             <div class="w-full">
               <ElRadio
                 label="1"

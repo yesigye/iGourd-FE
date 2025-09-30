@@ -1,6 +1,15 @@
 <script setup>
 import { inject, onMounted, ref, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
+
+import {
+  ElButton,
+  ElDrawer,
+  ElImage,
+  ElInput,
+  ElTable,
+  ElTableColumn,
+} from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
 
 import { guidePageListApi } from '@@/sale/apis';
 
@@ -21,7 +30,7 @@ const isReturnShow = ref(false);
 const searchValue = ref('');
 const customerList = ref([]);
 async function getCustomerList() {
-  const { data } = await guidePageListApi({
+  const data = await guidePageListApi({
     page_size: 100,
     page_num: 1,
     keywords: searchValue.value,
@@ -60,7 +69,7 @@ watch(
 
 <template>
   <div class="coupon-send">
-    <el-drawer
+    <ElDrawer
       v-model="isReturnShow"
       :model-value="props.showDialog"
       :with-header="false"
@@ -80,14 +89,14 @@ watch(
       </div>
       <div class="drawer-content">
         <div class="top">
-          <el-input
+          <ElInput
             v-model="searchValue"
             style="height: 36px"
-            :placeholder="$t('sales.search_guider_placeholder')"
+            :placeholder="$t('sales.search-guider-placeholder')"
             clearable
             @clear="fetchGoodsList"
           />
-          <el-button
+          <ElButton
             class="outer-btn right-box search-btn blue-btn"
             @click="getCustomerList"
           >
@@ -99,10 +108,10 @@ watch(
                 <span> {{ $t('employee.searchButton') }}</span>
               </div>
             </div>
-          </el-button>
+          </ElButton>
         </div>
         <div class="person">
-          <el-table
+          <ElTable
             :data="customerList || []"
             class="down-table-list"
             :show-header="false"
@@ -113,7 +122,7 @@ watch(
             @row-click="handleRowClick"
           >
             <!-- <el-table-column type="selection" align="center" :width="55"> </el-table-column> -->
-            <el-table-column
+            <ElTableColumn
               prop="profilePhoto"
               width="80"
               fixed="left"
@@ -121,7 +130,7 @@ watch(
             >
               <template #default="scope">
                 <div class="profile-photo-box">
-                  <el-image
+                  <ElImage
                     :src="scope.row.profile_photo"
                     alt=""
                     class="product-pic"
@@ -137,11 +146,11 @@ watch(
                         class="product-pic"
                       />
                     </template>
-                  </el-image>
+                  </ElImage>
                 </div>
               </template>
-            </el-table-column>
-            <el-table-column prop="name">
+            </ElTableColumn>
+            <ElTableColumn prop="name">
               <template #default="{ row }">
                 <div class="name-box">
                   <span class="name text-gray-dark">{{
@@ -152,24 +161,21 @@ watch(
                   }}</span>
                 </div>
               </template>
-            </el-table-column>
-            <el-table-column
+            </ElTableColumn>
+            <ElTableColumn
               prop="balance"
               fixed="right"
               width="150"
               align="center"
             >
               <template #default="{ row }">
-                <span
-                  ><i class="iconfont icon-yonghu" style="margin-right: 5px"></i
-                  >{{ row.balance }}</span
-                >
+                <span><i class="iconfont icon-yonghu" style="margin-right: 5px"></i>{{ row.balance }}</span>
               </template>
-            </el-table-column>
-          </el-table>
+            </ElTableColumn>
+          </ElTable>
         </div>
       </div>
-    </el-drawer>
+    </ElDrawer>
   </div>
 </template>
 

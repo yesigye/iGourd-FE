@@ -10,7 +10,7 @@ export const codeConfig = [
     minWidth: 328,
   },
   {
-    label: 'sales.holdTake.warehouse',
+    label: 'sales.hold-take.warehouse',
     field: 'warehouse_name',
     minWidth: 328,
   },

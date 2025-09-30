@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, useTemplateRef, watch } from 'vue';
 
+import { ElDrawer, ElMessageBox } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import {
@@ -10,7 +11,6 @@ import {
 } from '@@/sale/apis';
 import SelectProductsable from '@@/sale/components/scan/SelectProductsable.vue';
 import { useInfiniteScroll } from '@vueuse/core';
-import { ElMessageBox } from 'element-plus';
 
 const props = defineProps({
   drawerReturnShow: {
@@ -133,9 +133,9 @@ const handleUpdateUnit = (updatedItem, newProduct, existingProduct) => {
 // 删除商品 清空数量 重新计算订单价格
 const handleDeleteGoods = (goodsId) => {
   // 是否要删除
-  ElMessageBox.confirm(t('sales.deleteGoods'), t('sales.confirm'), {
-    confirmButtonText: t('sales.yes'),
-    cancelButtonText: t('sales.no'),
+  ElMessageBox.confirm(t('scan.deleteGoods'), t('scan.confirm'), {
+    confirmButtonText: t('scan.yes'),
+    cancelButtonText: t('scan.no'),
   }).then(() => {
     selectGoodList.value = selectGoodList.value.filter(
       (item) => item.id !== goodsId,
@@ -151,10 +151,10 @@ const handleSearchClick = async () => {
     page_size: searchSize.value,
     product_group_id: productGroupId.value,
   });
-  if (res.code === 'SUCCESS') {
-    productList.value = res.data.list;
-    productListTotal.value = Number(res.data.total);
-  }
+  // if (res.code === 'SUCCESS') {
+  productList.value = res.list;
+  productListTotal.value = Number(res.total);
+  // }
 };
 const handleCurrentChange = (event) => {
   searchNum.value = event;
@@ -166,13 +166,13 @@ const getProductGroupFirstList = async () => {
     page_num: pageNumFirst.value,
     page_size: pageSizeFirst.value,
   });
-  if (res.code === 'SUCCESS') {
-    productGroupFirstList.value = res.data.list;
-    productGroupFirstTotal.value = res.data.total;
-    pageSumFirst.value = Math.ceil(
-      productGroupFirstTotal.value / pageSizeFirst.value,
-    );
-  }
+  // if (res.code === 'SUCCESS') {
+  productGroupFirstList.value = res.list;
+  productGroupFirstTotal.value = res.total;
+  pageSumFirst.value = Math.ceil(
+    productGroupFirstTotal.value / pageSizeFirst.value,
+  );
+  // }
 };
 
 // 父级分类分页
@@ -225,11 +225,11 @@ const getProductGroupList = async (id, event, index) => {
     page_size: pageSize.value,
     parent_id: productGroupFirstId.value,
   });
-  if (res.code === 'SUCCESS') {
-    productGroupList.value = res.data.list;
-    productGroupTotal.value = res.data.total;
-    downShow.value = true;
-  }
+  // if (res.code === 'SUCCESS') {
+  productGroupList.value = res.list;
+  productGroupTotal.value = res.total;
+  downShow.value = true;
+  // }
 };
 const downRef = useTemplateRef('downRef');
 
@@ -321,7 +321,7 @@ onMounted(() => {});
 </script>
 <template>
   <div>
-    <el-drawer
+    <ElDrawer
       v-model="isProductsShow"
       class="bg-porcelain"
       :with-header="false"
@@ -338,7 +338,7 @@ onMounted(() => {});
       <div class="drawer-container">
         <div class="drawer-title bg-white">
           <p class="title">
-            {{ t('sales.select_product') }}&nbsp;&nbsp;
+            {{ t('scan.select-product') }}&nbsp;&nbsp;
             <!-- <i
             class="iconfont icon-bangzhu"
           ></i> -->
@@ -349,7 +349,7 @@ onMounted(() => {});
             <el-row :gutter="5" class="h-full">
               <el-col :span="8" class="h-full">
                 <el-scrollbar class="h-full">
-                  <div class="drawer-content-left h-full bg-white">
+                  <div class="drawer-content-left bg-white">
                     <!-- 挂单选择 -->
                     <div class="select-products-search-box">
                       <div class="select-products-search gap-2">
@@ -359,7 +359,7 @@ onMounted(() => {});
                           :clearable="true"
                           class="h-13"
                           :placeholder="
-                            $t('sales.barcode_product_code_product_name')
+                            $t('scan.barcode-product-code-product-name')
                           "
                         >
                           <template #prefix>
@@ -376,7 +376,7 @@ onMounted(() => {});
                           class="w-25 h-full text-white"
                           @click="handleSearchClick"
                         >
-                          {{ t('sales.search') }}
+                          {{ t('scan.search') }}
                         </el-button>
                       </div>
                       <!-- 商品分类 -->
@@ -525,7 +525,7 @@ onMounted(() => {});
                   <div
                     class="basic-details-title border-b-solid border-b-gray-lightest border-b"
                   >
-                    {{ t('sales.product_details') }}
+                    {{ t('scan.product_details') }}
                   </div>
                   <div class="take-table-box">
                     <!-- <el-table
@@ -590,9 +590,7 @@ onMounted(() => {});
                     />
                   </div>
                   <div class="flex items-center justify-between pl-2 pr-2">
-                    <span class="text-ocean-blue"
-                      >Selected: {{ totalQuantity }}</span
-                    >
+                    <span class="text-ocean-blue">Selected: {{ totalQuantity }}</span>
                     <div class="mt-1 flex items-center gap-2.5">
                       <el-button
                         v-auth="['sale_hold_product_delete']"
@@ -617,7 +615,7 @@ onMounted(() => {});
           </div>
         </div>
       </div>
-    </el-drawer>
+    </ElDrawer>
   </div>
 </template>
 <style scoped lang="scss">
