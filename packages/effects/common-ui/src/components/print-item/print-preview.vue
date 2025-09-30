@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue';
+import { computed, markRaw, ref, watchEffect } from 'vue';
 
 import { processAffixedValue } from '@igourd/utils';
 
@@ -27,16 +27,16 @@ const props = defineProps({
   },
 });
 // 打印预览组件库
-const printComponents = ref({
-  PrintText,
-  PrintImage,
-  PrintTitle,
-  PrintLabel,
-  PrintBarcode,
-  PrintTable,
-  PrintDivider,
-  PrintRichTextEditor: PrintRichText,
-});
+const printComponents = {
+  PrintText: markRaw(PrintText),
+  PrintImage: markRaw(PrintImage),
+  PrintTitle: markRaw(PrintTitle),
+  PrintLabel: markRaw(PrintLabel),
+  PrintBarcode: markRaw(PrintBarcode),
+  PrintTable: markRaw(PrintTable),
+  PrintDivider: markRaw(PrintDivider),
+  PrintRichTextEditor: markRaw(PrintRichText),
+};
 // const optionData = ref([]);
 // 模板数据
 const printDataList = ref([]);
@@ -84,7 +84,7 @@ const optionData = computed(() => {
 
 watchEffect(() => {
   props.printData.forEach((item) => {
-    item.com = printComponents.value[item.component_type];
+    item.com = printComponents[item.component_type];
     item.option = {
       title: item.label,
       value: item.option ? item.option.value : '',

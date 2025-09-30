@@ -2,7 +2,13 @@
 // import
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 
-import { ElButton, ElMessage, ElTable, ElTableColumn } from '@igourd/common-ui';
+import {
+  ElButton,
+  ElInput,
+  ElMessage,
+  ElTable,
+  ElTableColumn,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { debounce, get } from '@igourd/utils';
 
@@ -220,7 +226,7 @@ defineExpose({
               <ElButton class="Inum-input" @click="decreaseEvent(row)">
                 -
               </ElButton>
-              <el-input
+              <ElInput
                 v-model="row[item.prop]"
                 v-input-number="8"
                 @input="handleInputDebounced(row)"
@@ -237,7 +243,7 @@ defineExpose({
             </div>
           </template>
           <template v-else-if="ableEdit && item.prop === 'selling_price'">
-            <el-input
+            <ElInput
               v-model="row.custom_price"
               v-input-number="8"
               class="input-number-control"

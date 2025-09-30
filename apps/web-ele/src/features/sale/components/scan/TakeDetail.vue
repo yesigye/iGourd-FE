@@ -1,7 +1,21 @@
 <script setup lang="ts">
 import { inject, onMounted, ref, watch } from 'vue';
 
-import { ElDrawer, ElMessage, ElMessageBox } from '@igourd/common-ui';
+import {
+  ElButton,
+  ElCol,
+  ElDrawer,
+  ElInput,
+  ElMessage,
+  ElMessageBox,
+  ElRadio,
+  ElRadioGroup,
+  ElRow,
+  ElScrollbar,
+  ElTable,
+  ElTableColumn,
+  ElText,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import {
@@ -13,7 +27,7 @@ import {
 } from '@@/sale/apis';
 import { codeConfig } from '@@/sale/components/scan/const/codeConfig';
 
-import { ReceiptTemplate } from '#/components/ReceiptTemplateNew'; // 生成小票模板
+import { ReceiptTemplate } from '#/components/receipt-template'; // 生成小票模板
 
 import HoldOrderTakeCard from './HoldOrderTakeCard.vue';
 import SelectCustomersDrawer from './SelectCustomersDrawer.vue';
@@ -461,36 +475,34 @@ defineExpose({
         </div>
         <div class="drawer-content">
           <div class="drawer-content-box">
-            <el-row :gutter="5" class="h-full">
-              <el-col :span="6" class="h-full">
-                <el-scrollbar class="h-full">
+            <ElRow :gutter="5" class="h-full">
+              <ElCol :span="6" class="h-full">
+                <ElScrollbar class="h-full">
                   <div class="select-products-search-box flex p-2">
                     <div class="select-products-search flex w-full">
-                      <el-input
+                      <ElInput
                         ref="searchRef"
                         v-model="customerName"
                         :clearable="true"
                         class="h-13"
-                        :placeholder="
-                          $t('scan.please-enter-the-customer-name')
-                        "
+                        :placeholder="$t('scan.please-enter-the-customer-name')"
                       />
-                      <el-button
+                      <ElButton
                         class="w-25 h-full text-white"
                         @click="handleSearchClick"
                       >
                         {{ t('scan.search') }}
-                      </el-button>
+                      </ElButton>
                     </div>
                   </div>
                   <div class="drawer-content-left bg-white">
                     <!-- 挂单选择 -->
-                    <el-radio-group
+                    <ElRadioGroup
                       v-model="currentId"
                       style="width: 100%"
                       @change="handChangeOfline"
                     >
-                      <el-radio
+                      <ElRadio
                         v-for="item in suspendList"
                         :key="item.id"
                         class="take-left-radio"
@@ -501,12 +513,12 @@ defineExpose({
                         :label="item.id"
                       >
                         <HoldOrderTakeCard :item-info="item" />
-                      </el-radio>
-                    </el-radio-group>
+                      </ElRadio>
+                    </ElRadioGroup>
                   </div>
-                </el-scrollbar>
-              </el-col>
-              <el-col :span="18" class="h-full">
+                </ElScrollbar>
+              </ElCol>
+              <ElCol :span="18" class="h-full">
                 <div
                   v-if="Object.keys(currentInfo).length > 0"
                   class="drawer-content-right h-full"
@@ -524,7 +536,7 @@ defineExpose({
                           currentInfo?.phone_number || '-'
                         }}
                       </p>
-                      <el-button
+                      <ElButton
                         color="#C6E2FF"
                         class="ml-2"
                         @click="handleReplaceCustomer"
@@ -535,7 +547,7 @@ defineExpose({
                             ? t('scan.replace')
                             : t('scan.select')
                         }}</span>
-                      </el-button>
+                      </ElButton>
                     </div>
                     <div
                       v-if="currentInfo.remark"
@@ -551,7 +563,7 @@ defineExpose({
                     <div class="basic-details-title">
                       {{ t('scan.product_details') }}
                     </div>
-                    <el-scrollbar class="scrollbar-box">
+                    <ElScrollbar class="scrollbar-box">
                       <div
                         v-for="(item, holdIndex) in currentInfo.order_holding"
                         :key="item.id"
@@ -566,27 +578,29 @@ defineExpose({
                             <span class="text-light-gray">
                               <!-- {{ currentInfo?.guider_login_id || '-' }} -->
                               {{ currentInfo?.guider_name || '-' }}
-                              <el-button
+                              <ElButton
                                 link
                                 type="primary"
                                 @click="handleEditGuider(index)"
                               >
                                 <i
                                   class="icon iconfont icon-icon_Edit ml-[10px]"
-                                ></i></el-button></span>
+                                ></i></ElButton
+                            ></span>
                           </div>
                           <div class="order-take-print-btn-group">
-                            <el-button
+                            <ElButton
                               v-if="holdIndex == 0"
                               class="order-take-print-btn"
                               color="#C6E2FF"
                               @click="handlePrintTakeAll"
                             >
                               <span class="text-blue-primary">
-                                {{ $t('scan.hold-take.print-take-all') }}</span>
-                            </el-button>
+                                {{ $t('scan.hold-take.print-take-all') }}</span
+                              >
+                            </ElButton>
 
-                            <el-button
+                            <ElButton
                               class="order-take-print-btn"
                               color="#C6E2FF"
                               @click="handlePrintTake(holdIndex)"
@@ -594,49 +608,51 @@ defineExpose({
                               <span class="text-blue-primary">
                                 {{ $t('scan.hold-take.print-take') }}
                               </span>
-                            </el-button>
+                            </ElButton>
                           </div>
                         </div>
                         <div class="order-table-box">
-                          <el-table
+                          <ElTable
                             :data="item?.order_holding_item_list"
                             header-row-class-name="take-table-header"
                           >
-                            <el-table-column
+                            <ElTableColumn
                               v-for="(schema, index) in codeConfig"
                               :key="index"
                               :align="schema.align || 'left'"
                               :label="t(schema.label)"
                               :prop="schema.field"
                             />
-                            <el-table-column label="Action">
+                            <ElTableColumn label="Action">
                               <template #default="scope">
-                                <el-button
+                                <ElButton
                                   v-auth="['sale_hold_detele']"
                                   type="danger"
                                   link
                                   @click="handleDelete(scope.row, holdIndex)"
                                 >
-                                  <el-text type="danger" tag="ins">
+                                  <ElText type="danger" tag="ins">
                                     Delete
-                                  </el-text>
-                                </el-button>
+                                  </ElText>
+                                </ElButton>
                               </template>
-                            </el-table-column>
-                          </el-table>
+                            </ElTableColumn>
+                          </ElTable>
                         </div>
                       </div>
-                    </el-scrollbar>
+                    </ElScrollbar>
                   </div>
                   <div
                     class="bg-linen text-dark-gray mt-2 flex h-11 items-center justify-end gap-2 pl-2 pr-2 text-[12px]"
                   >
-                    <span>{{ t('scan.columns.QTY') }}:
+                    <span
+                      >{{ t('scan.columns.QTY') }}:
                       <span class="text-orange-medium">{{
                         currentInfo?.quantity || 0
                       }}</span>
                     </span>
-                    <span>{{ t('printTemp.total_amount') }}:
+                    <span
+                      >{{ t('printTemp.total_amount') }}:
                       <span class="text-coral-light">
                         {{ currentInfo?.total_amount || '' }}
                       </span>
@@ -646,17 +662,17 @@ defineExpose({
                     <div class="order-take-action">
                       <!-- v-auth="['sale_hold_detele']" -->
                       <div class="order-take-action-delete">
-                        <el-button
+                        <ElButton
                           v-auth="['sale_hold_detele']"
                           class="mr-[10px] h-11 text-white"
                           @click.stop="removeHandler"
                         >
                           {{ t('scan.hold-take.delete') }}
-                        </el-button>
+                        </ElButton>
                       </div>
 
                       <div class="take-right-bottom">
-                        <el-button
+                        <ElButton
                           color="#D1EDC4"
                           class="mr-[10px] h-11"
                           @click="handleSelectProducts"
@@ -664,17 +680,18 @@ defineExpose({
                           <span class="text-grass-green">{{
                             t('scan.hold-take.add')
                           }}</span>
-                        </el-button>
-                        <el-button class="h-11" @click="handleCellClick">
+                        </ElButton>
+                        <ElButton class="h-11" @click="handleCellClick">
                           <span class="text-white">
-                            {{ t('scan.hold-take.take') }}</span>
-                        </el-button>
+                            {{ t('scan.hold-take.take') }}</span
+                          >
+                        </ElButton>
                       </div>
                     </div>
                   </div>
                 </div>
-              </el-col>
-            </el-row>
+              </ElCol>
+            </ElRow>
           </div>
           <!-- @calculation-badge-count="handleCalculationBadgeCount" -->
           <SelectProducts
@@ -779,9 +796,9 @@ defineExpose({
           :roles="receiptRoles"
         />
         <div class="btn-box">
-          <el-button id="printBtn" v-printv1="printParams" class="save-btn">
+          <ElButton id="printBtn" v-printv1="printParams" class="save-btn">
             Print
-          </el-button>
+          </ElButton>
         </div>
       </div>
     </ElDrawer>

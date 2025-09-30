@@ -102,7 +102,7 @@ export type PropsType = {
   getCustomTemplateOptionList: (params?: any) => Promise<any[]>;
   imageUrl?: string;
   isBarcode?: boolean;
-  optionContent?: any[];
+  optionContent?: string;
   printId: string;
   printInfo?: any[];
   roles: Partial<TemplateOptions>;

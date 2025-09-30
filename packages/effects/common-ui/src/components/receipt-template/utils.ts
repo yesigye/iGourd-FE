@@ -103,6 +103,7 @@ export const transformTemplate = async ({
   template: string; // 模板JSON字符串
   templateType: TemplateType; // 模板类型枚举
 }) => {
+  console.log('template');
   // 参数校验：如果模板或模板类型为空，直接返回空数组
   if (!template || !templateType) return [];
 

@@ -22,6 +22,7 @@ const props = withDefaults(defineProps<PropsType>(), {
 const { merchantInfo } = useUserStore();
 
 const printData = ref<TemplateOptions[]>([]);
+
 watchEffect(async () => {
   const templateData = await transformTemplate({
     // @ts-ignore
