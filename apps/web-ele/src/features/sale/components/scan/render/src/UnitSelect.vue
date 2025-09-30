@@ -1,40 +1,12 @@
-<template>
-  <div class="unit-select">
-    <el-dropdown trigger="click" popper-class="unit-dropdown">
-      <span class="el-dropdown-link">
-        {{ defaultUnit }}
-        <el-icon class="el-icon--right">
-          <arrow-down />
-        </el-icon>
-      </span>
-
-      <template #dropdown>
-        <el-dropdown-menu disabled>
-          <el-dropdown-item
-            v-for="item in unitOptions"
-            :key="item.id || item.product_unit_id"
-            @click="() => handleUnitChange(item)"
-          >
-            <div class="unit-item">
-              <span>{{ item.product_unit_name }}</span>
-              <span v-if="item.basic_unit_radio">1:{{ item.basic_unit_radio }}</span>
-            </div>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue';
-import { ArrowDown } from '@element-plus/icons-vue';
+import { onMounted, ref, watch } from 'vue';
+// import { ArrowDown } from '@element-plus/icons-vue';
 
 const props = defineProps({
   detailInfo: {
     type: Object,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const emit = defineEmits(['unitChange']);
@@ -48,7 +20,7 @@ watch(
   () => {
     initUnitOptions();
   },
-  { deep: true, immediate: true }
+  { deep: true, immediate: true },
 );
 
 function initUnitOptions() {
@@ -68,7 +40,7 @@ function handleUnitChange(value) {
   selectedUnit.value = value;
   emit('unitChange', {
     product: props.detailInfo,
-    unit: value
+    unit: value,
   });
 }
 
@@ -77,23 +49,53 @@ onMounted(() => {
 });
 </script>
 
+<template>
+  <div class="unit-select">
+    <el-dropdown trigger="click" popper-class="unit-dropdown">
+      <span class="el-dropdown-link">
+        {{ defaultUnit }}
+        <el-icon class="el-icon--right">
+          <arrow-down />
+        </el-icon>
+      </span>
+
+      <template #dropdown>
+        <el-dropdown-menu disabled>
+          <el-dropdown-item
+            v-for="item in unitOptions"
+            :key="item.id || item.product_unit_id"
+            @click="() => handleUnitChange(item)"
+          >
+            <div class="unit-item">
+              <span>{{ item.product_unit_name }}</span>
+              <span v-if="item.basic_unit_radio"
+                >1:{{ item.basic_unit_radio }}</span
+              >
+            </div>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+  </div>
+</template>
+
 <style lang="scss" scoped>
 .unit-select {
   width: 100%;
 
   .el-dropdown-link {
-    cursor: pointer;
     display: flex;
     align-items: center;
     font-size: 14px;
+    cursor: pointer;
   }
 
   .unit-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 300px;
     overflow: scroll;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
 }
 </style>

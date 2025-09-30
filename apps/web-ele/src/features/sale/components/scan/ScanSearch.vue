@@ -314,16 +314,7 @@ defineExpose({ handlePickOrder });
 
 <template>
   <div class="scan-search">
-    <!-- <div class="top-title">
-      <p class="empl-input-p">
-        {{ t('scan.scan-code-retail') }}&nbsp;
-        <i class="iconfont icon-bangzhu"></i>
-      </p>
-    </div> -->
-    <!-- <el-badge :value="badgeCount" :hidden="badgeCount === 0"> -->
     <div class="center-item">
-      <!-- v-auth="'sale_scan_code_holdx'" -->
-
       <div class="Sh-search">
         <ElAutocomplete
           ref="autocompleteRef"
