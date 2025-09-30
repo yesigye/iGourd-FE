@@ -1,14 +1,5 @@
-<template>
-  <div class="store-name" :style="props.styleOptions">
-    <p class="store-name-item">{{ props.title }}:</p>
-    <p class="store-name-item">
-      {{ props.value }}
-    </p>
-  </div>
-</template>
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
+import { useI18n } from '@igourd/locales';
 
 const props = defineProps({
   title: {
@@ -22,21 +13,31 @@ const props = defineProps({
   itemStyle: {
     type: Object,
     default: () => {
-      return {}
+      return {};
     },
   },
   styleOptions: {
     type: Object,
     default: () => {
-      return {}
+      return {};
     },
   },
   width: {
     type: String,
     default: '50%',
   },
-})
+});
+
+const { t } = useI18n();
 </script>
+<template>
+  <div class="store-name" :style="props.styleOptions">
+    <p class="store-name-item">{{ props.title }}:</p>
+    <p class="store-name-item">
+      {{ props.value }}
+    </p>
+  </div>
+</template>
 <style lang="scss" scoped>
 .store-name {
   display: flex;
@@ -46,9 +47,11 @@ const props = defineProps({
   .store-name-item {
     width: 50%;
   }
+
   :first-child {
     text-align: left;
   }
+
   :last-child {
     text-align: right;
   }

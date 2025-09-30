@@ -1,6 +1,5 @@
 <script setup>
 import { inject, onMounted, ref, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
 
 import {
   ElButton,
@@ -10,6 +9,7 @@ import {
   ElTable,
   ElTableColumn,
 } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
 import { debounce } from '@igourd/utils';
 
 import { storeToRefs } from 'pinia';
@@ -167,13 +167,10 @@ watch(
               align="center"
             >
               <template #default="{ row }">
-                <span
-                  ><i
+                <span><i
                     class="iconfont icon-31jifen"
                     style="margin-right: 5px"
-                  ></i
-                  >{{ row.balance }}</span
-                >
+                  ></i>{{ row.balance }}</span>
               </template>
             </ElTableColumn>
           </ElTable>
