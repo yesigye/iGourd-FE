@@ -1,15 +1,15 @@
-import type { ScanSaleDTO, ScanSaleRow } from '@@/sale/types';
+// import type { ScanSaleDTO, ScanSaleRow } from '@@/sale/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import {
-  createScanSaleApi,
-  deleteScanSaleApi,
-  getScanSaleListApi,
-  updateScanSaleApi,
-} from '@@/sale/apis';
+// import {
+//   createScanSaleApi,
+//   deleteScanSaleApi,
+//   getScanSaleListApi,
+//   updateScanSaleApi,
+// } from '@@/sale/apis';
 import { ScanSaleDrawer } from '@@/sale/components';
 
 import { useCrud } from '#/hooks';
@@ -57,7 +57,8 @@ export function useScanSale() {
       cellRender: {
         name: 'ElText',
         props: {
-          formatter: '{{row.unit_price ? `¥${row.unit_price.toFixed(2)}` : "-"}}',
+          formatter:
+            '{{row.unit_price ? `¥${row.unit_price.toFixed(2)}` : "-"}}',
         },
       },
     },
@@ -69,7 +70,8 @@ export function useScanSale() {
       cellRender: {
         name: 'ElText',
         props: {
-          formatter: '{{row.total_amount ? `¥${row.total_amount.toFixed(2)}` : "-"}}',
+          formatter:
+            '{{row.total_amount ? `¥${row.total_amount.toFixed(2)}` : "-"}}',
         },
       },
     },
@@ -166,16 +168,16 @@ export function useScanSale() {
     },
   };
 
-  return useCrud<ScanSaleRow, ScanSaleDTO>({
+  return useCrud<any, any>({
     columns,
     searchFormSchema,
     batchOperate: true,
     connectedComponent: ScanSaleDrawer,
-    service: {
-      query: getScanSaleListApi,
-      drop: deleteScanSaleApi,
-      create: createScanSaleApi,
-      update: updateScanSaleApi,
-    },
+    // service: {
+    //   query: getScanSaleListApi,
+    //   drop: deleteScanSaleApi,
+    //   create: createScanSaleApi,
+    //   update: updateScanSaleApi,
+    // },
   });
 }

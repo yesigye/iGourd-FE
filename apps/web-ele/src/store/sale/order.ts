@@ -1,5 +1,4 @@
 import { orderListApi } from '@@/sale/apis/scan';
-import { ElMessage } from 'element-plus';
 /**
  * 订单store
  */
@@ -27,10 +26,7 @@ export const useOrderStore = defineStore('order', {
         this.orderListData = res?.data?.list || [];
         this.orderListTotal = res?.data.total || 0;
       } catch (error: any) {
-        ElMessage({
-          type: 'error',
-          message: error.message,
-        });
+        console.error('Get Order list:', error);
       }
     },
     setCalculateOrderList(list) {
