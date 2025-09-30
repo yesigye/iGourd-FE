@@ -66,6 +66,10 @@ export function useProductSpecForm(func) {
       grid: {
         type: 'void',
         'x-component': 'FormLayout',
+        'x-component-props': {
+          labelCol: 6,
+          wrapperCol: 14,
+        },
         properties: {
           product_spec_name: {
             type: 'string',
