@@ -39,7 +39,8 @@ export const transformTemplate = async ({
   // 调用API获取自定义模板选项列表
   const res = await getCustomTemplateListApi({
     template_type: templateType, // 模板类型
-    type: 'COLUMN', // 固定类型为列
+    type: templateType, // 固定类型为列
+    is_default: true, // 是否默认模板
   });
 
   // 提取响应数据

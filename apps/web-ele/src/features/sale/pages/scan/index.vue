@@ -225,38 +225,37 @@ const calculateOrderPrice = async () => {
       goodsList.value,
       orderCaclProductList.value,
     );
-    if (String(res.code) === 'SUCCESS') {
-      calculateOrderList.value = res?.order_item_product_model_list || [];
-      orderParams.value.pos_user_id = res?.pos_user_id || '';
-      orderParams.value.order_item_volist = [
-        ...(res?.order_item_product_model_list || []),
-      ];
-      orderParams.value.subtotal_amount = res?.subtotal_amount;
-      orderParams.value.total_amount = res?.total_amount;
-      orderParams.value.total_discount_amount = res?.total_discount_amount;
-      orderParams.value.vat_amount = res?.vat_amount;
-      orderParams.value.vip_discount_amount = res?.vip_discount_amount;
-      orderParams.value.coupon_amount = res?.coupon_amount ?? 0;
-      orderParams.value.order_no = res?.order_no;
-      orderParams.value.promotion_discount_amount =
-        res?.promotion_discount_amount;
-      orderParams.value.round_down_amount = res?.round_down_amount;
-      orderParams.value.other_tax_amount = res?.other_tax_amount;
-      orderParams.value.total_paid_amount = res?.total_paid_amount;
-      orderParams.value.payment_method = res?.payment_method;
-      orderParams.value.payment_cash_amount = res?.payment_cash_amount;
-      orderParams.value.payment_card_amount = res?.payment_card_amount;
-      orderParams.value.payment_third_party_amount =
-        res?.payment_third_party_amount;
-      orderParams.value.payment_third_party_type =
-        res?.payment_third_party_type;
-      orderParams.value.payment_balance_amount = res?.payment_balance_amount;
-      orderParams.value.cash_received_amount = res?.cash_received_amount;
-      orderParams.value.cash_change_amount = res?.cash_change_amount;
-      orderParams.value.vat_configuration = res?.vat_configuration;
-    } else {
-      ElMessage.error(res?.message);
-    }
+    // if (String(res.code) === 'SUCCESS') {
+    calculateOrderList.value = res || [];
+    orderParams.value.pos_user_id = res?.pos_user_id || '';
+    orderParams.value.order_item_volist = [
+      ...(res?.order_item_product_model_list || []),
+    ];
+    orderParams.value.subtotal_amount = res?.subtotal_amount;
+    orderParams.value.total_amount = res?.total_amount;
+    orderParams.value.total_discount_amount = res?.total_discount_amount;
+    orderParams.value.vat_amount = res?.vat_amount;
+    orderParams.value.vip_discount_amount = res?.vip_discount_amount;
+    orderParams.value.coupon_amount = res?.coupon_amount ?? 0;
+    orderParams.value.order_no = res?.order_no;
+    orderParams.value.promotion_discount_amount =
+      res?.promotion_discount_amount;
+    orderParams.value.round_down_amount = res?.round_down_amount;
+    orderParams.value.other_tax_amount = res?.other_tax_amount;
+    orderParams.value.total_paid_amount = res?.total_paid_amount;
+    orderParams.value.payment_method = res?.payment_method;
+    orderParams.value.payment_cash_amount = res?.payment_cash_amount;
+    orderParams.value.payment_card_amount = res?.payment_card_amount;
+    orderParams.value.payment_third_party_amount =
+      res?.payment_third_party_amount;
+    orderParams.value.payment_third_party_type = res?.payment_third_party_type;
+    orderParams.value.payment_balance_amount = res?.payment_balance_amount;
+    orderParams.value.cash_received_amount = res?.cash_received_amount;
+    orderParams.value.cash_change_amount = res?.cash_change_amount;
+    orderParams.value.vat_configuration = res?.vat_configuration;
+    // } else {
+    //   ElMessage.error(res?.message);
+    // }
   } catch (error) {
     ElMessage.error(error?.message);
     console.error('计算订单价格失败:', error);
@@ -831,6 +830,7 @@ onMounted(async () => {
                 class="scan-order-action bg-card flex flex-shrink-0 items-center gap-6"
               >
                 <div class="flex items-center justify-between gap-2">
+                  <!-- 挂单 -->
                   <ElButton
                     class="w-25 h-[50px]"
                     @click="handleHangOrder"
@@ -841,6 +841,7 @@ onMounted(async () => {
                       t('scan.hold')
                     }}</span>
                   </ElButton>
+                  <!-- 取单 -->
                   <ElBadge :value="badgeCount" :hidden="badgeCount === 0">
                     <ElButton
                       class="w-25 scan-order-action-primary text-blue-primary h-[50px]"
@@ -850,26 +851,22 @@ onMounted(async () => {
                     >
                       <span
                         class="scan-order-action-primary text-blue-primary"
-                        >{{ t('scan.take') }}</span
-                      >
+                        >{{ t('scan.take') }}</span>
                     </ElButton>
                   </ElBadge>
-                  <div>
-                    <ElButton
-                      class="w-25 scan-order-action-error text-coral h-[50px]"
-                      @click="handleSettleEmpty"
-                      type="danger"
-                      plain
-                    >
-                      {{ t('scan.empty') }}
-                    </ElButton>
-                  </div>
+                  <!-- 清空 -->
+                  <ElButton
+                    class="w-25 scan-order-action-error text-coral h-[50px]"
+                    @click="handleSettleEmpty"
+                    type="danger"
+                    plain
+                  >
+                    {{ t('scan.empty') }}
+                  </ElButton>
                 </div>
                 <div class="scan-action-box-settle-info bg-card">
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray"
-                      >{{ t('scan.total-amount') }}:</span
-                    >
+                    <span class="settle-info-lable text-light-gray">{{ t('scan.total-amount') }}:</span>
                     <span class="settle-info-val text-gray-dark">
                       {{ currentSymbol }}
                       {{
@@ -878,31 +875,24 @@ onMounted(async () => {
                               calculateOrderList.subtotal_amount,
                             )
                           : '--'
-                      }}</span
-                    >
+                      }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray"
-                      >{{ t('scan.tax') }}:</span
-                    >
+                    <span class="settle-info-lable text-light-gray">{{ t('scan.tax') }}:</span>
                     <span class="settle-info-val text-gray-dark">
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.vat_amount >= 0
                           ? thousandSeparator(calculateOrderList.vat_amount)
                           : '--'
-                      }}</span
-                    >
+                      }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray"
-                      >{{ t('scan.discount') }}:</span
-                    >
+                    <span class="settle-info-lable text-light-gray">{{ t('scan.discount') }}:</span>
                     <span class="settle-info-val text-gray-dark">
                       <span
                         v-if="calculateOrderList.promotion_discount_amount >= 0"
-                        >-</span
-                      >
+                        >-</span>
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.promotion_discount_amount >= 0
@@ -910,23 +900,20 @@ onMounted(async () => {
                               calculateOrderList.promotion_discount_amount,
                             )
                           : '--'
-                      }}</span
-                    >
+                      }}</span>
                   </div>
                 </div>
                 <div class="scan-action-box-settle-payment">
                   <div class="flex items-center justify-between gap-5">
                     <span class="total-title text-orange-medium">
-                      {{ t('scan.actual-amount') }}:</span
-                    >
+                      {{ t('scan.actual-amount') }}:</span>
                     <span class="total-price text-red-primary">
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.total_amount >= 0
                           ? thousandSeparator(calculateOrderList.total_amount)
                           : '--'
-                      }}</span
-                    >
+                      }}</span>
                   </div>
                 </div>
               </div>
@@ -959,33 +946,25 @@ onMounted(async () => {
                 </div>
                 <div v-if="Object.keys(customerInfo).length > 0">
                   <div class="mt-3 flex items-center justify-between">
-                    <span class="text-gray-mid"
-                      >{{ t('scan.contact-telephone') }}:</span
-                    >
+                    <span class="text-gray-mid">{{ t('scan.contact-telephone') }}:</span>
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.phone_number || '-'
                     }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid"
-                      >{{ t('scan.points') }}:</span
-                    >
+                    <span class="customer-title text-gray-mid">{{ t('scan.points') }}:</span>
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.points || '-'
                     }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid"
-                      >{{ t('scan.balance') }}:</span
-                    >
+                    <span class="customer-title text-gray-mid">{{ t('scan.balance') }}:</span>
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.balance || '0'
                     }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid"
-                      >{{ t('scan.salesman') }}:</span
-                    >
+                    <span class="customer-title text-gray-mid">{{ t('scan.salesman') }}:</span>
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.salesman_name || '0'
                     }}</span>
