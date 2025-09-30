@@ -432,7 +432,7 @@ const updateGoodsList = (selectedOrder) => {
         ...item.order_holding_item_list.map((item) => {
           return getProduct(item.product_id).then((res) => {
             {
-              const product = res.data;
+              const product = res;
               return {
                 id: product.id,
                 code: product.product_code,
@@ -693,7 +693,7 @@ watch(isSuspendSuccess, async (newValue) => {
       const res = await productPageListApi({
         page_size: 20,
       });
-      newGoods = res.data.list[0];
+      newGoods = res.list[0];
       getHoldListNum();
       console.log(newGoods);
     } catch (error) {
