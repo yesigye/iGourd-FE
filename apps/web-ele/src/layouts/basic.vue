@@ -1,8 +1,12 @@
 <script lang="ts" setup>
+import type { SupportedLanguagesType } from '@igourd/preferences';
+
 import { computed } from 'vue';
 
+import { SUPPORT_LANGUAGES } from '@igourd/constants';
 import { BasicLayout, UserDropdown } from '@igourd/layouts';
-import { preferences } from '@igourd/preferences';
+import { loadLocaleMessages } from '@igourd/locales';
+import { preferences, updatePreferences } from '@igourd/preferences';
 import { useUserStore } from '@igourd/stores';
 
 import { useAppStore, useAuthStore } from '#/store';
@@ -11,21 +15,49 @@ import { useAppStore, useAuthStore } from '#/store';
 
 const userStore = useUserStore();
 const authStore = useAuthStore();
-const appStores = useAppStore();
+const { apps } = useAppStore();
+
+async function handleUpdate(value: string | undefined) {
+  if (!value) return;
+  const locale = value as SupportedLanguagesType;
+  updatePreferences({
+    app: {
+      locale,
+    },
+  });
+  await loadLocaleMessages(locale);
+}
+
 const menus = computed(() => [
+  {
+    text: userStore.merchantInfo.full_name,
+    icon: 'solar:shop-2-outline',
+  },
   {
     handler(...args: any) {
       console.log(...args);
     },
     text: 'Switch Store',
-    children: [
-      {
-        text: 'A',
-      },
-      {
-        text: 'B',
-      },
-    ],
+    icon: 'solar:shop-2-outline',
+    children: apps.map((app: any) => {
+      return {
+        ...app,
+        disabled: app.merchant_id === userStore.merchantInfo.merchant_id,
+        text: app.full_name,
+        icon: 'solar:shop-2-outline',
+      };
+    }),
+  },
+  {
+    handler: ({ value }: { value: string }) => handleUpdate(value),
+    text: 'Switch Language',
+    icon: 'majesticons:globe-grid-line',
+    children: SUPPORT_LANGUAGES.map((item) => {
+      return {
+        text: item.label,
+        value: item.value,
+      };
+    }),
   },
 ]);
 

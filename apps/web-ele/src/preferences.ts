@@ -10,7 +10,7 @@ export const overridesPreferences = defineOverridesPreferences({
   app: {
     name: import.meta.env.VITE_APP_TITLE,
     accessMode: 'backend',
-    enablePreferences: true,
+    enablePreferences: false,
     defaultHomePath: '/home',
   },
 
@@ -25,6 +25,8 @@ export const overridesPreferences = defineOverridesPreferences({
   },
   tabbar: {
     postion: 'breadcrumb',
+    showMaximize: false,
+    showMore: true,
   },
   theme: {
     mode: 'auto',
@@ -37,7 +39,9 @@ export const overridesPreferences = defineOverridesPreferences({
     globalSearch: false,
     notification: false,
     sidebarToggle: false,
-    themeToggle: true,
+    themeToggle: false,
+    languageToggle: false,
+    fullscreen: false,
     lockScreen: false,
     refresh: false,
   },
