@@ -157,7 +157,7 @@ export function useCountForm() {
                 'x-component': 'div',
                 'x-content': '{{userName}}',
                 'x-component-props': {
-                  style: { color: 'red' },
+                  class: 'text-red-500',
                 },
               },
             },
