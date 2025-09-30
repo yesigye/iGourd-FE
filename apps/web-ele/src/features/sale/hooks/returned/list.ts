@@ -104,7 +104,7 @@ export function useReturnedOrder() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('sale.customerName')}}",
+        placeholder: "{{t('sale.customer-name')}}",
         clearable: true,
       },
     },

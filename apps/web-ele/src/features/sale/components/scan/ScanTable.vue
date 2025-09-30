@@ -95,7 +95,7 @@ const handleInputDebounced = debounce((row) => handleQuantityChange(row), 1000);
 const handleQuantityChangeOriginal = (item: any) => {
   if (item.stock_total_quantity === null || item.stock_total_quantity === '') {
     item.stock_total_quantity = 0; // 默认值为0
-    ElMessage.error(t('scan.pleaseInputQuantity'));
+    ElMessage.error(t('scan.please-input-quantity'));
   } else {
     const decimalQuantity = new Decimal(item.stock_total_quantity);
     item.stock_total_quantity = retainDecimal8(decimalQuantity, 8);

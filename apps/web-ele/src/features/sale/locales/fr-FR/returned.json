@@ -1,9 +1,9 @@
 {
   "returnedNo": "N° de Retour",
   "orderNo": "N° de Commande",
-  "customerName": "Nom du Client",
+  "customer-name": "Nom du Client",
   "customerCode": "Code du Client",
-  "totalAmount": "Montant Total",
+  "total-amount": "Montant Total",
   "status": "Statut",
   "addReturned": "Ajouter Commande de Retour",
   "editReturned": "Modifier Commande de Retour",

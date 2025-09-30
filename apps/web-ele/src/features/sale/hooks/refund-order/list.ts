@@ -132,7 +132,7 @@ export function useSaleRefundOrder() {
           name: 'keywords',
           title: t('refund-order.search'),
           'x-component-props': {
-            placeholder: t('refund-order.searchPlaceholder'),
+            placeholder: t('refund-order.search-placeholder'),
           },
         },
       },

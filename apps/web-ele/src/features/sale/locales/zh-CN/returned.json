@@ -1,9 +1,9 @@
 {
   "returnedNo": "退货单号",
   "orderNo": "订单号",
-  "customerName": "客户名称",
+  "customer-name": "客户名称",
   "customerCode": "客户编码",
-  "totalAmount": "总金额",
+  "total-amount": "总金额",
   "status": "状态",
   "addReturned": "添加退货单",
   "editReturned": "编辑退货单",

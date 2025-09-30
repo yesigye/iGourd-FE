@@ -133,7 +133,7 @@ const handleUpdateUnit = (updatedItem, newProduct, existingProduct) => {
 // 删除商品 清空数量 重新计算订单价格
 const handleDeleteGoods = (goodsId) => {
   // 是否要删除
-  ElMessageBox.confirm(t('scan.deleteGoods'), t('scan.confirm'), {
+  ElMessageBox.confirm(t('scan.delete-goods'), t('scan.confirm'), {
     confirmButtonText: t('scan.yes'),
     cancelButtonText: t('scan.no'),
   }).then(() => {
@@ -525,7 +525,7 @@ onMounted(() => {});
                   <div
                     class="basic-details-title border-b-solid border-b-gray-lightest border-b"
                   >
-                    {{ t('scan.product_details') }}
+                    {{ t('scan.product-details') }}
                   </div>
                   <div class="take-table-box">
                     <!-- <el-table
@@ -590,7 +590,7 @@ onMounted(() => {});
                     />
                   </div>
                   <div class="flex items-center justify-between pl-2 pr-2">
-                    <span class="text-ocean-blue">Selected: {{ totalQuantity }}</span>
+                    <span class="text-ocean-blue">Selected: {{ total-quantity }}</span>
                     <div class="mt-1 flex items-center gap-2.5">
                       <el-button
                         v-auth="['sale_hold_product_delete']"

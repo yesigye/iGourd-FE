@@ -4,7 +4,7 @@
   "productCode": "Product Code",
   "quantity": "Quantity",
   "unitPrice": "Unit Price",
-  "totalAmount": "Total Amount",
+  "total-amount": "Total Amount",
   "scanTime": "Scan Time",
   "status": "Status",
   "addScan": "Add Scan",

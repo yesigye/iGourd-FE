@@ -98,7 +98,7 @@ const handleQuantityChangeOriginal = (item: any) => {
     item.sale_warehouse_product_stock_quantity === ''
   ) {
     item.sale_warehouse_product_stock_quantity = 0; // 默认值为0
-    ElMessage.error(t('scan.pleaseInputQuantity'));
+    ElMessage.error(t('scan.please-input-quantity'));
   } else {
     const decimalQuantity = new Decimal(
       item.sale_warehouse_product_stock_quantity,
