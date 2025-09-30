@@ -12,7 +12,22 @@ import { useAppStore, useAuthStore } from '#/store';
 const userStore = useUserStore();
 const authStore = useAuthStore();
 const appStores = useAppStore();
-const menus = computed(() => []);
+const menus = computed(() => [
+  {
+    handler(...args: any) {
+      console.log(...args);
+    },
+    text: 'Switch Store',
+    children: [
+      {
+        text: 'A',
+      },
+      {
+        text: 'B',
+      },
+    ],
+  },
+]);
 
 const avatar = computed(() => {
   return userStore.userInfo?.avatar ?? preferences.app.defaultAvatar;

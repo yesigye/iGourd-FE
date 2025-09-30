@@ -5,13 +5,13 @@ import type { AnyFunction } from '@igourd/types';
 
 import { computed, useTemplateRef, watch } from 'vue';
 
+import { useIgourdModal } from '@igourd/common-ui';
 import { useHoverToggle } from '@igourd/hooks';
 import { LogOut } from '@igourd/icons';
 import { $t } from '@igourd/locales';
 import { preferences, usePreferences } from '@igourd/preferences';
 import { isWindowsOs } from '@igourd/utils';
 
-import { useIgourdModal } from '@igourd/common-ui';
 import {
   Badge,
   DropdownMenu,
@@ -20,6 +20,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
+  // 新增：Sub 相关
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
   IgourdAvatar,
   IgourdIcon,
@@ -29,35 +33,36 @@ import { useMagicKeys, whenever } from '@vueuse/core';
 
 // import { LockScreenModal } from '../lock-screen';
 
-interface Props {
-  /**
-   * 头像
-   */
-  avatar?: string;
-  /**
-   * @zh_CN 描述
-   */
-  description?: string;
-  /**
-   * 是否启用快捷键
-   */
-  enableShortcutKey?: boolean;
-  /**
-   * 菜单数组
-   */
-  menus?: Array<{
-    handler: AnyFunction;
-    icon?: Component | Function | string;
-    text: string;
-  }>;
+type MenuChild = {
+  disabled?: boolean;
+  handler?: AnyFunction;
+  icon?: Component | Function | string;
+  shortcut?: string;
+  text: string;
+  value?: unknown;
+};
 
-  /**
-   * 标签文本
-   */
+type MenuItem = {
+  children?: MenuChild[];
+  disabled?: boolean;
+  handler?: AnyFunction;
+  icon?: Component | Function | string;
+  shortcut?: string;
+  text: string;
+};
+
+interface Props {
+  /** 头像 */
+  avatar?: string;
+  /** 描述 */
+  description?: string;
+  /** 是否启用快捷键 */
+  enableShortcutKey?: boolean;
+  /** 菜单数组（支持二级） */
+  menus?: MenuItem[];
+  /** 标签文本 */
   tagText?: string;
-  /**
-   * 文本
-   */
+  /** 文本 */
   text?: string;
   /** 触发方式 */
   trigger?: 'both' | 'click' | 'hover';
@@ -65,28 +70,30 @@ interface Props {
   hoverDelay?: number;
 }
 
-defineOptions({
-  name: 'UserDropdown',
-});
+defineOptions({ name: 'UserDropdown' });
 
 const props = withDefaults(defineProps<Props>(), {
   avatar: '',
   description: '',
   enableShortcutKey: true,
   menus: () => [],
-  showShortcutKey: true,
   tagText: '',
   text: '',
   trigger: 'click',
   hoverDelay: 500,
 });
 
-const emit = defineEmits<{ logout: [] }>();
+// 事件：保持现有 logout，同时新增通用 select（用于 child.value）
+const emit = defineEmits<{
+  logout: [];
+  select: [
+    payload: { item: MenuChild; parent?: null | string; value: unknown },
+  ];
+}>();
 
 const { globalLogoutShortcutKey } = usePreferences();
-// const [LockModal, lockModalApi] = useIgourdModal({
-//   connectedComponent: LockScreenModal,
-// });
+
+// const [LockModal, lockModalApi] = useIgourdModal({ connectedComponent: LockScreenModal });
 const [LogoutModal, logoutModalApi] = useIgourdModal({
   onConfirm() {
     handleSubmitLogout();
@@ -102,30 +109,19 @@ const [openPopover, hoverWatcher] = useHoverToggle(
 
 watch(
   () => props.trigger === 'hover' || props.trigger === 'both',
-  (val) => {
-    if (val) {
-      hoverWatcher.enable();
-    } else {
-      hoverWatcher.disable();
-    }
-  },
-  {
-    immediate: true,
-  },
+  (val) => (val ? hoverWatcher.enable() : hoverWatcher.disable()),
+  { immediate: true },
 );
 
 const altView = computed(() => (isWindowsOs() ? 'Alt' : '⌥'));
-
-const enableLogoutShortcutKey = computed(() => {
-  return props.enableShortcutKey && globalLogoutShortcutKey.value;
-});
-
-const enableShortcutKey = computed(() => {
-  return props.enableShortcutKey && preferences.shortcutKeys.enable;
-});
+const enableLogoutShortcutKey = computed(
+  () => props.enableShortcutKey && globalLogoutShortcutKey.value,
+);
+const enableShortcutKey = computed(
+  () => props.enableShortcutKey && preferences.shortcutKeys.enable,
+);
 
 function handleLogout() {
-  // emit
   logoutModalApi.open();
   openPopover.value = false;
 }
@@ -135,12 +131,27 @@ function handleSubmitLogout() {
   logoutModalApi.close();
 }
 
+// 统一处理“叶子项”点击：优先 handler；否则如果有 value，则发 select；最后关闭菜单
+function onLeafClick(
+  item: { handler?: AnyFunction; value?: unknown },
+  parent?: string,
+) {
+  if (typeof item.handler === 'function') {
+    item.handler();
+  } else if ('value' in item && item.value !== undefined) {
+    emit('select', {
+      parent: parent ?? null,
+      value: item.value,
+      item: item as MenuChild,
+    });
+  }
+  openPopover.value = false;
+}
+
 if (enableShortcutKey.value) {
   const keys = useMagicKeys();
   whenever(keys['Alt+KeyQ']!, () => {
-    if (enableLogoutShortcutKey.value) {
-      handleLogout();
-    }
+    if (enableLogoutShortcutKey.value) handleLogout();
   });
 }
 </script>
@@ -174,6 +185,7 @@ if (enableShortcutKey.value) {
         </div>
       </div>
     </DropdownMenuTrigger>
+
     <DropdownMenuContent class="mr-2 min-w-[240px] p-0 pb-1">
       <div ref="refContent">
         <DropdownMenuLabel class="flex items-center p-3">
@@ -201,18 +213,60 @@ if (enableShortcutKey.value) {
             </div>
           </div>
         </DropdownMenuLabel>
+
         <DropdownMenuSeparator v-if="menus?.length" />
-        <DropdownMenuItem
-          v-for="menu in menus"
-          :key="menu.text"
-          class="mx-1 flex cursor-pointer items-center rounded-sm py-1 leading-8"
-          @click="menu.handler"
-        >
-          <IgourdIcon :icon="menu.icon" class="mr-2 size-4" />
-          {{ menu.text }}
-        </DropdownMenuItem>
+
+        <!-- 菜单区：自动识别是否有 children，决定渲染 Item 或 Sub -->
+        <template v-for="menu in menus" :key="menu.text">
+          <!-- 二级菜单 -->
+          <DropdownMenuSub v-if="menu.children?.length">
+            <DropdownMenuSubTrigger
+              class="mx-1 flex w-full cursor-pointer items-center rounded-sm py-1 leading-8"
+              :disabled="menu.disabled"
+            >
+              <IgourdIcon :icon="menu.icon" class="mr-2 size-4" />
+              <span class="flex-1">{{ menu.text }}</span>
+              <DropdownMenuShortcut v-if="menu.shortcut">
+                {{ menu.shortcut }}
+              </DropdownMenuShortcut>
+            </DropdownMenuSubTrigger>
+            <!-- 注意：这里不使用 Portal，避免 hover-toggle 因跨层导致根菜单提前关闭 -->
+            <DropdownMenuSubContent class="min-w-[200px] p-0 pb-1">
+              <DropdownMenuItem
+                v-for="child in menu.children"
+                :key="child.text"
+                class="mx-1 flex cursor-pointer items-center rounded-sm py-1 leading-8"
+                :disabled="child.disabled"
+                @click="onLeafClick(child, menu.text)"
+              >
+                <IgourdIcon :icon="child.icon" class="mr-2 size-4" />
+                <span class="flex-1">{{ child.text }}</span>
+                <DropdownMenuShortcut v-if="child.shortcut">
+                  {{ child.shortcut }}
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+
+          <!-- 普通单项 -->
+          <DropdownMenuItem
+            v-else
+            class="mx-1 flex cursor-pointer items-center rounded-sm py-1 leading-8"
+            :disabled="menu.disabled"
+            @click="onLeafClick(menu)"
+          >
+            <IgourdIcon :icon="menu.icon" class="mr-2 size-4" />
+            <span class="flex-1">{{ menu.text }}</span>
+            <DropdownMenuShortcut v-if="menu.shortcut">
+              {{ menu.shortcut }}
+            </DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </template>
+
         <DropdownMenuSeparator />
+
         <DropdownMenuSeparator v-if="preferences.widget.lockScreen" />
+
         <DropdownMenuItem
           class="mx-1 flex cursor-pointer items-center rounded-sm py-1 leading-8"
           @click="handleLogout"

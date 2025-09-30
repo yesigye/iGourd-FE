@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
-// import { ArrowDown } from '@element-plus/icons-vue';
+
+import { ArrowDown } from '@igourd/icons';
 
 const props = defineProps({
   detailInfo: {
@@ -55,7 +56,7 @@ onMounted(() => {
       <span class="el-dropdown-link">
         {{ defaultUnit }}
         <el-icon class="el-icon--right">
-          <arrow-down />
+          <ArrowDown />
         </el-icon>
       </span>
 
