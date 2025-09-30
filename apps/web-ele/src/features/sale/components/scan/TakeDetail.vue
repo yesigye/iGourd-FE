@@ -86,7 +86,7 @@ const columnsVisible = ref([
   },
   {
     prop: 'create_time',
-    label: t('scan.hold_date'),
+    label: t('scan.hold-date'),
     width: '161px',
     align: 'left',
   },
@@ -177,7 +177,7 @@ const getDetail = async () => {
   currentInfo.value = res;
 };
 const removeHandler = () => {
-  ElMessageBox.confirm(t('scan.deleteConfirm'), t('scan.tips'), {
+  ElMessageBox.confirm(t('scan.delete-confirm'), t('scan.tips'), {
     confirmButtonText: t('scan.confirm'),
     cancelButtonText: t('scan.cancel'),
     type: 'warning',
@@ -204,7 +204,7 @@ const handleTakeOrder = async (row) => {
       });
       currentId.value = '';
       currentInfo.value = {};
-      ElMessage.success(t('scan.takeSuccess'));
+      ElMessage.success(t('scan.take-success'));
       fetchOrderSuspendList();
       handleClose();
       emit('calculationBadgeCount', true);
@@ -264,13 +264,13 @@ const confirmHandler = async (data) => {
 };
 const handleReplaceCustomer = () => {
   drawerDetailsCustomers.value = {
-    title: t('scan.selectCustomers'),
+    title: t('scan.select-customers'),
     visible: true,
   };
 };
 const handleEditGuider = () => {
   drawerDetailsGuider.value = {
-    title: t('scan.selectGuider'),
+    title: t('scan.select-guider'),
     visible: true,
   };
 };

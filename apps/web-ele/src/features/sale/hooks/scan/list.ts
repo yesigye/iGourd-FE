@@ -63,7 +63,7 @@ export function useScanSale() {
     },
     {
       field: 'total_amount',
-      title: t('sale.totalAmount'),
+      title: t('sale.total-amount'),
       width: 120,
       align: 'right',
       cellRender: {

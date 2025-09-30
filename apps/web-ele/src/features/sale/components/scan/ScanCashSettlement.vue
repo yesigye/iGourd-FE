@@ -763,10 +763,10 @@ defineExpose({
       class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
       <span class="scan-cash-settlement-header-title"
-        >{{ t('scan.accounts_receivable') }}:</span
+        >{{ t('scan.accounts-receivable') }}:</span
       >
 
-      <span class="">{{ totalAmount }} {{ currentSymbol }}</span>
+      <span class="">{{ total-amount }} {{ currentSymbol }}</span>
     </div>
     <!-- 实付金额 -->
     <div

@@ -91,7 +91,7 @@ watch(
           <ElInput
             v-model="keywords"
             style="height: 36px"
-            :placeholder="$t('customers.searchPlaceholder')"
+            :placeholder="$t('customers.search-placeholder')"
             clearable
             @clear="fetchGoodsList"
           />

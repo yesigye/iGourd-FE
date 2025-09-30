@@ -52,7 +52,7 @@ defineExpose({
     <div class="scan-settle-content">
       <div class="scan-settle-content-item">
         <p class="scan-settle-content-item-title">
-          {{ `${t('scan.totalAmount')}:` }}
+          {{ `${t('scan.total-amount')}:` }}
         </p>
         <p class="scan-settle-content-item-value">
           {{
@@ -87,7 +87,7 @@ defineExpose({
     </div>
     <div class="scan-settle-content-item payingRight">
       <p class="scan-settle-content-item-title-actual">
-        {{ `${t('scan.actualAmount')}:` }}
+        {{ `${t('scan.actual-amount')}:` }}
       </p>
       <p class="scan-settle-content-item-value-actual amountAll">
         {{

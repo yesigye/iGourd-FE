@@ -125,7 +125,7 @@ const handleSave = async () => {
   try {
     const res = await orderSuspendApi(params.value);
     // 挂单成功
-    ElMessage.success(t('scan.suspendSuccess'));
+    ElMessage.success(t('scan.suspend-success'));
     isShowDialog.value = false;
     activeTag.value = [];
 

@@ -101,7 +101,7 @@ function isStockLessThanZero(item: any) {
     item.is_basic &&
     isLessZeroProhibited.value
   ) {
-    ElMessage.warning(t('scan.stockLessThanZero'));
+    ElMessage.warning(t('scan.stock-less-than-zero'));
     return true;
   }
   return false;
@@ -190,7 +190,7 @@ function handleSelect(item: any) {
   // 检查商品是否有在售的SKU并获取所有在售SKU
   const onSaleSkus = getOnSaleSkus(item);
   if (!onSaleSkus || onSaleSkus.length === 0) {
-    ElMessage.warning(t('scan.productOffSale'));
+    ElMessage.warning(t('scan.product-off-sale'));
     return;
   }
 
@@ -316,7 +316,7 @@ defineExpose({ handlePickOrder });
   <div class="scan-search">
     <!-- <div class="top-title">
       <p class="empl-input-p">
-        {{ t('scan.scanCodeRetail') }}&nbsp;
+        {{ t('scan.scan-code-retail') }}&nbsp;
         <i class="iconfont icon-bangzhu"></i>
       </p>
     </div> -->

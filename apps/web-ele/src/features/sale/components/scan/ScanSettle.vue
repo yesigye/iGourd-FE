@@ -37,11 +37,11 @@ const customerBalance = computed(() => props.customerInfo?.balance ?? 0);
 <template>
   <div class="scan-settle-content">
     <div class="scan-settle-content-item">
-      <p>{{ `${t('scan.customerName')}:` }}</p>
+      <p>{{ `${t('scan.customer-name')}:` }}</p>
       <p>{{ customerName ? customerName : '-' }}</p>
     </div>
     <div class="scan-settle-content-item">
-      <p>{{ `${t('scan.contactPhone')}:` }}</p>
+      <p>{{ `${t('scan.contact-phone')}:` }}</p>
       <p>{{ customerPhone ? customerPhone : '-' }}</p>
     </div>
     <div class="scan-settle-content-item">

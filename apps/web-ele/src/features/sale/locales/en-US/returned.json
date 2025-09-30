@@ -1,9 +1,9 @@
 {
   "returnedNo": "Returned No.",
   "orderNo": "Order No.",
-  "customerName": "Customer Name",
+  "customer-name": "Customer Name",
   "customerCode": "Customer Code",
-  "totalAmount": "Total Amount",
+  "total-amount": "Total Amount",
   "status": "Status",
   "addReturned": "Add Returned Order",
   "editReturned": "Edit Returned Order",

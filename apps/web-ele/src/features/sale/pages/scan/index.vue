@@ -386,7 +386,7 @@ const handlePickOrderNew = () => {
 };
 // 挂单：打开挂单弹窗
 const handlePickOrder = () => {
-  drawerDialog.value.title = t('scan.pickUpOrder');
+  drawerDialog.value.title = t('scan.pick-up-order');
   drawerDialog.value.visible = true;
 };
 
@@ -414,7 +414,7 @@ const getHoldListNum = async () => {
 // 挂单：更新商品列表
 const updateGoodsList = (selectedOrder) => {
   if (goodsList.value.length > 0) {
-    ElMessage.warning(t('scan.listHasRetailGoods'));
+    ElMessage.warning(t('scan.list-has-retail-goods'));
     isSuspend.value = false;
   } else {
     getHoldListNum();
@@ -491,18 +491,18 @@ const updateGoodsList = (selectedOrder) => {
         if (goodsList.value.length > 0) {
           calculateOrderPrice();
         } else {
-          ElMessage.warning(t('scan.suspendFailed'));
+          ElMessage.warning(t('scan.suspend-failed'));
         }
       })
       .catch((error) => {
         console.error('Error fetching products:', error);
-        ElMessage.error(t('scan.suspendFailed'));
+        ElMessage.error(t('scan.suspend-failed'));
       });
   }
 };
 
 const handleSelectCustomer = () => {
-  drawerDialogCustomers.value.title = t('scan.selectCustomers');
+  drawerDialogCustomers.value.title = t('scan.select-customers');
   drawerDialogCustomers.value.visible = true;
 };
 const clearCustomerInfo = () => {
@@ -513,7 +513,7 @@ const clearCustomerInfo = () => {
   calculateOrderPrice();
 };
 const handleSelectGuider = () => {
-  drawerDialogGuider.value.title = t('scan.selectGuider');
+  drawerDialogGuider.value.title = t('scan.select-guider');
   drawerDialogGuider.value.visible = true;
 };
 const handleSelectCustomerRow = (row) => {
@@ -548,7 +548,7 @@ const confirmGuiderClose = () => {
 const handleHangOrder = () => {
   // 如果列表为空 暂无挂单的商品
   if (goodsList.value.length === 0) {
-    ElMessage.warning(t('scan.noGoodsToHang'));
+    ElMessage.warning(t('scan.no-goods-to-hang'));
     return;
   }
   scanDialogVisible.value = true;
@@ -567,7 +567,7 @@ const hanleIsSuspend = (val) => {
     guiderInfo.value = {};
   } else {
     // 挂单失败 不进行操作
-    ElMessage.error(t('scan.suspendFailed'));
+    ElMessage.error(t('scan.suspend-failed'));
   }
 };
 
@@ -586,7 +586,7 @@ const handleScanDialogVisible = () => {
 // 删除商品 清空数量 重新计算订单价格
 const handleDeleteGoods = (goodsId) => {
   // 是否要删除
-  ElMessageBox.confirm(t('scan.deleteGoods'), t('scan.confirm'), {
+  ElMessageBox.confirm(t('scan.delete-goods'), t('scan.confirm'), {
     confirmButtonText: t('scan.yes'),
     cancelButtonText: t('scan.no'),
   }).then(() => {
@@ -665,7 +665,7 @@ const addOrder = async () => {
   try {
     const res = await orderCreateApi(orderParams.value);
     if (String(res.code) === 'SUCCESS') {
-      ElMessage.success(t('scan.orderCreatedSuccessfully'));
+      ElMessage.success(t('scan.order-created-successfully'));
       console.log(res?.data);
       orderData.value = res?.data;
       getOrderDetail();
@@ -689,7 +689,7 @@ const handleSettlePay = () => {
     drawerDialog.value.visible = true;
     addOrder();
   } else {
-    ElMessage.error(t('scan.stock_quantity'));
+    ElMessage.error(t('scan.stock-quantity'));
   }
 };
 
@@ -866,7 +866,7 @@ onMounted(async () => {
                 </div>
                 <div class="scan-action-box-settle-info bg-white">
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray">{{ t('scan.totalAmount') }}:</span>
+                    <span class="settle-info-lable text-light-gray">{{ t('scan.total-amount') }}:</span>
                     <span class="settle-info-val text-gray-dark">
                       {{ currentSymbol }}
                       {{
@@ -906,7 +906,7 @@ onMounted(async () => {
                 <div class="scan-action-box-settle-payment">
                   <div class="flex items-center justify-between gap-5">
                     <span class="total-title text-orange-medium">
-                      {{ t('scan.actualAmount') }}:</span>
+                      {{ t('scan.actual-amount') }}:</span>
                     <span class="total-price text-red-primary">
                       {{ currentSymbol
                       }}{{

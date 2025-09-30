@@ -99,7 +99,7 @@ export const allColumns: Column[] = [
   },
   {
     prop: 'vat_amount',
-    localKey: 'taxRate',
+    localKey: 'tax-rate',
     key: 'sales',
     width: '160',
     align: 'left',
@@ -108,7 +108,7 @@ export const allColumns: Column[] = [
   },
   {
     prop: 'total_amount',
-    localKey: 'totalAmount',
+    localKey: 'total-amount',
     key: 'sales',
     width: '160',
     fixed: 'right',
@@ -209,7 +209,7 @@ export const allColumnsSelect: Column[] = [
   },
   {
     prop: 'total_amount',
-    localKey: 'totalAmount',
+    localKey: 'total-amount',
     key: 'sales',
     width: '160',
     fixed: 'right',
