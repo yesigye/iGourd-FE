@@ -33,8 +33,8 @@ import ScanDialog from '@@/sale/components/scan/ScanDialog.vue';
 import ScanOrderSettle from '@@/sale/components/scan/ScanOrderSettle.vue';
 import ScanSearch from '@@/sale/components/scan/ScanSearch.vue';
 import ScanTable from '@@/sale/components/scan/ScanTable.vue';
-import SelectCustomersDrawer from '@@/sale/components/scan/SelectCustomersDrawer.vue';
 import SelectGuiderDrawer from '@@/sale/components/scan/SelectGuiderDrawer.vue';
+import { useSelectCustomer } from '@@/sale/hooks';
 import { storeToRefs } from 'pinia';
 
 import { useOrderStore } from '#/store/sale/order';
@@ -51,7 +51,7 @@ defineOptions({
 });
 // const { merchantInfo } = useUserStore();
 const { setInfo } = storeToRefs(useSetStore());
-
+const { Drawer: SelectCustomer, drawerApi } = useSelectCustomer();
 const { t } = useI18n();
 
 const state = reactive({
@@ -502,8 +502,9 @@ const updateGoodsList = (selectedOrder) => {
 };
 
 const handleSelectCustomer = () => {
-  drawerDialogCustomers.value.title = t('scan.select-customers');
-  drawerDialogCustomers.value.visible = true;
+  // drawerDialogCustomers.value.title = t('scan.select-customers');
+  // drawerDialogCustomers.value.visible = true;
+  drawerApi.open();
 };
 const clearCustomerInfo = () => {
   customerInfo.value = {};
@@ -1009,12 +1010,7 @@ onMounted(async () => {
         </ElRow>
       </div>
       <!-- 弹窗部分 -->
-      <!-- 选择顾客 -->
-      <SelectCustomersDrawer
-        key="CustomersDrawer"
-        :title="drawerDialogCustomers.title"
-        :show-dialog="drawerDialogCustomers.visible"
-        :inner-drawer-show="drawerDialog.innerDrawerShow"
+      <SelectCustomer
         @close-tkr="confirmClose"
         @select-customer-row:row="handleSelectCustomerRow"
       />
