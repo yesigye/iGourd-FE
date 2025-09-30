@@ -72,6 +72,7 @@ export function useInventory() {
       field: 'stock_quantity_message',
       title: t('inventory.stock'),
       width: 120,
+      slots: { default: 'tooltip' },
     },
     {
       field: 'stock_quantity',
@@ -84,12 +85,14 @@ export function useInventory() {
       title: t('inventory.inboundTransitStock'),
       width: 80,
       align: 'center',
+      slots: { default: 'tooltipNum' },
     },
     {
       field: 'outbound_in_transit_stock_message',
       title: t('inventory.outboundTransitStock'),
       width: 80,
       align: 'center',
+      slots: { default: 'tooltipNum' },
     },
     {
       field: 'product_group_name',
