@@ -1,15 +1,12 @@
 import type { Router } from 'vue-router';
 
-import type { SupportedLanguagesType } from '@igourd/preferences';
-
 import { useAccount } from '@igourd/access';
 import { LOGIN_PATH } from '@igourd/constants';
-import { loadLocaleMessages } from '@igourd/locales';
-import { preferences, updatePreferences } from '@igourd/preferences';
+import { preferences } from '@igourd/preferences';
 import { useAccessStore, useUserStore } from '@igourd/stores';
 import { startProgress, stopProgress } from '@igourd/utils';
 
-import { loadFeatureLocal, loadRemoteLocale } from '#/locales';
+import { loadFeatureLocal, loadRemoteLocale, updateLocale } from '#/locales';
 import { accessRoutes, coreRouteNames } from '#/router/routes';
 import { useAppStore, useAuthStore } from '#/store';
 
@@ -54,15 +51,7 @@ function setupAccessGuard(router: Router) {
     const userStore = useUserStore();
     const authStore = useAuthStore();
     const appStore = useAppStore();
-    const { token_id, user_id, owner_id, owner_type, language } = to.query;
-    if (language && ['en-US', 'fr-FR', 'zh-CN'].includes(language as string)) {
-      await loadLocaleMessages(language as SupportedLanguagesType);
-      updatePreferences({
-        app: {
-          locale: language as SupportedLanguagesType,
-        },
-      });
-    }
+    const { token_id, user_id, owner_id, owner_type, ...reset } = to.query;
     // 基本路由，这些路由不需要进入权限拦截
     if (coreRouteNames.includes(to.name as string)) {
       if (to.path === LOGIN_PATH && accessStore.accessToken) {
@@ -120,6 +109,9 @@ function setupAccessGuard(router: Router) {
     await appStore.fetchApps();
     return {
       path: to.path,
+      query: {
+        ...reset,
+      },
       replace: true,
     };
   });
@@ -129,6 +121,18 @@ function setupI18n(router: Router) {
   router.beforeEach(async (to, _, next) => {
     const module = to.matched.at(1)?.name;
     await Promise.all([loadRemoteLocale(), loadFeatureLocal(module as string)]);
+    const { language, ...reset } = to.query;
+    if (language) {
+      await updateLocale(language as string);
+      next({
+        path: to.path,
+        query: {
+          ...reset,
+        },
+        replace: true,
+      });
+      return;
+    }
     next();
   });
 }

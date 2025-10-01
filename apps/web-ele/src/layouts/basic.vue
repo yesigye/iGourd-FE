@@ -1,14 +1,13 @@
 <script lang="ts" setup>
-import type { SupportedLanguagesType } from '@igourd/preferences';
-
 import { computed } from 'vue';
 
 import { SUPPORT_LANGUAGES } from '@igourd/constants';
 import { BasicLayout, UserDropdown } from '@igourd/layouts';
-import { loadLocaleMessages } from '@igourd/locales';
-import { preferences, updatePreferences } from '@igourd/preferences';
+import { useI18n } from '@igourd/locales';
+import { preferences } from '@igourd/preferences';
 import { useUserStore } from '@igourd/stores';
 
+import { updateLocale } from '#/locales';
 import { useAppStore, useAuthStore } from '#/store';
 
 // import LoginForm from '#/views/_core/authentication/login.vue';
@@ -16,19 +15,8 @@ import { useAppStore, useAuthStore } from '#/store';
 const userStore = useUserStore();
 const authStore = useAuthStore();
 const { apps } = useAppStore();
-
+const { t } = useI18n();
 const { currentLoginUserApp } = userStore;
-
-async function handleUpdate(value: string | undefined) {
-  if (!value) return;
-  const locale = value as SupportedLanguagesType;
-  updatePreferences({
-    app: {
-      locale,
-    },
-  });
-  await loadLocaleMessages(locale);
-}
 
 const menus = computed(() => [
   {
@@ -39,7 +27,7 @@ const menus = computed(() => [
     handler(...args: any) {
       console.log(...args);
     },
-    text: 'Switch Store',
+    text: t('common.switch.store'),
     icon: 'solar:shop-2-outline',
     children: apps.map((app: any) => {
       return {
@@ -51,8 +39,8 @@ const menus = computed(() => [
     }),
   },
   {
-    handler: ({ value }: { value: string }) => handleUpdate(value),
-    text: 'Switch Language',
+    handler: ({ value }: { value: string }) => updateLocale(value),
+    text: t('common.switch.language'),
     icon: 'majesticons:globe-grid-line',
     children: SUPPORT_LANGUAGES.map((item) => {
       return {

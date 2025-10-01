@@ -20,5 +20,9 @@
   "yes": "是",
   "no": "否",
   "showSearchPanel": "显示搜索面板",
-  "hideSearchPanel": "隐藏搜索面板"
+  "hideSearchPanel": "隐藏搜索面板",
+  "switch": {
+    "language": "切换语言",
+    "store": "切换门店"
+  }
 }
