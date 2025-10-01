@@ -71,6 +71,10 @@ const { detail, showDialog } = toRefs(props);
 const printObj = {
   ids: 'receiptPrintId3',
   popTitle: '页面打印',
+  breakInside: 'avoid',
+  preview: true,
+  // 小票模式
+  receipt: true,
 };
 const customer = inject<any>('customerInfo');
 const { t } = useI18n();
@@ -901,7 +905,7 @@ defineExpose({
       class="scan-cash-settlement-button absolute bottom-0 flex w-full justify-end bg-white pb-2.5 pr-5 pt-2.5"
     >
       <ElButton
-        v-printv1="printObj"
+        v-print="printObj"
         :disabled="!isPrintEnabled"
         class="scan-cash-settlement-button-print"
       >
@@ -911,7 +915,7 @@ defineExpose({
       <ElButton
         type="danger"
         v-if="paymentWay === PaymentWay.CREDIT"
-        v-printv1="printObj"
+        v-print="printObj"
         @click="handleSettleAccount"
       >
         <span class="text-white"> {{ t('set.on_credit') }} </span>

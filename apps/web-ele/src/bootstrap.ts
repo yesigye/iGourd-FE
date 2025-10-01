@@ -2,14 +2,15 @@ import { createApp, watchEffect } from 'vue';
 
 import { registerAccessDirective } from '@igourd/access';
 import { ElLoading, registerLoadingDirective } from '@igourd/common-ui';
+import { VuePrintPlugin } from '@igourd/plugins/print';
 // import '@igourd/common-ui/style';
 import { preferences } from '@igourd/preferences';
 import { initStores } from '@igourd/stores';
 import '@igourd/styles';
 import '@igourd/styles/ele';
-import { ElInfiniteScroll } from 'element-plus';
 
 import { useTitle } from '@vueuse/core';
+import { ElInfiniteScroll } from 'element-plus';
 
 import { $t, setupI18n } from '#/locales';
 
@@ -38,7 +39,8 @@ async function bootstrap(namespace: string) {
 
   // 注册Element Plus提供的v-loading指令
   app.directive('loading', ElLoading.directive);
-app.directive('infinite-scroll', ElInfiniteScroll);
+  app.directive('infinite-scroll', ElInfiniteScroll);
+  app.use(VuePrintPlugin);
 
   // 注册Igourd提供的v-loading和v-spinning指令
   registerLoadingDirective(app, {

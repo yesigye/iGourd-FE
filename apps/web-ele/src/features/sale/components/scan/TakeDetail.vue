@@ -796,7 +796,7 @@ defineExpose({
           :roles="receiptRoles"
         />
         <div class="btn-box">
-          <ElButton id="printBtn" v-printv1="printParams" class="save-btn">
+          <ElButton id="printBtn" v-print="printParams" class="save-btn">
             Print
           </ElButton>
         </div>

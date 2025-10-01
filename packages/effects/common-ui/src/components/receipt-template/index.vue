@@ -71,14 +71,6 @@ watchEffect(async () => {
 </template>
 
 <style lang="scss" scoped>
-.Rt {
-  // padding: 0 28px;
-  box-sizing: border-box;
-  margin: 0 auto;
-  font-family: initial;
-  font-weight: 500;
-}
-
 @page {
   size: auto;
   margin: 0;
@@ -86,19 +78,29 @@ watchEffect(async () => {
 
 @media print {
   body {
-    margin: 0;
-    // print-color-adjust: exact;
-    // -webkit-print-color-adjust: exact;
-  }
-
-  .Rt {
-    position: absolute;
-    top: 0;
-    width: 100%;
+    min-height: auto;
   }
 }
-</style>
-<style lang="scss">
+
+.Rt {
+  // padding: 0 28px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  font-family: initial;
+  font-weight: 500;
+}
+// @media print {
+//   body {
+//     margin: 0;
+//     // print-color-adjust: exact;
+//     // -webkit-print-color-adjust: exact;
+//   }
+
+//   .Rt {
+//     position: absolute;
+//     top: 0;
+//   }
+// }
 .receipt-template-new {
   img {
     max-width: 100%;

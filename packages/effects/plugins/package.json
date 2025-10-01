@@ -27,6 +27,10 @@
     "./motion": {
       "types": "./src/motion/index.ts",
       "default": "./src/motion/index.ts"
+    },
+    "./print": {
+      "types": "./src/print/index.ts",
+      "default": "./src/print/index.ts"
     }
   },
   "publishConfig": {
@@ -46,6 +50,10 @@
       "./motion": {
         "types": "./dist/motion/index.d.ts",
         "default": "./dist/motion/index.mjs"
+      },
+      "./print": {
+        "types": "./dist/print/index.d.ts",
+        "default": "./dist/print/index.mjs"
       },
       "./style": {
         "default": "./dist/index.css"
