@@ -1,8 +1,11 @@
 import type { Router } from 'vue-router';
 
+import type { SupportedLanguagesType } from '@igourd/preferences';
+
 import { useAccount } from '@igourd/access';
 import { LOGIN_PATH } from '@igourd/constants';
-import { preferences } from '@igourd/preferences';
+import { loadLocaleMessages } from '@igourd/locales';
+import { preferences, updatePreferences } from '@igourd/preferences';
 import { useAccessStore, useUserStore } from '@igourd/stores';
 import { startProgress, stopProgress } from '@igourd/utils';
 
@@ -45,14 +48,21 @@ function setupCommonGuard(router: Router) {
  * @param router
  */
 function setupAccessGuard(router: Router) {
-  router.beforeEach(async (to, from) => {
+  router.beforeEach(async (to) => {
     const { redirectToLogin } = useAccount();
     const accessStore = useAccessStore();
     const userStore = useUserStore();
     const authStore = useAuthStore();
     const appStore = useAppStore();
-    const { token_id, user_id, owner_id, owner_type, language, ...other } =
-      to.query;
+    const { token_id, user_id, owner_id, owner_type, language } = to.query;
+    if (language && ['en-US', 'fr-FR', 'zh-CN'].includes(language as string)) {
+      await loadLocaleMessages(language as SupportedLanguagesType);
+      updatePreferences({
+        app: {
+          locale: language as SupportedLanguagesType,
+        },
+      });
+    }
     // 基本路由，这些路由不需要进入权限拦截
     if (coreRouteNames.includes(to.name as string)) {
       if (to.path === LOGIN_PATH && accessStore.accessToken) {
@@ -88,24 +98,18 @@ function setupAccessGuard(router: Router) {
       await authStore.fetchUserInfo();
       userStore.setMerchantInfo({ owner_id, owner_type, user_id } as any);
     }
-    // if (loginAgain) {
-    //   await authStore.fetchUserInfo();
-    // }
-    // 生成路由表
-    // 当前登录用户拥有的角色标识列表
-    if (!userStore.userInfo) {
+    if (Object.keys(userStore.userInfo).length === 0) {
       await authStore.fetchUserInfo();
     }
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const userInfo = userStore.userInfo!;
-    const userRoles = userInfo.roles ?? [];
+
+    const { roles } = userStore.userInfo;
     // 是否已经生成过动态路由
     if (accessStore.isAccessChecked) {
       return true;
     }
     // 生成菜单和路由
     const { accessibleMenus, accessibleRoutes } = await generateAccess({
-      roles: userRoles,
+      roles,
       router,
       // 则会在菜单中显示，但是访问会被重定向到403
       routes: accessRoutes,

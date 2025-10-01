@@ -102,7 +102,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function fetchUserInfo() {
     let userInfo: null | UserInfo = null;
-    const currentInfo = userStore.userInfo?.current_login_user_app;
+    const currentInfo = userStore.currentLoginUserApp;
     userInfo = await getUserInfoApi({
       owner_id: currentInfo.owner_id,
       owner_type: currentInfo.owner_type,

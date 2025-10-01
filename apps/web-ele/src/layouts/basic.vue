@@ -17,6 +17,8 @@ const userStore = useUserStore();
 const authStore = useAuthStore();
 const { apps } = useAppStore();
 
+const { currentLoginUserApp } = userStore;
+
 async function handleUpdate(value: string | undefined) {
   if (!value) return;
   const locale = value as SupportedLanguagesType;
@@ -64,7 +66,7 @@ const menus = computed(() => [
 const avatar = computed(() => {
   return userStore.userInfo?.avatar ?? preferences.app.defaultAvatar;
 });
-const { currentLoginUserApp } = userStore;
+
 async function handleLogout() {
   await authStore.logout();
 }

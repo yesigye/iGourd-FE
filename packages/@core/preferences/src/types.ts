@@ -16,7 +16,7 @@ import type {
   ThemeModeType,
 } from '@igourd-core/typings';
 
-type SupportedLanguagesType = 'en-US' | 'zh-CN' | 'fr-FR';
+type SupportedLanguagesType = 'en-US' | 'fr-FR' | 'zh-CN';
 
 interface AppPreferences {
   /** 权限模式 */
@@ -69,6 +69,7 @@ interface AppPreferences {
   loginExpiredMode: LoginExpiredModeType;
   /** 应用名 */
   name: string;
+  persistence: boolean;
   /** 偏好设置按钮位置 */
   preferencesButtonPosition: PreferencesButtonPositionType;
   /**
@@ -192,7 +193,6 @@ interface ShortcutKeyPreferences {
 }
 
 interface TabbarPreferences {
-  postion: "breadcrumb" | "default";
   /** 是否开启多标签页拖拽 */
   draggable: boolean;
   /** 是否开启多标签页 */
@@ -207,6 +207,7 @@ interface TabbarPreferences {
   middleClickToClose: boolean;
   /** 是否持久化标签 */
   persist: boolean;
+  postion: 'breadcrumb' | 'default';
   /** 是否开启多标签页图标 */
   showIcon: boolean;
   /** 显示最大化按钮 */

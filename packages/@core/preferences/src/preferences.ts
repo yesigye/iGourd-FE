@@ -128,9 +128,11 @@ class PreferenceManager {
    * @param {Preferences} preference - 需要保存的偏好设置
    */
   private _savePreferences(preference: Preferences) {
-    this.cache?.setItem(STORAGE_KEY, preference);
-    this.cache?.setItem(STORAGE_KEY_LOCALE, preference.app.locale);
-    this.cache?.setItem(STORAGE_KEY_THEME, preference.theme.mode);
+    if (preference.app.persistence) {
+      this.cache?.setItem(STORAGE_KEY, preference);
+      this.cache?.setItem(STORAGE_KEY_LOCALE, preference.app.locale);
+      this.cache?.setItem(STORAGE_KEY_THEME, preference.theme.mode);
+    }
   }
 
   /**
@@ -162,7 +164,9 @@ class PreferenceManager {
    *  从缓存中加载偏好设置。如果缓存中没有找到对应的偏好设置，则返回默认偏好设置。
    */
   private loadCachedPreferences() {
-    return this.cache?.getItem<Preferences>(STORAGE_KEY);
+    if (this.initialPreferences.app.persistence) {
+      return this.cache?.getItem<Preferences>(STORAGE_KEY);
+    }
   }
 
   /**

@@ -86,9 +86,6 @@ const props = withDefaults(defineProps<Props>(), {
 // 事件：保持现有 logout，同时新增通用 select（用于 child.value）
 const emit = defineEmits<{
   logout: [];
-  select: [
-    payload: { item: MenuChild; parent?: null | string; value: unknown },
-  ];
 }>();
 
 const { globalLogoutShortcutKey } = usePreferences();
@@ -134,16 +131,12 @@ function handleSubmitLogout() {
 // 统一处理“叶子项”点击：优先 handler；否则如果有 value，则发 select；最后关闭菜单
 function onLeafClick(
   item: { handler?: AnyFunction; value?: unknown },
-  parent?: string,
+  parent?: MenuItem,
 ) {
   if (typeof item.handler === 'function') {
     item.handler();
-  } else if ('value' in item && item.value !== undefined) {
-    emit('select', {
-      parent: parent ?? null,
-      value: item.value,
-      item: item as MenuChild,
-    });
+  } else if (parent?.handler) {
+    parent?.handler(item);
   }
   openPopover.value = false;
 }
@@ -237,7 +230,7 @@ if (enableShortcutKey.value) {
                 :key="child.text"
                 class="mx-1 flex cursor-pointer items-center rounded-sm py-1 leading-8"
                 :disabled="child.disabled"
-                @click="onLeafClick(child, menu.text)"
+                @click="onLeafClick(child, menu)"
               >
                 <IgourdIcon :icon="child.icon" class="mr-2 size-4" />
                 <span class="flex-1">{{ child.text }}</span>

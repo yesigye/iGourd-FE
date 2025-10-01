@@ -12,6 +12,7 @@ export const overridesPreferences = defineOverridesPreferences({
     accessMode: 'backend',
     enablePreferences: false,
     defaultHomePath: '/home',
+    persistence: false,
   },
 
   breadcrumb: {

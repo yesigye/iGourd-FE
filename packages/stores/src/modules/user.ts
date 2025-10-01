@@ -50,12 +50,10 @@ interface CurrentLoginUserApp {
 interface AccessState {
   currentLoginUserApp?: CurrentLoginUserApp;
   jwt_token?: Record<string, any>;
-
   login_account?: string;
   login_type?: string;
   merchantInfo: any;
   merchantList: any[];
-  owner_id: string;
   owner_type: string;
   tokenId: string;
   user_id: string;
@@ -63,7 +61,7 @@ interface AccessState {
   /**
    * 用户信息
    */
-  userInfo: BasicUserInfo | null;
+  userInfo: Record<string, any>;
 
   userModel?: Record<string, any>;
 
@@ -80,7 +78,7 @@ export const useUserStore = defineStore('core-user', {
   actions: {
     setUserInfo(userInfo: BasicUserInfo | null) {
       // 设置用户信息
-      this.userInfo = userInfo;
+      this.userInfo = userInfo ?? {};
       // 设置角色信息
       const roles = userInfo?.roles ?? [];
       this.setUserRoles(roles);
@@ -134,10 +132,10 @@ export const useUserStore = defineStore('core-user', {
     },
   },
   state: (): AccessState => ({
-    userInfo: null,
+    userModel: {},
+    userInfo: {},
     userRoles: [],
     tokenId: '',
-    owner_id: '',
     owner_type: '',
     user_id: '',
     merchantList: [],
