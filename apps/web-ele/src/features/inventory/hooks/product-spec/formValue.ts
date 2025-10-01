@@ -80,6 +80,10 @@ export function useProductSpecValueForm(func) {
       grid: {
         type: 'void',
         'x-component': 'FormLayout',
+        'x-component-props': {
+          labelCol: 6,
+          wrapperCol: 14,
+        },
         properties: {
           product_spec_name: {
             type: 'string',
@@ -97,11 +101,13 @@ export function useProductSpecValueForm(func) {
             title: "{{t('product-spec.spec-value-code')}}",
             required: true,
             'x-decorator': 'FormItem',
-            'x-component': 'Input',
+            'x-component': 'InputNumber',
             'x-component-props': {
-              placeholder: "{{t('product-spec.product-spec-name')}}",
+              placeholder: "{{t('product-spec.spec-value-code')}}",
               clearable: true,
-              maxlength: 2,
+              min: 0,
+              max: 99,
+              align: 'left',
             },
           },
           product_spec_value: {

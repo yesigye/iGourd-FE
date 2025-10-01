@@ -55,6 +55,20 @@ const summary = (list) => {
     totalVarianceSellingPrice: totalVarianceSellingPriceChange,
   };
 };
+// 计算数量差异
+const countVarianceQuantity = (item) => {
+  // 只处理已选产品的项目
+  const physicalQty = Number(item.physical_quantity || 0);
+  const originQty = Number(item.origin_quantity || 0);
+  const unitRatio = Number(item.basic_unit_radio || 1);
+
+  // 重新计算数量差异
+  const variance_quantity =
+    unitRatio > 1
+      ? floorDecimal(physicalQty * unitRatio - originQty, 0)
+      : floorDecimal(physicalQty - originQty, 0);
+  return variance_quantity;
+};
 export function useCountForm() {
   const { t } = useI18n();
   const warehouse = useWarehouseSelect();
@@ -92,9 +106,9 @@ export function useCountForm() {
       params.physical_stock_take_item_list.forEach((item) => {
         item.basic_unit_radio = 1;
         item.product_name = item.major_name;
+
         // 盘点差额数量
-        item.variance_quantity =
-          item.stock_total_quantity - item.physical_quantity;
+        item.variance_quantity = countVarianceQuantity(item);
         // 盘点商品原有数量
         item.origin_quantity = item.stock_total_quantity;
         // 盘点商品数量
@@ -392,6 +406,7 @@ export function useCountForm() {
       appendToMain: true,
       class: 'md:w-2/3',
       async onOpenChange(isOpen) {
+        debugger;
         if (isOpen) {
           formAPI.reset();
           const data = drawerApi.getData();
@@ -404,6 +419,8 @@ export function useCountForm() {
               detail.physical_stock_take_item_models;
             detail.returned_quantity = detail.physical_total_quantity;
             formAPI.setValues(detail);
+          } else {
+            formAPI.setValues({});
           }
         } else {
           // 关闭抽屉时，重置表单
