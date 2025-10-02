@@ -1,3 +1,6 @@
+// eslint-disable-next-line no-restricted-imports
+import { MerchantStatus } from '@igourd/constants';
+
 import { acceptHMRUpdate, defineStore } from 'pinia';
 
 interface BasicUserInfo {
@@ -61,8 +64,6 @@ interface AccessState {
    */
   userInfo: Record<string, any>;
 
-  userModel?: Record<string, any>;
-
   /**
    * 用户角色
    */
@@ -87,9 +88,6 @@ export const useUserStore = defineStore('core-user', {
     setTokenId(tokenId: string) {
       this.userInfo.jwt_token.token_id = tokenId;
     },
-    setUserModel(useModel: Record<string, any>) {
-      this.userModel = useModel;
-    },
     setMerchantInfo(info: any) {
       this.merchantInfo = info;
     },
@@ -113,6 +111,9 @@ export const useUserStore = defineStore('core-user', {
         return state.userInfo?.current_login_user_app;
       }
     },
+    userModel(state) {
+      return state.userInfo.user_model;
+    },
     currencySymbol(state) {
       return state.merchantInfo.currency_symbol ?? '';
     },
@@ -131,9 +132,16 @@ export const useUserStore = defineStore('core-user', {
     tokenId(state) {
       return state.userInfo.jwt_token.token_id;
     },
+    userApps(state): {
+      owner_id: string;
+      owner_type: string;
+      status: MerchantStatus;
+      user_id: string;
+    }[] {
+      return state.userInfo.user_model?.user_apps ?? [];
+    },
   },
   state: (): AccessState => ({
-    userModel: {},
     userInfo: {},
     userRoles: [],
     user_id: '',

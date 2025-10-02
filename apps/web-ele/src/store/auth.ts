@@ -120,7 +120,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     userStore.setTokenId(userInfo.jwt_token.token_id);
-    userStore.setUserModel(userInfo.useModel);
     userStore.setUserInfo(userInfo);
     userStore.setLoginAccount(userInfo.login_account || '');
     userStore.setLoginType(userInfo.type || '');

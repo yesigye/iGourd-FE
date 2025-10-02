@@ -1753,6 +1753,9 @@ importers:
       '@igourd-core/typings':
         specifier: workspace:^
         version: link:../@core/base/typings
+      '@igourd/constants':
+        specifier: workspace:^
+        version: link:../constants
       pinia:
         specifier: ^3.0.3
         version: 3.0.3(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3))

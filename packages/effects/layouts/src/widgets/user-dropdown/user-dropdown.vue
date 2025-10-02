@@ -129,14 +129,14 @@ function handleSubmitLogout() {
 }
 
 // 统一处理“叶子项”点击：优先 handler；否则如果有 value，则发 select；最后关闭菜单
-function onLeafClick(
+async function onLeafClick(
   item: { handler?: AnyFunction; value?: unknown },
   parent?: MenuItem,
 ) {
   if (typeof item.handler === 'function') {
-    item.handler();
+    await item.handler();
   } else if (parent?.handler) {
-    parent?.handler(item);
+    await parent?.handler(item);
   }
   openPopover.value = false;
 }

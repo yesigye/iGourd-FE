@@ -1,8 +1,5 @@
-import { useAccessStore, useUserStore } from '@igourd/stores';
+import { useUserStore } from '@igourd/stores';
 
-import { router } from '#/router';
-import { generateAccess } from '#/router/access';
-import { accessRoutes } from '#/router/routes';
 import { useAppStore, useAuthStore } from '#/store';
 
 interface SessionOptions {
@@ -13,7 +10,6 @@ interface SessionOptions {
 }
 
 export function useSession() {
-  const accessStore = useAccessStore();
   const userStore = useUserStore();
   const authStore = useAuthStore();
   const appStore = useAppStore();
@@ -26,15 +22,6 @@ export function useSession() {
       });
     }
     await authStore.fetchUserInfo();
-    const { roles } = userStore.userInfo;
-    const { accessibleMenus, accessibleRoutes } = await generateAccess({
-      roles,
-      router,
-      // 则会在菜单中显示，但是访问会被重定向到403
-      routes: accessRoutes,
-    });
-    accessStore.setAccessMenus(accessibleMenus);
-    accessStore.setAccessRoutes(accessibleRoutes);
     await appStore.fetchApps();
   }
   return { setSession };
