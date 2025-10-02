@@ -158,19 +158,19 @@ async function loadFeatureLocal(moduleName: string) {
 
 async function updateLocale(value: string | undefined) {
   if (!value) return;
-  const map = { fr: 'fr-FR', en: 'es-US', zh_CN: 'zh-CN' };
+  const map = { fr: 'fr-FR', en: 'en-US', zh_CN: 'zh-CN' };
   let locale = 'en-US' as SupportedLanguagesType;
   if (Object.keys(map).includes(value)) {
     locale = map[value as keyof typeof map] as SupportedLanguagesType;
   } else if (['en-US', 'fr-FR', 'zh-CN'].includes(value)) {
     locale = value as SupportedLanguagesType;
   }
+  await loadLocaleMessages(locale);
   updatePreferences({
     app: {
       locale,
     },
   });
-  await loadLocaleMessages(locale);
 }
 
 export {

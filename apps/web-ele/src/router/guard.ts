@@ -6,9 +6,9 @@ import { preferences } from '@igourd/preferences';
 import { useAccessStore, useUserStore } from '@igourd/stores';
 import { startProgress, stopProgress } from '@igourd/utils';
 
+import { useSession } from '#/hooks/use-session';
 import { loadFeatureLocal, loadRemoteLocale, updateLocale } from '#/locales';
 import { accessRoutes, coreRouteNames } from '#/router/routes';
-import { useAppStore, useAuthStore } from '#/store';
 
 import { generateAccess } from './access';
 
@@ -40,32 +40,13 @@ function setupCommonGuard(router: Router) {
     }
   });
 }
-/**
- * 权限访问守卫配置
- * @param router
- */
-function setupAccessGuard(router: Router) {
-  router.beforeEach(async (to) => {
-    const { redirectToLogin } = useAccount();
+
+function setupAuthGurd(router: Router) {
+  router.beforeEach(async (to, _) => {
     const accessStore = useAccessStore();
     const userStore = useUserStore();
-    const authStore = useAuthStore();
-    const appStore = useAppStore();
-    const { token_id, user_id, owner_id, owner_type, ...reset } = to.query;
-    // 基本路由，这些路由不需要进入权限拦截
-    if (coreRouteNames.includes(to.name as string)) {
-      if (to.path === LOGIN_PATH && accessStore.accessToken) {
-        return decodeURIComponent(
-          (to.query?.redirect as string) ||
-            userStore.userInfo?.homePath ||
-            preferences.app.defaultHomePath,
-        );
-      }
-      return true;
-    }
-
-    // accessToken 检查
-    if (!accessStore.accessToken && !token_id) {
+    const { redirectToLogin } = useAccount();
+    if (!accessStore.accessToken) {
       // 明确声明忽略权限访问权限，则可以访问
       if (to.meta.ignoreAccess) {
         return true;
@@ -76,37 +57,60 @@ function setupAccessGuard(router: Router) {
         redirectToLogin();
         return false;
       }
-      return to;
+      // return true;
     }
-    if (token_id) {
-      userStore.setTokenId(token_id as string);
-      userStore.setUserInfo({
-        current_login_user_app: { owner_id, owner_type, user_id },
-        jwt_token: { token_id },
-      } as any);
-      await authStore.fetchUserInfo();
-      userStore.setMerchantInfo({ owner_id, owner_type, user_id } as any);
+    if (!accessStore.isAccessChecked) {
+      const { roles } = userStore.userInfo;
+      const { accessibleMenus, accessibleRoutes } = await generateAccess({
+        roles,
+        router,
+        routes: accessRoutes,
+      });
+      accessStore.setAccessMenus(accessibleMenus);
+      accessStore.setAccessRoutes(accessibleRoutes);
+      return {
+        path: to.path,
+        query: to.query,
+        replace: true,
+      };
     }
-    if (Object.keys(userStore.userInfo).length === 0) {
-      await authStore.fetchUserInfo();
-    }
+    return true;
+  });
+}
 
-    const { roles } = userStore.userInfo;
-    // 是否已经生成过动态路由
-    if (accessStore.isAccessChecked) {
+/**
+ * 权限访问守卫配置
+ * @param router
+ */
+function setupAccessGuard(router: Router) {
+  router.beforeEach(async (to, _) => {
+    const { redirectToLogin } = useAccount();
+    const userStore = useUserStore();
+    const { setSession } = useSession();
+    const { token_id, user_id, owner_id, owner_type, ...reset } = to.query;
+    // 基本路由，这些路由不需要进入权限拦截
+    if (coreRouteNames.includes(to.name as string)) {
       return true;
     }
-    // 生成菜单和路由
-    const { accessibleMenus, accessibleRoutes } = await generateAccess({
-      roles,
-      router,
-      // 则会在菜单中显示，但是访问会被重定向到403
-      routes: accessRoutes,
-    });
-    // 保存菜单信息和路由信息
-    accessStore.setAccessMenus(accessibleMenus);
-    accessStore.setAccessRoutes(accessibleRoutes);
-    await appStore.fetchApps();
+    /**
+     * 如果不存在 TokenId，本地也不存在用户信息，那么跳转登录
+     */
+    if (!token_id && !userStore.currentLoginUserApp) {
+      redirectToLogin();
+      return;
+    }
+    /**
+     * 如果本地存在用户信息，但是不存在token_id，那么表示正常路由跳转
+     */
+    if (userStore.currentLoginUserApp && !token_id) {
+      return true;
+    }
+    // 如果不存在本地用户信息，但是存在token_id，那么表示是登录回来，需要拉去用户信息。
+    if (token_id && !userStore.currentLoginUserApp) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      await setSession({ token_id, user_id, owner_id, owner_type });
+    }
     return {
       path: to.path,
       query: {
@@ -118,22 +122,21 @@ function setupAccessGuard(router: Router) {
 }
 
 function setupI18n(router: Router) {
-  router.beforeEach(async (to, _, next) => {
+  router.beforeEach(async (to) => {
     const module = to.matched.at(1)?.name;
     await Promise.all([loadRemoteLocale(), loadFeatureLocal(module as string)]);
     const { language, ...reset } = to.query;
     if (language) {
       await updateLocale(language as string);
-      next({
+      return {
         path: to.path,
         query: {
           ...reset,
         },
         replace: true,
-      });
-      return;
+      };
     }
-    next();
+    return true;
   });
 }
 /**
@@ -143,8 +146,14 @@ function setupI18n(router: Router) {
 function createRouterGuard(router: Router) {
   /** 通用 */
   setupCommonGuard(router);
+
   /** 权限访问 */
   setupAccessGuard(router);
+
+  /**
+   * 认证访问
+   */
+  setupAuthGurd(router);
 
   /** 国际化 */
   setupI18n(router);

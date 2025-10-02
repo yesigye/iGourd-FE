@@ -130,9 +130,9 @@ class PreferenceManager {
   private _savePreferences(preference: Preferences) {
     if (preference.app.persistence) {
       this.cache?.setItem(STORAGE_KEY, preference);
-      this.cache?.setItem(STORAGE_KEY_LOCALE, preference.app.locale);
       this.cache?.setItem(STORAGE_KEY_THEME, preference.theme.mode);
     }
+    this.cache?.setItem(STORAGE_KEY_LOCALE, preference.app.locale);
   }
 
   /**
@@ -167,6 +167,12 @@ class PreferenceManager {
     if (this.initialPreferences.app.persistence) {
       return this.cache?.getItem<Preferences>(STORAGE_KEY);
     }
+    // console.log(this.cache?.getItem('STORAGE_KEY_LOCALE'));
+    return {
+      app: {
+        locale: this.cache?.getItem(STORAGE_KEY_LOCALE) ?? 'en-US',
+      },
+    } as Preferences;
   }
 
   /**
@@ -174,7 +180,7 @@ class PreferenceManager {
    * @returns {Preferences} 加载的偏好设置
    */
   private loadPreferences(): Preferences {
-    return this.loadCachedPreferences() || { ...defaultPreferences };
+    return { ...defaultPreferences, ...this.loadCachedPreferences() };
   }
 
   /**

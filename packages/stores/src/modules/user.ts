@@ -54,8 +54,6 @@ interface AccessState {
   login_type?: string;
   merchantInfo: any;
   merchantList: any[];
-  owner_type: string;
-  tokenId: string;
   user_id: string;
 
   /**
@@ -76,7 +74,7 @@ interface AccessState {
  */
 export const useUserStore = defineStore('core-user', {
   actions: {
-    setUserInfo(userInfo: BasicUserInfo | null) {
+    setUserInfo(userInfo: null | Partial<BasicUserInfo>) {
       // 设置用户信息
       this.userInfo = userInfo ?? {};
       // 设置角色信息
@@ -87,10 +85,7 @@ export const useUserStore = defineStore('core-user', {
       this.userRoles = roles;
     },
     setTokenId(tokenId: string) {
-      this.tokenId = tokenId;
-      if (this.userInfo?.jwt_token) {
-        this.userInfo.jwt_token.token_id = tokenId;
-      }
+      this.userInfo.jwt_token.token_id = tokenId;
     },
     setUserModel(useModel: Record<string, any>) {
       this.userModel = useModel;
@@ -130,13 +125,17 @@ export const useUserStore = defineStore('core-user', {
     owner_id(state) {
       return state.currentLoginUserApp?.owner_id;
     },
+    owner_type(state) {
+      return state.currentLoginUserApp?.owner_type;
+    },
+    tokenId(state) {
+      return state.userInfo.jwt_token.token_id;
+    },
   },
   state: (): AccessState => ({
     userModel: {},
     userInfo: {},
     userRoles: [],
-    tokenId: '',
-    owner_type: '',
     user_id: '',
     merchantList: [],
     merchantInfo: {},
