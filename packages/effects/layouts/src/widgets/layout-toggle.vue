@@ -13,7 +13,10 @@ import {
   usePreferences,
 } from '@igourd/preferences';
 
-import { IgourdDropdownRadioMenu, IgourdIconButton } from '@igourd-core/shadcn-ui';
+import {
+  IgourdDropdownRadioMenu,
+  IgourdIconButton,
+} from '@igourd-core/shadcn-ui';
 
 defineOptions({
   name: 'AuthenticationLayoutToggle',

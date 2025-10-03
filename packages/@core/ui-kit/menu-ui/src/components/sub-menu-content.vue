@@ -5,7 +5,6 @@ import { computed } from 'vue';
 
 import { useNamespace } from '@igourd-core/composables';
 import { ChevronDown, ChevronRight } from '@igourd-core/icons';
-import { IgourdIcon } from '@igourd-core/shadcn-ui';
 
 import { useMenuContext } from '../hooks';
 
@@ -48,6 +47,10 @@ const mode = computed(() => {
   return rootMenu?.props.mode;
 });
 
+const showIcon = computed(() => {
+  return rootMenu?.props.icon && props.isMenuMore;
+});
+
 const showArrowIcon = computed(() => {
   return mode.value === 'horizontal' || !(isFirstLevel.value && collapse.value);
 });
@@ -83,7 +86,7 @@ const iconArrowStyle = computed(() => {
     <slot></slot>
 
     <IgourdIcon
-      v-if="!isMenuMore"
+      v-if="showIcon"
       :class="nsMenu.e('icon')"
       :icon="icon"
       fallback

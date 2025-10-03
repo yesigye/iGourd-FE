@@ -14,7 +14,6 @@ import { useIgourdForm } from '@igourd-core/form-ui';
 import { IgourdButton, IgourdCheckbox } from '@igourd-core/shadcn-ui';
 
 import Title from './auth-title.vue';
-import ThirdPartyLogin from './third-party-login.vue';
 
 defineOptions({
   name: 'AuthenticationLogin',

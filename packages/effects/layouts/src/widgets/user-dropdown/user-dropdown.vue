@@ -13,11 +13,9 @@ import { preferences, usePreferences } from '@igourd/preferences';
 import { isWindowsOs } from '@igourd/utils';
 
 import {
-  Badge,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   // 新增：Sub 相关
@@ -172,42 +170,17 @@ if (enableShortcutKey.value) {
 
   <DropdownMenu v-model:open="openPopover">
     <DropdownMenuTrigger ref="refTrigger" :disabled="props.trigger === 'hover'">
-      <div class="hover:bg-accent ml-1 mr-2 cursor-pointer rounded-full p-1.5">
+      <div class="ml-1 mr-2 cursor-pointer rounded-full p-1.5">
         <div class="hover:text-accent-foreground flex-center">
           <IgourdAvatar :alt="text" :src="avatar" class="size-8" dot />
+          <slot></slot>
         </div>
       </div>
     </DropdownMenuTrigger>
 
     <DropdownMenuContent class="mr-2 min-w-[240px] p-0 pb-1">
       <div ref="refContent">
-        <DropdownMenuLabel class="flex items-center p-3">
-          <IgourdAvatar
-            :alt="text"
-            :src="avatar"
-            class="size-12"
-            dot
-            dot-class="bottom-0 right-1 border-2 size-4 bg-green-500"
-          />
-          <div class="ml-2 w-full">
-            <div
-              v-if="tagText || text || $slots.tagText"
-              class="text-foreground mb-1 flex items-center text-sm font-medium"
-            >
-              {{ text }}
-              <slot name="tagText">
-                <Badge v-if="tagText" class="ml-2 text-green-400">
-                  {{ tagText }}
-                </Badge>
-              </slot>
-            </div>
-            <div class="text-muted-foreground text-xs font-normal">
-              {{ description }}
-            </div>
-          </div>
-        </DropdownMenuLabel>
-
-        <DropdownMenuSeparator v-if="menus?.length" />
+        <!-- <DropdownMenuSeparator v-if="menus?.length" /> -->
 
         <!-- 菜单区：自动识别是否有 children，决定渲染 Item 或 Sub -->
         <template v-for="menu in menus" :key="menu.text">

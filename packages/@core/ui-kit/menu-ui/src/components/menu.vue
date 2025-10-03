@@ -425,12 +425,13 @@ $namespace: igourd;
   }
 
   * {
-    vertical-align: bottom;
+    vertical-align: text-top;
   }
 }
 
 @mixin menu-title {
   max-width: var(--menu-title-width);
+  min-height: calc(var(--menu-font-size) + 2px);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -493,9 +494,9 @@ $namespace: igourd;
   }
 
   &.is-rounded {
-    --menu-item-margin-x: 8px;
-    --menu-item-collapse-margin-x: 6px;
-    --menu-item-radius: 8px;
+    --menu-item-margin-x: 4px;
+    --menu-item-collapse-margin-x: 4px;
+    --menu-item-radius: 4px;
   }
 
   &.is-horizontal:not(.is-rounded) {

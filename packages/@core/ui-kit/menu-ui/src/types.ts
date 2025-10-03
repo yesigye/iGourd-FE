@@ -31,6 +31,11 @@ interface MenuProps {
   defaultOpeneds?: string[];
 
   /**
+   * 是否展示icon
+   */
+  icon?: boolean;
+
+  /**
    * @zh_CN 菜单模式
    * @default vertical
    */

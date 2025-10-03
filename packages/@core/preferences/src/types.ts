@@ -169,12 +169,27 @@ interface SidebarPreferences {
   extraCollapse: boolean;
   /** 侧边栏扩展区域折叠宽度 */
   extraCollapsedWidth: number;
+  /**
+   * 可以搜索
+   */
+  filter: boolean;
   /** 侧边栏固定按钮是否可见 */
   fixedButton: boolean;
   /** 侧边栏是否隐藏 - css */
   hidden: boolean;
+  /**
+   * 是否展示icon
+   */
+  icon: boolean;
+
   /** 混合侧边栏宽度 */
   mixedWidth: number;
+
+  /**
+   * Popver展开菜单
+   */
+  popover: boolean;
+
   /** 侧边栏宽度 */
   width: number;
 }

@@ -1,29 +1,36 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
-import { IgourdSpinner } from '@igourd/common-ui';
+import { IgourdIcon, IgourdSpinner } from '@igourd/common-ui';
 import { MerchantStatus, SUPPORT_LANGUAGES } from '@igourd/constants';
+import { ChevronDown } from '@igourd/icons';
 import { BasicLayout, UserDropdown } from '@igourd/layouts';
 import { useI18n } from '@igourd/locales';
 import { preferences } from '@igourd/preferences';
 import { useUserStore } from '@igourd/stores';
+import { now } from '@igourd/utils';
 
 import { useSession } from '#/hooks/use-session';
 import { updateLocale } from '#/locales';
 import { useAppStore, useAuthStore } from '#/store';
 
-// import LoginForm from '#/views/_core/authentication/login.vue';
-
-const userStore = useUserStore();
+const {
+  userInfo,
+  userModel,
+  merchantInfo,
+  currentLoginUserApp,
+  userApps,
+  tokenId,
+} = useUserStore();
 const authStore = useAuthStore();
 const { apps } = useAppStore();
 const { setSession } = useSession();
 const { t } = useI18n();
-const { currentLoginUserApp, userApps, tokenId } = userStore;
 const spinning = ref(false);
+const nowTime = ref<string>('');
 const menus = computed(() => [
   {
-    text: userStore.merchantInfo.full_name,
+    text: merchantInfo.full_name,
     icon: 'solar:shop-2-outline',
   },
   {
@@ -43,7 +50,7 @@ const menus = computed(() => [
       .map((app: any) => {
         return {
           ...app,
-          disabled: app.merchant_id === userStore.merchantInfo.merchant_id,
+          disabled: app.merchant_id === merchantInfo.merchant_id,
           text: app.full_name,
           icon: 'solar:shop-2-outline',
         };
@@ -63,7 +70,7 @@ const menus = computed(() => [
 ]);
 
 const avatar = computed(() => {
-  return userStore.userInfo?.avatar ?? preferences.app.defaultAvatar;
+  return userModel?.profile_photo ?? preferences.app.defaultAvatar;
 });
 
 async function handleLogout() {
@@ -76,6 +83,18 @@ const roleChar = computed(() => {
     })
     .join('/');
 });
+let timer: null | number = null;
+onMounted(() => {
+  timer = setInterval(() => {
+    nowTime.value = now();
+  }, 1000) as unknown as number;
+});
+onBeforeUnmount(() => {
+  if (timer) {
+    clearInterval(timer);
+  }
+  timer = null;
+});
 </script>
 
 <template>
@@ -84,14 +103,31 @@ const roleChar = computed(() => {
       <Teleport to="body">
         <IgourdSpinner :spinning="spinning" style="z-index: 99999" />
       </Teleport>
+      <span class="text-muted-foreground text-sm">
+        {{ nowTime }}
+      </span>
+      <IgourdIcon
+        class="bg-primary-background-lighter text-muted-foreground ml-1 size-6 cursor-pointer rounded-sm p-1"
+        icon="material-symbols:kid-star"
+      />
       <UserDropdown
         :avatar
         :menus
-        :text="userStore.userInfo?.login_account"
-        :description="roleChar"
         :tag-text="currentLoginUserApp.owner_name"
         @logout="handleLogout"
-      />
+      >
+        <div
+          class="flex-center text-muted-foreground ml-1 flex h-full cursor-pointer flex-col content-start items-start px-2 text-sm font-semibold"
+        >
+          <div class="text-foreground mb-1 font-medium">
+            {{ userModel.name }}
+          </div>
+          <div class="text-muted-foreground text-xs font-light">
+            {{ userInfo.login_account }} / {{ roleChar }}
+          </div>
+        </div>
+        <ChevronDown class="size-4" />
+      </UserDropdown>
     </template>
   </BasicLayout>
 </template>

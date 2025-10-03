@@ -42,6 +42,10 @@ const collapseShowTitle = computed(
     rootMenu.props.collapse,
 );
 
+const showMenuIcon = computed(() => {
+  return rootMenu.props.icon;
+});
+
 const showTooltip = computed(
   () =>
     rootMenu.props.mode === 'vertical' &&
@@ -99,7 +103,12 @@ onBeforeUnmount(() => {
     >
       <template #trigger>
         <div :class="[nsMenu.be('tooltip', 'trigger')]">
-          <IgourdIcon :class="nsMenu.e('icon')" :icon="menuIcon" fallback />
+          <IgourdIcon
+            v-if="showMenuIcon"
+            :class="nsMenu.e('icon')"
+            :icon="menuIcon"
+            fallback
+          />
           <slot></slot>
           <span v-if="collapseShowTitle" :class="nsMenu.e('name')">
             <slot name="title"></slot>
@@ -114,7 +123,11 @@ onBeforeUnmount(() => {
         class="right-2"
         v-bind="props"
       />
-      <IgourdIcon :class="nsMenu.e('icon')" :icon="menuIcon" />
+      <IgourdIcon
+        v-if="showMenuIcon"
+        :class="nsMenu.e('icon')"
+        :icon="menuIcon"
+      />
       <slot></slot>
       <slot name="title"></slot>
     </div>

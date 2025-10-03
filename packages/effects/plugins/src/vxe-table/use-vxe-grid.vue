@@ -353,7 +353,7 @@ onUnmounted(() => {
 <template>
   <div
     :class="cn('bg-card rounded-md', className)"
-    :style="{ height: `calc(100% - ${footerHeight}px)` }"
+    :style="{ height: `calc(100% - ${footerHeight}px - 0.25rem)` }"
   >
     <VxeGrid
       ref="gridRef"

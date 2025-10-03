@@ -93,6 +93,9 @@ const defaultPreferences: Preferences = {
     hidden: false,
     mixedWidth: 80,
     width: 224,
+    icon: true,
+    filter: true,
+    popover: false,
   },
   tabbar: {
     postion: 'default',

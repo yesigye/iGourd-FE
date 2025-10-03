@@ -13,21 +13,37 @@ export const overridesPreferences = defineOverridesPreferences({
     enablePreferences: false,
     defaultHomePath: '/home',
     persistence: false,
+    contentPadding: 4,
+    contentPaddingLeft: 0,
   },
-
+  logo: {
+    fit: 'fill',
+    source: 'https://element-plus.org/images/element-plus-logo.svg',
+  },
   breadcrumb: {
     enable: false,
   },
   sidebar: {
-    collapsed: true,
+    autoActivateChild: false,
+    collapsedButton: false,
+    collapsed: false,
+    extraCollapse: false,
     expandOnHover: true,
-    collapsedShowTitle: true,
+    collapsedShowTitle: false,
     fixedButton: false,
+    width: 120,
+    icon: false,
+    filter: true,
+    popover: true,
   },
   tabbar: {
     postion: 'breadcrumb',
     showMaximize: false,
-    showMore: true,
+    showMore: false,
+    showIcon: false,
+  },
+  header: {
+    height: 40,
   },
   theme: {
     mode: 'auto',

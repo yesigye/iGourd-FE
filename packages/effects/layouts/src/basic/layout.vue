@@ -253,15 +253,16 @@ const headerSlots = computed(() => {
         v-if="preferences.logo.enable"
         :fit="preferences.logo.fit"
         :class="logoClass"
+        :logo-size="92"
         :collapsed="logoCollapsed"
         :src="preferences.logo.source"
-        :text="preferences.app.name"
+        text=""
         :theme="showHeaderNav ? headerTheme : theme"
         @click="clickLogo"
       >
-        <template v-if="$slots['logo-text']" #text>
+        <!-- <template v-if="$slots['logo-text']" #text>
           <slot name="logo-text"></slot>
-        </template>
+        </template> -->
       </IgourdLogo>
     </template>
     <!-- 头部区域 -->

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 // import type { IgourdFormSchema } from '@igourd-core/form-ui';
 
-import { computed, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { $t } from '@igourd/locales';
