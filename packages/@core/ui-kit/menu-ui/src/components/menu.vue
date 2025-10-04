@@ -33,6 +33,7 @@ import {
 } from '../hooks';
 import { useMenuScroll } from '../hooks/use-menu-scroll';
 import { flattedChildren } from '../utils';
+import Search from './search.vue';
 import SubMenu from './sub-menu.vue';
 
 interface Props extends MenuProps {}
@@ -350,6 +351,7 @@ function getActivePaths() {
     :style="menuStyle"
     role="menu"
   >
+    <Search v-if="props.search" />
     <template v-if="mode === 'horizontal' && getSlot.showSlotMore">
       <template v-for="item in getSlot.slotDefault" :key="item.key">
         <component :is="item" />

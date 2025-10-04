@@ -42,6 +42,12 @@ interface MenuProps {
   mode?: 'horizontal' | 'vertical';
 
   /**
+   * @zh_CN 是否使用浮层菜单
+   * @default false
+   */
+  popover?: boolean;
+
+  /**
    * @zh_CN 是否圆润风格
    * @default true
    */
@@ -53,6 +59,11 @@ interface MenuProps {
    */
   scrollToActive?: boolean;
 
+  /**
+   * 是否可搜索
+   * @default false
+   */
+  search?: boolean;
   /**
    * @zh_CN 菜单主题
    * @default dark

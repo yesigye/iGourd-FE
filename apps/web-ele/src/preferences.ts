@@ -48,7 +48,10 @@ export const overridesPreferences = defineOverridesPreferences({
   theme: {
     mode: 'auto',
     builtinType: 'default',
-    colorPrimary: 'hsl(212 100% 45%)',
+    colorPrimary: 'hsl(205 100% 53%)',
+    colorSuccess: 'hsl(100 54% 39%)',
+    colorDestructive: 'hsl(0 48% 55%)',
+    colorWarning: 'hsl(36 59% 45%)',
     radius: '0',
     semiDarkSidebar: true,
   },
