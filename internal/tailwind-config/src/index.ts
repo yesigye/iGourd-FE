@@ -209,6 +209,13 @@ export default {
         '100': '100',
         '1000': '1000',
       },
+      gridTemplateColumns: {
+        'auto-fit-64': 'repeat(auto-fit, minmax(16rem, 1fr))',
+        'auto-fit-72': 'repeat(auto-fit, minmax(18rem, 1fr))',
+        'auto-fit-80': 'repeat(auto-fit, minmax(20rem, 1fr))',
+        // 需要更宽可以继续加
+        'auto-fit-96': 'repeat(auto-fit, minmax(24rem, 1fr))',
+      },
     },
   },
   safelist: ['dark'],

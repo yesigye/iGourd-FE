@@ -253,11 +253,12 @@ onBeforeUnmount(() => {
     <template v-if="rootMenu.props.popover">
       <IgourdHoverCard
         :content-class="[
-          rootMenu.theme,
+          'light',
           nsMenu.e('popup-container'),
-          is(rootMenu.theme, true),
+          is('light', true),
           is('popover', true),
           'w-fit',
+          'max-w-[calc(100vw-24px)]',
           'overflow-auto',
           'max-h-[calc(var(--radix-hover-card-content-available-height)-20px)]',
           '',
@@ -282,17 +283,20 @@ onBeforeUnmount(() => {
           </SubMenuPopover>
         </template>
         <div
-          :class="[nsMenu.is(mode, true), nsMenu.e('popup')]"
+          :class="[
+            nsMenu.is(mode, true),
+            nsMenu.e('popover'),
+            'flex',
+            'w-fit',
+            'flex-wrap',
+            'gap-x-10',
+            'gap-y-8',
+          ]"
           @focus="(e) => handleMouseenter(e, 100)"
           @mouseenter="(e) => handleMouseenter(e, 100)"
           @mouseleave="() => handleMouseleave(true)"
         >
-          <ul
-            :class="[nsMenu.b(), is('rounded', rounded)]"
-            :style="subMenuStyle"
-          >
-            <slot></slot>
-          </ul>
+          <slot></slot>
         </div>
       </IgourdHoverCard>
     </template>

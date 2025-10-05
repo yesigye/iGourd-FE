@@ -733,6 +733,13 @@ $namespace: igourd;
     }
   }
 
+  &__popover {
+    .#{$namespace}-menu-item.is-active {
+      color:var(--menu-item-color);
+      background-color: transparent
+    }
+  }
+
   &__icon {
     flex-shrink: 0;
     width: var(--menu-item-icon-size);

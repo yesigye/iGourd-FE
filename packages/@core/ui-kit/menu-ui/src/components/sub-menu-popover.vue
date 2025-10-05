@@ -88,3 +88,6 @@ const hiddenTitle = computed(() => {
     />
   </div>
 </template>
+<style>
+
+</style>

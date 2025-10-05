@@ -8,6 +8,8 @@ import { MenuBadge, MenuItem, SubMenu as SubMenuComp } from './components';
 // eslint-disable-next-line import/no-self-import
 import SubMenu from './sub-menu.vue';
 import { useMenuContext } from './hooks';
+import { IgourdIcon } from '@igourd-core/shadcn-ui';
+import { useNamespace } from '@igourd-core/composables';
 
 interface Props {
   /**
@@ -22,6 +24,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {});
 
+const nsMenu = useNamespace('menu');
 /**
  * 判断是否有子节点，动态渲染 menu-item/sub-menu-item
  */
@@ -38,6 +41,7 @@ function hasSubGroup(menu?: MenuRecordRaw[]) {
   }
   return !menu!.some((item) => isEmpty(item.children));
 }
+console.log(rootMenu.props.popover);
 </script>
 
 <template>
@@ -75,7 +79,33 @@ function hasSubGroup(menu?: MenuRecordRaw[]) {
     </template>
     <template v-if="rootMenu.props.popover">
       <template v-if="hasSubGroup(menu.children)">
+        <div class="flex w-fit flex-wrap gap-x-2 gap-y-1">
+          <section
+            v-for="(s, idx) in menu.children"
+            :key="s?.path || s?.name || idx"
+            class="w-fit min-w-[180px] flex-none p-1"
+          >
+            <div
+              class="bg-primary-background-light mb-3 inline-flex w-full items-center gap-2 whitespace-nowrap rounded-md p-3 text-base font-medium"
+            >
+              <IgourdIcon
+                :class="nsMenu.e('icon')"
+                class="text-primary"
+                :icon="s.icon"
+              />
+              <span class="text-primary select-none font-medium">
+                {{ s.name }}
+              </span>
+            </div>
 
+            <template
+              v-for="childItem in s.children || []"
+              :key="childItem.path"
+            >
+              <SubMenu :menu="childItem" />
+            </template>
+          </section>
+        </div>
       </template>
       <template
         v-else
