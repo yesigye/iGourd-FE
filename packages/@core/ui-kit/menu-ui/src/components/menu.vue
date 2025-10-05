@@ -428,7 +428,7 @@ $namespace: igourd;
   }
 
   * {
-    vertical-align: text-top;
+    vertical-align: middle;
   }
 }
 
@@ -735,8 +735,8 @@ $namespace: igourd;
 
   &__popover {
     .#{$namespace}-menu-item.is-active {
-      color:var(--menu-item-color);
-      background-color: transparent
+      color: var(--menu-item-color);
+      background-color: transparent;
     }
   }
 

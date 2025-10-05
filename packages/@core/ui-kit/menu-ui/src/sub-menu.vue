@@ -30,6 +30,7 @@ const nsMenu = useNamespace('menu');
  */
 const hasChildren = computed(() => {
   const { menu } = props;
+  console.log(menu);
   return (
     Reflect.has(menu, 'children') && !!menu.children && menu.children.length > 0
   );
@@ -41,7 +42,6 @@ function hasSubGroup(menu?: MenuRecordRaw[]) {
   }
   return !menu!.some((item) => isEmpty(item.children));
 }
-console.log(rootMenu.props.popover);
 </script>
 
 <template>
@@ -56,7 +56,14 @@ console.log(rootMenu.props.popover);
     :path="menu.path"
   >
     <template #title>
-      <span>{{ menu.name }}</span>
+      <div class="flex w-full items-center justify-between">
+        <span>{{ menu.name }}</span>
+        <IgourdIcon
+          v-show="menu.parents"
+          class="text-muted-foreground ml-1 size-5 cursor-pointer rounded-sm p-1"
+          icon="material-symbols:kid-star"
+        />
+      </div>
     </template>
   </MenuItem>
   <SubMenuComp
@@ -84,7 +91,7 @@ console.log(rootMenu.props.popover);
           <section
             v-for="(s, idx) in menu.children"
             :key="s?.path || s?.name || idx"
-            class="w-fit min-w-[180px] flex-none p-1"
+            class="w-fit min-w-[210px] flex-none p-1"
           >
             <div
               class="bg-primary-background-light mb-3 inline-flex w-full items-center gap-2 whitespace-nowrap rounded-md p-3 text-base font-medium"
