@@ -43,7 +43,10 @@ export function removeCount(data: any) {
 
 // 更新盘点状态
 export function updateCountStatus(data: any) {
-  return request.put('/v1/inventory/count/status', data);
+  return request.post(
+    '/v1/merchant/basics/inventory/physical-stock-take/status/modify',
+    data,
+  );
 }
 
 // 导出库存盘点
