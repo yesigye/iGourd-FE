@@ -406,7 +406,6 @@ export function useCountForm() {
       appendToMain: true,
       class: 'md:w-2/3',
       async onOpenChange(isOpen) {
-        debugger;
         if (isOpen) {
           formAPI.reset();
           const data = drawerApi.getData();
