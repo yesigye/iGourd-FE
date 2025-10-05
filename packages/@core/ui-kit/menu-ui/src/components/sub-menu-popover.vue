@@ -1,0 +1,89 @@
+<script lang="ts" setup>
+import type { MenuItemProps } from '../types';
+
+import { computed } from 'vue';
+
+import { useNamespace } from '@igourd-core/composables';
+import { ChevronRight } from '@igourd-core/icons';
+
+import { useMenuContext } from '../hooks';
+
+interface Props extends MenuItemProps {
+  isMenuMore?: boolean;
+  isTopLevelMenuSubmenu: boolean;
+  level?: number;
+}
+
+defineOptions({ name: 'SubMenuContent' });
+
+const props = withDefaults(defineProps<Props>(), {
+  isMenuMore: false,
+  level: 0,
+});
+
+const rootMenu = useMenuContext();
+const { b, e, is } = useNamespace('sub-menu-content');
+const nsMenu = useNamespace('menu');
+
+const collapse = computed(() => {
+  return rootMenu.props.collapse;
+});
+
+const isFirstLevel = computed(() => {
+  return props.level === 1;
+});
+
+const getCollapseShowTitle = computed(() => {
+  return (
+    rootMenu.props.collapseShowTitle && isFirstLevel.value && collapse.value
+  );
+});
+
+const mode = computed(() => {
+  return rootMenu?.props.mode;
+});
+
+const showIcon = computed(() => {
+  return rootMenu?.props.icon && props.isMenuMore;
+});
+
+const showArrowIcon = computed(() => {
+  return mode.value === 'horizontal' || !(isFirstLevel.value && collapse.value);
+});
+
+const hiddenTitle = computed(() => {
+  return (
+    mode.value === 'vertical' &&
+    isFirstLevel.value &&
+    collapse.value &&
+    !getCollapseShowTitle.value
+  );
+});
+</script>
+<template>
+  <div
+    :class="[
+      b(),
+      is('collapse-show-title', getCollapseShowTitle),
+      is('more', isMenuMore),
+    ]"
+  >
+    <slot></slot>
+
+    <IgourdIcon
+      v-if="showIcon"
+      :class="nsMenu.e('icon')"
+      :icon="icon"
+      fallback
+    />
+    <div v-if="!hiddenTitle" :class="[e('title')]">
+      <slot name="title"></slot>
+    </div>
+    <ChevronRight
+      v-if="!isMenuMore"
+      v-show="showArrowIcon"
+      :class="[e('icon-arrow')]"
+      class="size-4"
+    />
+  </div>
+</template>

@@ -323,6 +323,8 @@ const headerSlots = computed(() => {
       <LayoutMenu
         :accordion="preferences.navigation.accordion"
         :collapse="preferences.sidebar.collapsed"
+        :search="preferences.sidebar.filter"
+        :popover="preferences.sidebar.popover"
         :collapse-show-title="preferences.sidebar.collapsedShowTitle"
         :default-active="sidebarActive"
         :menus="wrapperMenus(sidebarMenus)"
