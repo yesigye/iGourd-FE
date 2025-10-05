@@ -5,6 +5,7 @@ import { computed } from 'vue';
 
 import { useNamespace } from '@igourd-core/composables';
 import { ChevronRight } from '@igourd-core/icons';
+import { IgourdIcon } from '@igourd-core/shadcn-ui';
 
 import { useMenuContext } from '../hooks';
 

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import type { MenuRecordRaw } from '@igourd-core/typings';
+import { isEmpty } from '@igourd-core/shared/utils';
 
 import { computed } from 'vue';
 
 import { MenuBadge, MenuItem, SubMenu as SubMenuComp } from './components';
 // eslint-disable-next-line import/no-self-import
 import SubMenu from './sub-menu.vue';
+import { useMenuContext } from './hooks';
 
 interface Props {
   /**
@@ -29,6 +31,13 @@ const hasChildren = computed(() => {
     Reflect.has(menu, 'children') && !!menu.children && menu.children.length > 0
   );
 });
+const rootMenu = useMenuContext();
+function hasSubGroup(menu?: MenuRecordRaw[]) {
+  if (isEmpty(menu)) {
+    return false;
+  }
+  return !menu!.some((item) => isEmpty(item.children));
+}
 </script>
 
 <template>
@@ -64,8 +73,22 @@ const hasChildren = computed(() => {
     <template #title>
       <span>{{ menu.name }}</span>
     </template>
-    <template v-for="childItem in menu.children || []" :key="childItem.path">
-      <SubMenu :menu="childItem" />
+    <template v-if="rootMenu.props.popover">
+      <template v-if="hasSubGroup(menu.children)">
+
+      </template>
+      <template
+        v-else
+        v-for="childItem in menu.children || []"
+        :key="childItem.path"
+      >
+        <SubMenu :menu="childItem" />
+      </template>
+    </template>
+    <template v-else>
+      <template v-for="childItem in menu.children || []" :key="childItem.path">
+        <SubMenu :menu="childItem" />
+      </template>
     </template>
   </SubMenuComp>
 </template>

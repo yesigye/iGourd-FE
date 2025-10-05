@@ -17,6 +17,7 @@ import {
 } from '../hooks';
 import CollapseTransition from './collapse-transition.vue';
 import SubMenuContent from './sub-menu-content.vue';
+import SubMenuPopover from './sub-menu-popover.vue';
 
 interface Props extends SubMenuProps {
   isSubMenuMore?: boolean;
@@ -50,7 +51,12 @@ createSubMenuContext({
   removeSubMenu,
 });
 
+const popoverShow = ref(false);
+
 const opened = computed(() => {
+  if (rootMenu.props.popover) {
+    return false;
+  }
   return rootMenu?.openedMenus.includes(props.path);
 });
 const isTopLevelMenuSubmenu = computed(
@@ -62,7 +68,6 @@ const currentLevel = computed(() => subMenu?.level ?? 0);
 const isFirstLevel = computed(() => {
   return currentLevel.value === 1;
 });
-
 const contentProps = computed((): HoverCardContentProps => {
   const isHorizontal = mode.value === 'horizontal';
   const side = isHorizontal && isFirstLevel.value ? 'bottom' : 'right';
@@ -229,6 +234,52 @@ onBeforeUnmount(() => {
               <slot name="title"></slot>
             </template>
           </SubMenuContent>
+        </template>
+        <div
+          :class="[nsMenu.is(mode, true), nsMenu.e('popup')]"
+          @focus="(e) => handleMouseenter(e, 100)"
+          @mouseenter="(e) => handleMouseenter(e, 100)"
+          @mouseleave="() => handleMouseleave(true)"
+        >
+          <ul
+            :class="[nsMenu.b(), is('rounded', rounded)]"
+            :style="subMenuStyle"
+          >
+            <slot></slot>
+          </ul>
+        </div>
+      </IgourdHoverCard>
+    </template>
+    <template v-if="rootMenu.props.popover">
+      <IgourdHoverCard
+        :content-class="[
+          rootMenu.theme,
+          nsMenu.e('popup-container'),
+          is(rootMenu.theme, true),
+          is('popover', true),
+          'w-fit',
+          'overflow-auto',
+          'max-h-[calc(var(--radix-hover-card-content-available-height)-20px)]',
+          '',
+        ]"
+        :content-props="contentProps"
+        v-model:open="popoverShow"
+        :open-delay="0"
+      >
+        <template #trigger>
+          <SubMenuPopover
+            :class="is('active', active)"
+            :icon="menuIcon"
+            :is-menu-more="isSubMenuMore"
+            :is-top-level-menu-submenu="isTopLevelMenuSubmenu"
+            :level="currentLevel"
+            :path="path"
+            @click.stop="handleClick"
+          >
+            <template #title>
+              <slot name="title"></slot>
+            </template>
+          </SubMenuPopover>
         </template>
         <div
           :class="[nsMenu.is(mode, true), nsMenu.e('popup')]"

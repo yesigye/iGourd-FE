@@ -346,6 +346,7 @@ function getActivePaths() {
       is(theme, true),
       is('rounded', rounded),
       is('collapse', collapse),
+      is('popover', popover),
       is('menu-align', mode === 'horizontal'),
     ]"
     :style="menuStyle"
@@ -554,33 +555,47 @@ $namespace: igourd;
 
   // 垂直菜单
   &.is-vertical {
-    &:not(.#{$namespace}-menu.is-collapse) {
-      & .#{$namespace}-menu-item,
-      & .#{$namespace}-sub-menu-content,
-      & .#{$namespace}-menu-item-group__title {
+    // 非折叠，且排除 popover（避免互相打架）
+    &:not(.#{$namespace}-menu.is-collapse):not(.#{$namespace}-menu.is-popover) {
+      // 通用缩进：把“后代部分”塞进 :where()，不增加额外优先级
+      &
+        :where(
+          .#{$namespace}-menu-item,
+          .#{$namespace}-sub-menu-content,
+          .#{$namespace}-menu-item-group__title
+        ) {
         padding-left: calc(
-          var(--menu-item-indent) + var(--menu-level) * var(--menu-item-indent)
+          var(--menu-item-indent) + var(--menu-level, 0) *
+            var(--menu-item-indent)
         );
         white-space: nowrap;
       }
 
-      & > .#{$namespace}-sub-menu {
-        & > .#{$namespace}-menu {
-          & > .#{$namespace}-menu-item {
-            padding-left: calc(
-              0px + var(--menu-item-indent) + var(--menu-level) *
-                var(--menu-item-indent)
-            );
-          }
-        }
-
-        & > .#{$namespace}-sub-menu-content {
-          padding-left: calc(var(--menu-item-indent) - 8px);
-        }
-      }
-      & > .#{$namespace}-menu-item {
+      // ——保留你原来的“第一层”规则，确保不会丢 padding
+      > .#{$namespace}-menu-item {
         padding-left: calc(var(--menu-item-indent) - 8px);
       }
+
+      > .#{$namespace}-sub-menu > .#{$namespace}-sub-menu-content {
+        padding-left: calc(var(--menu-item-indent) - 8px);
+      }
+    }
+
+    // popover：写在后面，自然覆盖；不叠加根缩进
+    &.#{$namespace}-menu.popover {
+      &
+        :where(
+          .#{$namespace}-menu-item,
+          .#{$namespace}-sub-menu-content,
+          .#{$namespace}-menu-item-group__title
+        ) {
+        padding-left: calc(var(--menu-level, 0) * var(--menu-item-indent));
+        white-space: nowrap;
+      }
+
+      // 需要的话，可以给 popover 的第一层单独设定微缩进
+      // > .#{$namespace}-menu-item { padding-left: 0; }
+      // > .#{$namespace}-sub-menu > .#{$namespace}-sub-menu-content { padding-left: 0; }
     }
   }
 
@@ -699,10 +714,13 @@ $namespace: igourd;
   }
 
   &__popup-container {
-    max-width: 240px;
     height: unset;
     padding: 0;
     background: var(--menu-background-color);
+  }
+
+  &:not(.is-popover) {
+    max-width: 240px;
   }
 
   &__popup {
@@ -743,7 +761,11 @@ $namespace: igourd;
     height: var(--menu-item-height);
 
     span {
-      @include menu-title;
+      min-height: calc(var(--menu-font-size) + 2px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      opacity: 1;
     }
   }
 
@@ -770,7 +792,7 @@ $namespace: igourd;
     }
   }
 
-  &:not(.is-active):hover {
+  &:not(.is-active):not(.is-search):hover {
     color: var(--menu-item-hover-color);
     text-decoration: none;
     cursor: pointer;
