@@ -65,6 +65,7 @@ console.log(rootMenu.props.popover);
     :active-icon="menu.activeIcon"
     :icon="menu.icon"
     :path="menu.path"
+    :hasSubGroup="hasSubGroup(menu.children)"
   >
     <template #content>
       <MenuBadge

@@ -21,6 +21,7 @@ import SubMenuPopover from './sub-menu-popover.vue';
 
 interface Props extends SubMenuProps {
   isSubMenuMore?: boolean;
+  hasSubGroup?: boolean;
 }
 
 defineOptions({ name: 'SubMenu' });
@@ -28,6 +29,7 @@ defineOptions({ name: 'SubMenu' });
 const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   isSubMenuMore: false,
+  hasSubGroup: false,
 });
 
 const { parentMenu, parentPaths } = useMenu();
@@ -42,7 +44,6 @@ const mouseInChild = ref(false);
 const items = ref<MenuProvider['items']>({});
 const subMenus = ref<MenuProvider['subMenus']>({});
 const timer = ref<null | ReturnType<typeof setTimeout>>(null);
-
 createSubMenuContext({
   addSubMenu,
   handleMouseleave,
@@ -287,10 +288,10 @@ onBeforeUnmount(() => {
             nsMenu.is(mode, true),
             nsMenu.e('popover'),
             'flex',
-            'w-fit',
-            'flex-wrap',
-            'gap-x-10',
-            'gap-y-8',
+            props.hasSubGroup ? 'w-fit' : 'flex-col',
+            props.hasSubGroup ? 'flex-wrap' : '',
+            'gap-x-4',
+            'gap-y-2',
           ]"
           @focus="(e) => handleMouseenter(e, 100)"
           @mouseenter="(e) => handleMouseenter(e, 100)"
