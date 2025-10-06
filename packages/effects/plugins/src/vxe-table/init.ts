@@ -7,28 +7,18 @@ import { usePreferences } from '@igourd/preferences';
 import {
   VxeButton,
   VxeCheckbox,
-
-  // VxeFormGather,
-  // VxeForm,
-  // VxeFormItem,
   VxeIcon,
   VxeInput,
   VxeLoading,
   VxeModal,
   VxeNumberInput,
   VxePager,
-  // VxeList,
-  // VxeModal,
-  // VxeOptgroup,
-  // VxeOption,
-  // VxePulldown,
-  // VxeRadio,
-  // VxeRadioButton,
   VxeRadioGroup,
   VxeSelect,
   VxeTooltip,
   VxeUI,
   VxeUpload,
+  VxePrint,
   // VxeSwitch,
   // VxeTextarea,
 } from 'vxe-pc-ui';
@@ -61,36 +51,24 @@ export function initVxeTable() {
   if (isInit) {
     return;
   }
-
+  // 后续需要替换成为自己的
   VxeUI.component(VxeTable);
   VxeUI.component(VxeColumn);
   VxeUI.component(VxeColgroup);
   VxeUI.component(VxeGrid);
   VxeUI.component(VxeToolbar);
-
   VxeUI.component(VxeButton);
-  // VxeUI.component(VxeButtonGroup);
   VxeUI.component(VxeCheckbox);
-  // VxeUI.component(VxeCheckboxGroup);
+  VxeUI.component(VxePrint);
   VxeUI.component(createVirtualComponent('VxeForm'));
-  // VxeUI.component(VxeFormGather);
-  // VxeUI.component(VxeFormItem);
   VxeUI.component(VxeIcon);
   VxeUI.component(VxeInput);
-  // VxeUI.component(VxeList);
   VxeUI.component(VxeLoading);
   VxeUI.component(VxeModal);
   VxeUI.component(VxeNumberInput);
-  // VxeUI.component(VxeOptgroup);
-  // VxeUI.component(VxeOption);
   VxeUI.component(VxePager);
-  // VxeUI.component(VxePulldown);
-  // VxeUI.component(VxeRadio);
-  // VxeUI.component(VxeRadioButton);
   VxeUI.component(VxeRadioGroup);
   VxeUI.component(VxeSelect);
-  // VxeUI.component(VxeSwitch);
-  // VxeUI.component(VxeTextarea);
   VxeUI.component(VxeTooltip);
   VxeUI.component(VxeUpload);
 

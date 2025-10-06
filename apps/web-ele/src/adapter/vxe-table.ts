@@ -53,6 +53,7 @@ setupIgourdVxeTable({
         },
         toolbarConfig: {
           custom: true,
+          refresh: true,
         },
         round: true,
         showOverflow: true,

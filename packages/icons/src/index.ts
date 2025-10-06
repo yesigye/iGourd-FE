@@ -15,3 +15,11 @@ export const SquareMousePointer = createIconifyIcon(
 );
 export const Tickets = createIconifyIcon('ep:tickets');
 export const Warning = createIconifyIcon('ep:warning');
+
+export const RefreshRight = createIconifyIcon('ep:refresh-right');
+
+export const Import = createIconifyIcon('ix:import');
+
+export const Export = createIconifyIcon('ix:export');
+
+export const Print = createIconifyIcon('ix:print');

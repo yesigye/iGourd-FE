@@ -30,7 +30,6 @@ const nsMenu = useNamespace('menu');
  */
 const hasChildren = computed(() => {
   const { menu } = props;
-  console.log(menu);
   return (
     Reflect.has(menu, 'children') && !!menu.children && menu.children.length > 0
   );
