@@ -52,7 +52,7 @@ export const overridesPreferences = defineOverridesPreferences({
     colorSuccess: 'hsl(100 54% 39%)',
     colorDestructive: 'hsl(0 48% 55%)',
     colorWarning: 'hsl(36 59% 45%)',
-    radius: '0',
+    radius: '0.25',
     semiDarkSidebar: true,
   },
   widget: {

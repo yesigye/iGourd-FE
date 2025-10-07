@@ -17,9 +17,11 @@ import {
 } from '../hooks';
 import CollapseTransition from './collapse-transition.vue';
 import SubMenuContent from './sub-menu-content.vue';
+import SubMenuPopover from './sub-menu-popover.vue';
 
 interface Props extends SubMenuProps {
   isSubMenuMore?: boolean;
+  hasSubGroup?: boolean;
 }
 
 defineOptions({ name: 'SubMenu' });
@@ -27,6 +29,7 @@ defineOptions({ name: 'SubMenu' });
 const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   isSubMenuMore: false,
+  hasSubGroup: false,
 });
 
 const { parentMenu, parentPaths } = useMenu();
@@ -41,7 +44,6 @@ const mouseInChild = ref(false);
 const items = ref<MenuProvider['items']>({});
 const subMenus = ref<MenuProvider['subMenus']>({});
 const timer = ref<null | ReturnType<typeof setTimeout>>(null);
-
 createSubMenuContext({
   addSubMenu,
   handleMouseleave,
@@ -50,7 +52,12 @@ createSubMenuContext({
   removeSubMenu,
 });
 
+const popoverShow = ref(false);
+
 const opened = computed(() => {
+  if (rootMenu.props.popover) {
+    return false;
+  }
   return rootMenu?.openedMenus.includes(props.path);
 });
 const isTopLevelMenuSubmenu = computed(
@@ -62,7 +69,6 @@ const currentLevel = computed(() => subMenu?.level ?? 0);
 const isFirstLevel = computed(() => {
   return currentLevel.value === 1;
 });
-
 const contentProps = computed((): HoverCardContentProps => {
   const isHorizontal = mode.value === 'horizontal';
   const side = isHorizontal && isFirstLevel.value ? 'bottom' : 'right';
@@ -242,6 +248,56 @@ onBeforeUnmount(() => {
           >
             <slot></slot>
           </ul>
+        </div>
+      </IgourdHoverCard>
+    </template>
+    <template v-if="rootMenu.props.popover">
+      <IgourdHoverCard
+        :content-class="[
+          'light',
+          nsMenu.e('popup-container'),
+          is('light', true),
+          is('popover', true),
+          'w-fit',
+          'max-w-[calc(100vw-24px)]',
+          'overflow-auto',
+          'max-h-[calc(var(--radix-hover-card-content-available-height)-20px)]',
+          '',
+        ]"
+        :content-props="contentProps"
+        v-model:open="popoverShow"
+        :open-delay="0"
+      >
+        <template #trigger>
+          <SubMenuPopover
+            :class="is('active', active)"
+            :icon="menuIcon"
+            :is-menu-more="isSubMenuMore"
+            :is-top-level-menu-submenu="isTopLevelMenuSubmenu"
+            :level="currentLevel"
+            :path="path"
+            @click.stop="handleClick"
+          >
+            <template #title>
+              <slot name="title"></slot>
+            </template>
+          </SubMenuPopover>
+        </template>
+        <div
+          :class="[
+            nsMenu.is(mode, true),
+            nsMenu.e('popover'),
+            'flex',
+            props.hasSubGroup ? 'w-fit' : 'flex-col',
+            props.hasSubGroup ? 'flex-wrap' : '',
+            'gap-x-4',
+            'gap-y-2',
+          ]"
+          @focus="(e) => handleMouseenter(e, 100)"
+          @mouseenter="(e) => handleMouseenter(e, 100)"
+          @mouseleave="() => handleMouseleave(true)"
+        >
+          <slot></slot>
         </div>
       </IgourdHoverCard>
     </template>

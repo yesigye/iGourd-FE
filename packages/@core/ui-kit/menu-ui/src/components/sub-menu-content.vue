@@ -4,6 +4,8 @@ import type { MenuItemProps } from '../types';
 import { computed } from 'vue';
 
 import { useNamespace } from '@igourd-core/composables';
+import { IgourdIcon } from '@igourd-core/shadcn-ui';
+
 import { ChevronDown, ChevronRight } from '@igourd-core/icons';
 
 import { useMenuContext } from '../hooks';

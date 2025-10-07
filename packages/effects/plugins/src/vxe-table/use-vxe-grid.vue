@@ -24,9 +24,25 @@ import {
   useTemplateRef,
 } from 'vue';
 
-import { useTableSearchForm } from '@igourd/common-ui';
+import {
+  ElButton,
+  useTableSearchForm,
+  Submit,
+  ElText,
+  FormButtonGroup,
+  ElDropdownMenu,
+  ElDropdownItem,
+  ElDropdown,
+} from '@igourd/common-ui';
 import { usePriorityValues } from '@igourd/hooks';
-import { EmptyIcon } from '@igourd/icons';
+import {
+  EmptyIcon,
+  RefreshRight,
+  ArrayDown,
+  Import,
+  Export,
+  Print,
+} from '@igourd/icons';
 import { $t, useI18n } from '@igourd/locales';
 import { usePreferences } from '@igourd/preferences';
 import {
@@ -101,26 +117,22 @@ const slots: SetupContext['slots'] = useSlots();
 
 const { Form, formAPI: formApi } = useTableSearchForm({
   useI18n,
-  compact: true,
   schema: formOptions.value?.schema || {},
-  handleSubmit: async () => {
-    const formValues = formApi.values;
-    await props.api.reload(formValues);
-  },
-  handleReset: async () => {
-    const prevValues = formApi.values;
-    await formApi.reset();
-    const formValues = formApi.values;
-    if (isEqual(prevValues, formValues) || !formOptions.value?.submitOnChange) {
-      await props.api.reload(formValues);
-    }
-  },
-  showCollapseButton: true,
-  // @ts-ignore
-  submitButtonOptions: {
-    content: computed(() => $t('common.search')),
-  },
+  submitOnEnter: true,
 });
+
+async function handleSubmit() {
+  const formValues = formApi.values;
+  await props.api.reload(formValues);
+}
+async function handleReset() {
+  const prevValues = formApi.values;
+  await formApi.reset();
+  const formValues = formApi.values;
+  if (isEqual(prevValues, formValues) || !formOptions.value?.submitOnChange) {
+    await props.api.reload(formValues);
+  }
+}
 const showTableTitle = computed(() => {
   return !!slots[TABLE_TITLE]?.() || tableTitle.value;
 });
@@ -160,8 +172,6 @@ const toolbarOptions = computed(() => {
     return { toolbarConfig };
   }
 
-  // 强制使用固定的toolbar配置，不允许用户自定义
-  // 减少配置的复杂度，以及后续维护的成本
   toolbarConfig.slots = {
     ...(slotActions || showTableTitle.value
       ? { buttons: TOOLBAR_ACTIONS }
@@ -176,7 +186,11 @@ const options = computed(() => {
 
   const mergedOptions: VxeTableGridProps = cloneDeep(
     mergeWithArrayOverride(
-      {},
+      {
+        toolbarConfig: {
+          enabled: false,
+        },
+      },
       toRaw(toolbarOptions.value),
       toRaw(gridOptions.value),
       globalGridConfig,
@@ -259,17 +273,6 @@ const delegatedSlots = computed(() => {
   return resultSlots;
 });
 
-// const delegatedFormSlots = computed(() => {
-//   const resultSlots: string[] = [];
-
-//   for (const key of Object.keys(slots)) {
-//     if (key.startsWith(FORM_SLOT_PREFIX)) {
-//       resultSlots.push(key);
-//     }
-//   }
-//   return resultSlots.map((key) => key.replace(FORM_SLOT_PREFIX, ''));
-// });
-
 const showDefaultEmpty = computed(() => {
   // 检查是否有原生的 VXE Table 空状态配置
   const hasEmptyText = options.value.emptyText !== undefined;
@@ -295,13 +298,8 @@ async function init() {
       'query',
       formOptions.value ? formApi.values : {},
     );
-    // props.api.reload(formApi.form?.values ?? {});
   }
-
-  // form 由 igourd-form代替，所以不适配formConfig，这里给出警告
   const formConfig = gridOptions.value?.formConfig;
-  // 处理某个页面加载多个Table时，第2个之后的Table初始化报出警告
-  // 因为第一次初始化之后会把defaultGridOptions和gridOptions合并后缓存进State
   if (formConfig && formConfig.enabled) {
     console.warn(
       '[Igourd Vxe Table]: The formConfig in the grid is not supported, please use the `formOptions` props',
@@ -311,41 +309,26 @@ async function init() {
   // form 由 igourd-form 代替，所以需要保证query相关事件可以拿到参数
   extendProxyOptions(props.api, defaultGridOptions, () => formApi.values);
 }
+
+async function handleCommand(command: string) {
+  console.log(command);
+  debugger;
+  if (command === 'print') {
+    await gridRef.value?.print(options.value.printConfig);
+  }
+  if (command === 'export' && gridRef.value?.exportConfig) {
+    await gridRef.value?.openExport(gridRef.value?.exportConfig);
+    return;
+  }
+  await gridRef.value?.commitProxy(command);
+}
 const footerHeight = inject(Symbol.for('Page.FooterHeight'), ref(0));
-
-// // formOptions支持响应式
-// watch(
-//   formOptions,
-//   () => {
-//     formApi.se
-//     formApi.setState((prev) => {
-//       const finalFormOptions: IgourdFormProps = mergeWithArrayOverride(
-//         {},
-//         formOptions.value,
-//         prev,
-//       );
-//       return {
-//         ...finalFormOptions,
-//         collapseTriggerResize: !!finalFormOptions.showCollapseButton,
-//       };
-//     });
-//   },
-//   {
-//     immediate: true,
-//   },
-// );
-
-// const isCompactForm = computed(() => {
-//   return formApi.getState()?.compact;
-// });
-
 onMounted(() => {
   props.api?.mount?.(gridRef.value, formApi);
   init();
 });
 
 onUnmounted(() => {
-  // formApi?.unmount?.();
   props.api?.unmount?.();
 });
 </script>
@@ -359,7 +342,7 @@ onUnmounted(() => {
       ref="gridRef"
       :class="
         cn(
-          'p-2',
+          'px-1',
           {
             'pt-0': showToolbar && !formOptions,
           },
@@ -408,17 +391,82 @@ onUnmounted(() => {
         <div
           v-if="formOptions"
           v-show="showSearchForm !== false"
-          :class="cn('relative rounded py-1 pb-2')"
+          :class="cn('relative rounded')"
         >
           <slot name="form">
-            <Form :use-i18n="useI18n" :scope="props.formOptions?.scope || {}" />
+            <div class="flex h-9 items-center justify-between align-middle">
+              <div class="flex gap-x-1">
+                <Form
+                  :use-i18n="useI18n"
+                  :scope="props.formOptions?.scope || {}"
+                >
+                  <FormButtonGroup :gutter="0">
+                    <Submit @submit="formApi.submit(handleSubmit)">
+                      {{ $t('common.search') }}
+                    </Submit>
+                    <ElButton text bg @click="handleReset()">
+                      {{ $t('common.reset') }}
+                    </ElButton>
+                  </FormButtonGroup>
+                </Form>
+              </div>
+              <div class="flex justify-end gap-x-1">
+                <ElText
+                  v-if="gridOptions?.toolbarConfig?.refresh"
+                  :title="$t('common.refresh')"
+                  @click="handleSubmit()"
+                >
+                  <RefreshRight class="mr-4 size-4 cursor-pointer" />
+                </ElText>
+                <slot name="table-actions"> </slot>
+                <ElDropdown @command="handleCommand">
+                  <ElButton type="primary">
+                    {{ $t('common.action') }}
+                    <ArrayDown class="el-icon--right" />
+                  </ElButton>
+                  <template #dropdown>
+                    <ElDropdownMenu>
+                      <ElDropdownItem
+                        :icon="Import"
+                        command="import"
+                        v-if="options.toolbarConfig?.import"
+                      >
+                        {{ $t('common.import') }}
+                      </ElDropdownItem>
+                      <ElDropdownItem
+                        v-if="options.toolbarConfig?.export"
+                        command="export"
+                        :icon="Export"
+                      >
+                        {{ $t('common.export') }}
+                      </ElDropdownItem>
+                      <ElDropdownItem
+                        v-if="options.toolbarConfig?.print"
+                        command="print"
+                        :icon="Print"
+                      >
+                        {{ $t('common.print') }}
+                      </ElDropdownItem>
+                      <ElDropdownItem
+                        :command="value.code"
+                        :key="value.code"
+                        :icon="value.iconRender"
+                        v-for="value in toolbarOptions.toolbarConfig.tools"
+                      >
+                        {{ $t(value.name!) }}
+                      </ElDropdownItem>
+                    </ElDropdownMenu>
+                  </template>
+                </ElDropdown>
+              </div>
+            </div>
           </slot>
           <div
             v-if="isSeparator"
             :style="{
               ...(separatorBg ? { backgroundColor: separatorBg } : undefined),
             }"
-            class="bg-background-deep z-100 absolute -left-2 bottom-1 h-2 w-full overflow-hidden md:bottom-2 md:h-3"
+            class="bg-background-deep h-2 w-full overflow-hidden md:bottom-1 md:h-1"
           ></div>
         </div>
       </template>

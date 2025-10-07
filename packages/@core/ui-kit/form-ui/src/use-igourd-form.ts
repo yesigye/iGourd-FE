@@ -72,60 +72,24 @@ export function useTableSearchForm<T extends object>(
     schema: ISchema['properties'];
   },
 ) {
-  const actions = {
-    type: 'void',
-    'x-decorator': 'FormItem', // 保持和其他字段对齐
-    'x-component': 'Space', // 或者 'FormButtonGroup'
-    properties: {
-      search: {
-        type: 'void',
-        'x-component': 'Submit',
-        'x-content': {
-          default: "{{ t('common.search') }}",
-        },
-        'x-component-props': {
-          type: 'primary',
-          onClick: () => {
-            if (options.handleSubmit) {
-              return options.handleSubmit();
-            }
-            throw new ReferenceError('unknown Submit Handler');
-          },
-        },
-      },
-      reset: {
-        type: 'void',
-        'x-component': 'Button',
-        'x-component-props': {
-          onClick: () => {
-            if (options.handleReset) {
-              return options.handleReset();
-            }
-            throw new ReferenceError('unknown Submit Handler');
-          },
-        },
-        'x-content': {
-          default: "{{ t('common.reset') }}",
-        },
-      },
-    },
-  };
-
-  const copySchema = Object.assign({}, options.schema, {
-    $actions: actions,
-  }) as Record<string, any>;
-
   const schemaPolyfill = {
     type: 'object',
     properties: {
       grid: {
         type: 'void',
-        'x-component': 'FormGrid',
+        'x-component': 'FormLayout',
         'x-component-props': {
-          minColumns: [2, 4, 6, 8, 12],
-          breakpoints: [720, 1280, 1920, 2560, 3840],
+          feedbackLayout: 'none',
+          layout: 'horizontal',
+          size: 'small',
         },
-        properties: { ...copySchema },
+        properties: {
+          space: {
+            type: 'void',
+            'x-component-props': 'Space',
+            properties: options.schema,
+          },
+        },
       },
     },
   } as ISchema;

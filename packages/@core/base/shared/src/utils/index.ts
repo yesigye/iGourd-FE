@@ -23,3 +23,4 @@ export { default as omit } from 'lodash-es/omit';
 export { default as pick } from 'lodash-es/pick';
 export { default as set } from 'lodash-es/set';
 export { default as sortBy } from 'lodash-es/sortBy';
+export { default as isEmpty } from "lodash-es/isEmpty"
