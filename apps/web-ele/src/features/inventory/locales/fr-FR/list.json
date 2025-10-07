@@ -10,5 +10,11 @@
   "lastUpdateTime": "Dernière Mise à Jour",
   "updateInventory": "Mettre à Jour Inventaire",
   "editInventory": "Modifier Inventaire",
-  "inventoryDetail": "Détail de l'Inventaire"
+  "inventoryDetail": "Détail de l'Inventaire",
+  "delete-failed-message": "删除失败信息",
+  "delete-failed": "suppression échouée de ",
+  "successfully-deleted": "Suppression réussie de",
+  "strip": "barres",
+  "list-detele-message":"Les données d'inventaire de l'entrepôt de vente, ne peuvent pas être supprimées, seulement les quantités en stock sont effacées!"
+
 }

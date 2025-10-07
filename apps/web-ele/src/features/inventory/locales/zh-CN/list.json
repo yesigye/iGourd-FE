@@ -13,5 +13,10 @@
   "inventoryDetail": "库存详情",
   "add-inventory-reason": "添加库存原因",
   "warehouse-name": "仓库",
-  "add-stock": "添加库存"
+  "add-stock": "添加库存",
+  "delete-failed-message": "删除失败信息",
+  "delete-failed": "删除失败",
+  "successfully-deleted": "成功删除",
+  "strip": "条",
+  "list-detele-message": "该记录为默认销售仓库存记录,不可删除！您可点击【按钮:去清空】清空库存。"
 }

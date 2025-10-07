@@ -81,7 +81,8 @@ export function useInventorySpoilageList() {
       title: t('inventory.review'),
       minWidth: 85,
       fixed: 'right',
-      slots: { default: 'status' },
+      // slots: { default: 'status' },
+      slots: { default: 'modal' },
     },
     {
       field: 'creator_name',

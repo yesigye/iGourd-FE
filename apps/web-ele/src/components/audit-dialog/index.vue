@@ -101,6 +101,7 @@ const [Modal, modalApi] = useIgourdModal({
   },
   title: t('common.auditOpinion'),
 });
+
 const openModal = () => {
   modalApi.open();
 };
