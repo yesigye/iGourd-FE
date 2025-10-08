@@ -1,10 +1,14 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { VxeGridProps, VxeUIExport } from 'vxe-table';
 
 import type { Recordable } from '@igourd/types';
 
 import type { VxeGridApi } from './api';
 
-import { formatDate, formatDateTime, isFunction } from '@igourd/utils';
+import { h } from 'vue';
+
+import { ElSpace, IgourdIcon } from '@igourd/common-ui';
+import { formatDate, formatDateTime, isEmpty, isFunction } from '@igourd/utils';
 
 export function extendProxyOptions(
   api: VxeGridApi,
@@ -78,4 +82,45 @@ export function extendsDefaultFormatter(vxeUI: VxeUIExport) {
       return formatDateTime(cellValue);
     },
   });
+}
+
+export function extendsColumn(
+  columns: VxeGridProps['columns'],
+  api: VxeGridApi,
+) {
+  const actions = columns?.find((col) =>
+    ['actions', 'operation'].includes(col.field ?? ''),
+  );
+  if (isEmpty(actions)) {
+    columns?.push({
+      fixed: 'right',
+      sortable: false,
+      width: 32,
+      align: 'center',
+      slots: {
+        header: () => {
+          return h(IgourdIcon, {
+            icon: 'ep:set-up',
+            class: 'cursor-pointer size-4',
+            onClick: () => {
+              api.grid.openCustom();
+            },
+          });
+        },
+      },
+    });
+  } else {
+    actions.slots!.header = () => {
+      return h(ElSpace, {}, [
+        actions.title,
+        h(IgourdIcon, {
+          icon: 'ep:set-up',
+          class: 'cursor-pointer size-4',
+          onClick: () => {
+            api.grid.openCustom();
+          },
+        }),
+      ]);
+    };
+  }
 }

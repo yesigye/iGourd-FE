@@ -13,20 +13,19 @@ import {
   VxeModal,
   VxeNumberInput,
   VxePager,
+  VxePrint,
   VxeRadioGroup,
   VxeSelect,
   VxeTooltip,
   VxeUI,
   VxeUpload,
-  VxePrint,
   // VxeSwitch,
   // VxeTextarea,
 } from 'vxe-pc-ui';
 import enUS from 'vxe-pc-ui/es/language/en-US';
+import frFR from 'vxe-pc-ui/es/language/fr-FR';
 // 导入默认的语言
 import zhCN from 'vxe-pc-ui/es/language/zh-CN';
-
-import frFR from 'vxe-pc-ui/es/language/fr-FR';
 import {
   VxeColgroup,
   VxeColumn,

@@ -26,22 +26,22 @@ import {
 
 import {
   ElButton,
-  useTableSearchForm,
-  Submit,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
   ElText,
   FormButtonGroup,
-  ElDropdownMenu,
-  ElDropdownItem,
-  ElDropdown,
+  Submit,
+  useTableSearchForm,
 } from '@igourd/common-ui';
 import { usePriorityValues } from '@igourd/hooks';
 import {
-  EmptyIcon,
-  RefreshRight,
   ArrayDown,
-  Import,
+  EmptyIcon,
   Export,
+  Import,
   Print,
+  RefreshRight,
 } from '@igourd/icons';
 import { $t, useI18n } from '@igourd/locales';
 import { usePreferences } from '@igourd/preferences';
@@ -311,8 +311,6 @@ async function init() {
 }
 
 async function handleCommand(command: string) {
-  console.log(command);
-  debugger;
   if (command === 'print') {
     await gridRef.value?.print(options.value.printConfig);
   }
@@ -330,6 +328,16 @@ onMounted(() => {
 
 onUnmounted(() => {
   props.api?.unmount?.();
+});
+
+const openMoreActions = computed(() => {
+  return (
+    options.value.toolbarConfig?.import ||
+    options.value.toolbarConfig?.export ||
+    options.value.toolbarConfig?.print ||
+    (Array.isArray(options.value.toolbarConfig?.tools) &&
+      options.value.toolbarConfig?.tools.length > 0)
+  );
 });
 </script>
 
@@ -393,9 +401,9 @@ onUnmounted(() => {
           v-show="showSearchForm !== false"
           :class="cn('relative rounded')"
         >
-          <slot name="form">
-            <div class="flex h-9 items-center justify-between align-middle">
-              <div class="flex gap-x-1">
+          <div class="flex h-9 items-center justify-between align-middle">
+            <div class="flex gap-x-1">
+              <slot name="form">
                 <Form
                   :use-i18n="useI18n"
                   :scope="props.formOptions?.scope || {}"
@@ -409,58 +417,58 @@ onUnmounted(() => {
                     </ElButton>
                   </FormButtonGroup>
                 </Form>
-              </div>
-              <div class="flex justify-end gap-x-1">
-                <ElText
-                  v-if="gridOptions?.toolbarConfig?.refresh"
-                  :title="$t('common.refresh')"
-                  @click="handleSubmit()"
-                >
-                  <RefreshRight class="mr-4 size-4 cursor-pointer" />
-                </ElText>
-                <slot name="table-actions"> </slot>
-                <ElDropdown @command="handleCommand">
-                  <ElButton type="primary">
-                    {{ $t('common.action') }}
-                    <ArrayDown class="el-icon--right" />
-                  </ElButton>
-                  <template #dropdown>
-                    <ElDropdownMenu>
-                      <ElDropdownItem
-                        :icon="Import"
-                        command="import"
-                        v-if="options.toolbarConfig?.import"
-                      >
-                        {{ $t('common.import') }}
-                      </ElDropdownItem>
-                      <ElDropdownItem
-                        v-if="options.toolbarConfig?.export"
-                        command="export"
-                        :icon="Export"
-                      >
-                        {{ $t('common.export') }}
-                      </ElDropdownItem>
-                      <ElDropdownItem
-                        v-if="options.toolbarConfig?.print"
-                        command="print"
-                        :icon="Print"
-                      >
-                        {{ $t('common.print') }}
-                      </ElDropdownItem>
-                      <ElDropdownItem
-                        :command="value.code"
-                        :key="value.code"
-                        :icon="value.iconRender"
-                        v-for="value in toolbarOptions.toolbarConfig.tools"
-                      >
-                        {{ $t(value.name!) }}
-                      </ElDropdownItem>
-                    </ElDropdownMenu>
-                  </template>
-                </ElDropdown>
-              </div>
+              </slot>
             </div>
-          </slot>
+            <div class="flex justify-end gap-x-1">
+              <ElText
+                v-if="gridOptions?.toolbarConfig?.refresh"
+                :title="$t('common.refresh')"
+                @click="handleSubmit()"
+              >
+                <RefreshRight class="mr-4 size-4 cursor-pointer" />
+              </ElText>
+              <slot name="table-actions"> </slot>
+              <ElDropdown v-if="openMoreActions" @command="handleCommand">
+                <ElButton type="primary">
+                  {{ $t('common.action') }}
+                  <ArrayDown class="el-icon--right" />
+                </ElButton>
+                <template #dropdown>
+                  <ElDropdownMenu>
+                    <ElDropdownItem
+                      :icon="Import"
+                      command="import"
+                      v-if="options.toolbarConfig?.import"
+                    >
+                      {{ $t('common.import') }}
+                    </ElDropdownItem>
+                    <ElDropdownItem
+                      v-if="options.toolbarConfig?.export"
+                      command="export"
+                      :icon="Export"
+                    >
+                      {{ $t('common.export') }}
+                    </ElDropdownItem>
+                    <ElDropdownItem
+                      v-if="options.toolbarConfig?.print"
+                      command="print"
+                      :icon="Print"
+                    >
+                      {{ $t('common.print') }}
+                    </ElDropdownItem>
+                    <ElDropdownItem
+                      :command="value.code"
+                      :key="value.code"
+                      :icon="value.iconRender"
+                      v-for="value in toolbarOptions.toolbarConfig.tools"
+                    >
+                      {{ $t(value.name!) }}
+                    </ElDropdownItem>
+                  </ElDropdownMenu>
+                </template>
+              </ElDropdown>
+            </div>
+          </div>
           <div
             v-if="isSeparator"
             :style="{

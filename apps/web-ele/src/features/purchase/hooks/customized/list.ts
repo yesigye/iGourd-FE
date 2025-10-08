@@ -80,9 +80,10 @@ export function useCustomized() {
     {
       field: 'operation',
       title: t('purchase.operation'),
-      sortable: true,
       minWidth: 180,
-      slots: { default: 'operation' },
+      sortable: false,
+      dragSort: false,
+      slots: { default: 'actions' },
     },
   ];
   const searchFormSchema = {
