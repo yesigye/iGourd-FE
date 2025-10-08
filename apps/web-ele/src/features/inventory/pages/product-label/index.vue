@@ -141,7 +141,7 @@ onMounted(() => {
       </section>
     </template>
     <Grid>
-      <template #table-title>
+      <template #table-actions>
         <!--
         <ElButton
           v-auth="'inventory_product_label_add'"

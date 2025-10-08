@@ -95,26 +95,41 @@ export function useInventorySkuList() {
   ];
 
   const searchFormSchema = {
-    keywords: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
+    form: {
+      type: 'void',
+      'x-component': 'FormLayout',
       'x-component-props': {
-        placeholder: "{{t('inventory.pleaseEnterKeywordsNameAndSku')}}",
-        clearable: true,
+        layout: 'inline',
       },
-    },
-    status: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Select',
-      'x-component-props': {
-        placeholder: "{{t('inventory.status')}}",
-        clearable: true,
-        options: [
-          { label: t('inventory.onSale'), value: 'ON_SALE' },
-          { label: t('inventory.offSale'), value: 'OFF_SALE' },
-        ],
+      properties: {
+        keywords: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0' },
+          },
+          'x-component-props': {
+            placeholder: "{{t('inventory.pleaseEnterKeywordsNameAndSku')}}",
+            clearable: true,
+          },
+        },
+        status: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0', width: '140px' },
+          },
+          'x-component-props': {
+            placeholder: "{{t('inventory.status')}}",
+            clearable: true,
+            options: [
+              { label: t('inventory.onSale'), value: 'ON_SALE' },
+              { label: t('inventory.offSale'), value: 'OFF_SALE' },
+            ],
+          },
+        },
       },
     },
   };

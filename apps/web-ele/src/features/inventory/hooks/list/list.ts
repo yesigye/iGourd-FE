@@ -123,40 +123,61 @@ export function useInventory() {
   ];
 
   const searchFormSchema = {
-    product_name: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
+    form: {
+      type: 'void',
+      'x-component': 'FormLayout',
       'x-component-props': {
-        placeholder: "{{t('inventory.productName')}}",
-        clearable: true,
+        layout: 'inline',
       },
-    },
-    product_code: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('inventory.productCode')}}",
-        clearable: true,
-      },
-    },
-    warehouse_name: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('inventory.warehouseName')}}",
-        clearable: true,
-      },
-    },
-    warehouse_code: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('inventory.warehouseCode')}}",
-        clearable: true,
+      properties: {
+        product_name: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0' },
+          },
+          'x-component-props': {
+            placeholder: "{{t('inventory.productName')}}",
+            clearable: true,
+          },
+        },
+        product_code: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0' },
+          },
+          'x-component-props': {
+            placeholder: "{{t('inventory.productCode')}}",
+            clearable: true,
+          },
+        },
+        warehouse_name: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0' },
+          },
+          'x-component-props': {
+            placeholder: "{{t('inventory.warehouseName')}}",
+            clearable: true,
+          },
+        },
+        warehouse_code: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0' },
+          },
+          'x-component-props': {
+            placeholder: "{{t('list.warehouse-code')}}",
+            clearable: true,
+          },
+        },
       },
     },
   };

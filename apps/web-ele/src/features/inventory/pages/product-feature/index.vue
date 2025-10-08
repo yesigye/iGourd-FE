@@ -16,7 +16,7 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-title>
+      <template #table-actions>
         <ElButton
           v-auth="'inventory_product_feature_add'"
           type="primary"

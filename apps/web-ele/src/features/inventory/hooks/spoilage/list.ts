@@ -106,37 +106,55 @@ export function useInventorySpoilageList() {
   ];
 
   const searchFormSchema = {
-    keywords: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
+    form: {
+      type: 'void',
+      'x-component': 'FormLayout',
       'x-component-props': {
-        placeholder: "{{t('inventory.pleaseEnterKeywordsToSearch')}}",
-        clearable: true,
+        layout: 'inline',
       },
-    },
-    consumption_reason: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Select',
-      'x-component-props': {
-        placeholder: "{{t('spoilage.consumption-reason')}}",
-        clearable: true,
-        options: consumptionReason,
-      },
-    },
-    status: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Select',
-      'x-component-props': {
-        placeholder: "{{t('inventory.status')}}",
-        clearable: true,
-        options: [
-          { label: t('inventory.PENDING'), value: 'PENDING' },
-          { label: t('inventory.APPROVED'), value: 'APPROVED' },
-          { label: t('inventory.REJECTED'), value: 'REJECTED' },
-        ],
+      properties: {
+        keywords: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0' },
+          },
+          'x-component-props': {
+            placeholder: "{{t('inventory.pleaseEnterKeywordsToSearch')}}",
+            clearable: true,
+          },
+        },
+        consumption_reason: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0', width: '140px' },
+          },
+          'x-component-props': {
+            placeholder: "{{t('spoilage.consumption-reason')}}",
+            clearable: true,
+            options: consumptionReason,
+          },
+        },
+        status: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0', width: '140px' },
+          },
+          'x-component-props': {
+            placeholder: "{{t('inventory.status')}}",
+            clearable: true,
+            options: [
+              { label: t('inventory.PENDING'), value: 'PENDING' },
+              { label: t('inventory.APPROVED'), value: 'APPROVED' },
+              { label: t('inventory.REJECTED'), value: 'REJECTED' },
+            ],
+          },
+        },
       },
     },
   };

@@ -127,11 +127,11 @@ onMounted(() => {
                   <div class="flex-1">{{ item.product_spec_name }}</div>
                   <div class="show-opertion text-right">
                     <i
-                      class="iconfont icon-icon_Edit mr-4"
+                      class="iconfont icon-icon_Edit mr-4 text-sm"
                       @click="handleEditLabel(item)"
                     ></i>
                     <i
-                      class="iconfont icon-icon_del"
+                      class="iconfont icon-icon_del text-sm"
                       @click="handleRemove(item)"
                     ></i>
                   </div>
@@ -143,7 +143,7 @@ onMounted(() => {
       </section>
     </template>
     <Grid>
-      <template #table-title>
+      <template #table-actions>
         <ElButton type="primary" @click="handleAddSpecValue">
           {{ t('common.add') }}
         </ElButton>

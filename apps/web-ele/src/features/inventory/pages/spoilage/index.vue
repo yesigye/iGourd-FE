@@ -57,7 +57,7 @@ const handleconfirm = (data) => {
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-title>
+      <template #table-actions>
         <ElButton type="primary" @click="handleEdit()">
           {{ t('common.add') }}
         </ElButton>
