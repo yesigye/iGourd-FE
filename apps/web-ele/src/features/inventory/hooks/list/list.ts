@@ -31,7 +31,7 @@ export function useInventory() {
     {
       field: 'major_name',
       title: t('inventory.major_name'),
-      minWidth: 150,
+      minWidth: 180,
       sortable: true,
       align: 'left',
     },
@@ -83,27 +83,27 @@ export function useInventory() {
     {
       field: 'inbound_in_transit_stock_message',
       title: t('inventory.inboundTransitStock'),
-      width: 80,
+      minWidth: 120,
       align: 'center',
       slots: { default: 'tooltipNum' },
     },
     {
       field: 'outbound_in_transit_stock_message',
       title: t('inventory.outboundTransitStock'),
-      width: 80,
+      minWidth: 120,
       align: 'center',
       slots: { default: 'tooltipNum' },
     },
     {
       field: 'product_group_name',
       title: t('inventory.productGroup'),
-      width: 80,
+      minWidth: 120,
       align: 'center',
     },
     {
       field: 'creator_name',
       title: t('inventory.creator'),
-      width: 80,
+      minWidth: 120,
       align: 'center',
     },
     {
