@@ -111,16 +111,22 @@ export function extendsColumn(
     });
   } else {
     actions.slots!.header = () => {
-      return h(ElSpace, {}, [
-        actions.title,
-        h(IgourdIcon, {
-          icon: 'ep:set-up',
-          class: 'cursor-pointer size-4',
-          onClick: () => {
-            api.grid.openCustom();
-          },
-        }),
-      ]);
+      return h(
+        ElSpace,
+        {},
+        {
+          default: () => [
+            actions.title,
+            h(IgourdIcon, {
+              icon: 'ep:set-up',
+              class: 'cursor-pointer size-4',
+              onClick: () => {
+                api.grid.openCustom();
+              },
+            }),
+          ],
+        },
+      );
     };
   }
 }
