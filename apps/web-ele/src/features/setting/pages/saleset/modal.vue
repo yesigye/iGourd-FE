@@ -32,7 +32,7 @@ function handleUpdate(len: number) {
     <div
       v-for="item in list"
       :key="item"
-      class="even:bg-heavy bg-muted flex-center h-[220px] w-full"
+      class="even:bg-heavy  flex-center h-[220px] w-full"
     >
       {{ item }}
     </div>
