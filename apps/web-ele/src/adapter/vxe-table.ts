@@ -2,7 +2,13 @@ import type { VxeTableGridOptions } from '@igourd/plugins/vxe-table';
 
 import { h } from 'vue';
 
-import { ElButton, ElImage, ElSwitch } from '@igourd/common-ui';
+import {
+  ElButton,
+  ElImage,
+  ElLink,
+  ElSpace,
+  ElSwitch,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import {
   setupIgourdVxeTable,
@@ -183,7 +189,39 @@ setupIgourdVxeTable({
         });
       },
     });
-
+    vxeUI.renderer.add('upgradeService', {
+      renderTableDefault({ props }, params) {
+        const { row } = params;
+        const disabled = row.status === 'NONACTIVATED';
+        const upgradeDisabled = row?.package_models?.some(
+          ({ package_id }: { package_id: number }) => +package_id >= 3,
+        );
+        return h(ElSpace, null, [
+          h(
+            ElLink,
+            {
+              disabled: upgradeDisabled,
+              type: 'primary',
+              onClick: () => {
+                props?.onClick(row, 'renew');
+              },
+            },
+            '续费',
+          ),
+          h(
+            ElLink,
+            {
+              disabled,
+              type: 'primary',
+              onClick: () => {
+                props?.onClick(row, 'upgrade');
+              },
+            },
+            '升级',
+          ),
+        ]);
+      },
+    });
     // 这里可以自行扩展 vxe-table 的全局配置，比如自定义格式化
     // vxeUI.formats.add
   },
