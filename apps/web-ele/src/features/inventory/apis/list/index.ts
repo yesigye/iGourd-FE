@@ -44,6 +44,12 @@ export function getInventoryStockDetail(params) {
   );
 }
 
+export function createOrUpdateStock(params) {
+  return Reflect.has(params, 'id')
+    ? modifyInventoryStock(params)
+    : createInventoryStock(params);
+}
+
 // 修改库存详情
 export function modifyInventoryStock(params) {
   return requestClient.post(

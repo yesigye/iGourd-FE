@@ -4,7 +4,7 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { getInventoryListApi, updateInventoryApi } from '@@/inventory/apis';
+import { getInventoryListApi } from '@@/inventory/apis';
 import { InventoryDrawer } from '@@/inventory/components';
 
 import { useCrud } from '#/hooks';
@@ -194,7 +194,6 @@ export function useInventory() {
     },
     service: {
       query: getInventoryListApi,
-      update: updateInventoryApi,
     },
   });
 }

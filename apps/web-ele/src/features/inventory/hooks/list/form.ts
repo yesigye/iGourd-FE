@@ -4,9 +4,8 @@ import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
 import {
-  createInventoryStock,
+  createOrUpdateStock,
   getInventoryStockDetail,
-  modifyInventoryStock,
   wareHouseProductSearch,
 } from '@@/inventory/apis';
 
@@ -174,54 +173,35 @@ export function useListForm() {
       },
     },
   };
-  const totalFun = (formData) => {
-    const items = formData.stock_consumption_item_list;
-  };
   // 表单提交处理
-  const handleSubmit = async (formData: PurchaseCodeRulesFormData) => {
-    try {
-      let response = null;
-      // 仓位ID(暂时默认传个1)
-      formData.warehouse_location_id = 1;
-      const params = JSON.parse(JSON.stringify(formData));
-      const keysToCopy = [
-        'product_code',
-        'product_id',
-        'product_name',
-        'product_group_id',
-        'product_unit_name',
-        'merchant_id',
-        'basic_product_id',
-        'sku_group_code',
-        'stock_quantity',
-        'basic_unit_radio',
-      ];
-      const list = params.product.map((item) => {
-        const partialCopy = keysToCopy.reduce((obj, key) => {
-          obj[key] = item[key];
-          return obj;
-        }, {});
-        partialCopy.product_id = item.id;
-        partialCopy.basic_unit_radio = 1;
-        partialCopy.product_name = item.major_name;
-        return partialCopy;
-      });
-      params.product = list;
-      if (params.id) {
-        response = await modifyInventoryStock({
-          ...params,
-        });
-      } else {
-        // 调用 API
-        response = await createInventoryStock({
-          ...params,
-        });
-      }
-      return response;
-    } catch (error) {
-      console.error('调拨单 customized form submission error:', error);
-      throw error;
-    }
+  const handleSubmit = async (formData: any) => {
+    // 仓位ID(暂时默认传个1)
+    formData.warehouse_location_id = 1;
+    const params = formData;
+    const keysToCopy = [
+      'product_code',
+      'product_id',
+      'product_name',
+      'product_group_id',
+      'product_unit_name',
+      'merchant_id',
+      'basic_product_id',
+      'sku_group_code',
+      'stock_quantity',
+      'basic_unit_radio',
+    ];
+    const list = params.product.map((item) => {
+      const partialCopy = keysToCopy.reduce((obj, key) => {
+        obj[key] = item[key];
+        return obj;
+      }, {});
+      partialCopy.product_id = item.id;
+      partialCopy.basic_unit_radio = 1;
+      partialCopy.product_name = item.major_name;
+      return partialCopy;
+    });
+    params.product = list;
+    return createOrUpdateStock(params);
   };
   const { Form, formAPI, Drawer, drawerApi } = useDrawerForm({
     drawerOptions: {
@@ -242,8 +222,8 @@ export function useListForm() {
             // detail.returned_quantity = detail.physical_total_quantity;
             formAPI.setValues(detail);
           }
-          if(data && data.mode === 'detail'){
-            formAPI.setFormState({readPretty:true})
+          if (data && data.mode === 'detail') {
+            formAPI.setFormState({ readPretty: true });
           }
         } else {
           // 关闭抽屉时，重置表单å
@@ -256,7 +236,7 @@ export function useListForm() {
       async onConfirm() {
         await formAPI.validate();
         drawerApi.lock();
-        await handleSubmit(formAPI.values as PurchaseCodeRulesFormData)
+        handleSubmit(formAPI.values)
           .then(() => {
             drawerApi.close();
           })
