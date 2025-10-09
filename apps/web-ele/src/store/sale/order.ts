@@ -29,10 +29,10 @@ export const useOrderStore = defineStore('order', {
         console.error('Get Order list:', error);
       }
     },
-    setCalculateOrderList(list) {
+    setCalculateOrderList(list: any) {
       this.calculateOrderList = list;
     },
-    setMergeGoodsList(list) {
+    setMergeGoodsList(list: any) {
       this.mergeGoodsList = list;
     },
   },

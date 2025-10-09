@@ -144,11 +144,11 @@ onMounted(async () => {
                 </div>
                 <div class="show-opertion">
                   <i
-                    class="iconfont icon-icon_Edit mr-4"
+                    class="iconfont icon-icon_Edit mr-4 text-sm"
                     @click.stop="handleEditGroup(node)"
                   ></i>
                   <i
-                    class="iconfont icon-icon_del"
+                    class="iconfont icon-icon_del text-sm"
                     @click.stop="handleRemove(node)"
                   ></i>
                 </div>

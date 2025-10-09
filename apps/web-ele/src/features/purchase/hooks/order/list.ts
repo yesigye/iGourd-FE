@@ -107,7 +107,7 @@ export function usePurchaseOrder() {
       fixed: 'right',
       title: t('common.operations'),
       slots: {
-        default: 'operation',
+        default: 'actions',
       },
     },
   ];
@@ -120,29 +120,43 @@ export function usePurchaseOrder() {
   };
 
   // 使用 CRUD Hook
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
-    useCrud({
-      service,
-      columns: baseColumns,
-      searchFormSchema: {
-        keywords: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Input',
-          'x-component-props': {
-            placeholder: t('order.search-placeholder'),
-          },
+  const {
+    Grid,
+    gridApi,
+    canBatchOperate,
+    Drawer,
+    handleEdit,
+    handleBatchDelete,
+  } = useCrud({
+    service,
+    columns: baseColumns,
+    searchFormSchema: {
+      keywords: {
+        type: 'string',
+        'x-decorator': 'FormItem',
+        'x-component': 'Input',
+        'x-component-props': {
+          placeholder: t('order.search-placeholder'),
         },
       },
-      batchOperate: true,
-      connectedComponent: PurchaseOrderDrawer,
-    });
+    },
+    printConfig: {
+      sheetName: '打印出货单据',
+    },
+    toolbarConfig: {
+      export: true,
+      print: true,
+      import: true,
+    },
+    batchOperate: true,
+    connectedComponent: PurchaseOrderDrawer,
+  });
 
   return {
     // 组件
     Grid,
     Drawer,
-
+    gridApi,
     // 方法
     handleEdit,
     handleBatchDelete,

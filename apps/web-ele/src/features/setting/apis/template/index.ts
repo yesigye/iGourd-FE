@@ -6,7 +6,7 @@ export function getPrintTemplateList(data: {
   type: keyof typeof PrintTemplateBusinessTypeEnum;
 }) {
   return requestClient.post(
-    `v1/merchant/basics/settings/print-template-system/list`,
+    `/v1/merchant/basics/settings/print-template-merchant/option/list`,
     data,
   );
 }
@@ -15,7 +15,7 @@ export function deletePrintTemplate(data: {
   print_template_merchant_id_list: string[];
 }) {
   return requestClient.post(
-    `v1/merchant/basics/settings/print-template-merchant/remove`,
+    `/v1/merchant/basics/settings/print-template-merchant/remove`,
     data,
   );
 }
@@ -25,7 +25,7 @@ export function setDefaultPrintTemplate(data: {
   id: string;
 }) {
   return requestClient.post(
-    `v1/merchant/basics/settings/print-template-merchant/default/modify`,
+    `/v1/merchant/basics/settings/print-template-merchant/default/modify`,
     data,
   );
 }
@@ -34,7 +34,7 @@ export function getPrintTemplateOptionList(data: {
   business_type: keyof typeof PrintTemplateBusinessTypeEnum;
 }) {
   return requestClient.post(
-    `v1/merchant/basics/settings/print-template-merchant/option/list`,
+    `/v1/merchant/basics/settings/print-template-merchant/option/list`,
     data,
   );
 }

@@ -14,10 +14,11 @@ import { ref } from 'vue';
 import {
   $t,
   setupI18n as coreSetup,
+  loadLocaleMessages,
   loadLocalesMapFromDir,
   mergeLocaleMessage,
 } from '@igourd/locales';
-import { preferences } from '@igourd/preferences';
+import { preferences, updatePreferences } from '@igourd/preferences';
 import { useUserStore } from '@igourd/stores';
 
 // import { useAccessStore } from "@igourd/stores"
@@ -147,7 +148,7 @@ async function setupI18n(app: App, options: LocaleSetupOptions = {}) {
 
 async function loadFeatureLocal(moduleName: string) {
   if (!moduleName) return;
-  const regexp = new RegExp(`${moduleName}\/locales\/([^/]+)\/(.*)\.json$`);
+  const regexp = new RegExp(`${moduleName}/locales/([^/]+)/(.*).json$`);
   const featureLocalesMap = loadLocalesMapFromDir(regexp, featureModules);
   Object.keys(featureLocalesMap).map(async (key) => {
     const message = await featureLocalesMap[key]?.();
@@ -155,4 +156,28 @@ async function loadFeatureLocal(moduleName: string) {
   });
 }
 
-export { $t, elementLocale, loadFeatureLocal, loadRemoteLocale, setupI18n };
+async function updateLocale(value: string | undefined) {
+  if (!value) return;
+  const map = { fr: 'fr-FR', en: 'en-US', zh_CN: 'zh-CN' };
+  let locale = 'en-US' as SupportedLanguagesType;
+  if (Object.keys(map).includes(value)) {
+    locale = map[value as keyof typeof map] as SupportedLanguagesType;
+  } else if (['en-US', 'fr-FR', 'zh-CN'].includes(value)) {
+    locale = value as SupportedLanguagesType;
+  }
+  await loadLocaleMessages(locale);
+  updatePreferences({
+    app: {
+      locale,
+    },
+  });
+}
+
+export {
+  $t,
+  elementLocale,
+  loadFeatureLocal,
+  loadRemoteLocale,
+  setupI18n,
+  updateLocale,
+};

@@ -2,43 +2,31 @@ import { createApp, watchEffect } from 'vue';
 
 import { registerAccessDirective } from '@igourd/access';
 import { ElLoading, registerLoadingDirective } from '@igourd/common-ui';
+import { VuePrintPlugin } from '@igourd/plugins/print';
 // import '@igourd/common-ui/style';
 import { preferences } from '@igourd/preferences';
 import { initStores } from '@igourd/stores';
 import '@igourd/styles';
 import '@igourd/styles/ele';
-import { ElInfiniteScroll } from 'element-plus';
 
 import { useTitle } from '@vueuse/core';
+import { ElInfiniteScroll } from 'element-plus';
 
 import { $t, setupI18n } from '#/locales';
 
 import { initComponentAdapter } from './adapter/component';
-// import './assets/iconfont/iconfont.css';
-// import { initSetupIgourdForm } from './adapter/form';
 import App from './app.vue';
 import { router } from './router';
 
 async function bootstrap(namespace: string) {
   // 初始化组件适配器
   await initComponentAdapter();
-
-  // 初始化表单组件
-  // await initSetupIgourdForm();
-
-  // // 设置弹窗的默认配置
-  // setDefaultModalProps({
-  //   fullscreenButton: false,
-  // });
-  // // 设置抽屉的默认配置
-  // setDefaultDrawerProps({
-  //   zIndex: 2000,
-  // });
   const app = createApp(App);
 
   // 注册Element Plus提供的v-loading指令
   app.directive('loading', ElLoading.directive);
-app.directive('infinite-scroll', ElInfiniteScroll);
+  app.directive('infinite-scroll', ElInfiniteScroll);
+  app.use(VuePrintPlugin);
 
   // 注册Igourd提供的v-loading和v-spinning指令
   registerLoadingDirective(app, {
@@ -53,10 +41,6 @@ app.directive('infinite-scroll', ElInfiniteScroll);
 
   // 安装权限指令
   registerAccessDirective(app);
-
-  // 初始化 tippy
-  const { initTippy } = await import('@igourd/common-ui/es/tippy');
-  initTippy(app);
 
   // 配置路由及路由守卫
   app.use(router);

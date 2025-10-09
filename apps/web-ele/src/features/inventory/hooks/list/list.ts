@@ -31,7 +31,7 @@ export function useInventory() {
     {
       field: 'major_name',
       title: t('inventory.major_name'),
-      minWidth: 150,
+      minWidth: 180,
       sortable: true,
       align: 'left',
     },
@@ -83,27 +83,27 @@ export function useInventory() {
     {
       field: 'inbound_in_transit_stock_message',
       title: t('inventory.inboundTransitStock'),
-      width: 80,
+      minWidth: 120,
       align: 'center',
       slots: { default: 'tooltipNum' },
     },
     {
       field: 'outbound_in_transit_stock_message',
       title: t('inventory.outboundTransitStock'),
-      width: 80,
+      minWidth: 120,
       align: 'center',
       slots: { default: 'tooltipNum' },
     },
     {
       field: 'product_group_name',
       title: t('inventory.productGroup'),
-      width: 80,
+      minWidth: 120,
       align: 'center',
     },
     {
       field: 'creator_name',
       title: t('inventory.creator'),
-      width: 80,
+      minWidth: 120,
       align: 'center',
     },
     {
@@ -116,47 +116,68 @@ export function useInventory() {
     {
       field: 'operation',
       title: t('common.operations'),
-      width: 120,
+      width: 180,
       fixed: 'right',
       slots: { default: 'operation' },
     },
   ];
 
   const searchFormSchema = {
-    product_name: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
+    form: {
+      type: 'void',
+      'x-component': 'FormLayout',
       'x-component-props': {
-        placeholder: "{{t('inventory.productName')}}",
-        clearable: true,
+        layout: 'inline',
       },
-    },
-    product_code: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('inventory.productCode')}}",
-        clearable: true,
-      },
-    },
-    warehouse_name: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('inventory.warehouseName')}}",
-        clearable: true,
-      },
-    },
-    warehouse_code: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('inventory.warehouseCode')}}",
-        clearable: true,
+      properties: {
+        product_name: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0' },
+          },
+          'x-component-props': {
+            placeholder: "{{t('inventory.productName')}}",
+            clearable: true,
+          },
+        },
+        product_code: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0' },
+          },
+          'x-component-props': {
+            placeholder: "{{t('inventory.productCode')}}",
+            clearable: true,
+          },
+        },
+        warehouse_name: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0' },
+          },
+          'x-component-props': {
+            placeholder: "{{t('inventory.warehouseName')}}",
+            clearable: true,
+          },
+        },
+        warehouse_code: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0' },
+          },
+          'x-component-props': {
+            placeholder: "{{t('list.warehouse-code')}}",
+            clearable: true,
+          },
+        },
       },
     },
   };
@@ -166,6 +187,11 @@ export function useInventory() {
     searchFormSchema,
     batchOperate: true,
     connectedComponent: InventoryDrawer,
+    toolbarConfig: {
+      export: true,
+      print: false,
+      import: false,
+    },
     service: {
       query: getInventoryListApi,
       update: updateInventoryApi,

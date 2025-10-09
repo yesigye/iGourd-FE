@@ -51,3 +51,9 @@ export function modifyInventoryStock(params) {
     params,
   );
 }
+export function removeInventoryStock(params) {
+  return requestClient.post(
+    `/v1/merchant/basics/inventory/stock/remove`,
+    params,
+  );
+}

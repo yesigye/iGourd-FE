@@ -113,7 +113,7 @@ const headerWrapperHeight = computed(() => {
   if (props.headerVisible && !props.headerHidden) {
     height += props.headerHeight;
   }
-  if (props.tabbarEnable && props.tabbarPostion === "default") {
+  if (props.tabbarEnable && props.tabbarPostion === 'default') {
     height += props.tabbarHeight;
   }
   return height;
@@ -374,9 +374,7 @@ const showHeaderLogo = computed(() => {
 watch(
   () => props.isMobile,
   (val) => {
-    if (val) {
-      sidebarCollapse.value = true;
-    }
+    sidebarCollapse.value = val;
   },
   {
     immediate: true,

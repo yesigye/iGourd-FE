@@ -3,6 +3,8 @@ import type { PropType } from 'vue';
 
 import { computed, onBeforeUnmount, ref } from 'vue';
 
+import { ElOption, ElSelect } from '@igourd/common-ui';
+
 import { warehouseStockListApi } from '@@/sale/apis';
 import { storeToRefs } from 'pinia';
 
@@ -121,13 +123,13 @@ const handleDropdownVisible = (visible: boolean) => {
       <Stock :detail-info="currentWarehouseInfo" />
     </div>
     <div class="warehouse-select">
-      <el-select
+      <ElSelect
         v-model="selectedWarehouse"
         size="small"
         @change="handleChange"
         @visible-change="handleDropdownVisible"
       >
-        <el-option
+        <ElOption
           v-for="item in warehouseList"
           :key="item.warehouse_id"
           :label="item.name"
@@ -137,8 +139,8 @@ const handleDropdownVisible = (visible: boolean) => {
             <span>{{ item.warehouse_name }}-</span>
             <span class="stock-count">{{ item.stock_quantity_message }}</span>
           </div>
-        </el-option>
-      </el-select>
+        </ElOption>
+      </ElSelect>
     </div>
   </div>
 </template>

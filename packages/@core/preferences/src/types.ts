@@ -16,7 +16,7 @@ import type {
   ThemeModeType,
 } from '@igourd-core/typings';
 
-type SupportedLanguagesType = 'en-US' | 'zh-CN' | 'fr-FR';
+type SupportedLanguagesType = 'en-US' | 'fr-FR' | 'zh-CN';
 
 interface AppPreferences {
   /** 权限模式 */
@@ -69,6 +69,7 @@ interface AppPreferences {
   loginExpiredMode: LoginExpiredModeType;
   /** 应用名 */
   name: string;
+  persistence: boolean;
   /** 偏好设置按钮位置 */
   preferencesButtonPosition: PreferencesButtonPositionType;
   /**
@@ -168,12 +169,27 @@ interface SidebarPreferences {
   extraCollapse: boolean;
   /** 侧边栏扩展区域折叠宽度 */
   extraCollapsedWidth: number;
+  /**
+   * 可以搜索
+   */
+  filter: boolean;
   /** 侧边栏固定按钮是否可见 */
   fixedButton: boolean;
   /** 侧边栏是否隐藏 - css */
   hidden: boolean;
+  /**
+   * 是否展示icon
+   */
+  icon: boolean;
+
   /** 混合侧边栏宽度 */
   mixedWidth: number;
+
+  /**
+   * Popver展开菜单
+   */
+  popover: boolean;
+
   /** 侧边栏宽度 */
   width: number;
 }
@@ -192,7 +208,6 @@ interface ShortcutKeyPreferences {
 }
 
 interface TabbarPreferences {
-  postion: "breadcrumb" | "default";
   /** 是否开启多标签页拖拽 */
   draggable: boolean;
   /** 是否开启多标签页 */
@@ -207,6 +222,7 @@ interface TabbarPreferences {
   middleClickToClose: boolean;
   /** 是否持久化标签 */
   persist: boolean;
+  postion: 'breadcrumb' | 'default';
   /** 是否开启多标签页图标 */
   showIcon: boolean;
   /** 显示最大化按钮 */

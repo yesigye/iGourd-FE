@@ -131,9 +131,19 @@ export default {
   ],
   prefix: '',
   theme: {
+    fontSize: {
+      xs: '0.625rem',
+      sm: '0.75rem',
+      base: '0.875rem',
+      xl: '1rem',
+      '2xl': '1.25rem',
+      '3xl': '1.563rem',
+      '4xl': '1.953rem',
+      '5xl': '2.441rem',
+    },
     container: {
       center: true,
-      padding: '2rem',
+      padding: '1em',
       screens: {
         '2xl': '1400px',
       },
@@ -198,6 +208,13 @@ export default {
       zIndex: {
         '100': '100',
         '1000': '1000',
+      },
+      gridTemplateColumns: {
+        'auto-fit-64': 'repeat(auto-fit, minmax(16rem, 1fr))',
+        'auto-fit-72': 'repeat(auto-fit, minmax(18rem, 1fr))',
+        'auto-fit-80': 'repeat(auto-fit, minmax(20rem, 1fr))',
+        // 需要更宽可以继续加
+        'auto-fit-96': 'repeat(auto-fit, minmax(24rem, 1fr))',
       },
     },
   },

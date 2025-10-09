@@ -7,14 +7,12 @@ import type { MenuRecordRaw } from '@igourd/types';
 import { computed, onMounted, useSlots, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { useRefresh } from '@igourd/hooks';
-import { $t, i18n } from '@igourd/locales';
+import { $t } from '@igourd/locales';
 import {
   preferences,
   updatePreferences,
   usePreferences,
 } from '@igourd/preferences';
-import { useAccessStore } from '@igourd/stores';
 import { cloneDeep, mapTree } from '@igourd/utils';
 
 import { IgourdAdminLayout } from '@igourd-core/layout-ui';
@@ -51,8 +49,7 @@ const {
   sidebarCollapsed,
   theme,
 } = usePreferences();
-const accessStore = useAccessStore();
-const { refresh } = useRefresh();
+// const { refresh } = useRefresh();
 
 const sidebarTheme = computed(() => {
   const dark = isDark.value || preferences.theme.semiDarkSidebar;
@@ -185,9 +182,9 @@ watch(
   },
 );
 
-// 语言更新后，刷新页面
-// i18n.global.locale会在preference.app.locale变更之后才会更新，因此watchpreference.app.locale是不合适的，刷新页面时可能语言配置尚未完全加载完成
-watch(i18n.global.locale, refresh, { flush: 'post' });
+// // 语言更新后，刷新页面
+// // i18n.global.locale会在preference.app.locale变更之后才会更新，因此watchpreference.app.locale是不合适的，刷新页面时可能语言配置尚未完全加载完成
+// watch(i18n.global.locale, refresh, { flush: 'post' });
 
 const slots: SetupContext['slots'] = useSlots();
 const headerSlots = computed(() => {
@@ -256,15 +253,16 @@ const headerSlots = computed(() => {
         v-if="preferences.logo.enable"
         :fit="preferences.logo.fit"
         :class="logoClass"
+        :logo-size="92"
         :collapsed="logoCollapsed"
         :src="preferences.logo.source"
-        :text="preferences.app.name"
+        text=""
         :theme="showHeaderNav ? headerTheme : theme"
         @click="clickLogo"
       >
-        <template v-if="$slots['logo-text']" #text>
+        <!-- <template v-if="$slots['logo-text']" #text>
           <slot name="logo-text"></slot>
-        </template>
+        </template> -->
       </IgourdLogo>
     </template>
     <!-- 头部区域 -->
@@ -325,6 +323,8 @@ const headerSlots = computed(() => {
       <LayoutMenu
         :accordion="preferences.navigation.accordion"
         :collapse="preferences.sidebar.collapsed"
+        :search="preferences.sidebar.filter"
+        :popover="preferences.sidebar.popover"
         :collapse-show-title="preferences.sidebar.collapsedShowTitle"
         :default-active="sidebarActive"
         :menus="wrapperMenus(sidebarMenus)"

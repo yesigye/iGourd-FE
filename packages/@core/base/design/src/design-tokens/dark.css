@@ -61,7 +61,8 @@
   --secondary-foreground: 0 0% 98%;
 
   /* Used for accents such as hover effects on <DropdownMenuItem>, <SelectItem>...etc */
-  --accent: 216 5% 19%;
+
+  --accent: 205deg 100% 53%;
   --accent-dark: 240 0% 22%;
   --accent-darker: 240 0% 26%;
   --accent-lighter: 216 5% 12%;
@@ -97,7 +98,7 @@
 
   /* =============component & UI============= */
 
-  --sidebar: 222.34deg 10.43% 12.27%;
+  --sidebar: 198.75deg 12.5% 25.1% / 1;
   --sidebar-deep: 220deg 13.06% 9%;
   --menu: var(--sidebar);
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 
 import {
   ElButton,

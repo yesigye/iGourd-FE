@@ -17,6 +17,15 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
 <template>
   <Page auto-content-height>
     <Grid>
+      <template #table-actions>
+        <ElButton
+          type="danger"
+          v-if="canBatchOperate"
+          @click="handleBatchDelete"
+        >
+          {{ t('common.delete') }}
+        </ElButton>
+      </template>
       <template #operation="{ row }">
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}

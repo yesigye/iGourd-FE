@@ -13,11 +13,9 @@ import { preferences, usePreferences } from '@igourd/preferences';
 import { isWindowsOs } from '@igourd/utils';
 
 import {
-  Badge,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   // 新增：Sub 相关
@@ -86,9 +84,6 @@ const props = withDefaults(defineProps<Props>(), {
 // 事件：保持现有 logout，同时新增通用 select（用于 child.value）
 const emit = defineEmits<{
   logout: [];
-  select: [
-    payload: { item: MenuChild; parent?: null | string; value: unknown },
-  ];
 }>();
 
 const { globalLogoutShortcutKey } = usePreferences();
@@ -132,18 +127,14 @@ function handleSubmitLogout() {
 }
 
 // 统一处理“叶子项”点击：优先 handler；否则如果有 value，则发 select；最后关闭菜单
-function onLeafClick(
+async function onLeafClick(
   item: { handler?: AnyFunction; value?: unknown },
-  parent?: string,
+  parent?: MenuItem,
 ) {
   if (typeof item.handler === 'function') {
-    item.handler();
-  } else if ('value' in item && item.value !== undefined) {
-    emit('select', {
-      parent: parent ?? null,
-      value: item.value,
-      item: item as MenuChild,
-    });
+    await item.handler();
+  } else if (parent?.handler) {
+    await parent?.handler(item);
   }
   openPopover.value = false;
 }
@@ -179,42 +170,17 @@ if (enableShortcutKey.value) {
 
   <DropdownMenu v-model:open="openPopover">
     <DropdownMenuTrigger ref="refTrigger" :disabled="props.trigger === 'hover'">
-      <div class="hover:bg-accent ml-1 mr-2 cursor-pointer rounded-full p-1.5">
+      <div class="ml-1 mr-2 cursor-pointer rounded-full p-1.5">
         <div class="hover:text-accent-foreground flex-center">
           <IgourdAvatar :alt="text" :src="avatar" class="size-8" dot />
+          <slot></slot>
         </div>
       </div>
     </DropdownMenuTrigger>
 
     <DropdownMenuContent class="mr-2 min-w-[240px] p-0 pb-1">
       <div ref="refContent">
-        <DropdownMenuLabel class="flex items-center p-3">
-          <IgourdAvatar
-            :alt="text"
-            :src="avatar"
-            class="size-12"
-            dot
-            dot-class="bottom-0 right-1 border-2 size-4 bg-green-500"
-          />
-          <div class="ml-2 w-full">
-            <div
-              v-if="tagText || text || $slots.tagText"
-              class="text-foreground mb-1 flex items-center text-sm font-medium"
-            >
-              {{ text }}
-              <slot name="tagText">
-                <Badge v-if="tagText" class="ml-2 text-green-400">
-                  {{ tagText }}
-                </Badge>
-              </slot>
-            </div>
-            <div class="text-muted-foreground text-xs font-normal">
-              {{ description }}
-            </div>
-          </div>
-        </DropdownMenuLabel>
-
-        <DropdownMenuSeparator v-if="menus?.length" />
+        <!-- <DropdownMenuSeparator v-if="menus?.length" /> -->
 
         <!-- 菜单区：自动识别是否有 children，决定渲染 Item 或 Sub -->
         <template v-for="menu in menus" :key="menu.text">
@@ -237,7 +203,7 @@ if (enableShortcutKey.value) {
                 :key="child.text"
                 class="mx-1 flex cursor-pointer items-center rounded-sm py-1 leading-8"
                 :disabled="child.disabled"
-                @click="onLeafClick(child, menu.text)"
+                @click="onLeafClick(child, menu)"
               >
                 <IgourdIcon :icon="child.icon" class="mr-2 size-4" />
                 <span class="flex-1">{{ child.text }}</span>

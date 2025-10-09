@@ -3,7 +3,6 @@ import type {
   MerchantPaymentMethodConfigModelAddPayField,
   PaymentInputType,
   PaymentInputTypeKey,
-  WIPED_AMOUNT_INPUT_KEY,
 } from '@@/sale/types';
 
 import {
@@ -18,6 +17,17 @@ import {
   watchEffect,
 } from 'vue';
 
+import {
+  ElButton,
+  ElCheckbox,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElIcon,
+  ElInput,
+  ElInputNumber,
+} from '@igourd/common-ui';
+import { ArrowDown, Tickets } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 
 import {
@@ -26,7 +36,11 @@ import {
   getOrderPaymentMethodConfigListApi,
   offlinePayApi,
 } from '@@/sale/apis';
-import { PaymentMethodEnum, PaymentWay } from '@@/sale/types';
+import {
+  PaymentMethodEnum,
+  PaymentWay,
+  WIPED_AMOUNT_INPUT_KEY,
+} from '@@/sale/types';
 import Decimal from 'decimal.js';
 import { ElMessage } from 'element-plus';
 
@@ -57,6 +71,10 @@ const { detail, showDialog } = toRefs(props);
 const printObj = {
   ids: 'receiptPrintId3',
   popTitle: '页面打印',
+  breakInside: 'avoid',
+  preview: true,
+  // 小票模式
+  receipt: true,
 };
 const customer = inject<any>('customerInfo');
 const { t } = useI18n();
@@ -433,6 +451,7 @@ const isSettlementDisabled = computed(() => {
 
 // 计算总金额：total_Amount
 const totalAmount = computed(() => {
+  console.log(calculateOrderList);
   const amount = calculateOrderList.value?.total_amount || 0;
   return Number(amount).toFixed(2);
 });
@@ -639,7 +658,6 @@ const handleSettlement = async () => {
   try {
     const params = {
       order_no: orderData.value.order_no || '',
-      merchant_id: merchantId,
       ...other,
       total_paid_amount: orderData.value.total_amount - wipedAmount.value,
       round_down_amount: wipedAmount.value,
@@ -653,20 +671,16 @@ const handleSettlement = async () => {
       return;
     }
 
-    const res = await offlinePayApi(params);
+    await offlinePayApi(params);
 
-    if (String(res.code) === 'SUCCESS') {
-      ElMessage.success(res.message);
-      settlementData.value = params as never;
-      emit('settlement-success', params);
-      isPrintEnabled.value = true;
-      isSettlementCompleted.value = true;
-      emit('handleEmpty');
+    ElMessage.success(t('scan.pay.success'));
+    settlementData.value = params as never;
+    emit('settlement-success', params);
+    isPrintEnabled.value = true;
+    isSettlementCompleted.value = true;
+    emit('handleEmpty');
 
-      emit('close-drawer');
-    } else {
-      ElMessage.error(res.message || t('scan.settlementError'));
-    }
+    // emit('close-drawer');
   } catch (error: any) {
     ElMessage.error(error.message || t('scan.settlementError'));
   }
@@ -762,11 +776,11 @@ defineExpose({
     <div
       class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
-      <span class="scan-cash-settlement-header-title"
-        >{{ t('scan.accounts-receivable') }}:</span
-      >
+      <span class="scan-cash-settlement-header-title">
+        {{ t('scan.accounts-receivable') }}:
+      </span>
 
-      <span class="">{{ total-amount }} {{ currentSymbol }}</span>
+      <span class="">{{ totalAmount }} {{ currentSymbol }}</span>
     </div>
     <!-- 实付金额 -->
     <div
@@ -776,9 +790,9 @@ defineExpose({
         >{{ t('scan.amountTendered') }}:</span
       >
 
-      <span class="scan-cash-settlement-header-amount"
-        >{{ tenderedAmount.toFixed(2) }} {{ currentSymbol }}</span
-      >
+      <span class="scan-cash-settlement-header-amount">
+        {{ tenderedAmount.toFixed(2) }} {{ currentSymbol }}
+      </span>
     </div>
     <!-- 抹零 -->
     <div
@@ -788,7 +802,7 @@ defineExpose({
         >{{ t('scan.amountChange') }}:</span
       >
       <div class="flex-1">
-        <el-input-number
+        <ElInputNumber
           ref="wipedAmountInput"
           v-model="wipedAmount"
           :controls="false"
@@ -803,12 +817,12 @@ defineExpose({
           <template #suffix>
             <span>{{ currentSymbol }}</span>
           </template>
-        </el-input-number>
+        </ElInputNumber>
       </div>
     </div>
     <!-- 支付方式 -->
     <div class="mb-1 bg-white pb-2.5 pl-5 pr-5 pt-2.5">
-      <el-checkbox
+      <ElCheckbox
         v-model="paymentWay"
         :true-value="PaymentWay.CREDIT"
         :false-value="PaymentWay.NORMAL"
@@ -818,7 +832,7 @@ defineExpose({
         "
       >
         {{ t('set.on_credit') }}
-      </el-checkbox>
+      </ElCheckbox>
       <ul>
         <li
           v-for="item in paymentOptions"
@@ -826,21 +840,21 @@ defineExpose({
           class="bg-primary-light-8 borde mb-2.5 flex items-center rounded-md text-sm"
         >
           <!-- 图标 -->
-          <el-dropdown :disabled="item.length <= 1" class="h-full w-1/2">
+          <ElDropdown :disabled="item.length <= 1" class="h-full w-1/2">
             <div class="text-azure w-full pl-3 pr-3">
               <div class="flex min-w-[60%] items-center gap-2.5">
-                <el-icon>
+                <ElIcon>
                   <Tickets />
-                </el-icon>
+                </ElIcon>
                 <p class="flex-1">{{ getPayMetName(item) }}</p>
-                <el-icon v-if="item.length > 1">
+                <ElIcon v-if="item.length > 1">
                   <ArrowDown />
-                </el-icon>
+                </ElIcon>
               </div>
             </div>
             <template #dropdown>
-              <el-dropdown-menu class="bg-white">
-                <el-dropdown-item
+              <ElDropdownMenu class="bg-white">
+                <ElDropdownItem
                   v-for="payItem in item"
                   :key="payItem.id"
                   @click="handleChangePayMet(item, payItem.id)"
@@ -850,10 +864,10 @@ defineExpose({
                   >
                     {{ payItem.payment_method_name || '' }}
                   </div>
-                </el-dropdown-item>
-              </el-dropdown-menu>
+                </ElDropdownItem>
+              </ElDropdownMenu>
             </template>
-          </el-dropdown>
+          </ElDropdown>
           <!-- 支付方式 对应的 输入框 -->
           <ElInput
             :ref="(ref) => (paymentInput[item[0].payment_method_type!] = ref)"
@@ -890,23 +904,25 @@ defineExpose({
     <div
       class="scan-cash-settlement-button absolute bottom-0 flex w-full justify-end bg-white pb-2.5 pr-5 pt-2.5"
     >
-      <el-button
-        v-printv1="printObj"
+      <ElButton
+        v-print="printObj"
         :disabled="!isPrintEnabled"
         class="scan-cash-settlement-button-print"
       >
         {{ t('scan.print') }}
-      </el-button>
+      </ElButton>
 
-      <el-button
+      <ElButton
+        type="danger"
         v-if="paymentWay === PaymentWay.CREDIT"
-        v-printv1="printObj"
+        v-print="printObj"
         @click="handleSettleAccount"
       >
         <span class="text-white"> {{ t('set.on_credit') }} </span>
-      </el-button>
-      <el-button
+      </ElButton>
+      <ElButton
         v-else
+        type="danger"
         :disabled="isSettlementDisabled"
         :class="{ 'is-disabled': isSettlementDisabled }"
         @click="handleSettlement"
@@ -914,10 +930,11 @@ defineExpose({
         <span class="text-white">
           {{ t('scan.settlement') }}
         </span>
-      </el-button>
+      </ElButton>
     </div>
   </div>
 </template>
+
 <style lang="scss" scoped>
 @use 'sass:map';
 

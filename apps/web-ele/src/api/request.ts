@@ -31,11 +31,7 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
   client.addRequestInterceptor({
     fulfilled: async (config) => {
       const { locale } = i18n.global;
-      // 此处数据太乱了，应该要持久化。TOOD
-      const tokenId =
-        useUserStore().userInfo?.jwt_token.token_id || useUserStore().tokenId;
-      const { owner_id, owner_type } =
-        useUserStore().userInfo?.current_login_user_app || useUserStore();
+      const { tokenId, owner_id, owner_type } = useUserStore();
       config.headers['X-cur_lang_client'] = locale.value;
       config.headers['X-time_zone_client'] =
         Intl.DateTimeFormat().resolvedOptions().timeZone;

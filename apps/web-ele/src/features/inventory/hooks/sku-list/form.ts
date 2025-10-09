@@ -18,143 +18,134 @@ export function useSkuListForm() {
           wrapperCol: 14,
         },
         properties: {
-          common: {
-            type: 'void',
-            'x-component': 'FormLayout',
+          major_name: {
+            type: 'string',
+            title: "{{t('sku-list.major_name')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Input',
             'x-component-props': {
-              header: 'Hello Card',
+              maxLength: 32,
+              placeholder: "{{t('common.enter')}}",
+              clearable: true,
             },
-            properties: {
-              major_name: {
-                type: 'string',
-                title: '名称(主)',
+            'x-validator': [
+              {
                 required: true,
-                'x-decorator': 'FormItem',
-                'x-component': 'Input',
-                'x-component-props': {
-                  maxLength: 32,
-                  placeholder: "{{t('common.enter')}}",
-                  clearable: true,
-                },
-                'x-validator': [
-                  {
-                    required: true,
-                    message: "{{t('product-group.please-select-level')}}",
-                  },
-                ],
+                message: "{{t('product-group.please-select-level')}}",
               },
-              profile_photo: {
-                type: 'string',
-                title: '图片',
-                'x-decorator': 'FormItem',
-                'x-component': 'Upload',
-                'x-component-props': {
-                  maxLength: 32,
-                  placeholder: "{{t('common.select')}}",
-                  clearable: true,
-                },
-              },
-              product_unit_name: {
-                type: 'string',
-                title: '单位',
+            ],
+          },
+          profile_photo: {
+            type: 'string',
+            title: "{{t('sku-list.profile_photo')}}",
+            'x-decorator': 'FormItem',
+            'x-component': 'Upload',
+            'x-component-props': {
+              maxLength: 32,
+              placeholder: "{{t('common.select')}}",
+              clearable: true,
+            },
+          },
+          product_unit_name: {
+            type: 'string',
+            title: "{{t('sku-list.product_unit_name')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Input',
+            'x-disabled': true,
+            'x-component-props': {
+              maxLength: 32,
+              placeholder: "{{t('common.enter')}}",
+              clearable: true,
+            },
+            'x-validator': [
+              {
                 required: true,
-                'x-decorator': 'FormItem',
-                'x-component': 'Input',
-                'x-disabled': true,
-                'x-component-props': {
-                  maxLength: 32,
-                  placeholder: "{{t('common.enter')}}",
-                  clearable: true,
-                },
-                'x-validator': [
-                  {
-                    required: true,
-                    message: "{{t('product-group.please-select-level')}}",
-                  },
-                ],
+                message: "{{t('product-group.please-select-level')}}",
               },
-              spec_code: {
-                type: 'string',
-                title: '规格编码',
-                'x-decorator': 'FormItem',
-                'x-component': 'Input',
-                'x-disabled': true,
-                'x-component-props': {
-                  maxLength: 32,
-                  placeholder: "{{t('common.enter')}}",
-                  clearable: true,
-                },
-              },
-              sku_barcode: {
-                type: 'string',
-                title: '规格条码',
+            ],
+          },
+          spec_code: {
+            type: 'string',
+            title: "{{t('sku-list.spec_code')}}",
+            'x-decorator': 'FormItem',
+            'x-component': 'Input',
+            'x-disabled': true,
+            'x-component-props': {
+              maxLength: 32,
+              placeholder: "{{t('common.enter')}}",
+              clearable: true,
+            },
+          },
+          sku_barcode: {
+            type: 'string',
+            title: "{{t('sku-list.sku_barcode')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Input',
+            'x-component-props': {
+              maxLength: 32,
+              placeholder: "{{t('common.enter')}}",
+              clearable: true,
+            },
+          },
+          cost_price: {
+            type: 'string',
+            title: "{{t('sku-list.cost_price')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Input',
+            'x-component-props': {
+              maxLength: 32,
+              placeholder: "{{t('common.enter')}}",
+              clearable: true,
+            },
+            'x-validator': [
+              {
                 required: true,
-                'x-decorator': 'FormItem',
-                'x-component': 'Input',
-                'x-component-props': {
-                  maxLength: 32,
-                  placeholder: "{{t('common.enter')}}",
-                  clearable: true,
-                },
+                message: "{{t('product-group.please-select-level')}}",
               },
-              cost_price: {
-                type: 'string',
-                title: '成本价',
+            ],
+          },
+          selling_price: {
+            type: 'string',
+            title: "{{t('sku-list.selling_price')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Input',
+            'x-component-props': {
+              maxLength: 32,
+              placeholder: "{{t('common.enter')}}",
+              clearable: true,
+            },
+            'x-validator': [
+              {
                 required: true,
-                'x-decorator': 'FormItem',
-                'x-component': 'Input',
-                'x-component-props': {
-                  maxLength: 32,
-                  placeholder: "{{t('common.enter')}}",
-                  clearable: true,
-                },
-                'x-validator': [
-                  {
-                    required: true,
-                    message: "{{t('product-group.please-select-level')}}",
-                  },
-                ],
+                message: "{{t('product-group.please-select-level')}}",
               },
-              selling_price: {
-                type: 'string',
-                title: '售价',
-                required: true,
-                'x-decorator': 'FormItem',
-                'x-component': 'Input',
-                'x-component-props': {
-                  maxLength: 32,
-                  placeholder: "{{t('common.enter')}}",
-                  clearable: true,
-                },
-                'x-validator': [
-                  {
-                    required: true,
-                    message: "{{t('product-group.please-select-level')}}",
-                  },
-                ],
-              },
-              status: {
-                type: 'string',
-                title: '状态',
-                'x-decorator': 'FormItem',
-                'x-component': 'Switch',
-                'x-component-props': {
-                  maxLength: 32,
-                  placeholder: "{{t('common.enter')}}",
-                  clearable: true,
-                },
-              },
-              remark: {
-                type: 'string',
-                title: '备注',
-                'x-decorator': 'FormItem',
-                'x-component': 'Input.TextArea',
-                'x-component-props': {
-                  maxLength: 32,
-                  placeholder: "{{t('common.enter')}}",
-                  clearable: true,
-                },
-              },
+            ],
+          },
+          status: {
+            type: 'string',
+            title: "{{t('sku-list.status')}}",
+            'x-decorator': 'FormItem',
+            'x-component': 'Switch',
+            'x-component-props': {
+              maxLength: 32,
+              placeholder: "{{t('common.enter')}}",
+              clearable: true,
+            },
+          },
+          remark: {
+            type: 'string',
+            title: "{{t('common.remarks')}}",
+            'x-decorator': 'FormItem',
+            'x-component': 'Input.TextArea',
+            'x-component-props': {
+              maxLength: 32,
+              placeholder: "{{t('common.enter')}}",
+              clearable: true,
             },
           },
         },
@@ -163,7 +154,7 @@ export function useSkuListForm() {
   };
   return useDrawerForm({
     drawerOptions: {
-      title: t('product-group.add-product-group'),
+      title: t('sku-list.edit-sku-title'),
       appendToMain: true,
       class: 'w-1/2',
     },

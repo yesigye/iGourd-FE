@@ -29,6 +29,7 @@
     }
   },
   "peerDependencies": {
+    "dayjs": "catalog:",
     "vue-router": "catalog:"
   },
   "devDependencies": {

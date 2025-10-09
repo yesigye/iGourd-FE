@@ -75,6 +75,7 @@ export function useInventoryCountList() {
       cellRender: {
         name: 'ReviewStatus',
       },
+      slots: { default: 'modal' },
     },
     {
       field: 'creator_name',
@@ -91,7 +92,7 @@ export function useInventoryCountList() {
     {
       field: 'operation',
       title: t('common.operations'),
-      width: 120,
+      width: 200,
       fixed: 'right',
       slots: { default: 'operation' },
     },
@@ -107,8 +108,10 @@ export function useInventoryCountList() {
 
   const {
     Grid,
+    gridApi,
     canBatchOperate,
     Drawer,
+    drawerApi,
     handleEdit,
     handleBatchDelete,
     handleDelete,
@@ -131,7 +134,9 @@ export function useInventoryCountList() {
 
   return {
     Grid,
+    gridApi,
     Drawer,
+    drawerApi,
     handleEdit,
     handleBatchDelete,
     canBatchOperate,

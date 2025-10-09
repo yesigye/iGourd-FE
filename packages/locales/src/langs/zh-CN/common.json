@@ -17,8 +17,14 @@
   "edit": "修改",
   "delete": "删除",
   "create": "新增",
+  "import": "导入",
+  "export": "导出",
   "yes": "是",
   "no": "否",
   "showSearchPanel": "显示搜索面板",
-  "hideSearchPanel": "隐藏搜索面板"
+  "hideSearchPanel": "隐藏搜索面板",
+  "switch": {
+    "language": "切换语言",
+    "store": "切换门店"
+  }
 }

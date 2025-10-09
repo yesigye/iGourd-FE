@@ -11,7 +11,7 @@ useElementPlusDesignTokens();
 </script>
 
 <template>
-  <ElConfigProvider :locale="elementLocale">
+  <ElConfigProvider :locale="elementLocale" size="small">
     <RouterView />
   </ElConfigProvider>
 </template>

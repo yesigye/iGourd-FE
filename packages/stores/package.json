@@ -29,6 +29,7 @@
     "provenance": false
   },
   "peerDependencies": {
+    "@igourd/constants": "workspace:^",
     "pinia": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:"
@@ -40,6 +41,7 @@
     "@igourd-core/preferences": "workspace:^",
     "@igourd-core/shared": "workspace:^",
     "@igourd-core/typings": "workspace:^",
+    "@igourd/constants": "workspace:^",
     "pinia": "catalog:",
     "secure-ls": "catalog:",
     "vue": "catalog:",

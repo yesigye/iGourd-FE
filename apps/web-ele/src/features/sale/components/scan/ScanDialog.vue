@@ -165,7 +165,7 @@ watch(
       <template #header>
         <h1 class="scan-dialog-title">{{ t('scan.remark') }}</h1>
       </template>
-      <div class="">
+      <div class="scan-dialog-content">
         <ElInput
           v-model="params.remark"
           type="textarea"

@@ -1,3 +1,6 @@
+// eslint-disable-next-line no-restricted-imports
+import { MerchantStatus } from '@igourd/constants';
+
 import { acceptHMRUpdate, defineStore } from 'pinia';
 
 interface BasicUserInfo {
@@ -50,22 +53,16 @@ interface CurrentLoginUserApp {
 interface AccessState {
   currentLoginUserApp?: CurrentLoginUserApp;
   jwt_token?: Record<string, any>;
-
   login_account?: string;
   login_type?: string;
   merchantInfo: any;
   merchantList: any[];
-  owner_id: string;
-  owner_type: string;
-  tokenId: string;
   user_id: string;
 
   /**
    * 用户信息
    */
-  userInfo: BasicUserInfo | null;
-
-  userModel?: Record<string, any>;
+  userInfo: Record<string, any>;
 
   /**
    * 用户角色
@@ -78,9 +75,9 @@ interface AccessState {
  */
 export const useUserStore = defineStore('core-user', {
   actions: {
-    setUserInfo(userInfo: BasicUserInfo | null) {
+    setUserInfo(userInfo: null | Partial<BasicUserInfo>) {
       // 设置用户信息
-      this.userInfo = userInfo;
+      this.userInfo = userInfo ?? {};
       // 设置角色信息
       const roles = userInfo?.roles ?? [];
       this.setUserRoles(roles);
@@ -89,13 +86,7 @@ export const useUserStore = defineStore('core-user', {
       this.userRoles = roles;
     },
     setTokenId(tokenId: string) {
-      this.tokenId = tokenId;
-      if (this.userInfo?.jwt_token) {
-        this.userInfo.jwt_token.token_id = tokenId;
-      }
-    },
-    setUserModel(useModel: Record<string, any>) {
-      this.userModel = useModel;
+      this.userInfo.jwt_token.token_id = tokenId;
     },
     setMerchantInfo(info: any) {
       this.merchantInfo = info;
@@ -120,6 +111,9 @@ export const useUserStore = defineStore('core-user', {
         return state.userInfo?.current_login_user_app;
       }
     },
+    userModel(state) {
+      return state.userInfo.user_model;
+    },
     currencySymbol(state) {
       return state.merchantInfo.currency_symbol ?? '';
     },
@@ -132,13 +126,24 @@ export const useUserStore = defineStore('core-user', {
     owner_id(state) {
       return state.currentLoginUserApp?.owner_id;
     },
+    owner_type(state) {
+      return state.currentLoginUserApp?.owner_type;
+    },
+    tokenId(state) {
+      return state.userInfo.jwt_token.token_id;
+    },
+    userApps(state): {
+      owner_id: string;
+      owner_type: string;
+      status: MerchantStatus;
+      user_id: string;
+    }[] {
+      return state.userInfo.user_model?.user_apps ?? [];
+    },
   },
   state: (): AccessState => ({
-    userInfo: null,
+    userInfo: {},
     userRoles: [],
-    tokenId: '',
-    owner_id: '',
-    owner_type: '',
     user_id: '',
     merchantList: [],
     merchantInfo: {},

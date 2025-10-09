@@ -32,6 +32,7 @@ function handleMenuOpen(key: string, path: string[]) {
   <Menu
     :accordion="accordion"
     :collapse="collapse"
+    :popover="popover"
     :collapse-show-title="collapseShowTitle"
     :default-active="defaultActive"
     :menus="menus"

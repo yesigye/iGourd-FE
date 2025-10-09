@@ -18,6 +18,10 @@ import {
 } from '@igourd-core/composables';
 import { X } from '@igourd-core/icons';
 import {
+  IgourdButton,
+  IgourdHelpTooltip,
+  IgourdIconButton,
+  IgourdLoading,
   Separator,
   Sheet,
   SheetClose,
@@ -26,10 +30,6 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-  IgourdButton,
-  IgourdHelpTooltip,
-  IgourdIconButton,
-  IgourdLoading,
   VisuallyHidden,
 } from '@igourd-core/shadcn-ui';
 import { ELEMENT_ID_MAIN_CONTENT } from '@igourd-core/shared/constants';
@@ -283,7 +283,7 @@ const getForceMount = computed(() => {
       <div
         ref="wrapperRef"
         :class="
-          cn('relative flex-1 overflow-y-auto p-3', contentClass, {
+          cn('bg-muted relative flex-1 overflow-y-auto p-1', contentClass, {
             'pointer-events-none': showLoading || submitting,
           })
         "

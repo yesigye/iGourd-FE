@@ -18,6 +18,7 @@ export default defineLibraryConfig(async () => {
             'vue-router',
             'pinia',
             '@vueuse/core',
+            '@igourd/constants',
             'pinia-plugin-persistedstate',
           ],
           output: {

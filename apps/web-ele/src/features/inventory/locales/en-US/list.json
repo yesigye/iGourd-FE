@@ -10,5 +10,13 @@
   "lastUpdateTime": "Last Update Time",
   "updateInventory": "Update Inventory",
   "editInventory": "Edit Inventory",
-  "inventoryDetail": "Inventory Detail"
+  "inventoryDetail": "Inventory Detail",
+  "delete-failed-message": "删除失败信息",
+  "delete-failed": "failed to delete",
+  "successfully-deleted": "Successfully deleted",
+  "strip": "products",
+  "list-detele-message":"The inventory data of the sales warehouse cannot be deleted, only the inventory quantity can be cleared!"
+
+
+  
 }

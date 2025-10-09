@@ -51,7 +51,7 @@ withDefaults(defineProps<Props>(), {
     <a
       :class="$attrs.class"
       :href="href"
-      class="flex h-full items-center gap-2 overflow-hidden px-3 text-lg leading-normal transition-all duration-500"
+      class="flex h-full w-full items-center gap-2 overflow-hidden px-3 text-lg leading-normal transition-all duration-500"
     >
       <IgourdAvatar
         v-if="src"
@@ -59,15 +59,8 @@ withDefaults(defineProps<Props>(), {
         :src="src"
         :size="logoSize"
         :fit="fit"
-        class="relative rounded-none bg-transparent"
+        class="relative w-full rounded-none bg-transparent"
       />
-      <template v-if="!collapsed">
-        <slot name="text">
-          <span class="text-foreground truncate text-nowrap font-semibold">
-            {{ text }}
-          </span>
-        </slot>
-      </template>
     </a>
   </div>
 </template>

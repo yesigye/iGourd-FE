@@ -13,5 +13,9 @@ const props = defineProps({
 });
 </script>
 <template>
-  <section class="print-rich-text" v-html="props.value"></section>
+  <section
+    class="print-rich-text"
+    style="word-break: break-all"
+    v-html="props.value"
+  ></section>
 </template>

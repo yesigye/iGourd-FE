@@ -13,7 +13,7 @@ export default defineLibraryConfig(async () => {
         emptyOutDir: true,
         cssCodeSplit: true,
         rollupOptions: {
-          external: ['vue-router'],
+          external: ['vue-router', 'dayjs'],
           output: {
             exports: 'named',
             dir: './dist',

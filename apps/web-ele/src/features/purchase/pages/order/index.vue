@@ -10,15 +10,25 @@ defineOptions({
 
 const { t } = useI18n();
 
-const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
-  usePurchaseOrder();
+const {
+  Grid,
+  Drawer,
+  handleEdit,
+  handleBatchDelete,
+  canBatchOperate,
+  gridApi,
+} = usePurchaseOrder();
+
+function test() {
+  console.log(gridApi.grid.openCustom());
+}
 </script>
 
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-title>
-        <ElButton type="primary" @click="handleEdit">
+      <template #table-actions>
+        <ElButton type="primary" @click="test">
           {{ t('common.create') }}
         </ElButton>
         <ElButton

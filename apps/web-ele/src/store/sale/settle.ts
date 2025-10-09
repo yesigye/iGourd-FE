@@ -5,6 +5,7 @@ import { defineStore } from 'pinia';
 import { incrementAndPad, parseTime } from '#/utils/sale';
 
 export const useSaleSettleStore = defineStore('saleSettle', () => {
+  // TODO 对应应该使用 Reactive，不应当使用 ref
   const orderInfo = ref<{ serialNo: number }>({
     serialNo: 1,
   });
@@ -16,10 +17,13 @@ export const useSaleSettleStore = defineStore('saleSettle', () => {
     const year = parseTime(Date.now(), '{y}{m}{d}').slice(2);
     return `${year}${serialNo.value}`;
   });
-
+  const $reset = () => {
+    orderInfo.value = { serialNo: 1 };
+  };
   return {
     orderInfo,
     orderSerialNo,
     serialNo,
+    $reset,
   };
 });

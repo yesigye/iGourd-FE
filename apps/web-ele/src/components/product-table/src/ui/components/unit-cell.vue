@@ -9,7 +9,7 @@ import {
   ElIcon,
   useRecord,
 } from '@igourd/common-ui';
-import { EpArrayDown } from '@igourd/icons';
+import { ArrayDown } from '@igourd/icons';
 import { omit } from '@igourd/utils';
 
 defineProps<{ modelValue?: string }>();
@@ -46,7 +46,7 @@ async function unitChange(item: any) {
       <span class="el-dropdown-link">
         {{ row.product_unit_name }}
         <ElIcon v-if="options.length > 0" class="el-icon--right">
-          <EpArrayDown />
+          <ArrayDown />
         </ElIcon>
       </span>
       <template #dropdown>
