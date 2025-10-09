@@ -18,8 +18,9 @@
     "relationType": "关联范围",
     "productGroups": "商品组",
     "productLabels": "商品标签",
-    "products": "商品",
+    "products": "商品设置",
     "add": "新增",
+    "period": "活动周期",
     "activeSetting": "有效期设置",
     "activeHours": "有效时段（小时）",
     "activeWeekDays": "有效星期",
@@ -28,6 +29,7 @@
     "addDate": "新增日期",
     "remark": "备注"
   },
+  "moreTimeSetting": "更多时间和日期设置 >>",
   "placeholder": {
     "name": "请输入促销名称",
     "minimumAmount": "请输入消费门槛",

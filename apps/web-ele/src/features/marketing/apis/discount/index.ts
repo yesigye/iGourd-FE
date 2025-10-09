@@ -1,3 +1,5 @@
+import { isEmpty } from '@igourd/utils';
+
 import { requestClient } from '#/api/request';
 
 // 获取折扣分页列表
@@ -20,8 +22,18 @@ export function createDiscountApi(data: any) {
 export function updateDiscountApi(form: any) {
   const data = {
     ...form,
+    relation_product_label_id_list:
+      form.relation_product_label_id_list
+        ?.filter((i: any) => i.id)
+        ?.map((i: any) => i.id) || undefined,
+    relation_product_group_id_list:
+      form.relation_product_group_id_list
+        ?.filter((i: any) => i.id)
+        ?.map((i: any) => i.id) || undefined,
     relation_product_id_list:
-      form.relation_product_id_list?.map((i: any) => i.id) || undefined,
+      form.relation_product_id_list
+        ?.filter((i: any) => i.id)
+        ?.map((i: any) => i.id) || undefined,
   };
   return requestClient.post(
     '/v1/merchant/basics/marketing/promotion/modify',
@@ -46,7 +58,30 @@ export function updateDiscountStatusApi(data: any) {
 
 // 获取折扣详情
 export function getDiscountDetailApi(row: Record<string, any>) {
-  return requestClient.post(`/v1/merchant/basics/marketing/promotion/detail`, {
-    promotion_id: row.id,
-  });
+  return requestClient
+    .post(`/v1/merchant/basics/marketing/promotion/detail`, {
+      promotion_id: row.id,
+    })
+    .then((res) => {
+      return {
+        ...res,
+        active_day_hours: res.active_day_hours?.map(Number) || [],
+        // 处理默认值的问题
+        relation_product_id_list: isEmpty(res.relation_product_list)
+          ? [{}]
+          : res.relation_product_list,
+
+        relation_product_label_id_list: isEmpty(
+          res.relation_product_label_id_list,
+        )
+          ? [{}]
+          : res.relation_product_label_id_list,
+
+        relation_product_group_id_list: isEmpty(
+          res.relation_product_group_id_list,
+        )
+          ? [{}]
+          : res.relation_product_group_id_list,
+      };
+    });
 }

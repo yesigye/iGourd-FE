@@ -27,6 +27,9 @@ export const productLabelSelect: ISchema = {
     size: 'small',
   },
   'x-decorator': 'FormItem',
+  'x-decorator-props': {
+    class: 'ml-[100px]',
+  },
   items: {
     type: 'object',
     properties: {

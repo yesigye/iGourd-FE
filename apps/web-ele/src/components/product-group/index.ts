@@ -26,6 +26,9 @@ export const productGroupSelect: ISchema = {
     stripe: true,
     size: 'small',
   },
+  'x-decorator-props': {
+    class: 'ml-[100px]',
+  },
   'x-decorator': 'FormItem',
   items: {
     type: 'object',

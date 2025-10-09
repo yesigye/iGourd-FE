@@ -31,6 +31,7 @@ export * from './input-number';
 export * from './loading';
 export * from './page';
 export * from './password';
+export * from './period-picker';
 export * from './preview-text';
 export * from './print-item';
 export * from './radio';

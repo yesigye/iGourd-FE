@@ -33,8 +33,14 @@ export function useDiscount() {
     {
       field: 'type',
       title: t('marketing.promotiontype'),
-      minWidth: 150,
+      minWidth: 100,
       sortable: true,
+      formatter: ({ cellValue }) => {
+        if (cellValue === 'DISCOUNT') {
+          return t('discount.enum.type.discount');
+        }
+        return t('discount.enum.type.reduction');
+      },
       align: 'left',
     },
     {
@@ -59,6 +65,12 @@ export function useDiscount() {
       field: 'channel',
       title: t('marketing.scopeofapplication'),
       width: 120,
+      formatter: ({ cellValue }) => {
+        if (cellValue === 'STORE') {
+          return t('discount.enum.channel.store');
+        }
+        return t('discount.enum.channel.online');
+      },
       align: 'right',
     },
     {
@@ -85,7 +97,7 @@ export function useDiscount() {
     {
       field: 'operation',
       title: t('common.operations'),
-      width: 120,
+      width: 135,
       fixed: 'right',
       slots: { default: 'operation' },
     },
