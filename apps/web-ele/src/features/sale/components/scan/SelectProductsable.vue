@@ -206,7 +206,6 @@ defineExpose({
 
 <template>
   <div class="scan-content" style="height: 100%; overflow-y: auto">
-    <!-- <p v-for="item in mergeGoodsList" style="color: aqua">{{ item }}</p> -->
     <ElTable
       ref="tableRef"
       :data="mergeGoodsList || []"

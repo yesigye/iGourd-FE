@@ -787,7 +787,7 @@ defineExpose({
       class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
       <span class="scan-cash-settlement-header-title"
-        >{{ t('scan.amountTendered') }}:</span
+        >{{ t('scan.amount-tendered') }}:</span
       >
 
       <span class="scan-cash-settlement-header-amount">
@@ -799,7 +799,7 @@ defineExpose({
       class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
       <span class="scan-cash-settlement-header-title"
-        >{{ t('scan.amountChange') }}:</span
+        >{{ t('scan.amount-change') }}:</span
       >
       <div class="flex-1">
         <ElInputNumber
@@ -831,7 +831,7 @@ defineExpose({
           calculateOrderList.customer_id === '0'
         "
       >
-        {{ t('set.on_credit') }}
+        {{ t('scan.on-credit') }}
       </ElCheckbox>
       <ul>
         <li
@@ -918,7 +918,7 @@ defineExpose({
         v-print="printObj"
         @click="handleSettleAccount"
       >
-        <span class="text-white"> {{ t('set.on_credit') }} </span>
+        <span class="text-white"> {{ t('scan.on-credit') }} </span>
       </ElButton>
       <ElButton
         v-else

@@ -1,7 +1,7 @@
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-title>
+    <template #table-actions>
         <ElButton type="primary">
           {{ t('store.addStoreCreate') }}
         </ElButton>

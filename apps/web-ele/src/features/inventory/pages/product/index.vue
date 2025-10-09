@@ -16,7 +16,7 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-title>
+    <template #table-actions>
         <ElButton type="primary" @click="handleEdit()">
           {{ t('inventory.addProduct') }}
         </ElButton>

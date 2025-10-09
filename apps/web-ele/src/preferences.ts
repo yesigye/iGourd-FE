@@ -46,7 +46,7 @@ export const overridesPreferences = defineOverridesPreferences({
     height: 40,
   },
   theme: {
-    mode: 'auto',
+    mode: 'light',
     builtinType: 'default',
     colorPrimary: 'hsl(205 100% 53%)',
     colorSuccess: 'hsl(100 54% 39%)',

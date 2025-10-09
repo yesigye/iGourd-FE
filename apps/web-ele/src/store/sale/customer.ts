@@ -9,6 +9,7 @@ export const useCustomerStore = defineStore('customer', {
     return {
       // 客户列表
       customerList: [],
+      total: 0,
     };
   },
   getters: {},
@@ -20,6 +21,7 @@ export const useCustomerStore = defineStore('customer', {
       try {
         const data = await getCustomerPageListApi(params);
         this.customerList = data?.list || [];
+        this.total = data?.total || 0;
       } catch (error) {
         console.error(error);
       }

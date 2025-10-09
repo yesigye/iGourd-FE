@@ -1,13 +1,13 @@
 <script setup>
-import { inject, onMounted, ref, watch } from 'vue';
+import { ref } from 'vue';
 
 import {
   ElButton,
-  ElDrawer,
   ElImage,
   ElInput,
   ElTable,
   ElTableColumn,
+  useIgourdDrawer,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
@@ -39,65 +39,40 @@ async function getCustomerList() {
     customerList.value = data.list;
   }
 }
-const mergeGoodsList = inject('mergeGoodsList');
-
-// const userInfo = Local.get('userinfo') || {};
-const customerInfo = ref({});
 
 const handleClose = () => {
   isReturnShow.value = false;
-  emit('close-tkr');
 };
 
 const handleRowClick = (row) => {
   emit('select-customer-row:row', row);
-  handleClose();
+  emit('close-tkr');
+  drawerApi.close();
 };
-onMounted(() => {
-  getCustomerList();
-});
-watch(
-  () => props.showDialog,
-  (val) => {
+const [Drawer, drawerApi] = useIgourdDrawer({
+  onOpenChange: (val) => {
     if (val) {
-      isReturnShow.value = true;
       getCustomerList();
     }
   },
-);
+});
 </script>
 
 <template>
-  <div class="coupon-send">
-    <ElDrawer
-      v-model="isReturnShow"
-      :model-value="props.showDialog"
-      :with-header="false"
-      direction="rtl"
-      size="86%"
-      custom-class="coupon-drawer-prevent-send"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-      :append-to-body="true"
-    >
-      <!-- 列表关闭栏 -->
-      <div class="close86" @click="handleClose">
-        <i class="iconfont icon-guanbi"></i>
-      </div>
-      <div class="drawer-title border-b-solid border-gray-lightest border-b">
-        <p class="title">{{ props.title }}&nbsp;&nbsp;</p>
-      </div>
-      <div class="drawer-content">
-        <div class="top">
+  <Drawer>
+    <div class="">
+      <div class="">
+        <div class="flex items-center gap-1">
           <ElInput
             v-model="searchValue"
             style="height: 36px"
-            :placeholder="$t('sales.search-guider-placeholder')"
+            :placeholder="$t('scan.search-guider-placeholder')"
             clearable
             @clear="fetchGoodsList"
           />
           <ElButton
-            class="outer-btn right-box search-btn blue-btn"
+            class="outer-btn right-box search-btn blue-btn h-9"
+            type="primary"
             @click="getCustomerList"
           >
             <div class="outer">
@@ -105,7 +80,7 @@ watch(
                 <i class="iconfont icon-sousuo"></i>
               </div>
               <div class="inner-right">
-                <span> {{ $t('employee.searchButton') }}</span>
+                <span> {{ $t('common.search') }}</span>
               </div>
             </div>
           </ElButton>
@@ -169,14 +144,17 @@ watch(
               align="center"
             >
               <template #default="{ row }">
-                <span><i class="iconfont icon-yonghu" style="margin-right: 5px"></i>{{ row.balance }}</span>
+                <span
+                  ><i class="iconfont icon-yonghu" style="margin-right: 5px"></i
+                  >{{ row.balance }}</span
+                >
               </template>
             </ElTableColumn>
           </ElTable>
         </div>
       </div>
-    </ElDrawer>
-  </div>
+    </div>
+  </Drawer>
 </template>
 
 <style lang="scss" scoped>

@@ -169,7 +169,7 @@ onMounted(async () => {
       </section>
     </template>
     <Grid>
-      <template #table-title>
+    <template #table-actions>
         <ElButton
           v-if="canBatchOperate"
           v-auth="'inventory_product_label_delete'"

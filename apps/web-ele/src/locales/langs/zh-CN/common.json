@@ -300,5 +300,14 @@
   "delete-confirm-text": "您确定要删除此选项吗？",
 
   "detele": "删除",
-  "system-prompt": "系统提示"
+  "system-prompt": "系统提示",
+  "product-code": "商品编码",
+  "product-name": "商品名称",
+  "product-unit-name": "商品单位",
+  "cost_price": "成本价",
+  "stock": "库存",
+  "qty": "数量",
+  "price": "价格",
+  "amount": "金额",
+  "total-amount": "总金额"
 }

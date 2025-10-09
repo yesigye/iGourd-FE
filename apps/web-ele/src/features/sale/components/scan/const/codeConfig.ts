@@ -1,31 +1,31 @@
 export const codeConfig = [
   {
-    label: 'sales.columns.product',
+    label: 'common.product-name',
     field: 'product_name',
     minWidth: 328,
   },
   {
-    label: 'sales.columns.unit',
+    label: 'common.product-unit-name',
     field: 'product_unit_name',
     minWidth: 328,
   },
   {
-    label: 'sales.hold-take.warehouse',
+    label: 'common.warehouse',
     field: 'warehouse_name',
     minWidth: 328,
   },
   {
-    label: 'sales.columns.quantity',
+    label: 'common.qty',
     field: 'quantity',
     minWidth: 328,
   },
   {
-    label: 'sales.columns.price',
+    label: 'common.price',
     field: 'selling_price',
     minWidth: 328,
   },
   {
-    label: 'sales.columns.amount',
+    label: 'common.amount',
     field: 'total_amount',
     minWidth: 328,
   },

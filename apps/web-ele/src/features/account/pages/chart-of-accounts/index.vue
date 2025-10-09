@@ -83,7 +83,7 @@ onMounted(async () => {
       />
     </ElTabs>
     <Grid v-if="isLoadGrid">
-      <template #table-title>
+    <template #table-actions>
         <ElButton type="primary" @click="handleAddAccount()">
           {{ t('account.add_sub_ledger') }}
         </ElButton>

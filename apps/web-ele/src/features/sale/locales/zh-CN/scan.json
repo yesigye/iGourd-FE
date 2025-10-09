@@ -79,5 +79,8 @@
   "select-customer": "选择客户",
   "pay": {
     "success": "支付成功"
-  }
+  },
+  "search-placeholder": "请输入客户名称/联系电话",
+  "search-guider-placeholder": "请输入导购员名称",
+  "on-credit": "赊账"
 }

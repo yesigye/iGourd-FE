@@ -169,6 +169,8 @@ watch(
         <ElInput
           v-model="params.remark"
           type="textarea"
+          :maxlength="256"
+          show-word-limit
           placeholder="Please enter remark"
         />
         <ElForm>
