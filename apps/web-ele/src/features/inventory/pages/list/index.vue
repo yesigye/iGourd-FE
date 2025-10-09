@@ -9,12 +9,13 @@ import {
   useIgourdModal,
   ElTable,
   ElTableColumn,
+  ElSpace
 } from '@igourd/common-ui';
-import { Warning } from '@igourd/icons';
+import { Warning,ArrowRight } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
-import { removeInventoryStock } from '@@/inventory/apis';
+import { removeInventoryStock, clearInventoryStock } from '@@/inventory/apis';
 import { useInventory } from '@@/inventory/hooks';
 // 错误数据
 interface ErrorItem {
@@ -45,7 +46,7 @@ const [Modal, modalApi] = useIgourdModal({
   title: t('inventory.message_tip'),
 });
 
-const [clearModal, clearModalApi2] = useIgourdModal({
+const [clearModal, clearModalApi] = useIgourdModal({
   fullscreenButton: false,
   isOpen: false,
   onCancel() {
@@ -55,15 +56,26 @@ const [clearModal, clearModalApi2] = useIgourdModal({
   onOpenChange() {},
   title: t('inventory.message_tip'),
 });
-const { Grid, gridApi, checkedKeys, Drawer, handleEdit, handleView, canBatchOperate } =
-  useInventory();
+const {
+  Grid,
+  gridApi,
+  checkedKeys,
+  Drawer,
+  handleEdit,
+  handleView,
+  canBatchOperate,
+} = useInventory();
 // 错误数据
 const errorList = ref<ErrorItem[]>();
 // 错误总数
 const errorCount = ref<number>(0);
 // 成功总数
 const successCount = ref<number>(0);
-
+// 清理前
+const clearBeforeList = ref();
+const deleteGoodListTable = ref(null);
+const selectList = ref([])
+// 删除库存
 const handleBatchDelete = () => {
   confirm({
     title: t('common.delete-confirm-title'),
@@ -106,6 +118,53 @@ const handleBatchDelete = () => {
       gridApi.reload();
     });
 };
+const handDelGoodList = val => {
+  selectList.value = val
+}
+// 清空
+const handleClear = (row) => {
+    const params = {
+      stock_product_remove_volist: [],
+    };
+    clearBeforeList.value.forEach((element) => {
+      params.stock_product_remove_volist.push({
+        merchant_id: currentLoginUserApp.owner_id,
+        product_code: element.product_code,
+        product_id: element.product_id,
+        product_name: element.major_name,
+        stock_id: element.id,
+        warehouse_id: element.warehouse_id,
+        warehouse_location_id: element.warehouse_location_id,
+      });
+    });
+    confirm({
+      title: t('common.delete-confirm-title'),
+      content: t('common.delete-confirm-text'),
+    })
+    .then(() => {
+        clearInventoryStock(params).then(()=>{
+          clearModalApi.close();
+          modalApi.close();
+        })
+    })
+
+}
+// 显示清空dialog
+const openDialogSingle =(row)=> {
+  clearBeforeList.value = [row]
+  clearModalApi.open()
+}
+// 显示清空dialog
+const openDialogMultiple = () => {
+  clearBeforeList.value = deleteGoodListTable.value.getSelectionRows()
+  clearModalApi.open()
+}
+const  tableHeaderStyle = {
+  background: '#F6F8FC',
+  color: '#323232',
+  height: '30px',
+}
+
 </script>
 
 <template>
@@ -167,8 +226,8 @@ const handleBatchDelete = () => {
           >{{ t('list.strip') }}
         </div>
         <div class="text-16 mt-4">{{ t('list.list-detele-message') }}</div>
-        <div class="text-12">{{ t('list.delete-failed-message') }}</div>
-        <ElTable :data="errorList">
+        <div class="text-12 mb-4">{{ t('list.delete-failed-message') }}</div>
+        <ElTable :data="errorList" :header-cell-style="tableHeaderStyle" ref="deleteGoodListTable" @selection-change="handDelGoodList">
           <ElTableColumn type="selection"></ElTableColumn>
           <ElTableColumn
             property="product_name"
@@ -188,15 +247,64 @@ const handleBatchDelete = () => {
           ></ElTableColumn>
           <ElTableColumn property="" :label="t('common.action')">
             <template #default="scope">
-              <a> {{ t('inventory.clear') }}</a>
+              <a @click="openDialogSingle(scope.row)"> {{ t('inventory.clear') }}</a>
             </template>
           </ElTableColumn>
         </ElTable>
+
       </div>
+      <template #footer>
+         <ElButton @click="modalApi.close()">
+          {{ t('inventory.cancel') }}
+        </ElButton>
+         <ElButton v-if="selectList.length > 0" type="primary" @click="openDialogMultiple()">
+          {{ t('list.go-clear') }}
+        </ElButton>
+      </template>
     </Modal>
     <!--清空提示 -->
     <clearModal>
-      <div>ddd</div>
+      <div class="mb-4">{{t('list.confirm-stock-clearance')}}</div>
+      <ElSpace>
+      <ElTable :data="clearBeforeList" :header-cell-style="tableHeaderStyle">
+          <ElTableColumn
+            property="product_name"
+            :label="t('inventory.productName')"
+          ></ElTableColumn>
+          <ElTableColumn
+            property="stock_origin_quantity"
+            :label="t('inventory.stock')"
+          >
+            <template #default="scope">
+                <span>{{ scope.row.stock_origin_quantity || 0 }}</span>
+                {{ scope.row.product_unit_name }}
+            </template>
+          </ElTableColumn>
+        </ElTable>
+        <ElIcon class="ml-4"><ArrowRight /></ElIcon>
+        <ElTable :data="clearBeforeList" :header-cell-style="tableHeaderStyle">
+          <ElTableColumn
+            property="product_name"
+            :label="t('inventory.productName')"
+          ></ElTableColumn>
+          <ElTableColumn
+            property="stock_origin_quantity"
+            :label="t('inventory.stock')"
+          >
+            <template #default="scope">
+              <span>0</span> {{ scope.row.product_unit_name }}
+            </template>
+        </ElTableColumn>
+        </ElTable>
+      </ElSpace>
+      <template #footer>
+         <ElButton @click="clearModalApi.close()">
+          {{ t('inventory.cancel') }}
+        </ElButton>
+         <ElButton type="primary" @click="handleClear()">
+          {{ t('inventory.clear') }}
+        </ElButton>
+      </template>
     </clearModal>
   </Page>
 </template>
