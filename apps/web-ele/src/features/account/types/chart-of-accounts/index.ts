@@ -1,25 +1,25 @@
 import type {
-  AccountLedgerBalanceTreeQueryVO,
-  AccountLedgerBalanceTreeModel,
-  AccountLedgerBalanceModifyVO,
-  AccountLedgerRemoveVO,
-  AccountRemoveVO,
-  AccountLedgerCreateVO,
-  AccountLedgerModifyVO,
-  AccountLedgerDetailModel,
-  AccountDetailModel,
+  AccountBalanceInfoResponseModel,
   AccountCreateVO,
-  AccountModifyVO,
-  AccountLedgerModel,
-  AccountSetDetailModel,
-  SubsidiaryLedgerQueryPageVO,
-  SubsidiaryLedgerPageModel,
+  AccountDetailModel,
   AccountingPeriodCurrentQueryVO,
   AccountingPeriodModel,
-  FindCurrentPeriodPayload,
-  AccountBalanceInfoResponseModel,
   AccountLedgerBalanceDirectionEnum,
+  AccountLedgerBalanceModifyVO,
+  AccountLedgerBalanceTreeModel,
+  AccountLedgerBalanceTreeQueryVO,
   AccountLedgerCategoryEnum,
+  AccountLedgerCreateVO,
+  AccountLedgerDetailModel,
+  AccountLedgerModel,
+  AccountLedgerModifyVO,
+  AccountLedgerRemoveVO,
+  AccountModifyVO,
+  AccountRemoveVO,
+  AccountSetDetailModel,
+  FindCurrentPeriodPayload,
+  SubsidiaryLedgerPageModel,
+  SubsidiaryLedgerQueryPageVO,
 } from '@/apis/accounting/type';
 
 // 科目类型枚举
@@ -31,25 +31,25 @@ export enum LedgerType {
 // 标签页类型
 export enum TabType {
   asset = 'asset',
-  liability = 'liability',
   equity = 'equity',
-  revenue = 'revenue',
   expense = 'expense',
+  liability = 'liability',
   profitAndLoss = 'profitAndLoss',
+  revenue = 'revenue',
 }
 
 // 抽屉类型
 export enum DrawerType {
   add = 'add',
-  edit = 'edit',
   detail = 'detail',
+  edit = 'edit',
 }
 
 // 输入列键
 export enum InputColumnKey {
-  openingBalance = 'initial_balance',
-  cumulativeDebit = 'cumulative_debit_amount',
   cumulativeCredit = 'cumulative_credit_amount',
+  cumulativeDebit = 'cumulative_debit_amount',
+  openingBalance = 'initial_balance',
 }
 
 // 搜索关键字
@@ -60,9 +60,9 @@ export enum SearchKeyword {
 
 // 科目传输数据
 export type LedgerTransferData<Row = any> = {
+  ledgerType: LedgerType;
   row?: Row;
   type: DrawerType;
-  ledgerType: LedgerType;
 };
 
 // 表格数据类型
@@ -70,11 +70,11 @@ export type TableData = Pick<
   AccountLedgerBalanceTreeModel,
   'account_ledger'
 > & {
-  sub_ledger_trees?: (TableData | AccountBalanceInfoResponseModel)[];
+  sub_ledger_trees?: (AccountBalanceInfoResponseModel | TableData)[];
 };
 
 // 余额方向简写
-type BalanceDirectionShort = 'DR' | 'CR';
+type BalanceDirectionShort = 'CR' | 'DR';
 
 // 科目表单数据
 export interface AccountLedgerFormData {
@@ -131,25 +131,25 @@ export interface ChartOfAccountsExportParams {
 
 // 重新导出原有类型
 export type {
-  AccountLedgerBalanceTreeQueryVO,
-  AccountLedgerBalanceTreeModel,
-  AccountLedgerBalanceModifyVO,
-  AccountLedgerRemoveVO,
-  AccountRemoveVO,
-  AccountLedgerCreateVO,
-  AccountLedgerModifyVO,
-  AccountLedgerDetailModel,
-  AccountDetailModel,
+  AccountBalanceInfoResponseModel,
   AccountCreateVO,
-  AccountModifyVO,
-  AccountLedgerModel,
-  AccountSetDetailModel,
-  SubsidiaryLedgerQueryPageVO,
-  SubsidiaryLedgerPageModel,
+  AccountDetailModel,
   AccountingPeriodCurrentQueryVO,
   AccountingPeriodModel,
-  FindCurrentPeriodPayload,
-  AccountBalanceInfoResponseModel,
   AccountLedgerBalanceDirectionEnum,
+  AccountLedgerBalanceModifyVO,
+  AccountLedgerBalanceTreeModel,
+  AccountLedgerBalanceTreeQueryVO,
   AccountLedgerCategoryEnum,
+  AccountLedgerCreateVO,
+  AccountLedgerDetailModel,
+  AccountLedgerModel,
+  AccountLedgerModifyVO,
+  AccountLedgerRemoveVO,
+  AccountModifyVO,
+  AccountRemoveVO,
+  AccountSetDetailModel,
+  FindCurrentPeriodPayload,
+  SubsidiaryLedgerPageModel,
+  SubsidiaryLedgerQueryPageVO,
 };

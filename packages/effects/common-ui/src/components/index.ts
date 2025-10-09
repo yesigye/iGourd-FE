@@ -103,6 +103,7 @@ export {
   ElOption,
   ElPagination,
   ElPopover,
+  ElProgress,
   ElRadio,
   ElRadioButton,
   ElRadioGroup,
