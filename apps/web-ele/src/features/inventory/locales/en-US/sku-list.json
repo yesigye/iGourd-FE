@@ -26,5 +26,18 @@
   "statusUpdateFailed": "Status Update Failed",
   "delete_tips_recent_sales_recor": "This product has recent sales records, are you sure to delete?",
   "delete_tips_assoclated_bom": "This product has associated BOM, are you sure to delete?",
-  "delete_tips_warranty_info": "This product has warranty information, are you sure to delete?"
+  "delete_tips_warranty_info": "This product has warranty information, are you sure to delete?",
+  "profile_photo": "Image",
+  "major_name": "Name(Major)",
+  "spec_code": "Spec Code",
+  "product_unit_name": "Unit",
+  "cost_price": "Cost Price",
+  "selling_price": "Selling Price",
+  "stock_total_quantity": "Stock",
+  "monthly_sales_quantity": "Monthly Sales",
+  "creator_name": "Creator",
+  "creation_time": "Creation Time",
+  "edit": "Edit",
+  "detail": "Detail",
+  "delete": "Delete"
 }

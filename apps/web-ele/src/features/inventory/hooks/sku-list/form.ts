@@ -18,16 +18,9 @@ export function useSkuListForm() {
           wrapperCol: 14,
         },
         properties: {
-          common: {
-            type: 'void',
-            'x-component': 'FormLayout',
-            'x-component-props': {
-              header: 'Hello Card',
-            },
-            properties: {
               major_name: {
                 type: 'string',
-                title: '名称(主)',
+                title: "{{t('sku-list.major_name')}}",
                 required: true,
                 'x-decorator': 'FormItem',
                 'x-component': 'Input',
@@ -45,7 +38,7 @@ export function useSkuListForm() {
               },
               profile_photo: {
                 type: 'string',
-                title: '图片',
+                title: "{{t('sku-list.profile_photo')}}",
                 'x-decorator': 'FormItem',
                 'x-component': 'Upload',
                 'x-component-props': {
@@ -56,7 +49,7 @@ export function useSkuListForm() {
               },
               product_unit_name: {
                 type: 'string',
-                title: '单位',
+                title: "{{t('sku-list.product_unit_name')}}",
                 required: true,
                 'x-decorator': 'FormItem',
                 'x-component': 'Input',
@@ -75,7 +68,7 @@ export function useSkuListForm() {
               },
               spec_code: {
                 type: 'string',
-                title: '规格编码',
+                title:  "{{t('sku-list.spec_code')}}",
                 'x-decorator': 'FormItem',
                 'x-component': 'Input',
                 'x-disabled': true,
@@ -87,7 +80,7 @@ export function useSkuListForm() {
               },
               sku_barcode: {
                 type: 'string',
-                title: '规格条码',
+                title: "{{t('sku-list.sku_barcode')}}",
                 required: true,
                 'x-decorator': 'FormItem',
                 'x-component': 'Input',
@@ -99,7 +92,7 @@ export function useSkuListForm() {
               },
               cost_price: {
                 type: 'string',
-                title: '成本价',
+                title: "{{t('sku-list.cost_price')}}",
                 required: true,
                 'x-decorator': 'FormItem',
                 'x-component': 'Input',
@@ -117,7 +110,7 @@ export function useSkuListForm() {
               },
               selling_price: {
                 type: 'string',
-                title: '售价',
+                title: "{{t('sku-list.selling_price')}}",
                 required: true,
                 'x-decorator': 'FormItem',
                 'x-component': 'Input',
@@ -135,7 +128,7 @@ export function useSkuListForm() {
               },
               status: {
                 type: 'string',
-                title: '状态',
+                title: "{{t('sku-list.status')}}",
                 'x-decorator': 'FormItem',
                 'x-component': 'Switch',
                 'x-component-props': {
@@ -146,7 +139,7 @@ export function useSkuListForm() {
               },
               remark: {
                 type: 'string',
-                title: '备注',
+                title:  "{{t('common.remarks')}}",
                 'x-decorator': 'FormItem',
                 'x-component': 'Input.TextArea',
                 'x-component-props': {
@@ -156,14 +149,12 @@ export function useSkuListForm() {
                 },
               },
             },
-          },
-        },
       },
     },
   };
   return useDrawerForm({
     drawerOptions: {
-      title: t('product-group.add-product-group'),
+      title: t('sku-list.edit-sku-title'),
       appendToMain: true,
       class: 'w-1/2',
     },

@@ -26,5 +26,18 @@
   "statusUpdateFailed": "Échec de la Mise à Jour du Statut",
   "delete_tips_recent_sales_recor": "Ce produit a des enregistrements de vente récents, êtes-vous sûr de vouloir supprimer ?",
   "delete_tips_assoclated_bom": "Ce produit a un BOM associé, êtes-vous sûr de vouloir supprimer ?",
-  "delete_tips_warranty_info": "Ce produit a des informations de garantie, êtes-vous sûr de vouloir supprimer ?"
+  "delete_tips_warranty_info": "Ce produit a des informations de garantie, êtes-vous sûr de vouloir supprimer ?",
+  "profile_photo": "Image",
+  "major_name": "Nom (principal)",
+  "spec_code": "Code de spécification",
+  "product_unit_name": "nité",
+  "cost_price": "rix de revient",
+  "selling_price": "Prix de vente",
+  "stock_total_quantity": "Stock",
+  "monthly_sales_quantity": "Ventes mensuelles",
+  "creator_name": "Créateur",
+  "creation_time": "Date de création",
+  "edit": "Modifier",
+  "detail": "Détails",
+  "delete": "Supprimer"
 }

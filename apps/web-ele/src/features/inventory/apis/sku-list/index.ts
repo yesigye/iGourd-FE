@@ -23,7 +23,7 @@ export function deleteSku(params: {
   merchant_id: number;
   product_info_ids: number[];
 }) {
-  return request.post('/inventory/sku/delete', params);
+  return request.post('/v1/merchant/basics/inventory/product-info/remove', params);
 }
 
 /**
