@@ -15,7 +15,7 @@ const { Grid, Drawer, drawerApi, handleEdit, canBatchDelete, batchDelete } = {};
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-title>
+    <template #table-actions>
         <ElButton type="primary" @click="drawerApi.open()">
           {{ t('common.create') }}
         </ElButton>

@@ -32,7 +32,7 @@ onMounted(() => {
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-title>
+    <template #table-actions>
         <div class="flex w-full items-center justify-between">
           <div class="flex items-center gap-4">
             <ElButton

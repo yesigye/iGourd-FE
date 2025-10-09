@@ -18,7 +18,7 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
   <Page auto-content-height>
     <Drawer />
     <Grid>
-      <template #table-title>
+    <template #table-actions>
         <ElButton type="primary">
           {{ t('account.add') }}
         </ElButton>

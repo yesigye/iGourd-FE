@@ -1,7 +1,7 @@
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-title>
+    <template #table-actions>
         <ElButton type="primary">
           {{ t('customers.addRevenue') }}
         </ElButton>
@@ -12,15 +12,15 @@
           {{ t('customers.import') }}
         </ElButton>
       </template>
-      
+
       <template #operation="{ row }">
-        <ElButton 
+        <ElButton
           type="text"
           @click="handleEdit(row)"
         >
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton 
+        <ElButton
           type="text"
           @click="handleBatchDelete(row)"
         >
@@ -28,7 +28,7 @@
         </ElButton>
       </template>
     </Grid>
-    
+
     <Drawer />
   </Page>
 </template>

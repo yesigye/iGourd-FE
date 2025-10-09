@@ -22,7 +22,7 @@ const {
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-title>
+    <template #table-actions>
         <ElButton
           type="danger"
           v-if="canBatchOperate"

@@ -47,7 +47,7 @@ async function handleStatusChange(row: any) {
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-title>
+    <template #table-actions>
         <ElButton type="primary">
           {{ t('employee.add') }}
         </ElButton>

@@ -1,7 +1,7 @@
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-title>
+    <template #table-actions>
         <div class="flex gap-4">
           <!-- <ElButton
             v-for="tab in tabOptions"
