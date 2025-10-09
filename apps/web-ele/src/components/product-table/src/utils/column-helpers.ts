@@ -85,7 +85,13 @@ export const createBaseColumns = (): ColumnDescriptor[] => [
   },
   {
     name: 'basic_unit_radio',
+    type: 'number',
+    'x-hidden': true,
+  },
+  {
+    name: 'basic_unit_radio_display',
     title: '{{t("common.purchase.basic_unit_radio")}}',
+    type: 'void',
     'x-component-props': {
       width: 160,
     },

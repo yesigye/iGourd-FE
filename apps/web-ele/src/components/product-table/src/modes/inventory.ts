@@ -93,10 +93,12 @@ export const InventoryMode: ModePlugin = {
       },
       {
         name: 'basic_unit_radio',
+        type: 'number',
         'x-hidden': true,
       },
       {
-        name: 'basic_unit_radio',
+        name: 'basic_unit_radio_display',
+        type: 'void',
         title: '{{t("common.purchase.basic_unit_radio")}}',
         'x-component': 'PreviewText.Input',
         'x-decorator': 'FormItem',

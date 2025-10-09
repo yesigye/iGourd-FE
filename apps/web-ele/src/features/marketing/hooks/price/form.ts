@@ -9,7 +9,8 @@ export function usePriceForm() {
   return useDrawerForm({
     drawerOptions: {
       title: t('price.add-price'),
-      class: 'w-full',
+      class: 'w-[579px]',
+      contentClass: 'bg-muted',
       appendToMain: true,
     },
     formOptions: {

@@ -46,10 +46,7 @@ export function updateDiscountStatusApi(data: any) {
 
 // 获取折扣详情
 export function getDiscountDetailApi(row: Record<string, any>) {
-  return requestClient.post(
-    `/v1/merchant/basics/marketing/price-level/detail`,
-    {
-      price_level_id: row.id,
-    },
-  );
+  return requestClient.post(`/v1/merchant/basics/marketing/promotion/detail`, {
+    promotion_id: row.id,
+  });
 }
