@@ -23,7 +23,7 @@ export function useListForm() {
   const warehouse = useWarehouseSelect();
   const userName = useUserStore().userInfo?.user_model.name;
   const userLabel = `${t('count.creator')}:`;
-
+ const { currentLoginUserApp } = useUserStore();
   const schema: ISchema = {
     type: 'object',
     properties: {
@@ -223,7 +223,12 @@ export function useListForm() {
       async onConfirm() {
         await formAPI.validate();
         drawerApi.lock();
-        createOrUpdateStock(formAPI.values)
+
+        const params ={
+          ...formAPI.values,
+          merchant_id:currentLoginUserApp.owner_id,
+        }
+        createOrUpdateStock(params)
           .then(() => {
             drawerApi.close();
           })

@@ -59,7 +59,7 @@ const summary = (list) => {
 const countVarianceQuantity = (item) => {
   // 只处理已选产品的项目
   const physicalQty = Number(item.physical_quantity || 0);
-  const originQty = Number(item.origin_quantity || 0);
+  const originQty = Number(item.stock_total_quantity || 0);
   const unitRatio = Number(item.basic_unit_radio || 1);
 
   // 重新计算数量差异

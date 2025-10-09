@@ -54,11 +54,15 @@ export function createOrUpdateStock(params: any) {
 export function modifyInventoryStock(params: any) {
   const { product_model: _product_model, product, ...reset } = params;
   const [first] = product ?? [];
+  const obj = JSON.parse(JSON.stringify(first))
   const data = {
     ...reset,
-    stock_origin_quantity: first.stock_quantity,
-    product: first,
+    stock_origin_quantity:reset.stock_quantity,
+    stock_change_quantity: first.stock_quantity,
+    product: {...obj,merchant_id:reset.merchant_id}
   };
+  debugger
+
   return requestClient.post(`/v1/merchant/basics/inventory/stock/modify`, data);
 }
 export function removeInventoryStock(params:any) {
