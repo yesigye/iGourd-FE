@@ -1,39 +1,12 @@
 <script setup lang="ts">
-import { ElButton, Page } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-
-import { useReturnedOrder } from '@@/sale/hooks';
+import { Page } from '@igourd/common-ui';
 
 defineOptions({
   name: 'IReturnedOrder',
 });
-
-const { t } = useI18n();
-const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
-  useReturnedOrder();
 </script>
 
 <template>
   <Page auto-content-height>
-    <Grid>
-    <template #table-actions>
-        <ElButton
-          type="danger"
-          v-if="canBatchOperate"
-          @click="handleBatchDelete"
-        >
-          {{ t('common.delete') }}
-        </ElButton>
-      </template>
-      <template #operation="{ row }">
-        <ElButton type="text" @click="handleEdit(row)">
-          {{ t('common.edit') }}
-        </ElButton>
-        <ElButton type="text" @click="handleEdit(row)">
-          {{ t('common.detail') }}
-        </ElButton>
-      </template>
-    </Grid>
-    <Drawer />
-  </Page>
+1 </Page>
 </template>

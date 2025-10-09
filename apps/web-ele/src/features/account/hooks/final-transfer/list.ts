@@ -1,81 +1,68 @@
-import type { FinalTransferData } from '@@/account/types';
-
-import type { VxeGridPropTypes } from '#/adapter/vxe-table';
+import type { VxeGridProps, VxeGridPropTypes } from '#/adapter/vxe-table';
+import type { PurchaseCustomizedInfo } from '#/features/purchase/types/purchase';
 
 import { useI18n } from '@igourd/locales';
+import { useUserStore } from '@igourd/stores';
 
-import {
-  getFinalTransferListApi,
-  executeFinalTransferApi,
-  reverseFinalTransferApi,
-  getTransferStatusApi,
-} from '@@/account/apis';
-import { FinalTransferDrawer } from '@@/account/components';
+import { listSubLedgerTree } from '@@/account/apis';
 
-import { useCrud } from '#/hooks';
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
 
-export function useFinalTransfer() {
+export function useFinalTransfer(periodId: string) {
   const { t } = useI18n();
+  const userStore = useUserStore();
 
-  // 基础列定义
-  const baseColumns: VxeGridPropTypes.Column<FinalTransferData>[] = [
+  const columns: VxeGridPropTypes.Column<PurchaseCustomizedInfo>[] = [
     {
       field: 'code',
-      width: 165,
-      fixed: 'left',
       title: t('account.account'),
+      minWidth: 170,
       sortable: true,
+      align: 'left',
     },
     {
       field: 'current_debit_amount',
-      width: 200,
-      title: t('account.debit_amount'),
+      title: t('account.debit-amount'),
+      minWidth: 170,
       sortable: true,
+      align: 'left',
     },
     {
       field: 'current_credit_amount',
-      width: 200,
-      title: t('account.credit_amount'),
+      title: t('account.credit-amount'),
+      minWidth: 170,
       sortable: true,
+      align: 'left',
     },
   ];
-  // 服务函数
-  const service = {
-    // 获取列表数据
-    query: getFinalTransferListApi,
-
-    // 执行结转
-    execute: executeFinalTransferApi,
-
-    // 撤销结转
-    reverse: reverseFinalTransferApi,
-  };
-
-  // 使用 CRUD Hook
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
-    useCrud({
-      service,
-      columns: baseColumns,
-      searchFormSchema: {
-        keywords: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Input',
-          'x-component-props': {
-            placeholder: t('account.searchPlaceholder'),
-          },
+  // Grid 选项配置
+  const gridOptions: VxeGridProps<PurchaseCustomizedInfo> = {
+    columns,
+    height: '',
+    keepSource: true,
+    proxyConfig: {
+      ajax: {
+        query: async () => {
+          return await listSubLedgerTree({
+            category: 'PROFIT_AND_LOSS',
+            account_set_id: userStore.merchantInfo.account_set_id,
+            accounting_period_id: periodId,
+          });
         },
       },
-      batchOperate: true,
-      connectedComponent: FinalTransferDrawer,
-    });
+    },
+  };
 
-
+  // 使用 useIgourdVxeGrid
+  const [Grid, gridApi] = useIgourdVxeGrid({
+    gridOptions,
+  });
   return {
+    // 组件
     Grid,
-    Drawer,
-    handleEdit,
-    handleBatchDelete,
-    canBatchOperate,
+    gridApi,
+    // 配置
+    columns,
+    gridOptions,
   };
 }
