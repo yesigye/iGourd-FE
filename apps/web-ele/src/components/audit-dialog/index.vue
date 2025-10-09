@@ -46,7 +46,6 @@ const formSchema: ISchema = {
           title: "{{t('common.remarks')}}",
           'x-decorator': 'FormItem',
           'x-component': 'Input.TextArea',
-          visible: false,
           'x-reactions': {
             dependencies: ['review_status'],
             fulfill: {

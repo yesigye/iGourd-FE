@@ -233,13 +233,17 @@ function useCrud<T extends { id?: number | string }, P extends object>(
    * 打开抽屉并设置数据
    * @param dto - 要编辑的数据对象，可选
    */
-  const handleEdit = async (dto?: T) => {
+  const handleEdit = async (dto?: T,mode:string) => {
     if (options.service?.detail && Reflect.ownKeys(dto ?? {}).length > 0) {
       // @ts-ignore
       const data = await options.service?.detail(dto);
+
       drawerApi.setData(data ?? {}).open();
       return;
     }
+    if(dto && mode && mode ==='detail'){
+        dto.mode = "detail"
+      }
     drawerApi.setData(dto ?? {}).open();
   };
 

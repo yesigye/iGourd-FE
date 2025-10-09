@@ -149,7 +149,7 @@ const handleBatchDelete = () => {
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleEdit(row)">
+        <ElButton type="text" @click="handleEdit(row,'detail')">
           {{ t('common.detail') }}
         </ElButton>
       </template>
