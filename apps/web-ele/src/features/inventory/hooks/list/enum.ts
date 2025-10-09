@@ -53,7 +53,7 @@ export const inventoryReasonList = [
   },
   {
     value: 'SAFETY_STOCK',
-    label: 'SAFETYSTOCK',
+    label: 'inventory.SAFETYSTOCK',
   },
   {
     value: 'STOCK_REPLENISHMENT',
