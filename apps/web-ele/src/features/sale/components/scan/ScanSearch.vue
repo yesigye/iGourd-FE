@@ -328,6 +328,7 @@ defineExpose({ handlePickOrder });
           :fetch-suggestions="[]"
           :select-when-unmatched="false"
           :placeholder="$t('scan.barcode-product-code-product-name')"
+          :maxlength="128"
           @blur="handleBlur"
           @focus="handleFocus"
           @select="handleSelect"
