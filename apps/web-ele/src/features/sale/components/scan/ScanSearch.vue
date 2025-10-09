@@ -6,13 +6,13 @@ import { useI18n } from '@igourd/locales';
 import { debounce } from '@igourd/utils';
 
 import { productSearchApi } from '@@/sale/apis';
+// import TakeDetail from './TakeDetail.vue';
+import { useTakeDetail } from '@@/sale/hooks';
 import { storeToRefs } from 'pinia';
 
 import codeIcon from '#/assets/sale/longcode-s.png';
 import { useSetStore } from '#/store/sale/setStore';
 import { thousandSeparator } from '#/utils/sale';
-
-import TakeDetail from './TakeDetail.vue';
 
 const props = defineProps({
   rowSelection: {
@@ -34,7 +34,7 @@ const emit = defineEmits([
   'refreshCalculationBadgeCount',
   'productAdded',
 ]);
-
+const { Drawer: takeDetail, drawerApi: drawerApiTakeDetail } = useTakeDetail();
 const { setInfo } = storeToRefs(useSetStore());
 
 const { t } = useI18n();
@@ -231,8 +231,7 @@ const handleHangOrder = () => {
 };
 
 const handlePickOrder = () => {
-  isShowDialog.value = true;
-  takeTitle.value = t('scan.take');
+  drawerApiTakeDetail.open();
 };
 
 const handleTakeOrder = async (selectedOrder) => {
@@ -289,7 +288,7 @@ const handleEnterKey = async () => {
 const handleEnterKeyDebounced = debounce(handleEnterKey, 500);
 
 const handleClose = () => {
-  isShowDialog.value = false;
+  drawerApiTakeDetail.close();
 };
 
 watch(selectGoods, (newVal) => {
@@ -349,27 +348,25 @@ defineExpose({ handlePickOrder });
               style="pointer-events: none; background-color: #eee"
             >
               <div class="Sh-info-code">
-                {{ $t('common.purchase.product_code') }}
+                {{ $t('common.product-code') }}
               </div>
               <div class="Sh-info-name">
-                {{ $t('common.purchase.product_name') }}
+                {{ $t('common.product-name') }}
               </div>
               <div class="Sh-info-type">
-                {{ $t('common.purchase.product_unit_name') }}
+                {{ $t('common.product-unit-name') }}
               </div>
-              <div class="Sh-info-price">{{ $t('customers.cost_price') }}</div>
-              <div class="Sh-info-quantity">{{ $t('inventory.stock') }}</div>
+              <div class="Sh-info-price">{{ $t('common.cost_price') }}</div>
+              <div class="Sh-info-quantity">{{ $t('common.stock') }}</div>
             </div>
             <div v-else class="Sh-info">
               <span class="Sh-info-code">{{ item.product_code || '-' }}</span>
-              <span class="Sh-info-name"
-                >{{ item.major_name || '-'
+              <span class="Sh-info-name">{{ item.major_name || '-'
                 }}{{
                   item.product_spec_kvmessage
                     ? `-${item.product_spec_kvmessage}`
                     : ''
-                }}</span
-              >
+                }}</span>
               <span class="Sh-info-type">{{
                 item.product_unit_name || '-'
               }}</span>
@@ -395,21 +392,21 @@ defineExpose({ handlePickOrder });
       </div>
       <ElButton
         type="primary"
-        class="mt-[5px] h-full"
+        class="mt-[5px] h-[50px] w-36"
         @click="handleEnterKeyDebounced()"
       >
-        <div class="sale">
+        <div class="sale flex gap-2">
           <div class="sale-left">
             <i class="iconfont icon-sousuo"></i>
           </div>
           <div class="sale-right">
-            <span>{{ t('common.searchBtn') }}</span>
+            <span>{{ t('common.search') }}</span>
           </div>
         </div>
       </ElButton>
     </div>
     <!-- 挂单列表 -->
-    <TakeDetail
+    <takeDetail
       ref="takeDetailRef"
       :drawer-return-show="isShowDialog"
       :drawer-return-title="takeTitle"

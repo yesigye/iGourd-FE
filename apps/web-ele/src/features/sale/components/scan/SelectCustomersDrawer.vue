@@ -53,12 +53,12 @@ const [Drawer, drawerApi] = useIgourdDrawer({
           <ElInput
             v-model="keywords"
             style="height: 36px"
-            :placeholder="$t('customers.search-placeholder')"
+            :placeholder="$t('scan.search-placeholder')"
             clearable
             @clear="fetchGoodsList"
           />
           <ElButton
-            class="outer-btn right-box search-btn blue-btn"
+            class="outer-btn right-box search-btn blue-btn h-9"
             type="primary"
             @click="fetchGoodsList"
           >
@@ -67,7 +67,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
                 <i class="iconfont icon-sousuo"></i>
               </div>
               <div class="inner-right">
-                <span> {{ $t('employee.searchButton') }}</span>
+                <span> {{ $t('common.search') }}</span>
               </div>
             </div>
           </ElButton>
