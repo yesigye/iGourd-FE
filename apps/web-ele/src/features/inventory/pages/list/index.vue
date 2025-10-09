@@ -55,7 +55,7 @@ const [clearModal, clearModalApi2] = useIgourdModal({
   onOpenChange() {},
   title: t('inventory.message_tip'),
 });
-const { Grid, gridApi, checkedKeys, Drawer, handleEdit, canBatchOperate } =
+const { Grid, gridApi, checkedKeys, Drawer, handleEdit, handleView, canBatchOperate } =
   useInventory();
 // 错误数据
 const errorList = ref<ErrorItem[]>();
@@ -150,7 +150,7 @@ const handleBatchDelete = () => {
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleEdit(row,'detail')">
+        <ElButton type="text" @click="handleView(row)">
           {{ t('common.detail') }}
         </ElButton>
       </template>
