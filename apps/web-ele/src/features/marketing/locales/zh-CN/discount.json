@@ -1,5 +1,8 @@
 {
   "form": {
+    "edit": "编辑促销",
+    "create": "新增促销",
+    "basicInfo": "基础信息",
     "type": "促销类型",
     "channel": "适用范围",
     "name": "促销名称",
@@ -41,7 +44,7 @@
   },
   "enum": {
     "type": { "discount": "折扣", "reduction": "满减" },
-    "channel": { "store": "门店", "online": "网店" },
+    "channel": { "store": "门店", "online": "在线商城" },
     "rounding": {
       "high": "四舍五入到高位",
       "middle": "四舍五入",

@@ -9,6 +9,8 @@ export const Card = connect(
     return {
       ...props,
       shadow: props.shadow ?? 'never',
+      class: props.bodyClass ?? 'mb-1',
+      bodyClass: props.bodyClass ?? `border-0`,
       headerClass: props.headerClass ?? `${stylePrefix}-card-header`,
     };
   }),

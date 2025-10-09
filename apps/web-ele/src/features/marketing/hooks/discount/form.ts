@@ -1,12 +1,16 @@
+import { useI18n } from '@igourd/locales';
+
 import { useDrawerForm } from '#/hooks';
 
 import schema from './form-schema';
 
 export function useDiscountForm() {
-  return useDrawerForm({
+  const { t } = useI18n();
+  const { Drawer, Form, drawerApi, formAPI } = useDrawerForm({
     drawerOptions: {
-      title: 'ddd',
-      class: 'w-full',
+      title: t('discount.form.create'),
+      class: 'w-[958px]',
+      contentClass: 'bg-muted  px-0',
       appendToMain: true,
     },
     formOptions: {
@@ -19,4 +23,12 @@ export function useDiscountForm() {
       schema,
     },
   });
+  drawerApi.onOpened = () => {
+    if (Reflect.has(drawerApi.getData() ?? {}, 'id')) {
+      drawerApi.setState({
+        title: t('discount.form.edit'),
+      });
+    }
+  };
+  return { Drawer, Form, drawerApi, formAPI };
 }

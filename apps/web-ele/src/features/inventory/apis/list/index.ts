@@ -56,6 +56,7 @@ export function modifyInventoryStock(params: any) {
   const [first] = product ?? [];
   const data = {
     ...reset,
+    stock_origin_quantity: first.stock_quantity,
     product: first,
   };
   return requestClient.post(`/v1/merchant/basics/inventory/stock/modify`, data);

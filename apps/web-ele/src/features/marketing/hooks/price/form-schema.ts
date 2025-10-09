@@ -16,7 +16,7 @@ export default {
           'x-component': 'Card',
           'x-component-props': {
             header: "{{t('priceLevel.form.name')}}",
-            class: 'mb-10',
+            class: 'mb-1',
           },
           properties: {
             name: {
@@ -144,7 +144,7 @@ export default {
           'x-component': 'Card',
           'x-component-props': {
             header: "{{t('priceLevel.form.name')}}",
-            class: 'mb-10',
+            class: 'mb-1',
           },
           properties: {
             effective_time: {
@@ -195,7 +195,7 @@ export default {
           'x-component': 'Card',
           'x-component-props': {
             header: "{{t('priceLevel.form.name')}}",
-            class: 'mb-6',
+            class: 'mb-1',
           },
           properties: {
             relation_type: {
@@ -379,48 +379,58 @@ export default {
             },
           },
         },
-
-        rounding_off: {
-          type: 'string',
-          title: "{{t('priceLevel.form.roundingOff')}}",
-          'x-decorator': 'FormItem',
-          'x-component': 'Select',
-          'x-component-props': {
-            placeholder: "{{t('priceLevel.placeholder.roundingOff')}}",
-          },
-          enum: [
-            { label: "{{t('priceLevel.enum.rounding.high')}}", value: 'HIGH' },
-            {
-              label: "{{t('priceLevel.enum.rounding.middle')}}",
-              value: 'MIDDLE',
+        card_3: {
+          type: 'void',
+          'x-component': 'Card',
+          properties: {
+            rounding_off: {
+              type: 'string',
+              title: "{{t('priceLevel.form.roundingOff')}}",
+              'x-decorator': 'FormItem',
+              'x-component': 'Select',
+              'x-component-props': {
+                placeholder: "{{t('priceLevel.placeholder.roundingOff')}}",
+              },
+              enum: [
+                {
+                  label: "{{t('priceLevel.enum.rounding.high')}}",
+                  value: 'HIGH',
+                },
+                {
+                  label: "{{t('priceLevel.enum.rounding.middle')}}",
+                  value: 'MIDDLE',
+                },
+                {
+                  label: "{{t('priceLevel.enum.rounding.low')}}",
+                  value: 'LOW',
+                },
+              ],
+              'x-reactions': {
+                dependencies: ['change_mode'],
+                fulfill: { state: { visible: "{{$deps[0]==='PERCENTAGE'}}" } },
+              },
             },
-            { label: "{{t('priceLevel.enum.rounding.low')}}", value: 'LOW' },
-          ],
-          'x-reactions': {
-            dependencies: ['change_mode'],
-            fulfill: { state: { visible: "{{$deps[0]==='PERCENTAGE'}}" } },
+
+            rounding_amount: {
+              type: 'number',
+              title: "{{t('priceLevel.form.roundingAmount')}}",
+              'x-decorator': 'FormItem',
+              'x-component': 'Select',
+              'x-component-props': {
+                placeholder: "{{t('priceLevel.placeholder.roundingAmount')}}",
+              },
+              enum: [0.001, 0.01, 0.1, 1, 10, 100, 1000].map((v) => ({
+                label: String(v),
+                value: v,
+              })),
+              'x-reactions': {
+                dependencies: ['change_mode'],
+                fulfill: { state: { visible: "{{$deps[0]==='PERCENTAGE'}}" } },
+              },
+            },
           },
         },
 
-        rounding_amount: {
-          type: 'number',
-          title: "{{t('priceLevel.form.roundingAmount')}}",
-          'x-decorator': 'FormItem',
-          'x-component': 'Select',
-          'x-component-props': {
-            placeholder: "{{t('priceLevel.placeholder.roundingAmount')}}",
-          },
-          enum: [0.001, 0.01, 0.1, 1, 10, 100, 1000].map((v) => ({
-            label: String(v),
-            value: v,
-          })),
-          'x-reactions': {
-            dependencies: ['change_mode'],
-            fulfill: { state: { visible: "{{$deps[0]==='PERCENTAGE'}}" } },
-          },
-        },
-
-        merchant_id: { type: 'number', 'x-visible': false },
         entity: { type: 'string', 'x-visible': false },
         creator_id: { type: 'number', default: 0, 'x-visible': false },
       },

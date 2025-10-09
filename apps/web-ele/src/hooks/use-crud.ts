@@ -237,19 +237,20 @@ function useCrud<T extends { id?: number | string }, P extends object>(
     if (options.service?.detail && Reflect.ownKeys(dto ?? {}).length > 0) {
       // @ts-ignore
       const data = await options.service?.detail(dto);
-
       drawerApi.setData(data ?? {}).open();
       return;
     }
     drawerApi.setData(dto ?? {}).open();
   };
   /*
-  *  查看详情
-  */
+   *  查看详情
+   */
   const handleView = (dto?: T) => {
-    dto.mode = "detail"
+    if (dto) {
+      dto.mode = 'detail';
+    }
     drawerApi.setData(dto ?? {}).open();
-  }
+  };
 
   /**
    * 处理取消订单操作
@@ -349,7 +350,7 @@ function useCrud<T extends { id?: number | string }, P extends object>(
     handleCreate: handleEdit, // 创建处理函数（复用编辑函数）
     handleCancel, // 取消订单处理函数
     handleDelete,
-    handleView
+    handleView,
   };
 }
 
