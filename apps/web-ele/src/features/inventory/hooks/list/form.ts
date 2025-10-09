@@ -242,8 +242,11 @@ export function useListForm() {
             // detail.returned_quantity = detail.physical_total_quantity;
             formAPI.setValues(detail);
           }
+          if(data && data.mode === 'detail'){
+            formAPI.setFormState({readPretty:true})
+          }
         } else {
-          // 关闭抽屉时，重置表单
+          // 关闭抽屉时，重置表单å
           formAPI.values = {};
         }
       },
