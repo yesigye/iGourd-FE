@@ -63,9 +63,14 @@ export function useProductGroupForm(func) {
       if (isOpen) {
         formAPI.reset();
         const data = drawerApi.getData();
-        const pIdList = await getParentList(data.parent_id);
-        // pIdList.push(data.parent_id);
-        data.parent_id = pIdList;
+        if(data && data.parent_id){
+          const pIdList = await getParentList(data.parent_id);
+          // pIdList.push(data.parent_id);
+          data.parent_id = pIdList;
+        }else{
+          data.parent_id = 0;
+        }
+
         formAPI.setValues(data);
         //  formAPI.setValuesIn('parent_id', pIdList);
       }

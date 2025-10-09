@@ -18,7 +18,7 @@ setupIgourdVxeTable({
     vxeUI.setConfig({
       grid: {
         align: 'center',
-        border: false,
+        border: true,
         stripe: true,
         rowConfig: {
           isCurrent: true,

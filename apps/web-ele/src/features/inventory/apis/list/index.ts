@@ -29,7 +29,7 @@ export function getInventoryStatsApi(data: any) {
 }
 
 // 创建库存
-export function createInventoryStock(params) {
+export function createInventoryStock(params: any) {
   return requestClient.post(
     `/v1/merchant/basics/inventory/stock-info/create/batch`,
     params,
@@ -37,23 +37,29 @@ export function createInventoryStock(params) {
 }
 
 // 获取库存详情
-export function getInventoryStockDetail(params) {
+export function getInventoryStockDetail(params: any) {
   return requestClient.post(
     `/v1/merchant/basics/inventory/stock/detail`,
     params,
   );
 }
 
-// 修改库存详情
-export function modifyInventoryStock(params) {
-  return requestClient.post(
-    `/v1/merchant/basics/inventory/stock/modify`,
-    params,
-  );
+export function createOrUpdateStock(params: any) {
+  return Reflect.has(params, 'id')
+    ? modifyInventoryStock(params)
+    : createInventoryStock(params);
 }
-export function removeInventoryStock(params) {
-  return requestClient.post(
-    `/v1/merchant/basics/inventory/stock/remove`,
-    params,
-  );
+
+// 修改库存详情
+export function modifyInventoryStock(params: any) {
+  const { product_model: _product_model, product, ...reset } = params;
+  const [first] = product ?? [];
+  const data = {
+    ...reset,
+    product: first,
+  };
+  return requestClient.post(`/v1/merchant/basics/inventory/stock/modify`, data);
+}
+export function removeInventoryStock(data: any) {
+  return requestClient.post(`/v1/merchant/basics/inventory/stock/remove`, data);
 }

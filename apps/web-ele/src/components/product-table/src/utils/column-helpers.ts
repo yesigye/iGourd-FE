@@ -159,7 +159,7 @@ export const createQuantityColumn = (
   'x-reactions': {
     fulfill: {
       state: {
-        'x-component-props': {
+        componentProps: {
           max: maxField
             ? `{{$values?.${maxField} ? $record?.${maxField} : Number.MAX_SAFE_INTEGER}}`
             : 'Number.MAX_SAFE_INTEGER',

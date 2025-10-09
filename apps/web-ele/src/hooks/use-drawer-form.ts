@@ -62,7 +62,7 @@ export function useDrawerForm(options: DrawerFormOptions) {
   options.drawerOptions.onConfirm = async function () {
     // 如果存在原始确认回调，则先执行
     if (onConfirm) {
-      onConfirm();
+      return await onConfirm();
     }
 
     // 验证表单数据

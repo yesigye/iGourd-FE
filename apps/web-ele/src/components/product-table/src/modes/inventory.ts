@@ -8,6 +8,34 @@ export const InventoryMode: ModePlugin = {
   columns(_ctx) {
     return [
       {
+        name: 'id',
+        'x-hidden': true,
+      },
+      {
+        name: 'sku_group_code',
+        'x-hidden': true,
+      },
+      {
+        name: 'basic_product_id',
+        'x-hidden': true,
+      },
+      {
+        name: 'product_name',
+        'x-hidden': true,
+      },
+      {
+        name: 'product_group_id',
+        'x-hidden': true,
+      },
+      {
+        name: 'product_unit_name',
+        'x-hidden': true,
+      },
+      {
+        name: 'merchant_id',
+        'x-hidden': true,
+      },
+      {
         name: 'product_code',
         title: '{{t("common.purchase.product_code")}}',
         'x-component': 'PreviewText.Input',
@@ -20,13 +48,6 @@ export const InventoryMode: ModePlugin = {
         title: 'product_id',
         'x-component': 'PreviewText.Input',
         'x-hidden': true,
-        'x-reactions': {
-          fulfill: {
-            state: {
-              'x-hidden': true,
-            },
-          },
-        },
       },
       {
         name: 'major_name',
@@ -72,6 +93,10 @@ export const InventoryMode: ModePlugin = {
       },
       {
         name: 'basic_unit_radio',
+        'x-hidden': true,
+      },
+      {
+        name: 'basic_unit_radio',
         title: '{{t("common.purchase.basic_unit_radio")}}',
         'x-component': 'PreviewText.Input',
         'x-decorator': 'FormItem',
@@ -79,9 +104,10 @@ export const InventoryMode: ModePlugin = {
           width: 160,
         },
         'x-reactions': {
+          dependencies: ['.basic_unit_radio'],
           fulfill: {
             state: {
-              value: '{{$self.value ? "1:"+ $self.value: "" }}',
+              value: '{{ $deps[0] ? "1:"+ $deps[0]: "" }}',
             },
           },
         },

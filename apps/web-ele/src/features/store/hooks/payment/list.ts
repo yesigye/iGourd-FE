@@ -8,7 +8,7 @@ import { useCrud } from '#/hooks';
 
 import * as storePaymentApi from '../../apis/payment';
 
-export function useStorePaymentList() {
+export function useStorePayment() {
   const { t } = useI18n();
 
   // 基础列定义
