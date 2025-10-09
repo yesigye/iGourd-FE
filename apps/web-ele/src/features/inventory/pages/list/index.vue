@@ -63,6 +63,7 @@ const errorList = ref<ErrorItem[]>();
 const errorCount = ref<number>(0);
 // 成功总数
 const successCount = ref<number>(0);
+
 const handleBatchDelete = () => {
   confirm({
     title: t('common.delete-confirm-title'),
