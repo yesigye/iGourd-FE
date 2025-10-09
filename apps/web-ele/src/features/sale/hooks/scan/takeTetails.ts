@@ -7,6 +7,7 @@ export function useTakeDetail() {
   const { t } = useI18n();
   const [Drawer, drawerApi] = useIgourdDrawer({
     connectedComponent: TakeDetail,
+    destroyOnClose: true,
     appendToMain: true,
     class: 'w-2/3',
     title: t('scan.take'),

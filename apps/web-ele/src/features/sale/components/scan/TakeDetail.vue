@@ -56,7 +56,7 @@ const emit = defineEmits([
 const [Drawer, drawerApi] = useIgourdDrawer({
   onOpenChange: (val) => {
     if (val) {
-      getCustomerList();
+      // getCustomerList();
     }
   },
 });
