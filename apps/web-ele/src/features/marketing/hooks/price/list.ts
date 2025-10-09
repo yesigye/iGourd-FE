@@ -1,14 +1,13 @@
 import type { PriceDTO, PriceRow } from '@@/marketing/types';
 
-import type { VxeGridPropTypes } from '#/adapter/vxe-table';
-
 import { useI18n } from '@igourd/locales';
 
 import {
-  createPriceApi,
+  createOrUpdatePriceApi,
   deletePriceApi,
+  getPriceDetailApi,
   getPriceListApi,
-  updatePriceApi,
+  updatePriceStatusApi,
 } from '@@/marketing/apis';
 import { PriceDrawer } from '@@/marketing/components';
 
@@ -16,78 +15,6 @@ import { useCrud } from '#/hooks';
 
 export function usePrice() {
   const { t } = useI18n();
-  const columns: VxeGridPropTypes.Column<PriceRow>[] = [
-    {
-      type: 'checkbox',
-      width: 80,
-      fixed: 'left',
-    },
-    {
-      field: 'name',
-      title: t('marketing.priceLevelName'),
-      minWidth: 150,
-      sortable: true,
-      align: 'left',
-    },
-    {
-      field: 'change_type',
-      title: t('marketing.priceLevelType'),
-      minWidth: 150,
-      sortable: true,
-      align: 'left',
-    },
-    {
-      field: 'change_value',
-      title: t('marketing.priceLevelPrice'),
-      width: 100,
-      align: 'center',
-    },
-    {
-      field: 'change_mode',
-      title: t('marketing.changeMode'),
-      width: 120,
-      align: 'right',
-    },
-    {
-      field: 'effective_time',
-      title: t('marketing.effectiveDate'),
-      width: 120,
-      align: 'right',
-    },
-    {
-      field: 'expiration_time',
-      title: t('marketing.expirationTime'),
-      width: 120,
-      align: 'right',
-    },
-    {
-      field: 'creator_name',
-      title: t('marketing.creator'),
-      width: 160,
-      sortable: true,
-      align: 'center',
-    },
-    {
-      field: 'create_time',
-      title: t('marketing.createTime'),
-      width: 160,
-      sortable: true,
-      align: 'center',
-    },
-    {
-      field: 'status',
-      title: t('marketing.switchStatus'),
-      width: 100,
-      align: 'center',
-    },
-    {
-      field: 'operation',
-      title: t('common.operations'),
-      width: 120,
-      fixed: 'right',
-      slots: { default: 'operation' },
-    },
-  ];
 
   const searchFormSchema = {
     product_name: {
@@ -101,16 +28,122 @@ export function usePrice() {
     },
   };
 
-  return useCrud<PriceRow, PriceDTO>({
-    columns,
+  const {
+    Grid,
+    Drawer,
+    handleEdit,
+    canBatchOperate,
+    handleBatchDelete,
+    gridApi,
+  } = useCrud<PriceRow, PriceDTO>({
+    columns: [
+      {
+        type: 'checkbox',
+        width: 80,
+        fixed: 'left',
+      },
+      {
+        field: 'name',
+        title: t('marketing.priceLevelName'),
+        minWidth: 150,
+        sortable: true,
+        align: 'left',
+      },
+      {
+        field: 'change_type',
+        title: t('marketing.priceLevelType'),
+        minWidth: 150,
+        sortable: true,
+        align: 'left',
+        formatter: ({ cellValue }) => {
+          if (cellValue === 'DECREASE') {
+            return t('priceLevel.enum.changeType.decrease');
+          }
+          return t('priceLevel.enum.changeType.increase');
+        },
+      },
+      {
+        field: 'change_value',
+        title: t('marketing.priceLevelPrice'),
+        width: 100,
+        align: 'center',
+      },
+      {
+        field: 'change_mode',
+        title: t('marketing.changeMode'),
+        width: 120,
+        align: 'right',
+        formatter: ({ cellValue }) => {
+          if (cellValue === 'AMOUNT') {
+            return t('priceLevel.enum.changeMode.amount');
+          }
+          return t('priceLevel.enum.changeMode.percentage');
+        },
+      },
+      {
+        field: 'effective_time',
+        title: t('marketing.effectiveDate'),
+        width: 120,
+        align: 'right',
+      },
+      {
+        field: 'expiration_time',
+        title: t('marketing.expirationTime'),
+        width: 120,
+        align: 'right',
+      },
+      {
+        field: 'creator_name',
+        title: t('marketing.creator'),
+        width: 160,
+        sortable: true,
+        align: 'center',
+      },
+      {
+        field: 'create_time',
+        title: t('marketing.createTime'),
+        width: 160,
+        sortable: true,
+        align: 'center',
+      },
+      {
+        field: 'status',
+        title: t('marketing.switchStatus'),
+        width: 100,
+        cellRender: {
+          name: 'Switch',
+          props: {
+            activeValue: 'OPEN',
+            inactiveValue: 'CLOSE',
+            onChange(value: string, { row }: { row: PriceRow }) {
+              updatePriceStatusApi({
+                id: row.id,
+                status: value,
+              }).then(() => {
+                gridApi.reload();
+              });
+            },
+          },
+        },
+      },
+      {
+        field: 'operation',
+        title: t('common.operations'),
+        width: 135,
+        fixed: 'right',
+        slots: { default: 'operation' },
+      },
+    ],
     searchFormSchema,
     batchOperate: true,
     connectedComponent: PriceDrawer,
     service: {
       query: getPriceListApi,
+      detail: getPriceDetailApi,
       drop: deletePriceApi,
-      create: createPriceApi,
-      update: updatePriceApi,
+      create: createOrUpdatePriceApi,
+      update: createOrUpdatePriceApi,
     },
   });
+  return { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete };
 }

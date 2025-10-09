@@ -9,11 +9,17 @@ export function usePriceForm() {
   return useDrawerForm({
     drawerOptions: {
       title: t('price.add-price'),
-      class: 'w-[579px]',
+      class: 'w-[958px]',
       contentClass: 'bg-muted',
       appendToMain: true,
     },
+
     formOptions: {
+      initialValues: {
+        relation_product_list: [{}],
+        relation_product_label_list: [{}],
+        relation_product_group_list: [{}],
+      },
       schema,
     },
   });

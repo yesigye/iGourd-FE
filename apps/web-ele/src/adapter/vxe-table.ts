@@ -2,7 +2,7 @@ import type { VxeTableGridOptions } from '@igourd/plugins/vxe-table';
 
 import { h } from 'vue';
 
-import { ElButton, ElImage } from '@igourd/common-ui';
+import { ElButton, ElImage, ElSwitch } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import {
   setupIgourdVxeTable,
@@ -168,6 +168,19 @@ setupIgourdVxeTable({
           },
           formatNumber(changeAmount),
         );
+      },
+    });
+    vxeUI.renderer.add('Switch', {
+      renderTableDefault({ props }, params) {
+        const { row, column } = params;
+        const cellValue = row[column.field];
+        return h(ElSwitch, {
+          modelValue: cellValue,
+          ...props,
+          onChange(value) {
+            props?.onChange?.(value, { row, column });
+          },
+        });
       },
     });
 

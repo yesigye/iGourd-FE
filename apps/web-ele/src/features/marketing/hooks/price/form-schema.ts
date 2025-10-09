@@ -1,5 +1,9 @@
 import type { ISchema } from '@igourd/common-ui';
 
+import { productGroupSelect } from '#/components/product-group';
+import { productLabelSelect } from '#/components/product-label';
+import { productSelect } from '#/components/product-select';
+
 export default {
   type: 'object',
   properties: {
@@ -7,15 +11,14 @@ export default {
       type: 'void',
       'x-component': 'FormLayout',
       'x-component-props': {
-        labelCol: 6,
-        wrapperCol: 10,
+        labelWidth: 100,
       },
       properties: {
         card_0: {
           type: 'void',
           'x-component': 'Card',
           'x-component-props': {
-            header: "{{t('priceLevel.form.name')}}",
+            header: "{{t('discount.form.basicInfo')}}",
             class: 'mb-1',
           },
           properties: {
@@ -69,7 +72,7 @@ export default {
                 },
                 change_mode: {
                   type: 'string',
-                  title: "{{t('priceLevel.form.changeMode')}}",
+                  // title: "{{t('priceLevel.form.changeMode')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'Select',
                   'x-component-props': {
@@ -97,7 +100,7 @@ export default {
 
                 change_value: {
                   type: 'number',
-                  title: "{{t('priceLevel.form.changeValue')}}",
+                  // title: "{{t('priceLevel.form.changeValue')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'InputNumber',
                   'x-component-props': {
@@ -143,7 +146,7 @@ export default {
           type: 'void',
           'x-component': 'Card',
           'x-component-props': {
-            header: "{{t('priceLevel.form.name')}}",
+            header: "{{t('discount.form.activeSetting')}}",
             class: 'mb-1',
           },
           properties: {
@@ -194,7 +197,7 @@ export default {
           type: 'void',
           'x-component': 'Card',
           'x-component-props': {
-            header: "{{t('priceLevel.form.name')}}",
+            header: "{{t('discount.form.products')}}",
             class: 'mb-1',
           },
           properties: {
@@ -203,7 +206,7 @@ export default {
               title: "{{t('priceLevel.form.relationType')}}",
               default: 'ALL',
               'x-decorator': 'FormItem',
-              'x-component': 'Select',
+              'x-component': 'Radio.Group',
               enum: [
                 {
                   label: "{{t('priceLevel.enum.relation.all')}}",
@@ -229,144 +232,58 @@ export default {
                 },
               ],
             },
-            relation_product_group_id_list: {
-              type: 'array',
-              title: "{{t('priceLevel.form.productGroups')}}",
-              'x-decorator': 'FormItem',
-              'x-component': 'ArrayTable',
-              'x-reactions': {
-                dependencies: ['relation_type'],
-                fulfill: {
-                  state: { visible: "{{$deps[0]==='PRODUCT_GROUP'}}" },
-                },
+            relation_product_group_list: {
+              ...productGroupSelect,
+              'x-decorator-props': {
+                class: 'ml-[100px]',
               },
-              items: {
-                type: 'object',
-                properties: {
-                  index: {
-                    type: 'void',
-                    'x-component': 'ArrayTable.Index',
-                    'x-component-props': { width: 60, title: '#' },
-                  },
-                  id: {
-                    type: 'number',
-                    title: "{{t('priceLevel.table.columns.group')}}",
-                    'x-decorator': 'FormItem',
-                    'x-component': 'Select',
-                    'x-component-props': {
-                      filterable: true,
-                      placeholder:
-                        "{{t('priceLevel.placeholder.productGroup')}}",
+              'x-reactions': [
+                {
+                  dependencies: ['relation_type'],
+                  fulfill: {
+                    state: {
+                      display:
+                        "{{$deps[0]==='PRODUCT_GROUP' ? 'visible' : 'none'}}",
                     },
-                    enum: [],
-                  },
-                  remove: {
-                    type: 'void',
-                    title: "{{t('priceLevel.table.columns.ops')}}",
-                    'x-component': 'ArrayTable.Remove',
                   },
                 },
-              },
-              properties: {
-                addition: {
-                  type: 'void',
-                  title: "{{t('priceLevel.form.add')}}",
-                  'x-component': 'ArrayTable.Addition',
-                },
-              },
+              ],
             },
 
-            relation_product_label_id_list: {
-              type: 'array',
-              title: "{{t('priceLevel.form.productLabels')}}",
-              'x-decorator': 'FormItem',
-              'x-component': 'ArrayTable',
-              'x-reactions': {
-                dependencies: ['relation_type'],
-                fulfill: {
-                  state: { visible: "{{$deps[0]==='PRODUCT_LABEL'}}" },
-                },
+            relation_product_label_list: {
+              ...productLabelSelect,
+              'x-decorator-props': {
+                class: 'ml-[100px]',
               },
-              items: {
-                type: 'object',
-                properties: {
-                  index: {
-                    type: 'void',
-                    'x-component': 'ArrayTable.Index',
-                    'x-component-props': { width: 60, title: '#' },
-                  },
-                  id: {
-                    type: 'number',
-                    title: "{{t('priceLevel.table.columns.label')}}",
-                    'x-decorator': 'FormItem',
-                    'x-component': 'Select',
-                    'x-component-props': {
-                      filterable: true,
-                      placeholder:
-                        "{{t('priceLevel.placeholder.productLabel')}}",
+              'x-reactions': [
+                {
+                  dependencies: ['relation_type'],
+                  fulfill: {
+                    state: {
+                      display:
+                        "{{$deps[0]==='PRODUCT_LABEL' ? 'visible' : 'none'}}",
                     },
-                    enum: [],
-                  },
-                  remove: {
-                    type: 'void',
-                    title: "{{t('priceLevel.table.columns.ops')}}",
-                    'x-component': 'ArrayTable.Remove',
                   },
                 },
-              },
-              properties: {
-                addition: {
-                  type: 'void',
-                  title: "{{t('priceLevel.form.add')}}",
-                  'x-component': 'ArrayTable.Addition',
-                },
-              },
+              ],
             },
 
-            relation_product_id_list: {
-              type: 'array',
-              title: "{{t('priceLevel.form.products')}}",
-              'x-decorator': 'FormItem',
-              'x-component': 'ArrayTable',
-              'x-reactions': {
-                dependencies: ['relation_type'],
-                fulfill: { state: { visible: "{{$deps[0]==='PRODUCT'}}" } },
+            relation_product_list: {
+              ...productSelect,
+              'x-decorator-props': {
+                class: 'ml-[100px]',
               },
-              items: {
-                type: 'object',
-                properties: {
-                  index: {
-                    type: 'void',
-                    'x-component': 'ArrayTable.Index',
-                    'x-component-props': { width: 60, title: '#' },
-                  },
-                  id: {
-                    type: 'number',
-                    title: "{{t('priceLevel.table.columns.product')}}",
-                    'x-decorator': 'FormItem',
-                    'x-component': 'Select',
-                    'x-component-props': {
-                      filterable: true,
-                      placeholder: "{{t('priceLevel.placeholder.product')}}",
+              'x-reactions': [
+                {
+                  dependencies: ['relation_type'],
+                  fulfill: {
+                    state: {
+                      display: "{{$deps[0]==='PRODUCT' ? 'visible' : 'none'}}",
                     },
-                    enum: [],
-                  },
-                  remove: {
-                    type: 'void',
-                    title: "{{t('priceLevel.table.columns.ops')}}",
-                    'x-component': 'ArrayTable.Remove',
                   },
                 },
-              },
-              properties: {
-                addition: {
-                  type: 'void',
-                  title: "{{t('priceLevel.form.add')}}",
-                  'x-component': 'ArrayTable.Addition',
-                },
-              },
+              ],
             },
-
             remark: {
               type: 'string',
               title: "{{t('priceLevel.form.remark')}}",
@@ -379,58 +296,6 @@ export default {
             },
           },
         },
-        card_3: {
-          type: 'void',
-          'x-component': 'Card',
-          properties: {
-            rounding_off: {
-              type: 'string',
-              title: "{{t('priceLevel.form.roundingOff')}}",
-              'x-decorator': 'FormItem',
-              'x-component': 'Select',
-              'x-component-props': {
-                placeholder: "{{t('priceLevel.placeholder.roundingOff')}}",
-              },
-              enum: [
-                {
-                  label: "{{t('priceLevel.enum.rounding.high')}}",
-                  value: 'HIGH',
-                },
-                {
-                  label: "{{t('priceLevel.enum.rounding.middle')}}",
-                  value: 'MIDDLE',
-                },
-                {
-                  label: "{{t('priceLevel.enum.rounding.low')}}",
-                  value: 'LOW',
-                },
-              ],
-              'x-reactions': {
-                dependencies: ['change_mode'],
-                fulfill: { state: { visible: "{{$deps[0]==='PERCENTAGE'}}" } },
-              },
-            },
-
-            rounding_amount: {
-              type: 'number',
-              title: "{{t('priceLevel.form.roundingAmount')}}",
-              'x-decorator': 'FormItem',
-              'x-component': 'Select',
-              'x-component-props': {
-                placeholder: "{{t('priceLevel.placeholder.roundingAmount')}}",
-              },
-              enum: [0.001, 0.01, 0.1, 1, 10, 100, 1000].map((v) => ({
-                label: String(v),
-                value: v,
-              })),
-              'x-reactions': {
-                dependencies: ['change_mode'],
-                fulfill: { state: { visible: "{{$deps[0]==='PERCENTAGE'}}" } },
-              },
-            },
-          },
-        },
-
         entity: { type: 'string', 'x-visible': false },
         creator_id: { type: 'number', default: 0, 'x-visible': false },
       },
