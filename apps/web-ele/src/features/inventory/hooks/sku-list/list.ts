@@ -134,7 +134,6 @@ export function useInventorySkuList() {
     },
   };
 
-
   // 使用 CRUD Hook
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
@@ -149,10 +148,10 @@ export function useInventorySkuList() {
         create: withEntityParam({})(modifySku),
         update: withEntityParam({})(modifySku),
         drop: async (data) => {
-              const params = { product_info_ids: data };
-              // @ts-ignore
-              return await deleteSku(params);
-            },
+          const params = { product_info_ids: data };
+          // @ts-ignore
+          return await deleteSku(params);
+        },
       },
     });
 

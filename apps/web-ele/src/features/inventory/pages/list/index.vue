@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import { ref } from 'vue';
 import {
   confirm,
   ElButton,
@@ -8,7 +8,7 @@ import {
   Page,
   useIgourdModal,
   ElTable,
-  ElTableColumn
+  ElTableColumn,
 } from '@igourd/common-ui';
 import { Warning } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
@@ -18,14 +18,14 @@ import { removeInventoryStock } from '@@/inventory/apis';
 import { useInventory } from '@@/inventory/hooks';
 // 错误数据
 interface ErrorItem {
-  product_code: string
-  product_id: string
-  product_name: string
-  sku_barcode:string
-  stock_id: string
-  warehouse_id: string
-  warehouse_name: string
-  warehouse_location_id: string
+  product_code: string;
+  product_id: string;
+  product_name: string;
+  sku_barcode: string;
+  stock_id: string;
+  warehouse_id: string;
+  warehouse_name: string;
+  warehouse_location_id: string;
 }
 defineOptions({
   name: 'IInventory',
@@ -55,8 +55,9 @@ const [clearModal, clearModalApi2] = useIgourdModal({
   onOpenChange() {},
   title: t('inventory.message_tip'),
 });
-const { Grid, gridApi, checkedKeys, Drawer, handleEdit, canBatchOperate} =useInventory();
-  // 错误数据
+const { Grid, gridApi, checkedKeys, Drawer, handleEdit, canBatchOperate } =
+  useInventory();
+// 错误数据
 const errorList = ref<ErrorItem[]>();
 // 错误总数
 const errorCount = ref<number>(0);
@@ -73,7 +74,7 @@ const handleBatchDelete = () => {
       };
       const fullData = gridApi.grid.getTableData().fullData;
       fullData.forEach((element) => {
-        if (checkedKeys.value.indexOf(element.id)>=0) {
+        if (checkedKeys.value.indexOf(element.id) >= 0) {
           params.stock_product_remove_volist.push({
             merchant_id: currentLoginUserApp.owner_id,
             product_code: element.product_code,
@@ -156,27 +157,45 @@ const handleBatchDelete = () => {
     <Drawer />
     <!--删除提示 -->
     <Modal>
+      <div>
         <div>
-          <div>{{ t('list.successfully-deleted')}}<span class="text-emerald">{{successCount}}</span>{{t('list.strip')}}, {{ t('list.delete-failed')}}<span class="text-orange-medium">{{errorCount}}</span>{{t('list.strip')}}</div>
-          <div class="mt-4 text-16">{{t('list.list-detele-message')}}</div>
-          <div class="text-12">{{t('list.delete-failed-message')}}</div>
-          <ElTable :data="errorList">
-            <ElTableColumn type="selection" ></ElTableColumn>
-            <ElTableColumn property="product_name" :label="t('inventory.productName')"></ElTableColumn>
-            <ElTableColumn property="product_code" :label="t('inventory.productCode')"></ElTableColumn>
-            <ElTableColumn property="sku_barcode" :label="t('inventory.sku_barcode')"></ElTableColumn>
-            <ElTableColumn property="warehouse_name" :label="t('inventory.warehouse_name')"></ElTableColumn>
-            <ElTableColumn property="" :label="t('common.action')">
-              <template #default="scope">
-                <a> {{ t('inventory.clear') }}</a>
-              </template>
-            </ElTableColumn>
-          </ElTable>
+          {{ t('list.successfully-deleted')
+          }}<span class="text-emerald">{{ successCount }}</span
+          >{{ t('list.strip') }}, {{ t('list.delete-failed')
+          }}<span class="text-orange-medium">{{ errorCount }}</span
+          >{{ t('list.strip') }}
         </div>
+        <div class="text-16 mt-4">{{ t('list.list-detele-message') }}</div>
+        <div class="text-12">{{ t('list.delete-failed-message') }}</div>
+        <ElTable :data="errorList">
+          <ElTableColumn type="selection"></ElTableColumn>
+          <ElTableColumn
+            property="product_name"
+            :label="t('inventory.productName')"
+          ></ElTableColumn>
+          <ElTableColumn
+            property="product_code"
+            :label="t('inventory.productCode')"
+          ></ElTableColumn>
+          <ElTableColumn
+            property="sku_barcode"
+            :label="t('inventory.sku_barcode')"
+          ></ElTableColumn>
+          <ElTableColumn
+            property="warehouse_name"
+            :label="t('inventory.warehouse_name')"
+          ></ElTableColumn>
+          <ElTableColumn property="" :label="t('common.action')">
+            <template #default="scope">
+              <a> {{ t('inventory.clear') }}</a>
+            </template>
+          </ElTableColumn>
+        </ElTable>
+      </div>
     </Modal>
-     <!--清空提示 -->
+    <!--清空提示 -->
     <clearModal>
-        <div>ddd</div>
+      <div>ddd</div>
     </clearModal>
   </Page>
 </template>

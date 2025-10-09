@@ -117,7 +117,7 @@ export function useTransferForm() {
           },
           row_0: {
             type: 'void', // 表示空字段
-            title:"{{t('transfer.source-warehouse-name')}}", // formItem 的 label
+            title: "{{t('transfer.source-warehouse-name')}}", // formItem 的 label
             'x-component': 'Space',
             'x-decorator': 'FormItem',
             'x-decorator-props': {
@@ -127,7 +127,7 @@ export function useTransferForm() {
             properties: {
               source_merchant_id: {
                 type: 'string',
-                title: "",
+                title: '',
                 'x-decorator': 'FormItem',
                 'x-component': 'Select',
                 'x-reactions': {
@@ -139,7 +139,7 @@ export function useTransferForm() {
                 },
                 'x-component-props': {
                   style: { width: '300px', marginRight: '10px' },
-                   colon: false,
+                  colon: false,
                 },
               },
               source_warehouse_id: {
@@ -165,7 +165,7 @@ export function useTransferForm() {
           },
           row_1: {
             type: 'void', // 表示空字段
-            title:"{{t('transfer.destination-warehouse-name')}}", // formItem 的 label
+            title: "{{t('transfer.destination-warehouse-name')}}", // formItem 的 label
             'x-component': 'Space',
             'x-decorator': 'FormItem',
             'x-decorator-props': {
@@ -175,7 +175,7 @@ export function useTransferForm() {
             properties: {
               destination_merchant_id: {
                 type: 'string',
-                title: "",
+                title: '',
                 'x-decorator': 'FormItem',
                 'x-component': 'Select',
                 'x-reactions': {

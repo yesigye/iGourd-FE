@@ -107,7 +107,7 @@ export function usePurchaseOrder() {
       fixed: 'right',
       title: t('common.operations'),
       slots: {
-        default: 'operation',
+        default: 'actions',
       },
     },
   ];

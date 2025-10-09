@@ -36,6 +36,15 @@ setupIgourdVxeTable({
           showIcon: true,
           showDragTip: true,
           animation: true,
+          disabledMethod: ({ column }) => {
+            if (['actions', 'operation'].includes(column.field as string)) {
+              return true;
+            }
+            if (column.fixed) {
+              return true;
+            }
+            return false;
+          },
         },
         rowDragConfig: {
           showDragTip: true,
@@ -134,9 +143,9 @@ setupIgourdVxeTable({
     });
     vxeUI.renderer.add('Amount', {
       renderTableDefault(props, params) {
-        const { t } = useI18n();
         const { row, column } = params;
         const cellValue = row[column.field];
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         const { computedFn } = props || {};
         if (!computedFn) {

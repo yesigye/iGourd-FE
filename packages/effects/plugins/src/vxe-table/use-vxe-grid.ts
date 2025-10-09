@@ -11,6 +11,7 @@ import { defineComponent, h, onBeforeUnmount } from 'vue';
 import { useStore } from '@igourd-core/shared/store';
 
 import { VxeGridApi } from './api';
+import { extendsColumn } from './extends';
 import VxeGrid from './use-vxe-grid.vue';
 
 type FilteredSlots<T> = {
@@ -23,8 +24,12 @@ export function useIgourdVxeGrid<
   T extends Record<string, any> = any,
   D extends IGourdFormProps<any> = IGourdFormProps<any>,
 >(options: VxeGridProps<T, D>) {
-  // const IS_REACTIVE = isReactive(options);
   const api = new VxeGridApi(options);
+  if (options.gridOptions?.columns) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    extendsColumn(options.gridOptions.columns, api);
+  }
   const extendedApi: ExtendedVxeGridApi<T, D> = api as ExtendedVxeGridApi<T, D>;
   extendedApi.useStore = (selector) => {
     return useStore(api.store, selector);
