@@ -1,5 +1,5 @@
 /* ui/schema-builder.ts */
-import type { ISchema } from '@igourd/common-ui';
+import type { ISchema, observable } from '@igourd/common-ui';
 
 import type { ColumnDescriptor, Ctx } from '../types';
 
@@ -9,13 +9,7 @@ export type BuildSchemaOptions = {
     method?: 'push' | 'unshift';
     title?: string;
   };
-  operations?: {
-    moveDown?: boolean;
-    moveUp?: boolean;
-    remove?: boolean;
-    title?: string;
-    width?: number | string;
-  };
+  canOperate?: ReturnType<typeof observable<{ value: boolean }>>;
   showIndex?: boolean;
   /** element-plus Table 的 span-method */
   spanMethod?: any;
@@ -61,11 +55,7 @@ export function buildSchema(
   const {
     tableProps = {},
     showIndex = true,
-    operations = {
-      remove: true,
-      title: '操作',
-      width: 170,
-    },
+    canOperate = { value: true },
     spanMethod,
   } = opts;
   // 过滤列（目前所有列都显示）
@@ -92,36 +82,29 @@ export function buildSchema(
       }
     : undefined;
 
-  // 操作列（避免额外依赖 Space，这里直接渲染三个内置按钮组件）
-  const hasOps = !!(
-    operations.remove ||
-    operations.moveUp ||
-    operations.moveDown
-  );
-  const opCol: ISchema | undefined = hasOps
-    ? {
+  const opCol: ISchema | undefined = {
+    type: 'void',
+    'x-component': 'ArrayTable.Column',
+    'x-component-props': {
+      title: "{{ t('common.action') }}",
+      width: 220,
+      fixed: 'right',
+      align: 'center',
+    },
+    'x-hidden': !canOperate.value,
+    properties: {
+      create: {
         type: 'void',
-        'x-component': 'ArrayTable.Column',
-        'x-component-props': {
-          title: operations.title ?? '操作',
-          width: operations.width ?? 300,
-          fixed: 'right',
-          align: 'center',
-        },
-        properties: {
-          create: {
-            type: 'void',
-            'x-component': 'ArrayTable.Addition',
-            title: '{{t("common.create")}}',
-          },
-          remove: {
-            type: 'void',
-            'x-component': 'ArrayTable.Remove',
-            title: '{{t("common.delete")}}',
-          },
-        },
-      }
-    : undefined;
+        'x-component': 'ArrayTable.Addition',
+        title: '{{t("common.create")}}',
+      },
+      remove: {
+        type: 'void',
+        'x-component': 'ArrayTable.Remove',
+        title: '{{t("common.delete")}}',
+      },
+    },
+  };
 
   // // 新增按钮
   // const additionNode: ISchema = {

@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { Ctx } from '../types';
 
-import { defineComponent, h, provide } from 'vue';
+import { defineComponent, h, provide, watch } from 'vue';
 
 import {
   ArrayTable,
   composeExport,
+  observable,
   RecursionField,
   useField,
   useFieldSchema,
@@ -34,22 +35,12 @@ registerMode(SpoilageMode);
 registerMode(ReturnMode);
 registerMode(InventoryMode);
 
-// registerMode(StockMode);
-
-// function addrToIndex(addr: any): number {
-//   const segs = addr?.segments || [];
-//   const idx =
-//     typeof segs.at?.(-2) === 'number'
-//       ? segs.at(-2)
-//       : segs.findLast?.((s: any) => typeof s === 'number');
-//   return typeof idx === 'number' ? idx : -1;
-// }
-
 export const InnerProductTable = defineComponent({
   name: 'ProductTable',
   props: {
     mode: { type: String, required: true },
     warehouseId: [String, Number],
+    canOperate: { type: Boolean, default: true },
     currencySymbol: String,
     vatMode: { type: String, default: 'NOT_APPLICATION' },
     capabilities: { type: Array, default: () => [] },
@@ -86,12 +77,25 @@ export const InnerProductTable = defineComponent({
     };
     provide('ptCtx', ctx);
     const filedSchema = useFieldSchema();
+    const canOperate = observable({ value: props.canOperate });
     // build schema
     const schema = buildSchema(mode.columns(ctx), ctx, {
+      canOperate,
       tableProps: {
         scrollbarAlwaysOn: true,
       },
     });
+    watch(
+      () => props.canOperate,
+      (value) => {
+        form.value.setFieldState('*.operations', (state) => {
+          state.visible = value;
+        });
+      },
+      {
+        immediate: true,
+      },
+    );
     // @ts-ignore
     filedSchema.value.setItems(schema.items);
     // @ts-ignore
