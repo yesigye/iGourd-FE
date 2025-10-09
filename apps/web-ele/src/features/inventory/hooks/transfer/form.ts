@@ -492,6 +492,8 @@ export function useTransferForm() {
             detail.stock_transfer_item_list =
               detail.stock_transfer_item_model_list;
             formAPI.setValues(detail);
+          }else{
+            formAPI.setValues({stock_transfer_item_list:[{}]});
           }
         } else {
           // 关闭抽屉时，重置表单

@@ -221,6 +221,11 @@ export function useListForm() {
             detail.product = [detail.product_model];
             // detail.returned_quantity = detail.physical_total_quantity;
             formAPI.setValues(detail);
+          }else{
+            //新增默认保留一条数据
+            formAPI.setValues({
+              product:[{}]
+            });
           }
           if (data && data.mode === 'detail') {
             formAPI.setFormState({ readPretty: true });

@@ -265,6 +265,8 @@ export function useSpoilageForm() {
       appendToMain: true,
       class: 'w-2/3',
       async onOpenChange(isOpen) {
+        debugger
+
         if (isOpen) {
           formAPI.reset();
           const data = drawerApi.getData();
@@ -273,10 +275,12 @@ export function useSpoilageForm() {
             const detail = await getSpoilageDetail({
               stock_consumption_id: data.id,
             });
-            detail.physical_stock_take_item_list =
+            detail.stock_consumption_item_list =
               detail.physical_stock_take_item_models;
             detail.returned_quantity = detail.physical_total_quantity;
             formAPI.setValues(detail);
+          }else{
+            formAPI.setValues({stock_consumption_item_list:[{}]});
           }
         } else {
           // 关闭抽屉时，重置表单

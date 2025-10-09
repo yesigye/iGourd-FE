@@ -419,7 +419,8 @@ export function useCountForm() {
             detail.returned_quantity = detail.physical_total_quantity;
             formAPI.setValues(detail);
           } else {
-            formAPI.setValues({});
+            //增加时，保留1条数据
+            formAPI.setValues({physical_stock_take_item_list:[{}]});
           }
         } else {
           // 关闭抽屉时，重置表单

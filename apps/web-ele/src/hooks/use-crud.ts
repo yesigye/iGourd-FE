@@ -233,7 +233,7 @@ function useCrud<T extends { id?: number | string }, P extends object>(
    * 打开抽屉并设置数据
    * @param dto - 要编辑的数据对象，可选
    */
-  const handleEdit = async (dto?: T,mode:string) => {
+  const handleEdit = async (dto?: T) => {
     if (options.service?.detail && Reflect.ownKeys(dto ?? {}).length > 0) {
       // @ts-ignore
       const data = await options.service?.detail(dto);
@@ -241,11 +241,15 @@ function useCrud<T extends { id?: number | string }, P extends object>(
       drawerApi.setData(data ?? {}).open();
       return;
     }
-    if(dto && mode && mode ==='detail'){
-        dto.mode = "detail"
-      }
     drawerApi.setData(dto ?? {}).open();
   };
+  /*
+  *  查看详情
+  */
+  const handleView = (dto?: T) => {
+    dto.mode = "detail"
+    drawerApi.setData(dto ?? {}).open();
+  }
 
   /**
    * 处理取消订单操作
@@ -345,6 +349,7 @@ function useCrud<T extends { id?: number | string }, P extends object>(
     handleCreate: handleEdit, // 创建处理函数（复用编辑函数）
     handleCancel, // 取消订单处理函数
     handleDelete,
+    handleView
   };
 }
 
