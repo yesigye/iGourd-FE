@@ -1,57 +1,33 @@
-<template>
-  <Page auto-content-height>
-    <Grid>
-    <template #table-actions>
-        <ElButton type="primary">
-          {{ t('common.add') }}
-        </ElButton>
-        <ElButton
-          type="danger"
-          v-if="canBatchOperate"
-          @click="handleBatchDelete"
-        >
-          {{ t('common.delete') }}
-        </ElButton>
-      </template>
+<script lang="ts" setup>
+import { ref } from 'vue';
 
-      <template #operation="{ row }">
-        <ElButton
-          type="text"
-          @click="handleEdit(row)"
-        >
-          {{ t('common.edit') }}
-        </ElButton>
-        <ElButton
-          type="text"
-          @click="handleBatchDelete(row)"
-        >
-          {{ t('common.delete') }}
-        </ElButton>
-      </template>
-    </Grid>
-
-    <Drawer />
-  </Page>
-</template>
-
-<script setup lang="ts">
-import { ElButton, Page } from '@igourd/common-ui';
+import { ElTabPane, ElTabs, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { useFinalTransfer } from '@@/account/hooks';
-
-defineOptions({
-  name: 'IFinalTransfer',
-});
+import FinaProcessing from '@@/account/components/final-transfer/FinalProcessing.vue';
+import ReverseCarryover from '@@/account/components/final-transfer/ReverseCarryover.vue';
 
 const { t } = useI18n();
 
-const {
-  Grid,
-  Drawer,
-  handleEdit,
-  handleBatchDelete,
-  canBatchOperate,
-} = useFinalTransfer();
+const carryForwardType = ref('finalProcessing');
 </script>
-
+<template>
+  <Page auto-content-height class="p-2">
+    <section class="bg-card h-full p-2">
+      <ElTabs v-model="carryForwardType">
+        <ElTabPane
+          :label="t('final-transfer.final-rocessin')"
+          name="finalProcessing"
+        >
+          <FinaProcessing :mode="carryForwardType" />
+        </ElTabPane>
+        <ElTabPane
+          :label="t('final-transfer.reverse-arryover')"
+          name="reverseCarryover"
+        >
+          <ReverseCarryover :mode="carryForwardType" />
+        </ElTabPane>
+      </ElTabs>
+    </section>
+  </Page>
+</template>

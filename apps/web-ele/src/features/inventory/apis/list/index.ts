@@ -61,6 +61,17 @@ export function modifyInventoryStock(params: any) {
   };
   return requestClient.post(`/v1/merchant/basics/inventory/stock/modify`, data);
 }
-export function removeInventoryStock(data: any) {
-  return requestClient.post(`/v1/merchant/basics/inventory/stock/remove`, data);
+export function removeInventoryStock(params:any) {
+  return requestClient.post(
+    `/v1/merchant/basics/inventory/stock/remove`,
+    params,
+  );
 }
+export function clearInventoryStock(params:any) {
+  return requestClient.post(
+    `/v1/merchant/basics/inventory/stock/clear`,
+    params,
+  );
+}
+
+

@@ -1,33 +1,31 @@
 import type {
-  ReceiptOrderQueryPageVO,
-  ReceiptOrderPageModel,
-  ReceiptOrderDetailModel,
-  ReceiptOrderRemoveVO,
-  ReceiptOrderCreateVO,
-  ReceiptOrderModifyVO,
+  AccountPageModel,
+  ListPageOrderModel,
   MerchantPaymentMethodConfigModel,
   PaymentMethodConfigQueryVO,
+  ReceiptOrderCreateVO,
+  ReceiptOrderDetailModel,
+  ReceiptOrderModifyVO,
+  ReceiptOrderPageModel,
+  ReceiptOrderQueryPageVO,
+  ReceiptOrderRemoveVO,
   ReceiptOrderReviewVO,
-  ListPageOrderModel,
-  AccountPageModel,
 } from '@/apis/accounting/type';
-
-import { DrawerType } from '@/utils';
 
 // 收款单抽屉类型
 export type CollectionVoucherDrawerType = {
-  id?: string;
-  type: DrawerType;
   businessType?: string;
+  id?: string;
+  type: '';
 };
 
 // 订单状态枚举
 export enum OrderInfoStatusEnum {
   CANCEL = 'CANCEL',
-  PENDING = 'PENDING',
-  PAID = 'PAID',
   NO_REPAID = 'NO_REPAID',
+  PAID = 'PAID',
   PARTIAL_REPAID = 'PARTIAL_REPAID',
+  PENDING = 'PENDING',
   REPAID = 'REPAID',
 }
 
@@ -39,76 +37,76 @@ export enum ReceiptDirection {
 
 // 业务类型枚举
 export enum BusinessTypeEnum {
+  ACCOUNTING_NOTE = 'ACCOUNTING_NOTE', // 记账笔记
+  AR_CREDIT_SALE = 'AR_CREDIT_SALE', // 客户赊销
+  CURRENCY_EXCHANGE = 'CURRENCY_EXCHANGE', // 货币兑换
+  CUSTOMER_RECHARGER = 'CUSTOMER_RECHARGER', // 客户充值
+  GOODS_RECEIPT_NOTE = 'GOODS_RECEIPT_NOTE', // 收货单
+  INVENTORY_WRITE_OFF = 'INVENTORY_WRITE_OFF', // 库存报损
+  PHYSICAL_STOCK_TAKE = 'PHYSICAL_STOCK_TAKE', // 库存盘点
+  PREPAYMENT = 'PREPAYMENT', // 预付款项
+  PURCHASE_ORDER = 'PURCHASE_ORDER', // 采购订单
+  PURCHASE_ORDER_REFUND = 'PURCHASE_ORDER_REFUND', // 采购退单
   SALES_ORDER = 'SALES_ORDER', // 销售订单
   SALES_ORDER_RETURNED = 'SALES_ORDER_RETURNED', // 销售退单
-  PURCHASE_ORDER = 'PURCHASE_ORDER', // 采购订单
-  GOODS_RECEIPT_NOTE = 'GOODS_RECEIPT_NOTE', // 收货单
-  PURCHASE_ORDER_REFUND = 'PURCHASE_ORDER_REFUND', // 采购退单
   STOCK_TRANSFER = 'STOCK_TRANSFER', // 库存调拨
-  PHYSICAL_STOCK_TAKE = 'PHYSICAL_STOCK_TAKE', // 库存盘点
-  INVENTORY_WRITE_OFF = 'INVENTORY_WRITE_OFF', // 库存报损
-  ACCOUNTING_NOTE = 'ACCOUNTING_NOTE', // 记账笔记
-  CUSTOMER_RECHARGER = 'CUSTOMER_RECHARGER', // 客户充值
-  CURRENCY_EXCHANGE = 'CURRENCY_EXCHANGE', // 货币兑换
-  PREPAYMENT = 'PREPAYMENT', // 预付款项
-  AR_CREDIT_SALE = 'AR_CREDIT_SALE', // 客户赊销
 }
 
 // 科目类型枚举
 export enum LedgerTypeEnum {
-  REVENUE = 'REVENUE', // 预收款
   RECEIVABLE = 'RECEIVABLE', // 应收款
+  REVENUE = 'REVENUE', // 预收款
 }
 
 // 审核状态枚举
 export enum ReviewStatusEnum {
-  PENDING = 'PENDING', // 等待中
   APPROVED = 'APPROVED', // 审核通过
+  PENDING = 'PENDING', // 等待中
   REJECTED = 'REJECTED', // 审核拒绝
 }
 
 // 收款单类型枚举
 export enum ReceiptOrderTypeEnum {
-  SALES_ORDER = 'SALES_ORDER', // 销售订单
-  SALES_ORDER_RETURNED = 'SALES_ORDER_RETURNED', // 销售退单
+  ACCOUNTING_NOTE = 'ACCOUNTING_NOTE', // 记账笔记
   CUSTOMER_RECHARGER = 'CUSTOMER_RECHARGER', // 客户充值
   CUSTOMER_REPAYMENT = 'CUSTOMER_REPAYMENT', // 客户还款
-  ACCOUNTING_NOTE = 'ACCOUNTING_NOTE', // 记账笔记
+  SALES_ORDER = 'SALES_ORDER', // 销售订单
+  SALES_ORDER_RETURNED = 'SALES_ORDER_RETURNED', // 销售退单
 }
 
 // 表格视图支付方案
 export type TableViewPaySchema = {
   collected_account: string;
-  collected_method: string;
-  collected_amount: string;
-  service_fee?: string;
-  collected_method_raw: MerchantPaymentMethodConfigModel;
   collected_account_raw: AccountPageModel;
+  collected_amount: string;
+  collected_method: string;
+  collected_method_raw: MerchantPaymentMethodConfigModel;
+  service_fee?: string;
 };
 
 // 表格视图数据
 export type TableViewData = {
   [key: string]: {
-    paySchema: TableViewPaySchema[];
     data: ListPageOrderModel;
+    paySchema: TableViewPaySchema[];
   };
 };
 
 // 收款单表单数据
 export type CollectionVoucherForm = {
-  receipt_order_no?: string;
-  customer_id: number;
-  payer_name: string;
-  receipt_time: string;
-  receivable_balance: string;
-  last_debt: string;
-  formilySelectSourceOrder: TableViewData;
-  remark?: string;
   attachment_url?: {
+    _fromHistoryRecord?: boolean;
     name: string;
     url: string;
-    _fromHistoryRecord?: boolean;
   }[];
+  customer_id: number;
+  formilySelectSourceOrder: TableViewData;
+  last_debt: string;
+  payer_name: string;
+  receipt_order_no?: string;
+  receipt_time: string;
+  receivable_balance: string;
+  remark?: string;
 };
 
 // 查询参数
@@ -140,13 +138,13 @@ export interface CollectionVoucherSearchParams {
 
 // 重新导出原有类型
 export type {
-  ReceiptOrderQueryPageVO,
-  ReceiptOrderPageModel,
-  ReceiptOrderDetailModel,
-  ReceiptOrderRemoveVO,
-  ReceiptOrderCreateVO,
-  ReceiptOrderModifyVO,
   MerchantPaymentMethodConfigModel,
   PaymentMethodConfigQueryVO,
+  ReceiptOrderCreateVO,
+  ReceiptOrderDetailModel,
+  ReceiptOrderModifyVO,
+  ReceiptOrderPageModel,
+  ReceiptOrderQueryPageVO,
+  ReceiptOrderRemoveVO,
   ReceiptOrderReviewVO,
 };

@@ -6,10 +6,10 @@ export enum TransferType {
 
 // 结转状态枚举
 export enum TransferStatus {
-  UNPROCESSED = 'unprocessed', // 未结转
+  CURRENT = 'current', // 当前期间
   PROCESSED = 'processed', // 已结转
   REVERSED = 'reversed', // 已反结转
-  CURRENT = 'current', // 当前期间
+  UNPROCESSED = 'unprocessed', // 未结转
 }
 
 // 查询参数
@@ -79,4 +79,10 @@ export interface FinalTransferForm {
   transfer_date: string;
   remark?: string;
   merchant_id?: number;
+}
+export enum AccountingPeriodSettlementStatusEnum {
+  CLOSED = 'CLOSED',
+  OPEN = 'OPEN',
+  PROFIT_LOSS_TRANSFERRED = 'PROFIT_LOSS_TRANSFERRED',
+  ROLL_BACKED = 'ROLL_BACKED',
 }

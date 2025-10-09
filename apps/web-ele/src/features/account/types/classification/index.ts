@@ -1,25 +1,14 @@
-import type {
-  FinanceCategoryListPayload,
-  FinanceCategoryListResponse,
-  FinanceCategoryPayload,
-  DeleteFinanceCategoryPayload,
-  DetailFinanceCategoryPayload,
-  FinanceCategoryDetailModel,
-} from '@/apis/accounting/type';
-
-import { DrawerType } from '@/utils';
-
 // 财务分类抽屉数据
 export type FinanceCategoryDrawer = {
-  type: DrawerType;
   id?: string;
+  type: '';
 };
 
 // 列类型枚举
 export enum ColumnType {
   ALL = 'ALL',
-  REVENUE = 'REVENUE',
   EXPENSE = 'EXPENSE',
+  REVENUE = 'REVENUE',
 }
 
 // 查询参数
@@ -49,11 +38,12 @@ export const tabOptions = [
 ];
 
 // 重新导出原有类型
-export type {
-  FinanceCategoryListPayload,
-  FinanceCategoryListResponse,
-  FinanceCategoryPayload,
-  DeleteFinanceCategoryPayload,
-  DetailFinanceCategoryPayload,
-  FinanceCategoryDetailModel,
-};
+
+export {
+  type DeleteFinanceCategoryPayload,
+  type DetailFinanceCategoryPayload,
+  type FinanceCategoryDetailModel,
+  type FinanceCategoryListPayload,
+  type FinanceCategoryListResponse,
+  type FinanceCategoryPayload,
+} from '@@/account/types';
