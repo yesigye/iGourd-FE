@@ -116,7 +116,7 @@ export function useInventory() {
     {
       field: 'operation',
       title: t('common.operations'),
-      width: 120,
+      width: 180,
       fixed: 'right',
       slots: { default: 'operation' },
     },
@@ -187,6 +187,11 @@ export function useInventory() {
     searchFormSchema,
     batchOperate: true,
     connectedComponent: InventoryDrawer,
+    toolbarConfig: {
+      export: true,
+      print: false,
+      import: false,
+    },
     service: {
       query: getInventoryListApi,
       update: updateInventoryApi,

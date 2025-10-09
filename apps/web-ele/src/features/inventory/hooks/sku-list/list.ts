@@ -21,7 +21,7 @@ export function useInventorySkuList() {
     },
     {
       field: 'major_name_spec',
-      title: t('inventory.sku_list.major_name'),
+      title: t('sku-list.major_name'),
       minWidth: 80,
       fixed: 'left',
       slots: { default: 'image' },
@@ -34,37 +34,37 @@ export function useInventorySkuList() {
     },
     {
       field: 'sku_barcode',
-      title: t('inventory.sku_list.sku_barcode'),
+      title: t('sku-list.sku_barcode'),
       minWidth: 180,
     },
     {
       field: 'product_unit_name',
-      title: t('inventory.sku_list.product_unit_name'),
+      title: t('sku-list.product_unit_name'),
       minWidth: 160,
     },
     {
       field: 'selling_price',
-      title: t('inventory.sku_list.selling_price'),
+      title: t('sku-list.selling_price'),
       minWidth: 200,
     },
     {
       field: 'cost_price',
-      title: t('inventory.sku_list.cost_price'),
+      title: t('sku-list.cost_price'),
       minWidth: 200,
     },
     {
       field: 'spec_code',
-      title: t('inventory.sku_list.spec_code'),
+      title: t('sku-list.spec_code'),
       minWidth: 200,
     },
     {
       field: 'stock_total_quantity_message',
-      title: t('inventory.sku_list.stock_total_quantity'),
+      title: t('sku-list.stock_total_quantity'),
       minWidth: 200,
     },
     {
       field: 'monthly_sales_quantity',
-      title: t('inventory.sku_list.monthly_sales_quantity'),
+      title: t('sku-list.monthly_sales_quantity'),
       minWidth: 200,
     },
     {
@@ -74,13 +74,13 @@ export function useInventorySkuList() {
     },
     {
       field: 'creator_name',
-      title: t('inventory.sku_list.creator_name'),
+      title: t('sku-list.creator_name'),
       minWidth: 120,
     },
 
     {
       field: 'create_time',
-      title: t('inventory.sku_list.creation_time'),
+      title: t('sku-list.creation_time'),
       minWidth: 180,
       sortable: true,
       formatter: 'formatDateTime',
@@ -134,18 +134,6 @@ export function useInventorySkuList() {
     },
   };
 
-  // 服务函数
-  const service = {
-    // 获取列表数据
-    query: getSkuList,
-
-    // 删除SKU
-    remove: async (data: { product_info_ids: number[] }) => {
-      // @ts-ignore
-      return await deleteSku(data);
-    },
-  };
-
   // 使用 CRUD Hook
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
@@ -159,7 +147,11 @@ export function useInventorySkuList() {
         query: withEntityParam({})(getSkuList),
         create: withEntityParam({})(modifySku),
         update: withEntityParam({})(modifySku),
-        drop: withEntityParam({})(deleteSku),
+        drop: async (data) => {
+          const params = { product_info_ids: data };
+          // @ts-ignore
+          return await deleteSku(params);
+        },
       },
     });
 

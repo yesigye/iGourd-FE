@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
 import {
   ElButton,
@@ -8,10 +8,8 @@ import {
   ElPagination,
   ElTable,
   ElTableColumn,
-  Page,
   useIgourdDrawer,
 } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
 import { debounce } from '@igourd/utils';
 
 import { storeToRefs } from 'pinia';
@@ -21,30 +19,11 @@ import { useCustomerStore } from '#/store/sale/customer';
 defineOptions({
   name: 'SelectCustomersDrawer',
 });
-
-const props = defineProps({
-  showDialog: {
-    type: Boolean,
-    default: false,
-  },
-  title: {
-    type: String,
-    default: '',
-  },
-});
-
 const emit = defineEmits(['close-tkr', 'select-customer-row:row']);
-
-const { t } = useI18n();
 const keywords = ref('');
-const isReturnShow = ref(false);
 const customerStore = useCustomerStore();
-const { customerList } = storeToRefs(customerStore);
+const { customerList, total } = storeToRefs(customerStore);
 
-const handleClose = () => {
-  drawerApi.close();
-  emit('close-tkr');
-};
 const fetchGoodsList = debounce(async () => {
   await customerStore.getCustomerList({
     page_size: 100,
@@ -53,7 +32,8 @@ const fetchGoodsList = debounce(async () => {
 }, 500);
 const handleRowClick = (row) => {
   emit('select-customer-row:row', row);
-  handleClose();
+  drawerApi.close();
+  emit('close-tkr');
 };
 
 const [Drawer, drawerApi] = useIgourdDrawer({
@@ -63,21 +43,13 @@ const [Drawer, drawerApi] = useIgourdDrawer({
     }
   },
 });
-watch(
-  () => props.showDialog,
-  (val) => {
-    if (val) {
-      isReturnShow.value = true;
-    }
-  },
-);
 </script>
 
 <template>
   <Drawer>
-    <Page class="bg-primary-50 h-full">
-      <div class="">
-        <div class="flex gap-1">
+    <section class="h-full">
+      <div class="flex h-full flex-col gap-2.5">
+        <div class="flex flex-shrink-0 gap-1">
           <ElInput
             v-model="keywords"
             style="height: 36px"
@@ -100,7 +72,7 @@ watch(
             </div>
           </ElButton>
         </div>
-        <div class="person">
+        <div class="bg-card flex-grow">
           <ElTable
             :data="customerList || []"
             class="down-table-list"
@@ -112,7 +84,6 @@ watch(
             highlight-current-row
             @row-click="handleRowClick"
           >
-            <!-- <el-table-column type="selection" align="center" :width="55"> </el-table-column> -->
             <ElTableColumn
               prop="profilePhoto"
               width="80"
@@ -169,7 +140,7 @@ watch(
             </ElTableColumn>
           </ElTable>
         </div>
-        <div>
+        <div class="flex-shrink-0">
           <ElPagination
             :small="true"
             v-model:current-page="currentPage"
@@ -180,7 +151,7 @@ watch(
           />
         </div>
       </div>
-    </Page>
+    </section>
   </Drawer>
 </template>
 

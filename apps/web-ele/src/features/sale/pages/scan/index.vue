@@ -33,8 +33,7 @@ import ScanDialog from '@@/sale/components/scan/ScanDialog.vue';
 import ScanOrderSettle from '@@/sale/components/scan/ScanOrderSettle.vue';
 import ScanSearch from '@@/sale/components/scan/ScanSearch.vue';
 import ScanTable from '@@/sale/components/scan/ScanTable.vue';
-import SelectGuiderDrawer from '@@/sale/components/scan/SelectGuiderDrawer.vue';
-import { useSelectCustomer } from '@@/sale/hooks';
+import { useSelectCustomer, useSelectGuider } from '@@/sale/hooks';
 import { storeToRefs } from 'pinia';
 
 import { useOrderStore } from '#/store/sale/order';
@@ -51,7 +50,10 @@ defineOptions({
 });
 // const { merchantInfo } = useUserStore();
 const { setInfo } = storeToRefs(useSetStore());
-const { Drawer: SelectCustomer, drawerApi } = useSelectCustomer();
+const { Drawer: SelectCustomer, drawerApi: drawerApiCustomer } =
+  useSelectCustomer();
+const { Drawer: SelectGuider, drawerApi: drawerApiGuider } = useSelectGuider();
+
 const { t } = useI18n();
 
 const state = reactive({
@@ -496,9 +498,7 @@ const updateGoodsList = (selectedOrder) => {
 };
 
 const handleSelectCustomer = () => {
-  // drawerDialogCustomers.value.title = t('scan.select-customers');
-  // drawerDialogCustomers.value.visible = true;
-  drawerApi.open();
+  drawerApiCustomer.open();
 };
 const clearCustomerInfo = () => {
   customerInfo.value = {};
@@ -508,8 +508,7 @@ const clearCustomerInfo = () => {
   calculateOrderPrice();
 };
 const handleSelectGuider = () => {
-  drawerDialogGuider.value.title = t('scan.select-guider');
-  drawerDialogGuider.value.visible = true;
+  drawerApiGuider.open();
 };
 const handleSelectCustomerRow = (row) => {
   customerInfo.value = row;
@@ -1021,12 +1020,7 @@ onMounted(async () => {
         @close-tkr="confirmClose"
         @select-customer-row:row="handleSelectCustomerRow"
       />
-      <!-- 选择导购员 -->
-      <SelectGuiderDrawer
-        key="GuiderDrawer"
-        :title="drawerDialogGuider.title"
-        :show-dialog="drawerDialogGuider.visible"
-        :inner-drawer-show="drawerDialog.innerDrawerShow"
+      <SelectGuider
         @close-tkr="confirmGuiderClose"
         @select-customer-row:row="handleSelectGuiderRow"
       />
