@@ -176,12 +176,14 @@ const editPayMenthod = async () => {
     payment_method_operate: operate,
   });
 
-  if (result) {
-    getPayMenthodList();
-    addSceneDialogVisible.value = false;
-  } else {
-    ElMessage.error(res.message);
-  }
+  // if (result) {
+  getPayMenthodList();
+  addSceneDialogVisible.value = false;
+  await getPayMenthodList();
+
+  // } else {
+  //   ElMessage.error(result.message);
+  // }
 };
 const sortPayMethod = async (event) => {
   const result = await merchantPaymentMethodSort({
@@ -214,10 +216,10 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <Page auto-content-height>
-    <div class="setting-container h-full">
+  <Page auto-content-height class="p-4">
+    <div class="h-full">
       <!-- 页面标题 -->
-      <div class="top flex items-center gap-1 pb-2.5 pt-2.5">
+      <div class="top flex items-center gap-1 pb-2.5">
         <div class="bg-primary h-2.5 w-1 rounded-sm"></div>
         <div class="top-title">
           <span>{{ t('payment.payment-set') }}</span>

@@ -1,33 +1,27 @@
-<script lang="ts" setup>
+<script setup>
 import { onMounted, provide, reactive, ref, toRefs } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
-import { ElButton, ElDialog, ElIcon, ElMessage, Page } from '@igourd/common-ui';
-import { ArrowLeft, ArrowRight } from '@igourd/icons';
+import { ElButton, ElDialog, ElIcon } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import {
   cancelRefundOrder,
   createRefund,
   getOrderList,
-  getRefundPrice,
+  getOrderPriceApi,
   getValidOrderItems,
-  productSearchApi,
 } from '@@/sale/apis';
+import CustomerInfo from '@@/sale/components/returned/CustomerInfo.vue';
 import DrawerList from '@@/sale/components/returned/DrawerList.vue';
+import RefundOrder from '@@/sale/components/returned/RefundOrder.vue';
 import ReturnedSettleAction from '@@/sale/components/returned/ReturnedSettleAction.vue';
 import ReturnOrderContent from '@@/sale/components/returned/ReturnOrderContent.vue';
 import ReturnOrderSearch from '@@/sale/components/returned/ReturnOrderSearch.vue';
-import { useSelectCustomer, useSelectGuider } from '@@/sale/hooks';
 import Decimal from 'decimal.js';
+import { ElMessage } from 'element-plus';
 
-import { initializeCurrencySymbol } from '#/utils/sale';
-
-import { columnsVisible, refundColumns } from './utils/column';
-
-const { Drawer: SelectCustomer, drawerApi: drawerApiCustomer } =
-  useSelectCustomer();
-const { Drawer: SelectGuider, drawerApi: drawerApiGuider } = useSelectGuider();
+import { columnsVisible, refundColumns } from './utils/column.tsx';
 
 // const [refundOrderRegister, { openDrawer: openRefundOrderDrawer }] =
 //   useDrawer();
@@ -36,7 +30,6 @@ const { t } = useI18n();
 const router = useRouter();
 const dialogVisible = ref(false);
 const refundColumnsData = ref([]);
-const isShrink = ref(false);
 // 创建退单参数
 const returnOrderParams = ref({
   merchant_id: null,
@@ -117,51 +110,14 @@ const {
   compuredReturnedProductInfo,
 } = toRefs(state);
 const showRefundDialog = ref(false);
+const refundTitle = ref('');
 const returnOrderList = ref([]);
 provide('returnOrderList', returnOrderList);
 provide('createReturedInfo', createReturedInfo);
 provide('compuredReturnedinfo', compuredReturnedinfo);
-const drawerDialogCustomers = ref({
-  title: t('sales.selectCustomers'),
-  visible: false,
-  innerDrawerShow: false,
-});
-const drawerDialogGuider = ref({
-  title: t('sales.selectGuider'),
-  visible: false,
-  innerDrawerShow: false,
-});
-const handleSelectCustomer = () => {
-  drawerApiCustomer.open();
-};
-const handleSelectGuider = () => {
-  drawerApiGuider.open();
-};
-const confirmClose = () => {
-  drawerDialogCustomers.value.visible = false;
-};
-const confirmGuiderClose = () => {
-  drawerDialogGuider.value.visible = false;
-};
 
-const handleSelectCustomerRow = (row) => {
-  row.order_calc_product_model_list = [];
-  customerDetailModel.value = row;
-  compuredReturnedinfo.value = row;
-};
-const guiderDetailModel = ref({});
-const handleSelectGuiderRow = (row) => {
-  guiderDetailModel.value = row;
-};
 // ================================ 动态表头(暂时不需要) start ================================
 const drawerListBoxShow = ref(false);
-const handIsShrink = () => {
-  isShrink.value = !isShrink.value;
-  setTimeout(() => {
-    // 触发window的resize事件，让el-table重新计算布局
-    window.dispatchEvent(new Event('resize'));
-  }, 300);
-};
 const showLocalTables = () => {
   drawerListBoxShow.value = true;
 };
@@ -184,22 +140,12 @@ const handleEmptyAll = () => {
   customerDetailModel.value = {};
   handleEmptyAmount();
 };
-/**
- * 清空地址栏
- */
-const handRefresh = (event) => {
-  if (event.type == 'ALL') {
-    router.push({
-      path: '/sale/returned',
-      query: {},
-    });
-  }
-};
 const handleEmptyAmount = () => {
   compuredReturnedinfo.value = {};
 };
-// 原单算费接口
-const computedRefundAmountOriginAl = async () => {
+
+// 计算退单价格
+const computedRefundAmount = async () => {
   const params = {
     merchant_id: '',
     order_no: '',
@@ -228,57 +174,22 @@ const computedRefundAmountOriginAl = async () => {
   );
 
   try {
-    const res = await getRefundPrice(params);
-    // if (res.code === 'SUCCESS') {
-    compuredReturnedinfo.value = res;
-    compuredReturnedProductInfo.value = res?.order_calc_product_model_list;
-    // } else {
-    //   ElMessage.error(res.message);
-    // }
+    const res = await getOrderPriceApi(params);
+    if (res.code === 'SUCCESS') {
+      compuredReturnedinfo.value = res?.data;
+      compuredReturnedProductInfo.value =
+        res?.data?.order_calc_product_model_list;
+    } else {
+      ElMessage.error(res.message);
+    }
   } catch {
     console.log();
   }
 };
-/** 非原单模拟算费*/
-const computedRefundAmountNoOriginAl = async () => {
-  let totalAmount = new Decimal(0);
-  let totalQuantity = new Decimal(0);
-  returnOrderList.value.forEach((item) => {
-    totalAmount = totalAmount.plus(
-      new Decimal(item.selling_price).times(item.quantity),
-    );
-    totalQuantity = totalQuantity.plus(new Decimal(item.quantity));
-  });
-  compuredReturnedinfo.value.subtotal_amount = totalAmount
-    .toDecimalPlaces(2)
-    .toNumber();
-  compuredReturnedinfo.value.total_amount = totalAmount
-    .toDecimalPlaces(2)
-    .toNumber();
-  compuredReturnedinfo.value.total_paid_amount = totalAmount
-    .toDecimalPlaces(2)
-    .toNumber();
-
-  compuredReturnedinfo.value.quantity = totalQuantity.toNumber();
-};
-
-// 计算退单价格
-const computedRefundAmount = async () => {
-  if (refundType.value === 'original_order') {
-    computedRefundAmountOriginAl();
-  } else {
-    computedRefundAmountNoOriginAl();
-  }
-};
-const route = useRoute();
 const openRefund = () => {
-  const refund_no = route.query.orderNo as string;
-
   openRefundOrderDrawer(true, {
     createReturnedInfo: createReturedInfo.value,
     compuredReturnedinfo: compuredReturnedinfo.value,
-    type: refundType.value,
-    refund_no,
   });
 };
 // 添加退单
@@ -290,7 +201,10 @@ const addReturned = async () => {
     compuredReturnedinfo.value.subtotal_amount;
   returnOrderParams.value.round_down_amount =
     compuredReturnedinfo.value?.round_down_amount;
-
+  returnOrderParams.value.order_returned_item_volist =
+    compuredReturnedProductInfo.value.map((item) => ({
+      ...item,
+    }));
   returnOrderParams.value.total_amount =
     compuredReturnedinfo.value.total_amount;
   returnOrderParams.value.total_amount_compatible =
@@ -306,7 +220,7 @@ const addReturned = async () => {
     vat_amount = Decimal(Number(vat_amount) + Number(item.vat_amount));
   });
   returnOrderParams.value.promotion_discount_amount = promotionDiscountAmount;
-  returnOrderParams.value.vat_amount = vat_amount || 0;
+  returnOrderParams.value.vat_amount = vat_amount;
 
   returnOrderParams.value.total_paid_amount =
     compuredReturnedinfo.value?.total_paid_amount;
@@ -329,22 +243,7 @@ const addReturned = async () => {
     compuredReturnedinfo.value.remaining_amount;
 
   try {
-    let res = {};
-    if (refundType.value === 'original_order') {
-      returnOrderParams.value.type = 'ORIGINAL_ORDER';
-      returnOrderParams.value.order_returned_item_volist =
-        compuredReturnedProductInfo.value.map((item) => ({
-          ...item,
-        }));
-      res = await createRefund(returnOrderParams.value);
-    } else {
-      returnOrderParams.value.order_returned_item_volist =
-        returnOrderList.value.map((item) => ({
-          ...item,
-        }));
-      returnOrderParams.value.type = 'NO_ORIGINAL_ORDER';
-      res = await createNoOriginRefund(returnOrderParams.value);
-    }
+    const res = await createRefund(returnOrderParams.value);
     if (res.code === 'SUCCESS') {
       if (res.data.is_exists) {
         refundColumnsData.value = [res?.data.order_returned_detail_model];
@@ -410,8 +309,8 @@ const handleRemoveItem = (itemToRemove) => {
   // 重新计算退单价格
   computedRefundAmount();
 };
-/** 原单处理选择商品*/
-const originalOrderSelectGoods = async (val) => {
+
+const handleSelectRows = (val) => {
   if (!val || val.length === 0) {
     ElMessage.warning(t('sales.pleaseSelectProduct'));
   } else {
@@ -434,43 +333,6 @@ const originalOrderSelectGoods = async (val) => {
   }
 };
 
-/** 非原单处理选择商品*/
-const noOriginalOrderSelectGoods = async (val) => {
-  if (!val || val.length === 0) {
-    ElMessage.warning(t('sales.pleaseSelectProduct'));
-  } else {
-    const selectedItems = [];
-    val.forEach((item) => {
-      item.product_name = item.major_name;
-      item.product_code = item.product_code;
-      item.selling_price = item.selling_price;
-      item.product_unit_name = item.major_unit_name;
-      item.other_tax_amount = 0;
-      item.promotion_discount_amount = 0;
-      item.subtotal_amount = item.selling_price;
-      item.quantity = 1;
-      selectedItems.push({
-        ...item,
-        originalQuantity: 'infinity',
-        quantity: item.quantity,
-        displayQuantity: 'infinity',
-        displayOriginalQuantity: -item.quantity,
-      });
-    });
-    returnOrderList.value = selectedItems;
-    computedRefundAmount();
-  }
-};
-const refundType = ref('original_order');
-const handleSelectRows = (event) => {
-  refundType.value = event.type;
-  if (event.type == 'original_order') {
-    originalOrderSelectGoods(event.val);
-  } else if (event.type == 'non_original_order') {
-    noOriginalOrderSelectGoods(event.val);
-  }
-};
-
 const transformReturnQuantityList = ref([]);
 
 const handleReturnOrderListQuantity = () => {
@@ -481,11 +343,6 @@ const handleReturnOrderListQuantity = () => {
 };
 
 const handleRefund = async () => {
-  if (refundType.value == 'original_order') {
-    computedRefundAmount();
-  } else {
-    computedRefundAmount();
-  }
   // 添加退单
   await addReturned();
 };
@@ -506,7 +363,6 @@ const fetchOrderList = async () => {
 //   try {
 //     const res = await OrderService.getOrderDetail({
 //       order_no: val,
-//       merchant_id: Local.get('userinfo')?.current_login_user_app?.owner_id
 //     });
 //     if (res.code === 'SUCCESS') {
 //       orderDetail.value = res?.data;
@@ -517,58 +373,23 @@ const fetchOrderList = async () => {
 //     // ElMessage.error(error.message);
 //   }
 // };
-// 原始订单查询商品
-const originalOrderGetGoodsList = async (val) => {
-  const res = await getValidOrderItems({
-    order_no: val,
-  });
-  // if (res.code === 'SUCCESS') {
-  orderDetail.value = res;
-  orderItemModelList.value = res?.order_item_model_list;
-  customerDetailModel.value = res?.customer_detail_model;
-  // }
-};
-const noOriginalOrderGetGoodsList = async (val) => {
-  const res = await productSearchApi({
-    keywords: val,
-    business_type: 'SALE',
-    // status: 'ON_SALE',
-    page_num: 1,
-    page_size: 10,
-  });
-  // if (res.code === 'SUCCESS') {
-  // return res.data
-  orderItemModelList.value = res?.list;
-  orderItemModelList.value.forEach((item) => {
-    item.product_name = item.major_name;
-    item.product_code = item.product_code;
-    item.selling_price = item.selling_price;
-    item.product_unit_name = item.major_unit_name;
-    item.other_tax_amount = 0;
-    item.promotion_discount_amount = 0;
-    item.subtotal_amount = item.selling_price;
-    item.total_amount = item.selling_price;
-    item.quantity = 1;
-  });
-  // }
-};
-
 // 获取有效退单的订单详情
-const handleSearchAalidOrder = async (event) => {
+const handleSearchAalidOrder = async (val) => {
   try {
-    refundType.value = event.type;
-
-    await (event.type === 'original_order'
-      ? originalOrderGetGoodsList(event.val)
-      : noOriginalOrderGetGoodsList(event.val));
-  } catch (error) {
-    ElMessage.error(error.message);
+    const res = await getValidOrderItems({
+      order_no: val,
+    });
+    if (res.code === 'SUCCESS') {
+      orderDetail.value = res?.data;
+      orderItemModelList.value = res.data?.order_item_model_list;
+      customerDetailModel.value = res.data?.customer_detail_model;
+    }
+  } catch {
+    // ElMessage.error(error.message);
   }
 };
-const currentSymbol = ref('');
-onMounted(async () => {
-  currentSymbol.value = await initializeCurrencySymbol();
 
+onMounted(() => {
   // const jsonLocalTable = Local.get('CL');
   // if (jsonLocalTable && jsonLocalTable.returnTable) {
   //   allColumns.value = jsonLocalTable.returnTable?.list;
@@ -577,101 +398,34 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <Page auto-content-height>
-    <section class="flex h-full flex-col justify-between">
-      <!-- 搜索+搜索内容 + 客户信息 -->
-      <section class="flex h-full gap-2.5">
+  <div>
+    <div class="scancode-container">
+      <div class="top">
         <!-- 扫描搜索 -->
-        <div class="w-auto flex-1 overflow-hidden bg-white p-2.5">
-          <ReturnOrderSearch
-            :order-item-model-list="orderItemModelList"
-            @select-rows="handleSelectRows"
-            @search-order="handleSearchAalidOrder"
+        <ReturnOrderSearch
+          :order-item-model-list="orderItemModelList"
+          @select-rows="handleSelectRows"
+          @search-order="handleSearchAalidOrder"
+        />
+      </div>
+      <div class="down">
+        <div class="down-table">
+          <!-- 扫描内容 -->
+          <ReturnOrderContent
+            :columns-visible="columnsVisible"
+            :return-order-list="returnOrderList"
+            @remove-item="handleRemoveItem"
+            @update-quantity="handleUpdateQuantity"
           />
-          <div class="w-auto overflow-auto">
-            <ReturnOrderContent
-              :columns-visible="columnsVisible"
-              :return-order-list="returnOrderList"
-              @remove-item="handleRemoveItem"
-              @update-quantity="handleUpdateQuantity"
-            />
-          </div>
         </div>
-        <div class="relative max-w-[306px] break-words bg-white p-2.5">
-          <!-- 收缩按钮 -->
-          <div
-            class="bg-primary-100 absolute left-0 top-[50%] flex h-10 w-4 cursor-pointer items-center justify-center"
-            @click="handIsShrink"
-          >
-            <ArrowRight v-if="!isShrink" />
-            <ArrowLeft v-else />
-          </div>
-          <div class="bg-primary-50 w-[286px] p-2.5 text-xs" v-if="!isShrink">
-            <p class="mb-3 flex items-center justify-between">
-              <ElButton
-                type="primary"
-                size="mini"
-                @click="handleSelectCustomer"
-              >
-                <span class="text-info">{{
-                  t('returned.select-customer')
-                }}</span>
-              </ElButton>
-              <span class="text-sm font-bold">{{
-                customerDetailModel?.name || '--'
-              }}</span>
-            </p>
-            <p class="mb-3 flex justify-between">
-              <span>{{ t('returned.customer-title') }}:</span>
-              <span class="text-right">{{
-                customerDetailModel?.phone_number || '--'
-              }}</span>
-            </p>
-            <p class="mb-3 flex justify-between">
-              <span>{{ t('returned.points') }}:</span>
-              <span class="text-right">{{
-                customerDetailModel?.points || '0'
-              }}</span>
-            </p>
-            <p class="mb-3 flex justify-between">
-              <span>{{ t('returned.balance') }}:</span>
-              <span class="text-right"
-                >{{ curr }} {{ customerDetailModel?.balance || '0' }}</span
-              >
-            </p>
-            <p class="flex justify-between">
-              <span>{{ t('returned.salesman') }}:</span>
-              <span class="text-right">--</span>
-            </p>
-          </div>
-          <div
-            class="bg-primary-50 mt-1 w-[286px] p-2.5 text-xs"
-            v-if="!isShrink"
-          >
-            <p class="mb-3 flex items-center justify-between">
-              <ElButton type="primary" size="mini" @click="handleSelectGuider">
-                <span class="text-info">{{ t('returned.select-guider') }}</span>
-              </ElButton>
-              <span class="text-sm font-bold">{{
-                guiderDetailModel.name || '--'
-              }}</span>
-            </p>
-            <p class="mb-3 flex justify-between">
-              <span>{{ t('returned.account') }}:</span>
-              <span class="text-right">--</span>
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- 退款操作层 -->
-      <section class="mt-2.5 flex h-auto">
-        <!-- 客户信息 -->
-        <!-- <div class="scan-settle-content-left">
+      </div>
+      <!-- 结算 -->
+      <div class="scan-settle">
+        <div class="scan-settle-content-left">
+          <!-- 客户信息 -->
           <CustomerInfo :customer-detail-model="customerDetailModel" />
-        </div> -->
-
-        <div class="w-full bg-white pb-2.5 pt-2.5">
+        </div>
+        <div class="scan-settle-content-right">
           <!-- 退货结算 -->
           <ReturnedSettleAction
             :order-detail="orderDetail"
@@ -681,8 +435,8 @@ onMounted(async () => {
             @handle-empty="handleEmptyAll"
           />
         </div>
-      </section>
-    </section>
+      </div>
+    </div>
     <!--抽屉列表-->
     <DrawerList
       :drawer-info-show="drawerListBoxShow"
@@ -693,14 +447,14 @@ onMounted(async () => {
       @confirm-list="confirmList"
     />
     <!-- 退单抽屉 -->
-    <!-- <RefundOrder
+    <RefundOrder
       @register="refundOrderRegister"
-      @success="handRefresh"
-      @close="handRefresh"
+      @success="refresh"
+      @close="refresh"
       @close-tkr="handleClose"
       @handle-empty="handleEmptyAll"
       @handle-empty-amount="handleEmptyAmount"
-    /> -->
+    />
     <ElDialog
       v-model="dialogVisible"
       :title="t('common.prompt_message')"
@@ -717,7 +471,7 @@ onMounted(async () => {
             <p class="mt-5 font-bold">
               {{
                 t('sales.continue_create_prompt', {
-                  no: refundColumnsData?.[0]?.order_returned_no || '',
+                  no: refundColumnsData[0].order_returned_no || '',
                 })
               }}
               <span class="text-error">{{ t('sales.delete_no') }}</span> ,
@@ -760,19 +514,105 @@ onMounted(async () => {
         </div>
       </template>
     </ElDialog>
-
-    <SelectCustomer
-      @close-tkr="confirmClose"
-      @select-customer-row:row="handleSelectCustomerRow"
-    />
-    <SelectGuider
-      @close-tkr="confirmGuiderClose"
-      @select-customer-row:row="handleSelectGuiderRow"
-    />
-  </Page>
+  </div>
 </template>
 <style lang="scss"></style>
 <style scoped lang="scss">
+.scancode-container {
+  width: 100%;
+  overflow: hidden;
+
+  .top {
+    // height: 100px;
+    padding: 10px 0;
+    background-color: #fff;
+  }
+
+  .down {
+    // padding: 10px 21px 15px 21px;
+    height: calc(100vh - 310px);
+    margin-top: 6px;
+    overflow-y: auto;
+    background-color: #fff;
+
+    .down-delete {
+      // height: 50px;
+      display: flex;
+      justify-content: space-between;
+      padding-top: 10px;
+
+      .del-btn {
+        margin-left: 14px;
+        background-color: #fc5c65;
+      }
+
+      .import-btn {
+        color: #fff;
+        background-color: #4a9ffc;
+      }
+    }
+
+    .down-table {
+      // overflow-y: auto;
+      flex-grow: 1;
+      margin: 10px 21px 0;
+
+      .role-page {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+      }
+
+      .table {
+        box-shadow: 5px 5px 5px #dedede;
+      }
+
+      .custom-header {
+        background-color: #183f8f;
+      }
+
+      .icon-bianji1,
+      .icon-chakan,
+      .icon-icon_printer {
+        width: 20px;
+        height: 20px;
+        color: #5e7987;
+      }
+    }
+
+    .down-btn {
+      .total {
+        margin-top: 20px;
+      }
+    }
+
+    .action-bottom {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 49px;
+    }
+  }
+
+  .scan-settle {
+    display: flex;
+    // justify-content: space-between;
+    height: auto;
+    margin-top: 10px;
+
+    .scan-settle-content-left {
+      width: 25%;
+      background-color: #fff;
+    }
+
+    .scan-settle-content-right {
+      width: 75%;
+      padding: 10px 0;
+      margin-left: 10px;
+      background-color: #fff;
+    }
+  }
+}
+
 .common-btn {
   width: 80px;
   height: 32px;

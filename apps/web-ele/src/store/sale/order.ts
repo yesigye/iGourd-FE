@@ -23,8 +23,8 @@ export const useOrderStore = defineStore('order', {
     async getOrderList(params: any) {
       try {
         const res = await orderListApi(params);
-        this.orderListData = res?.data?.list || [];
-        this.orderListTotal = res?.data.total || 0;
+        this.orderListData = res?.list || [];
+        this.orderListTotal = res.total || 0;
       } catch (error: any) {
         console.error('Get Order list:', error);
       }
