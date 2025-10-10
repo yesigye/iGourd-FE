@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import { ElButton, Page } from '@igourd/common-ui';
+import {
+  ElButton,
+  Page,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElIcon,
+} from '@igourd/common-ui';
+import { ArrayDown } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
@@ -40,7 +48,27 @@ const {
   canBatchOperate,
 } = usePurchaseOrder();
 const { currentLoginUserApp } = useUserStore();
+
+const operationOpt = [
+  {
+    label: t('common.pending'),
+    value: 'PENDING',
+  },
+  {
+    label: t('common.approve'),
+    value: 'APPROVED',
+  },
+  {
+    label: t('common.reject'),
+    value: 'REJECTED',
+  },
+];
+const getlabel = (value:string) => {
+  const obj = operationOpt.find((item) => item.value === value);
+  return obj?.label;
+};
 const detailDrawerRef = ref();
+const unitChange = () => {};
 
 const currentRow = ref();
 const openModal = (row: tableItem) => {
@@ -81,6 +109,26 @@ const handleconfirm = (data: AuditFormData) => {
         </ElButton>
       </template>
       <template #modal="{ row }">
+        <ElDropdown>
+          <span>
+            {{ getlabel(row.review_status) }}
+            <ElIcon class="el-icon--right">
+              <ArrayDown />
+            </ElIcon>
+          </span>
+          <template #dropdown>
+            <ElDropdownMenu>
+              <ElDropdownItem
+                v-for="item in operationOpt"
+                :key="item?.value"
+                @click="() => unitChange(item)"
+              >
+                <div>{{ item.label }}</div>
+              </ElDropdownItem>
+            </ElDropdownMenu>
+          </template>
+        </ElDropdown>
+        <!--
         <ElButton type="text" @click="openModal(row)">
           <i
             v-if="row.review_status === 'PENDING'"
@@ -97,7 +145,7 @@ const handleconfirm = (data: AuditFormData) => {
             class="iconfont icon-fILED status_icon"
             style="color: var(--el-color-danger)"
           ></i>
-        </ElButton>
+        </ElButton>-->
       </template>
       <template #operation="{ row }">
         <ElButton
