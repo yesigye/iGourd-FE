@@ -1,68 +1,98 @@
-import type {
-  StoreCreateQueryPageVO,
-  StoreCreatePageModel,
-  StoreCreateCreateVO,
-  StoreCreateModifyVO,
-  StoreCreateRemoveVO,
-  StoreCreateDetailModel,
-} from '@@/store/types';
+// import type { MerchantDetailResponse } from '@@/store/types/create';
 
-import { requestClient } from '#/api/request';
+import type { MerchantPackageListRequest } from '@@/store/types';
 
-const STORE_CREATE_BASE_URL = '/v1/merchant/store/create';
+/**
+ * 商户创建
+ */
+import { requestClient as request } from '#/api/request';
 
-// 获取店铺创建分页列表
-export function getStoreCreatePageListApi(data: StoreCreateQueryPageVO) {
-  return requestClient.post(
-    `${STORE_CREATE_BASE_URL}/page-list`,
+export function basicsMerchantSubMerchantCreate(data: any) {
+  return request.post('/v1/merchant/basics/merchant/sub-merchant/create', data);
+}
+
+// 商户所有子商户信息查询（分页）
+export function basicsMerchantSubMerchantPageList(data: any) {
+  return request.post(
+    '/v1/merchant/basics/merchant/sub-merchant/page-list',
     data,
   );
 }
 
-// 创建店铺
-export function createStoreCreateApi(data: StoreCreateCreateVO) {
-  return requestClient.post(
-    `${STORE_CREATE_BASE_URL}/create`,
+// 商户套餐查询(适用于3种套餐场景：NEW:新购,RENEW:续费复购,UPGRADE:套餐升级)
+export function basicsMerchantPackageList(data: MerchantPackageListRequest) {
+  return request.post('/v1/merchant/basics/merchant/package/list', data);
+}
+
+// 商户下单(选择套餐下单，适用于：NEW:新购,RENEW:续费复购,UPGRADE:套餐升级)
+export function basicsMerchantPackagePlaceOrder(data: any) {
+  return request.post('/v1/merchant/basics/merchant/package/place-order', data);
+}
+
+// 基于入网id, 获取入网信息详情 商户入网详情查询请求接收参数
+export function basicsMerchantMerchantEnrollFind(data: {
+  // 一级商户ID(当前登录id)
+  first_level_merchant_id?: number;
+  // 套餐业务类型
+  package_business_type: 'NEW' | 'RENEW' | 'UPGRADE';
+  // 商户ID(要查询的二级商户ID)
+  sub_merchant_id: number;
+}) {
+  return request.post(
+    '/v1/merchant/basics/merchant/merchant-enroll/find',
     data,
   );
 }
 
-// 更新店铺创建
-export function updateStoreCreateApi(data: StoreCreateModifyVO) {
-  return requestClient.post(
-    `${STORE_CREATE_BASE_URL}/modify`,
+// 子商户信息修改
+export function basicsMerchantSubMerchantModify(data: any) {
+  return request.post('/v1/merchant/basics/merchant/sub-merchant/modify', data);
+}
+
+// 商户入网审核历史记录查询(创建商户)
+export function basicsMerchantReviewLogList(data: any) {
+  return request.post('/v1/merchant/basics/merchant/review-log/list', data);
+}
+
+// 基于商户套餐完成付款动作，更新付款完成的状态(适用于：NEW:新购,RENEW:续费复购,UPGRADE:套餐升级)
+export function basicsMerchantPackagePaid(data: any) {
+  return request.post('/v1/merchant/basics/merchant/package/paid', data);
+}
+
+// 商户订单付费记录信息查询(分页)
+export function basicsMerchantOrderPaymentPageList(data: any) {
+  return request.post('/v1/merchant/basics/merchant/order/page-list', data);
+}
+
+// 商户设备授权分页查询接口
+export function basicsMerchantDevicePageList(data: any) {
+  return request.post('/v1/merchant/basics/merchant/device/page-list', data);
+}
+
+// 商户设备授权分页查询接口
+export function deviceAuthorizationStatusModify(data: any) {
+  return request.post(
+    '/v1/merchant/basics/merchant/device/authorization/status/modify',
     data,
   );
 }
 
-// 删除店铺创建
-export function deleteStoreCreateApi(data: StoreCreateRemoveVO) {
-  return requestClient.post(
-    `${STORE_CREATE_BASE_URL}/remove`,
+// 是否禁用
+export function merchantDeviceStatusModify(data: any) {
+  return request.post(
+    '/v1/merchant/basics/merchant/device/status/modify',
     data,
   );
 }
 
-// 获取店铺创建详情
-export function getStoreCreateDetailApi(data: { create_id: number; merchant_id?: number }) {
-  return requestClient.post(
-    `${STORE_CREATE_BASE_URL}/detail`,
+// 当前门店信息修改
+export function basicsMerchantStoreModify(data: any) {
+  return request.post(
+    '/v1/merchant/basics/merchant/current-merchant/modify',
     data,
   );
 }
-
-// 提交店铺创建申请
-export function submitStoreCreateApi(data: { create_id: number; merchant_id?: number }) {
-  return requestClient.post(
-    `${STORE_CREATE_BASE_URL}/submit`,
-    data,
-  );
-}
-
-// 获取店铺创建步骤
-export function getStoreCreateStepsApi(data: { create_id: number; merchant_id?: number }) {
-  return requestClient.post(
-    `${STORE_CREATE_BASE_URL}/steps`,
-    data,
-  );
+// 当前门店信息修改
+export function basicsMerchantfind(merchantId: { merchantId: number }) {
+  return request.get(`/merchant/basics/merchant/find/${merchantId}`);
 }

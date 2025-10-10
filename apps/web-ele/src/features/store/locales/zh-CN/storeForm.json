@@ -1,0 +1,43 @@
+{
+  "business_type": {
+    "label": "业务类型",
+    "placeholder": "选择业务类型"
+  },
+  "full_name": {
+    "label": "门店名称",
+    "placeholder": "输入门店名称"
+  },
+  "short_name": {
+    "label": "门店简称",
+    "placeholder": "输入门店简称"
+  },
+  "industry_code": {
+    "label": "门店行业",
+    "placeholder": "选择门店行业"
+  },
+  "time_zone_id": {
+    "label": "时区",
+    "placeholder": "选择时区"
+  },
+  "country_id": {
+    "label": "国家",
+    "placeholder": "选择国家"
+  },
+  "actual_address": {
+    "label": "地址",
+    "placeholder": "输入地址"
+  },
+  "basic_currency_code": {
+    "label": "基础货币",
+    "placeholder": "选择基础货币"
+  },
+  "majorCountry_language": {
+    "label": "语言设置",
+    "placeholder": "选择主语言"
+  },
+  "minorCountry_language": {
+    "label": "语言设置",
+    "placeholder": "选择副语言"
+  },
+  "merchantExisted": "门店名称已存在"
+}

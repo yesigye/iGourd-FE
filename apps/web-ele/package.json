@@ -53,8 +53,11 @@
     "vue-router": "catalog:"
   },
   "devDependencies": {
+    "@element-plus/icons-vue": "catalog:",
+    "clipboard": "^2.0.11",
     "pinia-plugin-persistedstate": "catalog:",
     "unplugin-element-plus": "catalog:",
-    "vite-plugin-imp": "^2.4.0"
+    "vite-plugin-imp": "^2.4.0",
+    "vue-request": "^2.0.4"
   }
 }

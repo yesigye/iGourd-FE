@@ -2,13 +2,7 @@ import type { VxeTableGridOptions } from '@igourd/plugins/vxe-table';
 
 import { h } from 'vue';
 
-import {
-  ElButton,
-  ElImage,
-  ElLink,
-  ElSpace,
-  ElSwitch,
-} from '@igourd/common-ui';
+import { ElButton, ElImage, ElSpace, ElSwitch } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import {
   setupIgourdVxeTable,
@@ -205,34 +199,38 @@ setupIgourdVxeTable({
     });
     vxeUI.renderer.add('upgradeService', {
       renderTableDefault({ props }, params) {
+        const { t } = useI18n();
         const { row, column } = params;
         const cellValue = row[column.field];
         const disabled = row.status === 'NONACTIVATED';
-        const upgradeDisabled = row?.package_models?.some(
-          ({ package_id }: { package_id: number }) => +package_id >= 3,
-        );
+        const upgradeDisabled =
+          row?.package_models?.some(
+            ({ package_id }: { package_id: number }) => +package_id >= 3,
+          ) ?? true;
         return h(ElSpace, null, [
           h(
-            ElLink,
+            ElButton,
             {
               disabled: upgradeDisabled,
               type: 'primary',
+              link: true,
               onClick: () => {
                 props?.onClick({ row, value: cellValue }, 'RENEW');
               },
             },
-            '续费',
+            t('store.storeList.renew'),
           ),
           h(
-            ElLink,
+            ElButton,
             {
               disabled,
               type: 'primary',
+              link: true,
               onClick: () => {
                 props?.onClick({ row, value: cellValue }, 'UPGRADE');
               },
             },
-            '升级',
+            t('store.storeList.upgrade'),
           ),
         ]);
       },
@@ -244,8 +242,9 @@ setupIgourdVxeTable({
         const disabled = row.status === 'NONACTIVATED';
         return h(ElSpace, null, [
           h(
-            ElLink,
+            ElButton,
             {
+              link: true,
               disabled,
               type: 'primary',
               onClick: () => {

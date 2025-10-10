@@ -27,6 +27,7 @@ export function useStoreList() {
     type: 'RENEW' | 'UPGRADE',
   ) {
     jumpCreateStorePage({
+      sub_merchant_id: row.id,
       business_type: row.business_type,
       package_business_type: type,
     });
@@ -99,12 +100,14 @@ export function useStoreList() {
       },
     },
     {
-      field: 'device_authorization_model',
+      field: 'device_authorization_model_1',
       minWidth: 120,
       align: 'left',
       title: t('store.storeList.used_quantity'),
-      formatter({ cellValue }) {
-        return cellValue?.used_quantity;
+      formatter({ row }) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return row.device_authorization_model?.used_quantity;
       },
     },
     {
@@ -186,7 +189,7 @@ export function useStoreList() {
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: t('store.searchPlaceholder'),
+            placeholder: t('common.search'),
           },
         },
       },
@@ -194,6 +197,7 @@ export function useStoreList() {
     });
 
   return {
+    jumpCreateStorePage,
     Grid,
     Drawer,
     handleEdit,

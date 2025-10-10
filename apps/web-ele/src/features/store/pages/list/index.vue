@@ -10,7 +10,7 @@ defineOptions({
 
 const { t } = useI18n();
 
-const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
+const { Grid, Drawer, handleEdit, jumpCreateStorePage, canBatchOperate } =
   useStoreList();
 </script>
 
@@ -18,7 +18,7 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
   <Page auto-content-height>
     <Grid>
       <template #table-actions>
-        <ElButton type="primary">
+        <ElButton type="primary" @click="jumpCreateStorePage({})">
           {{ t('common.add') }}
         </ElButton>
         <ElButton type="danger" v-if="canBatchOperate">

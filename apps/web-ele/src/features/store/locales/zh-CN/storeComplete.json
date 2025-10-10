@@ -1,0 +1,15 @@
+{
+  "creationTitleAPPROVED": "完成验证",
+  "creationTitleREJECTED": "创建失败",
+  "creationTitlePENDING": "正在验证的交易",
+
+  "creationMessageAPPROVED": "您的帐户验证已完成。现在，您可以登录并开始使用我们的服务。",
+  "creationMessageREJECTED": "您的帐户验证未通过。请离线联系销售人员调查原因！重新创建店面。",
+  "creationMessagePENDING": "您的交易目前正在验证中，请耐心等待。我们将在一个工作日内完成验证，请注意您的电子邮件或短信。验证成功后，您可以登录并访问主页。",
+
+  "auditText": "审核记录",
+  "creationBtnTextAPPROVED": "返回",
+  "creationBtnTextREJECTED": "返回",
+  "creationBtnTextPENDING": "返回",
+  "emptyText": "暂无数据"
+}
