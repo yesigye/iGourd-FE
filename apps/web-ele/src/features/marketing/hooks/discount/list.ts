@@ -5,11 +5,10 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
-  createDiscountApi,
+  createOrUpdateDiscount,
   deleteDiscountApi,
   getDiscountDetailApi,
   getDiscountListApi,
-  updateDiscountApi,
 } from '@@/marketing/apis';
 import { DiscountDrawer } from '@@/marketing/components';
 
@@ -126,8 +125,8 @@ export function useDiscount() {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       detail: getDiscountDetailApi,
-      create: createDiscountApi,
-      update: updateDiscountApi,
+      create: createOrUpdateDiscount,
+      update: createOrUpdateDiscount,
     },
   });
 }

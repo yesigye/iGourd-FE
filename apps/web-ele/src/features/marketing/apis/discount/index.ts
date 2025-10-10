@@ -10,16 +10,7 @@ export function getDiscountListApi(data: any) {
   );
 }
 
-// 创建折扣
-export function createDiscountApi(data: any) {
-  return requestClient.post(
-    '/v1/merchant/basics/marketing/promotion/create',
-    data,
-  );
-}
-
-// 更新折扣
-export function updateDiscountApi(form: any) {
+export function createOrUpdateDiscount(form: any) {
   const data = {
     ...form,
     relation_product_label_id_list:
@@ -35,9 +26,25 @@ export function updateDiscountApi(form: any) {
         ?.filter((i: any) => i.id)
         ?.map((i: any) => i.id) || undefined,
   };
+  if (Reflect.has(data, 'id')) {
+    return updateDiscountApi(data);
+  }
+  return createDiscountApi(data);
+}
+
+// 创建折扣
+export function createDiscountApi(data: any) {
+  return requestClient.post(
+    '/v1/merchant/basics/marketing/promotion/create',
+    data,
+  );
+}
+
+// 更新折扣
+export function updateDiscountApi(form: any) {
   return requestClient.post(
     '/v1/merchant/basics/marketing/promotion/modify',
-    data,
+    form,
   );
 }
 
