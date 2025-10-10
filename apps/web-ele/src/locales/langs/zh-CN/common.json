@@ -309,5 +309,10 @@
   "qty": "数量",
   "price": "价格",
   "amount": "金额",
-  "total-amount": "总金额"
+  "total-amount": "总金额",
+  "unit": "单位",
+  "tax": "税额",
+  "discount": "折扣",
+  "sub-total": "总金额",
+  "empty": "清空"
 }
