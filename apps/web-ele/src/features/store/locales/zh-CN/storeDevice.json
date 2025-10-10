@@ -1,0 +1,26 @@
+{
+  "title": "设备授权",
+  "searchPlaceholder": "输入要搜索的关键字（设备名称、设备代码）",
+  "storename": "门店全称",
+  "short_name": "门店简称",
+  "code": "设备ID",
+  "name": "设备名称",
+  "mac_address": "Mac地址",
+  "ip_address": "登录IP",
+  "last_login_time": "登录时间",
+  "login_count": "登录次数",
+  "software_version": "版本号",
+  "version_update_time": "版本更新时间",
+  "os_version": "设备操作系统版本",
+  "type": "设备类型",
+  "is_authorized": "授权",
+  "status": "是否禁用",
+  "status_ACTIVE": "激活",
+  "status_FROZEN": "冻结",
+  "status_PROHIBITED": "禁用",
+
+  "type_POS": "POS设备",
+  "type_HANDHELD_TERMINAL": "手持设备",
+  "type_PRICE_INCREASER": "提价器",
+  "type_SCAN_PRINT_ALL_IN_ONE": "扫打一体机"
+}
