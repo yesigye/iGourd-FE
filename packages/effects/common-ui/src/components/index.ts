@@ -83,6 +83,8 @@ export {
   ElCol,
   ElConfigProvider,
   ElDatePicker,
+  ElDescriptions,
+  ElDescriptionsItem,
   ElDialog,
   ElDrawer,
   ElDropdown,

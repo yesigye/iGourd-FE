@@ -13,7 +13,7 @@
   "products": "产品列表",
   "addPurchaseOrder": "添加采购订单",
   "editPurchaseOrder": "编辑采购订单",
-  "purchaseOrderDetail": "采购订单详情",
+  "purchase-order-detail": "采购订单详情",
   "purchaseOrder": "采购订单",
   "please-select-supplier": "请选择供应商",
   "please_select_order_type": "请选择订单类型",

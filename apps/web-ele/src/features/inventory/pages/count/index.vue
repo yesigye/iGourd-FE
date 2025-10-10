@@ -41,7 +41,7 @@ const handleconfirm = (data) => {
   data.id = currentRow.value.id;
   data.merchant_id = currentLoginUserApp.owner_id;
   updateCountStatus(data).then(() => {
-    auditDialogRef.value.close();
+    auditDialogRef.value.closeModal();
     gridApi.reload();
   });
 };
@@ -76,7 +76,7 @@ const handleconfirm = (data) => {
         <ElButton type="text" @click="handleDetail(row)">
           {{ t('common.detail') }}
         </ElButton>
-        <!-- 
+        <!--
         <ElButton type="text" @click="handleDelete([row.id])">
           {{ t('common.delete') }}
         </ElButton>-->
