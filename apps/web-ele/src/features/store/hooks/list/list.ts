@@ -2,6 +2,8 @@ import type { StoreListPageModel } from '@@/store/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
+import { useRouter } from 'vue-router';
+
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
@@ -9,9 +11,26 @@ import { deleteStoreListApi, getStoreListPageListApi } from '@@/store/apis';
 
 import { useCrud } from '#/hooks';
 
+import { BUSINESS_TYPE_CONFIG } from '../../constants';
+
 export function useStoreList() {
   const { t } = useI18n();
   const { currentLoginUserApp } = useUserStore();
+  const router = useRouter();
+
+  function jumpCreateStorePage(query: Record<string, any>) {
+    router.push({ path: '/store/create', query });
+  }
+
+  function handleUpgradeCellClick(
+    { row }: { row: StoreListPageModel },
+    type: 'RENEW' | 'UPGRADE',
+  ) {
+    jumpCreateStorePage({
+      business_type: row.business_type,
+      package_business_type: type,
+    });
+  }
 
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<StoreListPageModel>[] = [
@@ -39,6 +58,11 @@ export function useStoreList() {
       width: 100,
       align: 'center',
       title: t('store.storeList.business_type'),
+      formatter({ cellValue }) {
+        return t(
+          `${BUSINESS_TYPE_CONFIG.find((i) => i.value === cellValue)?.name}`,
+        );
+      },
     },
     {
       field: 'industry_name',
@@ -51,6 +75,9 @@ export function useStoreList() {
       width: 120,
       align: 'left',
       title: t('store.storeList.status'),
+      cellRender: {
+        name: 'OpenStatus',
+      },
     },
     {
       field: 'create_time',
@@ -91,9 +118,7 @@ export function useStoreList() {
       cellRender: {
         name: 'upgradeService',
         props: {
-          onClick(row, op: string) {
-            console.log(row, op);
-          },
+          onClick: handleUpgradeCellClick,
         },
       },
     },

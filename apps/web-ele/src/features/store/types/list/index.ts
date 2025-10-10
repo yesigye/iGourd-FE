@@ -1,17 +1,17 @@
 // 店铺状态枚举
 export enum StoreStatus {
   ACTIVE = 'ACTIVE', // 营业中
+  CLOSED = 'CLOSED', // 已关闭
   INACTIVE = 'INACTIVE', // 停业
   MAINTENANCE = 'MAINTENANCE', // 维护中
-  CLOSED = 'CLOSED', // 已关闭
 }
 
 // 店铺类型枚举
 export enum StoreType {
+  HYBRID = 'HYBRID', // 混合店
+  ONLINE = 'ONLINE', // 网店
   RETAIL = 'RETAIL', // 零售店
   WHOLESALE = 'WHOLESALE', // 批发店
-  ONLINE = 'ONLINE', // 网店
-  HYBRID = 'HYBRID', // 混合店
 }
 
 // 查询参数
@@ -43,6 +43,7 @@ export interface StoreListPageModel {
   total_orders: number;
   creator_name: string;
   create_time: string;
+  business_type: string;
 }
 
 // 创建参数

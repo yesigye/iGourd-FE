@@ -122,6 +122,11 @@ setupIgourdVxeTable({
         });
       },
     });
+    vxeUI.renderer.add('OpenStatus', {
+      renderTableDefault(_, params) {
+        return h('div');
+      },
+    });
     vxeUI.renderer.add('PaymentStatus', {
       renderTableDefault(_, params) {
         const { t } = useI18n();
@@ -191,7 +196,8 @@ setupIgourdVxeTable({
     });
     vxeUI.renderer.add('upgradeService', {
       renderTableDefault({ props }, params) {
-        const { row } = params;
+        const { row, column } = params;
+        const cellValue = row[column.field];
         const disabled = row.status === 'NONACTIVATED';
         const upgradeDisabled = row?.package_models?.some(
           ({ package_id }: { package_id: number }) => +package_id >= 3,
@@ -203,7 +209,7 @@ setupIgourdVxeTable({
               disabled: upgradeDisabled,
               type: 'primary',
               onClick: () => {
-                props?.onClick(row, 'renew');
+                props?.onClick({ row, value: cellValue }, 'RENEW');
               },
             },
             '续费',
@@ -214,7 +220,7 @@ setupIgourdVxeTable({
               disabled,
               type: 'primary',
               onClick: () => {
-                props?.onClick(row, 'upgrade');
+                props?.onClick({ row, value: cellValue }, 'UPGRADE');
               },
             },
             '升级',

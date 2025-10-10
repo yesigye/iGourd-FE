@@ -11,7 +11,7 @@ import { requestClient as request } from '#/api/request';
  */
 export function getProductList(params: ProductListParams) {
   return request.post<ProductListResponse>(
-    '/v1/merchant/basics/inventory/product-profile/page-list',
+    '/v1/merchant/basics/inventory/product-info/page-list',
     params,
   );
 }
