@@ -7,12 +7,12 @@ import {
   ElDropdown,
   ElDropdownItem,
   ElDropdownMenu,
-  ElIcon,
   ElInput,
   ElMessage,
   ElTable,
   ElTableColumn,
 } from '@igourd/common-ui';
+import { ArrayDown } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 
 import code from '#/assets/sale/code.svg';
@@ -32,15 +32,12 @@ const props = defineProps<Props>();
 // };
 // 生命周期
 
-// emits
 const emit = defineEmits(['searchOrder', 'selectRows']);
-// data
 const { t } = useI18n();
 const keywords = ref('');
 const dropdown1 = ref();
 const tableRef = ref();
 const selectRows: any = ref([]);
-// 新增单选模式标志
 const isSingleSelection = ref(false);
 const refundType = ref([
   {
@@ -155,14 +152,13 @@ onMounted(() => {
           <ElDropdown
             class="border-border min-w-[120px] border-r border-solid p-3"
             @command="handleCommand"
+            trigger="click"
           >
-            <div class="flex w-full items-center justify-center">
+            <div class="flex w-full items-center justify-center gap-1">
               <span class="el-dropdown-link">
                 {{ t(refundTypeText) }}
-                <ElIcon class="el-icon--right">
-                  <arrow-down />
-                </ElIcon>
               </span>
+              <ArrayDown />
             </div>
 
             <template #dropdown>
@@ -201,9 +197,10 @@ onMounted(() => {
               />
             </div>
             <template #dropdown>
-              <ElDropdownMenu class="w-full max-w-[800px] p-0">
+              <ElDropdownMenu class="w-[800px] p-0">
                 <ElTable
                   ref="tableRef"
+                  style="width: 100%"
                   :data="filteredOrderItems"
                   @row-click="handleRowClick"
                   @select-all="handleSelect"

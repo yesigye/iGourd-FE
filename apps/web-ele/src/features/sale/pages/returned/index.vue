@@ -3,6 +3,7 @@ import { onMounted, provide, reactive, ref, toRefs } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { ElButton, ElDialog, ElIcon, ElMessage, Page } from '@igourd/common-ui';
+import { ArrowLeft, ArrowRight } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 
 import {
@@ -535,7 +536,6 @@ const noOriginalOrderGetGoodsList = async (val) => {
     page_num: 1,
     page_size: 10,
   });
-  console.log('res', res);
   // if (res.code === 'SUCCESS') {
   // return res.data
   orderItemModelList.value = res?.list;
@@ -600,15 +600,11 @@ onMounted(async () => {
         <div class="relative max-w-[306px] break-words bg-white p-2.5">
           <!-- 收缩按钮 -->
           <div
-            class="top-50% bg-primary-100 absolute left-0 flex h-10 w-4 cursor-pointer items-center justify-center"
+            class="bg-primary-100 absolute left-0 top-[50%] flex h-10 w-4 cursor-pointer items-center justify-center"
             @click="handIsShrink"
           >
-            <ElIcon v-if="!isShrink">
-              <ArrowRightBold />
-            </ElIcon>
-            <ElIcon v-else>
-              <ArrowLeftBold />
-            </ElIcon>
+            <ArrowRight v-if="!isShrink" />
+            <ArrowLeft v-else />
           </div>
           <div class="bg-primary-50 w-[286px] p-2.5 text-xs" v-if="!isShrink">
             <p class="mb-3 flex items-center justify-between">
@@ -639,7 +635,9 @@ onMounted(async () => {
             </p>
             <p class="mb-3 flex justify-between">
               <span>{{ t('returned.balance') }}:</span>
-              <span class="text-right">{{ curr }} {{ customerDetailModel?.balance || '0' }}</span>
+              <span class="text-right"
+                >{{ curr }} {{ customerDetailModel?.balance || '0' }}</span
+              >
             </p>
             <p class="flex justify-between">
               <span>{{ t('returned.salesman') }}:</span>
