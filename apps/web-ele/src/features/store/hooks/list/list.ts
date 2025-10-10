@@ -24,7 +24,7 @@ export function useStoreList() {
 
   function handleUpgradeCellClick(
     { row }: { row: StoreListPageModel },
-    type: 'RENEW' | 'UPGRADE',
+    type: 'NEW' | 'RENEW' | 'UPGRADE',
   ) {
     jumpCreateStorePage({
       sub_merchant_id: row.id,
@@ -81,7 +81,7 @@ export function useStoreList() {
         props: {
           statusList: STATUS_CONFIG,
           onClick({ row }: { row: StoreListPageModel }) {
-            handleUpgradeCellClick({ row }, 'RENEW');
+            handleUpgradeCellClick({ row }, 'NEW');
           },
         },
       },
