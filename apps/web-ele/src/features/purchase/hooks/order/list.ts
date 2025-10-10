@@ -1,3 +1,4 @@
+
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
@@ -62,31 +63,31 @@ export function usePurchaseOrder() {
       title: t('order.total-amount'),
     },
     {
-      field: 'deposit',
+      field: 'deposit_amount',
       minWidth: 150,
       align: 'center',
       title: t('purchase.deposit'),
     },
     {
-      field: 'cumulative_deposit',
+      field: 'cumulative_deposit_amount',
       minWidth: 150,
       align: 'center',
       title: t('order.cumulative-deposit'),
     },
     {
-      field: 'balance',
+      field: 'unpaid_amount',
       minWidth: 150,
       align: 'center',
       title: t('order.balance'),
     },
     {
-      field: 'creator',
+      field: 'creator_name',
       minWidth: 150,
       align: 'center',
       title: t('purchase.creator'),
     },
     {
-      field: 'creation_time',
+      field: 'create_time',
       minWidth: 150,
       align: 'center',
       title: t('order.creation-time'),
@@ -100,6 +101,7 @@ export function usePurchaseOrder() {
       cellRender: {
         name: 'ReviewStatus',
       },
+      slots: { default: 'modal' },
     },
     {
       field: 'operation',
@@ -107,7 +109,7 @@ export function usePurchaseOrder() {
       fixed: 'right',
       title: t('common.operations'),
       slots: {
-        default: 'actions',
+        default: 'operation',
       },
     },
   ];

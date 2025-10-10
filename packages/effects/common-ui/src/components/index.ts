@@ -123,6 +123,8 @@ export {
   ElTooltip,
   ElTree,
   ElUpload,
+  ElDescriptions,
+  ElDescriptionsItem,
   formContextKey,
 } from 'element-plus';
 export type { UploadFile, UploadProps, UploadUserFile } from 'element-plus';

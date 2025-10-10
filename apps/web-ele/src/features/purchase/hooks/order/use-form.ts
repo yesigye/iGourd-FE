@@ -8,7 +8,12 @@ import ModalTable from '@igourd/plugins/modal-table';
 
 import { orderNoGenerate } from '#/api/common';
 import { wareHouseProductSearch } from '#/features/inventory';
-import { getPurchaseListApi, createPurchaseOrderApi } from '@@/purchase/apis';
+import {
+  getPurchaseListApi,
+  createPurchaseOrderApi,
+  updatePurchaseOrderApi,
+  getPurchaseOrderDetailApi,
+} from '@@/purchase/apis';
 import { basicsCurrencyList } from '#/api';
 
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
@@ -98,8 +103,7 @@ export function useOrderForm() {
                         'x-validator': [
                           {
                             required: true,
-                            message:
-                              "{{t('order.please-select-supplier')}}",
+                            message: "{{t('order.please-select-supplier')}}",
                           },
                         ],
                       },
@@ -124,7 +128,6 @@ export function useOrderForm() {
                           feedbackLayout: 'terse',
                         },
                         'x-component-props': {},
-
                       },
                       purchase_date: {
                         type: 'string',
@@ -143,8 +146,7 @@ export function useOrderForm() {
                         'x-validator': [
                           {
                             required: true,
-                            message:
-                              "{{t('order.please-select-order-date')}}",
+                            message: "{{t('order.please-select-order-date')}}",
                           },
                         ],
                       },
@@ -160,8 +162,7 @@ export function useOrderForm() {
                         'x-validator': [
                           {
                             required: true,
-                            message:
-                              "{{t('order.please-selectVat')}}",
+                            message: "{{t('order.please-selectVat')}}",
                           },
                         ],
                         enum: vatConfigurationEnums,
@@ -178,8 +179,7 @@ export function useOrderForm() {
                         'x-validator': [
                           {
                             required: true,
-                            message:
-                              "{{t('order.please-warehouse')}}",
+                            message: "{{t('order.please-warehouse')}}",
                           },
                         ],
                         'x-reactions': {
@@ -228,8 +228,7 @@ export function useOrderForm() {
                             'x-validator': [
                               {
                                 required: true,
-                                message:
-                                  "{{t('order.input-deposit')}}",
+                                message: "{{t('order.input-deposit')}}",
                               },
                             ],
                             'x-component-props': {
@@ -265,7 +264,7 @@ export function useOrderForm() {
                 'x-content': {
                   header: () => {
                     return h(Space, null, [
-                      h('div', null,t('order.product-details')),
+                      h('div', null, t('order.product-details')),
                       h(ModalTable, {
                         text: t('order.quick-select'),
                         title: t('order.product-selection-list'),
@@ -391,14 +390,14 @@ export function useOrderForm() {
         (acc: any, item: any) => acc + item.quantity * item.cost_price,
         0,
       );
-      formData.purchase_order_item_list.forEach(item=>{
-        item.product_name = item.label
-        item.product_id = item.id
-        item.other_tax_amount= 0;
+      formData.purchase_order_item_list.forEach((item) => {
+        item.product_name = item.label;
+        item.product_id = item.id;
+        item.other_tax_amount = 0;
         item.vat_amount = 0;
-        item.subtotal_amount = item.quantity * item.cost_price
-        item.total_amount = item.quantity * item.cost_price
-      })
+        item.subtotal_amount = item.quantity * item.cost_price;
+        item.total_amount = item.quantity * item.cost_price;
+      });
       // 	汇率(选择币种和系统币种的换算比例)
       formData.exchange_rate = 0;
       formData.vat_amount = 0;
@@ -406,8 +405,11 @@ export function useOrderForm() {
       formData.subtotal_amount = total.toFixed(2);
       // total_amount  最终总金额
       formData.total_amount = total.toFixed(2);
-
-      response = await createPurchaseOrderApi(formData);
+      if (formData.id) {
+        response = updatePurchaseOrderApi(formData);
+      } else {
+        response = await createPurchaseOrderApi(formData);
+      }
       return response;
     } catch (error) {
       console.error('采购单 customized form submission error:', error);
@@ -427,16 +429,15 @@ export function useOrderForm() {
           const data = drawerApi.getData();
           // 编辑
           if (data.id) {
-            // const detail = await getCountDetail({
-            //   physical_stock_take_id: data.id,
-            // });
-            // detail.physical_stock_take_item_list =
-            //   detail.physical_stock_take_item_models;
-            // detail.returned_quantity = detail.physical_total_quantity;
-            // formAPI.setValues(detail);
+            const detail = await getPurchaseOrderDetailApi({
+              purchase_order_id:data.id,
+            });
+            detail.purchase_order_item_list =
+              detail.purchase_order_item_model_list;
+            formAPI.setValues(detail);
           } else {
             //增加时，保留1条数据
-            // formAPI.setValues({ physical_stock_take_item_list: [{}] });
+            formAPI.setValues({ purchase_order_item_list: [{}] });
           }
         } else {
           // 关闭抽屉时，重置表单

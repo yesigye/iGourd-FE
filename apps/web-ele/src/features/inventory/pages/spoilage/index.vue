@@ -42,12 +42,12 @@ const handleconfirm = (data) => {
   }
   if (data.review_status === 'APPROVED') {
     approveSpoilage(data).then(() => {
-      auditDialogRef.value.close();
+      auditDialogRef.value.closeModal();
       gridApi.reload();
     });
   } else {
     rejectSpoilage(data).then(() => {
-      auditDialogRef.value.close();
+      auditDialogRef.value.closeModal();
       gridApi.reload();
     });
   }

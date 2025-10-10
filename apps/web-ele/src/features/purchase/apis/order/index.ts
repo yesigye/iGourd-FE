@@ -40,7 +40,7 @@ export function deletePurchaseOrderApi(data: PurchaseOrderRemoveVO) {
 }
 
 // 获取采购订单详情
-export function getPurchaseOrderDetailApi(data: { purchase_order_no: number }) {
+export function getPurchaseOrderDetailApi(data: { purchase_order_id: string }) {
   return requestClient.post(
     `/v1/merchant/purchase/purchase-order/detail`,
     data,
@@ -48,13 +48,13 @@ export function getPurchaseOrderDetailApi(data: { purchase_order_no: number }) {
 }
 
 // 审核采购订单
-export function auditPurchaseOrderApi(data: {
+export function reviewPurchaseOrderApi(data: {
   merchant_id?: number;
   order_id: number;
   remark?: string;
   status: string;
 }) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/audit`, data);
+  return requestClient.post(`/v1/merchant/purchase/purchase-order/review`, data);
 }
 
 // 结算采购订单
