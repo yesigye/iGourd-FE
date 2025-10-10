@@ -101,7 +101,8 @@ export function getProductlabelProductPage(params) {
 }
 
 // 获取商品列表
-export const inventoryProductProfilePageList = (data) => {
+export const inventoryProductProfilePageList = (data: any) => {
+  // @ts-ignore
   return request.post<PageResult<AnyObject[]>>(
     `/v1/merchant/basics/inventory/product-profile/page-list`,
     data,
