@@ -93,16 +93,10 @@ const copyData = (text: string) => {
 const sendBasicsMerchantPackagePaid = async (params) => {
   try {
     loading.value = true;
-    const { code, data, message } = await basicsMerchantPackagePaid(params);
-    console.log(code, data, message);
-    if (code === 'SUCCESS') {
-      isShowPay.value = false;
-      emits('place-success', data);
-      return;
-    }
-    ElMessage.info(message);
-  } catch (error) {
-    console.log(error);
+    const data = await basicsMerchantPackagePaid(params);
+    isShowPay.value = false;
+    // eslint-disable-next-line vue/custom-event-name-casing
+    emits('place-success', data);
   } finally {
     loading.value = false;
   }

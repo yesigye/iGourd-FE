@@ -127,6 +127,9 @@ setupIgourdVxeTable({
           value: cellValue,
           isI18n: true,
           ...props,
+          onClick: () => {
+            props?.onClick({ row });
+          },
         });
       },
     });
@@ -203,36 +206,54 @@ setupIgourdVxeTable({
         const { row, column } = params;
         const cellValue = row[column.field];
         const disabled = row.status === 'NONACTIVATED';
-        const upgradeDisabled =
-          row?.package_models?.some(
-            ({ package_id }: { package_id: number }) => +package_id >= 3,
-          ) ?? true;
-        return h(ElSpace, null, [
-          h(
-            ElButton,
-            {
-              disabled: upgradeDisabled,
-              type: 'primary',
-              link: true,
-              onClick: () => {
-                props?.onClick({ row, value: cellValue }, 'RENEW');
+        const { package_models } = row;
+        let upgradeDisabled = true;
+        if (!disabled) {
+          if (package_models?.length) {
+            upgradeDisabled = false;
+          }
+
+          if (
+            package_models?.some(({ package_id }) => Number(package_id) >= 3)
+          ) {
+            upgradeDisabled = true;
+          }
+        }
+        return h(ElSpace, null, {
+          default: () => [
+            h(
+              ElButton,
+              {
+                disabled,
+                type: 'primary',
+                link: true,
+                onClick: () => {
+                  if (disabled) {
+                    return;
+                  }
+                  props?.onClick({ row, value: cellValue }, 'RENEW');
+                },
               },
-            },
-            t('store.storeList.renew'),
-          ),
-          h(
-            ElButton,
-            {
-              disabled,
-              type: 'primary',
-              link: true,
-              onClick: () => {
-                props?.onClick({ row, value: cellValue }, 'UPGRADE');
+              {
+                default: () => t('store.storeList.renew'),
               },
-            },
-            t('store.storeList.upgrade'),
-          ),
-        ]);
+            ),
+            h(
+              ElButton,
+              {
+                disabled: disabled || upgradeDisabled,
+                type: 'primary',
+                link: true,
+                onClick: () => {
+                  props?.onClick({ row, value: cellValue }, 'UPGRADE');
+                },
+              },
+              {
+                default: () => t('store.storeList.upgrade'),
+              },
+            ),
+          ],
+        });
       },
     });
     vxeUI.renderer.add('AuthStatus', {
@@ -240,20 +261,26 @@ setupIgourdVxeTable({
         const { t } = useI18n();
         const { row } = params;
         const disabled = row.status === 'NONACTIVATED';
-        return h(ElSpace, null, [
-          h(
-            ElButton,
-            {
-              link: true,
-              disabled,
-              type: 'primary',
-              onClick: () => {
-                props?.onClick({ row });
-              },
-            },
-            t('store.storeList.authorize'),
-          ),
-        ]);
+        return h(ElSpace, null, {
+          default: () => {
+            return [
+              h(
+                ElButton,
+                {
+                  link: true,
+                  disabled,
+                  type: 'primary',
+                  onClick: () => {
+                    props?.onClick({ row });
+                  },
+                },
+                {
+                  default: () => t('store.storeList.authorize'),
+                },
+              ),
+            ];
+          },
+        });
       },
     });
     // 这里可以自行扩展 vxe-table 的全局配置，比如自定义格式化
