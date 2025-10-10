@@ -19,33 +19,16 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
     <Grid>
       <template #table-actions>
         <ElButton type="primary">
-          {{ t('store.addStore') }}
+          {{ t('common.add') }}
         </ElButton>
         <ElButton type="danger" v-if="canBatchOperate">
           {{ t('common.delete') }}
         </ElButton>
       </template>
 
-      <template #operation="{ row }">
-        <ElButton type="text">
-          {{ t('common.detail') }}
-        </ElButton>
+      <template #actions="{ row }">
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
-        </ElButton>
-        <ElButton type="text">
-          {{
-            row.status === 'ACTIVE'
-              ? t('store.deactivate')
-              : t('store.activate')
-          }}
-        </ElButton>
-        <ElButton
-          v-if="row.status !== 'ACTIVE'"
-          type="text"
-          @click="handleBatchDelete(row)"
-        >
-          {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>

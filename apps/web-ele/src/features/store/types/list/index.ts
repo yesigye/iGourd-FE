@@ -2,8 +2,9 @@
 export enum StoreStatus {
   ACTIVE = 'ACTIVE', // 营业中
   CLOSED = 'CLOSED', // 已关闭
-  INACTIVE = 'INACTIVE', // 停业
+  INACTIVE = 'INACTIVE', // 停业\
   MAINTENANCE = 'MAINTENANCE', // 维护中
+  NONACTIVATED = 'NONACTIVATED',
 }
 
 // 店铺类型枚举
