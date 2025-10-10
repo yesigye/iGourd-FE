@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ElButton, Page } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
+import { Page } from '@igourd/common-ui';
 
 import { useStoreDevice } from '../../hooks/device/list';
 
@@ -8,21 +7,13 @@ defineOptions({
   name: 'IStoreDevice',
 });
 
-const { t } = useI18n();
-
-const {
-  Grid,
-  Drawer,
-  handleEdit,
-  handleBatchDelete,
-  canBatchOperate,
-} = useStoreDevice();
+const { Grid, toggleAuthorization, toggleStatus } = useStoreDevice();
 </script>
 
 <template>
   <Page auto-content-height>
     <Grid>
-    <template #table-actions>
+      <!-- <template #table-actions>
         <ElButton type="primary">
           {{ t('common.add') }}
         </ElButton>
@@ -33,24 +24,31 @@ const {
         >
           {{ t('common.delete') }}
         </ElButton>
+      </template> -->
+      <template #is_authorized="{ row }">
+        <i
+          @click="toggleAuthorization(row)"
+          class="iconfont status_icon"
+          :class="row.is_authorized ? 'icon-SURE' : 'icon-fILED'"
+          :style="
+            row.is_authorized
+              ? 'color:var(--el-color-success)'
+              : 'color:var(--el-color-danger)'
+          "
+        ></i>
       </template>
-
-      <template #operation="{ row }">
-        <ElButton
-          type="text"
-          @click="handleEdit(row)"
-        >
-          {{ t('common.edit') }}
-        </ElButton>
-        <ElButton
-          type="text"
-          @click="handleBatchDelete(row)"
-        >
-          {{ t('common.delete') }}
-        </ElButton>
+      <template #status="{ row }">
+        <i
+          @click="toggleStatus(row)"
+          class="iconfont status_icon"
+          :class="row.status === 'ACTIVE' ? 'icon-SURE' : 'icon-fILED'"
+          :style="
+            row.status === 'ACTIVE'
+              ? 'color:var(--el-color-success)'
+              : 'color:var(--el-color-danger)'
+          "
+        ></i>
       </template>
     </Grid>
-
-    <Drawer />
   </Page>
 </template>

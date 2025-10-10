@@ -92,6 +92,20 @@ setupIgourdVxeTable({
       },
     });
 
+    // vxeUI.renderer.add('RenderIcon', {
+    //   renderTableDefault({ props }, params) {
+    //     const { column, row } = params;
+    //     const cellValue = row[column.field];
+    //     return h('i', {
+    //       class: `iconfont ${props?.icon} status_icon`,
+    //       style: `color:${props?.color}`,
+    //       onClick() {
+    //         props?.onClick?.({ cellValue, row, column });
+    //       },
+    //     });
+    //   },
+    // });
+
     vxeUI.renderer.add('ReviewStatus', {
       renderTableDefault(_, params) {
         const { column, row } = params;
@@ -117,6 +131,7 @@ setupIgourdVxeTable({
         });
       },
     });
+
     vxeUI.renderer.add('OpenStatus', {
       renderTableDefault({ props }, params) {
         const { column, row } = params;
