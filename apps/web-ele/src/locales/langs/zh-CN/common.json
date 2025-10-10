@@ -1,4 +1,9 @@
 {
+  "package": {
+    "package_1": "标准版",
+    "package_2": "高级版",
+    "package_3": "旗舰版"
+  },
   "back": "返回",
   "backToHome": "返回首页",
   "login": "登录",

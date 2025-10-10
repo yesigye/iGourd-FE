@@ -5,7 +5,7 @@
   "status": "状态",
   "totalAmount": "总金额",
   "paidAmount": "已付金额",
-  "orderDate": "订单日期",
+  "order-date": "订单日期",
   "deliveryDate": "交货日期",
   "creatorName": "创建人",
   "createTime": "创建时间",
@@ -15,9 +15,9 @@
   "editPurchaseOrder": "编辑采购订单",
   "purchaseOrderDetail": "采购订单详情",
   "purchaseOrder": "采购订单",
-  "please_select_supplier": "请选择供应商",
+  "please-select-supplier": "请选择供应商",
   "please_select_order_type": "请选择订单类型",
-  "please_select_order_date": "请选择订单日期",
+  "please-select-order-date": "请选择订单日期",
   "please_select_delivery_date": "请选择交货日期",
   "please_enter_remark": "请输入备注",
   "please_select_product": "请选择产品",
@@ -57,5 +57,19 @@
   "w/h-enter-status": "仓库进入状态",
   "review": "审核",
   "search-placeholder": "请输入采购单号",
-  "confirm-delete": "确认删除选中的采购订单吗？"
+  "confirm-delete": "确认删除选中的采购订单吗？",
+  "not-applicable": "不适用",
+  "VAT_inclusive": "包含VAT",
+  "VAT_exclusive": "不包含VAT",
+  "please-selectVat": "请选择VAT",
+  "input-deposit": "输入定金",
+  "please-warehouse": "选择仓库",
+  "please-enter-exchange-rate": "输入货币代码",
+  "vat": "VAT",
+  "quick-select":"快速选择",
+  "product-details":"商品明细",
+  "product-selection-list":"选择商品列表"
+
+
+
 }

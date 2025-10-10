@@ -15,6 +15,7 @@ import {
   useIgourdVxeGrid,
 } from '@igourd/plugins/vxe-table';
 
+import StatusTemplate from '#/components/status/index.vue';
 import { formatNumber } from '#/utils';
 
 // import { useIgourdForm } from './form';
@@ -123,8 +124,16 @@ setupIgourdVxeTable({
       },
     });
     vxeUI.renderer.add('OpenStatus', {
-      renderTableDefault(_, params) {
-        return h('div');
+      renderTableDefault({ props }, params) {
+        const { column, row } = params;
+        const cellValue = row[column.field] as string;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return h(StatusTemplate, {
+          value: cellValue,
+          isI18n: true,
+          ...props,
+        });
       },
     });
     vxeUI.renderer.add('PaymentStatus', {
@@ -224,6 +233,26 @@ setupIgourdVxeTable({
               },
             },
             '升级',
+          ),
+        ]);
+      },
+    });
+    vxeUI.renderer.add('AuthStatus', {
+      renderTableDefault({ props }, params) {
+        const { t } = useI18n();
+        const { row } = params;
+        const disabled = row.status === 'NONACTIVATED';
+        return h(ElSpace, null, [
+          h(
+            ElLink,
+            {
+              disabled,
+              type: 'primary',
+              onClick: () => {
+                props?.onClick({ row });
+              },
+            },
+            t('store.storeList.authorize'),
           ),
         ]);
       },
