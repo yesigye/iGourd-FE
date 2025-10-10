@@ -127,6 +127,9 @@ setupIgourdVxeTable({
           value: cellValue,
           isI18n: true,
           ...props,
+          onClick: () => {
+            props?.onClick({ row });
+          },
         });
       },
     });
@@ -209,8 +212,10 @@ setupIgourdVxeTable({
           if (package_models?.length) {
             upgradeDisabled = false;
           }
-          // eslint-disable-next-line prettier/prettier
-          if (package_models?.some(({ package_id }) => Number(package_id) >= 3)) {
+
+          if (
+            package_models?.some(({ package_id }) => Number(package_id) >= 3)
+          ) {
             upgradeDisabled = true;
           }
         }

@@ -80,7 +80,9 @@ export function useStoreList() {
         name: 'OpenStatus',
         props: {
           statusList: STATUS_CONFIG,
-          onClick() {},
+          onClick({ row }: { row: StoreListPageModel }) {
+            handleUpgradeCellClick({ row }, 'RENEW');
+          },
         },
       },
     },
@@ -148,7 +150,9 @@ export function useStoreList() {
       cellRender: {
         name: 'AuthStatus',
         props: {
-          onClick: handleUpgradeCellClick,
+          onClick: ({ row }) => {
+            handleUpgradeCellClick(row, 'RENEW');
+          },
         },
       },
     },
