@@ -394,7 +394,10 @@ export function useOrderForm() {
       );
       formData.purchase_order_item_list.forEach((item) => {
         item.product_name = item.label;
-        item.product_id = item.id;
+        // 新增时 id 是产品id；编辑时,id 是数据id 不能设置给产品id  2025年10月10日18:38:12
+        if (!formData.id) {
+          item.product_id = item.id;
+        }
         item.other_tax_amount = 0;
         item.vat_amount = 0;
         item.subtotal_amount = item.quantity * item.cost_price;

@@ -49,12 +49,11 @@ const openModal = (row: tableItem) => {
     auditDialogRef.value.openModal();
   }
 };
-const handleDetail = async (row: tableItem) => {
+const handleDetail = async (row: tableItem, mode: string) => {
   const detail = await getPurchaseOrderDetailApi({
     purchase_order_id: row.id,
   });
-
-  detailDrawerRef.value.open(detail);
+  detailDrawerRef.value.open(detail, mode);
 };
 const handleconfirm = (data: AuditFormData) => {
   data.id = currentRow.value.id;
@@ -109,9 +108,17 @@ const handleconfirm = (data: AuditFormData) => {
           {{ t('common.edit') }}
         </ElButton>
 
-        <ElButton type="text" @click="handleDetail(row)">
+        <ElButton type="text" @click="handleDetail(row, 'view')">
           {{ t('common.detail') }}
         </ElButton>
+        <ElButton type="text" @click="handleDetail(row, 'close')">
+          {{ t('common.close') }}
+        </ElButton>
+        <!--
+        <ElButton type="text" @click="handleDetail(row)">
+          {{ t('common.print') }}
+        </ElButton>
+        -->
       </template>
     </Grid>
     <Drawer />

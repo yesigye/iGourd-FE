@@ -450,7 +450,10 @@ export function useTransferForm() {
             ? floorDecimal(stockQty + convertedTransferQty, 0)
             : stayFloatSub(stockQty, convertedTransferQty);
         item.product_cost_price = item.cost_price;
-        item.product_id = item.id;
+        // 新增时 id 是产品id；编辑时,id 是数据id 不能设置给产品id  2025年10月10日18:38:12
+        if (!formData.id) {
+          item.product_id = item.id;
+        }
       });
       // 如果仅入库和仅出库 初始化id 0
       if (params.transfer_type === 'TRANSFER_IN_ONLY') {
@@ -492,8 +495,8 @@ export function useTransferForm() {
             detail.stock_transfer_item_list =
               detail.stock_transfer_item_model_list;
             formAPI.setValues(detail);
-          }else{
-            formAPI.setValues({stock_transfer_item_list:[{}]});
+          } else {
+            formAPI.setValues({ stock_transfer_item_list: [{}] });
           }
         } else {
           // 关闭抽屉时，重置表单

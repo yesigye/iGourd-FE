@@ -319,5 +319,6 @@
   "tax": "税额",
   "discount": "折扣",
   "sub-total": "总金额",
-  "empty": "清空"
+  "empty": "清空",
+  "close": "关闭"
 }
