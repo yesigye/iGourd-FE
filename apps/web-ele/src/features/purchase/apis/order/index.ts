@@ -54,7 +54,10 @@ export function reviewPurchaseOrderApi(data: {
   remark?: string;
   status: string;
 }) {
-  return requestClient.post(`/v1/merchant/purchase/purchase-order/review`, data);
+  return requestClient.post(
+    `/v1/merchant/purchase/purchase-order/review`,
+    data,
+  );
 }
 
 // 结算采购订单

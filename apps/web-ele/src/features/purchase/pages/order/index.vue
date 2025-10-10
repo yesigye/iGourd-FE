@@ -1,21 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+
 import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-
-import { usePurchaseOrder } from '@@/purchase/hooks';
-import { AuditDialog } from '#/components';
 import { useUserStore } from '@igourd/stores';
+
 import {
-  reviewPurchaseOrderApi,
   getPurchaseOrderDetailApi,
+  reviewPurchaseOrderApi,
 } from '@@/purchase/apis';
+import { usePurchaseOrder } from '@@/purchase/hooks';
+
+import { AuditDialog } from '#/components';
+
 import Detail from '../../components/order/detail.vue';
 
 defineOptions({
   name: 'IPurchaseOrder',
 });
-//table数据项
+// table数据项
 interface tableItem {
   id?: string;
   review_status: string;
@@ -120,5 +123,5 @@ const handleconfirm = (data: AuditFormData) => {
   </Page>
   <!--调用公共审核框 -->
   <AuditDialog ref="auditDialogRef" @confirm="handleconfirm" />
-  <Detail ref="detailDrawerRef" data=""></Detail>
+  <Detail ref="detailDrawerRef" data="" />
 </template>

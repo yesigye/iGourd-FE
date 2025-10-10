@@ -1,22 +1,24 @@
-import { h } from 'vue';
 import type { ISchema } from '@igourd/common-ui';
-import { useUserStore } from '@igourd/stores';
+
+import { h } from 'vue';
 
 import { Space } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import ModalTable from '@igourd/plugins/modal-table';
+import { useUserStore } from '@igourd/stores';
 
+import {
+  createPurchaseOrderApi,
+  getPurchaseListApi,
+  getPurchaseOrderDetailApi,
+  updatePurchaseOrderApi,
+} from '@@/purchase/apis';
+
+import { basicsCurrencyList } from '#/api';
 import { orderNoGenerate } from '#/api/common';
 import { wareHouseProductSearch } from '#/features/inventory';
-import {
-  getPurchaseListApi,
-  createPurchaseOrderApi,
-  updatePurchaseOrderApi,
-  getPurchaseOrderDetailApi,
-} from '@@/purchase/apis';
-import { basicsCurrencyList } from '#/api';
-
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
+
 function remoteMethod(keywords: string) {
   return getPurchaseListApi({
     page_num: 1,
@@ -70,7 +72,7 @@ export function useOrderForm() {
             type: 'void',
             'x-component': 'Card',
             'x-component-props': {
-              //header: '{{t("discount.form.basicInfo")}}',
+              // header: '{{t("discount.form.basicInfo")}}',
             },
             properties: {
               row_0: {
@@ -385,8 +387,8 @@ export function useOrderForm() {
         });
         formData.purchase_order_no = result.order_no;
       }
-      //合计金额
-      let total = formData.purchase_order_item_list.reduce(
+      // 合计金额
+      const total = formData.purchase_order_item_list.reduce(
         (acc: any, item: any) => acc + item.quantity * item.cost_price,
         0,
       );
@@ -405,11 +407,9 @@ export function useOrderForm() {
       formData.subtotal_amount = total.toFixed(2);
       // total_amount  最终总金额
       formData.total_amount = total.toFixed(2);
-      if (formData.id) {
-        response = updatePurchaseOrderApi(formData);
-      } else {
-        response = await createPurchaseOrderApi(formData);
-      }
+      response = formData.id
+        ? updatePurchaseOrderApi(formData)
+        : await createPurchaseOrderApi(formData);
       return response;
     } catch (error) {
       console.error('采购单 customized form submission error:', error);
@@ -430,13 +430,13 @@ export function useOrderForm() {
           // 编辑
           if (data.id) {
             const detail = await getPurchaseOrderDetailApi({
-              purchase_order_id:data.id,
+              purchase_order_id: data.id,
             });
             detail.purchase_order_item_list =
               detail.purchase_order_item_model_list;
             formAPI.setValues(detail);
           } else {
-            //增加时，保留1条数据
+            // 增加时，保留1条数据
             formAPI.setValues({ purchase_order_item_list: [{}] });
           }
         } else {
@@ -466,7 +466,7 @@ export function useOrderForm() {
       scope: {
         warehouse,
       },
-      schema: schema,
+      schema,
     },
   });
   return {
