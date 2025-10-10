@@ -27,12 +27,14 @@ import { useVaidateHooks } from '#/hooks/useVaidateHooks';
 interface PropsType {
   submitBtnText?: string;
   isUpdate?: boolean;
+  showSubmit?: boolean;
 }
 
 // 定义子组件传递参数，设置默认值
 const props = withDefaults(defineProps<PropsType>(), {
   isUpdate: false,
   submitBtnText: 'login.next',
+  showSubmit: true,
 });
 
 // 主动派发事件
@@ -163,7 +165,7 @@ const submitForm = async () => {
     const api = isUpdate
       ? basicsMerchantSubMerchantModify
       : basicsMerchantSubMerchantCreate;
-    await api(formData).then((data) => {
+    return await api(formData).then((data) => {
       emits('updateStore', { isUpdate, ...data, createForm: formData });
     });
   } catch (error) {
@@ -239,6 +241,7 @@ const basicsCountryAnguageList = async () => {
 defineExpose({
   getFileds: () => Object.keys(storeForm.value),
   setEditForm,
+  submitForm,
 });
 
 onMounted(() => {
@@ -437,16 +440,16 @@ onMounted(() => {
         </ElFormItem>
         <ElFormItem prop="money_amount_scale" label="价格精度">
           <ElSelect v-model="storeForm.money_amount_scale">
-            <ElOption v-for="i in 4" :key="i" :label="i" value="i" />
+            <ElOption v-for="i in 4" :key="i" :label="i" :value="i" />
           </ElSelect>
         </ElFormItem>
         <ElFormItem prop="money_amount_scale" label="数量精度">
           <ElSelect v-model="storeForm.quantity_amount_scale">
-            <ElOption v-for="i in 8" :key="i" :label="i" value="i" />
+            <ElOption v-for="i in 8" :key="i" :label="i" :value="i" />
           </ElSelect>
         </ElFormItem>
       </ElForm>
-      <div class="Cform-next">
+      <div v-if="showSubmit" class="Cform-next">
         <ElButton
           class="Cform-next-btn"
           type="primary"

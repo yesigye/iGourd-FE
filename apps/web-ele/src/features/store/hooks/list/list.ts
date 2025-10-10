@@ -8,6 +8,7 @@ import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
 import { deleteStoreListApi, getStoreListPageListApi } from '@@/store/apis';
+import Form from '@@/store/components/list/drawer.vue';
 
 import { useCrud } from '#/hooks';
 
@@ -197,7 +198,8 @@ export function useStoreList() {
           },
         },
       },
-      batchOperate: true, // 支持批量删除
+      batchOperate: true,
+      connectedComponent: Form,
     });
 
   return {

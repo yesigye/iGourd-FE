@@ -93,6 +93,6 @@ export function basicsMerchantStoreModify(data: any) {
   );
 }
 // 当前门店信息修改
-export function basicsMerchantfind(merchantId: { merchantId: number }) {
-  return request.get(`/merchant/basics/merchant/find/${merchantId}`);
+export function basicsMerchantfind(merchantId: number | string) {
+  return request.get(`/v1/merchant/basics/merchant/find/${merchantId}`);
 }
