@@ -93,7 +93,7 @@ export function usePurchaseOrder() {
     },
     {
       field: 'review_status',
-      minWidth: 80,
+      minWidth: 180,
       align: 'center',
       fixed: 'right',
       title: t('purchase.reviewStatus'),

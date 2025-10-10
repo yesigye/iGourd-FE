@@ -116,6 +116,7 @@
   "pleaseEnterEnglishChineseNumericWithSpace": "输入英文、中文、数字(空格)",
   "auditOpinion": "审核意见",
   "review_results": "审核结果",
+  "pending": "待审核",
   "approve": "通过",
   "reject": "拒绝",
   "pleaseEnterRejectReason": "输入拒绝原因",
