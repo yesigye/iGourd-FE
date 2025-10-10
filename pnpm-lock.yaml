@@ -747,6 +747,9 @@ importers:
       pinia-plugin-persistedstate:
         specifier: 'catalog:'
         version: 4.5.0(@nuxt/kit@3.17.0(magicast@0.3.5))(pinia@3.0.3(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3)))
+      resize-observer-polyfill:
+        specifier: 'catalog:'
+        version: 1.5.1
       unplugin-element-plus:
         specifier: 'catalog:'
         version: 0.10.0
