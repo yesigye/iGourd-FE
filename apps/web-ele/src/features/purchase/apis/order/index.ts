@@ -67,7 +67,7 @@ export function settlePurchaseOrderApi(data: {
   payment_amount: number;
 }) {
   return requestClient.post(
-    `/v1/merchant/purchase/purchase-order/settle`,
+    `/v1/merchant/purchase/purchase-order/settlement`,
     data,
   );
 }

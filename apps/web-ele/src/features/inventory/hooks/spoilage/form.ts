@@ -243,7 +243,10 @@ export function useSpoilageForm() {
         item.stock_quantity = item.stock_total_quantity;
 
         item.product_cost_price = item.cost_price;
-        item.product_id = item.id;
+        // 新增时 id 是产品id；编辑时,id 是数据id 不能设置给产品id  2025年10月10日18:38:12
+        if (!formData.id) {
+          item.product_id = item.id;
+        }
       });
       // 调用 API
       response = await (params.id
@@ -265,8 +268,6 @@ export function useSpoilageForm() {
       appendToMain: true,
       class: 'w-2/3',
       async onOpenChange(isOpen) {
-        debugger
-
         if (isOpen) {
           formAPI.reset();
           const data = drawerApi.getData();
@@ -279,8 +280,8 @@ export function useSpoilageForm() {
               detail.physical_stock_take_item_models;
             detail.returned_quantity = detail.physical_total_quantity;
             formAPI.setValues(detail);
-          }else{
-            formAPI.setValues({stock_consumption_item_list:[{}]});
+          } else {
+            formAPI.setValues({ stock_consumption_item_list: [{}] });
           }
         } else {
           // 关闭抽屉时，重置表单

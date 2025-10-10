@@ -104,7 +104,7 @@ export function usePurchaseOrder() {
     },
     {
       field: 'operation',
-      minWidth: 180,
+      minWidth: 280,
       fixed: 'right',
       title: t('common.operations'),
       slots: {
@@ -146,8 +146,8 @@ export function usePurchaseOrder() {
     },
     toolbarConfig: {
       export: true,
-      print: true,
-      import: true,
+      print: false,
+      import: false,
     },
     batchOperate: true,
     connectedComponent: PurchaseOrderDrawer,

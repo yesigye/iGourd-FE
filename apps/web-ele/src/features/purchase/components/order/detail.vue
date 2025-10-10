@@ -4,12 +4,16 @@ import type { VxeGridProps } from '#/adapter/vxe-table';
 import { defineExpose, ref } from 'vue';
 
 import {
+  ElButton,
   ElCard,
   ElDescriptions,
   ElDescriptionsItem,
   useIgourdDrawer,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+import { useUserStore } from '@igourd/stores';
+
+import { settlePurchaseOrderApi } from '@@/purchase/apis';
 
 import { useIgourdVxeGrid } from '#/adapter/vxe-table';
 
@@ -62,7 +66,8 @@ const gridOptions: VxeGridProps<RowType> = {
   showOverflow: true,
 };
 const detailData = ref(null);
-
+const modeRef = ref<string>('');
+const { currentLoginUserApp } = useUserStore();
 const [Grid] = useIgourdVxeGrid({ gridOptions });
 
 const [Drawer, drawerApi] = useIgourdDrawer({
@@ -74,8 +79,19 @@ const [Drawer, drawerApi] = useIgourdDrawer({
     if (isOpen) {}
   },
 });
-const open = (detail) => {
+const handle = () => {
+  const params = {
+    purchase_order_id: detailData.value.id,
+    merchant_id: currentLoginUserApp.owner_id,
+    purchase_order_no: detailData.value.purchase_order_no,
+  };
+  settlePurchaseOrderApi(params).then((res) => {
+    drawerApi.close();
+  });
+};
+const open = (detail: any, mode: string) => {
   detailData.value = detail;
+  modeRef.value = mode;
   drawerApi.open();
 };
 const close = () => {
@@ -85,7 +101,7 @@ defineExpose({ open, close });
 </script>
 
 <template>
-  <Drawer class="bg-muted w-full">
+  <Drawer class="w-full">
     <ElCard class="mt-1">
       <div class="text-sm">
         订单号：<span class="text-red-500">{{
@@ -148,6 +164,14 @@ defineExpose({ open, close });
         <div class="title">附件</div>
       </template>
     </ElCard>
+    <template #footer>
+      <ElButton @click="close">
+        {{ t('common.cancel') }}
+      </ElButton>
+      <ElButton type="primary" v-if="modeRef === 'close'" @click="handle">
+        {{ t('common.close') }}
+      </ElButton>
+    </template>
   </Drawer>
 </template>
 <style>

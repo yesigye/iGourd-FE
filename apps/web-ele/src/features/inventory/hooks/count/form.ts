@@ -113,7 +113,10 @@ export function useCountForm() {
         item.origin_quantity = item.stock_total_quantity;
         // 盘点商品数量
         // item.physical_quantity = item.physical_quantity;
-        item.product_id = item.id;
+        // 新增时 id 是产品id；编辑时,id 是数据id 不能设置给产品id  2025年10月10日18:38:12
+        if (!formData.id) {
+          item.product_id = item.id;
+        }
       });
 
       const {
@@ -419,8 +422,8 @@ export function useCountForm() {
             detail.returned_quantity = detail.physical_total_quantity;
             formAPI.setValues(detail);
           } else {
-            //增加时，保留1条数据
-            formAPI.setValues({physical_stock_take_item_list:[{}]});
+            // 增加时，保留1条数据
+            formAPI.setValues({ physical_stock_take_item_list: [{}] });
           }
         } else {
           // 关闭抽屉时，重置表单
