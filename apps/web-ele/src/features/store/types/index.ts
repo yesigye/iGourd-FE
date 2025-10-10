@@ -24,8 +24,8 @@ export interface StoreStats {
   monthly_revenue: number;
 }
 
-// Store Types
-export * from './list';
 export * from './create';
 export * from './device';
+// Store Types
+export * from './list';
 export * from './payment';

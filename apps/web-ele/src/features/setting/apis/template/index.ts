@@ -6,7 +6,7 @@ export function getPrintTemplateList(data: {
   type: keyof typeof PrintTemplateBusinessTypeEnum;
 }) {
   return requestClient.post(
-    `/v1/merchant/basics/settings/print-template-merchant/option/list`,
+    `/v1/merchant/basics/settings/print-template-merchant/list`,
     data,
   );
 }

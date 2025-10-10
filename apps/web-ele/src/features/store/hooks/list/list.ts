@@ -11,7 +11,7 @@ import { deleteStoreListApi, getStoreListPageListApi } from '@@/store/apis';
 
 import { useCrud } from '#/hooks';
 
-import { BUSINESS_TYPE_CONFIG } from '../../constants';
+import { BUSINESS_TYPE_CONFIG, STATUS_CONFIG } from '../../constants';
 
 export function useStoreList() {
   const { t } = useI18n();
@@ -27,6 +27,7 @@ export function useStoreList() {
     type: 'RENEW' | 'UPGRADE',
   ) {
     jumpCreateStorePage({
+      sub_merchant_id: row.id,
       business_type: row.business_type,
       package_business_type: type,
     });
@@ -36,26 +37,26 @@ export function useStoreList() {
   const baseColumns: VxeGridPropTypes.Column<StoreListPageModel>[] = [
     {
       field: 'short_name',
-      width: 200,
+      minWidth: 200,
       align: 'left',
       fixed: 'left',
       title: t('store.storeList.short_name'),
     },
     {
       field: 'id',
-      width: 150,
+      minWidth: 150,
       align: 'left',
-      title: 'Id',
+      title: t('store.storeList.id'),
     },
     {
       field: 'full_name',
-      width: 120,
+      minWidth: 120,
       align: 'center',
       title: t('store.storeList.full_name'),
     },
     {
       field: 'business_type',
-      width: 100,
+      minWidth: 100,
       align: 'center',
       title: t('store.storeList.business_type'),
       formatter({ cellValue }) {
@@ -66,52 +67,68 @@ export function useStoreList() {
     },
     {
       field: 'industry_name',
-      width: 250,
+      minWidth: 250,
       align: 'left',
       title: t('store.storeList.industry_name'),
     },
     {
       field: 'status',
-      width: 120,
+      minWidth: 120,
       align: 'left',
       title: t('store.storeList.status'),
       cellRender: {
         name: 'OpenStatus',
+        props: {
+          statusList: STATUS_CONFIG,
+          onClick() {},
+        },
       },
     },
     {
       field: 'create_time',
-      width: 120,
+      minWidth: 120,
       align: 'left',
       title: t('store.storeList.create_time'),
     },
     {
-      field: 'owned_quantity',
-      width: 150,
+      field: 'device_authorization_model',
+      minWidth: 150,
       align: 'left',
       title: t('store.storeList.owned_quantity'),
+      formatter({ cellValue }) {
+        return cellValue?.owned_quantity;
+      },
     },
     {
-      field: 'used_quantity',
-      width: 120,
+      field: 'device_authorization_model_1',
+      minWidth: 120,
       align: 'left',
       title: t('store.storeList.used_quantity'),
+      formatter({ row }) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return row.device_authorization_model?.used_quantity;
+      },
     },
     {
-      field: 'package',
-      width: 150,
+      field: 'package_models',
+      minWidth: 150,
       align: 'center',
       title: t('store.storeList.package'),
+      formatter({ cellValue }) {
+        const info = cellValue?.pop();
+        return info ? t(`common.package_${info.package_id}`) : '-';
+      },
     },
     {
       field: 'final_expiration_time',
-      width: 120,
+      minWidth: 120,
       align: 'right',
       title: t('store.storeList.final_expiration_time'),
     },
     {
       field: 'upgradeService',
-      width: 100,
+      minWidth: 100,
       align: 'center',
       fixed: 'right',
       title: t('store.storeList.upgradeService'),
@@ -124,18 +141,26 @@ export function useStoreList() {
     },
     {
       field: 'device',
-      width: 120,
+      minWidth: 120,
       align: 'left',
       fixed: 'right',
       title: t('store.storeList.device'),
+      cellRender: {
+        name: 'AuthStatus',
+        props: {
+          onClick: handleUpgradeCellClick,
+        },
+      },
     },
     {
       field: 'actions',
-      width: 100,
+      minWidth: 100,
       align: 'center',
       title: t('common.action'),
       fixed: 'right',
-      slots: {},
+      slots: {
+        default: 'actions',
+      },
     },
   ];
 
@@ -164,7 +189,7 @@ export function useStoreList() {
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: t('store.searchPlaceholder'),
+            placeholder: t('common.search'),
           },
         },
       },
@@ -172,6 +197,7 @@ export function useStoreList() {
     });
 
   return {
+    jumpCreateStorePage,
     Grid,
     Drawer,
     handleEdit,

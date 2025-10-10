@@ -57,6 +57,9 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
       if (!config.data) {
         config.data = {};
       }
+      if (Reflect.has(config.data, 'merchant_id')) {
+        return config;
+      }
       config.data.merchant_id = currentLoginUserApp.owner_id;
       return config;
     },

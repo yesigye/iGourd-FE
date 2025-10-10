@@ -125,3 +125,21 @@ const extractPlaceholderValue = (str) => {
     };
   }
 };
+export enum PrintTemplateType {
+  /** 商品条码标签 */
+  BARCODE_LABEL = 'BARCODE_LABEL',
+  /** 赊销小票 */
+  CREDIT_ORDER_RECEIPT = 'CREDIT_ORDER_RECEIPT',
+  /** 欠款单 */
+  DEBT_ORDER_RECEIPT = 'DEBT_ORDER_RECEIPT',
+  /** 预结单小票 */
+  PRELIMINARY_BILL_RECEIPT = 'PRELIMINARY_BILL_RECEIPT',
+  /** 商品价签 */
+  PRICE_TAG = 'PRICE_TAG',
+  /** 小票 */
+  RECEIPT = 'RECEIPT',
+  /** 退款小票 */
+  REFUND_RECEIPT = 'REFUND_RECEIPT',
+  /** 还款小票 */
+  REPAYMENT_RECEIPT = 'REPAYMENT_RECEIPT',
+}

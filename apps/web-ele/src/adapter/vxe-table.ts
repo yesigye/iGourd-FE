@@ -2,19 +2,14 @@ import type { VxeTableGridOptions } from '@igourd/plugins/vxe-table';
 
 import { h } from 'vue';
 
-import {
-  ElButton,
-  ElImage,
-  ElLink,
-  ElSpace,
-  ElSwitch,
-} from '@igourd/common-ui';
+import { ElButton, ElImage, ElSpace, ElSwitch } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import {
   setupIgourdVxeTable,
   useIgourdVxeGrid,
 } from '@igourd/plugins/vxe-table';
 
+import StatusTemplate from '#/components/status/index.vue';
 import { formatNumber } from '#/utils';
 
 // import { useIgourdForm } from './form';
@@ -123,8 +118,16 @@ setupIgourdVxeTable({
       },
     });
     vxeUI.renderer.add('OpenStatus', {
-      renderTableDefault(_, params) {
-        return h('div');
+      renderTableDefault({ props }, params) {
+        const { column, row } = params;
+        const cellValue = row[column.field] as string;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return h(StatusTemplate, {
+          value: cellValue,
+          isI18n: true,
+          ...props,
+        });
       },
     });
     vxeUI.renderer.add('PaymentStatus', {
@@ -196,34 +199,59 @@ setupIgourdVxeTable({
     });
     vxeUI.renderer.add('upgradeService', {
       renderTableDefault({ props }, params) {
+        const { t } = useI18n();
         const { row, column } = params;
         const cellValue = row[column.field];
         const disabled = row.status === 'NONACTIVATED';
-        const upgradeDisabled = row?.package_models?.some(
-          ({ package_id }: { package_id: number }) => +package_id >= 3,
-        );
+        const upgradeDisabled =
+          row?.package_models?.some(
+            ({ package_id }: { package_id: number }) => +package_id >= 3,
+          ) ?? true;
         return h(ElSpace, null, [
           h(
-            ElLink,
+            ElButton,
             {
               disabled: upgradeDisabled,
               type: 'primary',
+              link: true,
               onClick: () => {
                 props?.onClick({ row, value: cellValue }, 'RENEW');
               },
             },
-            '续费',
+            t('store.storeList.renew'),
           ),
           h(
-            ElLink,
+            ElButton,
             {
               disabled,
               type: 'primary',
+              link: true,
               onClick: () => {
                 props?.onClick({ row, value: cellValue }, 'UPGRADE');
               },
             },
-            '升级',
+            t('store.storeList.upgrade'),
+          ),
+        ]);
+      },
+    });
+    vxeUI.renderer.add('AuthStatus', {
+      renderTableDefault({ props }, params) {
+        const { t } = useI18n();
+        const { row } = params;
+        const disabled = row.status === 'NONACTIVATED';
+        return h(ElSpace, null, [
+          h(
+            ElButton,
+            {
+              link: true,
+              disabled,
+              type: 'primary',
+              onClick: () => {
+                props?.onClick({ row });
+              },
+            },
+            t('store.storeList.authorize'),
           ),
         ]);
       },

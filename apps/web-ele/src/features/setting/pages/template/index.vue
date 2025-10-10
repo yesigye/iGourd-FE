@@ -138,6 +138,18 @@ const handleOpenAddTemplateDrawer = () => {
   drawerApi.setData({ templateType: selectedTemplateTypeItem.value.type });
   drawerApi.open();
 };
+// 编辑模板
+const handleEditTemplate = (item: PrintTemplate) => {
+  drawerApi.setData({
+    templateType: selectedTemplateTypeItem.value.type,
+    currentTemplateData: item,
+  });
+  drawerApi.open();
+};
+// 抽屉保存事件
+const handleSaved = () => {
+  getTemplateList();
+};
 </script>
 
 <template>
@@ -218,11 +230,7 @@ const handleOpenAddTemplateDrawer = () => {
       <section>
         <PageTitle :title="t('template.other-template')">
           <template #rightOption>
-            <ElButton
-              type="primary"
-              :plain="true"
-              @click="handleOpenAddTemplateDrawer"
-            >
+            <ElButton type="primary" @click="handleOpenAddTemplateDrawer">
               {{ t('common.add') }}
             </ElButton>
           </template>
@@ -251,7 +259,10 @@ const handleOpenAddTemplateDrawer = () => {
               >
                 {{ t('common.select') }}
               </div>
-              <div class="w-full flex-1 bg-[#FF9800] pb-3 pt-3 text-white">
+              <div
+                class="w-full flex-1 bg-[#FF9800] pb-3 pt-3 text-white"
+                @click="handleEditTemplate(item)"
+              >
                 {{ t('common.edit') }}
               </div>
               <div
@@ -265,6 +276,6 @@ const handleOpenAddTemplateDrawer = () => {
         </section>
       </section>
     </section>
-    <Drawer />
+    <Drawer @saved="handleSaved" />
   </Page>
 </template>
