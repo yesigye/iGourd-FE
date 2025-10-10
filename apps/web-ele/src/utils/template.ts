@@ -1,4 +1,5 @@
 import type { ColumnOptionCode, PrintTemplateOption } from '@@/setting/types';
+import type { TreeNode } from 'element-plus';
 
 import type { DefineComponent, Ref } from 'vue';
 
@@ -165,13 +166,10 @@ export const fontSizeOption = {
 };
 
 type DataType = Record<string, any>;
-type Node = DataType & {
-  isPenultimate: boolean;
-};
 
 export const treeSelectChange = (
   printData: Ref<DataType[]>,
-  node: Node,
+  node: TreeNode,
   tableValue,
 ) => {
   if (node.component_type == 'PrintTable') {

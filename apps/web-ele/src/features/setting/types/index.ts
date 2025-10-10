@@ -22,6 +22,26 @@ export interface UserSettings {
   create_time: string;
   update_time: string;
 }
+export type IdString = `${number}`;
+
+export type ColumnOptionCode = {
+  column_option_code: string;
+  i18nKey: string;
+  id: IdString;
+  name: string;
+  prefix: string;
+  storeInfo: any;
+  suffix: string;
+};
+export type PrintTemplateApiType = {
+  column_option_code?: ColumnOptionCode[];
+  component_type?: string;
+  id: IdString;
+  imageUrl?: string;
+  style: Record<string, string> /** 目前只用到textAlign  */ & {
+    textAlign: string;
+  };
+};
 
 // Setting Types
 export * from './payment';
