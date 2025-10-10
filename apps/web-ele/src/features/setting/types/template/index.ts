@@ -136,3 +136,9 @@ export type ColumnOptionCode = {
   storeInfo: any;
   suffix: string;
 };
+export interface PrintTemplateColumnOption {
+  component_type: string;
+  id: string;
+  option: Record<string, unknown>;
+  style: Record<string, unknown>;
+}
