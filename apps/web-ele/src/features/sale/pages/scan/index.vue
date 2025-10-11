@@ -119,7 +119,6 @@ const orderPriceParams = ref({
   customer_id: null,
   device_id: null,
   guider_id: null,
-  merchant_id: null,
   order_calc_product_volist: [
     {
       product_id: null,
@@ -137,7 +136,6 @@ const orderPriceParams = ref({
 });
 // 创建订单参数
 const orderParams = ref({
-  merchant_id: '',
   cash_change_amount: 0,
   cash_received_amount: 0,
   channel: 'WEB',
