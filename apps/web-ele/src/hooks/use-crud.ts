@@ -220,7 +220,6 @@ function useCrud<T extends { id?: number | string }, P extends object>(
       return await options.service.query(queryData);
     };
   }
-
   // 初始化表格组件和API
   const [Grid, gridApi] = useIgourdVxeGrid({
     // 合并事件处理器

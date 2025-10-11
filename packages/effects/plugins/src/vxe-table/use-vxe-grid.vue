@@ -52,7 +52,6 @@ import {
   cloneDeep,
   cn,
   isBoolean,
-  isEmpty,
   isEqual,
   mergeWithArrayOverride,
 } from '@igourd/utils';
@@ -97,8 +96,9 @@ const {
   tabs,
   tabsOption,
 } = usePriorityValues(props, state);
+
 const showTableTabs = computed(() => {
-  return !isEmpty(unref(tabs));
+  return !!unref(tabs);
 });
 const tabsValue = ref(tabsOption.value?.defaultActiveValue);
 const { isMobile } = usePreferences();
@@ -331,7 +331,15 @@ async function init() {
   }
   props.api?.setState?.({ gridOptions: defaultGridOptions });
   // form 由 igourd-form 代替，所以需要保证query相关事件可以拿到参数
-  extendProxyOptions(props.api, defaultGridOptions, () => formApi.values);
+  extendProxyOptions(props.api, defaultGridOptions, () => {
+    if (unref(showTableTabs)) {
+      return {
+        ...formApi.values,
+        [unref(tabsOption)!.formKey]: unref(tabsValue),
+      };
+    }
+    return formApi.values;
+  });
 }
 
 async function handleCommand(command: string) {
@@ -374,7 +382,7 @@ const openMoreActions = computed(() => {
       ref="gridRef"
       :class="
         cn(
-          'px-1',
+          'px-3',
           {
             'pt-0': showToolbar && !formOptions,
           },
