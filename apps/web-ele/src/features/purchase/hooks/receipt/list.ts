@@ -78,6 +78,7 @@ export function usePurchaseReceipt() {
       cellRender: {
         name: 'ReviewStatus',
       },
+      slots: { default: 'modal' },
     },
     {
       field: 'operation',
@@ -94,9 +95,45 @@ export function usePurchaseReceipt() {
   const service = {
     // 获取列表数据
     query: getPurchaseReceiptPageListApi,
-    detail: getPurchaseReceiptDetailApi,
+    //detail: getPurchaseReceiptDetailApi,
     // 删除收货单
     remove: deletePurchaseReceiptApi,
+  };
+
+    const searchFormSchema = {
+    form: {
+      type: 'void',
+      'x-component': 'FormLayout',
+      'x-component-props': {
+        layout: 'inline',
+      },
+      properties: {
+        date_range: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'DatePicker',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0',width:"200px"  },
+            class:"mr-2"
+          },
+          'x-component-props': {
+            placeholder: t('purchase.good-placeholder'),
+            type: 'datetimerange',
+          },
+        },
+        keywords: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0',width:"160px" },
+          },
+          'x-component-props': {
+            placeholder: t('purchase.good-placeholder'),
+          },
+        },
+      },
+    },
   };
 
   // 使用 CRUD Hook
@@ -104,17 +141,7 @@ export function usePurchaseReceipt() {
     useCrud({
       service,
       columns: baseColumns,
-      searchFormSchema: {
-        keywords: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Input',
-          'x-component-props': {
-            placeholder: t('common.keywords'),
-            clearable: true,
-          },
-        },
-      },
+      searchFormSchema:searchFormSchema,
       batchOperate: true, // 支持批量删除
       connectedComponent: PurchaseReceiptDrawer,
     });

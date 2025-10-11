@@ -4,7 +4,7 @@
   "purchaseTitle": "打印采购订单",
   "goodTitle": "收货单",
   "purchasePlaceholder": "输入(采购单号)",
-  "goodPlaceholder": "输入(收货单号,采购单号)",
+  "good-placeholder": "输入(收货单号,采购单号)",
   "btnReview": "审核",
   "editReview": "编辑",
   "detailReview": "详情",

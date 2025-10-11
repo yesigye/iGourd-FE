@@ -51,9 +51,8 @@ const gridOptions: VxeGridProps<RowType> = {
   proxyConfig: {
     ajax: {
       query: async ({ page }) => {
-        debugger;
         const result = {
-          list: detailData.value.purchase_order_item_model_list,
+          list: detailData.value.productList,
           page_num: '1',
           page_size: '20',
           pages: '1',
