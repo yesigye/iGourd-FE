@@ -392,10 +392,11 @@ export function useOrderForm() {
         (acc: any, item: any) => acc + item.quantity * item.cost_price,
         0,
       );
+      debugger
       formData.purchase_order_item_list.forEach((item) => {
         item.product_name = item.label;
         // 新增时 id 是产品id；编辑时,id 是数据id 不能设置给产品id  2025年10月10日18:38:12
-        if (!formData.id) {
+        if(!item.product_id){
           item.product_id = item.id;
         }
         item.other_tax_amount = 0;
@@ -437,6 +438,7 @@ export function useOrderForm() {
             });
             detail.purchase_order_item_list =
               detail.purchase_order_item_model_list;
+
             formAPI.setValues(detail);
           } else {
             // 增加时，保留1条数据
