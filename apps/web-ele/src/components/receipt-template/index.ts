@@ -7,7 +7,7 @@ import { h, mergeProps } from 'vue';
 
 import { ReceiptTemplate as InnerReceiptTemplate } from '@igourd/common-ui';
 
-import { getPrintTemplateList } from '@@/setting/apis';
+import { getPrintTemplateOptionList } from '@@/setting/apis';
 
 export function ReceiptTemplate(
   props: ReceiptTemplateProps,
@@ -15,7 +15,7 @@ export function ReceiptTemplate(
 ) {
   const merged = mergeProps(
     props,
-    { getCustomTemplateOptionList: getPrintTemplateList },
+    { getCustomTemplateOptionList: getPrintTemplateOptionList },
     attrs,
   );
   // @ts-ignore

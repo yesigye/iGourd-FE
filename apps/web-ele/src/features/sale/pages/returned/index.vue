@@ -39,7 +39,6 @@ const refundColumnsData = ref([]);
 const isShrink = ref(false);
 // 创建退单参数
 const returnOrderParams = ref({
-  merchant_id: null,
   channel: 'WEB',
   customer_id: null,
   device_id: null,
@@ -201,7 +200,6 @@ const handleEmptyAmount = () => {
 // 原单算费接口
 const computedRefundAmountOriginAl = async () => {
   const params = {
-    merchant_id: '',
     order_no: '',
     order_returned_calc_product_volist: [],
   };
@@ -481,7 +479,8 @@ const handleReturnOrderListQuantity = () => {
 };
 
 const handleRefund = async () => {
-  if (refundType.value == 'original_order') {
+  console.log(refundType.value);
+  if (refundType.value === 'original_order') {
     computedRefundAmount();
   } else {
     computedRefundAmount();

@@ -140,7 +140,6 @@ const orderSuspendParams = ref({
   pos_user_id: null,
   start_create_time: '',
   status: 'PENDING',
-  merchant_id: null,
   customer_keywords: '',
 });
 const suspendList = ref([]);

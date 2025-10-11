@@ -16,6 +16,30 @@ import { PrintTable } from '@igourd/common-ui';
 import { useUserStore } from '@igourd/stores';
 import { sortBy } from '@igourd/utils';
 
+export const PRINT_TEMPLATE_OTHER_OPTION_CHILD = {
+  id: '908',
+  label: 'Divider',
+  com: 'PrintDivider',
+  component_type: 'PrintDivider',
+  style: {},
+  option: {},
+};
+export const PRINT_TEMPLATE_OTHER_OPTION_CHILD_RICH_TEXT = {
+  id: '908',
+  label: 'Divider',
+  com: 'PrintRichTextEditor',
+  component_type: 'PrintRichTextEditor',
+  style: {},
+  option: {},
+};
+
+export const PRINT_TEMPLATE_OTHER_OPTION = {
+  id: `type-other`,
+  name: 'other',
+  children: [],
+  isPenultimate: true,
+};
+
 const { merchantInfo } = useUserStore();
 const tableItemJsonTemplate: TableJsonTemplate = {
   id: '',
