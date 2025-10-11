@@ -367,7 +367,7 @@ export function useReceiptForm() {
         const result = await orderNoGenerate({
           category_type: 'GOODS_RECEIPT_NOTE',
         });
-        formData.purchase_order_no = result.order_no;
+        formData.goods_receipt_note_no = result.order_no;
       }
       // 合计金额
       const total = formData.goods_receipt_note_item_list.reduce(
@@ -415,13 +415,13 @@ export function useReceiptForm() {
               goods_receipt_note_id: data.id,
               purchase_order_id:data.purchase_order_id
             });
-            detail.purchase_order_item_list =
-              detail.purchase_order_item_model_list;
+            detail.goods_receipt_note_item_list =
+              detail.goods_receipt_note_item_model_list;
 
             formAPI.setValues(detail);
           } else {
             // 增加时，保留1条数据
-            formAPI.setValues({ purchase_order_item_list: [{}] });
+            formAPI.setValues({ goods_receipt_note_item_list: [{}] });
           }
         } else {
           // 关闭抽屉时，重置表单
@@ -446,7 +446,7 @@ export function useReceiptForm() {
     formOptions: {
       initialValues: {
         goods_receipt_note_item_list: [{}],
-        goods_receipt_note_no: '11',
+        //goods_receipt_note_no: '11',
       },
       scope: {
         warehouse,

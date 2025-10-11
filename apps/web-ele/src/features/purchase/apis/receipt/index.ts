@@ -38,7 +38,7 @@ function receiptDetail(data: any) {
   return requestClient
     .post(`${PURCHASE_RECEIPT_BASE_URL}/detail`, data)
     .then((res) => {
-      return res?.[0];
+      return res;
     });
 }
 export function getPurchaseReceiptDetailApi({
@@ -48,9 +48,8 @@ export function getPurchaseReceiptDetailApi({
   return Promise.all([
     receiptDetail({ goods_receipt_note_id, purchase_order_id }),
     //getPurchaseOrderDetailApi({ purchase_order_id }),
-  ]).then(([receipt, order]) => {
+  ]).then(([receipt]) => {
     return {
-      ...order,
       ...receipt,
     };
   });

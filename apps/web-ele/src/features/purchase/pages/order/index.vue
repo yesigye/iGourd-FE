@@ -89,7 +89,7 @@ const handleDetail = async (row: tableItem, mode: string) => {
   const detail = await getPurchaseReceiptDetailApi({
     purchase_order_id: row.id,
   });
-  detailDrawerRef.value.open(detail, mode);
+  detailDrawerRef.value.open({...detail,productList:detail.purchase_order_item_model_list}, mode);
 };
 const handleconfirm = (data: AuditFormData) => {
   data.id = currentRow.value.id;
