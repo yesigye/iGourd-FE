@@ -15,8 +15,8 @@ export const PurchaseMode: ModePlugin = {
         },
       },
       {
-        name: 'product_id',
-        title: 'product_id',
+        name: 'major_name',
+        title: 'major_name',
         'x-component': 'PreviewText.Input',
         'x-hidden': true,
         'x-reactions': {
@@ -28,7 +28,7 @@ export const PurchaseMode: ModePlugin = {
         },
       },
       {
-        name: 'major_name',
+        name: 'product_id',
         title: '{{t("common.purchase.major_name")}}',
         'x-component': 'ProductTable.ProductCell',
         'x-decorator': 'FormItem',
