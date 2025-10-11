@@ -195,10 +195,11 @@ const handleconfirm = (data: AuditFormData) => {
       <div>总计：100T</div>
     </template>
     -->
+    <!--调用公共审核框 -->
+    <AuditDialog ref="auditDialogRef" @confirm="handleconfirm" />
+    <Detail ref="detailDrawerRef" />
   </Page>
-  <!--调用公共审核框 -->
-  <AuditDialog ref="auditDialogRef" @confirm="handleconfirm" />
-  <Detail ref="detailDrawerRef" />
+
 </template>
 <style scoped>
 .custom-dropdown:focus-visible {
