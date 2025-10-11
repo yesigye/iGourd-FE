@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 
-import {
-  ColPage,
-  ElButton,
-  ElTabPane,
-  ElTabs,
-  ElTree,
-} from '@igourd/common-ui';
+import { ColPage, ElButton, ElTree } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { useSubsidiaryLedger } from '@@/account/hooks';
@@ -99,15 +93,15 @@ onMounted(async () => {
 </script>
 
 <template>
-  <ElTabs v-model="activeName" class="ml-10" @tab-click="handleTabClick">
+  <!-- <ElTabs v-model="activeName" class="ml-10" @tab-click="handleTabClick">
     <ElTabPane
       v-for="item in tabsData"
       :key="item.value"
       :label="item.label"
       :name="item.value"
     />
-  </ElTabs>
-  <ColPage auto-content-height>
+  </ElTabs> -->
+  <ColPage auto-content-height :left-width="20">
     <template #left="{ isCollapsed, expand }">
       <section class="bg-card h-full rounded p-2.5">
         <!-- 分类树 -->

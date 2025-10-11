@@ -12,14 +12,35 @@ import type {
 
 import { requestClient } from '#/api/request';
 
+// 转换算法实现
+const convertToElTreeFormat = (data: any) => {
+  return data.map((item: any) => {
+    const node = {
+      ...item.account_ledger,
+      id: item.account_ledger.id,
+      label: item.account_ledger.name,
+      children: [],
+    };
+
+    // 递归处理子节点
+    if (item.sub_ledger_trees && item.sub_ledger_trees.length > 0) {
+      node.children = convertToElTreeFormat(item.sub_ledger_trees);
+    }
+
+    return node;
+  });
+};
+
 // 科目余额树形结构查询
 export function getChartOfAccountsTreeApi(
   data: AccountLedgerBalanceTreeQueryVO,
 ) {
-  return requestClient.post(
-    `/v1/merchant/basics/accounting/account-ledger-balance/tree-list`,
-    data,
-  );
+  return requestClient
+    .post(
+      `/v1/merchant/basics/accounting/account-ledger-balance/tree-list`,
+      data,
+    )
+    .then(convertToElTreeFormat);
 }
 
 // 修改科目余额
