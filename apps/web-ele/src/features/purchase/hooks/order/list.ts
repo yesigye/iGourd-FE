@@ -93,7 +93,7 @@ export function usePurchaseOrder() {
     },
     {
       field: 'review_status',
-      minWidth: 80,
+      minWidth: 180,
       align: 'center',
       fixed: 'right',
       title: t('purchase.reviewStatus'),
@@ -115,9 +115,56 @@ export function usePurchaseOrder() {
   // 服务函数
   const service = {
     // 获取列表数据
-    query: getPurchaseOrderPageListApi,
+    query: async (data: {
+      date_range?: string[];
+      page_num: number;
+      page_size: number;
+    }) => {
+      const params = {
+        ...data,
+      };
+      if (data.date_range && data.date_range.length > 0) {
+        params.start_create_time = data.date_range[0];
+        params.end_create_time = data.date_range[1];
+      }
+      return await getPurchaseOrderPageListApi(params);
+    },
     // 删除订单
     remove: deletePurchaseOrderApi,
+  };
+  const searchFormSchema = {
+    form: {
+      type: 'void',
+      'x-component': 'FormLayout',
+      'x-component-props': {
+        layout: 'inline',
+      },
+      properties: {
+        date_range: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'DatePicker',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0' },
+          },
+          'x-component-props': {
+            placeholder: t('order.search-placeholder'),
+            type: 'datetimerange',
+          },
+        },
+        keywords: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0' },
+          },
+          'x-component-props': {
+            placeholder: t('order.search-placeholder'),
+          },
+        },
+      },
+    },
   };
 
   // 使用 CRUD Hook
@@ -131,16 +178,7 @@ export function usePurchaseOrder() {
   } = useCrud({
     service,
     columns: baseColumns,
-    searchFormSchema: {
-      keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-component': 'Input',
-        'x-component-props': {
-          placeholder: t('order.search-placeholder'),
-        },
-      },
-    },
+    searchFormSchema: searchFormSchema,
     printConfig: {
       sheetName: '打印出货单据',
     },

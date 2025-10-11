@@ -151,8 +151,10 @@ export function useStoreList() {
       cellRender: {
         name: 'AuthStatus',
         props: {
-          onClick: ({ row }) => {
-            handleUpgradeCellClick(row, 'RENEW');
+          onClick: () => {
+            router.push({
+              path: '/store/device',
+            });
           },
         },
       },

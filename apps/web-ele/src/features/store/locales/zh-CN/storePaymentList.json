@@ -1,0 +1,37 @@
+{
+  "title": "订单记录",
+  "merchant_order_no": "订单编号",
+  "storename": "门店名称",
+  "package_name": "服务名称",
+  "total_day": "天数",
+  "discount_amount": "折扣",
+  "total_amount": "金额",
+  "payment_method": "付款方式",
+  "type": "付款类型",
+  "status": "审核",
+  "create_time": "创建时间",
+
+  "payment_method_NO_PAYMENT": "不需要支付",
+  "payment_method_CASH": "现金",
+  "payment_method_OFFLINE_WECHAT": "线下微信支付",
+  "payment_method_OFFLINE_ALIPAY": "线下支付宝支付",
+  "payment_method_ONLINE_WECHAT": "线上微信支付",
+  "payment_method_ONLINE_ALIPAY": "线上支付宝支付",
+  "payment_method_ONLINE_BANKING": "线上网银",
+  "payment_method_OFFLINE_BANK_TRANSFER": "线下银行转帐",
+
+  "type_INNER_TRADE": "内部交易",
+  "type_MERCHANT_PACKAGE_BUY": "商户套餐购买",
+  "type_MERCHANT_GOODS_BUY": "商户商品购买",
+  "type_OTHER": "其他",
+  "status_INIT": "待支付",
+  "status_SUCCESS": "支付成功",
+  "status_CANCEL": "已取消",
+  "status_REFUND": "已退款",
+  "status_REFUNDING": "退款中",
+  "status_REFUNDFAIL": "退款失败",
+
+  "enroll_status_PENDING": "等待中",
+  "enroll_status_APPROVED": "审核通过",
+  "enroll_status_REJECTED": "审核拒绝"
+}

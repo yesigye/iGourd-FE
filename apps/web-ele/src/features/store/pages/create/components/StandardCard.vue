@@ -138,7 +138,7 @@ function handleClickEvent() {
       min-height: 90px;
       padding-top: 8px;
       margin: 0 auto;
-      overflow: scroll;
+      overflow: hidden;
       font-size: 12px;
       line-height: 18px;
       color: #999;
@@ -153,7 +153,7 @@ function handleClickEvent() {
   &-module {
     box-sizing: border-box;
     padding: 12px 34px;
-    overflow: scroll;
+    overflow: hidden;
 
     &-title {
       font-size: 12px;

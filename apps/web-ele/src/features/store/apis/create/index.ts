@@ -69,22 +69,6 @@ export function basicsMerchantDevicePageList(data: any) {
   return request.post('/v1/merchant/basics/merchant/device/page-list', data);
 }
 
-// 商户设备授权分页查询接口
-export function deviceAuthorizationStatusModify(data: any) {
-  return request.post(
-    '/v1/merchant/basics/merchant/device/authorization/status/modify',
-    data,
-  );
-}
-
-// 是否禁用
-export function merchantDeviceStatusModify(data: any) {
-  return request.post(
-    '/v1/merchant/basics/merchant/device/status/modify',
-    data,
-  );
-}
-
 // 当前门店信息修改
 export function basicsMerchantStoreModify(data: any) {
   return request.post(

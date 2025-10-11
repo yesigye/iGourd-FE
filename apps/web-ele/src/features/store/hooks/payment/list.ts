@@ -1,66 +1,142 @@
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
-
-import { PaymentDrawer } from '@@/store/components';
+import { useUserStore } from '@igourd/stores';
 
 import { useCrud } from '#/hooks';
+import { formatNumber } from '#/utils';
 
 import * as storePaymentApi from '../../apis/payment';
 
+const PAYMENT_METHOD = [
+  { name: 'storePaymentList.payment_method_NO_PAYMENT', value: 'NO_PAYMENT' },
+  { name: 'storePaymentList.payment_method_CASH', value: 'CASH' },
+  {
+    name: 'storePaymentList.payment_method_OFFLINE_WECHAT',
+    value: 'OFFLINE_WECHAT',
+  },
+  {
+    name: 'storePaymentList.payment_method_OFFLINE_ALIPAY',
+    value: 'OFFLINE_ALIPAY',
+  },
+  {
+    name: 'storePaymentList.payment_method_ONLINE_WECHAT',
+    value: 'ONLINE_WECHAT',
+  },
+  {
+    name: 'storePaymentList.payment_method_ONLINE_ALIPAY',
+    value: 'ONLINE_ALIPAY',
+  },
+  {
+    name: 'storePaymentList.payment_method_ONLINE_BANKING',
+    value: 'ONLINE_BANKING',
+  },
+  {
+    name: 'storePaymentList.payment_method_OFFLINE_BANK_TRANSFER',
+    value: 'OFFLINE_BANK_TRANSFER',
+  },
+];
+const TYPE_CONFIG = [
+  { name: 'storePaymentList.type_INNER_TRADE', value: 'INNER_TRADE' },
+  {
+    name: 'storePaymentList.type_MERCHANT_PACKAGE_BUY',
+    value: 'MERCHANT_PACKAGE_BUY',
+  },
+  {
+    name: 'storePaymentList.type_MERCHANT_GOODS_BUY',
+    value: 'MERCHANT_GOODS_BUY',
+  },
+  { name: 'storePaymentList.type_OTHER', value: 'OTHER' },
+];
 export function useStorePayment() {
   const { t } = useI18n();
-
+  const {
+    currentLoginUserApp: { owner_id },
+    currencySymbol,
+  } = useUserStore();
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<any>[] = [
     {
-      field: 'payment_method_name',
-      width: 200,
-      align: 'left',
+      field: 'merchant_order_no',
+      minWidth: 206,
       fixed: 'left',
-      title: t('store.paymentMethodName'),
+      title: t('storePaymentList.merchant_order_no'),
     },
     {
-      field: 'payment_method_mark',
+      field: 'storename',
       width: 150,
-      align: 'left',
-      title: t('store.paymentMethodMark'),
+      minWidth: 235,
+      title: t('storePaymentList.storename'),
+      formatter({ row }) {
+        return row.merchant_model.full_name;
+      },
     },
     {
-      field: 'payment_type',
+      field: 'package_name',
       width: 120,
-      align: 'center',
-      title: t('store.paymentType'),
+      minWidth: 235,
+      title: t('storePaymentList.package_name'),
+      formatter({ row }) {
+        return row.merchant_package_model?.package_name;
+      },
+    },
+    {
+      field: 'total_day',
+      minWidth: 150,
+      title: t('storePaymentList.total_day'),
+    },
+    {
+      field: 'discount_amount',
+      minWidth: 150,
+      title: t('storePaymentList.discount_amount'),
+      formatter({ cellValue }) {
+        return `${currencySymbol} ${formatNumber(cellValue)}`;
+      },
+    },
+    {
+      field: 'total_amount',
+      minWidth: 150,
+      title: t('storePaymentList.total_amount'),
+      formatter({ cellValue }) {
+        return `${currencySymbol} ${formatNumber(cellValue)}`;
+      },
+    },
+    {
+      field: 'type',
+      minWidth: 240,
+      title: t('storePaymentList.type'),
+      formatter({ cellValue }) {
+        const key = TYPE_CONFIG.find((i) => i.value === cellValue)?.name;
+        if (key) {
+          return t(key);
+        }
+        return '';
+      },
+    },
+    {
+      field: 'payment_method',
+      minWidth: 220,
+      title: t('storePaymentList.payment_method'),
+      formatter({ cellValue }) {
+        const key = PAYMENT_METHOD.find((i) => i.value === cellValue)?.name;
+        if (key) {
+          return t(key);
+        }
+        return '';
+      },
     },
     {
       field: 'status',
-      width: 100,
-      align: 'center',
-      title: t('store.status'),
+      minWidth: 220,
+      title: t('storePaymentList.status'),
+      slots: {
+        default: 'status',
+      },
     },
     {
-      field: 'sort_order',
-      width: 100,
-      align: 'center',
-      title: t('store.sortOrder'),
-    },
-    {
-      field: 'is_default',
-      width: 100,
-      align: 'center',
-      title: t('store.isDefault'),
-    },
-    {
-      field: 'remark',
-      width: 200,
-      align: 'left',
-      title: t('store.remark'),
-    },
-    {
+      title: t('storePaymentList.create_time'),
       field: 'create_time',
-      width: 180,
-      align: 'center',
-      title: t('store.createTime'),
+      minWidth: 200,
     },
   ];
 
@@ -68,13 +144,14 @@ export function useStorePayment() {
   const service = {
     // 获取列表数据
     query: storePaymentApi.getPaymentMethodList,
-    // 删除支付方式
-    remove: storePaymentApi.deletePaymentMethod,
   };
 
   // 使用 CRUD Hook
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
+      params: {
+        first_level_merchant_id: owner_id,
+      },
       service,
       columns: baseColumns,
       searchFormSchema: {
@@ -83,12 +160,11 @@ export function useStorePayment() {
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: t('store.searchPlaceholder'),
+            placeholder: t('common.search'),
           },
         },
       },
       batchOperate: true,
-      connectedComponent: PaymentDrawer,
     });
 
   return {
