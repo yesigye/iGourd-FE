@@ -19,6 +19,7 @@ const formSchema: ISchema = {
         wrapperCol: 20,
       },
       properties: {
+        /*
         review_status: {
           type: 'string',
           required: true,
@@ -41,21 +42,13 @@ const formSchema: ISchema = {
             clearable: true,
           },
         },
+        */
         review_opinion: {
           type: 'string',
           title: "{{t('common.remarks')}}",
           'x-decorator': 'FormItem',
           'x-component': 'Input.TextArea',
-          'x-visible': false,
-          'x-reactions': {
-            dependencies: ['review_status'],
-            fulfill: {
-              state: {
-                visible: "{{$deps[0] === 'REJECTED'}}",
-              },
-            },
-          },
-
+          'x-visible': true,
           'x-component-props': {
             maxlength: 256,
             rows: 5,
@@ -91,7 +84,7 @@ const [Modal, modalApi] = useIgourdModal({
   onOpenChange(isOpen: boolean) {
     if (isOpen) {
       formAPI.setFieldState('review_opinion', (f) => {
-        f.visible = false;
+        f.visible = true;
       });
     } else {
       formAPI.setValues({

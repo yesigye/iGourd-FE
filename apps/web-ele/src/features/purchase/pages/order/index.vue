@@ -63,18 +63,26 @@ const operationOpt = [
     value: 'REJECTED',
   },
 ];
-const getlabel = (value:string) => {
+const getlabel = (value: string) => {
   const obj = operationOpt.find((item) => item.value === value);
   return obj?.label;
 };
 const detailDrawerRef = ref();
-const unitChange = () => {};
 
 const currentRow = ref();
-const openModal = (row: tableItem) => {
-  if (row.review_status === 'PENDING') {
+const openModal = (row: tableItem, item) => {
+  if (row.review_status === 'PENDING' && item.value === 'REJECTED') {
     currentRow.value = row;
     auditDialogRef.value.openModal();
+  } else if (row.review_status === 'PENDING' && item.value === 'APPROVED') {
+    const param = {
+      id: row.id,
+      merchant_id: currentLoginUserApp.owner_id,
+      review_status: 'APPROVED',
+    };
+    reviewPurchaseOrderApi(param).then(() => {
+      gridApi.reload();
+    });
   }
 };
 const handleDetail = async (row: tableItem, mode: string) => {
@@ -86,6 +94,7 @@ const handleDetail = async (row: tableItem, mode: string) => {
 const handleconfirm = (data: AuditFormData) => {
   data.id = currentRow.value.id;
   data.merchant_id = currentLoginUserApp.owner_id;
+  data.review_status = 'REJECTED';
   reviewPurchaseOrderApi(data).then(() => {
     auditDialogRef.value.closeModal();
     gridApi.reload();
@@ -109,8 +118,8 @@ const handleconfirm = (data: AuditFormData) => {
         </ElButton>
       </template>
       <template #modal="{ row }">
-        <ElDropdown>
-          <span>
+        <ElDropdown v-if="row.review_status === 'PENDING'">
+          <span class="custom-dropdown">
             {{ getlabel(row.review_status) }}
             <ElIcon class="el-icon--right">
               <ArrayDown />
@@ -118,16 +127,27 @@ const handleconfirm = (data: AuditFormData) => {
           </span>
           <template #dropdown>
             <ElDropdownMenu>
-              <ElDropdownItem
-                v-for="item in operationOpt"
-                :key="item?.value"
-                @click="() => unitChange(item)"
-              >
-                <div>{{ item.label }}</div>
-              </ElDropdownItem>
+              <template v-for="item in operationOpt" :key="item?.value">
+                <ElDropdownItem
+                  v-if="item.value !== 'PENDING'"
+                  @click="() => openModal(row, item)"
+                >
+                  <div>{{ item.label }}</div>
+                </ElDropdownItem>
+              </template>
             </ElDropdownMenu>
           </template>
         </ElDropdown>
+        <span
+          v-if="row.review_status === 'APPROVED'"
+          style="color: var(--el-color-success)"
+          >{{ getlabel(row.review_status) }}</span
+        >
+        <span
+          v-if="row.review_status === 'REJECTED'"
+          style="color: var(--el-color-danger)"
+          >{{ getlabel(row.review_status) }}</span
+        >
         <!--
         <ElButton type="text" @click="openModal(row)">
           <i
@@ -178,5 +198,10 @@ const handleconfirm = (data: AuditFormData) => {
   </Page>
   <!--调用公共审核框 -->
   <AuditDialog ref="auditDialogRef" @confirm="handleconfirm" />
-  <Detail ref="detailDrawerRef" data="" />
+  <Detail ref="detailDrawerRef" />
 </template>
+<style scoped>
+.custom-dropdown:focus-visible {
+  outline: unset;
+}
+</style>

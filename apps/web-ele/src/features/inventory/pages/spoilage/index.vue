@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import { ElButton, Page } from '@igourd/common-ui';
+import {
+  ElButton,
+  Page,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElIcon,
+} from '@igourd/common-ui';
+
+import { ArrayDown } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
@@ -16,6 +25,24 @@ defineOptions({
 const { currentLoginUserApp } = useUserStore();
 const auditDialogRef = ref();
 const { t } = useI18n();
+const operationOpt = [
+  {
+    label: t('common.pending'),
+    value: 'PENDING',
+  },
+  {
+    label: t('common.approve'),
+    value: 'APPROVED',
+  },
+  {
+    label: t('common.reject'),
+    value: 'REJECTED',
+  },
+];
+const getlabel = (value: string) => {
+  const obj = operationOpt.find((item) => item.value === value);
+  return obj?.label;
+};
 
 const {
   Grid,
@@ -28,29 +55,34 @@ const {
 } = useInventorySpoilageList();
 
 const currentRow = ref();
-const openModal = (row) => {
-  currentRow.value = row;
-  auditDialogRef.value.openModal();
+const openModal = (row, item) => {
+  if (row.status === 'PENDING' && item.value === 'REJECTED') {
+    currentRow.value = row;
+    auditDialogRef.value.openModal();
+  } else if (row.status === 'PENDING' && item.value === 'APPROVED') {
+    const param = {
+      id: row.id,
+      merchant_id: currentLoginUserApp.owner_id,
+      status: 'APPROVED',
+    };
+    approveSpoilage(param).then(() => {
+      auditDialogRef.value.closeModal();
+      gridApi.reload();
+    });
+  }
 };
 
 const handleconfirm = (data) => {
   data.id = currentRow.value.id;
   data.merchant_id = currentLoginUserApp.owner_id;
-  data.status = data.review_status;
+  data.status = 'REJECTED';
   if (!data.review_opinion) {
     data.review_opinion = '';
   }
-  if (data.review_status === 'APPROVED') {
-    approveSpoilage(data).then(() => {
-      auditDialogRef.value.closeModal();
-      gridApi.reload();
-    });
-  } else {
-    rejectSpoilage(data).then(() => {
-      auditDialogRef.value.closeModal();
-      gridApi.reload();
-    });
-  }
+  rejectSpoilage(data).then(() => {
+    auditDialogRef.value.closeModal();
+    gridApi.reload();
+  });
 };
 </script>
 
@@ -70,9 +102,36 @@ const handleconfirm = (data) => {
         </ElButton>
       </template>
       <template #modal="{ row }">
-        <ElButton type="text" @click="openModal(row)">
-          <i class="iconfont icon-daishenhe status_icon"></i>
-        </ElButton>
+        <ElDropdown v-if="row.status === 'PENDING'">
+          <span class="custom-dropdown">
+            {{ getlabel(row.status) }}
+            <ElIcon class="el-icon--right">
+              <ArrayDown />
+            </ElIcon>
+          </span>
+          <template #dropdown>
+            <ElDropdownMenu>
+              <template v-for="item in operationOpt" :key="item?.value">
+                <ElDropdownItem
+                  v-if="item.value !== 'PENDING'"
+                  @click="() => openModal(row, item)"
+                >
+                  <div>{{ item.label }}</div>
+                </ElDropdownItem>
+              </template>
+            </ElDropdownMenu>
+          </template>
+        </ElDropdown>
+        <span
+          v-if="row.status === 'APPROVED'"
+          style="color: var(--el-color-success)"
+          >{{ getlabel(row.status) }}</span
+        >
+        <span
+          v-if="row.status === 'REJECTED'"
+          style="color: var(--el-color-danger)"
+          >{{ getlabel(row.status) }}</span
+        >
       </template>
 
       <template #operation="{ row }">
