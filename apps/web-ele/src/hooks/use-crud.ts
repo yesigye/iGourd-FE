@@ -3,13 +3,17 @@ import type { Component, Ref } from 'vue';
 
 import type { ISchema } from '@igourd/common-ui';
 
-import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
+import type {
+  VxeGridListeners,
+  VxeGridProps,
+  VxeTableGridOptions,
+} from '#/adapter/vxe-table';
 
 import { computed, provide, reactive, ref } from 'vue';
 
 import { confirm, useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { omit } from '@igourd/utils';
+import { omit, pick } from '@igourd/utils';
 
 import { modifySaleOrderApi } from '@@/sale/apis/order';
 
@@ -59,7 +63,9 @@ export interface Service<T, P> {
  * @template T - 数据实体类型
  * @template P - 数据传输对象类型(DTO)
  */
-export interface CRUDOptions<T, P> extends VxeGridProps<T> {
+export interface CRUDOptions<T extends object, P extends object>
+  extends VxeGridProps<T, P>,
+    VxeTableGridOptions {
   /** 服务接口实现，提供CRUD操作方法 */
   service: Partial<Service<T, P>>;
   /** 搜索表单的JSON Schema定义 */
@@ -169,8 +175,23 @@ function useCrud<T extends { id?: number | string }, P extends object>(
     'scope',
     'data',
     'connectedComponent',
+    'tableTitle',
+    'tableTitleHelp',
+    'class',
+    'showSearchForm',
+    'separator',
+    'tabs',
+    'tabsOption',
   ]);
-
+  const vxeTableProps = pick(options, [
+    'tableTitle',
+    'tableTitleHelp',
+    'class',
+    'showSearchForm',
+    'separator',
+    'tabs',
+    'tabsOption',
+  ]);
   // 确保代理配置存在
   if (!gridOptions.proxyConfig) {
     gridOptions.proxyConfig = {};
@@ -209,6 +230,7 @@ function useCrud<T extends { id?: number | string }, P extends object>(
       scope: options.scope,
       initialValues: options.initialValues,
     },
+    ...vxeTableProps,
     gridOptions: {
       height: 'auto',
       ...gridOptions,
@@ -248,6 +270,7 @@ function useCrud<T extends { id?: number | string }, P extends object>(
    */
   const handleView = (dto?: T) => {
     if (dto) {
+      // @ts-ignore
       dto.mode = 'detail';
     }
     drawerApi.setData(dto ?? {}).open();

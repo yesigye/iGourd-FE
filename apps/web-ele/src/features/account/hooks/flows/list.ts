@@ -112,7 +112,14 @@ export function useFlows() {
     useCrud({
       service,
       columns: baseColumns,
-
+      tabs: [
+        { value: 'ALL', label: 'ALL' },
+        { value: 'ALL1', label: 'ALL1' },
+      ],
+      tabsOption: {
+        defaultActiveValue: 'ALL',
+        formKey: 'type',
+      },
       toolbarConfig: {
         print: true,
       },
