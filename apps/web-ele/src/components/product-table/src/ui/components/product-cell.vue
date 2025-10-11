@@ -5,6 +5,7 @@ import type { Product } from '../../types';
 import { inject, ref } from 'vue';
 
 import { useRecord } from '@igourd/common-ui';
+import { omit } from '@igourd/utils';
 
 import { ElOption, ElSelect } from 'element-plus';
 
@@ -31,7 +32,7 @@ async function onSearch(keyword: string) {
 async function onChange(productId: any) {
   const p = options.value.find((o) => o.id === productId);
   if (!p) return;
-  Object.assign(row.value, p);
+  Object.assign(omit(row.value, 'id'), p);
   emits('change', p.id);
 }
 </script>
