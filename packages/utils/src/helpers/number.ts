@@ -36,7 +36,7 @@ export const formatTool = (
  * @returns {string} 格式化后的金额 e.g. $1,000.00
  */
 export const moneyFormat = (
-  money: bigint | Intl.StringNumericLiteral,
+  money: bigint | Intl.StringNumericLiteral | number,
   options?: formatOptions,
 ) => {
   const { locale, ...opts } = options || {};

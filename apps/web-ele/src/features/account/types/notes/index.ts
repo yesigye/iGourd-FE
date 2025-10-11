@@ -3,7 +3,7 @@ export interface GetFinanceNoteListRequest {
   // 记账单号
   accounting_note_no?: string;
   // AccountingChangeTypeEnum:财务变动类型(REVENUE:收入,EXPENDITURE:支出)
-  change_type?: 'EXPENDITURE' | 'REVENUE';
+  change_type?: 'ALL' | 'EXPENDITURE' | 'REVENUE';
   // TradeChannelEnum:销售渠道(POS:销售点,WEB:后台,APP:手机APP)
   channel?: 'APP' | 'POS' | 'WEB';
   // 设备编码(冗余字段)
@@ -211,6 +211,6 @@ export interface GetFinanceNoteListResponse {
 
 // 抽屉传输数据
 export interface NotesDrawerTransferData {
-  type: 'add' | 'edit' | 'details';
+  type: 'add' | 'details' | 'edit';
   id?: number;
 }

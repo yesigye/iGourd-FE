@@ -1,7 +1,23 @@
+<script setup lang="ts">
+import { ElButton, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import { useExchange } from '@@/account/hooks';
+
+defineOptions({
+  name: 'IExchange',
+});
+
+const { t } = useI18n();
+
+const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
+  useExchange();
+</script>
+
 <template>
   <Page auto-content-height>
     <Grid>
-    <template #table-actions>
+      <template #table-actions>
         <ElButton type="primary" @click="handleEdit()">
           {{ t('common.create') }}
         </ElButton>
@@ -20,22 +36,6 @@
       </template>
     </Grid>
 
-    <Drawer />
+    <!-- <Drawer /> -->
   </Page>
 </template>
-
-<script setup lang="ts">
-import { ElButton, Page } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-
-import { useExchange } from '@@/account/hooks';
-
-defineOptions({
-  name: 'IExchange',
-});
-
-const { t } = useI18n();
-
-const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
-  useExchange();
-</script>

@@ -16,9 +16,9 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
 <template>
   <Page auto-content-height>
     <Grid>
-    <template #table-actions>
+      <template #table-actions>
         <ElButton type="primary" @click="handleEdit()">
-          {{ t('notes.add-note') }}
+          {{ t('common.add') }}
         </ElButton>
         <ElButton
           type="danger"

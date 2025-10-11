@@ -1,16 +1,17 @@
 import type {
-  FinanceCategoryListPayload,
-  FinanceCategoryListResponse,
-  FinanceCategoryPayload,
   DeleteFinanceCategoryPayload,
   DetailFinanceCategoryPayload,
-  FinanceCategoryDetailModel,
+  FinanceCategoryListPayload,
+  FinanceCategoryPayload,
 } from '@@/account/types';
 
 import { requestClient } from '#/api/request';
 
 // 获取财务分类列表
 export function getFinanceCategoryListApi(data: FinanceCategoryListPayload) {
+  if (Reflect.get(data, 'type') === 'ALL') {
+    delete data.type;
+  }
   return requestClient.post(
     `/v1/merchant/basics/accounting/finance-category/page-list`,
     data,
@@ -42,7 +43,9 @@ export function deleteFinanceCategoryApi(data: DeleteFinanceCategoryPayload) {
 }
 
 // 获取财务分类详情
-export function getFinanceCategoryDetailApi(data: DetailFinanceCategoryPayload) {
+export function getFinanceCategoryDetailApi(
+  data: DetailFinanceCategoryPayload,
+) {
   return requestClient.post(
     `/v1/merchant/basics/accounting/finance-category/detail`,
     data,

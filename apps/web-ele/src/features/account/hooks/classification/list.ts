@@ -3,59 +3,57 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
-  getFinanceCategoryListApi,
   deleteFinanceCategoryApi,
+  getFinanceCategoryListApi,
 } from '@@/account/apis';
-import { ClassificationDrawer } from '@@/account/components';
 
 import { useCrud } from '#/hooks';
-import type { Ref } from 'vue';
 
-export function useClassification(filterType: Ref<string>) {
+export function useClassification() {
   const { t } = useI18n();
 
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<any>[] = [
     {
       field: 'name',
-      width: 180,
+      minWidth: 180,
       title: t('account.classification'),
     },
     {
       field: 'type',
-      width: 120,
+      minWidth: 120,
       title: t('account.revenue_and_expenditure'),
     },
     {
       field: 'ledger_names',
-      width: 150,
+      minWidth: 150,
       title: t('account.classification_form.debit'),
     },
     {
       field: 'target_ledger_name',
-      width: 100,
+      minWidth: 100,
       title: t('account.classification_form.credit'),
     },
     {
       field: 'remark',
-      width: 300,
+      minWidth: 300,
       title: t('account.remark'),
     },
     {
       field: 'creator_name',
-      width: 100,
+      minWidth: 100,
       title: t('account.creatorName'),
     },
     {
       field: 'create_time',
-      width: 120,
+      minWidth: 120,
       title: t('account.createTime'),
     },
     {
       field: 'operation',
       title: t('account.operation'),
       sortable: true,
-      minWidth: 180,
+      width: 120,
       fixed: 'right',
       slots: { default: 'operation' },
     },
@@ -64,8 +62,7 @@ export function useClassification(filterType: Ref<string>) {
   // 服务函数
   const service = {
     // 获取列表数据
-    query: (params: { page_num: number; page_size: number; type: string }) =>
-      getFinanceCategoryListApi({ ...params, type: filterType.value }),
+    query: getFinanceCategoryListApi,
     // 删除分类
     remove: deleteFinanceCategoryApi,
   };
@@ -80,6 +77,24 @@ export function useClassification(filterType: Ref<string>) {
     handleBatchDelete,
   } = useCrud({
     service,
+    tabs: [
+      {
+        label: '全部',
+        value: 'ALL',
+      },
+      {
+        label: '收入',
+        value: 'REVENUE',
+      },
+      {
+        label: '支出',
+        value: 'EXPENDITURE',
+      },
+    ],
+    tabsOption: {
+      defaultActiveValue: 'ALL',
+      formKey: 'type',
+    },
     columns: baseColumns,
     searchFormSchema: {
       keywords: {
@@ -92,7 +107,7 @@ export function useClassification(filterType: Ref<string>) {
       },
     },
     batchOperate: true,
-    connectedComponent: ClassificationDrawer,
+    // connectedComponent: ClassificationDrawer,
   });
 
   return {

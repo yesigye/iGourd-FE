@@ -115,19 +115,6 @@ setupIgourdVxeTable({
         return moneyFormat(cellValue);
       },
     });
-    // vxeUI.renderer.add('RenderIcon', {
-    //   renderTableDefault({ props }, params) {
-    //     const { column, row } = params;
-    //     const cellValue = row[column.field];
-    //     return h('i', {
-    //       class: `iconfont ${props?.icon} status_icon`,
-    //       style: `color:${props?.color}`,
-    //       onClick() {
-    //         props?.onClick?.({ cellValue, row, column });
-    //       },
-    //     });
-    //   },
-    // });
 
     vxeUI.renderer.add('ReviewStatus', {
       renderTableDefault(_, params) {
@@ -252,6 +239,8 @@ setupIgourdVxeTable({
           }
 
           if (
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             package_models?.some(({ package_id }) => Number(package_id) >= 3)
           ) {
             upgradeDisabled = true;
