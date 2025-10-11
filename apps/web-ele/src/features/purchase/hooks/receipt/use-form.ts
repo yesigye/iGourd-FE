@@ -308,6 +308,151 @@ export function useReceiptForm() {
                   },
                 },
               },
+               row_1: {
+                type: 'void',
+                'x-component': 'div',
+                'x-component-props': {
+                  class: 'w-full flex mt-10 mb-10',
+                  style: {},
+                },
+                properties: {
+                  row_col_0: {
+                    type: 'void',
+                    'x-component': 'div',
+                    'x-component-props': {
+                      class: 'w-2/3',
+                      style: {},
+                    },
+                    properties: {},
+                  },
+                  row_col_1: {
+                    type: 'void',
+                    'x-component': 'div',
+                    'x-component-props': {
+                      class: 'w-1/3 flex items-center justify-center mt-6 mb-6',
+                      style: {
+                        background: '#edf5ff',
+                      },
+                    },
+                    properties: {
+                      center: {
+                        type: 'void',
+                        'x-component': 'div',
+                        'x-component-props': {
+                          class:"p-4"
+                        },
+                        properties: {
+                          label_1: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-component-props': {
+                              class: 'flex',
+                            },
+                            properties: {
+                              c: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-content': "{{t('purchase.subtotal')+' : '}}",
+                                'x-component-props': {
+                                  class:"w-20 text-right",
+                                  style: { fontSize: '14px' },
+                                },
+                              },
+                              diffNum: {
+                                type: 'string',
+                                'x-component': 'div',
+                                'x-content': "{{$self.value?$self.value:'0'}}",
+                                'x-component-props': {
+                                  style: {},
+                                },
+                              },
+                            },
+                          },
+                          label_2: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-component-props': {
+                              class: 'flex',
+                            },
+                            properties: {
+                              c: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-content': "{{t('purchase.vat')+' : '}}",
+                                'x-component-props': {
+                                  class:"w-20 text-right",
+                                  style: { fontSize: '14px' },
+                                },
+                              },
+                              diffCost: {
+                                type: 'string',
+                                'x-component': 'div',
+                                'x-content': "{{$self.value?$self.value:'0'}}",
+                                'x-component-props': {
+                                  style: {},
+                                },
+                              },
+                            },
+                          },
+                          label_3: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-component-props': {
+                              class: 'flex',
+                            },
+                            properties: {
+                              c: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-content':
+                                  "{{t('purchase.other_tax')+' : '}}",
+                                'x-component-props': {
+                                  class:"w-20 text-right",
+                                  style: { fontSize: '14px' },
+                                },
+                              },
+                              diffSale: {
+                                type: 'string',
+                                'x-component': 'div',
+                                'x-content': "{{$self.value?$self.value:'0'}}",
+                                'x-component-props': {
+                                  style: {},
+                                },
+                              },
+                            },
+                          },
+                          label_4: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-component-props': {
+                              class: 'flex',
+                            },
+                            properties: {
+                              c: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-content': "{{t('purchase.total')+' : '}}",
+                                'x-component-props': {
+                                  class:"w-20 text-right",
+                                  style: { fontSize: '14px' },
+                                },
+                              },
+                              diffSale: {
+                                type: 'string',
+                                'x-component': 'div',
+                                'x-content': "{{$self.value?$self.value:'0'}}",
+                                'x-component-props': {
+                                  style: {},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
               card_1: {
                 type: 'void',
                 'x-component': 'Card',
