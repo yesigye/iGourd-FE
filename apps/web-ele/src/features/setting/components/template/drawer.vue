@@ -30,6 +30,7 @@ import {
   useIgourdDrawer,
   vuedraggable,
 } from '@igourd/common-ui';
+import { Close } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 
 import {
@@ -41,6 +42,7 @@ import { getPrintTemplateOptionList } from '@@/setting/apis';
 
 import { PageTitle } from '#/components';
 import {
+  generateTableItemJson,
   getDividerJsonTemplate,
   getRichTextJsonTemplate,
   treeSelectChange,
@@ -72,19 +74,28 @@ const titleName = ref('');
 const imageUrl = ref('');
 const templateName = ref('');
 const defaultCheckedKeys = ref([]);
+const { t } = useI18n();
+
 const [Drawer, drawerApi] = useIgourdDrawer({
-  title: '添加打印模板',
+  title: t('template.add-template'),
   appendToMain: true,
   class: 'w-2/3',
   async onOpenChange(isOpen) {
     if (isOpen) {
       const event = drawerApi.getData();
       templateType.value = event.templateType;
-      isNewTemplate.value = event.currentTemplateData
-        ? Object.keys(event.currentTemplateData).length > 0
-        : true;
+      isNewTemplate.value = !event.currentTemplateData?.id;
       currentTemplateData.value = event.currentTemplateData || {};
+
+      // 编辑模板处理模板名称与标题
+      if (event.currentTemplateData?.id) {
+        templateName.value = currentTemplateData.value?.name || '';
+        titleName.value = currentTemplateData.value.title_name || '';
+      }
+
       fetchTemplateColumnList();
+    } else {
+      handleReset();
     }
   },
   onClosed() {
@@ -94,7 +105,6 @@ const [Drawer, drawerApi] = useIgourdDrawer({
     await handleSave();
   },
 });
-const { t } = useI18n();
 const isAllChecked = ref(false);
 // 模板备选项
 const data = ref([]);
@@ -359,7 +369,6 @@ const processTemplateData = async (
         previewDataIds.push(item);
       } else if (item.component_type === 'PrintRichTextEditor') {
         previewDataIds.push(item);
-        console.log(item, '测试自定义富文本');
       }
       // 处理表格组件
       else if (item.column_option_code?.length > 0) {
@@ -407,7 +416,7 @@ const processTemplateData = async (
     }
 
     // 设置其他模板属性
-    business_type.value = businessType;
+    // business_type.value = businessType;
 
     // 处理图片组件（仅新建模板需要）
     printData.value.forEach((item) => {
@@ -501,7 +510,6 @@ const fetchTemplateColumnList = async () => {
     // // 更新左侧树形结构数据
     data.value = [...treeData];
 
-    // 如果不是新建模板（即编辑模式），需要回显已保存的数据
     if (isNewTemplate.value) {
       // 新建模板的话，获取系统初始化模板，选中数据
       // TODO 因为tree组件获取默认值后会触发 check-change 事件，所以需要加一个标记来控制是否执行逻辑
@@ -509,6 +517,7 @@ const fetchTemplateColumnList = async () => {
       await getTemplateInit(apiData);
       isAddNewTemplate.value = false;
     } else {
+      // 如果不是新建模板（即编辑模式），需要回显已保存的数据
       await handleExistingTemplateData(apiData);
     }
 
@@ -639,18 +648,38 @@ const showLabelOrTicket = computed(() => {
   }
   return null;
 });
+// 删除分割线
+const handDelDivider = () => {
+  printData.value = printData.value.filter(
+    (item) => item.id !== printForm.value.id,
+  );
+
+  printForm.value = {
+    option: {},
+    style: {},
+  };
+};
 </script>
 
 <template>
   <Drawer>
     <section class="h-full">
-      <ElRow class="w-full">
-        <ElCol :span="8">
-          <PageTitle title="Default Template" />
+      <ElRow class="h-full w-full overflow-hidden">
+        <ElCol :span="8" class="h-full overflow-hidden">
+          <PageTitle
+            :title="
+              isNewTemplate
+                ? t('template.add-template')
+                : t('template.edit-template')
+            "
+          />
           <p class="border-b border-t border-dashed border-[#99999999]">
-            <ElCheckbox v-model="isAllChecked" label="Select All" />
+            <ElCheckbox
+              v-model="isAllChecked"
+              :label="t('template.select-all')"
+            />
           </p>
-          <ElScrollbar>
+          <ElScrollbar class="h-[90%]">
             <ElTree
               :data="data"
               show-checkbox
@@ -676,62 +705,23 @@ const showLabelOrTicket = computed(() => {
               <template #default="{ node }">
                 <div class="custom-tree-node">
                   <span v-if="node.data.id === 'type-other'">
-                    {{ t(`template.${node.data.name}`) }}</span>
+                    {{ t(`template.${node.data.name}`) }}</span
+                  >
                   <span v-else>{{ node.data.name }}</span>
                 </div>
               </template>
             </ElTree>
           </ElScrollbar>
         </ElCol>
-        <ElCol :span="8">
-          <section class="scrollbar-container scrollbar-container-center p-4">
-            <!-- 中间预览区域 -->
-            <!-- 小票区域 -->
-            <div
-              v-if="showLabelOrTicket === 'RECEIPT'"
-              class="template-preview add-bill-template-drawer-body-box flex bg-white"
-            >
-              <vuedraggable
-                :key="titleName"
-                :list="printData"
-                :animation="100"
-                item-key="id"
-                :force-fallback="true"
-                ghost-class="ghost"
-                chosen-class="chosenClass"
-                class="w-full"
+        <ElCol :span="8" class="h-full">
+          <ElScrollbar>
+            <section class="scrollbar-container scrollbar-container-center p-4">
+              <!-- 中间预览区域 -->
+              <!-- 小票区域 -->
+              <div
+                v-if="showLabelOrTicket === 'RECEIPT'"
+                class="template-preview add-bill-template-drawer-body-box flex bg-white"
               >
-                <template #item="{ element }">
-                  <div class="draggable-item select-none bg-white" style="">
-                    <div v-if="element.com">
-                      <component
-                        :is="element.com"
-                        :key="titleName"
-                        :title="element.name"
-                        :value="
-                          element.component_type == 'PrintTitle'
-                            ? titleName
-                            : element.option.value
-                        "
-                        :item-style="element.style"
-                        :element-data="element"
-                        @click="handleClick(element)"
-                      />
-                    </div>
-                    <div v-else>
-                      <span class="text-gray-neutral">
-                        {{ t('printTemp.empty') }}</span>
-                    </div>
-                  </div>
-                </template>
-              </vuedraggable>
-            </div>
-            <!-- 标签区域 -->
-            <div
-              v-if="showLabelOrTicket == 'LABEL'"
-              class="add-bill-template-drawer-label-body-box flex bg-white"
-            >
-              <div class="template-preview-label flex">
                 <vuedraggable
                   :key="titleName"
                   :list="printData"
@@ -740,14 +730,10 @@ const showLabelOrTicket = computed(() => {
                   :force-fallback="true"
                   ghost-class="ghost"
                   chosen-class="chosenClass"
-                  vuedraggable=".draggable-item"
                   class="w-full"
                 >
                   <template #item="{ element }">
-                    <div
-                      class="draggable-item bg-white"
-                      @click="handleClick(element)"
-                    >
+                    <div class="draggable-item select-none bg-white" style="">
                       <div v-if="element.com">
                         <component
                           :is="element.com"
@@ -760,37 +746,80 @@ const showLabelOrTicket = computed(() => {
                           "
                           :item-style="element.style"
                           :element-data="element"
-                          width="auto"
-                          :style="{
-                            width: '100%',
-                          }"
+                          @click="handleClick(element)"
                         />
                       </div>
                       <div v-else>
-                        <span class="text-textColor-tertiary">组件未定义</span>
+                        <span class="text-gray-neutral">
+                          {{ t('template.empty') }}</span
+                        >
                       </div>
                     </div>
                   </template>
                 </vuedraggable>
               </div>
-            </div>
-          </section>
+              <!-- 标签区域 -->
+              <div
+                v-if="showLabelOrTicket == 'LABEL'"
+                class="add-bill-template-drawer-label-body-box flex bg-white"
+              >
+                <div class="template-preview-label flex">
+                  <vuedraggable
+                    :key="titleName"
+                    :list="printData"
+                    :animation="100"
+                    item-key="id"
+                    :force-fallback="true"
+                    ghost-class="ghost"
+                    chosen-class="chosenClass"
+                    vuedraggable=".draggable-item"
+                    class="w-full"
+                  >
+                    <template #item="{ element }">
+                      <div
+                        class="draggable-item bg-white"
+                        @click="handleClick(element)"
+                      >
+                        <div v-if="element.com">
+                          <component
+                            :is="element.com"
+                            :key="titleName"
+                            :title="element.name"
+                            :value="
+                              element.component_type == 'PrintTitle'
+                                ? titleName
+                                : element.option.value
+                            "
+                            :item-style="element.style"
+                            :element-data="element"
+                            width="auto"
+                            :style="{
+                              width: '100%',
+                            }"
+                          />
+                        </div>
+                        <div v-else>
+                          <span class="text-textColor-tertiary">组件未定义</span>
+                        </div>
+                      </div>
+                    </template>
+                  </vuedraggable>
+                </div>
+              </div>
+            </section>
+          </ElScrollbar>
         </ElCol>
-        <ElCol :span="8">
+        <ElCol :span="8" class="h-full overflow-auto">
           <ElScrollbar class="scrollbar-container">
             <!-- RIGHT setting col -->
             <div
               class="template-configuration add-bill-template-drawer-body-box bg-white"
             >
-              <div class="flex justify-between">
-                <div class="components-tree-header">
-                  <span class="components-tree-header-line"></span>
-                  <p>{{ t('settings.settings') }}</p>
-                </div>
-                <div class="cursor-pointer" @click="deaultOption">
-                  <el-icon><Close /></el-icon>
-                </div>
-              </div>
+              <PageTitle :title="t('template.settings')">
+                <template #rightOption>
+                  <Close @click="deaultOption" />
+                </template>
+              </PageTitle>
               <ElForm
                 :model="printForm"
                 label-width="100px"
@@ -802,13 +831,13 @@ const showLabelOrTicket = computed(() => {
                     !printForm.id && printForm.component_type !== 'PrintTable'
                   "
                 >
-                  <ElFormItem :label="`${t('settings.name')}:`">
+                  <ElFormItem :label="`${t('template.name')}:`">
                     <ElInput
                       v-model="templateName"
-                      :placeholder="t('settings.nameTips')"
+                      :placeholder="t('template.name-tips')"
                     />
                   </ElFormItem>
-                  <ElFormItem :label="`${t('settings.spec')}:`">
+                  <ElFormItem :label="`${t('template.spec')}:`">
                     <ElSelect v-model="specValue">
                       <el-option
                         v-for="item in specList"
@@ -827,7 +856,7 @@ const showLabelOrTicket = computed(() => {
                 >
                   <ElFormItem
                     v-if="printForm.component_type === 'PrintTitle'"
-                    :label="`${t('printTemp.title_name')}:`"
+                    :label="`${t('template.title-name')}:`"
                   >
                     <ElInput
                       v-model="titleName"
@@ -837,7 +866,7 @@ const showLabelOrTicket = computed(() => {
 
                   <ElFormItem
                     v-if="printForm.component_type !== 'PrintRichTextEditor'"
-                    :label="`${t('printTemp.position')}:`"
+                    :label="`${t('template.position')}:`"
                   >
                     <ElRadioGroup
                       v-model="printForm.style.textAlign"
@@ -862,7 +891,7 @@ const showLabelOrTicket = computed(() => {
                   </ElFormItem>
                   <ElFormItem
                     v-if="printForm.component_type === 'PrintImage'"
-                    :label="`${t('printTemp.image')}:`"
+                    :label="`${t('template.image')}:`"
                   >
                     <UploadComponent
                       v-model="imageUrl"
@@ -878,36 +907,36 @@ const showLabelOrTicket = computed(() => {
                       printForm.component_type === 'PrintDivider' ||
                       printForm.component_type === 'PrintTable'
                     "
-                    :label="`${t('printTemp.line_style')}:`"
+                    :label="`${t('template.line-style')}:`"
                   >
                     <ElRadioGroup v-model="printForm.style.border">
                       <ElRadio value="none">
-                        {{ t('printTemp.empty') }}
+                        {{ t('template.empty') }}
                       </ElRadio>
                       <ElRadio value="solid">
-                        {{ t('printTemp.solid_line') }}
+                        {{ t('template.solid-line') }}
                       </ElRadio>
                       <ElRadio value="dashed">
-                        {{ t('printTemp.dotted_line') }}
+                        {{ t('template.dotted-line') }}
                       </ElRadio>
                     </ElRadioGroup>
                   </ElFormItem>
                   <div v-if="printForm.component_type === 'PrintDivider'">
                     <!-- 边框条数  -->
-                    <ElFormItem :label="`${t('printTemp.line_type')}:`">
+                    <ElFormItem :label="`${t('template.line_type')}:`">
                       <ElRadioGroup v-model="printForm.style.borderCount">
                         <ElRadio :value="1">
-                          {{ t('printTemp.single_line') }}
+                          {{ t('template.single_line') }}
                         </ElRadio>
                         <ElRadio :value="2">
-                          {{ t('printTemp.double_lines') }}
+                          {{ t('template.double_lines') }}
                         </ElRadio>
                       </ElRadioGroup>
                     </ElFormItem>
                     <!-- 是否删除边框线 -->
-                    <ElFormItem :label="`${t('printTemp.action')}:`">
+                    <ElFormItem :label="`${t('template.action')}:`">
                       <ElButton type="warning" @click="handDelDivider">
-                        {{ t('common.deleteBtn') }}
+                        {{ t('common.delete') }}
                       </ElButton>
                     </ElFormItem>
                   </div>
@@ -924,7 +953,7 @@ const showLabelOrTicket = computed(() => {
                     <div class="mt-5">
                       <ElFormItem
                         label-width="auto"
-                        :label="`${t('printTemp.action')}:`"
+                        :label="`${t('template.action')}:`"
                       >
                         <ElButton type="warning" @click="handRichText">
                           {{ t('common.deleteBtn') }}
