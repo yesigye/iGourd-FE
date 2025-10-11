@@ -8,6 +8,7 @@ import {
   setupIgourdVxeTable,
   useIgourdVxeGrid,
 } from '@igourd/plugins/vxe-table';
+import { moneyFormat } from '@igourd/utils';
 
 import StatusTemplate from '#/components/status/index.vue';
 import { formatNumber } from '#/utils';
@@ -65,6 +66,24 @@ setupIgourdVxeTable({
           custom: true,
           refresh: true,
         },
+        customConfig: {
+          checkMethod({ column }) {
+            if (column.type === 'checkbox') {
+              return false;
+            }
+            if (column.type === 'seq') {
+              return false;
+            }
+            if (
+              ['action', 'actions', 'operation', 'operations'].includes(
+                column.field,
+              )
+            ) {
+              return false;
+            }
+            return true;
+          },
+        },
         round: true,
         showOverflow: true,
         size: 'small',
@@ -91,7 +110,11 @@ setupIgourdVxeTable({
         );
       },
     });
-
+    vxeUI.formats.add('formatMoney', {
+      tableCellFormatMethod({ cellValue }) {
+        return moneyFormat(cellValue);
+      },
+    });
     // vxeUI.renderer.add('RenderIcon', {
     //   renderTableDefault({ props }, params) {
     //     const { column, row } = params;

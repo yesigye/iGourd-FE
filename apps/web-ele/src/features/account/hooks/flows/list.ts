@@ -64,25 +64,29 @@ export function useFlows() {
     {
       field: 'finance_category_name',
       minWidth: 200,
-      align: 'left',
+      align: 'right',
       title: t('account.financeCategoryName'),
     },
     {
       field: 'revenue_amount',
       minWidth: 150,
-      align: 'left',
+      align: 'right',
       title: t('account.revenueAmount'),
+      formatter: 'formatMoney',
     },
     {
       field: 'expenditure_amount',
       minWidth: 150,
-      align: 'left',
+      align: 'right',
       title: t('account.expenditureAmount'),
+      formatter: 'formatMoney',
     },
     {
       field: 'business_original_amount',
       minWidth: 150,
+      align: 'right',
       title: t('account.business_original_amount'),
+      formatter: 'formatMoney',
     },
     {
       field: 'trader_name',
@@ -162,6 +166,7 @@ export function useFlows() {
       },
       toolbarConfig: {
         print: true,
+        export: true,
       },
       searchFormSchema: {
         keywords: {
