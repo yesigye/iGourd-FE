@@ -1,7 +1,6 @@
 import type { Ctx, LineItem, ModePlugin, ProductTableEvent } from '../types';
 
 import { ScanCodeEntry } from '#/components';
-
 export const PurchaseMode: ModePlugin = {
   id: 'purchase',
 
@@ -44,7 +43,7 @@ export const PurchaseMode: ModePlugin = {
         },
       },
       {
-        name: 'sku_barcode',
+        name: 'product_barcode',
         title: '{{t("common.purchase.product_barcode")}}',
         'x-component': 'PreviewText.Input',
         'x-component-props': {
