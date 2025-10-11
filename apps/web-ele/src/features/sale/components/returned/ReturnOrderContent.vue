@@ -47,7 +47,6 @@ const params = ref({
   page_num: 1,
   page_size: 10,
   keywords: '',
-  merchant_id: null,
   order_no: null,
   payment_card_type: '',
   payment_third_party_type: '',

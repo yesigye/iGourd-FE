@@ -10,6 +10,7 @@ export function getPrintTemplateList(data: {
     data,
   );
 }
+
 // 删除模板
 export function deletePrintTemplate(data: {
   print_template_merchant_id_list: string[];
