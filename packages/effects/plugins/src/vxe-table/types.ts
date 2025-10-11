@@ -27,6 +27,15 @@ export interface VxeTableGridOptions<T = any> extends VxeTableGridProps<T> {
   /** 工具栏配置 */
   toolbarConfig?: ToolbarConfigOptions;
 }
+export interface VxeTableTab {
+  label: string;
+  value: string;
+}
+
+export interface VxeTableTabOptions {
+  defaultActiveValue: string;
+  formKey: string;
+}
 
 export interface SeparatorOptions {
   show?: boolean;
@@ -77,6 +86,16 @@ export interface VxeGridProps<
    * 搜索表单与表格主体之间的分隔条
    */
   separator?: boolean | SeparatorOptions;
+
+  /**
+   * 表格的Tabs
+   */
+  tabs?: Array<VxeTableTab>;
+
+  /**
+   * 默认激活的标签
+   */
+  tabsOption?: VxeTableTabOptions;
 }
 
 export type ExtendedVxeGridApi<

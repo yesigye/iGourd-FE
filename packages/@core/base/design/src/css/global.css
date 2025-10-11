@@ -149,6 +149,115 @@
   .card-box {
     @apply bg-card text-card-foreground border-border rounded-xl border;
   }
+  /* ========== 通用 reset ========== */
+  .el-radio-group.tw-tabs-line,
+  .el-radio-group.tw-tabs-card {
+    @apply inline-flex select-none whitespace-nowrap;
+  }
+
+  /* 重置 EP 默认的按钮外观，交给我们自定义 */
+  .el-radio-group.tw-tabs-line .el-radio-button__inner,
+  .el-radio-group.tw-tabs-card .el-radio-button__inner {
+    @apply rounded-none border-0 bg-transparent shadow-none;
+    /* 过渡更顺滑一点 */
+    @apply transition-[color,background,border,box-shadow,transform] duration-150 ease-out;
+  }
+
+  /* ========== LINE 风格（ElTabs type="line" 类似） ========== */
+  .el-radio-group.tw-tabs-line {
+    @apply items-end gap-0;
+  }
+
+  .el-radio-group.tw-tabs-line .el-radio-button {
+    @apply relative -mb-px; /* 底部线条堆叠到容器边框之上 */
+  }
+
+  .el-radio-group.tw-tabs-line .el-radio-button__inner {
+    @apply px-4 py-2 text-sm text-[var(--el-text-color-primary)];
+  }
+  .el-radio-group.tw-tabs-line .el-radio-button:hover .el-radio-button__inner {
+    @apply text-[var(--el-text-color-primary)];
+  }
+  .el-radio-group.tw-tabs-line
+    .el-radio-button.is-active
+    .el-radio-button__inner {
+    @apply text-[var(--el-color-primary)];
+  }
+  .el-radio-group.tw-tabs-line
+    .el-radio-button.is-disabled
+    .el-radio-button__inner {
+    @apply cursor-not-allowed text-[var(--el-text-color-disabled)];
+  }
+  .el-radio-group.tw-tabs-line
+    .el-radio-button:focus-visible
+    .el-radio-button__inner {
+    @apply ring-2 ring-[var(--el-color-primary)] ring-offset-0;
+  }
+
+  /* 活跃项的底部主色下划线 */
+  .el-radio-group.tw-tabs-line .el-radio-button.is-active::after {
+    content: '';
+    position: absolute;
+    left: 0.5rem; /* 两侧留点内缩，和 Tabs 默认视觉更接近 */
+    right: 0.5rem;
+    bottom: -1px; /* 压住 group 的底边框 */
+    height: 2px;
+    background: var(--el-color-primary);
+    border-radius: 1px;
+  }
+  .el-radio-group.tw-tabs-line {
+    .el-radio-button {
+      /* 彻底禁用按钮激活态的背景/边框，用变量一把梭 */
+      --el-radio-button-checked-bg-color: transparent;
+      --el-radio-button-checked-border-color: transparent;
+      --el-radio-button-checked-text-color: var(--el-text-color-primary);
+    }
+  }
+
+  /* ========== CARD 风格（ElTabs type="card" 类似） ========== */
+  .el-radio-group.tw-tabs-card {
+    @apply relative items-end gap-1;
+  }
+
+  /* 底部分隔线（未激活项在下方“坐”在这条线上） */
+  .el-radio-group.tw-tabs-card::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-bottom: 1px solid var(--el-border-color);
+  }
+
+  .el-radio-group.tw-tabs-card .el-radio-button {
+    @apply relative;
+  }
+
+  .el-radio-group.tw-tabs-card .el-radio-button__inner {
+    @apply rounded-t-lg px-4 py-2 text-sm font-medium text-[var(--el-text-color-regular)];
+  }
+  .el-radio-group.tw-tabs-card .el-radio-button:hover .el-radio-button__inner {
+    @apply text-[var(--el-text-color-primary)];
+  }
+  .el-radio-group.tw-tabs-card
+    .el-radio-button.is-active
+    .el-radio-button__inner {
+    @apply bg-[var(--el-bg-color)] font-semibold text-[var(--el-text-color-primary)];
+    border: 1px solid var(--el-border-color);
+    border-bottom-color: transparent; /* 活跃卡片“顶”在分隔线上方 */
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+  }
+  .el-radio-group.tw-tabs-card
+    .el-radio-button.is-disabled
+    .el-radio-button__inner {
+    @apply cursor-not-allowed text-[var(--el-text-color-disabled)];
+  }
+  .el-radio-group.tw-tabs-card
+    .el-radio-button:focus-visible
+    .el-radio-button__inner {
+    @apply ring-2 ring-[var(--el-color-primary)] ring-offset-0;
+  }
 }
 
 html.invert-mode {

@@ -1,13 +1,10 @@
-import type { AccountPageModel, AccountQueryPageVO, DrawerTransferData } from '@@/account/types';
+import type { AccountPageModel, AccountQueryPageVO } from '@@/account/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import {
-  getAccountManagementListApi,
-  removeAccountApi,
-} from '@@/account/apis';
+import { getAccountManagementListApi, removeAccountApi } from '@@/account/apis';
 import { AccountDrawerForm } from '@@/account/components';
 
 import { useCrud } from '#/hooks';
