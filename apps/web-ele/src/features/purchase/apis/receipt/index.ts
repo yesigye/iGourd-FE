@@ -62,5 +62,5 @@ export function auditPurchaseReceiptApi(data: {
   remark?: string;
   status: string;
 }) {
-  return requestClient.post(`${PURCHASE_RECEIPT_BASE_URL}/audit`, data);
+  return requestClient.post(`${PURCHASE_RECEIPT_BASE_URL}/review`, data);
 }
