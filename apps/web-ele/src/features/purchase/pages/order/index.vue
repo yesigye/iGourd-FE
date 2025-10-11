@@ -14,7 +14,7 @@ import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
 import {
-  getPurchaseOrderDetailApi,
+  getPurchaseReceiptDetailApi,
   reviewPurchaseOrderApi,
 } from '@@/purchase/apis';
 import { usePurchaseOrder } from '@@/purchase/hooks';
@@ -86,7 +86,7 @@ const openModal = (row: tableItem, item) => {
   }
 };
 const handleDetail = async (row: tableItem, mode: string) => {
-  const detail = await getPurchaseOrderDetailApi({
+  const detail = await getPurchaseReceiptDetailApi({
     purchase_order_id: row.id,
   });
   detailDrawerRef.value.open(detail, mode);

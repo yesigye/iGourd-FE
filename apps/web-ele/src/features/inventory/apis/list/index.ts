@@ -61,7 +61,6 @@ export function modifyInventoryStock(params: any) {
     stock_change_quantity: first.stock_quantity,
     product: {...obj,merchant_id:reset.merchant_id}
   };
-  debugger
 
   return requestClient.post(`/v1/merchant/basics/inventory/stock/modify`, data);
 }

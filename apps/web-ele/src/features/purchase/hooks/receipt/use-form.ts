@@ -6,7 +6,13 @@ import ModalTable from '@igourd/plugins/modal-table';
 import { useUserStore } from '@igourd/stores';
 import { wareHouseProductSearch } from '#/features/inventory';
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
-import { getPurchaseListApi } from '@@/purchase/apis';
+import { orderNoGenerate } from '#/api/common';
+import {
+  getPurchaseListApi,
+  updatePurchaseReceiptApi,
+  createPurchaseReceiptApi,
+  getPurchaseReceiptDetailApi,
+} from '@@/purchase/apis';
 import { basicsCurrencyList } from '#/api';
 function remoteMethod(keywords: string) {
   return getPurchaseListApi({
@@ -37,6 +43,7 @@ const getCurrencyList = async () => {
 export function useReceiptForm() {
   const { t } = useI18n();
   const warehouse = useWarehouseSelect();
+  const { currentLoginUserApp } = useUserStore();
   const vatConfigurationEnums = [
     { label: t('order.not-applicable'), value: 'NOT_APPLICATION' },
     { label: t('order.VAT_inclusive'), value: 'VAT_INCLUSIVE' },
@@ -60,6 +67,7 @@ export function useReceiptForm() {
             'x-component': 'Card',
             'x-component-props': {
               // header: '{{t("discount.form.basicInfo")}}',
+              class: 'border-0',
             },
             properties: {
               row_0: {
@@ -70,17 +78,26 @@ export function useReceiptForm() {
                   class: 'flex gap-4 mt-4',
                 },
                 properties: {
-                  left_box: {
+                  right_box: {
                     type: 'void',
                     'x-component': 'div',
                     'x-component-props': {
-                      class: 'rounded-lg px-4 pb-4',
+                      class: 'grid grid-cols-3 gap-4',
                       style: {
-                        border: '1px dashed #dddfe7',
-                        width: '40%',
+                        width: '100%',
                       },
                     },
                     properties: {
+                      goods_receipt_note_no: {
+                        type: 'string',
+                        title: '编号',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Input',
+                        'x-decorator-props': {
+                          feedbackLayout: 'terse',
+                        },
+                        'x-component-props': {},
+                      },
                       vendor_id: {
                         type: 'string',
                         title: '供应商',
@@ -96,29 +113,7 @@ export function useReceiptForm() {
                           },
                         ],
                       },
-                    },
-                  },
-                  right_box: {
-                    type: 'void',
-                    'x-component': 'div',
-                    'x-component-props': {
-                      class: 'grid grid-cols-3 gap-4',
-                      style: {
-                        width: '100%',
-                      },
-                    },
-                    properties: {
-                      no: {
-                        type: 'string',
-                        title: '编号',
-                        'x-decorator': 'FormItem',
-                        'x-component': 'Input',
-                        'x-decorator-props': {
-                          feedbackLayout: 'terse',
-                        },
-                        'x-component-props': {},
-                      },
-                      purchase_date: {
+                      receipt_date: {
                         type: 'string',
                         title: "{{t('order.order-date')}}",
                         required: true,
@@ -255,14 +250,14 @@ export function useReceiptForm() {
                     return h(Space, null, [
                       h('div', null, t('order.product-details')),
                       h(ModalTable, {
-                        text: t('order.quick-select'),
+                        text: '选择采购单',
                         title: t('order.product-selection-list'),
                       }),
                     ]);
                   },
                 },
                 properties: {
-                  goods_receipt_note_item_model_list: {
+                  goods_receipt_note_item_list: {
                     type: 'array',
                     'x-component': 'ProductTable',
                     'x-component-props': {
@@ -359,15 +354,99 @@ export function useReceiptForm() {
     },
   };
 
+  // 表单提交处理
+  const handleSubmit = async (formData: any) => {
+    try {
+      let response = null;
+      //固定写一个测试
+      formData.purchase_order_id ="1976912925254823938" ;
+      // 其他税额
+      formData.other_tax_amount = 0;
+      formData.merchant_id = currentLoginUserApp.owner_id;
+      if (!formData.id) {
+        const result = await orderNoGenerate({
+          category_type: 'GOODS_RECEIPT_NOTE',
+        });
+        formData.purchase_order_no = result.order_no;
+      }
+      // 合计金额
+      const total = formData.goods_receipt_note_item_list.reduce(
+        (acc: any, item: any) => acc + item.received_quantity * item.cost_price,
+        0,
+      );
+
+      formData.goods_receipt_note_item_list.forEach((item) => {
+        item.product_name = item.label;
+
+        item.other_tax_amount = 0;
+        item.vat_amount = 0;
+        item.subtotal_amount = item.received_quantity * item.cost_price;
+        item.total_amount = item.received_quantity * item.cost_price;
+      });
+      // 	汇率(选择币种和系统币种的换算比例)
+      formData.exchange_rate = 0;
+      formData.vat_amount = 0;
+      // subtotal_amount  商品总金额
+      formData.subtotal_amount = total.toFixed(2);
+      // total_amount  最终总金额
+      formData.total_amount = total.toFixed(2);
+      response = formData.id
+        ? updatePurchaseReceiptApi(formData)
+        : await createPurchaseReceiptApi(formData);
+      return response;
+    } catch (error) {
+      console.error('收货单 customized form submission error:', error);
+      throw error;
+    }
+  };
+
   const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
     drawerOptions: {
       class: 'w-full',
       appendToMain: true,
-      title: 'Hello',
+      title: '添加收货单',
+      async onOpenChange(isOpen) {
+        if (isOpen) {
+          formAPI.reset();
+          const data = drawerApi.getData();
+          // 编辑
+          if (data.id) {
+            const detail = await getPurchaseReceiptDetailApi({
+              goods_receipt_note_id: data.id,
+              purchase_order_id:data.purchase_order_id
+            });
+            detail.purchase_order_item_list =
+              detail.purchase_order_item_model_list;
+
+            formAPI.setValues(detail);
+          } else {
+            // 增加时，保留1条数据
+            formAPI.setValues({ purchase_order_item_list: [{}] });
+          }
+        } else {
+          // 关闭抽屉时，重置表单
+          formAPI.values = {};
+        }
+      },
+      onClosed() {
+        formAPI.reset();
+      },
+      async onConfirm() {
+        await formAPI.validate();
+        drawerApi.lock();
+        await handleSubmit(formAPI.values)
+          .then(() => {
+            drawerApi.close();
+          })
+          .finally(() => {
+            drawerApi.unlock();
+          });
+      },
     },
     formOptions: {
       initialValues: {
-        goods_receipt_note_item_model_list: [{}],
+        goods_receipt_note_item_list: [{}],
+        goods_receipt_note_no: '11',
       },
       scope: {
         warehouse,
