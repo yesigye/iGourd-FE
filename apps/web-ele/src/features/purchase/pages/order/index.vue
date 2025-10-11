@@ -3,11 +3,11 @@ import { ref } from 'vue';
 
 import {
   ElButton,
-  Page,
   ElDropdown,
   ElDropdownItem,
   ElDropdownMenu,
   ElIcon,
+  Page,
 } from '@igourd/common-ui';
 import { ArrayDown } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
@@ -141,13 +141,15 @@ const handleconfirm = (data: AuditFormData) => {
         <span
           v-if="row.review_status === 'APPROVED'"
           style="color: var(--el-color-success)"
-          >{{ getlabel(row.review_status) }}</span
         >
+          {{ getlabel(row.review_status) }}
+        </span>
         <span
           v-if="row.review_status === 'REJECTED'"
           style="color: var(--el-color-danger)"
-          >{{ getlabel(row.review_status) }}</span
         >
+          {{ getlabel(row.review_status) }}
+        </span>
         <!--
         <ElButton type="text" @click="openModal(row)">
           <i
@@ -190,16 +192,9 @@ const handleconfirm = (data: AuditFormData) => {
       </template>
     </Grid>
     <Drawer />
-    <!--
-    <template #footer >
-      <div>总计：100T</div>
-    </template>
-    -->
-    <!--调用公共审核框 -->
     <AuditDialog ref="auditDialogRef" @confirm="handleconfirm" />
     <Detail ref="detailDrawerRef" />
   </Page>
-
 </template>
 <style scoped>
 .custom-dropdown:focus-visible {

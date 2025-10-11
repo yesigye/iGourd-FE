@@ -55,7 +55,7 @@ export function useOrderForm() {
     { label: t('order.VAT_exclusive'), value: 'VAT_EXCLUSIVE' },
   ];
 
-  // 配置菜单
+  // 配置form
   const schema: ISchema = {
     type: 'object',
     properties: {
