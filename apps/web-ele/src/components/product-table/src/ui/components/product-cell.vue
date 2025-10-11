@@ -32,7 +32,7 @@ async function onSearch(keyword: string) {
 async function onChange(productId: any) {
   const p = options.value.find((o) => o.id === productId);
   if (!p) return;
-  Object.assign(omit(row.value, 'id'), p);
+  Object.assign(row.value, omit(p, 'id'));
   emits('change', p.id);
 }
 </script>
