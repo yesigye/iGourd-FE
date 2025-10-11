@@ -97,7 +97,9 @@ const {
   tabs,
   tabsOption,
 } = usePriorityValues(props, state);
-
+const showTableTabs = computed(() => {
+  return !isEmpty(unref(tabs));
+});
 const tabsValue = ref(tabsOption.value?.defaultActiveValue);
 const { isMobile } = usePreferences();
 const isSeparator = computed(() => {
@@ -145,15 +147,15 @@ async function handleReset() {
   tabsValue.value = unref(tabsOption)?.defaultActiveValue;
 
   if (isEqual(prevValues, formValues) || !formOptions.value?.submitOnChange) {
-    await props.api.reload({
-      ...formValues,
-      [unref(tabsOption)!.formKey]: unref(tabsValue),
-    });
+    await (unref(showTableTabs)
+      ? props.api.reload({
+          ...formValues,
+          [unref(tabsOption)!.formKey]: unref(tabsValue),
+        })
+      : props.api.reload(formValues));
   }
 }
-const showTableTabs = computed(() => {
-  return !isEmpty(unref(tabs));
-});
+
 const showTableTitle = computed(() => {
   return !!slots[TABLE_TITLE]?.() || tableTitle.value || unref(showTableTabs);
 });
@@ -310,11 +312,16 @@ async function init() {
   const autoLoad = defaultGridOptions.proxyConfig?.autoLoad;
   const enableProxyConfig = options.value.proxyConfig?.enabled;
   if (enableProxyConfig && autoLoad) {
-    const queryData = {
-      ...formApi.values,
-      [unref(tabsOption)!.formKey]: unref(tabsValue),
-    };
-    props.api.grid.commitProxy?.('query', queryData);
+    if (unref(showTableTabs)) {
+      const queryData = {
+        ...formApi.values,
+        [unref(tabsOption)!.formKey]: unref(tabsValue),
+      };
+      props.api.grid.commitProxy?.('query', queryData);
+    } else {
+      const queryData = formApi.values;
+      props.api.grid.commitProxy?.('query', queryData);
+    }
   }
   const formConfig = gridOptions.value?.formConfig;
   if (formConfig && formConfig.enabled) {

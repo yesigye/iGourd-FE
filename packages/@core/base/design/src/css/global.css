@@ -173,7 +173,7 @@
   }
 
   .el-radio-group.tw-tabs-line .el-radio-button__inner {
-    @apply px-4 py-2 text-sm font-medium text-[var(--el-text-color-secondary)];
+    @apply px-4 py-2 text-sm text-[var(--el-text-color-primary)];
   }
   .el-radio-group.tw-tabs-line .el-radio-button:hover .el-radio-button__inner {
     @apply text-[var(--el-text-color-primary)];
@@ -181,7 +181,7 @@
   .el-radio-group.tw-tabs-line
     .el-radio-button.is-active
     .el-radio-button__inner {
-    @apply font-semibold text-[var(--el-text-color-primary)];
+    @apply text-[var(--el-color-primary)];
   }
   .el-radio-group.tw-tabs-line
     .el-radio-button.is-disabled

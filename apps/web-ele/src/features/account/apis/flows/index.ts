@@ -4,6 +4,9 @@ import { requestClient } from '#/api/request';
 
 // 获取财务流水分页列表
 export function getFinanceFlowPageListApi(data: FinanceFlowPlusQueryPageVO) {
+  if (Reflect.get(data, 'balance_direction') === 'ALL') {
+    delete data.balance_direction;
+  }
   return requestClient.post(
     `/v1/merchant/basics/accounting/finance-flow-plus/page-list`,
     data,

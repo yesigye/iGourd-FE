@@ -9,94 +9,133 @@ import { FlowsDrawer } from '@@/account/components';
 
 import { useCrud } from '#/hooks';
 
+const sourceTypeMap = {
+  ACCOUNTING_NOTE_CREATE: {
+    label: 'account.source_type.accounting_note_create',
+  },
+  ACCOUNTING_NOTE_MODIFY: {
+    label: 'account.source_type.accounting_note_modify',
+  },
+  CUSTOMER_RECHARGE_WITHOUT_VIP: {
+    label: 'account.source_type.customer_recharge_without_vip',
+  },
+  CUSTOMER_RECHARGE_WITH_VIP: {
+    label: 'account.source_type.customer_recharge_with_vip',
+  },
+  MANUALLY_CREATE: {
+    label: 'account.source_type.manually_create',
+  },
+  PURCHASE_BILL_GOODS_PAYMENT: {
+    label: 'account.source_type.purchase_bill_goods_payment',
+  },
+  PURCHASE_ORDER_PAYMENT: {
+    label: 'account.source_type.purchase_order_payment',
+  },
+  PURCHASE_ORDER_RETURNED: {
+    label: 'account.source_type.purchase_order_returned',
+  },
+  SALES_OFFLINE_ORDER_SYNC: {
+    label: 'account.source_type.sales_offline_order_sync',
+  },
+  SALES_ORDER_PAYMENT: {
+    label: 'account.source_type.sales_order_payment',
+  },
+  SALES_ORDER_REFUND: {
+    label: 'account.source_type.sales_order_refund',
+  },
+};
+
 export function useFlows() {
   const { t } = useI18n();
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<AccountFlowsInfo>[] = [
     {
       type: 'checkbox',
-      width: 80,
+      minWidth: 80,
       fixed: 'left',
     },
     {
       field: 'flow_no',
-      width: 165,
+      minWidth: 165,
       align: 'left',
       fixed: 'left',
       title: t('account.serialNumber'),
     },
     {
       field: 'finance_category_name',
-      width: 200,
+      minWidth: 200,
       align: 'left',
       title: t('account.financeCategoryName'),
     },
     {
       field: 'revenue_amount',
-      width: 150,
+      minWidth: 150,
       align: 'left',
       title: t('account.revenueAmount'),
     },
     {
       field: 'expenditure_amount',
-      width: 150,
+      minWidth: 150,
       align: 'left',
       title: t('account.expenditureAmount'),
     },
     {
       field: 'business_original_amount',
-      width: 150,
+      minWidth: 150,
       title: t('account.business_original_amount'),
     },
     {
       field: 'trader_name',
-      width: 150,
+      minWidth: 150,
       title: t('account.trader_name'),
     },
     {
-      width: 200,
+      minWidth: 200,
       title: '支付信息',
       children: [
         {
           field: 'target_account_name',
-          width: 200,
+          minWidth: 200,
           title: t('account.target_account_name'),
         },
         {
           field: 'payment_method_name',
-          width: 200,
+          minWidth: 200,
           title: t('account.payment_method'),
         },
       ],
     },
     {
       field: 'source_type',
-      width: 150,
+      minWidth: 150,
       title: t('account.source'),
+      formatter({ cellValue }: { cellValue: keyof typeof sourceTypeMap }) {
+        return t(sourceTypeMap[cellValue].label);
+      },
     },
     {
       field: 'trading_no',
-      width: 150,
+      minWidth: 150,
       title: t('account.tradingNo'),
     },
     {
       field: 'remark',
-      width: 150,
+      minWidth: 150,
       title: t('account.remark'),
     },
     {
       field: 'trading_time',
-      width: 150,
+      minWidth: 150,
       title: t('account.trading_time'),
     },
     {
       field: 'creator_name',
-      width: 200,
+      minWidth: 200,
       title: t('account.creatorName'),
     },
     {
       field: 'create_time',
-      width: 180,
+      minWidth: 180,
       title: t('account.createTime'),
     },
   ];
@@ -113,12 +152,13 @@ export function useFlows() {
       service,
       columns: baseColumns,
       tabs: [
-        { value: 'ALL', label: 'ALL' },
-        { value: 'ALL1', label: 'ALL1' },
+        { value: 'ALL', label: '全部' },
+        { value: 'CREDIT', label: '收入' },
+        { value: 'DEBIT', label: '支出' },
       ],
       tabsOption: {
         defaultActiveValue: 'ALL',
-        formKey: 'type',
+        formKey: 'balance_direction',
       },
       toolbarConfig: {
         print: true,
