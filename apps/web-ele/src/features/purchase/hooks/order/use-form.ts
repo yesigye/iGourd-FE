@@ -1,6 +1,7 @@
 import type { ISchema } from '@igourd/common-ui';
-
-import { h } from 'vue';
+import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
+import { onFieldValueChange } from '@igourd/common-ui';
+import { h, inject,ref} from 'vue';
 
 import { Space } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
@@ -18,13 +19,15 @@ import { basicsCurrencyList } from '#/api';
 import { orderNoGenerate } from '#/api/common';
 import { wareHouseProductSearch } from '#/features/inventory';
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
-
+// 供应商数据
+const  purchaseList = ref([]);
 function remoteMethod(keywords: string) {
   return getPurchaseListApi({
     page_num: 1,
     page_size: 15,
     keywords,
   }).then((res) => {
+    purchaseList.value = res.list;
     return res.list.map((item: any) => {
       return {
         ...item,
@@ -47,6 +50,9 @@ const getCurrencyList = async () => {
 };
 export function useOrderForm() {
   const { t } = useI18n();
+  const { gridApi } = inject<{
+    gridApi: ExtendedVxeGridApi;
+  }>(Symbol.for('PageGrid'));
   const warehouse = useWarehouseSelect();
   const { currentLoginUserApp } = useUserStore();
   const vatConfigurationEnums = [
@@ -108,6 +114,82 @@ export function useOrderForm() {
                             message: "{{t('order.please-select-supplier')}}",
                           },
                         ],
+                      },
+                      info: {
+                        type: 'void',
+                        'x-component': 'div',
+                        'x-content': '',
+                        'x-visible': false,
+                        'x-component-props': {
+                          class: 'flex border-b border-gray-300 pb-4',
+                          style: {
+                            fontSize: '12px',
+                          },
+                        },
+                        properties: {
+                          label_0: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-content': "{{t('purchase.vendor')+' : '}}",
+                            'x-component-props': {
+                              class: 'text-slate-300',
+                            },
+                          },
+                          vendor_name: {
+                            type: 'string',
+                            'x-component': 'div',
+                            'x-content': "{{$self.value?$self.value:''}}",
+                            'x-component-props': {
+                              class: 'text-slate-700',
+                            },
+                          },
+                        },
+                      },
+                      info_1: {
+                        type: 'void',
+                        'x-component': 'div',
+                        'x-content': '',
+                        'x-visible': false,
+                        'x-component-props': {
+                          class: 'flex',
+                          style: {
+                            fontSize: '12px',
+                          },
+                        },
+                        properties: {
+                          label_0: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-content': "{{t('purchase.contactName')+' : '}}",
+                            'x-component-props': {
+                              class: 'text-slate-300 mt-4',
+                            },
+                          },
+                          contact_name: {
+                            type: 'string',
+                            'x-component': 'div',
+                            'x-content': "{{$self.value?$self.value:''}}",
+                            'x-component-props': {
+                              class: 'text-slate-700 mt-4 mr-4',
+                            },
+                          },
+                          label_1: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-content': "{{t('purchase.phoneNumber')+' : '}}",
+                            'x-component-props': {
+                              class: 'text-slate-300 mt-4',
+                            },
+                          },
+                          phone_number: {
+                            type: 'string',
+                            'x-component': 'div',
+                            'x-content': "{{$self.value?$self.value:''}}",
+                            'x-component-props': {
+                              class: 'text-slate-700 mt-4',
+                            },
+                          },
+                        },
                       },
                     },
                   },
@@ -411,6 +493,7 @@ export function useOrderForm() {
       response = formData.id
         ? updatePurchaseOrderApi(formData)
         : await createPurchaseOrderApi(formData);
+      gridApi.reload();
       return response;
     } catch (error) {
       console.error('采购单 customized form submission error:', error);
@@ -467,6 +550,23 @@ export function useOrderForm() {
       },
       scope: {
         warehouse,
+      },
+      effects() {
+        onFieldValueChange('vendor_id', (field, form) => {
+          console.log(`target值变化：${field.value}`);
+          const currObj = purchaseList.value.find(item=> item.id === field.value)
+
+          form.setValuesIn('vendor_name', currObj?.name);
+          form.setValuesIn('contact_name', currObj?.contact_name);
+          form.setValuesIn('phone_number', currObj?.contact_telephone);
+          form.setFieldState('info', (f) => {
+            f.visible = true;
+          });
+           form.setFieldState('info_1', (f) => {
+            f.visible = true;
+          });
+          debugger
+        });
       },
       schema,
     },

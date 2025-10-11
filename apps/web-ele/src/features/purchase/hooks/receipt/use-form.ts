@@ -1,12 +1,14 @@
 import { useI18n } from '@igourd/locales';
 import type { ISchema } from '@igourd/common-ui';
-import { h } from 'vue';
+import { h, inject } from 'vue';
 import { Space } from '@igourd/common-ui';
 import ModalTable from '@igourd/plugins/modal-table';
 import { useUserStore } from '@igourd/stores';
 import { wareHouseProductSearch } from '#/features/inventory';
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
 import { orderNoGenerate } from '#/api/common';
+import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
+
 import {
   getPurchaseListApi,
   updatePurchaseReceiptApi,
@@ -42,6 +44,9 @@ const getCurrencyList = async () => {
 };
 export function useReceiptForm() {
   const { t } = useI18n();
+  const { gridApi } = inject<{
+    gridApi: ExtendedVxeGridApi;
+  }>(Symbol.for('PageGrid'));
   const warehouse = useWarehouseSelect();
   const { currentLoginUserApp } = useUserStore();
   const vatConfigurationEnums = [
@@ -359,7 +364,7 @@ export function useReceiptForm() {
     try {
       let response = null;
       //固定写一个测试
-      formData.purchase_order_id ="1976912925254823938" ;
+      formData.purchase_order_id = '1976912925254823938';
       // 其他税额
       formData.other_tax_amount = 0;
       formData.merchant_id = currentLoginUserApp.owner_id;
@@ -393,6 +398,7 @@ export function useReceiptForm() {
       response = formData.id
         ? updatePurchaseReceiptApi(formData)
         : await createPurchaseReceiptApi(formData);
+      gridApi.reload();
       return response;
     } catch (error) {
       console.error('收货单 customized form submission error:', error);
@@ -413,7 +419,7 @@ export function useReceiptForm() {
           if (data.id) {
             const detail = await getPurchaseReceiptDetailApi({
               goods_receipt_note_id: data.id,
-              purchase_order_id:data.purchase_order_id
+              purchase_order_id: data.purchase_order_id,
             });
             detail.goods_receipt_note_item_list =
               detail.goods_receipt_note_item_model_list;
