@@ -1,15 +1,13 @@
-import { useI18n } from '@igourd/locales';
-import { useCrud } from '#/hooks';
-import type { VxeGridPropTypes } from '#/adapter/vxe-table';
-
 import type { AccountFlowsInfo } from '../../types/account';
 
-import {
-  getFinanceFlowPageListApi,
-  getFinanceFlowListApi,
-  getFinanceFlowTotalApi,
-} from '@@/account/apis';
+import type { VxeGridPropTypes } from '#/adapter/vxe-table';
+
+import { useI18n } from '@igourd/locales';
+
+import { getFinanceFlowPageListApi } from '@@/account/apis';
 import { FlowsDrawer } from '@@/account/components';
+
+import { useCrud } from '#/hooks';
 
 export function useFlows() {
   const { t } = useI18n();
@@ -56,17 +54,11 @@ export function useFlows() {
       title: t('account.trader_name'),
     },
     {
-      field: 'target_account_name',
       width: 200,
       title: '支付信息',
       children: [
         {
           field: 'target_account_name',
-          width: 200,
-          title: t('account.target_account_name'),
-        },
-        {
-          field: 'payment_method_name',
           width: 200,
           title: t('account.target_account_name'),
         },
@@ -107,14 +99,6 @@ export function useFlows() {
       width: 180,
       title: t('account.createTime'),
     },
-    {
-      field: 'operation',
-      title: t('account.operation'),
-      sortable: true,
-      minWidth: 180,
-      fixed: 'right',
-      slots: { default: 'operation' },
-    },
   ];
 
   // 服务函数
@@ -124,30 +108,28 @@ export function useFlows() {
   };
 
   // 使用 CRUD Hook
-  const {
-    Grid,
-    gridApi,
-    Drawer,
-    handleEdit,
-    canBatchOperate,
-    handleBatchDelete,
-  } = useCrud({
-    service,
-    columns: baseColumns,
-    searchFormSchema: {
-      keywords: {
-        type: 'string',
-        'x-decorator': 'FormItem',
-        'x-component': 'Input',
-        'x-component-props': {
-          placeholder: "{{t('common.keywords')}}",
-          clearable: true,
+  const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
+    useCrud({
+      service,
+      columns: baseColumns,
+
+      toolbarConfig: {
+        print: true,
+      },
+      searchFormSchema: {
+        keywords: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-component-props': {
+            placeholder: "{{t('common.keywords')}}",
+            clearable: true,
+          },
         },
       },
-    },
-    batchOperate: false,
-    connectedComponent: FlowsDrawer,
-  });
+      batchOperate: false,
+      connectedComponent: FlowsDrawer,
+    });
 
   return {
     // 组件
