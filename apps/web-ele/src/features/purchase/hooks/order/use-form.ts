@@ -55,7 +55,7 @@ export function useOrderForm() {
     { label: t('order.VAT_exclusive'), value: 'VAT_EXCLUSIVE' },
   ];
 
-  // 配置菜单
+  // 配置form
   const schema: ISchema = {
     type: 'object',
     properties: {
@@ -392,13 +392,10 @@ export function useOrderForm() {
         (acc: any, item: any) => acc + item.quantity * item.cost_price,
         0,
       );
-      debugger
+
       formData.purchase_order_item_list.forEach((item) => {
         item.product_name = item.label;
-        // 新增时 id 是产品id；编辑时,id 是数据id 不能设置给产品id  2025年10月10日18:38:12
-        if(!item.product_id){
-          item.product_id = item.id;
-        }
+
         item.other_tax_amount = 0;
         item.vat_amount = 0;
         item.subtotal_amount = item.quantity * item.cost_price;
