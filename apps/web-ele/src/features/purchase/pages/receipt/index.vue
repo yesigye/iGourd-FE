@@ -12,7 +12,8 @@ import { ArrayDown } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
-import { usePurchaseReceipt } from '../../hooks/receipt/list';
+import { usePurchaseReceipt,usePurchaseOrderDetail } from '@@/purchase/hooks';
+
 import {
   getPurchaseReceiptDetailApi,
   auditPurchaseReceiptApi,
@@ -21,8 +22,7 @@ defineOptions({
   name: 'IPurchaseReceipt',
 });
 import { AuditDialog } from '#/components';
-
-import Detail from '../../components/order/detail.vue';
+const{Drawer:Detail,drawerApi:detailDrawerApi} = usePurchaseOrderDetail()
 const { currentLoginUserApp } = useUserStore();
 const {
   Grid,
@@ -85,7 +85,7 @@ const handleDetail = async (row: tableItem, mode: string) => {
   const detail = await getPurchaseReceiptDetailApi({
     goods_receipt_note_id: row.id,
   });
-  detailDrawerRef.value.open({...detail,productList:detail.goods_receipt_note_item_model_list}, mode);
+  detailDrawerApi.setData({...detail,productList:detail.goods_receipt_note_item_model_list}, mode).open();
 };
 const handleconfirm = (data: AuditFormData) => {
   data.id = currentRow.value.id;
