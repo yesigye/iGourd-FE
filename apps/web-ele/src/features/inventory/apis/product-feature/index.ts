@@ -17,7 +17,5 @@ export function updateDynamicColumn(data: any) {
 
 // 删除自定义属性
 export function deleteDynamicColumn(data: any) {
-  return request.delete('/v1/merchant/basics/dynamic-column/remove', {
-    params: data,
-  });
+  return request.post('/v1/merchant/basics/dynamic-column/remove', data);
 }

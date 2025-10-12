@@ -201,14 +201,31 @@ export function useFeatureForm() {
       },
     },
   };
-  return useDrawerForm({
+  const {Drawer, Form, drawerApi, formAPI} = useDrawerForm({
     drawerOptions: {
-      title: t('customized.addCustomized'),
+      title: t('product-feature.addCustomized'),
       appendToMain: true,
       class: 'w-full',
+       async onOpenChange(isOpen) {
+      if (isOpen) {
+        formAPI.reset();
+        const data = drawerApi.getData();
+        if(!data.selectionOptions){
+          data.selectionOptions = []
+        }
+        formAPI.setValues(data);
+      } else {
+        formAPI.values = {
+          selectionOptions: []
+        };
+      }
+    },
     },
     formOptions: {
       schema,
+      initialValues: {
+        selectionOptions: [],
+      },
       scope: {
         featureTypes: [
           { label: t('product-feature.input-box'), value: 'INPUT' },
@@ -221,7 +238,6 @@ export function useFeatureForm() {
           { label: t('product-feature.user-created'), value: true },
           { label: t('product-feature.fixed-value'), value: false },
         ],
-
         // 是否必填
         compulsoryTypes: [
           { label: t('product-feature.yes'), value: true },
@@ -230,4 +246,5 @@ export function useFeatureForm() {
       },
     },
   });
+  return {Drawer, Form, drawerApi, formAPI}
 }
