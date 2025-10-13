@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { TreeNode } from 'element-plus';
+
 import { onMounted, ref } from 'vue';
 
 import {
@@ -62,10 +64,14 @@ const getFirstLevelCategory = async (resolve?: (data: any) => void) => {
   productGroupData.value.list = treeList;
   resolve && resolve(treeList);
 };
+<<<<<<< HEAD
 const loadNode = async (
   node: SecondGroupItem,
   resolve: (data: any) => void,
 ) => {
+=======
+const loadNode = async (node: TreeNode, resolve) => {
+>>>>>>> 59a22b47ac0191b57c1c2da0f6628254dc9146dc
   const { level } = node;
   if (level == 0) {
     getFirstLevelCategory(resolve);
