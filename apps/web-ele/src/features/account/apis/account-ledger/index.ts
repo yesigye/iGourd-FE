@@ -22,3 +22,21 @@ export function getLedgersSelect(data: any) {
       });
     });
 }
+/**
+ * 科目分页查询请求接收参数VO
+ * @param {any}      [body]          (optional)
+ */
+export const accountLedgerPageQueryPageVO = (data: any) => {
+  return requestClient
+    .post('/v1/merchant/basics/accounting/account-ledger/page-list', data)
+    .then((res) => {
+      return {
+        ...res,
+        list: res.list?.map((item: any) => ({
+          ...item,
+          label: item.name,
+          value: item.code,
+        })),
+      };
+    });
+};
