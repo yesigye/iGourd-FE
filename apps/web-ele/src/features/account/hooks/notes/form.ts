@@ -1,4 +1,9 @@
-import { observable, onFieldChange, useRecord } from '@igourd/common-ui';
+import {
+  observable,
+  onFieldChange,
+  onFieldInputValueChange,
+  useRecord,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { omit } from '@igourd/utils';
 import { paymentMethodListUsingPOST } from '@@/setting/apis';
@@ -165,8 +170,10 @@ export function useNotesForm() {
             form.setValuesIn('accounting_period_id', selected.period);
           }
         });
-        onFieldChange('change_type', () => {
+        onFieldInputValueChange('change_type', () => {
           form.setValuesIn('finance_category_id', '');
+          form.setValuesIn('item_create_volist', [{}]);
+          form.setValuesIn('external_account_data', [{}]);
         });
         onFieldChange(
           'external_account_data.0.target_account_ledger_id',

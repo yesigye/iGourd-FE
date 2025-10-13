@@ -62,6 +62,14 @@ export function getAccountingNoteDetail(data: any) {
       return {
         ...res,
         item_create_volist: res.item_detail_models,
+        external_account_data: [
+          {
+            target_account_id: res.target_account_id,
+            target_account_ledger_id: res.target_account_ledger_id,
+            target_account_name: res.target_account_name,
+            target_node_type: res.target_node_type,
+          },
+        ],
       };
     });
 }
