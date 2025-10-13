@@ -42,12 +42,7 @@ export function useWarehouse() {
       minWidth: 200,
       align: 'left',
     },
-    {
-      field: 'is_sale',
-      title: t('warehouse.default-sale'),
-      minWidth: 200,
-      align: 'left',
-    },
+
     {
       field: 'creator_name',
       title: t('common.creator'),
@@ -61,6 +56,15 @@ export function useWarehouse() {
       width: 160,
       sortable: true,
       align: 'center',
+    },
+    {
+      field: 'is_sale',
+      title: t('warehouse.default-sale'),
+      minWidth: 200,
+      align: 'left',
+      slots: {
+        default: 'status',
+      },
     },
     {
       field: 'operation',

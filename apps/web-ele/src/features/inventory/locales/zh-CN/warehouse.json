@@ -20,5 +20,7 @@
   "email": "邮箱",
   "remarks": "备注",
   "please-warehouse-name": "请输入仓库名称",
-  "default-sale": "默认仓库"
+  "default-sale": "默认仓库",
+  "validate-email": "请输入正确邮箱",
+  "validate-phone": "请输入正确手机号"
 }
