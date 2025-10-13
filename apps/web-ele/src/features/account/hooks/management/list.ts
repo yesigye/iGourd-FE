@@ -1,5 +1,3 @@
-import type { AccountPageModel, AccountQueryPageVO } from '@@/account/types';
-
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
@@ -8,10 +6,11 @@ import { getAccountManagementListApi, removeAccountApi } from '@@/account/apis';
 import { AccountDrawerForm } from '@@/account/components';
 
 import { useCrud } from '#/hooks';
+import { ref, nextTick } from 'vue';
 
 export function useAccountManagement() {
   const { t } = useI18n();
-  const columns: VxeGridPropTypes.Column<AccountPageModel>[] = [
+  const columns: VxeGridPropTypes.Column<any>[] = [
     {
       type: 'checkbox',
       width: 80,
@@ -74,7 +73,7 @@ export function useAccountManagement() {
       slots: { default: 'operation' },
     },
   ];
-
+  const type = ref('CASH');
   const searchFormSchema = {
     keywords: {
       type: 'string',
@@ -87,7 +86,13 @@ export function useAccountManagement() {
     },
   };
 
-  return useCrud<AccountPageModel, AccountQueryPageVO>({
+  const {
+    Grid,
+    Drawer,
+    handleEdit: innerHandleEdit,
+    canBatchOperate,
+    handleBatchDelete,
+  } = useCrud<any, any>({
     columns,
     searchFormSchema,
     batchOperate: true,
@@ -97,4 +102,13 @@ export function useAccountManagement() {
       drop: removeAccountApi,
     },
   });
+
+  function handleEdit(dto?: any, mode?: 'CASH' | 'CARD') {
+    type.value = mode ?? 'CASH';
+    nextTick(() => {
+      innerHandleEdit(dto);
+    });
+  }
+
+  return { Grid, Drawer, type, handleEdit, canBatchOperate, handleBatchDelete };
 }

@@ -109,6 +109,30 @@ export function getLeafLedgersApi(data: {
   );
 }
 
+export function getLeafLedgersOptions(data: any) {
+  return requestClient
+    .post(`/v1/merchant/basics/accounting/account-ledger/leaf-ledgers`, data)
+    .then((res) => {
+      return res?.map((it: any) => ({
+        ...it,
+        label: `${it.name} - ${it.code}`,
+        value: it.id,
+      }));
+    });
+}
+
+export function getLeafAccounts(data: any) {
+  return requestClient
+    .post(`/v1/merchant/basics/accounting/account-ledger/leaf-accounts`, data)
+    .then((res) => {
+      return res?.map((it: any) => ({
+        ...it,
+        label: `${it.name} - ${it.code}`,
+        value: it.id,
+      }));
+    });
+}
+
 // 获取账套详情
 export function getAccountSetDetailApi(data: {
   id?: number;
