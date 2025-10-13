@@ -46,8 +46,16 @@ export function useProductSpecValueForm(func) {
         const data = drawerApi.getData();
         // 如果存在数据，则设置表单值
         if (data.id) {
+          formAPI.setFieldState('status', (f) => {
+            f.visible = true;
+          });
+
           formAPI.setValues(data);
+          formAPI.setFormState({ readPretty: data?.mode === 'detail' });
         } else {
+          formAPI.setFieldState('status', (f) => {
+            f.visible = false;
+          });
           const vals = {
             product_spec_id: data.product_spec_id,
             product_spec_name: data.product_spec_name,
@@ -83,6 +91,7 @@ export function useProductSpecValueForm(func) {
         'x-component-props': {
           labelCol: 6,
           wrapperCol: 14,
+          'hide-required-asterisk': true,
         },
         properties: {
           product_spec_name: {
@@ -121,6 +130,20 @@ export function useProductSpecValueForm(func) {
               clearable: true,
             },
           },
+          status: {
+            type: 'string',
+            title: ' ',
+            'x-decorator': 'FormItem',
+            'x-component': 'Switch',
+            'x-decorator-props': {
+              asterisk: false, // label 上显示必填的 * 号
+              feedbackLayout: 'none',
+            },
+            'x-component-props': {
+              'active-value': 'OPEN',
+              'inactive-value': 'CLOSED',
+            },
+          },
         },
       },
       t,
@@ -143,6 +166,18 @@ export function useProductSpecValueForm(func) {
   // 表单重置
   const resetForm = () => {
     formAPI.reset();
+  };
+
+  drawerApi.onOpened = () => {
+    if (Reflect.has(drawerApi.getData() ?? {}, 'id')) {
+      drawerApi.setState({
+        title: t('product-spec.edit-spec-value'),
+      });
+    } else {
+      drawerApi.setState({
+        title: t('product-spec.add-spec-value'),
+      });
+    }
   };
 
   return {

@@ -2,6 +2,7 @@
   "product_spec": "Product Specification",
   "product_spec_value": "Product Specification Value",
   "add-spec": "Add Specification",
+  "edit-spec": "Edit Specification",
   "spec_value": "Specification Value",
   "spec_value_code": "Specification Value Code",
   "status": "Status",
@@ -27,5 +28,7 @@
     "manual-entry": "Manual Entry",
     "system": "system generation",
     "bulk-import": "Bulk Import"
-  }
+  },
+  "add_spec_value": "Add Spec Value",
+  "edit_spec_value": "Edit Spec Value"
 }

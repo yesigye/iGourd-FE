@@ -71,6 +71,9 @@ export function useInventorySkuList() {
       field: 'status',
       title: t('inventory.status'),
       minWidth: 120,
+      slots: {
+        default: 'status',
+      },
     },
     {
       field: 'creator_name',
@@ -134,8 +137,9 @@ export function useInventorySkuList() {
     },
   };
 
+
   // 使用 CRUD Hook
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
+  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete,handleView } =
     useCrud({
       // @ts-ignore
       // service,
@@ -161,5 +165,6 @@ export function useInventorySkuList() {
     handleEdit,
     handleBatchDelete,
     canBatchOperate,
+    handleView
   };
 }

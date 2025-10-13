@@ -73,7 +73,6 @@ const handleClick = () => {
 
   &-text {
     box-sizing: border-box;
-    flex: 1;
     padding-left: 5px;
 
     &.underline {
