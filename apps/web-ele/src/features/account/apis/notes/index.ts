@@ -42,10 +42,28 @@ export function createAccountingNoteApi(data: CreateNoteRequest) {
 
 // 修改记账笔记
 export function modifyAccountingNoteApi(data: CreateNoteRequest) {
+  data = {
+    ...data,
+    //@ts-ignore
+    item_modify_volist: data.item_create_volist,
+  };
   return requestClient.post(
     `/v1/merchant/basics/accounting/accounting-note/modify`,
     data,
   );
+}
+
+export function getAccountingNoteDetail(data: any) {
+  return requestClient
+    .post('/v1/merchant/basics/accounting/accounting-note/detail', {
+      accounting_note_id: data.id,
+    })
+    .then((res) => {
+      return {
+        ...res,
+        item_create_volist: res.item_detail_models,
+      };
+    });
 }
 
 // 删除记账笔记

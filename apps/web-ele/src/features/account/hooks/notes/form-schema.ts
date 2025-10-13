@@ -129,6 +129,7 @@ const noteFormSchema: ISchema = {
                 remoteMethod: '{{ remoteMethod }}',
                 onSelect: '{{ handleCateSelect }}',
               },
+
             },
             payer_name: {
               type: 'string',
