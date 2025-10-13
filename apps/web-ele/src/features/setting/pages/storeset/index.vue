@@ -12,7 +12,7 @@ import {
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
-import { getBusinessTypeListApi, getCountryLanguageListApi, getCountryListApi, getCurrencyListApi, getIndustryListApi, getSettingStoresetDetailApi, getTimezoneListApi,updateSettingStoresetApi } from '@@/setting/apis';
+import { getBusinessTypeListApi, getCountryLanguageListApi, getCountryListApi, getCurrencyListApi, getIndustryListApi, getSettingStoresetDetailApi, getTimezoneListApi, updateSettingStoresetApi } from '@@/setting/apis';
 
 const { t } = useI18n();
 const { currentLoginUserApp } = useUserStore();
@@ -29,7 +29,7 @@ const timezoneList = ref<Options[]>([]);
 const getTimezoneList = async () => {
   const result = await getTimezoneListApi({});
   timezoneList.value = result.map((item) => ({
-    label: `${item.zone_id_name_local  }/${  item.zone_id_name_cn}`,
+    label: `${item.zone_id_name_local}/${item.zone_id_name_cn}`,
     value: item.zone_id,
   }));
 }
@@ -61,11 +61,11 @@ const getCurrencyList = async () => {
 const countryList = ref<Options[]>([]);
 const getCountryList = async () => {
   const result = await getCountryListApi({});
-  countryList.value = result.map((item:{country_id:string,name:string}) => ({
+  countryList.value = result.map((item: { country_id: string, name: string }) => ({
     label: item.name,
     value: item.country_id,
   }));
-  console.log(countryList.value,'国家列表');
+  console.log(countryList.value, '国家列表');
 }
 /**
  * 店铺类型列表
@@ -98,36 +98,36 @@ const getStoreSetting = async () => {
     id: currentLoginUserApp.owner_id,
   });
   storeInfo.value = result;
-  backUpInfo.value = {...result};
+  backUpInfo.value = { ...result };
   // 备份
 };
 /** 正在编辑的行*/
 const editKeyList = ref<string[]>([]);
 /** 判断当前行是否处于编辑状态*/
 const isEdit = (key: string) => editKeyList.value.includes(key);
-const handleEditClick = async (key: string,multiple: boolean = false,keys: string[] = []) => {
+const handleEditClick = async (key: string, multiple: boolean = false, keys: string[] = []) => {
   if (editKeyList.value.includes(key)) {
 
-    if(multiple){
-      keys.forEach(item=>{
-        if(!storeInfo.value[item]){
+    if (multiple) {
+      keys.forEach(item => {
+        if (!storeInfo.value[item]) {
           ElMessage.error(t('storeset.please-fill-in-full-information'));
           return false;
         }
       })
-    }else{
-    if(!storeInfo.value[key]){
-      ElMessage.error(t('storeset.please-fill-in-full-information'));
-      return false;
-    }
+    } else {
+      if (!storeInfo.value[key]) {
+        ElMessage.error(t('storeset.please-fill-in-full-information'));
+        return false;
+      }
     }
 
     editKeyList.value = editKeyList.value.filter((item) => item !== key);
     let params = {};
     if (multiple) {
-      const newParms={}
-      keys.forEach(item=>{
-        newParms[item]=storeInfo.value[item];
+      const newParms = {}
+      keys.forEach(item => {
+        newParms[item] = storeInfo.value[item];
       })
 
       params = {
@@ -141,7 +141,7 @@ const handleEditClick = async (key: string,multiple: boolean = false,keys: strin
       };
     }
 
-   await updateSettingStoresetApi(params);
+    await updateSettingStoresetApi(params);
     ElMessage.success('修改成功');
   } else {
     editKeyList.value.push(key);
@@ -162,7 +162,8 @@ onMounted(() => {
   <Page auto-content-height>
     <section class=" h-full text-xs">
       <p class="mb-4 flex items-center gap-2">
-      </p><div class="w-1 h-2.5 rounded-md bg-primary"></div> {{ t('storeset.basic-information') }}</p>
+      </p>
+      <div class="w-1 h-2.5 rounded-md bg-primary"></div> {{ t('storeset.basic-information') }}</p>
       <!-- 设置项 -->
       <section class="pb-4 pl-5 pr-5 pt-4 bg-card">
         <!-- ----------设置------------ -->
@@ -242,7 +243,8 @@ onMounted(() => {
         </div>
       </section>
       <p class="mb-4 mt-4  flex items-center gap-2">
-      </p><div class="w-1 h-2.5 rounded-md bg-primary"></div> {{ t('storeset.store-settings') }}</p>
+      </p>
+      <div class="w-1 h-2.5 rounded-md bg-primary"></div> {{ t('storeset.store-settings') }}</p>
 
       <!-- 设置项 -->
       <section class="pb-4 pl-5 pr-5 pt-4 bg-card ">
@@ -308,13 +310,14 @@ onMounted(() => {
             <!-- 插槽label -->
             <div class="flex w-[173px] gap-2 items-center">
               <div v-if="!isEdit('contact_telephone')">
-              {{ storeInfo.contact_country_area_code }}
-              {{ storeInfo.contact_telephone }}
+                {{ storeInfo.contact_country_area_code }}
+                {{ storeInfo.contact_telephone }}
               </div>
               <div class="flex gap-2 items-center" v-else>
-                <ElSelect /><ElInput />
+                <ElSelect />
+                <ElInput />
               </div>
-</div>
+            </div>
             <div class="w-[500px] text-[#999999]">
               ({{ t('storeset.store-no-tip') }})
             </div>
@@ -380,24 +383,33 @@ type="primary" :plain="!isEdit('contact_telephone')"
             <!-- 插槽label -->
             <div class="flex w-[173px] gap-2 items-center">
               <p v-if="!isEdit('language')">
-                {{ `${storeInfo.major_country_language_lang_code }--${ storeInfo.minor_country_language_lang_code}` }}
-</p>
+                {{ `${storeInfo.major_country_language_lang_code}--${storeInfo.minor_country_language_lang_code}` }}
+              </p>
               <div class="flex gap-2 w-full" v-else>
                 <ElSelect v-model="storeInfo.major_country_language_lang_code" class="w-full">
-                  <ElOption v-for="item in countryLanguageList" :key="item.value" :label="item.label" :value="item.value" />
+                  <ElOption
+v-for="item in countryLanguageList" :key="item.value" :label="item.label"
+                    :value="item.value"
+/>
                 </ElSelect>
                 <ElSelect v-model="storeInfo.minor_country_language_lang_code" class="w-full">
-                  <ElOption v-for="item in countryLanguageList" :key="item.value" :label="item.label" :value="item.value" />
+                  <ElOption
+v-for="item in countryLanguageList" :key="item.value" :label="item.label"
+                    :value="item.value"
+/>
                 </ElSelect>
               </div>
-</div>
+            </div>
             <div class="w-[500px] text-[#999999]">
               ({{ t('storeset.language-tip') }})
             </div>
           </div>
 
           <div class="flex min-w-[120px] justify-end">
-            <ElButton type="primary" :plain="!isEdit('language')" @click="handleEditClick('language',true,['major_country_language_lang_code','minor_country_language_lang_code'])">
+            <ElButton
+type="primary" :plain="!isEdit('language')"
+              @click="handleEditClick('language', true, ['major_country_language_lang_code', 'minor_country_language_lang_code'])"
+>
               {{ !isEdit('language') ? t('common.edit') : t('common.save') }}
             </ElButton>
           </div>
