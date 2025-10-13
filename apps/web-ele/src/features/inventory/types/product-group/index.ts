@@ -43,6 +43,9 @@ export interface SecondGroupItem {
   create_time: string;
   parent_id: string;
   merchant_id?: string;
+  data?:any;
+  level?:number;
+  has_children?:boolean;
 }
 
 // 分组列表响应
@@ -57,4 +60,8 @@ export interface GroupListResponse {
 export interface DeleteGroupParams {
   merchant_id: string;
   product_group_ids: string[];
+}
+
+export interface ProductGroupParams {
+  product_group_id: string;
 }

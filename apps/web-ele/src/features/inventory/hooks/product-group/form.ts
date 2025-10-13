@@ -63,11 +63,25 @@ export function useProductGroupForm(func) {
       if (isOpen) {
         formAPI.reset();
         const data = drawerApi.getData();
-        if(data && data.parent_id){
+        formAPI.setFieldState('parent_id', (f) => {
+          f.disabled = false;
+        });
+        //增加子分类 把当前id设置成父分类
+        if (data.sub && data.sub === 'sub') {
+          data.parent_id = data.id;
+          data.major_name = '';
+          formAPI.setFieldState('parent_id', (f) => {
+            f.disabled = true;
+          });
+        }
+        if (data && data.parent_id) {
           const pIdList = await getParentList(data.parent_id);
           // pIdList.push(data.parent_id);
           data.parent_id = pIdList;
-        }else{
+          formAPI.setFieldState('parent_id', (f) => {
+            f.disabled = true;
+          });
+        } else {
           data.parent_id = 0;
         }
 
@@ -98,8 +112,8 @@ export function useProductGroupForm(func) {
         type: 'void',
         'x-component': 'FormLayout',
         'x-component-props': {
-          labelCol: 4,
-          wrapperCol: 20,
+          labelCol: 6,
+          wrapperCol: 14,
         },
         properties: {
           parent_id: {

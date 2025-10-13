@@ -17,6 +17,16 @@ export function getProductList(params: ProductListParams) {
 }
 
 /**
+ * 获取基础商品列表
+ */
+export function getProductProfileList(params: ProductListParams) {
+  return request.post<ProductListResponse>(
+    '/v1/merchant/basics/inventory/product-profile/page-list',
+    params,
+  );
+}
+
+/**
  * 获取商品SKU列表
  */
 export function getProductSKUList(params: ProductListParams) {
