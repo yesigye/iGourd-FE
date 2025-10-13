@@ -766,6 +766,7 @@ export function useProductAdd() {
       // 编辑模式：填充现有数据
       isShowStock.value = false;
       const copiedData = JSON.parse(JSON.stringify(data));
+      console.log(copiedData, 'copiedData');
 
       // 处理商品标签ID列表
       copiedData.product_label_id_list =

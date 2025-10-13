@@ -128,7 +128,6 @@ export function useInventory() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-decorator-props': {
-        //style: { 'margin-bottom': '0' },
       },
       'x-component-props': {
         placeholder: "{{t('inventory.productName')}}",
@@ -140,7 +139,6 @@ export function useInventory() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-decorator-props': {
-        //style: { 'margin-bottom': '0' },
       },
       'x-component-props': {
         placeholder: "{{t('inventory.productCode')}}",
@@ -152,7 +150,6 @@ export function useInventory() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-decorator-props': {
-        //style: { 'margin-bottom': '0' },
       },
       'x-component-props': {
         placeholder: "{{t('inventory.warehouseName')}}",
@@ -164,7 +161,6 @@ export function useInventory() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-decorator-props': {
-        //style: { 'margin-bottom': '0' },
       },
       'x-component-props': {
         placeholder: "{{t('list.warehouse-code')}}",

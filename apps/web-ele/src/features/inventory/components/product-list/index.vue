@@ -71,10 +71,28 @@ const [Drawer, drawerApi] = useIgourdDrawer({
       // 打开弹窗时，根据 mode 来判断是添加还是编辑
       const { type, data } = drawerApi.getData();
       mode.value = type;
-      if (mode.value === 'add') {
-        openDrawer(null, true, false);
-      } else if (mode.value === 'edit') {
-        handleEdit(data, type);
+      switch (mode.value) {
+        case 'add': {
+          openDrawer(null, true, false);
+
+          break;
+        }
+        case 'copy': {
+          handleEdit(data, type);
+
+          break;
+        }
+        case 'details': {
+          handleDetail(data, type);
+
+          break;
+        }
+        case 'edit': {
+          handleEdit(data, type);
+
+          break;
+        }
+        // No default
       }
       // fetchGoodsList();
     }
@@ -504,6 +522,17 @@ const handleEdit = async (currentData, type) => {
 
   try {
     formMode.value = type;
+    if (type === 'copy') {
+      try {
+        const res = await getUnitList({
+          page_num: 1,
+          page_size: 500,
+        });
+        unitList.value = res.list;
+      } catch (error) {
+        console.error('Failed to get unit list:', error);
+      }
+    }
     // 1. 初始化基础表单数据
     await openDrawer(currentData, false, false, merchantId.value, type);
 
