@@ -9,6 +9,7 @@ import { useI18n } from '@igourd/locales';
 import { moneyFormat } from '@igourd/utils';
 
 import {
+  createOrUpdateAccountingNote,
   getFinanceNoteListApi,
   removeAccountingNoteApi,
 } from '@@/account/apis';
@@ -160,6 +161,12 @@ export function useAccountNotes() {
     connectedComponent: NotesDrawerForm,
     service: {
       query: getFinanceNoteListApi,
+      // @ts-ignore
+      create: createOrUpdateAccountingNote,
+      // @ts-ignore
+      // detail: modifyAccountingNoteApi,
+      update: createOrUpdateAccountingNote,
+      // @ts-ignore
       drop: removeAccountingNoteApi,
     },
   });

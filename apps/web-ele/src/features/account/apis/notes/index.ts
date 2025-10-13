@@ -17,6 +17,21 @@ export function getFinanceNoteListApi(data: GetFinanceNoteListRequest) {
   );
 }
 
+export function createOrUpdateAccountingNote(data: CreateNoteRequest) {
+  const {
+    // @ts-ignore
+    external_account_data: [first],
+  } = data;
+  data = {
+    ...data,
+    ...first,
+  };
+  if (Reflect.has(data, 'id')) {
+    return modifyAccountingNoteApi(data);
+  }
+  return createAccountingNoteApi(data);
+}
+
 // 创建记账笔记
 export function createAccountingNoteApi(data: CreateNoteRequest) {
   return requestClient.post(
