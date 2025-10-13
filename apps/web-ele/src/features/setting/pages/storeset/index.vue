@@ -243,8 +243,8 @@ onMounted(() => {
         </div>
       </section>
       <p class="mb-4 mt-4  flex items-center gap-2">
-      </p>
-      <div class="w-1 h-2.5 rounded-md bg-primary"></div> {{ t('storeset.store-settings') }}</p>
+      <div class="w-1 h-2.5 rounded-md bg-primary"></div> {{ t('storeset.store-settings') }}
+    </p>
 
       <!-- 设置项 -->
       <section class="pb-4 pl-5 pr-5 pt-4 bg-card ">
