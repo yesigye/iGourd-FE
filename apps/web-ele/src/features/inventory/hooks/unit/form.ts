@@ -18,40 +18,31 @@ export function useUnitForm() {
           wrapperCol: 14,
         },
         properties: {
-          common: {
-            type: 'void',
-            'x-component': 'FormLayout',
+          name: {
+            type: 'string',
+            title: "{{t('unit.unit-name')}}",
+            required: true,
+            'x-decorator': 'FormItem',
+            'x-component': 'Input',
             'x-component-props': {
-              header: 'Hello Card',
+              maxLength: 32,
+              placeholder: "{{t('common.enter')}}",
+              clearable: true,
             },
-            properties: {
-              name: {
-                type: 'string',
-                title: "{{t('unit.unit-name')}}",
+            'x-validator': [
+              {
                 required: true,
-                'x-decorator': 'FormItem',
-                'x-component': 'Input',
-                'x-component-props': {
-                  maxLength: 32,
-                  placeholder: "{{t('common.enter')}}",
-                  clearable: true,
-                },
-                'x-validator': [
-                  {
-                    required: true,
-                    message: "{{t('unit.please-enter-name')}}",
-                  },
-                ],
+                message: "{{t('unit.please-enter-name')}}",
               },
-            },
+            ],
           },
         },
       },
     },
   };
-  return useDrawerForm({
+  const { Drawer, Form, drawerApi, formAPI } = useDrawerForm({
     drawerOptions: {
-      title: t('product-group.add-product-group'),
+      title: t('unit.addUnit'),
       appendToMain: true,
       class: 'w-1/2',
     },
@@ -60,4 +51,16 @@ export function useUnitForm() {
       scope: {},
     },
   });
+  drawerApi.onOpened = () => {
+    if (Reflect.has(drawerApi.getData() ?? {}, 'id')) {
+      drawerApi.setState({
+        title: t('unit.editUnit'),
+      });
+    }else{
+      drawerApi.setState({
+        title: t('unit.addUnit'),
+      });
+    }
+  };
+  return { Drawer, Form, drawerApi, formAPI };
 }
