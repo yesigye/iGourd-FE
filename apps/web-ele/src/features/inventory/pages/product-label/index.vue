@@ -10,7 +10,9 @@ import {
   ElRadio,
   ElRadioGroup,
   useIgourdDrawer,
+  ElIcon,
 } from '@igourd/common-ui';
+import { Edit, Delete } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 
 import { getProductLabelList, removeProductLabel } from '@@/inventory/apis';
@@ -124,14 +126,18 @@ onMounted(() => {
                 <div class="inline-flex w-full items-center">
                   <div class="flex-1">{{ item.name }}</div>
                   <div class="show-opertion text-right">
-                    <i
-                      class="iconfont icon-icon_Edit mr-4"
-                      @click="handleEditLabel(item)"
-                    ></i>
-                    <i
-                      class="iconfont icon-icon_del"
-                      @click="handleRemove(item)"
-                    ></i>
+                  <ElIcon
+                    class="text-primary ml-1"
+                    @click="handleEditLabel(item)"
+                    ><Edit
+                  /></ElIcon>
+                  <ElIcon
+                    class="ml-1"
+                    style="color: var(--el-color-danger)"
+                    @click="handleRemove(item)"
+                    ><Delete
+                  /></ElIcon>
+
                   </div>
                 </div>
               </ElRadio>
@@ -158,7 +164,7 @@ onMounted(() => {
           type="danger"
           @click="handleBatchDelete"
         >
-          {{ t('employee.deleteButton') }}
+          {{ t('common.delete') }}
         </ElButton>
       </template>
       <template #productDetail="{ row }">

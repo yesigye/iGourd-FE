@@ -5,7 +5,10 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { deleteProduct, getProductList } from '@@/inventory/apis';
+import {
+  deleteProduct,
+  inventoryProductProfilePageList,
+} from '@@/inventory/apis';
 import { ProductListDrawer } from '@@/inventory/components';
 
 import { useCrud } from '#/hooks';
@@ -68,6 +71,7 @@ export function useInventoryProductList() {
       field: 'product_label_list',
       title: t('inventory.productLabel'),
       minWidth: 280,
+      slots: { default: 'label' },
     },
     {
       field: 'creator_name',
@@ -90,42 +94,34 @@ export function useInventoryProductList() {
   ];
 
   const searchFormSchema = {
-    form: {
-      type: 'void',
-      'x-component': 'FormLayout',
-      'x-component-props': {
-        layout: 'inline',
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
+      'x-decorator-props': {
+        style: { 'margin-bottom': '0' },
+        class: 'w-64',
       },
-      properties: {
-        keywords: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Input',
-          'x-decorator-props': {
-            style: { 'margin-bottom': '0' },
-          },
-          'x-component-props': {
-            placeholder:
-              "{{t('inventory.pleaseEnterKeywordsToSearchProductNameProductCode')}}",
-            clearable: true,
-          },
-        },
-        status: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Select',
-          'x-decorator-props': {
-            style: { 'margin-bottom': '0', width: '140px' },
-          },
-          'x-component-props': {
-            placeholder: "{{t('inventory.saleStatus')}}",
-            clearable: true,
-            options: [
-              { label: t('inventory.onSale'), value: 'ON_SALE' },
-              { label: t('inventory.offSale'), value: 'OFF_SALE' },
-            ],
-          },
-        },
+      'x-component-props': {
+        placeholder:
+          "{{t('inventory.pleaseEnterKeywordsToSearchProductNameProductCode')}}",
+        clearable: true,
+      },
+    },
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-decorator-props': {
+        style: { 'margin-bottom': '0', width: '140px' },
+      },
+      'x-component-props': {
+        placeholder: "{{t('inventory.saleStatus')}}",
+        clearable: true,
+        options: [
+          { label: t('inventory.onSale'), value: 'ON_SALE' },
+          { label: t('inventory.offSale'), value: 'OFF_SALE' },
+        ],
       },
     },
   };
@@ -133,26 +129,33 @@ export function useInventoryProductList() {
   // 服务函数
   const service = {
     // 获取列表数据
-    query: getProductList,
+    query: inventoryProductProfilePageList,
 
     // 删除产品
     remove: deleteProduct,
   };
 
   // 使用 CRUD Hook
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
-    useCrud({
-      // @ts-ignore
-      service,
-      columns,
-      searchFormSchema,
-      batchOperate: true,
-      connectedComponent: ProductListDrawer,
-    });
+  const {
+    Grid,
+    gridApi,
+    canBatchOperate,
+    Drawer,
+    handleEdit,
+    handleBatchDelete,
+  } = useCrud({
+    // @ts-ignore
+    service,
+    columns,
+    searchFormSchema,
+    batchOperate: true,
+    connectedComponent: ProductListDrawer,
+  });
 
   return {
     Grid,
     Drawer,
+    gridApi,
     handleEdit,
     handleBatchDelete,
     canBatchOperate,

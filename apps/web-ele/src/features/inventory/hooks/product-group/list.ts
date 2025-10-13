@@ -1,11 +1,11 @@
-import type { ProductLabelItem, ProductLabelParams } from '@@/inventory/types';
+import type { ProductLabelItem, ProductLabelParams,ProductGroupParams } from '@@/inventory/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
-import { deleteProductLabel, getProductList } from '@@/inventory/apis';
+import { deleteProductLabel, getProductProfileList } from '@@/inventory/apis';
 
 import { useCrud } from '#/hooks';
 
@@ -14,7 +14,7 @@ export function useProductGroupList() {
   const { currentLoginUserApp } = useUserStore();
 
   // 表格列配置 - 基于原有的 columnsVisible 数组
-  const columns: VxeGridPropTypes.Column<PurchaseCustomizedInfo>[] = [
+  const columns: VxeGridPropTypes.Column<any>[] = [
     {
       type: 'checkbox',
       width: 80,
@@ -76,18 +76,32 @@ export function useProductGroupList() {
       },
     },
   };
+  let queryParam:ProductGroupParams = {
+    product_group_id:''
+  };
 
-  return useCrud<ProductLabelItem, ProductLabelParams>({
+  const uCrud = useCrud<ProductLabelItem, ProductLabelParams>({
     columns,
     searchFormSchema,
     batchOperate: true,
     service: {
       // @ts-ignore
-      query: getProductList,
+      query: async (params:ProductGroupParams) => {
+        if(queryParam){
+          params.product_group_id = queryParam.product_group_id
+        }
+        getProductProfileList(params);
+      },
       // @ts-ignore
       drop: deleteProductLabel,
-      create: '',
-      update: '',
     },
   });
+  const { gridApi } = uCrud;
+
+  // 查询数据
+  const handleQueryTable = (qParam: any) => {
+    queryParam = qParam;
+    gridApi.reload();
+  };
+  return { ...uCrud, handleQueryTable };
 }

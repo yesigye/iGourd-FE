@@ -25,3 +25,6 @@ export const Import = createIconifyIcon('ix:import');
 export const Export = createIconifyIcon('ix:export');
 
 export const Print = createIconifyIcon('ix:print');
+export const CirclePlus = createIconifyIcon('ep:circle-plus');
+export const Edit = createIconifyIcon('ep:edit');
+export const Delete = createIconifyIcon('ep:delete');

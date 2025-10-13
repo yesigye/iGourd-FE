@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import {
-  Page, ElButton, ElInput,
-  ElSelect,
-  ElUpload,
-  ElMessage,
-  ElOption,
-} from '@igourd/common-ui';
 import type { SettingStoresetDetail } from '@@/setting/types/storeset';
 
-import { getSettingStoresetDetailApi, getTimezoneListApi, getIndustryListApi, getCurrencyListApi, getCountryListApi, getBusinessTypeListApi, getCountryLanguageListApi,updateSettingStoresetApi } from '@@/setting/apis';
 import { onMounted, ref } from 'vue';
-import { useUserStore } from '@igourd/stores';
+
+import {
+  ElButton, ElInput, ElMessage,
+  ElOption,
+  ElSelect,
+  Page,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+import { useUserStore } from '@igourd/stores';
+
+import { getBusinessTypeListApi, getCountryLanguageListApi, getCountryListApi, getCurrencyListApi, getIndustryListApi, getSettingStoresetDetailApi, getTimezoneListApi,updateSettingStoresetApi } from '@@/setting/apis';
+
 const { t } = useI18n();
 const { currentLoginUserApp } = useUserStore();
 const storeInfo = ref<SettingStoresetDetail>({});
@@ -27,7 +29,7 @@ const timezoneList = ref<Options[]>([]);
 const getTimezoneList = async () => {
   const result = await getTimezoneListApi({});
   timezoneList.value = result.map((item) => ({
-    label: item.zone_id_name_local + '/' + item.zone_id_name_cn,
+    label: `${item.zone_id_name_local  }/${  item.zone_id_name_cn}`,
     value: item.zone_id,
   }));
 }
@@ -99,9 +101,9 @@ const getStoreSetting = async () => {
   backUpInfo.value = {...result};
   // 备份
 };
-/**正在编辑的行*/
+/** 正在编辑的行*/
 const editKeyList = ref<string[]>([]);
-/**判断当前行是否处于编辑状态*/
+/** 判断当前行是否处于编辑状态*/
 const isEdit = (key: string) => editKeyList.value.includes(key);
 const handleEditClick = async (key: string,multiple: boolean = false,keys: string[] = []) => {
   if (editKeyList.value.includes(key)) {
@@ -123,7 +125,7 @@ const handleEditClick = async (key: string,multiple: boolean = false,keys: strin
     editKeyList.value = editKeyList.value.filter((item) => item !== key);
     let params = {};
     if (multiple) {
-      let newParms={}
+      const newParms={}
       keys.forEach(item=>{
         newParms[item]=storeInfo.value[item];
       })
@@ -160,7 +162,7 @@ onMounted(() => {
   <Page auto-content-height>
     <section class=" h-full text-xs">
       <p class="mb-4 flex items-center gap-2">
-      <div class="w-1 h-2.5 rounded-md bg-primary"></div> {{ t('storeset.basic-information') }}</p>
+      </p><div class="w-1 h-2.5 rounded-md bg-primary"></div> {{ t('storeset.basic-information') }}</p>
       <!-- 设置项 -->
       <section class="pb-4 pl-5 pr-5 pt-4 bg-card">
         <!-- ----------设置------------ -->
@@ -240,7 +242,7 @@ onMounted(() => {
         </div>
       </section>
       <p class="mb-4 mt-4  flex items-center gap-2">
-      <div class="w-1 h-2.5 rounded-md bg-primary"></div> {{ t('storeset.store-settings') }}</p>
+      </p><div class="w-1 h-2.5 rounded-md bg-primary"></div> {{ t('storeset.store-settings') }}</p>
 
       <!-- 设置项 -->
       <section class="pb-4 pl-5 pr-5 pt-4 bg-card ">
@@ -251,7 +253,7 @@ onMounted(() => {
             <!-- 插槽label -->
             <div class="flex w-[173px] gap-2 items-center">
               <p v-if="!isEdit('full_name')">{{ storeInfo.full_name }}</p>
-              <ElInput v-model="storeInfo.full_name" v-else></ElInput>
+              <ElInput v-model="storeInfo.full_name" v-else />
             </div>
             <div class="w-[500px] text-[#999999]">
               ({{ t('storeset.show-store-name') }})
@@ -271,7 +273,7 @@ onMounted(() => {
             <!-- 插槽label -->
             <div class="flex w-[173px] gap-2 items-center items-center">
               <p v-if="!isEdit('short_name')">{{ storeInfo.short_name }}</p>
-              <ElInput v-model="storeInfo.short_name" v-else></ElInput>
+              <ElInput v-model="storeInfo.short_name" v-else />
             </div>
             <div class="w-[500px] text-[#999999]">
               ({{ t('storeset.store-short-name-tip') }})
@@ -310,18 +312,19 @@ onMounted(() => {
               {{ storeInfo.contact_telephone }}
               </div>
               <div class="flex gap-2 items-center" v-else>
-                <ElSelect></ElSelect><ElInput></ElInput>
+                <ElSelect /><ElInput />
               </div>
-
-            </div>
+</div>
             <div class="w-[500px] text-[#999999]">
               ({{ t('storeset.store-no-tip') }})
             </div>
           </div>
 
           <div class="flex min-w-[120px] justify-end">
-            <ElButton type="primary" :plain="!isEdit('contact_telephone')"
-              @click="handleEditClick('contact_telephone')">
+            <ElButton
+type="primary" :plain="!isEdit('contact_telephone')"
+              @click="handleEditClick('contact_telephone')"
+>
               {{ !isEdit('contact_telephone') ? t('common.edit') : t('common.save') }}
             </ElButton>
           </div>
@@ -334,8 +337,7 @@ onMounted(() => {
             <div class="flex w-[173px] gap-2  items-center">
               <p v-if="!isEdit('country_id')">{{ storeInfo.country_info?.name }}</p>
               <ElSelect key="country_id" v-model="storeInfo.country_id" v-else>
-                <ElOption v-for="item in countryList" :key="item.value" :label="item.label" :value="item.value">
-                </ElOption>
+                <ElOption v-for="item in countryList" :key="item.value" :label="item.label" :value="item.value" />
               </ElSelect>
             </div>
             <div class="w-[500px] text-[#999999]">
@@ -357,8 +359,7 @@ onMounted(() => {
             <div class="flex w-[173px] gap-2 items-center">
               <p v-if="!isEdit('time_zone_id')">{{ storeInfo.time_zone_id }}</p>
               <ElSelect v-model="storeInfo.time_zone_id" v-else>
-                <ElOption v-for="item in timezoneList" :key="item.value" :label="item.label" :value="item.value">
-                </ElOption>
+                <ElOption v-for="item in timezoneList" :key="item.value" :label="item.label" :value="item.value" />
               </ElSelect>
             </div>
             <div class="w-[500px] text-[#999999]">
@@ -379,19 +380,17 @@ onMounted(() => {
             <!-- 插槽label -->
             <div class="flex w-[173px] gap-2 items-center">
               <p v-if="!isEdit('language')">
-                {{ storeInfo.major_country_language_lang_code + '--' + storeInfo.minor_country_language_lang_code }}</p>
+                {{ `${storeInfo.major_country_language_lang_code }--${ storeInfo.minor_country_language_lang_code}` }}
+</p>
               <div class="flex gap-2 w-full" v-else>
                 <ElSelect v-model="storeInfo.major_country_language_lang_code" class="w-full">
-                  <ElOption v-for="item in countryLanguageList" :key="item.value" :label="item.label" :value="item.value">
-                  </ElOption>
+                  <ElOption v-for="item in countryLanguageList" :key="item.value" :label="item.label" :value="item.value" />
                 </ElSelect>
                 <ElSelect v-model="storeInfo.minor_country_language_lang_code" class="w-full">
-                  <ElOption v-for="item in countryLanguageList" :key="item.value" :label="item.label" :value="item.value">
-                  </ElOption>
+                  <ElOption v-for="item in countryLanguageList" :key="item.value" :label="item.label" :value="item.value" />
                 </ElSelect>
               </div>
-
-            </div>
+</div>
             <div class="w-[500px] text-[#999999]">
               ({{ t('storeset.language-tip') }})
             </div>
@@ -411,8 +410,7 @@ onMounted(() => {
             <div class="flex w-[173px] gap-2 items-center">
               <p v-if="!isEdit('basic_currency_code')">{{ storeInfo.basic_currency_code }}</p>
               <ElSelect v-model="storeInfo.basic_currency_code" v-else>
-                <ElOption v-for="item in currencyList" :key="item.value" :label="item.label" :value="item.value">
-                </ElOption>
+                <ElOption v-for="item in currencyList" :key="item.value" :label="item.label" :value="item.value" />
               </ElSelect>
             </div>
             <div class="w-[500px] text-[#999999]">
@@ -421,8 +419,10 @@ onMounted(() => {
           </div>
 
           <div class="flex min-w-[120px] justify-end">
-            <ElButton type="primary" :plain="!isEdit('basic_currency_code')"
-              @click="handleEditClick('basic_currency_code')">
+            <ElButton
+type="primary" :plain="!isEdit('basic_currency_code')"
+              @click="handleEditClick('basic_currency_code')"
+>
               {{ !isEdit('basic_currency_code') ? t('common.edit') : t('common.save') }}
             </ElButton>
           </div>

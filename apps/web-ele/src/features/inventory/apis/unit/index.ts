@@ -16,11 +16,20 @@ export function getUnitList(params: UnitParams) {
     params,
   );
 }
+export function getUnitListApi(params: UnitParams) {
+  return request.post<UnitResponse>(
+    '/v1/merchant/basics/inventory/product-unit/page-list',
+    params,
+  );
+}
 
 /**
  * 获取单位详情
  */
 export function getUnitDetail(params: { id: number; merchant_id: number }) {
+  return request.post<UnitItem>('/inventory/unit/detail', params);
+}
+export function getUnitDetailApi(params: { id: number; merchant_id: number }) {
   return request.post<UnitItem>('/inventory/unit/detail', params);
 }
 
@@ -49,6 +58,9 @@ export function createUnit(data: UnitFormData) {
  */
 export function updateUnit(data: UnitFormData) {
   return request.post('/inventory/unit/update', data);
+}
+export function createUnitApi(data: UnitFormData) {
+  return request.post('/inventory/unit/create', data);
 }
 
 /**

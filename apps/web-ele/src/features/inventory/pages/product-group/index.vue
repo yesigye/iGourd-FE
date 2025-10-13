@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { TreeNode } from 'element-plus';
+
 import { onMounted, ref } from 'vue';
 
 import {
@@ -7,7 +9,9 @@ import {
   ElButton,
   ElTree,
   useIgourdDrawer,
+  ElIcon,
 } from '@igourd/common-ui';
+import { CirclePlus, Edit, Delete } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 
 import {
@@ -20,7 +24,7 @@ import { useProductGroupList } from '@@/inventory/hooks';
 import folderClose from '../../../../assets/inventory/folder-close.svg';
 import folderOpen from '../../../../assets/inventory/folder-open.svg';
 import drawer from '../../components/product-group/drawer.vue';
-
+import type { SecondGroupItem } from '@@/inventory/types';
 defineOptions({
   name: 'IInventoryProductGroup',
 });
@@ -34,14 +38,14 @@ const productGroupData = ref({
 });
 const treeRef = ref();
 
-const { Grid, handleEdit } = useProductGroupList();
+const { Grid, gridApi, handleQueryTable, handleEdit } = useProductGroupList();
 const [Drawer, drawerApi] = useIgourdDrawer({
   connectedComponent: drawer,
   appendToMain: true,
 });
 
 // 获取一级分类
-const getFirstLevelCategory = async (resolve) => {
+const getFirstLevelCategory = async (resolve?: (data: any) => void) => {
   const result = await getFirstGroupList({
     page_num: productGroupData.value.page_num,
     page_size: 10,
@@ -49,7 +53,7 @@ const getFirstLevelCategory = async (resolve) => {
   const list = result.list;
   let treeList = [];
   // 将list处理成element-plus的tree数据格式
-  treeList = list.map((item) => ({
+  treeList = list.map((item: SecondGroupItem) => ({
     ...item,
     id: item.id,
     label: item.major_name,
@@ -60,7 +64,7 @@ const getFirstLevelCategory = async (resolve) => {
   productGroupData.value.list = treeList;
   resolve && resolve(treeList);
 };
-const loadNode = async (node, resolve) => {
+const loadNode = async (node: TreeNode, resolve) => {
   const { level } = node;
   if (level == 0) {
     getFirstLevelCategory(resolve);
@@ -72,7 +76,7 @@ const loadNode = async (node, resolve) => {
     page_size: 10,
   });
   const list = result.list;
-  const treeList = list.map((item) => ({
+  const treeList = list.map((item: SecondGroupItem) => ({
     ...item,
     id: item.id,
     label: item.major_name,
@@ -81,13 +85,18 @@ const loadNode = async (node, resolve) => {
 
   resolve(treeList);
 };
-const handleAddGroup = (item) => {
+const handleAddGroup = () => {
   drawerApi.setData(null).open();
 };
-const handleEditGroup = (node) => {
+// 新增子分类
+const handleAddSubGroup = (node: SecondGroupItem) => {
+  node.data.sub = 'sub';
   drawerApi.setData(node.data).open();
 };
-const handleRemove = async (node) => {
+const handleEditGroup = (node: SecondGroupItem) => {
+  drawerApi.setData(node.data).open();
+};
+const handleRemove = async (node: SecondGroupItem) => {
   confirm({
     title: t('common.prompt'),
     content: t('common.confirmPrompt', {
@@ -107,6 +116,9 @@ const handleRemove = async (node) => {
     },
   );
 };
+const handleNodeClick = (node: SecondGroupItem) =>{
+   handleQueryTable({product_group_id:node?.id})
+}
 const refreshTree = () => {
   getFirstLevelCategory();
 };
@@ -143,14 +155,22 @@ onMounted(async () => {
                   <span class="pl-1">{{ node.label }}</span>
                 </div>
                 <div class="show-opertion">
-                  <i
-                    class="iconfont icon-icon_Edit mr-4 text-sm"
+                  <ElIcon
+                    class="text-primary ml-1"
+                    @click.stop="handleAddSubGroup(node)"
+                    ><CirclePlus
+                  /></ElIcon>
+                  <ElIcon
+                    class="text-primary ml-1"
                     @click.stop="handleEditGroup(node)"
-                  ></i>
-                  <i
-                    class="iconfont icon-icon_del text-sm"
+                    ><Edit
+                  /></ElIcon>
+                  <ElIcon
+                    class="ml-1"
+                    style="color: var(--el-color-danger)"
                     @click.stop="handleRemove(node)"
-                  ></i>
+                    ><Delete
+                  /></ElIcon>
                 </div>
               </div>
             </template>
@@ -161,7 +181,7 @@ onMounted(async () => {
     <Grid>
       <template #operation="{ row }">
         <ElButton type="text" @click="handleEdit(row)">
-          {{ t('common.edit') }}
+          {{ t('common.detail') }}
         </ElButton>
       </template>
     </Grid>

@@ -712,7 +712,6 @@ export function useOrderForm() {
           form.setFieldState('info_1', (f) => {
             f.visible = true;
           });
-          debugger;
         });
       },
       schema,
