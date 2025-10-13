@@ -8,8 +8,9 @@ export function useAddProduct() {
   const [Drawer, drawerApi] = useIgourdDrawer({
     connectedComponent: ProductListDrawer,
     appendToMain: true,
-    class: 'w-full',
+    class: 'w-3/4',
     title: t('product-list.add-product'),
+    closable: false,
   });
   return {
     Drawer,

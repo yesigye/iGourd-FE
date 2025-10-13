@@ -39,13 +39,13 @@ const handleUpload = async ({ file }: { file: File }) => {
     formData.append('file', file);
 
     const result = await upload(formData);
-    imageUrl.value = result.data.url;
+    imageUrl.value = result.url;
     emit('file-uploaded', result.data);
 
     ElMessage.success(t('inventory.upload_success'));
   } catch (error) {
     console.error('Upload failed:', error);
-    ElMessage.error(t('inventory.upload_failed'));
+    ElMessage.error(t('product-list.upload-failed'));
   }
 };
 // 默认选中值

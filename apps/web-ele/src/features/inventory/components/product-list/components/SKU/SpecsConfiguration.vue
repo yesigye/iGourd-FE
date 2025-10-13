@@ -36,6 +36,7 @@ import {
   ElSwitch,
   ElTable,
   ElTableColumn,
+  ElTag,
   ElTooltip,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
@@ -2172,14 +2173,14 @@ defineExpose({
                     <span>{{ $t('inventory.all') }}</span>
                   </template>
                   <div class="value-tags">
-                    <el-tag
+                    <ElTag
                       v-for="value in row.selectedValues"
                       :key="value.id"
                       :closable="true"
                       @close="handleRemoveSpecValueLocal(row, value)"
                     >
                       {{ value.product_spec_value }}
-                    </el-tag>
+                    </ElTag>
                     <ElButton
                       v-if="
                         mode !== 'view' || (!is_update_config && mode == 'edit')
@@ -2337,7 +2338,7 @@ defineExpose({
 
     <CheckBoxModal
       v-model:visible="specValueDialogVisible"
-      :title="$t('inventory.select_spec_values')"
+      :title="$t('product-list.select-spec-values')"
       :initial-options="availableSpecValues"
       :initial-selected="selectedSpecValues"
       :current-spec="currentSpecRow"

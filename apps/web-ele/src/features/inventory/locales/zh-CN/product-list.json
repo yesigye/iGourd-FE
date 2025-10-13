@@ -39,5 +39,12 @@
   "delete_tips_recent_sales_recor": "该商品有最近的销售记录，确定要删除吗？",
   "delete_tips_assoclated_bom": "该商品有关联的BOM，确定要删除吗？",
   "delete_tips_warranty_info": "该商品有保修信息，确定要删除吗？",
-  "add-product": "添加商品"
+  "add-product": "添加商品",
+
+  "basic-information": "基础信息",
+  "customized-information": "自定义信息",
+  "upload-failed": "上传失败",
+  "profile-photo": "商品图片",
+  "other-information": "其他信息",
+  "select-spec-values": "选择规格值"
 }
