@@ -50,15 +50,40 @@ const getProductDetail = async (id) => {
 
   return res;
 };
-const handleAddProduct = async (type: 'add' | 'edit', row) => {
+const handleAddProduct = async (
+  type: 'add' | 'copy' | 'details' | 'edit',
+  row,
+) => {
   mode.value = type;
-  if (type === 'add') {
-    drawerApi.setData({ type });
-    drawerApi.open();
-  } else if (type === 'edit') {
-    const res = await getProductDetail(row.id);
-    drawerApi.setData({ type, data: res });
-    drawerApi.open();
+  switch (type) {
+    case 'add': {
+      drawerApi.setData({ type });
+      drawerApi.open();
+
+      break;
+    }
+    case 'copy': {
+      const res = await getProductDetail(row.id);
+      drawerApi.setData({ type, data: res });
+      drawerApi.open();
+
+      break;
+    }
+    case 'details': {
+      const res = await getProductDetail(row.id);
+      drawerApi.setData({ type, data: res });
+      drawerApi.open();
+
+      break;
+    }
+    case 'edit': {
+      const res = await getProductDetail(row.id);
+      drawerApi.setData({ type, data: res });
+      drawerApi.open();
+
+      break;
+    }
+    // No default
   }
 };
 </script>
@@ -78,10 +103,20 @@ const handleAddProduct = async (type: 'add' | 'edit', row) => {
           {{ t('common.delete') }}
         </ElButton>
       </template>
-
+      <template #label="{ row }">
+        <div v-for="item in row.product_label_list" :key="item.id">
+          {{ item.name }}
+        </div>
+      </template>
       <template #operation="{ row }">
         <ElButton type="text" @click="handleAddProduct('edit', row)">
           {{ t('common.edit') }}
+        </ElButton>
+        <ElButton type="text" @click="handleAddProduct('details', row)">
+          {{ t('common.detail') }}
+        </ElButton>
+        <ElButton type="text" @click="handleAddProduct('copy', row)">
+          {{ t('common.copy') }}
         </ElButton>
         <ElButton type="text" @click="handleBatchDelete()">
           {{ t('common.delete') }}

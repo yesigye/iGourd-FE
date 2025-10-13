@@ -71,6 +71,7 @@ export function useInventoryProductList() {
       field: 'product_label_list',
       title: t('inventory.productLabel'),
       minWidth: 280,
+      slots: { default: 'label' },
     },
     {
       field: 'creator_name',
