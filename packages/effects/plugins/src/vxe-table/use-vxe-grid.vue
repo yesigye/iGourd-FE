@@ -20,6 +20,7 @@ import {
   onUnmounted,
   ref,
   toRaw,
+  unref,
   useSlots,
   useTemplateRef,
 } from 'vue';
@@ -29,6 +30,8 @@ import {
   ElDropdown,
   ElDropdownItem,
   ElDropdownMenu,
+  ElRadioButton,
+  ElRadioGroup,
   ElText,
   FormButtonGroup,
   Submit,
@@ -90,8 +93,14 @@ const {
   tableTitleHelp,
   showSearchForm,
   separator,
+  tabs,
+  tabsOption,
 } = usePriorityValues(props, state);
 
+const showTableTabs = computed(() => {
+  return !!unref(tabs);
+});
+const tabsValue = ref(tabsOption.value?.defaultActiveValue);
 const { isMobile } = usePreferences();
 const isSeparator = computed(() => {
   if (
@@ -123,18 +132,32 @@ const { Form, formAPI: formApi } = useTableSearchForm({
 
 async function handleSubmit() {
   const formValues = formApi.values;
-  await props.api.reload(formValues);
+  if (unref(showTableTabs)) {
+    return await props.api.reload({
+      ...formValues,
+      [unref(tabsOption)!.formKey]: unref(tabsValue),
+    });
+  }
+  return await props.api.reload(formValues);
 }
 async function handleReset() {
   const prevValues = formApi.values;
   await formApi.reset();
   const formValues = formApi.values;
+  tabsValue.value = unref(tabsOption)?.defaultActiveValue;
+
   if (isEqual(prevValues, formValues) || !formOptions.value?.submitOnChange) {
-    await props.api.reload(formValues);
+    await (unref(showTableTabs)
+      ? props.api.reload({
+          ...formValues,
+          [unref(tabsOption)!.formKey]: unref(tabsValue),
+        })
+      : props.api.reload(formValues));
   }
 }
+
 const showTableTitle = computed(() => {
-  return !!slots[TABLE_TITLE]?.() || tableTitle.value;
+  return !!slots[TABLE_TITLE]?.() || tableTitle.value || unref(showTableTabs);
 });
 
 const showToolbar = computed(() => {
@@ -289,10 +312,16 @@ async function init() {
   const autoLoad = defaultGridOptions.proxyConfig?.autoLoad;
   const enableProxyConfig = options.value.proxyConfig?.enabled;
   if (enableProxyConfig && autoLoad) {
-    props.api.grid.commitProxy?.(
-      'query',
-      formOptions.value ? formApi.values : {},
-    );
+    if (unref(showTableTabs)) {
+      const queryData = {
+        ...formApi.values,
+        [unref(tabsOption)!.formKey]: unref(tabsValue),
+      };
+      props.api.grid.commitProxy?.('query', queryData);
+    } else {
+      const queryData = formApi.values;
+      props.api.grid.commitProxy?.('query', queryData);
+    }
   }
   const formConfig = gridOptions.value?.formConfig;
   if (formConfig && formConfig.enabled) {
@@ -302,7 +331,15 @@ async function init() {
   }
   props.api?.setState?.({ gridOptions: defaultGridOptions });
   // form 由 igourd-form 代替，所以需要保证query相关事件可以拿到参数
-  extendProxyOptions(props.api, defaultGridOptions, () => formApi.values);
+  extendProxyOptions(props.api, defaultGridOptions, () => {
+    if (unref(showTableTabs)) {
+      return {
+        ...formApi.values,
+        [unref(tabsOption)!.formKey]: unref(tabsValue),
+      };
+    }
+    return formApi.values;
+  });
 }
 
 async function handleCommand(command: string) {
@@ -345,7 +382,7 @@ const openMoreActions = computed(() => {
       ref="gridRef"
       :class="
         cn(
-          'px-1',
+          'px-3',
           {
             'pt-0': showToolbar && !formOptions,
           },
@@ -358,12 +395,26 @@ const openMoreActions = computed(() => {
       <!-- 左侧操作区域或者title -->
       <template v-if="showToolbar" #toolbar-actions="slotProps">
         <slot v-if="showTableTitle" name="table-title">
-          {{ showTableTitle }} || {{ showToolbar }}
-          <div class="mr-1 pl-1 text-[1rem]">
+          <div v-if="tableTitle" class="mr-1 pl-1 text-[1rem]">
             {{ tableTitle }}
             <IgourdHelpTooltip v-if="tableTitleHelp" trigger-class="pb-1">
               {{ tableTitleHelp }}
             </IgourdHelpTooltip>
+          </div>
+          <div v-else-if="showTableTabs">
+            <ElRadioGroup
+              class="tw-tabs-line"
+              @change="handleSubmit"
+              v-model="tabsValue"
+            >
+              <ElRadioButton
+                :key="btn.value"
+                :value="btn.value"
+                v-for="btn in tabs"
+              >
+                {{ $t(btn.label) }}
+              </ElRadioButton>
+            </ElRadioGroup>
           </div>
         </slot>
         <slot name="toolbar-actions" v-bind="slotProps"> </slot>

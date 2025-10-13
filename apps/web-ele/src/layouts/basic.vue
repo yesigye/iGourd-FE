@@ -2,7 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
 import { IgourdIcon, IgourdSpinner } from '@igourd/common-ui';
-import { MerchantStatus, SUPPORT_LANGUAGES } from '@igourd/constants';
+import { SUPPORT_LANGUAGES } from '@igourd/constants';
 import { ChevronDown } from '@igourd/icons';
 import { BasicLayout, UserDropdown } from '@igourd/layouts';
 import { useI18n } from '@igourd/locales';
@@ -35,10 +35,7 @@ const menus = computed(() => [
   },
   {
     async handler({ merchant_id }: { merchant_id: string }) {
-      const target = userApps.find(
-        (app) =>
-          app.owner_id === merchant_id && app.status === MerchantStatus.OPEN,
-      );
+      const target = userApps.find((app) => app.owner_id === merchant_id);
       spinning.value = true;
       await setSession({ ...target, token_id: tokenId });
       window.location.reload();

@@ -3,11 +3,11 @@ import { ref } from 'vue';
 
 import {
   ElButton,
-  Page,
   ElDropdown,
   ElDropdownItem,
   ElDropdownMenu,
   ElIcon,
+  Page,
 } from '@igourd/common-ui';
 import { ArrayDown } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
@@ -17,11 +17,10 @@ import {
   getPurchaseOrderDetailApi,
   reviewPurchaseOrderApi,
 } from '@@/purchase/apis';
-import { usePurchaseOrder } from '@@/purchase/hooks';
+import { usePurchaseOrder,usePurchaseOrderDetail } from '@@/purchase/hooks';
 
 import { AuditDialog } from '#/components';
 
-import Detail from '../../components/order/detail.vue';
 
 defineOptions({
   name: 'IPurchaseOrder',
@@ -47,6 +46,7 @@ const {
   handleBatchDelete,
   canBatchOperate,
 } = usePurchaseOrder();
+const{Drawer:Detail,drawerApi:detailDrawerApi} = usePurchaseOrderDetail()
 const { currentLoginUserApp } = useUserStore();
 
 const operationOpt = [
@@ -89,7 +89,8 @@ const handleDetail = async (row: tableItem, mode: string) => {
   const detail = await getPurchaseOrderDetailApi({
     purchase_order_id: row.id,
   });
-  detailDrawerRef.value.open(detail, mode);
+  detailDrawerApi.setData({...detail,productList:detail.purchase_order_item_model_list}, mode).open()
+  //detailDrawerRef.value.open({...detail,productList:detail.purchase_order_item_model_list}, mode);
 };
 const handleconfirm = (data: AuditFormData) => {
   data.id = currentRow.value.id;
@@ -141,13 +142,15 @@ const handleconfirm = (data: AuditFormData) => {
         <span
           v-if="row.review_status === 'APPROVED'"
           style="color: var(--el-color-success)"
-          >{{ getlabel(row.review_status) }}</span
         >
+          {{ getlabel(row.review_status) }}
+        </span>
         <span
           v-if="row.review_status === 'REJECTED'"
           style="color: var(--el-color-danger)"
-          >{{ getlabel(row.review_status) }}</span
         >
+          {{ getlabel(row.review_status) }}
+        </span>
         <!--
         <ElButton type="text" @click="openModal(row)">
           <i
@@ -190,15 +193,9 @@ const handleconfirm = (data: AuditFormData) => {
       </template>
     </Grid>
     <Drawer />
-    <!--
-    <template #footer >
-      <div>总计：100T</div>
-    </template>
-    -->
+    <AuditDialog ref="auditDialogRef" @confirm="handleconfirm" />
+    <Detail  />
   </Page>
-  <!--调用公共审核框 -->
-  <AuditDialog ref="auditDialogRef" @confirm="handleconfirm" />
-  <Detail ref="detailDrawerRef" />
 </template>
 <style scoped>
 .custom-dropdown:focus-visible {

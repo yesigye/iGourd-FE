@@ -12,11 +12,7 @@ const { Grid, Drawer } = useFlows();
 
 <template>
   <Page auto-content-height>
-    <Grid>
-      <template #table-title>
-        <div class="flex gap-4">哈哈哈哈</div>
-      </template>
-    </Grid>
+    <Grid />
     <Drawer />
   </Page>
 </template>

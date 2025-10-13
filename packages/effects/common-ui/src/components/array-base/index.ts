@@ -21,13 +21,7 @@ import {
 } from 'vue';
 
 // import { HandleDirective } from 'vue-slicksort'
-import {
-  ArrowDown,
-  ArrowUp,
-  Delete,
-  Plus,
-  Rank,
-} from '@element-plus/icons-vue';
+import { ArrowDown, ArrowUp, Rank } from '@element-plus/icons-vue';
 import { clone, isValid, uid } from '@formily/shared';
 import { FragmentComponent, useField, useFieldSchema } from '@formily/vue';
 import { ElButton } from 'element-plus';
@@ -249,8 +243,6 @@ const ArrayBaseAddition = defineComponent({
         {
           ...attrs,
           ...props,
-          icon: Plus,
-          size: 'small',
           type: 'text',
           onClick: (e) => {
             if (array.props?.disabled) return;
@@ -294,8 +286,6 @@ const ArrayBaseRemove = defineComponent<
         {
           class: `${prefixCls}-remove`,
           type: 'text',
-          size: 'small',
-          icon: Delete,
           ...attrs,
           onClick: (e: MouseEvent) => {
             e.stopPropagation();

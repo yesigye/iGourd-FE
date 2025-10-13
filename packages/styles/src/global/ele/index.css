@@ -45,3 +45,10 @@
 html .el-loading-mask {
   z-index: 1000;
 }
+
+.el-button--text + .el-button--text {
+  margin-left: 0;
+}
+.el-button--text.el-button--small {
+  padding: 5px 6px;
+}

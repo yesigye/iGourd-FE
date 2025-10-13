@@ -51,9 +51,8 @@ const gridOptions: VxeGridProps<RowType> = {
   proxyConfig: {
     ajax: {
       query: async ({ page }) => {
-        debugger;
         const result = {
-          list: detailData.value.purchase_order_item_model_list,
+          list: detailData.value.productList,
           page_num: '1',
           page_size: '20',
           pages: '1',
@@ -65,18 +64,18 @@ const gridOptions: VxeGridProps<RowType> = {
   },
   showOverflow: true,
 };
+
 const detailData = ref(null);
 const modeRef = ref<string>('');
 const { currentLoginUserApp } = useUserStore();
 const [Grid] = useIgourdVxeGrid({ gridOptions });
 
 const [Drawer, drawerApi] = useIgourdDrawer({
-  title: t('order.purchase-order-detail'),
-  appendToMain: true,
-  class: 'w-1/2',
-  async onConfirm() {},
-  async onOpenChange(isOpen) {
-    if (isOpen) {}
+  async onOpenChange(isOpen,a,b) {
+    if (isOpen) {
+      const data = drawerApi.getData();
+      detailData.value = data;
+    }
   },
 });
 const handle = () => {

@@ -20,7 +20,7 @@ registerValidateLocale({
 export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
   const { formAPI } = useForm(options as IFormProps<object>);
   const components = getFormComponents();
-  //@ts-ignore
+  // @ts-ignore
   const { t, locale } = options.useI18n() as any;
   const $locale = computed(() => locale.value);
   const $i18n = observable({ lang: $locale.value });
@@ -80,13 +80,13 @@ export function useTableSearchForm<T extends object>(
         'x-component': 'FormLayout',
         'x-component-props': {
           feedbackLayout: 'none',
-          layout: 'horizontal',
+          layout: 'inline',
           size: 'small',
         },
         properties: {
           space: {
             type: 'void',
-            'x-component-props': 'Space',
+            'x-component': 'Space',
             properties: options.schema,
           },
         },

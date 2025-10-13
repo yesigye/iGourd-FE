@@ -78,6 +78,7 @@ export function usePurchaseReceipt() {
       cellRender: {
         name: 'ReviewStatus',
       },
+      slots: { default: 'modal' },
     },
     {
       field: 'operation',
@@ -94,33 +95,66 @@ export function usePurchaseReceipt() {
   const service = {
     // 获取列表数据
     query: getPurchaseReceiptPageListApi,
-    detail: getPurchaseReceiptDetailApi,
+    //detail: getPurchaseReceiptDetailApi,
     // 删除收货单
     remove: deletePurchaseReceiptApi,
   };
 
-  // 使用 CRUD Hook
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
-    useCrud({
-      service,
-      columns: baseColumns,
-      searchFormSchema: {
+  const searchFormSchema = {
+    form: {
+      type: 'void',
+      'x-component': 'FormLayout',
+      'x-component-props': {
+        layout: 'inline',
+      },
+      properties: {
+        date_range: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'DatePicker',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0', width: '200px' },
+            class: 'mr-2',
+          },
+          'x-component-props': {
+            placeholder: t('purchase.good-placeholder'),
+            type: 'datetimerange',
+          },
+        },
         keywords: {
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
+          'x-decorator-props': {
+            style: { 'margin-bottom': '0', width: '160px' },
+          },
           'x-component-props': {
-            placeholder: t('common.keywords'),
-            clearable: true,
+            placeholder: t('purchase.good-placeholder'),
           },
         },
       },
-      batchOperate: true, // 支持批量删除
-      connectedComponent: PurchaseReceiptDrawer,
-    });
+    },
+  };
+
+  // 使用 CRUD Hook
+  const {
+    Grid,
+    gridApi,
+    canBatchOperate,
+    Drawer,
+    handleEdit,
+    handleBatchDelete,
+  } = useCrud({
+    service,
+    columns: baseColumns,
+    searchFormSchema: searchFormSchema,
+    batchOperate: true, // 支持批量删除
+    connectedComponent: PurchaseReceiptDrawer,
+  });
 
   return {
     Grid,
+    gridApi,
     Drawer,
     handleEdit,
     handleBatchDelete,

@@ -133,36 +133,27 @@ export function usePurchaseOrder() {
     remove: deletePurchaseOrderApi,
   };
   const searchFormSchema = {
-    form: {
-      type: 'void',
-      'x-component': 'FormLayout',
-      'x-component-props': {
-        layout: 'inline',
+    date_range: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'DatePicker',
+      'x-decorator-props': {
+        style: { 'margin-bottom': '0' },
       },
-      properties: {
-        date_range: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'DatePicker',
-          'x-decorator-props': {
-            style: { 'margin-bottom': '0' },
-          },
-          'x-component-props': {
-            placeholder: t('order.search-placeholder'),
-            type: 'datetimerange',
-          },
-        },
-        keywords: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Input',
-          'x-decorator-props': {
-            style: { 'margin-bottom': '0' },
-          },
-          'x-component-props': {
-            placeholder: t('order.search-placeholder'),
-          },
-        },
+      'x-component-props': {
+        placeholder: t('order.search-placeholder'),
+        type: 'datetimerange',
+      },
+    },
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
+      'x-decorator-props': {
+        style: { 'margin-bottom': '0' },
+      },
+      'x-component-props': {
+        placeholder: t('order.search-placeholder'),
       },
     },
   };
@@ -178,7 +169,7 @@ export function usePurchaseOrder() {
   } = useCrud({
     service,
     columns: baseColumns,
-    searchFormSchema: searchFormSchema,
+    searchFormSchema,
     printConfig: {
       sheetName: '打印出货单据',
     },

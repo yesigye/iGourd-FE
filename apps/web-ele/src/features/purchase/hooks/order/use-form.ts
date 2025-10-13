@@ -1,6 +1,7 @@
 import type { ISchema } from '@igourd/common-ui';
-
-import { h } from 'vue';
+import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
+import { onFieldValueChange } from '@igourd/common-ui';
+import { h, inject, ref } from 'vue';
 
 import { Space } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
@@ -18,13 +19,15 @@ import { basicsCurrencyList } from '#/api';
 import { orderNoGenerate } from '#/api/common';
 import { wareHouseProductSearch } from '#/features/inventory';
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
-
+// 供应商数据
+const purchaseList = ref([]);
 function remoteMethod(keywords: string) {
   return getPurchaseListApi({
     page_num: 1,
     page_size: 15,
     keywords,
   }).then((res) => {
+    purchaseList.value = res.list;
     return res.list.map((item: any) => {
       return {
         ...item,
@@ -47,6 +50,9 @@ const getCurrencyList = async () => {
 };
 export function useOrderForm() {
   const { t } = useI18n();
+  const { gridApi } = inject<{
+    gridApi: ExtendedVxeGridApi;
+  }>(Symbol.for('PageGrid'));
   const warehouse = useWarehouseSelect();
   const { currentLoginUserApp } = useUserStore();
   const vatConfigurationEnums = [
@@ -55,7 +61,7 @@ export function useOrderForm() {
     { label: t('order.VAT_exclusive'), value: 'VAT_EXCLUSIVE' },
   ];
 
-  // 配置菜单
+  // 配置form
   const schema: ISchema = {
     type: 'object',
     properties: {
@@ -108,6 +114,82 @@ export function useOrderForm() {
                             message: "{{t('order.please-select-supplier')}}",
                           },
                         ],
+                      },
+                      info: {
+                        type: 'void',
+                        'x-component': 'div',
+                        'x-content': '',
+                        'x-visible': false,
+                        'x-component-props': {
+                          class: 'flex border-b border-gray-300 pb-4',
+                          style: {
+                            fontSize: '12px',
+                          },
+                        },
+                        properties: {
+                          label_0: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-content': "{{t('purchase.vendor')+' : '}}",
+                            'x-component-props': {
+                              class: 'text-slate-300',
+                            },
+                          },
+                          vendor_name: {
+                            type: 'string',
+                            'x-component': 'div',
+                            'x-content': "{{$self.value?$self.value:''}}",
+                            'x-component-props': {
+                              class: 'text-slate-700',
+                            },
+                          },
+                        },
+                      },
+                      info_1: {
+                        type: 'void',
+                        'x-component': 'div',
+                        'x-content': '',
+                        'x-visible': false,
+                        'x-component-props': {
+                          class: 'flex',
+                          style: {
+                            fontSize: '12px',
+                          },
+                        },
+                        properties: {
+                          label_0: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-content': "{{t('purchase.contactName')+' : '}}",
+                            'x-component-props': {
+                              class: 'text-slate-300 mt-4',
+                            },
+                          },
+                          contact_name: {
+                            type: 'string',
+                            'x-component': 'div',
+                            'x-content': "{{$self.value?$self.value:''}}",
+                            'x-component-props': {
+                              class: 'text-slate-700 mt-4 mr-4',
+                            },
+                          },
+                          label_1: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-content': "{{t('purchase.phoneNumber')+' : '}}",
+                            'x-component-props': {
+                              class: 'text-slate-300 mt-4',
+                            },
+                          },
+                          phone_number: {
+                            type: 'string',
+                            'x-component': 'div',
+                            'x-content': "{{$self.value?$self.value:''}}",
+                            'x-component-props': {
+                              class: 'text-slate-700 mt-4',
+                            },
+                          },
+                        },
                       },
                     },
                   },
@@ -323,6 +405,151 @@ export function useOrderForm() {
                   },
                 },
               },
+              row_1: {
+                type: 'void',
+                'x-component': 'div',
+                'x-component-props': {
+                  class: 'w-full flex mt-10 mb-10',
+                  style: {},
+                },
+                properties: {
+                  row_col_0: {
+                    type: 'void',
+                    'x-component': 'div',
+                    'x-component-props': {
+                      class: 'w-2/3',
+                      style: {},
+                    },
+                    properties: {},
+                  },
+                  row_col_1: {
+                    type: 'void',
+                    'x-component': 'div',
+                    'x-component-props': {
+                      class: 'w-1/3 flex items-center justify-center mt-6 mb-6',
+                      style: {
+                        background: '#edf5ff',
+                      },
+                    },
+                    properties: {
+                      center: {
+                        type: 'void',
+                        'x-component': 'div',
+                        'x-component-props': {
+                          class:"p-4"
+                        },
+                        properties: {
+                          label_1: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-component-props': {
+                              class: 'flex',
+                            },
+                            properties: {
+                              c: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-content': "{{t('purchase.subtotal')+' : '}}",
+                                'x-component-props': {
+                                  class:"w-20 text-right",
+                                  style: { fontSize: '14px' },
+                                },
+                              },
+                              diffNum: {
+                                type: 'string',
+                                'x-component': 'div',
+                                'x-content': "{{$self.value?$self.value:'0'}}",
+                                'x-component-props': {
+                                  style: {},
+                                },
+                              },
+                            },
+                          },
+                          label_2: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-component-props': {
+                              class: 'flex',
+                            },
+                            properties: {
+                              c: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-content': "{{t('purchase.vat')+' : '}}",
+                                'x-component-props': {
+                                  class:"w-20 text-right",
+                                  style: { fontSize: '14px' },
+                                },
+                              },
+                              diffCost: {
+                                type: 'string',
+                                'x-component': 'div',
+                                'x-content': "{{$self.value?$self.value:'0'}}",
+                                'x-component-props': {
+                                  style: {},
+                                },
+                              },
+                            },
+                          },
+                          label_3: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-component-props': {
+                              class: 'flex',
+                            },
+                            properties: {
+                              c: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-content':
+                                  "{{t('purchase.other_tax')+' : '}}",
+                                'x-component-props': {
+                                  class:"w-20 text-right",
+                                  style: { fontSize: '14px' },
+                                },
+                              },
+                              diffSale: {
+                                type: 'string',
+                                'x-component': 'div',
+                                'x-content': "{{$self.value?$self.value:'0'}}",
+                                'x-component-props': {
+                                  style: {},
+                                },
+                              },
+                            },
+                          },
+                          label_4: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-component-props': {
+                              class: 'flex',
+                            },
+                            properties: {
+                              c: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-content': "{{t('purchase.total')+' : '}}",
+                                'x-component-props': {
+                                  class:"w-20 text-right",
+                                  style: { fontSize: '14px' },
+                                },
+                              },
+                              diffSale: {
+                                type: 'string',
+                                'x-component': 'div',
+                                'x-content': "{{$self.value?$self.value:'0'}}",
+                                'x-component-props': {
+                                  style: {},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
               card_1: {
                 type: 'void',
                 'x-component': 'Card',
@@ -392,13 +619,10 @@ export function useOrderForm() {
         (acc: any, item: any) => acc + item.quantity * item.cost_price,
         0,
       );
-      debugger
+
       formData.purchase_order_item_list.forEach((item) => {
         item.product_name = item.label;
-        // 新增时 id 是产品id；编辑时,id 是数据id 不能设置给产品id  2025年10月10日18:38:12
-        if(!item.product_id){
-          item.product_id = item.id;
-        }
+
         item.other_tax_amount = 0;
         item.vat_amount = 0;
         item.subtotal_amount = item.quantity * item.cost_price;
@@ -414,6 +638,7 @@ export function useOrderForm() {
       response = formData.id
         ? updatePurchaseOrderApi(formData)
         : await createPurchaseOrderApi(formData);
+      gridApi.reload();
       return response;
     } catch (error) {
       console.error('采购单 customized form submission error:', error);
@@ -470,6 +695,25 @@ export function useOrderForm() {
       },
       scope: {
         warehouse,
+      },
+      effects() {
+        onFieldValueChange('vendor_id', (field, form) => {
+          console.log(`target值变化：${field.value}`);
+          const currObj = purchaseList.value.find(
+            (item) => item.id === field.value,
+          );
+
+          form.setValuesIn('vendor_name', currObj?.name);
+          form.setValuesIn('contact_name', currObj?.contact_name);
+          form.setValuesIn('phone_number', currObj?.contact_telephone);
+          form.setFieldState('info', (f) => {
+            f.visible = true;
+          });
+          form.setFieldState('info_1', (f) => {
+            f.visible = true;
+          });
+          debugger;
+        });
       },
       schema,
     },

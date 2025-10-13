@@ -37,15 +37,18 @@ const InnerSelect = defineComponent(
           });
       }
     }
+    function onSelect(op: any) {
+      emit('select', op);
+    }
     function onChange(val: string) {
+      const op = options.value.find((i) => i.value === val) || {};
       emit('change', val);
+
+      onSelect(op);
       if (!record.value) {
         return;
       }
-      Object.assign(
-        record.value,
-        options.value.find((i) => i.value === val) || {},
-      );
+      Object.assign(record.value, op);
     }
     return () => {
       return h(
@@ -85,7 +88,7 @@ const InnerSelect = defineComponent(
         default: () => [],
       },
     },
-    emits: ['update:modelValue', 'change'],
+    emits: ['update:modelValue', 'change', 'select'],
   },
 );
 

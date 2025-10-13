@@ -36,21 +36,20 @@ export function deletePurchaseReceiptApi(data: PurchaseReceiptRemoveVO) {
 // 获取收货单详情
 function receiptDetail(data: any) {
   return requestClient
-    .post(`${PURCHASE_RECEIPT_BASE_URL}/list/detail`, data)
+    .post(`${PURCHASE_RECEIPT_BASE_URL}/detail`, data)
     .then((res) => {
-      return res?.[0];
+      return res;
     });
 }
 export function getPurchaseReceiptDetailApi({
-  goods_receipt_note_no,
-  purchase_order_no,
+  goods_receipt_note_id,
+  purchase_order_id,
 }: any) {
   return Promise.all([
-    receiptDetail({ goods_receipt_note_no, purchase_order_no }),
-    getPurchaseOrderDetailApi({ purchase_order_no }),
-  ]).then(([receipt, order]) => {
+    receiptDetail({ goods_receipt_note_id, purchase_order_id }),
+    //getPurchaseOrderDetailApi({ purchase_order_id }),
+  ]).then(([receipt]) => {
     return {
-      ...order,
       ...receipt,
     };
   });
@@ -63,5 +62,5 @@ export function auditPurchaseReceiptApi(data: {
   remark?: string;
   status: string;
 }) {
-  return requestClient.post(`${PURCHASE_RECEIPT_BASE_URL}/audit`, data);
+  return requestClient.post(`${PURCHASE_RECEIPT_BASE_URL}/review`, data);
 }

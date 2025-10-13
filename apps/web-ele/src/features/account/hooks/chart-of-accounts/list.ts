@@ -2,6 +2,8 @@ import type { AccountLedgerBalanceTreeModel } from '@@/account/types';
 
 import type { VxeGridPropTypes } from '@igourd/plugins/vxe-table';
 
+import { ref } from 'vue';
+
 import { useI18n } from '@igourd/locales';
 
 import {
@@ -12,10 +14,11 @@ import {
 } from '@@/account/apis';
 import { ChartOfAccountsDrawer } from '@@/account/components';
 
-import { useCrud } from '#/hooks';
+import { useCrud, useLanguage } from '#/hooks';
 
 export function useChartOfAccounts() {
   const { t } = useI18n();
+  const categories = ref([]);
 
   // 基础列定义
   const columns: VxeGridPropTypes.Column<AccountLedgerBalanceTreeModel>[] = [
@@ -23,6 +26,7 @@ export function useChartOfAccounts() {
       field: 'code',
       width: 165,
       fixed: 'left',
+      align: 'left',
       title: t('account.account_code'),
       treeNode: true,
     },
@@ -86,56 +90,10 @@ export function useChartOfAccounts() {
     { label: t('account.profit_and_loss'), value: 'profitAndLoss' },
   ];
 
-  let queryParam = null;
-  // 查询数据
-  const handleQueryTable = (qParam) => {
-    queryParam = qParam;
-    gridApi.reload();
-  };
-
-  // 转换算法实现
-  const convertToElTreeFormat = (data) => {
-    return data.map((item) => {
-      const node = {
-        ...item.account_ledger,
-        id: item.account_ledger.id,
-        label: item.account_ledger.name,
-        children: [],
-      };
-
-      // 递归处理子节点
-      if (item.sub_ledger_trees && item.sub_ledger_trees.length > 0) {
-        node.children = convertToElTreeFormat(item.sub_ledger_trees);
-      }
-
-      return node;
-    });
-  };
-
   // 服务函数
   const service = {
     // 获取列表数据
-    query: async (data: {
-      date_range?: string[];
-      page_num: number;
-      page_size: number;
-    }) => {
-      const params = {
-        ...data,
-        category: '',
-      };
-      if (queryParam && queryParam.category) {
-        params.category = queryParam.category;
-      }
-      const tableData = await getChartOfAccountsTreeApi(params);
-      const treeData = convertToElTreeFormat(tableData);
-      console.log(treeData, 'treeData');
-      return new Promise<void>((resolve) => {
-        resolve({
-          list: treeData,
-        });
-      });
-    },
+    query: getChartOfAccountsTreeApi,
     // 删除科目
     remove: async (data: { ledger_id_list: number[] }) => {
       return await removeAccountLedgerApi(data);
@@ -161,9 +119,17 @@ export function useChartOfAccounts() {
     canBatchOperate,
     handleBatchDelete,
   } = useCrud({
-    // @ts-ignore
     service,
+    stripe: false,
     columns,
+    pagerConfig: {
+      enabled: false,
+    },
+    tabs: categories.value,
+    tabsOption: {
+      defaultActiveValue: 'COST',
+      formKey: 'category',
+    },
     treeConfig: {
       rowField: 'id',
       childrenField: 'children',
@@ -186,7 +152,9 @@ export function useChartOfAccounts() {
     batchOperate: false,
     connectedComponent: ChartOfAccountsDrawer,
   });
-
+  useLanguage('basics.accounting.account-ledger-category-enum').then((res) => {
+    categories.value = res;
+  });
   return {
     Grid,
     Drawer,
@@ -194,7 +162,7 @@ export function useChartOfAccounts() {
     handleEdit,
     canBatchOperate,
     handleBatchDelete,
+    categories,
     gridApi,
-    handleQueryTable,
   };
 }

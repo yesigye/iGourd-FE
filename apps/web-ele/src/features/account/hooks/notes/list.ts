@@ -6,6 +6,7 @@ import type {
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
+import { moneyFormat } from '@igourd/utils';
 
 import {
   getFinanceNoteListApi,
@@ -20,7 +21,7 @@ export function useAccountNotes() {
   const columns: VxeGridPropTypes.Column<AccountingNotePageModel>[] = [
     {
       type: 'checkbox',
-      width: 80,
+      minWidth: 50,
       fixed: 'left',
     },
     {
@@ -37,14 +38,14 @@ export function useAccountNotes() {
       sortable: true,
       align: 'left',
     },
-    // {
-    //   field: 'amount',
-    //   title: t('account.amount'),
-    //   minWidth: 120,
-    //   sortable: true,
-    //   align: 'left',
-    //   formatter: 'formatMoney',
-    // },
+    {
+      field: 'amount',
+      title: t('account.amount'),
+      minWidth: 120,
+      sortable: true,
+      align: 'left',
+      formatter: 'formatMoney',
+    },
     {
       field: 'our_account',
       title: t('account.our_account'),
@@ -54,19 +55,22 @@ export function useAccountNotes() {
           field: 'our_account_name',
           title: t('account.payment_account'),
           align: 'center',
-          width: 138,
+          minWidth: 138,
         },
         {
           field: 'our_payment_method_name',
           title: t('account.payment_method'),
           align: 'center',
-          width: 135,
+          minWidth: 135,
         },
         {
-          field: 'amount',
+          field: 'our_amount',
           title: t('account.amount'),
           align: 'center',
-          width: 135,
+          minWidth: 135,
+          formatter({ row }) {
+            return row.amount ? moneyFormat(row.amount) : '';
+          },
         },
       ],
     },
@@ -78,12 +82,15 @@ export function useAccountNotes() {
         {
           field: 'target_account_name',
           title: t('account.payment_account'),
-          width: 138,
+          minWidth: 138,
         },
         {
-          field: 'amount',
+          field: 'external_amount',
           title: t('account.amount'),
-          width: 138,
+          minWidth: 138,
+          formatter({ row }) {
+            return row.amount ? moneyFormat(row.amount) : '';
+          },
         },
       ],
     },
@@ -111,12 +118,14 @@ export function useAccountNotes() {
     },
     {
       field: 'reviewer',
+      fixed: 'right',
       title: t('account.Review'),
-      width: 165,
+      minWidth: 165,
     },
     {
       field: 'operation',
       title: t('account.operation'),
+      fixed: 'right',
       sortable: true,
       minWidth: 180,
       slots: { default: 'operation' },
@@ -139,6 +148,15 @@ export function useAccountNotes() {
     columns,
     searchFormSchema,
     batchOperate: true,
+    tabs: [
+      { value: 'ALL', label: '全部' },
+      { value: 'REVENUE', label: '收入' },
+      { value: 'EXPENDITURE', label: '支出' },
+    ],
+    tabsOption: {
+      defaultActiveValue: 'ALL',
+      formKey: 'change_type',
+    },
     connectedComponent: NotesDrawerForm,
     service: {
       query: getFinanceNoteListApi,
