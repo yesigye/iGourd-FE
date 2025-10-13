@@ -1,7 +1,7 @@
 import type { ISchema } from '@igourd/common-ui';
 import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
 import { onFieldValueChange } from '@igourd/common-ui';
-import { h, inject,ref} from 'vue';
+import { h, inject, ref } from 'vue';
 
 import { Space } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
@@ -20,7 +20,7 @@ import { orderNoGenerate } from '#/api/common';
 import { wareHouseProductSearch } from '#/features/inventory';
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
 // 供应商数据
-const  purchaseList = ref([]);
+const purchaseList = ref([]);
 function remoteMethod(keywords: string) {
   return getPurchaseListApi({
     page_num: 1,
@@ -405,6 +405,151 @@ export function useOrderForm() {
                   },
                 },
               },
+              row_1: {
+                type: 'void',
+                'x-component': 'div',
+                'x-component-props': {
+                  class: 'w-full flex mt-10 mb-10',
+                  style: {},
+                },
+                properties: {
+                  row_col_0: {
+                    type: 'void',
+                    'x-component': 'div',
+                    'x-component-props': {
+                      class: 'w-2/3',
+                      style: {},
+                    },
+                    properties: {},
+                  },
+                  row_col_1: {
+                    type: 'void',
+                    'x-component': 'div',
+                    'x-component-props': {
+                      class: 'w-1/3 flex items-center justify-center mt-6 mb-6',
+                      style: {
+                        background: '#edf5ff',
+                      },
+                    },
+                    properties: {
+                      center: {
+                        type: 'void',
+                        'x-component': 'div',
+                        'x-component-props': {
+                          class:"p-4"
+                        },
+                        properties: {
+                          label_1: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-component-props': {
+                              class: 'flex',
+                            },
+                            properties: {
+                              c: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-content': "{{t('purchase.subtotal')+' : '}}",
+                                'x-component-props': {
+                                  class:"w-20 text-right",
+                                  style: { fontSize: '14px' },
+                                },
+                              },
+                              diffNum: {
+                                type: 'string',
+                                'x-component': 'div',
+                                'x-content': "{{$self.value?$self.value:'0'}}",
+                                'x-component-props': {
+                                  style: {},
+                                },
+                              },
+                            },
+                          },
+                          label_2: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-component-props': {
+                              class: 'flex',
+                            },
+                            properties: {
+                              c: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-content': "{{t('purchase.vat')+' : '}}",
+                                'x-component-props': {
+                                  class:"w-20 text-right",
+                                  style: { fontSize: '14px' },
+                                },
+                              },
+                              diffCost: {
+                                type: 'string',
+                                'x-component': 'div',
+                                'x-content': "{{$self.value?$self.value:'0'}}",
+                                'x-component-props': {
+                                  style: {},
+                                },
+                              },
+                            },
+                          },
+                          label_3: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-component-props': {
+                              class: 'flex',
+                            },
+                            properties: {
+                              c: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-content':
+                                  "{{t('purchase.other_tax')+' : '}}",
+                                'x-component-props': {
+                                  class:"w-20 text-right",
+                                  style: { fontSize: '14px' },
+                                },
+                              },
+                              diffSale: {
+                                type: 'string',
+                                'x-component': 'div',
+                                'x-content': "{{$self.value?$self.value:'0'}}",
+                                'x-component-props': {
+                                  style: {},
+                                },
+                              },
+                            },
+                          },
+                          label_4: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-component-props': {
+                              class: 'flex',
+                            },
+                            properties: {
+                              c: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-content': "{{t('purchase.total')+' : '}}",
+                                'x-component-props': {
+                                  class:"w-20 text-right",
+                                  style: { fontSize: '14px' },
+                                },
+                              },
+                              diffSale: {
+                                type: 'string',
+                                'x-component': 'div',
+                                'x-content': "{{$self.value?$self.value:'0'}}",
+                                'x-component-props': {
+                                  style: {},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
               card_1: {
                 type: 'void',
                 'x-component': 'Card',
@@ -554,7 +699,9 @@ export function useOrderForm() {
       effects() {
         onFieldValueChange('vendor_id', (field, form) => {
           console.log(`target值变化：${field.value}`);
-          const currObj = purchaseList.value.find(item=> item.id === field.value)
+          const currObj = purchaseList.value.find(
+            (item) => item.id === field.value,
+          );
 
           form.setValuesIn('vendor_name', currObj?.name);
           form.setValuesIn('contact_name', currObj?.contact_name);
@@ -562,10 +709,10 @@ export function useOrderForm() {
           form.setFieldState('info', (f) => {
             f.visible = true;
           });
-           form.setFieldState('info_1', (f) => {
+          form.setFieldState('info_1', (f) => {
             f.visible = true;
           });
-          debugger
+          debugger;
         });
       },
       schema,

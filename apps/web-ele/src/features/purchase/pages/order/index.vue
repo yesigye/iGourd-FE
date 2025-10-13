@@ -14,14 +14,13 @@ import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
 import {
-  getPurchaseReceiptDetailApi,
+  getPurchaseOrderDetailApi,
   reviewPurchaseOrderApi,
 } from '@@/purchase/apis';
-import { usePurchaseOrder } from '@@/purchase/hooks';
+import { usePurchaseOrder,usePurchaseOrderDetail } from '@@/purchase/hooks';
 
 import { AuditDialog } from '#/components';
 
-import Detail from '../../components/order/detail.vue';
 
 defineOptions({
   name: 'IPurchaseOrder',
@@ -47,6 +46,7 @@ const {
   handleBatchDelete,
   canBatchOperate,
 } = usePurchaseOrder();
+const{Drawer:Detail,drawerApi:detailDrawerApi} = usePurchaseOrderDetail()
 const { currentLoginUserApp } = useUserStore();
 
 const operationOpt = [
@@ -86,10 +86,11 @@ const openModal = (row: tableItem, item) => {
   }
 };
 const handleDetail = async (row: tableItem, mode: string) => {
-  const detail = await getPurchaseReceiptDetailApi({
+  const detail = await getPurchaseOrderDetailApi({
     purchase_order_id: row.id,
   });
-  detailDrawerRef.value.open({...detail,productList:detail.purchase_order_item_model_list}, mode);
+  detailDrawerApi.setData({...detail,productList:detail.purchase_order_item_model_list}, mode).open()
+  //detailDrawerRef.value.open({...detail,productList:detail.purchase_order_item_model_list}, mode);
 };
 const handleconfirm = (data: AuditFormData) => {
   data.id = currentRow.value.id;
@@ -193,7 +194,7 @@ const handleconfirm = (data: AuditFormData) => {
     </Grid>
     <Drawer />
     <AuditDialog ref="auditDialogRef" @confirm="handleconfirm" />
-    <Detail ref="detailDrawerRef" />
+    <Detail  />
   </Page>
 </template>
 <style scoped>
