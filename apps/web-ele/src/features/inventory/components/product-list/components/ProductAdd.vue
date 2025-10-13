@@ -1087,7 +1087,7 @@ onMounted(() => {
           <!-- 动态字段 -->
           <FormSection
             v-if="res_options.length > 0"
-            :title="t('purchase.customizedInformation')"
+            :title="t('product-list.customized-information')"
           >
             <div
               v-if="res_options.length > 0"
@@ -1168,7 +1168,7 @@ onMounted(() => {
           <!-- 其他信息 -->
           <template v-if="showAllFiles">
             <div class="list-box-title">
-              {{ t('purchase.otherInformation') }}
+              {{ t('product-list.other-information') }}
             </div>
 
             <div class="form-row">
