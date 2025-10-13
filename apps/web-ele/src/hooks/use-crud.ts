@@ -262,6 +262,10 @@ function useCrud<T extends { id?: number | string }, P extends object>(
       drawerApi.setData(data ?? {}).open();
       return;
     }
+    if (dto) {
+      // @ts-ignore
+      dto.mode = 'edit';
+    }
     drawerApi.setData(dto ?? {}).open();
   };
   /*
