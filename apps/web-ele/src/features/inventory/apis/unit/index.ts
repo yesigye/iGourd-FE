@@ -40,7 +40,7 @@ export function deleteUnit(params: {
   merchant_id: number;
   product_unit_id_list: number[];
 }) {
-  return request.post('/v1/merchant/basics/inventory/unit/delete', params);
+  return request.post('/v1/merchant/basics/inventory/product-unit/remove', params);
 }
 
 /**

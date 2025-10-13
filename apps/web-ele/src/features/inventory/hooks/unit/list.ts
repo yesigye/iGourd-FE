@@ -64,7 +64,9 @@ export function useInventoryUnitList() {
     connectedComponent: UnitDrawer,
     service: {
       query: getUnitList,
-      remove: deleteUnit,
+      drop: (params)=>{
+        deleteUnit({product_unit_id_list:params})
+      },
       create: createUnit,
     },
   });
