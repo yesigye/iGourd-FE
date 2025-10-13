@@ -5,7 +5,10 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { deleteProduct, getProductList } from '@@/inventory/apis';
+import {
+  deleteProduct,
+  inventoryProductProfilePageList,
+} from '@@/inventory/apis';
 import { ProductListDrawer } from '@@/inventory/components';
 
 import { useCrud } from '#/hooks';
@@ -133,26 +136,33 @@ export function useInventoryProductList() {
   // 服务函数
   const service = {
     // 获取列表数据
-    query: getProductList,
+    query: inventoryProductProfilePageList,
 
     // 删除产品
     remove: deleteProduct,
   };
 
   // 使用 CRUD Hook
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
-    useCrud({
-      // @ts-ignore
-      service,
-      columns,
-      searchFormSchema,
-      batchOperate: true,
-      connectedComponent: ProductListDrawer,
-    });
+  const {
+    Grid,
+    gridApi,
+    canBatchOperate,
+    Drawer,
+    handleEdit,
+    handleBatchDelete,
+  } = useCrud({
+    // @ts-ignore
+    service,
+    columns,
+    searchFormSchema,
+    batchOperate: true,
+    connectedComponent: ProductListDrawer,
+  });
 
   return {
     Grid,
     Drawer,
+    gridApi,
     handleEdit,
     handleBatchDelete,
     canBatchOperate,

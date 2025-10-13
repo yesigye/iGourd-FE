@@ -87,7 +87,6 @@ const defaultTime = computed(() => {
 const getListAccountingPeriods = async () => {
   const res = await listAccountingPeriods(
     {
-      merchant_id: userStore.merchantId,
       account_set_id: userStore.merchantInfo.account_set_id,
     },
     { cancelDuplicate: false },
@@ -168,7 +167,6 @@ const handCurrentAccountingPeriod = async () => {
     const res = await carryOverProfitPreCheck({
       account_set_id: userStore.merchantInfo.account_set_id,
       accounting_period_id: accountingPeriod.value.id,
-      merchant_id: userStore.merchantId,
     });
     // if (res.code == 'SUCCESS') {
     if (res.is_carry_over) {
@@ -199,7 +197,6 @@ const handiSlentProfitLossTransfer = async () => {
     account_set_id: userStore.merchantInfo.account_set_id,
     accounting_period_id: accountingPeriod.value.id,
     is_skip_pre_check: false,
-    merchant_id: userStore.merchantId,
   });
 
   // if (res.code === 'SUCCESS') {
@@ -214,7 +211,6 @@ const handExecuteProfitLossCarryForward = async () => {
     account_set_id: userStore.merchantInfo.account_set_id,
     accounting_period_id: accountingPeriod.value.id,
     is_skip_pre_check: false,
-    merchant_id: userStore.merchantId,
   });
   // if (res.code === 'SUCCESS') {
   recordStep(3, 4);
@@ -229,9 +225,7 @@ const handCheckBeforeCheckout = async () => {
     account_set_id: userStore.merchantInfo.account_set_id,
     accounting_period_id: accountingPeriod.value.id,
     is_skip_pre_check: false,
-    merchant_id: userStore.merchantId,
   });
-  console.log(res, '这是结账前校验');
   // 根据is_only_message进行分组
   const group = res.check_items.reduce((groups, item) => {
     const key = item.is_only_message
@@ -276,7 +270,6 @@ const onBatchClosingInitiated = async () => {
         account_set_id: userStore.merchantInfo.account_set_id,
         accounting_period_id: element.id,
         is_skip_pre_check: false,
-        merchant_id: userStore.merchantId,
       });
       accountingPeriodList[index].id = res.data.accounting_period_id;
       index = index + 1;
@@ -318,7 +311,6 @@ const handExecutePeriodClose = async () => {
     account_set_id: userStore.merchantInfo.account_set_id,
     accounting_period_id: accountingPeriod.value.id,
     is_skip_pre_check: false,
-    merchant_id: userStore.merchantId,
   });
   // 如果成功初始化页面 并重新执行获取当前账套所有的会计期间
   // 重新获取会计期间列表
@@ -359,7 +351,6 @@ const handfinalTransferClick = async (event) => {
         {
           account_set_id: userStore.merchantInfo.account_set_id,
           accounting_period_id: event.id,
-          merchant_id: userStore.merchantId,
           check_sections: ['OPENING_BALANCE'],
         },
         { hideLoading: true },
@@ -396,7 +387,6 @@ const params = ref({
   end_time: '',
   finance_category_id: null,
   keywords: '',
-  merchant_id: userStore.merchantId,
   start_time: '',
   type: '',
   page_num: 1,
