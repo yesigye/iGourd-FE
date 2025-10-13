@@ -9,18 +9,18 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
+const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete, type } =
   useAccountManagement();
 </script>
 
 <template>
   <Page auto-content-height>
     <Grid>
-    <template #table-actions>
-        <ElButton type="primary" @click="handleEdit()">
+      <template #table-actions>
+        <ElButton type="primary" @click="handleEdit(undefined, 'CASH')">
           {{ t('account.add_cash') }}
         </ElButton>
-        <ElButton type="primary" @click="handleEdit()">
+        <ElButton type="primary" @click="handleEdit(undefined, 'CARD')">
           {{ t('account.add_bank_card') }}
         </ElButton>
         <ElButton
@@ -32,7 +32,7 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
         </ElButton>
       </template>
       <template #operation="{ row }">
-        <ElButton type="text" @click="handleEdit(row)">
+        <ElButton type="text" @click="handleEdit(row,row.account_type)">
           {{ t('common.edit') }}
         </ElButton>
         <ElButton type="text" @click="handleEdit(row)">
@@ -40,6 +40,6 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
         </ElButton>
       </template>
     </Grid>
-    <Drawer />
+    <Drawer :type="type" />
   </Page>
 </template>
