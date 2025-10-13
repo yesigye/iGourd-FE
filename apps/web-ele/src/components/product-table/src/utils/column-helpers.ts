@@ -17,13 +17,13 @@ export const createBaseColumns = (): ColumnDescriptor[] => [
     'x-component': 'PreviewText.Input',
   },
   {
-    name: 'product_id',
+    name: 'major_name',
     type: 'string',
     title: 'product_id',
     'x-hidden': true,
   },
   {
-    name: 'major_name',
+    name: 'product_id',
     type: 'string',
     title: '{{t("common.purchase.major_name")}}',
     'x-component-props': {
