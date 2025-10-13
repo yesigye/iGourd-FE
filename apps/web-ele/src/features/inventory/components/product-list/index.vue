@@ -97,6 +97,13 @@ const [Drawer, drawerApi] = useIgourdDrawer({
       // fetchGoodsList();
     }
   },
+  onConfirm: async () => {
+    try {
+      handleInputDebounced();
+    } catch (error) {
+      console.error(error);
+    }
+  },
   onClosed: () => {
     handleClose();
   },
@@ -686,8 +693,8 @@ onMounted(() => {
 <template>
   <Drawer>
     <template v-if="props.productTitle !== 'Add Price Adjustment'">
-      <div class="drawer-top">
-        <div class="content-form">
+      <div class="flex items-center justify-between">
+        <div class="m-2.5">
           <ElForm :inline="true">
             <ElFormItem
               :label="`${t('inventory.creator')}:`"
@@ -716,7 +723,7 @@ onMounted(() => {
       </div>
     </template>
 
-    <div class="drawer-form" style="margin: 10px 75px 0">
+    <div class="m-2.5">
       <ElForm
         ref="ruleFormRef"
         class="demo-ruleForm"
@@ -1160,8 +1167,7 @@ onMounted(() => {
                     </ElSelect>
                     <ElButton
                       v-if="item.is_fixed_option && !newDisabled"
-                      class="outer-btn right-box"
-                      style="height: 32px; margin-right: 0; margin-left: 4px"
+                      class="outer-btn right-box ml-1"
                       @click="openAddOptionDialog(item)"
                     >
                       <div class="outer">
@@ -1169,7 +1175,7 @@ onMounted(() => {
                           <i class="iconfont icon-tianjia-dianpu"></i>
                         </div>
                         <div class="inner-right">
-                          <span>{{ t('employee.addButton') }}</span>
+                          <span>{{ t('common.add') }}</span>
                         </div>
                       </div>
                     </ElButton>
@@ -1255,7 +1261,7 @@ onMounted(() => {
     </div>
 
     <!-- 修改按钮容器，仅在非禁用模式显示保存按钮 -->
-    <div class="btn-box">
+    <!-- <div class="btn-box">
       <ElButton :plain="true" @click="handleClose">
         {{ t('inventory.cancel') }}
       </ElButton>
@@ -1266,7 +1272,7 @@ onMounted(() => {
       >
         {{ t('inventory.save') }}
       </ElButton>
-    </div>
+    </div> -->
 
     <ElDialog
       v-model="addOptionDialogVisible"

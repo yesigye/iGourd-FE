@@ -236,34 +236,34 @@ export function useProductAdd() {
    */
   async function fetchDynamicColumnList(merchantId) {
     const res = await getCustomerFeaturePageListApi(queryParams_options);
-    if (res && res.data) {
-      // 构建动态字段配置
-      res_options.value = res.data?.list?.map((item) => {
-        return {
-          disabled: false,
-          isSelect: true,
-          required: item.is_compulsory, // 是否必填
-          label: item.name,
-          prop: item.key,
-          placeholder: '',
-          value: '',
-          is_fixed_option: item.is_fixed_option, // 是否固定选项
-          type: item.type,
-          options: item.options,
-        };
-      });
+    // if (res && res.data) {
+    // 构建动态字段配置
+    res_options.value = res?.list?.map((item) => {
+      return {
+        disabled: false,
+        isSelect: true,
+        required: item.is_compulsory, // 是否必填
+        label: item.name,
+        prop: item.key,
+        placeholder: '',
+        value: '',
+        is_fixed_option: item.is_fixed_option, // 是否固定选项
+        type: item.type,
+        options: item.options,
+      };
+    });
 
-      // 初始化表单中的动态字段
-      res.data?.list.forEach((item) => {
-        if (!(item.key in forms.value)) {
-          forms.value[item.key] = '';
-        }
-      });
+    // 初始化表单中的动态字段
+    res?.list.forEach((item) => {
+      if (!(item.key in forms.value)) {
+        forms.value[item.key] = '';
+      }
+    });
 
-      // 生成动态字段的验证规则
-      const dynamicRules = generateDynamicRules(res_options.value, t);
-      Object.assign(rules, dynamicRules);
-    }
+    // 生成动态字段的验证规则
+    const dynamicRules = generateDynamicRules(res_options.value, t);
+    Object.assign(rules, dynamicRules);
+    // }
   }
 
   /**
@@ -304,7 +304,7 @@ export function useProductAdd() {
       keywords,
       page_size: 500,
     }).then((res) => {
-      unitList.value = res.data?.list.map((item) => {
+      unitList.value = res?.list.map((item) => {
         return {
           id: item.id,
           name: item.name,
@@ -389,13 +389,13 @@ export function useProductAdd() {
         page_num: 1,
         page_size: configPageSize,
       });
-      if (res.code === 'SUCCESS') {
-        // 分离增值税和其他税种
-        vatList.value = res.data.list.filter((item) => item.tax_type === 'VAT');
-        otherTaxList.value = res.data.list.filter(
-          (item) => item.tax_type === 'OTHER_TAX',
-        );
-      }
+      // if (res.code === 'SUCCESS') {
+      // 分离增值税和其他税种
+      vatList.value = res.list.filter((item) => item.tax_type === 'VAT');
+      otherTaxList.value = res.list.filter(
+        (item) => item.tax_type === 'OTHER_TAX',
+      );
+      // }
     } catch (error) {
       console.error(error);
     }
