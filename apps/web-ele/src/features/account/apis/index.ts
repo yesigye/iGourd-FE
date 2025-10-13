@@ -10,6 +10,9 @@ export * from './management';
 export * from './notes';
 export * from './subsidiary-ledger';
 export * from './tax';
+
+export * from './account-ledger';
+
 export function listSubLedgerTreeApi() {
   return [];
 }

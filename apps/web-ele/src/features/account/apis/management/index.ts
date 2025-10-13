@@ -1,19 +1,19 @@
-import type { AccountPageModel, AccountQueryPageVO, AccountCreateVO, AccountRemoveVO } from '@@/account/types';
+import type {  AccountCreateVO, AccountRemoveVO } from '@@/account/types';
 
 import { requestClient } from '#/api/request';
 
 // 获取账户管理分页列表
-export function getAccountManagementListApi(data: AccountQueryPageVO) {
+export function getAccountManagementListApi(data: any) {
   return requestClient.post(
     `/v1/merchant/basics/accounting/account/page-list`,
     data,
   );
 }
 
-// 创建账户
-export function createAccountApi(data: AccountCreateVO) {
-  return requestClient.post(`/v1/merchant/basics/accounting/account/create`, data);
-}
+// // 创建账户
+// export function createAccountApi(data: AccountCreateVO) {
+//   return requestClient.post(`/v1/merchant/basics/accounting/account/create`, data);
+// }
 
 // 更新账户
 export function updateAccountApi(data: AccountCreateVO) {
