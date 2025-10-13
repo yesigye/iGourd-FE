@@ -1,5 +1,5 @@
 <script setup>
-import { useI18n } from 'vue-i18n';
+import { useI18n } from '@igourd/locales';
 
 import { ElIcon, ElTable, ElTableColumn } from '@igourd/common-ui';
 

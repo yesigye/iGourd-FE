@@ -97,6 +97,13 @@ const [Drawer, drawerApi] = useIgourdDrawer({
       // fetchGoodsList();
     }
   },
+  onConfirm: async () => {
+    try {
+      handleInputDebounced();
+    } catch (error) {
+      console.error(error);
+    }
+  },
   onClosed: () => {
     handleClose();
   },
@@ -306,17 +313,13 @@ const basicInfoFields = reactive({
 
 // 处理图片上传和预览
 const handleUploadSuccess = (response) => {
-  if (response.code === 'SUCCESS') {
-    ElMessage.success(t('inventory.uploadSuccess'));
-    forms.value.profile_photo = response.data.url;
-    fileList.value = [{ name: 'profile', url: response.data.url }];
-  } else {
-    ElMessage.error(response.message || t('inventory.uploadFailed'));
-  }
+  ElMessage.success(t('inventory.uploadSuccess'));
+  forms.value.profile_photo = response.url;
+  fileList.value = [{ name: 'profile', url: response.url }];
 };
 
 const handleUploadError = (error) => {
-  ElMessage.error(error.message || t('inventory.uploadFailed'));
+  ElMessage.error(error.message || t('product-list.upload-failed'));
 };
 
 const beforeUpload = (file) => {
@@ -685,9 +688,23 @@ onMounted(() => {
 </script>
 <template>
   <Drawer>
+    <template #extra>
+      <ElButton
+        v-if="!newDisabled"
+        type="primary"
+        plain
+        @click="handleSwitchFiles"
+      >
+        {{
+          showAllFiles
+            ? $t('inventory.primaryFiles')
+            : $t('inventory.showALlFiles')
+        }}
+      </ElButton>
+    </template>
     <template v-if="props.productTitle !== 'Add Price Adjustment'">
-      <div class="drawer-top">
-        <div class="content-form">
+      <div class="flex items-center justify-between">
+        <div class="m-2.5">
           <ElForm :inline="true">
             <ElFormItem
               :label="`${t('inventory.creator')}:`"
@@ -699,24 +716,11 @@ onMounted(() => {
             </ElFormItem>
           </ElForm>
         </div>
-        <div class="drawer-top-buttons">
-          <ElButton
-            v-if="!newDisabled"
-            type="primary"
-            plain
-            @click="handleSwitchFiles"
-          >
-            {{
-              showAllFiles
-                ? $t('inventory.primaryFiles')
-                : $t('inventory.showALlFiles')
-            }}
-          </ElButton>
-        </div>
+        <div class="drawer-top-buttons"></div>
       </div>
     </template>
 
-    <div class="drawer-form" style="margin: 10px 75px 0">
+    <div class="m-2.5">
       <ElForm
         ref="ruleFormRef"
         class="demo-ruleForm"
@@ -728,7 +732,7 @@ onMounted(() => {
         @submit.prevent
       >
         <!-- 基础信息 -->
-        <FormSection :title="t('purchase.basicInformaion')">
+        <FormSection :title="t('product-list.basic-information')">
           <FormRow>
             <ElFormItem
               v-for="(field, index) in basicInfoFields.row1"
@@ -894,7 +898,7 @@ onMounted(() => {
           <div class="form-row">
             <div class="el-form-item-two">
               <ElFormItem
-                :label="$t('customers.profile_photo')"
+                :label="$t('product-list.profile-photo')"
                 prop="profile_photo"
                 style="flex: 1; min-width: 280px"
                 class="profile-photo"
@@ -1124,7 +1128,7 @@ onMounted(() => {
         <!-- 动态字段 -->
         <FormSection
           v-if="res_options.length > 0"
-          :title="t('purchase.customizedInformation')"
+          :title="t('product-list.customized-information')"
         >
           <div v-if="res_options.length > 0" class="list-box-content form-row">
             <FormRow
@@ -1160,8 +1164,7 @@ onMounted(() => {
                     </ElSelect>
                     <ElButton
                       v-if="item.is_fixed_option && !newDisabled"
-                      class="outer-btn right-box"
-                      style="height: 32px; margin-right: 0; margin-left: 4px"
+                      class="outer-btn right-box ml-1"
                       @click="openAddOptionDialog(item)"
                     >
                       <div class="outer">
@@ -1169,7 +1172,7 @@ onMounted(() => {
                           <i class="iconfont icon-tianjia-dianpu"></i>
                         </div>
                         <div class="inner-right">
-                          <span>{{ t('employee.addButton') }}</span>
+                          <span>{{ t('common.add') }}</span>
                         </div>
                       </div>
                     </ElButton>
@@ -1202,7 +1205,7 @@ onMounted(() => {
         <!-- 其他信息 -->
         <template v-if="showAllFiles">
           <div class="list-box-title">
-            {{ t('purchase.otherInformation') }}
+            {{ t('product-list.other-information') }}
           </div>
 
           <div class="form-row">
@@ -1255,7 +1258,7 @@ onMounted(() => {
     </div>
 
     <!-- 修改按钮容器，仅在非禁用模式显示保存按钮 -->
-    <div class="btn-box">
+    <!-- <div class="btn-box">
       <ElButton :plain="true" @click="handleClose">
         {{ t('inventory.cancel') }}
       </ElButton>
@@ -1266,7 +1269,7 @@ onMounted(() => {
       >
         {{ t('inventory.save') }}
       </ElButton>
-    </div>
+    </div> -->
 
     <ElDialog
       v-model="addOptionDialogVisible"

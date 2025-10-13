@@ -96,7 +96,6 @@ const handleAddProduct = async (
     // No default
   }
 };
-const allLabels = ref([]);
 
 const [Modal, modalApi] = useIgourdModal({
   title: t('inventory.productList.labelSelect'),
