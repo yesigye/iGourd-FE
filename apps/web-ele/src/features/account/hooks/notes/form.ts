@@ -2,7 +2,6 @@ import {
   observable,
   onFieldChange,
   onFieldInputValueChange,
-  useRecord,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { omit } from '@igourd/utils';

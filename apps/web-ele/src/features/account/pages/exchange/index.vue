@@ -16,7 +16,8 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
 
 <template>
   <Page auto-content-height>
-    <Grid>
+    此页面隐藏
+    <!-- <Grid>
       <template #table-actions>
         <ElButton type="primary" @click="handleEdit()">
           {{ t('common.create') }}
@@ -36,6 +37,6 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
       </template>
     </Grid>
 
-    <!-- <Drawer /> -->
+    <Drawer /> -->
   </Page>
 </template>

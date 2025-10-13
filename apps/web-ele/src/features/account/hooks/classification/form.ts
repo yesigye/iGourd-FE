@@ -1,199 +1,24 @@
-import type { ISchema } from '@igourd/common-ui';
-
 import { useI18n } from '@igourd/locales';
 
 import { useDrawerForm } from '#/hooks/use-drawer-form';
 
+import schema from './form-schema';
+import { useUserStore } from '@igourd/stores';
+
 export function useClassificationForm() {
   const { t } = useI18n();
-
-  const schema: ISchema = {
-    type: 'object',
-    properties: {
-      form: {
-        type: 'void',
-        'x-component': 'FormLayout',
-        'x-component-props': {
-          labelCol: 6,
-          wrapperCol: 14,
-        },
-        properties: {
-          name: {
-            type: 'string',
-            title: "{{t('purchase.featureName')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Input',
-            'x-component-props': {
-              maxLength: 32,
-              placeholder: "{{t('purchase.pleaseEnterFeatureName')}}",
-              clearable: true,
-            },
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('purchase.pleaseEnterFeatureName')}}",
-              },
-              { max: 64, message: "{{t('common.maxChars', { n: 64 })}}" },
-            ],
-          },
-
-          type: {
-            type: 'string',
-            title: "{{t('purchase.featureType')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Radio.Group',
-            enum: '{{featureTypes}}',
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('purchase.pleaseSelectFeatureType')}}",
-              },
-            ],
-          },
-
-          is_fixed_option: {
-            type: 'boolean',
-            title: "{{t('purchase.selectionType')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Radio.Group',
-            enum: '{{selectTypes}}',
-            'x-visible': "{{$values.type === 'SELECT'}}",
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('purchase.pleaseSelectIsFixedValue')}}",
-              },
-            ],
-          },
-
-          selectionOptions: {
-            type: 'array',
-            title: "{{t('purchase.selectionOptions')}}",
-            'x-decorator': 'FormItem',
-            'x-visible': "{{$values.type === 'SELECT'}}",
-            'x-component': 'ArrayTable',
-            'x-component-props': {
-              border: true,
-              stripe: true,
-              size: 'small',
-            },
-            items: {
-              type: 'object',
-              properties: {
-                column1: {
-                  type: 'void',
-                  'x-component': 'ArrayTable.Column',
-                  'x-component-props': {
-                    width: 80,
-                    title: '#',
-                    align: 'center',
-                  },
-                  properties: {
-                    index: {
-                      type: 'void',
-                      'x-component': 'ArrayTable.Index',
-                    },
-                  },
-                },
-                colName: {
-                  type: 'void',
-                  'x-component': 'ArrayTable.Column',
-                  'x-component-props': {
-                    title: "{{t('purchase.optionName')}}",
-                  },
-                  properties: {
-                    name: {
-                      type: 'string',
-                      'x-decorator': 'FormItem',
-                      'x-component': 'Input',
-                      'x-component-props': {
-                        placeholder: "{{t('purchase.pleaseEnterOptionName')}}",
-                        clearable: true,
-                      },
-                    },
-                  },
-                },
-                colOps: {
-                  type: 'void',
-                  'x-component': 'ArrayTable.Column',
-                  'x-component-props': {
-                    title: "{{t('common.operations')}}",
-                    width: 180,
-                    fixed: 'right',
-                  },
-                  properties: {
-                    ops: {
-                      type: 'void',
-                      'x-component': 'FormItem',
-                      properties: {
-                        remove: {
-                          type: 'void',
-                          'x-component': 'ArrayTable.Remove',
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-            properties: {
-              add: {
-                type: 'void',
-                'x-component': 'ArrayTable.Addition',
-                title: "{{t('common.addOption')}}",
-              },
-            },
-          },
-
-          is_compulsory: {
-            type: 'boolean',
-            title: "{{t('purchase.compulsorySelection')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Radio.Group',
-            enum: '{{compulsoryTypes}}',
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('purchase.pleaseSelectIsCompulsory')}}",
-              },
-            ],
-          },
-
-          entity: {
-            type: 'string',
-            default: 'VENDOR',
-            'x-hidden': true,
-          },
-
-          options: {
-            type: 'string',
-            'x-hidden': true,
-            'x-reactions': [
-              {
-                dependencies: ['selectionOptions'],
-                fulfill: {
-                  'state.value':
-                    "{{$deps[0] ? JSON.stringify(($deps[0] || []).map(x=>({name: x?.name})).filter(x=>x.name && x.name.trim())) : ''}}",
-                },
-              },
-            ],
-          },
-        },
-      },
-    },
-  };
+  const {
+    merchantInfo: { account_set_id },
+  } = useUserStore();
   return useDrawerForm({
     drawerOptions: {
       title: t('classification.add-class'),
       appendToMain: true,
-      class: 'w-full',
+      class: 'w-[760px]',
+      contentClass: 'bg-muted px-0',
     },
     formOptions: {
-      schema,
+      schema: schema(account_set_id),
       scope: {
         featureTypes: [
           { label: t('purchase.inputBox'), value: 'INPUT' },

@@ -62,3 +62,4 @@ export { default as set } from 'lodash-es/set';
 export { default as sortBy } from 'lodash-es/sortBy';
 export { default as unionWith } from 'lodash-es/unionWith';
 export { default as upperFirst } from 'lodash-es/upperFirst';
+export { default as uniqBy } from 'lodash-es/uniqBy';
