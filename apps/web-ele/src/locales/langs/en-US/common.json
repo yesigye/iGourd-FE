@@ -27,5 +27,7 @@
   "detele": "Delete",
   "select": "Select",
   "add": "Add",
-  "system-prompt": "System Prompt"
+  "system-prompt": "System Prompt",
+  "close": "close",
+  "open":"open"
 }

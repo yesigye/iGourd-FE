@@ -25,6 +25,7 @@ export function useInventoryProductSpec() {
 
   // 表格列配置
   const tableColumns = computed(() => [
+
     {
       field: 'product_spec_code',
       title: t('inventory.product_spec.product_spec_code'),
@@ -45,6 +46,9 @@ export function useInventoryProductSpec() {
       field: 'status',
       title: t('common.commonStatus'),
       minWidth: 120,
+      slots: {
+        default: 'status',
+      },
     },
     {
       field: 'source_type',

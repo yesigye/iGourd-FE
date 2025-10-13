@@ -12,13 +12,14 @@ import {
   useIgourdDrawer,
   ElIcon,
 } from '@igourd/common-ui';
-import { Edit, Delete } from '@igourd/icons';
+import { Edit, Delete,Document } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 
 import { getProductLabelList, removeProductLabel } from '@@/inventory/apis';
-import { useInventoryProductLabelList } from '@@/inventory/hooks';
+import { useInventoryProductLabelList, useProductLabelDetail} from '@@/inventory/hooks';
 
 import drawer from '../../components/product-label/drawer.vue';
+import StatusTemplate from '#/components/status/index.vue';
 
 defineOptions({
   name: 'IInventoryProductLabel',
@@ -27,6 +28,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
   connectedComponent: drawer,
   appendToMain: true,
 });
+const{Drawer:Detail,drawerApi:detailDrawerApi} = useProductLabelDetail()
 const { t } = useI18n();
 const {
   Grid,
@@ -69,6 +71,9 @@ const handleAddLabel = () => {
 const handleEditLabel = (item) => {
   drawerApi.setData(item).open();
 };
+const handleViewLabel = (item) =>{
+  detailDrawerApi.setData(item).open();
+}
 const handleRemove = async (item) => {
   confirm({
     title: t('common.prompt'),
@@ -92,6 +97,19 @@ const refreshTree = () => {
 const handleChangeLabel = (value: String) => {
   handleQueryTable(value);
 };
+const STATUS_CONFIG = [
+  {
+    name: 'inventory.offSale',
+    value: 'OFF_SALE',
+    iconColor: '#9e9e9e',
+  },
+  {
+    name: 'inventory.onSale',
+    value: 'ON_SALE',
+    iconColor: '#4caf51',
+  },
+
+];
 
 onMounted(() => {
   handleGetProductLabelList();
@@ -132,11 +150,16 @@ onMounted(() => {
                     ><Edit
                   /></ElIcon>
                   <ElIcon
+                    class="text-primary ml-1"
+                    @click="handleViewLabel(item)"
+                    ><Document
+                  /></ElIcon>
+
+                  <ElIcon
                     class="ml-1"
                     style="color: var(--el-color-danger)"
                     @click="handleRemove(item)"
-                    ><Delete
-                  /></ElIcon>
+                    ><Delete/></ElIcon>
 
                   </div>
                 </div>
@@ -167,6 +190,12 @@ onMounted(() => {
           {{ t('common.delete') }}
         </ElButton>
       </template>
+      <template #status="{ row }">
+        <StatusTemplate
+          :value="row.status"
+          :status-list="STATUS_CONFIG"
+        />
+      </template>
       <template #productDetail="{ row }">
         <el-tooltip
           effect="customized"
@@ -188,11 +217,12 @@ onMounted(() => {
           type="text"
           @click="handleEdit(row)"
         >
-          <i class="iconfont icon-icon_Edit"></i>
+          {{ t('common.detail') }}
         </ElButton>
       </template>
     </Grid>
     <Drawer @refresh-tree="refreshTree" />
+    <Detail></Detail>
     <!--TODO Move TO Formily-->
     <!-- 商品详情弹窗 -->
     <el-dialog

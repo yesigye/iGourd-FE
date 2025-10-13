@@ -1,5 +1,5 @@
 import type { ISchema } from '@igourd/common-ui';
-
+import { ref } from 'vue';
 import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
@@ -8,6 +8,7 @@ import {
   createLabelBind,
   inventoryProductProfilePageList,
   updateProductLabel,
+  getProductlabelProductPage,
 } from '@@/inventory/apis';
 
 // 定义表单数据类型
@@ -19,6 +20,7 @@ interface ProductLabelFormData {
 export function useProductLabelForm(func) {
   const { t } = useI18n();
   const { currentLoginUserApp } = useUserStore();
+  const detailData = ref();
 
   // 表单提交处理
   const handleSubmit = async (formData: ProductLabelFormData) => {
@@ -60,6 +62,7 @@ export function useProductLabelForm(func) {
       if (isOpen) {
         formAPI.reset();
         const data = drawerApi.getData();
+        detailData.value = data;
         formAPI.setValues(data);
       } else {
         formAPI.values = {};
@@ -171,7 +174,11 @@ export function useProductLabelForm(func) {
       loadData,
       actions: {
         fetchProducts: inventoryProductProfilePageList,
-        fetchSelectedProducts: () => [],
+        fetchSelectedProducts: (params) => {
+          params.product_label_id = detailData.id;
+          getProductlabelProductPage(params);
+          return [{}];
+        },
         fetchProductsByIds: () => [],
         getAllIdsUnderFilter: () => [],
         searchVendors: () => [],

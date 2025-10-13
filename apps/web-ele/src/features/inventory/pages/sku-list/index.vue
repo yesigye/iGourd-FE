@@ -3,6 +3,7 @@ import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { useInventorySkuList } from '../../hooks/sku-list/list';
+import StatusTemplate from '#/components/status/index.vue';
 
 defineOptions({
   name: 'IInventorySkuList',
@@ -10,8 +11,23 @@ defineOptions({
 
 const { t } = useI18n();
 
-const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
+const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate,handleView } =
   useInventorySkuList();
+
+
+const STATUS_CONFIG = [
+  {
+    name: 'inventory.offSale',
+    value: 'OFF_SALE',
+    iconColor: '#9e9e9e',
+  },
+  {
+    name: 'inventory.onSale',
+    value: 'ON_SALE',
+    iconColor: '#4caf51',
+  },
+
+];
 </script>
 
 <template>
@@ -26,11 +42,17 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
           {{ t('common.delete') }}
         </ElButton>
       </template>
+      <template #status="{ row }">
+        <StatusTemplate
+          :value="row.status"
+          :status-list="STATUS_CONFIG"
+        />
+      </template>
       <template #operation="{ row }">
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleEdit(row)">
+        <ElButton type="text" @click="handleView(row)">
           {{ t('common.detail') }}
         </ElButton>
       </template>

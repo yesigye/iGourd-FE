@@ -272,6 +272,7 @@ function useCrud<T extends { id?: number | string }, P extends object>(
    *  查看详情
    */
   const handleView = (dto?: T) => {
+    debugger
     if (dto) {
       // @ts-ignore
       dto.mode = 'detail';

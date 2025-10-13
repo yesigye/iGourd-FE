@@ -47,6 +47,9 @@ export function useInventoryProductLabelList() {
       field: 'status',
       title: t('inventory.status'),
       minWidth: 85,
+      slots: {
+        default: 'status',
+      },
     },
 
     {

@@ -2,6 +2,7 @@
   "product-spec": "商品规格",
   "product-spec-value": "商品规格值",
   "add-spec": "添加规格",
+  "edit-spec": "编辑规格",
   "spec-value": "规格值",
   "spec-value-code": "规格值编码",
   "status": "状态",
@@ -27,5 +28,7 @@
     "manual-entry": "手动输入",
     "system": "系统生成",
     "bulk-import": "批量导入"
-  }
+  },
+  "add-spec-value": "添加规格值",
+  "edit-spec-value": "编辑规格值"
 }
