@@ -362,28 +362,6 @@ export default {
           },
         },
 
-        /* ---------------- 其他信息 ---------------- */
-        remark: {
-          type: 'string',
-          title: "{{ t('account.remarks') }}",
-          'x-decorator': 'FormItem',
-          'x-component': 'Input.TextArea',
-          'x-component-props': {
-            maxlength: 128,
-            showWordLimit: true,
-            placeholder: "{{ t('account.pleaseInput') }}",
-          },
-        },
-
-        /* 附件（与源码一致，使用自定义组件） */
-        attachments: {
-          type: 'array',
-          title: "{{ t('account.attachment') }}",
-          'x-decorator': 'FormItem',
-          'x-component': 'MultiFileDropzone',
-          'x-component-props': { multiple: true },
-        },
-
         /* ---------------- 金额合计（隐藏，自动汇总） ---------------- */
         revenue_amount: {
           type: 'number',

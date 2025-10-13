@@ -18,6 +18,18 @@ export function getFinanceCategoryListApi(data: FinanceCategoryListPayload) {
   );
 }
 
+export function getFinanceCategoryOptions(data: FinanceCategoryListPayload) {
+  return getFinanceCategoryListApi(data).then((res) => {
+    return res.list?.map((item: any) => {
+      return {
+        ...item,
+        label: item.name,
+        value: item.id,
+      };
+    });
+  });
+}
+
 // 创建财务分类
 export function createFinanceCategoryApi(data: FinanceCategoryPayload) {
   return requestClient.post(

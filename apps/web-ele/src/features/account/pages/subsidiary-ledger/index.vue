@@ -93,42 +93,28 @@ onMounted(async () => {
 </script>
 
 <template>
-  <!-- <ElTabs v-model="activeName" class="ml-10" @tab-click="handleTabClick">
-    <ElTabPane
-      v-for="item in tabsData"
-      :key="item.value"
-      :label="item.label"
-      :name="item.value"
-    />
-  </ElTabs> -->
   <ColPage auto-content-height :left-width="20">
-    <template #left="{ isCollapsed, expand }">
-      <section class="bg-card h-full rounded p-2.5">
-        <!-- 分类树 -->
-        <div class="mt-5">
-          <ElTree
-            ref="treeRef"
-            node-key="id"
-            :data="treeList"
-            @node-click="handleNodeClick"
-          >
-            <template #default="{ node }">
-              <div class="inline-flex flex-1">
-                <img :src="node.expanded ? folderOpen : folderClose" alt="" />
-                <span class="pl-1">{{ node.label }}</span>
-              </div>
-            </template>
-          </ElTree>
-        </div>
+    <template #left>
+      <section class="bg-card mr-2 h-full rounded p-2">
+        <ElTree
+          ref="treeRef"
+          node-key="id"
+          :data="treeList"
+          @node-click="handleNodeClick"
+        >
+          <template #default="{ node }">
+            <div class="inline-flex flex-1">
+              <img :src="node.expanded ? folderOpen : folderClose" alt="" />
+              <span class="pl-1">{{ node.label }}</span>
+            </div>
+          </template>
+        </ElTree>
       </section>
     </template>
     <Grid>
       <template #operation="{ row }">
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
-        </ElButton>
-        <ElButton type="text" @click="handleBatchDelete(row)">
-          {{ t('common.delete') }}
         </ElButton>
       </template>
     </Grid>

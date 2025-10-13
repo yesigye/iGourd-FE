@@ -118,12 +118,14 @@ export function useAccountNotes() {
     },
     {
       field: 'reviewer',
+      fixed: 'right',
       title: t('account.Review'),
       minWidth: 165,
     },
     {
       field: 'operation',
       title: t('account.operation'),
+      fixed: 'right',
       sortable: true,
       minWidth: 180,
       slots: { default: 'operation' },
