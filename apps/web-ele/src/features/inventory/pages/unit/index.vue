@@ -11,7 +11,7 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
+const { Grid, Drawer, handleEdit, handleBatchDelete, handleDelete,canBatchOperate } =
   useInventoryUnitList();
 </script>
 
@@ -22,7 +22,7 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
         <ElButton type="primary" @click="handleEdit()">
           {{ t('common.add') }}
         </ElButton>
-        <ElButton type="danger" v-if="canBatchOperate">
+        <ElButton type="danger" v-if="canBatchOperate" @click="handleBatchDelete()">
           {{ t('common.delete') }}
         </ElButton>
       </template>
@@ -50,7 +50,7 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleBatchDelete(row)">
+        <ElButton type="text" @click="handleDelete([row.id])">
           {{ t('common.delete') }}
         </ElButton>
       </template>
