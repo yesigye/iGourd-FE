@@ -10,7 +10,7 @@ import { useI18n } from '@igourd/locales';
 
 import {
   createProductLabel,
-  deleteProductLabel,
+  productUnbindApi,
   getProductlabelProductPage,
   updateProductLabel,
 } from '@@/inventory/apis';
@@ -109,7 +109,14 @@ export function useInventoryProductLabelList() {
         return resultList;
       },
       // @ts-ignore
-      drop: deleteProductLabel,
+      drop: async (params) => {
+        productUnbindApi({
+          product_label_id: queryParam,
+          product_profile_ids: params,
+        }).then(()=>{
+          uCrud.gridApi.reload();
+        })
+      },
       create: createProductLabel,
       update: updateProductLabel,
     },

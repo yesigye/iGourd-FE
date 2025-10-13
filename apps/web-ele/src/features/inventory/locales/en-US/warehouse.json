@@ -20,5 +20,7 @@
   "email": "Email",
   "remarks": "Remarks",
   "please-warehouse-name": "Please enter the warehouse name",
-  "default-sale": "Default Warehouse"
+  "default-sale": "Default Warehouse",
+  "validate-email": "Please enter the correct email",
+  "validate-phone": "Please enter the correct phone number"
 }
