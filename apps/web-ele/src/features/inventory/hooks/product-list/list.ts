@@ -94,42 +94,34 @@ export function useInventoryProductList() {
   ];
 
   const searchFormSchema = {
-    form: {
-      type: 'void',
-      'x-component': 'FormLayout',
-      'x-component-props': {
-        layout: 'inline',
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
+      'x-decorator-props': {
+        style: { 'margin-bottom': '0' },
+        class: 'w-64',
       },
-      properties: {
-        keywords: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Input',
-          'x-decorator-props': {
-            style: { 'margin-bottom': '0' },
-          },
-          'x-component-props': {
-            placeholder:
-              "{{t('inventory.pleaseEnterKeywordsToSearchProductNameProductCode')}}",
-            clearable: true,
-          },
-        },
-        status: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Select',
-          'x-decorator-props': {
-            style: { 'margin-bottom': '0', width: '140px' },
-          },
-          'x-component-props': {
-            placeholder: "{{t('inventory.saleStatus')}}",
-            clearable: true,
-            options: [
-              { label: t('inventory.onSale'), value: 'ON_SALE' },
-              { label: t('inventory.offSale'), value: 'OFF_SALE' },
-            ],
-          },
-        },
+      'x-component-props': {
+        placeholder:
+          "{{t('inventory.pleaseEnterKeywordsToSearchProductNameProductCode')}}",
+        clearable: true,
+      },
+    },
+    status: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-decorator-props': {
+        style: { 'margin-bottom': '0', width: '140px' },
+      },
+      'x-component-props': {
+        placeholder: "{{t('inventory.saleStatus')}}",
+        clearable: true,
+        options: [
+          { label: t('inventory.onSale'), value: 'ON_SALE' },
+          { label: t('inventory.offSale'), value: 'OFF_SALE' },
+        ],
       },
     },
   };

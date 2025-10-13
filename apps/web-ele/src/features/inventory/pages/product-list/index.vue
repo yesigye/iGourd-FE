@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import { ElButton, Page } from '@igourd/common-ui';
+import { ElButton, ElTag, Page, useIgourdModal } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { productProfileDetail } from '@@/inventory/apis';
@@ -11,7 +11,7 @@ import { useAddProduct } from '@@/inventory/hooks/product-list/addProduct';
 defineOptions({
   name: 'IInventoryProductList',
 });
-
+const [Modal, { close: closeModal }] = useIgourdModal();
 const { t } = useI18n();
 const mode = ref('add');
 
@@ -105,7 +105,10 @@ const handleAddProduct = async (
       </template>
       <template #label="{ row }">
         <div v-for="item in row.product_label_list" :key="item.id">
-          {{ item.name }}
+          <ElTag type="primary">
+            {{ item.name }}
+          </ElTag>
+          <ElButton @click="showInput" class="ml-2"> + New Tag </ElButton>
         </div>
       </template>
       <template #operation="{ row }">

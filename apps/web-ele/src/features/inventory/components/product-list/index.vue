@@ -522,6 +522,17 @@ const handleEdit = async (currentData, type) => {
 
   try {
     formMode.value = type;
+    if (type === 'copy') {
+      try {
+        const res = await getUnitList({
+          page_num: 1,
+          page_size: 500,
+        });
+        unitList.value = res.list;
+      } catch (error) {
+        console.error('Failed to get unit list:', error);
+      }
+    }
     // 1. 初始化基础表单数据
     await openDrawer(currentData, false, false, merchantId.value, type);
 

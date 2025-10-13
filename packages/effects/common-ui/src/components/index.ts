@@ -123,6 +123,7 @@ export {
   ElTableColumn,
   ElTabPane,
   ElTabs,
+  ElTag,
   ElText,
   ElTimeline,
   ElTimelineItem,
