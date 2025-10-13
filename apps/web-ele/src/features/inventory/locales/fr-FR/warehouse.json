@@ -20,5 +20,7 @@
   "email": "Email",
   "remarks": "Remarques",
   "please-warehouse-name": "Veuillez entrer le nom de l'entrepôt",
-  "default-sale": "Entrepôt par défaut"
+  "default-sale": "Entrepôt par défaut",
+  "validate-email": "Veuillez saisir un e-mail correct",
+  "validate-phone": "Veuillez saisir un numéro de téléphone correct"
 }
