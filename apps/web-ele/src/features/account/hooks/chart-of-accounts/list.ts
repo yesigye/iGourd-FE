@@ -2,24 +2,51 @@ import type { AccountLedgerBalanceTreeModel } from '@@/account/types';
 
 import type { VxeGridPropTypes } from '@igourd/plugins/vxe-table';
 
-import { ref } from 'vue';
+import { nextTick, ref, unref } from 'vue';
 
 import { useI18n } from '@igourd/locales';
 
 import {
+  createAccountApi,
+  createAccountLedgerApi,
   getChartOfAccountsTreeApi,
+  modifyAccountApi,
+  modifyAccountLedgerApi,
   modifyLedgerBalanceApi,
   removeAccountApi,
   removeAccountLedgerApi,
 } from '@@/account/apis';
-import { ChartOfAccountsDrawer } from '@@/account/components';
+import {
+  ChartOfAccountsDrawer,
+  type ChartOfAccountType,
+} from '@@/account/components';
 
 import { useCrud, useLanguage } from '#/hooks';
+
+function accountSaveOrUpdate(dto: any) {
+  if (Reflect.has(dto, 'id')) {
+    return modifyAccountApi(dto);
+  }
+  return createAccountApi(dto);
+}
+function ledgerSaveOrUpdate(dto: any) {
+  if (Reflect.has(dto, 'id')) {
+    return modifyAccountLedgerApi(dto);
+  }
+  return createAccountLedgerApi(dto);
+}
+
+function saveOrUpdate(dto: any, type: ChartOfAccountType) {
+  if (type === 'ledger') {
+    return accountSaveOrUpdate(dto);
+  }
+  return ledgerSaveOrUpdate(dto);
+}
 
 export function useChartOfAccounts() {
   const { t } = useI18n();
   const categories = ref([]);
-
+  const typeRef = ref<ChartOfAccountType>('ledger');
   // 基础列定义
   const columns: VxeGridPropTypes.Column<AccountLedgerBalanceTreeModel>[] = [
     {
@@ -98,6 +125,12 @@ export function useChartOfAccounts() {
     remove: async (data: { ledger_id_list: number[] }) => {
       return await removeAccountLedgerApi(data);
     },
+    create(dto: any) {
+      return saveOrUpdate(dto, unref(typeRef));
+    },
+    update(dto:any) {
+      return saveOrUpdate(dto, unref(typeRef));
+    },
     removeAccount: async (data: {
       account_id_list: number[];
       merchant_id?: number;
@@ -115,7 +148,7 @@ export function useChartOfAccounts() {
     Grid,
     gridApi,
     Drawer,
-    handleEdit,
+    handleEdit: innerHandleEdit,
     canBatchOperate,
     handleBatchDelete,
   } = useCrud({
@@ -155,6 +188,12 @@ export function useChartOfAccounts() {
   useLanguage('basics.accounting.account-ledger-category-enum').then((res) => {
     categories.value = res;
   });
+  const handleEdit = (dto?: any, type?: ChartOfAccountType) => {
+    typeRef.value = type ?? 'ledger';
+    nextTick(() => {
+      innerHandleEdit(dto);
+    });
+  };
   return {
     Grid,
     Drawer,
@@ -164,5 +203,6 @@ export function useChartOfAccounts() {
     handleBatchDelete,
     categories,
     gridApi,
+    typeRef,
   };
 }

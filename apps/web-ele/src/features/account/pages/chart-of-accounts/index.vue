@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import { ElButton, Page, useIgourdDrawer } from '@igourd/common-ui';
+import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { useChartOfAccounts } from '@@/account/hooks';
-
-import drawerSubject from '../../components/chart-of-accounts/drawer-subject.vue';
-import drawer from '../../components/chart-of-accounts/drawer.vue';
 
 defineOptions({
   name: 'IChartOfAccounts',
@@ -13,33 +10,18 @@ defineOptions({
 
 const { t } = useI18n();
 
-const [Drawer, drawerApi] = useIgourdDrawer({
-  connectedComponent: drawer,
-  appendToMain: true,
-});
-const [DrawerSubject, drawerSubjectApi] = useIgourdDrawer({
-  connectedComponent: drawerSubject,
-  appendToMain: true,
-});
-const { Grid, handleEdit, handleBatchDelete, categories } =
+const { Grid, handleEdit, handleBatchDelete, categories, typeRef, Drawer } =
   useChartOfAccounts();
-
-const handleAddAccount = () => {
-  drawerApi.setData(null).open();
-};
-const handleAddSubject = () => {
-  drawerSubjectApi.setData(null).open();
-};
 </script>
 
 <template>
   <Page auto-content-height>
     <Grid :tabs="categories">
       <template #table-actions>
-        <ElButton type="primary" @click="handleAddAccount()">
+        <ElButton type="primary" @click="handleEdit(undefined, 'ledger')">
           {{ t('account.add_sub_ledger') }}
         </ElButton>
-        <ElButton type="primary" @click="handleAddSubject()">
+        <ElButton type="primary" @click="handleEdit(undefined, 'subLedger')">
           {{ t('chart-of-accounts.add-account-ledger') }}
         </ElButton>
       </template>
@@ -61,8 +43,6 @@ const handleAddSubject = () => {
         </ElButton>
       </template>
     </Grid>
-
-    <Drawer />
-    <DrawerSubject />
+    <Drawer :type="typeRef" />
   </Page>
 </template>
