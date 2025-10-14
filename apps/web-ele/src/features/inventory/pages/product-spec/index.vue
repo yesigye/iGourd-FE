@@ -10,8 +10,11 @@ import {
   ElRadio,
   ElRadioGroup,
   useIgourdDrawer,
+  ElIcon,
 } from '@igourd/common-ui';
+import { Edit, Delete } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
+import StatusTemplate from '#/components/status/index.vue';
 
 import { useInventoryProductSpec } from '@@/inventory/hooks';
 
@@ -19,6 +22,19 @@ import { deleteProductSpec, getProductSpecList } from '../../apis/product-spec';
 import drawer from '../../components/product-spec/drawer.vue';
 import drawerValue from '../../components/product-spec/drawerValue.vue';
 
+const STATUS_CONFIG = [
+  {
+    name: 'common.close',
+    value: 'CLOSED',
+    iconColor: '#9e9e9e',
+  },
+  {
+    name: 'common.open',
+    value: 'OPEN',
+    iconColor: '#4caf51',
+  },
+
+];
 defineOptions({
   name: 'IInventoryProductSpec',
 });
@@ -32,7 +48,7 @@ const [DrawerValue, drawerValueApi] = useIgourdDrawer({
   connectedComponent: drawerValue,
   appendToMain: true,
 });
-const { Grid, handleQueryTable, handleDelete } = useInventoryProductSpec();
+const { Grid, handleQueryTable, handleDelete,canBatchOperate,handleBatchDelete } = useInventoryProductSpec();
 const productSpecList = ref<ProductLabelItem[]>([]);
 const selectedLabelId = ref<string>('');
 // 获取商品规格列表
@@ -87,8 +103,13 @@ const handleAddSpecValue = () => {
 };
 // 编辑
 const handleEditSpecValue = (row) => {
+  row.mode = 'edit';
   drawerValueApi.setData(row).open();
 };
+const handleView = (row) =>{
+  row.mode = 'detail';
+  drawerValueApi.setData(row).open();
+}
 
 const handleChangeSpec = (value: String) => {
   handleQueryTable(value);
@@ -126,14 +147,17 @@ onMounted(() => {
                 <div class="inline-flex w-full items-center">
                   <div class="flex-1">{{ item.product_spec_name }}</div>
                   <div class="show-opertion text-right">
-                    <i
-                      class="iconfont icon-icon_Edit mr-4 text-sm"
+                    <ElIcon
+                      class="text-primary ml-1"
                       @click="handleEditLabel(item)"
-                    ></i>
-                    <i
-                      class="iconfont icon-icon_del text-sm"
+                      ><Edit
+                    /></ElIcon>
+                    <ElIcon
+                      class="ml-1"
+                      style="color: var(--el-color-danger)"
                       @click="handleRemove(item)"
-                    ></i>
+                      ><Delete
+                    /></ElIcon>
                   </div>
                 </div>
               </ElRadio>
@@ -147,14 +171,32 @@ onMounted(() => {
         <ElButton type="primary" @click="handleAddSpecValue">
           {{ t('common.add') }}
         </ElButton>
+        <!--
+        <ElButton
+          v-if="canBatchOperate"
+          type="danger"
+          @click="handleBatchDelete"
+        >
+          {{ t('common.delete') }}
+        </ElButton>-->
+      </template>
+      <template #status="{ row }">
+        <StatusTemplate
+          :value="row.status"
+          :status-list="STATUS_CONFIG"
+        />
       </template>
       <template #operation="{ row }">
         <ElButton type="text" @click="handleEditSpecValue(row)">
           {{ t('common.edit') }}
         </ElButton>
+        <ElButton type="text" @click="handleView(row)">
+          {{ t('common.detail') }}
+        </ElButton>
         <ElButton type="text" @click="handleDelete(row)">
           {{ t('common.delete') }}
         </ElButton>
+
       </template>
     </Grid>
     <Drawer @refresh-tree="refreshTree" />

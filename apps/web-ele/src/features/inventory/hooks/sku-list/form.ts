@@ -152,15 +152,27 @@ export function useSkuListForm() {
       },
     },
   };
-  return useDrawerForm({
+   const { Drawer, Form, drawerApi, formAPI } = useDrawerForm({
     drawerOptions: {
       title: t('sku-list.edit-sku-title'),
       appendToMain: true,
       class: 'w-1/2',
+      async onOpenChange(isOpen) {
+        if (isOpen) {
+          formAPI.reset();
+          const data = drawerApi.getData();
+          formAPI.setFormState({ readPretty: data?.mode === 'detail' });
+          formAPI.setValues(data);
+        } else {
+          formAPI.values = {};
+        }
+      },
     },
     formOptions: {
       schema,
       scope: {},
     },
   });
+
+  return { Drawer, Form, drawerApi, formAPI }
 }

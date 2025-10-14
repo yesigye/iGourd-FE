@@ -105,6 +105,17 @@ export function useProductSpecForm(func) {
   const resetForm = () => {
     formAPI.reset();
   };
+   drawerApi.onOpened = () => {
+    if (Reflect.has(drawerApi.getData() ?? {}, 'id')) {
+      drawerApi.setState({
+        title: t('product-spec.edit-spec'),
+      });
+    }else{
+      drawerApi.setState({
+        title: t('product-spec.add-spec'),
+      });
+    }
+  };
 
   return {
     Form,

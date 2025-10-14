@@ -28,3 +28,4 @@ export const Print = createIconifyIcon('ix:print');
 export const CirclePlus = createIconifyIcon('ep:circle-plus');
 export const Edit = createIconifyIcon('ep:edit');
 export const Delete = createIconifyIcon('ep:delete');
+export const Document = createIconifyIcon('ep:document');

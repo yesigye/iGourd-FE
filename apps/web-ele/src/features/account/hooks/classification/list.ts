@@ -1,10 +1,14 @@
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
+import { ClassificationDrawer } from '@@/account/components';
 
 import {
+  createFinanceCategoryApi,
   deleteFinanceCategoryApi,
+  getFinanceCategoryDetailApi,
   getFinanceCategoryListApi,
+  updateFinanceCategoryApi,
 } from '@@/account/apis';
 
 import { useCrud } from '#/hooks';
@@ -23,6 +27,9 @@ export function useClassification() {
       field: 'type',
       minWidth: 120,
       title: t('account.revenue_and_expenditure'),
+      formatter({ cellValue }) {
+        return t(`account.${cellValue}`);
+      },
     },
     {
       field: 'ledger_names',
@@ -63,6 +70,9 @@ export function useClassification() {
   const service = {
     // 获取列表数据
     query: getFinanceCategoryListApi,
+    create: createFinanceCategoryApi,
+    update: updateFinanceCategoryApi,
+    detail: getFinanceCategoryDetailApi,
     // 删除分类
     remove: deleteFinanceCategoryApi,
   };
@@ -107,7 +117,7 @@ export function useClassification() {
       },
     },
     batchOperate: true,
-    // connectedComponent: ClassificationDrawer,
+    connectedComponent: ClassificationDrawer,
   });
 
   return {

@@ -32,6 +32,11 @@ export function getFinanceCategoryOptions(data: FinanceCategoryListPayload) {
 
 // 创建财务分类
 export function createFinanceCategoryApi(data: FinanceCategoryPayload) {
+  data = {
+    ...data,
+    //@ts-ignore
+    account_ledger_codes: data.account_ledger_codes?.join(','),
+  };
   return requestClient.post(
     `/v1/merchant/basics/accounting/finance-category/create`,
     data,
@@ -40,6 +45,11 @@ export function createFinanceCategoryApi(data: FinanceCategoryPayload) {
 
 // 更新财务分类
 export function updateFinanceCategoryApi(data: FinanceCategoryPayload) {
+  data = {
+    ...data,
+    //@ts-ignore
+    account_ledger_codes: data.account_ledger_codes?.join(','),
+  };
   return requestClient.post(
     `/v1/merchant/basics/accounting/finance-category/modify`,
     data,
@@ -58,8 +68,14 @@ export function deleteFinanceCategoryApi(data: DeleteFinanceCategoryPayload) {
 export function getFinanceCategoryDetailApi(
   data: DetailFinanceCategoryPayload,
 ) {
-  return requestClient.post(
-    `/v1/merchant/basics/accounting/finance-category/detail`,
-    data,
-  );
+  return requestClient
+    .post(`/v1/merchant/basics/accounting/finance-category/detail`, {
+      finance_category_id: data.id,
+    })
+    .then((res) => {
+      return {
+        ...res,
+        account_ledger_codes: res.account_ledger_codes?.split(','),
+      };
+    });
 }

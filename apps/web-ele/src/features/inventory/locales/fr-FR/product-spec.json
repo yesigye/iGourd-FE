@@ -2,6 +2,7 @@
   "product_spec": "Spécification de Produit",
   "product_spec_value": "Valeur de Spécification de Produit",
   "add-spec": "Ajouter Spécification",
+  "edit-spec": "Modifier Spécification",
   "spec_value": "Valeur de Spécification",
   "spec_value_code": "Code de Valeur de Spécification",
   "status": "Statut",
@@ -27,5 +28,7 @@
     "manual-entry": "Entrer par manuel",
     "system": "Génération du système",
     "bulk-import": "importer en bloc"
-  }
+  },
+  "add-spec-value": "Ajouter une Valeur de Spécification",
+  "edit-spec-value": "Modifier la Valeur de Spécification"
 }

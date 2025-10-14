@@ -569,7 +569,7 @@
   "quantity_zero": "数量不能小于等于0",
   "unpack_reset": "重置",
   "unpack_quantity_error": "可用库存数量: {t}",
-  
+
   "product_spec": {
     "confirm_delete_spec_value": "确定删除规格值吗？",
     "confirm_delete_spec": "确定删除规格吗？",
