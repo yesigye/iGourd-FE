@@ -16,6 +16,7 @@ export default defineConfig(async () => {
       plugins: [
         ElementPlus({
           format: 'esm',
+          ignoreComponents: ['AutoResizer'],
         }),
         // VitePluginImp({
         //   libList: [

@@ -96,6 +96,18 @@ export interface VxeGridProps<
    * 默认激活的标签
    */
   tabsOption?: VxeTableTabOptions;
+
+  /**
+   * 当前激活的tabs的值，受控
+   */
+  tabsActiveKey?: string;
+
+  tabsAppenTo?: string;
+
+  /**
+   * 搜索表单插入位置
+   */
+  searchFormAppendTo?: string;
 }
 
 export type ExtendedVxeGridApi<

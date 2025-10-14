@@ -95,12 +95,26 @@ const {
   separator,
   tabs,
   tabsOption,
+  searchFormAppendTo,
+  tabsActiveKey,
+  tabsAppenTo,
 } = usePriorityValues(props, state);
 
 const showTableTabs = computed(() => {
   return !!unref(tabs);
 });
-const tabsValue = ref(tabsOption.value?.defaultActiveValue);
+const emit = defineEmits(['update:tabsActiveKey']);
+
+const tabsValue = computed({
+  get() {
+    return unref(tabsActiveKey) ?? unref(tabsOption)?.defaultActiveValue;
+  },
+  set(value) {
+    emit('update:tabsActiveKey', value);
+  },
+});
+
+// const tabsValue = ref(tabsOption.value?.defaultActiveValue);
 const { isMobile } = usePreferences();
 const isSeparator = computed(() => {
   if (
@@ -128,7 +142,14 @@ const { Form, formAPI: formApi } = useTableSearchForm({
   useI18n,
   schema: formOptions.value?.schema || {},
   submitOnEnter: true,
+  ...(formOptions.value || {}),
 });
+
+async function handleTabsChange() {
+  if (options.value.proxyConfig?.autoLoad) {
+    handleSubmit();
+  }
+}
 
 async function handleSubmit() {
   const formValues = formApi.values;
@@ -402,19 +423,21 @@ const openMoreActions = computed(() => {
             </IgourdHelpTooltip>
           </div>
           <div v-else-if="showTableTabs">
-            <ElRadioGroup
-              class="tw-tabs-line"
-              @change="handleSubmit"
-              v-model="tabsValue"
-            >
-              <ElRadioButton
-                :key="btn.value"
-                :value="btn.value"
-                v-for="btn in tabs"
+            <Teleport :disabled="!tabsAppenTo" :to="tabsAppenTo" defer>
+              <ElRadioGroup
+                class="tw-tabs-line"
+                @change="handleTabsChange"
+                v-model="tabsValue"
               >
-                {{ $t(btn.label) }}
-              </ElRadioButton>
-            </ElRadioGroup>
+                <ElRadioButton
+                  :key="btn.value"
+                  :value="btn.value"
+                  v-for="btn in tabs"
+                >
+                  {{ $t(btn.label) }}
+                </ElRadioButton>
+              </ElRadioGroup>
+            </Teleport>
           </div>
         </slot>
         <slot name="toolbar-actions" v-bind="slotProps"> </slot>
@@ -443,87 +466,93 @@ const openMoreActions = computed(() => {
 
       <!-- form表单 -->
       <template #form>
-        <div
-          v-if="formOptions"
-          v-show="showSearchForm !== false"
-          :class="cn('relative rounded')"
+        <Teleport
+          defer
+          :disabled="!searchFormAppendTo"
+          :to="searchFormAppendTo"
         >
-          <div class="flex h-9 items-center justify-between align-middle">
-            <div class="flex gap-x-1">
-              <slot name="form">
-                <Form
-                  :use-i18n="useI18n"
-                  :scope="props.formOptions?.scope || {}"
-                >
-                  <FormButtonGroup :gutter="0">
-                    <Submit @submit="formApi.submit(handleSubmit)">
-                      {{ $t('common.search') }}
-                    </Submit>
-                    <ElButton text bg @click="handleReset()">
-                      {{ $t('common.reset') }}
-                    </ElButton>
-                  </FormButtonGroup>
-                </Form>
-              </slot>
-            </div>
-            <div class="flex justify-end gap-x-1">
-              <ElText
-                v-if="gridOptions?.toolbarConfig?.refresh"
-                :title="$t('common.refresh')"
-                @click="handleSubmit()"
-              >
-                <RefreshRight class="mr-4 size-4 cursor-pointer" />
-              </ElText>
-              <slot name="table-actions"> </slot>
-              <ElDropdown v-if="openMoreActions" @command="handleCommand">
-                <ElButton type="primary">
-                  {{ $t('common.action') }}
-                  <ArrayDown class="el-icon--right" />
-                </ElButton>
-                <template #dropdown>
-                  <ElDropdownMenu>
-                    <ElDropdownItem
-                      :icon="Import"
-                      command="import"
-                      v-if="options.toolbarConfig?.import"
-                    >
-                      {{ $t('common.import') }}
-                    </ElDropdownItem>
-                    <ElDropdownItem
-                      v-if="options.toolbarConfig?.export"
-                      command="export"
-                      :icon="Export"
-                    >
-                      {{ $t('common.export') }}
-                    </ElDropdownItem>
-                    <ElDropdownItem
-                      v-if="options.toolbarConfig?.print"
-                      command="print"
-                      :icon="Print"
-                    >
-                      {{ $t('common.print') }}
-                    </ElDropdownItem>
-                    <ElDropdownItem
-                      :command="value.code"
-                      :key="value.code"
-                      :icon="value.iconRender"
-                      v-for="value in toolbarOptions.toolbarConfig.tools"
-                    >
-                      {{ $t(value.name!) }}
-                    </ElDropdownItem>
-                  </ElDropdownMenu>
-                </template>
-              </ElDropdown>
-            </div>
-          </div>
           <div
-            v-if="isSeparator"
-            :style="{
-              ...(separatorBg ? { backgroundColor: separatorBg } : undefined),
-            }"
-            class="bg-background-deep h-2 w-full overflow-hidden md:bottom-1 md:h-1"
-          ></div>
-        </div>
+            v-if="formOptions"
+            v-show="showSearchForm !== false"
+            :class="cn('relative rounded')"
+          >
+            <div class="flex h-9 items-center justify-between align-middle">
+              <div class="flex gap-x-1">
+                <slot name="form">
+                  <Form
+                    :use-i18n="useI18n"
+                    :scope="props.formOptions?.scope || {}"
+                  >
+                    <FormButtonGroup :gutter="0">
+                      <Submit @submit="formApi.submit(handleSubmit)">
+                        {{ $t('common.search') }}
+                      </Submit>
+                      <ElButton text bg @click="handleReset()">
+                        {{ $t('common.reset') }}
+                      </ElButton>
+                    </FormButtonGroup>
+                  </Form>
+                </slot>
+              </div>
+              <div class="flex justify-end gap-x-1">
+                <ElText
+                  v-if="gridOptions?.toolbarConfig?.refresh"
+                  :title="$t('common.refresh')"
+                  @click="handleSubmit()"
+                >
+                  <RefreshRight class="mr-4 size-4 cursor-pointer" />
+                </ElText>
+                <slot name="table-actions"> </slot>
+                <ElDropdown v-if="openMoreActions" @command="handleCommand">
+                  <ElButton type="primary">
+                    {{ $t('common.action') }}
+                    <ArrayDown class="el-icon--right" />
+                  </ElButton>
+                  <template #dropdown>
+                    <ElDropdownMenu>
+                      <ElDropdownItem
+                        :icon="Import"
+                        command="import"
+                        v-if="options.toolbarConfig?.import"
+                      >
+                        {{ $t('common.import') }}
+                      </ElDropdownItem>
+                      <ElDropdownItem
+                        v-if="options.toolbarConfig?.export"
+                        command="export"
+                        :icon="Export"
+                      >
+                        {{ $t('common.export') }}
+                      </ElDropdownItem>
+                      <ElDropdownItem
+                        v-if="options.toolbarConfig?.print"
+                        command="print"
+                        :icon="Print"
+                      >
+                        {{ $t('common.print') }}
+                      </ElDropdownItem>
+                      <ElDropdownItem
+                        :command="value.code"
+                        :key="value.code"
+                        :icon="value.iconRender"
+                        v-for="value in toolbarOptions.toolbarConfig.tools"
+                      >
+                        {{ $t(value.name!) }}
+                      </ElDropdownItem>
+                    </ElDropdownMenu>
+                  </template>
+                </ElDropdown>
+              </div>
+            </div>
+            <div
+              v-if="isSeparator"
+              :style="{
+                ...(separatorBg ? { backgroundColor: separatorBg } : undefined),
+              }"
+              class="bg-background-deep h-2 w-full overflow-hidden md:bottom-1 md:h-1"
+            ></div>
+          </div>
+        </Teleport>
       </template>
       <!-- loading -->
       <template #loading>

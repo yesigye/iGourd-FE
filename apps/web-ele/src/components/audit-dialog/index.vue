@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { ISchema } from '@igourd/common-ui';
 
-import { defineEmits, defineExpose } from 'vue';
-
 import { useIgourdForm, useIgourdModal } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 

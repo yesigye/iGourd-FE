@@ -3,15 +3,109 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
-import { getSubsidiaryLedgerPageListApi } from '@@/account/apis';
+import {
+  getAccountingPeriodsApi,
+  getChartOfAccountsTreeApi,
+  getSubsidiaryLedgerPageListApi,
+} from '@@/account/apis';
 import { SubsidiaryLedgerDrawer } from '@@/account/components';
 
 import { useCrud } from '#/hooks';
-
-const userStore = useUserStore();
+import { reactive, ref, shallowRef, watch } from 'vue';
+import { useRemoteTableTabs } from '#/hooks/use-remote-tabs';
+import { observable, type ElTree } from '@igourd/common-ui';
+import { formateMonth, isBetween, isEmpty } from '@igourd/utils';
 
 export function useSubsidiaryLedger() {
   const { t } = useI18n();
+  const {
+    merchantInfo: { account_set_id },
+  } = useUserStore();
+  const treeList = shallowRef();
+  const params = reactive({
+    account_set_id,
+    account_ledger_ids: [],
+  });
+  const start_accounting_period = observable({ value: '' });
+  const end_accounting_period = observable({ value: '' });
+  const treeRef = ref<InstanceType<typeof ElTree>>();
+
+  const enabledDate = shallowRef([]);
+
+  function handleNodeClick() {
+    //@ts-ignore
+    params.account_ledger_ids = treeRef.value?.getCheckedKeys(false);
+    if (isEmpty(params.account_ledger_ids)) {
+      return;
+    }
+    gridApi.reload();
+  }
+  getAccountingPeriodsApi({ account_set_id }).then((res) => {
+    enabledDate.value = res?.map((i: any) => {
+      return {
+        ...i,
+        range: [i.start_date, i.end_date],
+      };
+    });
+    if (res?.length <= 0) {
+      return;
+    }
+    const [{ start_date, end_date }] = res;
+    start_accounting_period.value = formateMonth(start_date);
+    end_accounting_period.value = formateMonth(end_date);
+  });
+  function getTreeData(category: string) {
+    getChartOfAccountsTreeApi({
+      category,
+    }).then((res) => {
+      treeList.value = res;
+    });
+  }
+  const { tabs, tabsOption, tabsActiveKey } = useRemoteTableTabs(
+    'basics.accounting.account-ledger-category-enum',
+    'category',
+  );
+  watch(
+    tabsActiveKey,
+    (val) => {
+      const checkedKeys = treeRef.value?.getCheckedKeys(false);
+      if (!isEmpty(checkedKeys)) {
+        checkedKeys?.forEach((key) => {
+          treeRef.value?.setChecked(key, false, true);
+        });
+      }
+      getTreeData(val);
+    },
+    {
+      flush: 'pre',
+    },
+  );
+
+  watch(
+    treeList,
+    (val) => {
+      const [firstNode] = val;
+      treeRef.value?.setChecked(firstNode.id, true, true);
+    },
+    {
+      flush: 'post',
+    },
+  );
+  watch(
+    () => [treeList.value, enabledDate.value],
+    ([treeValue, periodValue]) => {
+      if (isEmpty(treeValue)) {
+        return;
+      }
+      if (isEmpty(periodValue)) {
+        return;
+      }
+      handleNodeClick();
+    },
+    {
+      flush: 'post',
+    },
+  );
 
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<any>[] = [
@@ -27,13 +121,22 @@ export function useSubsidiaryLedger() {
       field: 'summary',
       title: t('account.summary'),
     },
+
+    {
+      field: 'opposite_account_ledger',
+      title: t('account.opposite_accounts'),
+    },
     {
       field: 'debit_amount',
-      title: t('account.debitAmount'),
+      title: t('account.debit_amount'),
     },
     {
       field: 'credit_amount',
-      title: t('account.creditAmount'),
+      title: t('account.credit_amount'),
+    },
+    {
+      field: 'balance_direction',
+      title: t('account.direction'),
     },
     {
       field: 'balance',
@@ -44,54 +147,61 @@ export function useSubsidiaryLedger() {
   // 服务函数
   const service = {
     // 获取列表数据
-    query: async (data: {
-      date_range?: string[];
-      page_num: number;
-      page_size: number;
-    }) => {
-      const params = {
-        ...data,
-        account_ledger_ids: [],
-        account_set_id: '',
-        start_accounting_period: '2025-07',
-        end_accounting_period: '2025-07',
-      };
-      const account_set_id = userStore.merchantInfo?.account_set_id;
-      if (account_set_id) {
-        params.account_set_id = account_set_id;
+    query: (params: any) => {
+      if (isEmpty(params.account_ledger_ids)) {
+        return Promise.resolve([]);
       }
-      if (queryParam && queryParam.account_ledger_ids) {
-        params.account_ledger_ids = queryParam.account_ledger_ids;
-      }
-      return await getSubsidiaryLedgerPageListApi(params);
+      return getSubsidiaryLedgerPageListApi(params);
     },
   };
-  let queryParam = null;
-  // 查询数据
-  const handleQueryTable = (qParam) => {
-    queryParam = qParam;
-    gridApi.reload();
-  };
+
+  // const {} = use
 
   // 使用 CRUD Hook
   const {
     Grid,
+    gridApi,
     canBatchOperate,
     Drawer,
     handleEdit,
     handleBatchDelete,
-    gridApi,
   } = useCrud({
+    params,
     service,
+    proxyConfig: {
+      autoLoad: false,
+    },
     columns: baseColumns,
+    searchFormAppendTo: '#subsidiary-ledger',
+    separator: false,
+    scope: {
+      start_accounting_period,
+      end_accounting_period,
+    },
     searchFormSchema: {
-      date: {
+      '[start_accounting_period,end_accounting_period]': {
         type: 'string',
         'x-decorator': 'FormItem',
         'x-component': 'DatePicker',
         'x-component-props': {
           type: 'monthrange',
           placeholder: t('common.keywords'),
+          format: 'YYYY-MM',
+          valueFormat: 'YYYY-MM',
+          'disabled-date': (value: any) => {
+            return !enabledDate.value.find((i) => {
+              //@ts-ignore
+              return isBetween(value, i.range, 'day');
+            });
+          },
+        },
+        'x-reactions': {
+          fulfill: {
+            state: {
+              value:
+                '{{ [start_accounting_period.value, end_accounting_period.value ] }}',
+            },
+          },
         },
       },
       keywords: {
@@ -108,14 +218,16 @@ export function useSubsidiaryLedger() {
   });
 
   return {
-    // 组件
     Grid,
     Drawer,
-
-    // 方法
+    treeList,
     handleEdit,
     canBatchOperate,
+    tabs,
+    tabsOption,
     handleBatchDelete,
-    handleQueryTable,
+    tabsActiveKey,
+    treeRef,
+    handleNodeClick,
   };
 }

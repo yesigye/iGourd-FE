@@ -157,7 +157,6 @@ function useCrud<T extends { id?: number | string }, P extends object>(
   const queryData = reactive<QueryForm>({
     page_num: 1,
     page_size: 10,
-    ...options.params,
   });
   // 初始化批量操作相关功能
   const [checkedKeys, gridEvents, canBatchOperate] = useBatchOperate(
@@ -191,6 +190,9 @@ function useCrud<T extends { id?: number | string }, P extends object>(
     'separator',
     'tabs',
     'tabsOption',
+    'gridClass',
+    'searchFormAppendTo',
+    'tabsAppenTo',
   ]);
   // 确保代理配置存在
   if (!gridOptions.proxyConfig) {
@@ -212,7 +214,7 @@ function useCrud<T extends { id?: number | string }, P extends object>(
           list: [],
         };
       }
-      Object.assign(queryData, form, {
+      Object.assign(queryData, options.params, form, {
         page_num: page.currentPage,
         page_size: page.pageSize,
       });
@@ -228,6 +230,7 @@ function useCrud<T extends { id?: number | string }, P extends object>(
       schema: options.searchFormSchema,
       scope: options.scope,
       initialValues: options.initialValues,
+      
     },
     ...vxeTableProps,
     gridOptions: {
