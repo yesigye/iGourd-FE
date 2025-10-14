@@ -18,6 +18,10 @@ export default {
             header: `{{ t('account.basic_information')}}`,
           },
           properties: {
+            id: {
+              type: 'string',
+              'x-hidden': true,
+            },
             account_ledger_id: {
               type: 'string',
               'x-component': 'Select',

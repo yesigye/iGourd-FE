@@ -32,7 +32,7 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete, type } =
         </ElButton>
       </template>
       <template #operation="{ row }">
-        <ElButton type="text" @click="handleEdit(row,row.account_type)">
+        <ElButton type="text" @click="handleEdit(row, row.account_type)">
           {{ t('common.edit') }}
         </ElButton>
         <ElButton type="text" @click="handleEdit(row)">
@@ -40,6 +40,6 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete, type } =
         </ElButton>
       </template>
     </Grid>
-    <Drawer :type="type" />
+    <Drawer />
   </Page>
 </template>

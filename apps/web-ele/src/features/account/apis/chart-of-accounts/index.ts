@@ -11,6 +11,8 @@ import type {
 } from '@@/account/types';
 
 import { requestClient } from '#/api/request';
+import Decimal from 'decimal.js';
+import { padStart } from '@igourd/utils';
 
 // 转换算法实现
 const convertToElTreeFormat = (data: any) => {
@@ -122,15 +124,83 @@ export function getLeafLedgersOptions(data: any) {
 }
 
 export function getLeafAccounts(data: any) {
-  return requestClient
-    .post(`/v1/merchant/basics/accounting/account-ledger/leaf-accounts`, data)
-    .then((res) => {
-      return res?.map((it: any) => ({
-        ...it,
-        label: `${it.name} - ${it.code}`,
-        value: it.id,
-      }));
-    });
+  return requestClient.post(
+    `/v1/merchant/basics/accounting/account-ledger/leaf-accounts`,
+    data,
+  );
+}
+
+/** 计算科目的code */
+const generateAccountLedgerCode = ({
+  children,
+  parentCode,
+}: {
+  children: any;
+  parentCode: string;
+}) => {
+  let max = `${parentCode}001`;
+  const leftStart = `${parentCode}`;
+
+  children.forEach((child: any) => {
+    const childCode = child.account_ledger.code;
+    const codeNum = Decimal(childCode);
+    if (
+      childCode.startsWith(leftStart) &&
+      !codeNum.isNaN() &&
+      codeNum.gte(max)
+    ) {
+      max = codeNum.add(1).toString();
+    }
+  });
+
+  return max;
+};
+
+/** 计算账户的code */
+const generateSubLedgerCode = ({
+  children,
+  parentCode,
+}: {
+  children: { code: string }[];
+  parentCode: string;
+}) => {
+  let max = `${parentCode}-001`;
+  const leftStart = `${parentCode}-`;
+
+  children.forEach((child) => {
+    const code = child.code;
+
+    if (code.startsWith(leftStart)) {
+      const num = Decimal(code.replace(leftStart, ''));
+      const currentMax = max.replace(leftStart, '');
+      if (!num.isNaN() && num.gte(currentMax)) {
+        // 如果 num 小于 3位，进行左补 0
+        max = `${leftStart}${padStart(num.add(1).toString(), 3, '0')}`;
+      }
+    }
+  });
+
+  return max;
+};
+
+export function getCodeFromChildren(data: any) {
+  const { isAccountLedger } = data;
+  if (isAccountLedger) return generateAccountLedgerCode({ ...data });
+  return generateSubLedgerCode({ ...data });
+}
+
+export async function getMaxCodeLeafAccounts(
+  data: any,
+  isAccountLedger: boolean,
+  parentCode: string,
+) {
+  const children = await getLeafAccounts(data);
+  const max = getCodeFromChildren({
+    children,
+    isAccountLedger,
+    parentCode,
+  });
+  return max;
 }
 
 // 获取账套详情

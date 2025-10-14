@@ -26,9 +26,6 @@ export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
   const $i18n = observable({ lang: $locale.value });
 
   const tReactive = (...args: any[]) => {
-    // 这行访问会被 Formily 的 reactive 捕获为依赖
-    // （不用返回值，只需“读一下”）
-
     $i18n.lang;
     return t(...args) as string;
   };
@@ -45,13 +42,14 @@ export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
 
   const Form = defineComponent(
     (
-      props: Partial<Omit<IGourdFormProps<T>, 'i18n' | 'schema' | 'scope'>>,
+      props: Partial<Omit<IGourdFormProps<T>, 'i18n' | 'scope'>>,
       { attrs, slots },
     ) => {
+      console.log(props.schema);
       return () =>
         h(FormProvider, { form: formAPI, ...props, ...attrs }, () => [
           h(SchemaField, {
-            schema: options.schema,
+            schema: props.schema ?? options.schema,
             key: `i18n:${$i18n.lang}`,
           }),
           renderSlot(slots, 'default'),
@@ -60,6 +58,12 @@ export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
     {
       name: 'IgourdForm',
       inheritAttrs: false,
+      props: {
+        schema: {
+          type: Object,
+          required: false,
+        },
+      },
     },
   );
   return { formAPI, Form };

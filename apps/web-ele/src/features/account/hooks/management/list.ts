@@ -6,7 +6,7 @@ import { getAccountManagementListApi, removeAccountApi } from '@@/account/apis';
 import { AccountDrawerForm } from '@@/account/components';
 
 import { useCrud } from '#/hooks';
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, provide } from 'vue';
 
 export function useAccountManagement() {
   const { t } = useI18n();
@@ -85,6 +85,8 @@ export function useAccountManagement() {
       },
     },
   };
+
+  provide(Symbol.for('FormType'), { type });
 
   const {
     Grid,

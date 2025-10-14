@@ -1,15 +1,35 @@
-import { observable, onFieldInputValueChange } from '@igourd/common-ui';
+import {
+  observable,
+  onFieldInputValueChange,
+  useIgourdForm,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { useDrawerForm } from '#/hooks/use-drawer-form';
 
-import schema from './bank-schema';
+import bankSchema from './bank-schema';
 import cashSchema from './cash-schema';
 import { useUserStore } from '@igourd/stores';
-import { getLeafLedgersOptions } from '../../apis';
+import { getLeafLedgersOptions, getMaxCodeLeafAccounts } from '../../apis';
+import { computed, inject, ref, unref } from 'vue';
 
-export function useManagementForm(type: 'CASH' | 'CARD') {
+export function useManagementForm() {
   const { t } = useI18n();
+
+  /** balance_direction 科目余额方向枚举(DEBIT:借方向,CREDIT:贷方向)
+   * 在添加账户的时候展示为 CR/DR
+   * 这里做一层转换
+   */
+  const getBalanceDirection = (balanceDirection: string): string => {
+    switch (balanceDirection.toUpperCase()) {
+      case 'DEBIT':
+        return 'DR';
+      case 'CREDIT':
+        return 'CR';
+      default:
+        return '';
+    }
+  };
 
   const leafLedgers = observable<{ value: any[] }>({
     value: [],
@@ -18,34 +38,63 @@ export function useManagementForm(type: 'CASH' | 'CARD') {
     currencySymbol,
     merchantInfo: { account_set_id },
   } = useUserStore();
-  console.log(currencySymbol)
+  const relationFlag = ref(true);
+
   getLeafLedgersOptions({ account_set_id }).then((res) => {
     leafLedgers.value = res;
   });
+  const { type } = inject(Symbol.for('FormType'), { type: ref('CASH') });
 
-  const { drawerApi, Drawer, Form } = useDrawerForm({
+  const schema = computed(() => {
+    return unref(type) === 'CASH' ? cashSchema : bankSchema;
+  });
+
+  const { drawerApi, Drawer, Form, formAPI } = useDrawerForm({
     drawerOptions: {
       title: t('classification.add-class'),
       appendToMain: true,
       class: 'w-[760px]',
       destroyOnClose: true,
       contentClass: 'bg-muted px-0',
+      onOpened() {
+        // formAPI.setFormState()
+      },
     },
     formOptions: {
       effects(form) {
-        onFieldInputValueChange('account_ledger_id', (field) => {
-          const bd = leafLedgers.value.find(
-            (it) => it.id === field.value,
-          )?.balance_direction;
-          form.setValuesIn('balance_direction_sort', bd);
+        onFieldInputValueChange('code', () => {
+          relationFlag.value = false;
+        });
+        onFieldInputValueChange('account_ledger_id', async (field) => {
+          const bd = leafLedgers.value.find((it) => it.id === field.value);
+
+          const direction = getBalanceDirection(bd.balance_direction);
+
+          form.setValuesIn('balance_direction_sort', direction);
+          if (form.getValuesIn('id')) {
+            return;
+          }
+          if (!relationFlag.value) {
+            return;
+          }
+
+          const maxCode = await getMaxCodeLeafAccounts(
+            {
+              account_set_id,
+              account_ledger_id: bd.id,
+            },
+            false,
+            bd.code,
+          );
+          form.setValuesIn('code', maxCode);
         });
       },
       scope: {
         leafLedgers,
         currencySymbol,
       },
-      schema: type === 'CASH' ? cashSchema : schema,
+      schema: unref(schema),
     },
   });
-  return { drawerApi, Drawer, Form };
+  return { drawerApi, Drawer, Form, schema };
 }
