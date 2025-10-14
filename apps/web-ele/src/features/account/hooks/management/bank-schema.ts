@@ -18,6 +18,14 @@ export default {
             header: `{{ t('account.basic_information')}}`,
           },
           properties: {
+            id: {
+              type: 'string',
+              'x-hidden': true,
+            },
+            belong_type: {
+              type: 'string',
+              'x-hidden': true,
+            },
             account_ledger_id: {
               type: 'string',
               'x-component': 'Select',
@@ -146,7 +154,7 @@ export default {
               'x-decorator': 'FormItem',
               title: "{{t('account.closing_balance')}}",
               properties: {
-                current_balance: {
+                current_balance_row: {
                   type: 'void',
                   'x-component': 'Space',
                   'x-decorator': '',

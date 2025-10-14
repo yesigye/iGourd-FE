@@ -4,17 +4,11 @@ import { useManagementForm } from '@@/account/hooks';
 defineOptions({
   name: 'AccountDrawerForm',
 });
-type PropType = {
-  type: 'CASH' | 'CARD';
-};
-const props = withDefaults(defineProps<PropType>(), {
-  type: 'CASH',
-});
-const { Drawer, Form } = useManagementForm(props.type);
+const { Drawer, Form, schema } = useManagementForm();
 </script>
 
 <template>
   <Drawer>
-    <Form />
+    <Form :schema="schema" />
   </Drawer>
 </template>

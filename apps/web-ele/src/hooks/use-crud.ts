@@ -240,6 +240,7 @@ function useCrud<T extends { id?: number | string }, P extends object>(
   const [Drawer, drawerApi] = useIgourdDrawer({
     // 设置连接的组件
     connectedComponent: options.connectedComponent,
+    destroyOnClose: true,
     // 确认回调：重新加载表格数据
     onConfirm() {
       gridApi.reload();
@@ -272,7 +273,7 @@ function useCrud<T extends { id?: number | string }, P extends object>(
    *  查看详情
    */
   const handleView = (dto?: T) => {
-    debugger
+    debugger;
     if (dto) {
       // @ts-ignore
       dto.mode = 'detail';

@@ -2,11 +2,17 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { getAccountManagementListApi, removeAccountApi } from '@@/account/apis';
+import {
+  createAccountApi,
+  getAccountDetailApi,
+  getAccountManagementListApi,
+  removeAccountApi,
+  updateAccountApi,
+} from '@@/account/apis';
 import { AccountDrawerForm } from '@@/account/components';
 
 import { useCrud } from '#/hooks';
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, provide } from 'vue';
 
 export function useAccountManagement() {
   const { t } = useI18n();
@@ -86,6 +92,8 @@ export function useAccountManagement() {
     },
   };
 
+  provide(Symbol.for('FormType'), { type });
+
   const {
     Grid,
     Drawer,
@@ -99,6 +107,9 @@ export function useAccountManagement() {
     connectedComponent: AccountDrawerForm,
     service: {
       query: getAccountManagementListApi,
+      update: updateAccountApi,
+      create: createAccountApi,
+      detail: (dto) => getAccountDetailApi(dto.id),
       drop: removeAccountApi,
     },
   });
