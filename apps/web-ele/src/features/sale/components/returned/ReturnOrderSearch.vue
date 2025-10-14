@@ -201,6 +201,7 @@ onMounted(() => {
                 <ElTable
                   ref="tableRef"
                   style="width: 100%"
+                  height="400px"
                   :data="filteredOrderItems"
                   @row-click="handleRowClick"
                   @select-all="handleSelect"
@@ -225,7 +226,11 @@ onMounted(() => {
                   <ElButton class="cancel-btn" @click="handleCancel">
                     {{ $t('common.cancel') }}
                   </ElButton>
-                  <ElButton class="save-btn" @click="handleConfirm">
+                  <ElButton
+                    class="save-btn"
+                    type="primary"
+                    @click="handleConfirm"
+                  >
                     {{ $t('common.confirm') }}
                   </ElButton>
                 </div>

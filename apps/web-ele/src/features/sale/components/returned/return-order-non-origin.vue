@@ -3,10 +3,7 @@ import { computed, reactive, ref, toRefs, watch } from 'vue';
 
 import {
   ElButton,
-  ElDescriptions,
-  ElDescriptionsItem,
   ElIcon,
-  ElInput,
   ElMessage,
   ElMessageBox,
   useIgourdDrawer,
@@ -290,16 +287,6 @@ async function initMounted() {
 const [Drawer, drawerApi] = useIgourdDrawer({
   onOpenChange: (val) => {
     if (val) {
-      const data = drawerApi.getData();
-      Promise.all([
-        (createReturedInfo.value = data.createReturnedInfo),
-        (compuredReturnedinfo.value = data.compuredReturnedinfo),
-      ]).then(() => {
-        isRefundSuccess.value = false;
-        getReturnedDetail();
-        getRefundableAmountData();
-        initMounted();
-      });
     }
   },
 });
@@ -319,182 +306,14 @@ const [Drawer, drawerApi] = useIgourdDrawer({
       </div>
       <div class="bg-bg relative w-2/3">
         <div v-if="!isRefundSuccess" class="refunded-data ml-1">
-          <div class="bg-white p-2.5">
-            <div
-              class="border-border-disabled flex items-center gap-1 border-b border-solid pl-1"
-            >
-              <span class="bg-primary block h-2.5 w-1 rounded"></span>
-              <span>{{ $t('sales.sales_order_information') }}</span>
+          <!-- 非原单支付方式选择 -->
+          <!-- <ElScrollbar>
+            <div class="scrollbar-flex-content">
+              <p v-for="item in 50" :key="item" class="scrollbar-demo-item">
+                {{ item }}
+              </p>
             </div>
-            <div class="mt-2.5">
-              <ElDescriptions
-                class="margin-top"
-                label-width="140px"
-                :column="3"
-                border
-              >
-                <ElDescriptionsItem>
-                  <template #label>
-                    <div class="cell-item">
-                      {{ $t('sales.sales_total') }} ({{ currentSymbol }})
-                    </div>
-                  </template>
-                  {{ refundableAmountData?.order_total_amount || '0' }}
-                </ElDescriptionsItem>
-                <ElDescriptionsItem>
-                  <template #label>
-                    <div class="cell-item">
-                      {{ $t('sales.balance_debt') }} ({{ currentSymbol }})
-                    </div>
-                  </template>
-                  {{ refundableAmountData?.remaining_amount || '0' }}
-                </ElDescriptionsItem>
-                <ElDescriptionsItem>
-                  <template #label>
-                    <div class="cell-item">
-                      {{ $t('sales.refunded') }}({{ currentSymbol }})
-                    </div>
-                  </template>
-                  {{ refundableAmountData?.refund_total_amount || '0' }}
-                </ElDescriptionsItem>
-                <ElDescriptionsItem>
-                  <template #label>
-                    <div class="cell-item">
-                      {{ $t('sales.tendered_amount') }} ({{ currentSymbol }})
-                    </div>
-                  </template>
-                  <div class="font-bold">
-                    <p
-                      v-for="(
-                        value, key
-                      ) in refundableAmountData?.order_payment_amount_transaction_map"
-                      :key="key"
-                    >
-                      {{ key }} --
-                      {{ value }}
-                    </p>
-                  </div>
-                </ElDescriptionsItem>
-              </ElDescriptions>
-            </div>
-          </div>
-          <div class="mt-1 bg-white p-2.5">
-            <div
-              class="border-border-disabled flex items-center gap-1 border-b border-solid pl-1"
-            >
-              <span class="bg-primary block h-2.5 w-1 rounded"></span>
-              <span>{{ $t('sales.refund_information') }}</span>
-            </div>
-            <div class="mt-2.5">
-              <ElDescriptions
-                class="margin-top"
-                :column="3"
-                label-width="140px"
-                border
-              >
-                <ElDescriptionsItem :span="1">
-                  <template #label>
-                    <div class="cell-item">
-                      {{ $t('sales.refundable_value') }}
-                    </div>
-                  </template>
-                  {{ refundableAmountData?.returnable_value || '--' }}
-                </ElDescriptionsItem>
-                <ElDescriptionsItem :span="2">
-                  <template #label>
-                    <div class="cell-item">
-                      {{ $t('sales.returnable_amt') }}
-                    </div>
-                  </template>
-                  <p class="text-error">
-                    {{ refundableAmountData?.returnable_amount || '--' }}
-                  </p>
-                </ElDescriptionsItem>
-              </ElDescriptions>
-            </div>
-          </div>
-          <div class="mt-1 flex gap-1">
-            <div
-              class="flex h-[52px] w-full items-center justify-between bg-white pl-5 pr-5"
-            >
-              <span class="font-700 text-sm">{{ t('sales.this_refund') }}</span>
-
-              <span class="text-status-blocked text-2xl">{{
-                compuredReturnedinfo?.total_amount || '--'
-              }}</span>
-            </div>
-            <div
-              class="flex h-[52px] w-full items-center justify-between bg-white pl-5 pr-5"
-            >
-              <span class="font-700 text-sm">{{
-                $t('sales.still_balance')
-              }}</span>
-
-              <span class="text-status-blocked text-2xl">{{
-                stillBalance
-              }}</span>
-            </div>
-          </div>
-          <div
-            class="font-700 mt-1 flex h-[52px] w-full items-center justify-between bg-white pl-5 pr-5"
-          >
-            <span class="text-status-partial">{{
-              $t('sales.actual_refund')
-            }}</span>
-
-            <span class="text-status-blocked text-2xl">{{
-              actualRefundAmount
-            }}</span>
-          </div>
-          <div class="mt-1 bg-white pb-1.5 pl-5 pr-5 pt-1.5">
-            <p class="text-xs">
-              {{ $t('sales.source_of_payment_discount') }}：
-            </p>
-            <p class="font-700 mt-2.5 flex flex-wrap gap-7 text-sm">
-              <span
-                >{{ $t('sales.sales_wipe') }}：{{
-                  createReturedInfo?.round_down_amount || '0'
-                }}</span
-              ><span
-                >{{ $t('sales.sales_discount') }}：{{
-                  createReturedInfo?.promotion_discount_amount || '0'
-                }}</span
-              ><span
-                >{{ $t('sales.balance_deduction') }}：{{
-                  balanceDeduction
-                }}</span
-              >
-            </p>
-          </div>
-          <div
-            v-if="refundableAmountData.refund_method_amount?.length > 0"
-            class="mt-1 flex flex-wrap gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5"
-          >
-            <!-- 支付方式 -->
-            <div
-              v-for="item in refundableAmountData.refund_method_amount"
-              :key="item.refund_method_id || item.refund_method_mark"
-              class="payment-item"
-            >
-              <div
-                class="border-border-disabled flex items-center gap-5 border-b border-solid pb-2"
-              >
-                <div class="payment-item-name">
-                  <span class="font-bold">{{ item.refund_method_name }}</span>
-                </div>
-                <div class="payment-item-line bg-border-disabled"></div>
-                <div class="payment-item-amount">
-                  <ElInput
-                    v-model="item.refund_amount"
-                    type="number"
-                    :max="item.refund_amount"
-                    :disabled="true"
-                    :border="false"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          </ElScrollbar> -->
         </div>
         <div
           v-if="isRefundSuccess"

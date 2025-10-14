@@ -3,6 +3,13 @@ import { requestClient } from '#/api/request';
 export function createRefund(data: any) {
   return requestClient.post('/v1/merchant/order/returned/create', data);
 }
+export function createNoOriginRefund(data: any) {
+  return requestClient.post(
+    '/v1/merchant/order/returned/non-origin/create',
+    data,
+  );
+}
+
 export function getOrderList(data: any) {
   return requestClient.post('/v1/merchant/order/page-list', data);
 }
@@ -26,10 +33,7 @@ export function orderRefundOffline(data: any) {
 }
 
 export function refundableAmount(data: any) {
-  return requestClient.post(
-    '/v1/merchant/order/returned/calc/refund-amount',
-    data,
-  );
+  return requestClient.post('/v1/merchant/order/calc/refund-amount', data);
 }
 export function getRefundPrice(data: any) {
   return requestClient.post('/v1/merchant/order/returned/calc', data);

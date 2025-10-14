@@ -13,5 +13,13 @@
   "refund": "退款",
   "refund-qty": "退款数量",
   "total": "总金额",
-  "applied-discounts-and-promotions": "优惠和促销"
+  "applied-discounts-and-promotions": "优惠和促销",
+  "this-order-has-created-a-Refund-order": "该订单已创建退款订单，是否继续创建？",
+  "continue-create-prompt": "是否继续创建？",
+  "delete_no": "删除订单",
+  "create-new-refund-order": "创建新的退款订单",
+  "cancel-and-operation": "取消并操作",
+  "cancel-and-operation-confirm": "确认取消并操作？",
+  "close": "关闭",
+  "continue_create": "继续创建"
 }
