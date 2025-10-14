@@ -73,7 +73,7 @@ const {
                       :src="node.expanded ? folderOpen : folderClose"
                       alt=""
                     />
-                    <span class="text-sm">{{ node.label }}</span>
+                    <span class="pl-1 text-sm">{{ node.label }}</span>
                   </div>
                 </template>
               </ElTree>

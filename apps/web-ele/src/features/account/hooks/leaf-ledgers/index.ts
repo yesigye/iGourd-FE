@@ -79,3 +79,8 @@ export const accountLedgerBalanceDirectionOptions = () => {
     },
   ];
 };
+
+export const directionCodeLabel = {
+  [AccountLedgerBalanceDirectionEnum.DEBIT]: 'account.balance_directions.debit',
+  [AccountLedgerBalanceDirectionEnum.CREDIT]: 'account.balance_directions.credit',
+};

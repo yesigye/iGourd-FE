@@ -15,6 +15,7 @@ import { reactive, ref, shallowRef, watch } from 'vue';
 import { useRemoteTableTabs } from '#/hooks/use-remote-tabs';
 import { observable, type ElTree } from '@igourd/common-ui';
 import { formateMonth, isBetween, isEmpty } from '@igourd/utils';
+import { directionCodeLabel } from '../leaf-ledgers';
 
 export function useSubsidiaryLedger() {
   const { t } = useI18n();
@@ -129,18 +130,24 @@ export function useSubsidiaryLedger() {
     {
       field: 'debit_amount',
       title: t('account.debit_amount'),
+      formatter: 'formatMoney',
     },
     {
       field: 'credit_amount',
       title: t('account.credit_amount'),
+      formatter: 'formatMoney',
     },
     {
       field: 'balance_direction',
       title: t('account.direction'),
+      formatter({ cellValue }: { cellValue: keyof typeof directionCodeLabel }) {
+        return t(directionCodeLabel[cellValue]);
+      },
     },
     {
-      field: 'balance',
+      field: 'amount',
       title: t('account.balance'),
+      formatter: 'formatMoney',
     },
   ];
 
