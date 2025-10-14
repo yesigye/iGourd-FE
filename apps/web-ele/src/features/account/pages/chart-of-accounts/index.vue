@@ -26,7 +26,7 @@ const { Grid, handleEdit, handleBatchDelete, categories, typeRef, Drawer } =
         </ElButton>
       </template>
 
-      <template #operation="{ row }">
+      <template #actions="{ row }">
         <ElButton
           type="text"
           :disabled="row.source_type === 'SYSTEM'"

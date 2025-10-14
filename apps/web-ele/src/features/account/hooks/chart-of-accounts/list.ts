@@ -22,6 +22,7 @@ import {
 } from '@@/account/components';
 
 import { useCrud, useLanguage } from '#/hooks';
+import { accountLedgerBalanceDirectionOptions } from '../leaf-ledgers';
 
 function accountSaveOrUpdate(dto: any) {
   if (Reflect.has(dto, 'id')) {
@@ -48,7 +49,7 @@ export function useChartOfAccounts() {
   const categories = ref([]);
   const typeRef = ref<ChartOfAccountType>('ledger');
   // 基础列定义
-  const columns: VxeGridPropTypes.Column<AccountLedgerBalanceTreeModel>[] = [
+  const columns: VxeGridPropTypes.Column<any>[] = [
     {
       field: 'code',
       width: 165,
@@ -66,6 +67,13 @@ export function useChartOfAccounts() {
       field: 'balance_direction',
       width: 200,
       title: t('account.balance_direction'),
+      formatter({ cellValue }) {
+        return t(
+          accountLedgerBalanceDirectionOptions().find((i) => {
+            return i.value === cellValue;
+          })?.label ?? 'common.unkonwn',
+        );
+      },
     },
     {
       field: 'initial_balance',
@@ -105,6 +113,15 @@ export function useChartOfAccounts() {
       width: 200,
       title: t('account.ending_balance'),
     },
+    {
+      field: 'actions',
+      width: 100,
+      title: t('common.action'),
+      fixed: 'right',
+      slots: {
+        default: 'actions',
+      },
+    },
   ];
 
   // 标签页选项
@@ -128,18 +145,8 @@ export function useChartOfAccounts() {
     create(dto: any) {
       return saveOrUpdate(dto, unref(typeRef));
     },
-    update(dto:any) {
+    update(dto: any) {
       return saveOrUpdate(dto, unref(typeRef));
-    },
-    removeAccount: async (data: {
-      account_id_list: number[];
-      merchant_id?: number;
-    }) => {
-      return await removeAccountApi(data);
-    },
-
-    modifyBalance: async (data: any) => {
-      return await modifyLedgerBalanceApi(data);
     },
   };
 
@@ -152,12 +159,27 @@ export function useChartOfAccounts() {
     canBatchOperate,
     handleBatchDelete,
   } = useCrud({
+    girdEvents: {
+      editClosed({ row }) {
+        modifyLedgerBalanceApi({
+          ...row,
+          //@ts-ignore
+          account_ledger_id: row.curr_account_balance_model
+            ? //@ts-ignore
+              row.account_ledger_id
+            : row.id,
+        }).then(() => {
+          gridApi.reload();
+        });
+      },
+    },
     service,
     stripe: false,
     columns,
     pagerConfig: {
       enabled: false,
     },
+
     tabs: categories.value,
     tabsOption: {
       defaultActiveValue: 'COST',
@@ -170,6 +192,12 @@ export function useChartOfAccounts() {
     editConfig: {
       trigger: 'click',
       mode: 'cell',
+      beforeEditMethod({ row }) {
+        return (
+          row?.ledger_balance_model?.is_first_period ||
+          row?.curr_account_balance_model?.is_first_period
+        );
+      },
     },
     searchFormSchema: {
       keywords: {
