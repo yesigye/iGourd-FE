@@ -18,7 +18,11 @@ import DrawerList from '@@/sale/components/returned/DrawerList.vue';
 import ReturnedSettleAction from '@@/sale/components/returned/ReturnedSettleAction.vue';
 import ReturnOrderContent from '@@/sale/components/returned/ReturnOrderContent.vue';
 import ReturnOrderSearch from '@@/sale/components/returned/ReturnOrderSearch.vue';
-import { useSelectCustomer, useSelectGuider } from '@@/sale/hooks';
+import {
+  useReturnedOrderDrawer,
+  useSelectCustomer,
+  useSelectGuider,
+} from '@@/sale/hooks';
 import Decimal from 'decimal.js';
 
 import { initializeCurrencySymbol } from '#/utils/sale';
@@ -28,6 +32,8 @@ import { columnsVisible, refundColumns } from './utils/column';
 const { Drawer: SelectCustomer, drawerApi: drawerApiCustomer } =
   useSelectCustomer();
 const { Drawer: SelectGuider, drawerApi: drawerApiGuider } = useSelectGuider();
+const { Drawer: ReturnedOrderDrawer, drawerApi: drawerApiReturnedOrder } =
+  useReturnedOrderDrawer();
 
 // const [refundOrderRegister, { openDrawer: openRefundOrderDrawer }] =
 //   useDrawer();
@@ -271,13 +277,19 @@ const computedRefundAmount = async () => {
 const route = useRoute();
 const openRefund = () => {
   const refund_no = route.query.orderNo as string;
-
-  openRefundOrderDrawer(true, {
+  drawerApiReturnedOrder.setData({
     createReturnedInfo: createReturedInfo.value,
     compuredReturnedinfo: compuredReturnedinfo.value,
     type: refundType.value,
     refund_no,
   });
+  drawerApiReturnedOrder.open();
+  // openRefundOrderDrawer(true, {
+  //   createReturnedInfo: createReturedInfo.value,
+  //   compuredReturnedinfo: compuredReturnedinfo.value,
+  //   type: refundType.value,
+  //   refund_no,
+  // });
 };
 // 添加退单
 const addReturned = async () => {
@@ -373,7 +385,7 @@ const handleCancelAndOperate = () => {
     },
   });
 
-  // openRefund()
+  openRefund();
 };
 const handleContinueCreate = async () => {
   const res = await cancelRefundOrder({
@@ -479,7 +491,7 @@ const handleReturnOrderListQuantity = () => {
 };
 
 const handleRefund = async () => {
-  console.log(refundType.value);
+  drawerApiReturnedOrder.open();
   if (refundType.value === 'original_order') {
     computedRefundAmount();
   } else {
@@ -634,9 +646,7 @@ onMounted(async () => {
             </p>
             <p class="mb-3 flex justify-between">
               <span>{{ t('returned.balance') }}:</span>
-              <span class="text-right"
-                >{{ curr }} {{ customerDetailModel?.balance || '0' }}</span
-              >
+              <span class="text-right">{{ curr }} {{ customerDetailModel?.balance || '0' }}</span>
             </p>
             <p class="flex justify-between">
               <span>{{ t('returned.salesman') }}:</span>
@@ -767,6 +777,10 @@ onMounted(async () => {
     <SelectGuider
       @close-tkr="confirmGuiderClose"
       @select-customer-row:row="handleSelectGuiderRow"
+    />
+    <ReturnedOrderDrawer
+      @close-tkr="confirmReturnedOrderClose"
+      @select-customer-row:row="handleSelectReturnedOrderRow"
     />
   </Page>
 </template>
