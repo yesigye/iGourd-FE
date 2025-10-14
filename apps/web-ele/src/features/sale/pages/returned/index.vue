@@ -8,6 +8,7 @@ import { useI18n } from '@igourd/locales';
 
 import {
   cancelRefundOrder,
+  createNoOriginRefund,
   createRefund,
   getOrderList,
   getRefundPrice,
@@ -20,6 +21,7 @@ import ReturnOrderContent from '@@/sale/components/returned/ReturnOrderContent.v
 import ReturnOrderSearch from '@@/sale/components/returned/ReturnOrderSearch.vue';
 import {
   useReturnedOrderDrawer,
+  useReturnedOrderNonOriginDrawer,
   useSelectCustomer,
   useSelectGuider,
 } from '@@/sale/hooks';
@@ -34,7 +36,10 @@ const { Drawer: SelectCustomer, drawerApi: drawerApiCustomer } =
 const { Drawer: SelectGuider, drawerApi: drawerApiGuider } = useSelectGuider();
 const { Drawer: ReturnedOrderDrawer, drawerApi: drawerApiReturnedOrder } =
   useReturnedOrderDrawer();
-
+const {
+  Drawer: ReturnedOrderNonOriginDrawer,
+  drawerApi: drawerApiReturnedOrderNonOrigin,
+} = useReturnedOrderNonOriginDrawer();
 // const [refundOrderRegister, { openDrawer: openRefundOrderDrawer }] =
 //   useDrawer();
 const { t } = useI18n();
@@ -239,8 +244,8 @@ const computedRefundAmountOriginAl = async () => {
     // } else {
     //   ElMessage.error(res.message);
     // }
-  } catch {
-    console.log();
+  } catch (error) {
+    console.log(error);
   }
 };
 /** 非原单模拟算费*/
@@ -276,20 +281,26 @@ const computedRefundAmount = async () => {
 };
 const route = useRoute();
 const openRefund = () => {
-  const refund_no = route.query.orderNo as string;
-  drawerApiReturnedOrder.setData({
-    createReturnedInfo: createReturedInfo.value,
-    compuredReturnedinfo: compuredReturnedinfo.value,
-    type: refundType.value,
-    refund_no,
-  });
-  drawerApiReturnedOrder.open();
-  // openRefundOrderDrawer(true, {
-  //   createReturnedInfo: createReturedInfo.value,
-  //   compuredReturnedinfo: compuredReturnedinfo.value,
-  //   type: refundType.value,
-  //   refund_no,
-  // });
+  const refund_no = 'SO-20251011-00000003';
+  drawerApiReturnedOrder
+    .setData({
+      createReturnedInfo: createReturedInfo.value,
+      compuredReturnedinfo: compuredReturnedinfo.value,
+      type: refundType.value,
+      refund_no,
+    })
+    .open();
+};
+const openRefundNonOrigin = () => {
+  const refund_no = 'SO-20251011-00000003';
+  drawerApiReturnedOrderNonOrigin
+    .setData({
+      createReturnedInfo: createReturedInfo.value,
+      compuredReturnedinfo: compuredReturnedinfo.value,
+      type: refundType.value,
+      refund_no,
+    })
+    .open();
 };
 // 添加退单
 const addReturned = async () => {
@@ -337,7 +348,6 @@ const addReturned = async () => {
     : 0;
   returnOrderParams.value.remaining_amount =
     compuredReturnedinfo.value.remaining_amount;
-
   try {
     let res = {};
     if (refundType.value === 'original_order') {
@@ -355,25 +365,25 @@ const addReturned = async () => {
       returnOrderParams.value.type = 'NO_ORIGINAL_ORDER';
       res = await createNoOriginRefund(returnOrderParams.value);
     }
-    if (res.code === 'SUCCESS') {
-      if (res.data.is_exists) {
-        refundColumnsData.value = [res?.data.order_returned_detail_model];
-        dialogVisible.value = true;
-        createReturedInfo.value = res?.data.order_returned_detail_model;
-      } else {
-        ElMessage.success(t('sales.returnedCreatedSuccessfully'));
-        createReturedInfo.value = {
-          order_returned_no: res.data.order_returned_no,
-        };
-        openRefund();
-      }
-
-      // handleSettleEmpty();
+    // if (res.code === 'SUCCESS') {
+    if (res.is_exists) {
+      console.log(res, 'res');
+      refundColumnsData.value = [res?.order_returned_detail_model];
+      dialogVisible.value = true;
+      createReturedInfo.value = res?.order_returned_detail_model;
     } else {
-      ElMessage.error(res.message);
+      ElMessage.success(t('sales.returnedCreatedSuccessfully'));
+      createReturedInfo.value = {
+        order_returned_no: res.order_returned_no,
+      };
+      if (refundType.value === 'original_order') {
+        openRefund();
+      } else {
+        openRefundNonOrigin();
+      }
     }
-  } catch {
-    // ElMessage.error(error?.message);
+  } catch (error) {
+    console.error(error);
   }
 };
 const handleCancelAndOperate = () => {
@@ -388,13 +398,15 @@ const handleCancelAndOperate = () => {
   openRefund();
 };
 const handleContinueCreate = async () => {
-  const res = await cancelRefundOrder({
-    order_id: refundColumnsData.value[0].order_id,
-  });
-  if (res.code === 'SUCCESS') {
+  try {
+    const res = await cancelRefundOrder({
+      order_id: refundColumnsData.value[0].order_id,
+    });
     dialogVisible.value = false;
 
     addReturned();
+  } catch (error) {
+    console.error(error);
   }
 };
 // 处理退单数量
@@ -491,7 +503,6 @@ const handleReturnOrderListQuantity = () => {
 };
 
 const handleRefund = async () => {
-  drawerApiReturnedOrder.open();
   if (refundType.value === 'original_order') {
     computedRefundAmount();
   } else {
@@ -545,7 +556,7 @@ const noOriginalOrderGetGoodsList = async (val) => {
     business_type: 'SALE',
     // status: 'ON_SALE',
     page_num: 1,
-    page_size: 10,
+    page_size: 100,
   });
   // if (res.code === 'SUCCESS') {
   // return res.data
@@ -722,17 +733,19 @@ onMounted(async () => {
         </ElIcon>
         <div>
           <div class="text-sm">
-            <p>{{ t('sales.this_order_has_created_a_Refund_order') }}</p>
+            <p>{{ t('returned.this-order-has-created-a-Refund-order') }}</p>
             <p class="mt-5 font-bold">
               {{
-                t('sales.continue_create_prompt', {
+                t('returned.continue-create-prompt', {
                   no: refundColumnsData?.[0]?.order_returned_no || '',
                 })
               }}
-              <span class="text-error">{{ t('sales.delete_no') }}</span> ,
-              {{ t('sales.create_new_refund_order') }}!
+              <span class="text-error">{{ t('returned.delete_no') }}</span> ,
+              {{ t('returned.create-new-refund-order') }}!
             </p>
-            <p class="mt-1 font-bold">{{ t('sales.cancel_and_operation') }}</p>
+            <p class="mt-1 font-bold">
+              {{ t('returned.cancel-and-operation') }}
+            </p>
           </div>
           <div>
             <IgourdElTable
@@ -752,7 +765,7 @@ onMounted(async () => {
         >
           <ElButton @click="handleCancelAndOperate">
             <span class="text-error">{{
-              t('sales.cancel_and_operation_confirm')
+              t('returned.cancel-and-operation-confirm')
             }}</span>
           </ElButton>
           <div>
@@ -760,10 +773,12 @@ onMounted(async () => {
               class="border-primary border border-solid"
               @click="dialogVisible = false"
             >
-              <span class="text-primary">{{ t('sales.close') }}</span>
+              <span class="text-primary">{{ t('returned.close') }}</span>
             </ElButton>
             <ElButton type="primary" @click="handleContinueCreate">
-              <span class="text-white">{{ t('sales.continue_create') }}</span>
+              <span class="text-white">{{
+                t('returned.continue_create')
+              }}</span>
             </ElButton>
           </div>
         </div>
@@ -782,6 +797,7 @@ onMounted(async () => {
       @close-tkr="confirmReturnedOrderClose"
       @select-customer-row:row="handleSelectReturnedOrderRow"
     />
+    <ReturnedOrderNonOriginDrawer />
   </Page>
 </template>
 <style lang="scss"></style>

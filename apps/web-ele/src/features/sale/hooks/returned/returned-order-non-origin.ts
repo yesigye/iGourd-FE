@@ -1,15 +1,15 @@
 import { useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { returnedOrderDrawer } from '@@/sale/components/returned';
+import { returnedOrderOriginDrawer } from '@@/sale/components/returned';
 
-export function useReturnedOrderDrawer() {
+export function useReturnedOrderNonOriginDrawer() {
   const { t } = useI18n();
   const [Drawer, drawerApi] = useIgourdDrawer({
-    connectedComponent: returnedOrderDrawer,
+    connectedComponent: returnedOrderOriginDrawer,
     appendToMain: true,
     class: 'w-2/3',
-    title: '原单退款',
+    title: '非原单退款',
     footer: false,
   });
   return {
