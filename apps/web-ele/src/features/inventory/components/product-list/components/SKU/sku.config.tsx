@@ -28,6 +28,7 @@ export function createUnitsTableConfig(t: TranslationFunction): TableColumn[] {
     {
       label: '',
       prop: 'type',
+      width: 140,
       render: ({ row, $index }: UnitsTableRenderProps) => {
         return h(
           'span',
@@ -38,7 +39,6 @@ export function createUnitsTableConfig(t: TranslationFunction): TableColumn[] {
     },
     {
       label: 'unit',
-      width: 140,
       prop: 'secondary_unit_name',
       render: ({
         row,
@@ -105,7 +105,6 @@ export function createUnitsTableConfig(t: TranslationFunction): TableColumn[] {
     },
     {
       label: 'unit_rate',
-      width: 180,
       prop: 'basic_unit_radio',
       render: ({ row, $index, mode, handleUnitChange, unitList }) => {
         if ($index === 0) {
@@ -167,7 +166,6 @@ export function createUnitsTableConfig(t: TranslationFunction): TableColumn[] {
     // },
     {
       label: 'unit_conversion',
-      width: 150,
       prop: 'basic_unit_name',
       render: ({ row }) => {
         return h('span', {}, row.basic_unit_name);
@@ -286,7 +284,7 @@ export function createSkuSpecTableConfig(
       prop: 'status',
       fixed: 'left',
       label: 'inventory.status',
-      maxWidth: 80,
+      width: 80,
       align: 'center',
       render: ({ row, mode, handleStatusChange }: SkuTableRenderProps) => {
         if (mode === 'view') {
@@ -320,7 +318,7 @@ export function createSkuSpecTableConfig(
       prop: 'profile_photo',
       fixed: 'left',
       align: 'center',
-      maxWidth: 80,
+      width: 80,
       render: ({ row, mode, handRowUpload }) => {
         return h('div', { class: 'product-image-container' }, [
           h(UploadImage, {
@@ -376,7 +374,7 @@ export function createSkuSpecTableConfig(
     {
       prop: 'specCode',
       label: 'inventory.spec_code',
-      maxWidth: 120,
+      width: 120,
       align: 'center',
       render: ({ row, mode, handleInputChange }) => {
         if (mode === 'view') {
@@ -408,7 +406,6 @@ export function createSkuSpecTableConfig(
     {
       prop: 'initialStock',
       label: 'inventory.initial_stock',
-      maxWidth: 235,
       align: 'center',
       render: ({
         row,
@@ -622,7 +619,7 @@ export function createSkuSpecTableConfig(
     {
       fixed: 'right',
       label: 'inventory.action',
-      maxWidth: 80,
+      width: 80,
       align: 'center',
       render: ({ row, $index, handleDeleteRow, mode, unitsConfig }) => {
         if (mode === 'view') {

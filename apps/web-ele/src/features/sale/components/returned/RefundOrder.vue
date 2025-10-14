@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { computed, reactive, ref, toRefs, watch } from 'vue';
 
-import { ElButton, ElInput, ElMessage, ElMessageBox } from '@igourd/common-ui';
+import {
+  ElButton,
+  ElInput,
+  ElMessage,
+  ElMessageBox,
+  useIgourdDrawer,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import {
@@ -16,7 +22,6 @@ import {
   useReceiptTemplate,
 } from '#/components/receipt-template'; // 生成小票模板
 import { initializeCurrencySymbol } from '#/utils/sale';
-// import { BasicDrawer, useDrawerInner } from 'igourd-ui';
 
 const emit = defineEmits([
   'close-tkr',
@@ -24,6 +29,7 @@ const emit = defineEmits([
   'handleEmptyAmount',
   'paySuccess',
 ]);
+
 const printObj = {
   ids: '#receiptPrintId5',
   popTitle: '页面打印',
@@ -284,6 +290,22 @@ async function initMounted() {
   currentSymbol.value = await initializeCurrencySymbol();
   getTemplateList('REFUND_RECEIPT');
 }
+
+const [Drawer, drawerApi] = useIgourdDrawer({
+  onOpenChange: (val) => {
+    if (val) {
+      Promise.all([
+        (createReturedInfo.value = event.createReturnedInfo),
+        (compuredReturnedinfo.value = event.compuredReturnedinfo),
+      ]).then(() => {
+        isRefundSuccess.value = false;
+        getReturnedDetail();
+        getRefundableAmountData();
+        initMounted();
+      });
+    }
+  },
+});
 // const [register] = useDrawerInner((event) => {
 //   Promise.all([
 //     (createReturedInfo.value = event.createReturnedInfo),
@@ -297,12 +319,13 @@ async function initMounted() {
 // });
 </script>
 <template>
-  <BasicDrawer
+  <!-- <BasicDrawer
     :title="t('sales.refund')"
     size="70%"
     :show-footer="false"
     @register="register"
-  >
+  > -->
+  <Drawer>
     <section class="flex h-full gap-2">
       <div class="w-1/3 overflow-auto pr-2" style="height: calc(100vh - 88px)">
         <ReceiptTemplate
@@ -526,5 +549,6 @@ async function initMounted() {
         </div>
       </div>
     </section>
-  </BasicDrawer>
+  </Drawer>
+  <!-- </BasicDrawer> -->
 </template>
