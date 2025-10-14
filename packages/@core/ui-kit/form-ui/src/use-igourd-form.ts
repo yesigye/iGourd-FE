@@ -45,7 +45,6 @@ export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
       props: Partial<Omit<IGourdFormProps<T>, 'i18n' | 'scope'>>,
       { attrs, slots },
     ) => {
-      console.log(props.schema);
       return () =>
         h(FormProvider, { form: formAPI, ...props, ...attrs }, () => [
           h(SchemaField, {
