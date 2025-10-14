@@ -2,7 +2,13 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { getAccountManagementListApi, removeAccountApi } from '@@/account/apis';
+import {
+  createAccountApi,
+  getAccountDetailApi,
+  getAccountManagementListApi,
+  removeAccountApi,
+  updateAccountApi,
+} from '@@/account/apis';
 import { AccountDrawerForm } from '@@/account/components';
 
 import { useCrud } from '#/hooks';
@@ -101,6 +107,9 @@ export function useAccountManagement() {
     connectedComponent: AccountDrawerForm,
     service: {
       query: getAccountManagementListApi,
+      update: updateAccountApi,
+      create: createAccountApi,
+      detail: (dto) => getAccountDetailApi(dto.id),
       drop: removeAccountApi,
     },
   });

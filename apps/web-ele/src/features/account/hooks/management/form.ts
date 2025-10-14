@@ -61,6 +61,9 @@ export function useManagementForm() {
       },
     },
     formOptions: {
+      initialValues: {
+        belong_type: 'NONE',
+      },
       effects(form) {
         onFieldInputValueChange('code', () => {
           relationFlag.value = false;
@@ -87,6 +90,12 @@ export function useManagementForm() {
             bd.code,
           );
           form.setValuesIn('code', maxCode);
+        });
+        onFieldInputValueChange('initial_balance', (field) => {
+          if (Reflect.has(drawerApi.getData(), 'id')) {
+            return;
+          }
+          form.setValuesIn('current_balance', field.value);
         });
       },
       scope: {
