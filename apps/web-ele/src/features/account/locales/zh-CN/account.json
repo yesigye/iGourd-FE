@@ -513,7 +513,7 @@
   "accounting_note_tip": "存在未审核的记账笔记单据,需要审核通过或审核失败才能继续结转！",
   "accounting_note_tips_action": "是否前去操作？",
   "go_and_operate": "去操作",
-  "prompt_message": "提示信息",
+  "prompt-message": "提示信息",
   "Accounting_note_expenditure_quantity": "记账笔记支出数量",
   "Accounting_note_expenditure_amount": "记账笔记支出金额",
   "Accounting_note_revenue_quantity": "记账笔记收入数量",

@@ -16,5 +16,6 @@
   "refund-product-value": "退款商品金额",
   "actual-refund-amt": "实际退款金额",
   "refund-difference": "退款差异",
-  "refund-date": "退款日期"
+  "refund-date": "退款日期",
+  "cancel-order-tips": "确认取消退款订单吗？"
 }

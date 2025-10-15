@@ -10,7 +10,7 @@ import {
   getSaleOrderListApi,
   updateSaleOrderApi,
 } from '@@/sale/apis';
-import { SaleOrderDrawer } from '@@/sale/components';
+// import { SaleOrderDrawer } from '@@/sale/components';
 
 import { useCrud } from '#/hooks';
 
@@ -169,17 +169,16 @@ export function useSaleOrder() {
     columns,
     searchFormSchema,
     batchOperate: true,
-    connectedComponent: SaleOrderDrawer,
     service: {
       query: async (data: {
+        date_range?: string[];
         page_num: number;
         page_size: number;
-        date_range?: string[];
       }) => {
-        let params: SaleOrderQueryParams = { ...data };
+        const params: SaleOrderQueryParams = { ...data };
         if (data.date_range && data.date_range.length > 0) {
-          params.start_create_time = data.date_range[0] + ' 00:00:00';
-          params.end_create_time = data.date_range[1] + ' 23:59:59';
+          params.start_create_time = `${data.date_range[0]} 00:00:00`;
+          params.end_create_time = `${data.date_range[1]} 23:59:59`;
         }
         return await getSaleOrderListApi(params);
       },
