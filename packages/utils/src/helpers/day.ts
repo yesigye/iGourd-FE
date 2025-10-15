@@ -16,3 +16,7 @@ export function isBetween(
   const [start, end] = range;
   return dayjs(time).isBetween(start, end, unit, '[]');
 }
+
+export function formateMonth(time: string) {
+  return dayjs(time).format('YYYY-MM');
+}

@@ -1,10 +1,14 @@
 <script lang="ts" setup>
-import { useAccountForm } from '@@/account/hooks/chart-of-accounts/form-schema-account';
+import { useChartOfAccountsForm } from '@@/account/hooks';
+import type { IChatOfAccountProps } from '.';
 
-const { Drawer, Form } = useAccountForm();
+const props = withDefaults(defineProps<IChatOfAccountProps>(), {
+  type: 'ledger',
+});
+const { Drawer, Form, schema } = useChartOfAccountsForm(props);
 </script>
 <template>
   <Drawer>
-    <Form />
+    <Form :schema="schema" />
   </Drawer>
 </template>

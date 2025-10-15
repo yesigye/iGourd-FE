@@ -2,26 +2,54 @@ import type { AccountLedgerBalanceTreeModel } from '@@/account/types';
 
 import type { VxeGridPropTypes } from '@igourd/plugins/vxe-table';
 
-import { ref } from 'vue';
+import { nextTick, ref, unref } from 'vue';
 
 import { useI18n } from '@igourd/locales';
 
 import {
+  createAccountApi,
+  createAccountLedgerApi,
   getChartOfAccountsTreeApi,
+  modifyAccountApi,
+  modifyAccountLedgerApi,
   modifyLedgerBalanceApi,
   removeAccountApi,
   removeAccountLedgerApi,
 } from '@@/account/apis';
-import { ChartOfAccountsDrawer } from '@@/account/components';
+import {
+  ChartOfAccountsDrawer,
+  type ChartOfAccountType,
+} from '@@/account/components';
 
 import { useCrud, useLanguage } from '#/hooks';
+import { accountLedgerBalanceDirectionOptions } from '../leaf-ledgers';
+
+function accountSaveOrUpdate(dto: any) {
+  if (Reflect.has(dto, 'id')) {
+    return modifyAccountApi(dto);
+  }
+  return createAccountApi(dto);
+}
+function ledgerSaveOrUpdate(dto: any) {
+  if (Reflect.has(dto, 'id')) {
+    return modifyAccountLedgerApi(dto);
+  }
+  return createAccountLedgerApi(dto);
+}
+
+function saveOrUpdate(dto: any, type: ChartOfAccountType) {
+  if (type === 'ledger') {
+    return accountSaveOrUpdate(dto);
+  }
+  return ledgerSaveOrUpdate(dto);
+}
 
 export function useChartOfAccounts() {
   const { t } = useI18n();
   const categories = ref([]);
-
+  const typeRef = ref<ChartOfAccountType>('ledger');
   // 基础列定义
-  const columns: VxeGridPropTypes.Column<AccountLedgerBalanceTreeModel>[] = [
+  const columns: VxeGridPropTypes.Column<any>[] = [
     {
       field: 'code',
       width: 165,
@@ -39,6 +67,13 @@ export function useChartOfAccounts() {
       field: 'balance_direction',
       width: 200,
       title: t('account.balance_direction'),
+      formatter({ cellValue }) {
+        return t(
+          accountLedgerBalanceDirectionOptions().find((i) => {
+            return i.value === cellValue;
+          })?.label ?? 'common.unkonwn',
+        );
+      },
     },
     {
       field: 'initial_balance',
@@ -78,6 +113,15 @@ export function useChartOfAccounts() {
       width: 200,
       title: t('account.ending_balance'),
     },
+    {
+      field: 'actions',
+      width: 100,
+      title: t('common.action'),
+      fixed: 'right',
+      slots: {
+        default: 'actions',
+      },
+    },
   ];
 
   // 标签页选项
@@ -98,15 +142,11 @@ export function useChartOfAccounts() {
     remove: async (data: { ledger_id_list: number[] }) => {
       return await removeAccountLedgerApi(data);
     },
-    removeAccount: async (data: {
-      account_id_list: number[];
-      merchant_id?: number;
-    }) => {
-      return await removeAccountApi(data);
+    create(dto: any) {
+      return saveOrUpdate(dto, unref(typeRef));
     },
-
-    modifyBalance: async (data: any) => {
-      return await modifyLedgerBalanceApi(data);
+    update(dto: any) {
+      return saveOrUpdate(dto, unref(typeRef));
     },
   };
 
@@ -115,16 +155,31 @@ export function useChartOfAccounts() {
     Grid,
     gridApi,
     Drawer,
-    handleEdit,
+    handleEdit: innerHandleEdit,
     canBatchOperate,
     handleBatchDelete,
   } = useCrud({
+    girdEvents: {
+      editClosed({ row }) {
+        modifyLedgerBalanceApi({
+          ...row,
+          //@ts-ignore
+          account_ledger_id: row.curr_account_balance_model
+            ? //@ts-ignore
+              row.account_ledger_id
+            : row.id,
+        }).then(() => {
+          gridApi.reload();
+        });
+      },
+    },
     service,
     stripe: false,
     columns,
     pagerConfig: {
       enabled: false,
     },
+
     tabs: categories.value,
     tabsOption: {
       defaultActiveValue: 'COST',
@@ -137,6 +192,12 @@ export function useChartOfAccounts() {
     editConfig: {
       trigger: 'click',
       mode: 'cell',
+      beforeEditMethod({ row }) {
+        return (
+          row?.ledger_balance_model?.is_first_period ||
+          row?.curr_account_balance_model?.is_first_period
+        );
+      },
     },
     searchFormSchema: {
       keywords: {
@@ -155,6 +216,12 @@ export function useChartOfAccounts() {
   useLanguage('basics.accounting.account-ledger-category-enum').then((res) => {
     categories.value = res;
   });
+  const handleEdit = (dto?: any, type?: ChartOfAccountType) => {
+    typeRef.value = type ?? 'ledger';
+    nextTick(() => {
+      innerHandleEdit(dto);
+    });
+  };
   return {
     Grid,
     Drawer,
@@ -164,5 +231,6 @@ export function useChartOfAccounts() {
     handleBatchDelete,
     categories,
     gridApi,
+    typeRef,
   };
 }

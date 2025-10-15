@@ -87,7 +87,7 @@ export default {
               },
               'x-validator': [null],
             },
-            openingBalance: {
+            openingBalance_row: {
               type: 'void',
               'x-decorator': 'FormItem',
               title: "{{t('account.opening_balance')}}",
@@ -147,9 +147,8 @@ export default {
               'x-component-props': {
                 placeholder: "{{t('common.enter')}}",
               },
-              'x-validator': [null],
             },
-            closing_balance: {
+            closing_balance_row: {
               type: 'void',
               'x-decorator': 'FormItem',
               title: "{{t('account.closing_balance')}}",
@@ -211,7 +210,6 @@ export default {
               'x-validator': [null],
             },
           },
-          'x-validator': [null],
         },
         'other-info': {
           type: 'void',
