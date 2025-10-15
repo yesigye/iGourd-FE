@@ -26,6 +26,7 @@ import {
   ElIcon,
   ElInput,
   ElInputNumber,
+  ElMessage,
 } from '@igourd/common-ui';
 import { ArrowDown, Tickets } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
@@ -42,7 +43,6 @@ import {
   WIPED_AMOUNT_INPUT_KEY,
 } from '@@/sale/types';
 import Decimal from 'decimal.js';
-import { ElMessage } from 'element-plus';
 
 import { addDecimal, subtractDecimal } from '#/utils/decimal.serice';
 import { initializeCurrencySymbol } from '#/utils/sale';
@@ -451,7 +451,6 @@ const isSettlementDisabled = computed(() => {
 
 // 计算总金额：total_Amount
 const totalAmount = computed(() => {
-  console.log(calculateOrderList);
   const amount = calculateOrderList.value?.total_amount || 0;
   return Number(amount).toFixed(2);
 });
@@ -786,9 +785,7 @@ defineExpose({
     <div
       class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
-      <span class="scan-cash-settlement-header-title"
-        >{{ t('scan.amount-tendered') }}:</span
-      >
+      <span class="scan-cash-settlement-header-title">{{ t('scan.amount-tendered') }}:</span>
 
       <span class="scan-cash-settlement-header-amount">
         {{ tenderedAmount.toFixed(2) }} {{ currentSymbol }}
@@ -798,9 +795,7 @@ defineExpose({
     <div
       class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
-      <span class="scan-cash-settlement-header-title"
-        >{{ t('scan.amount-change') }}:</span
-      >
+      <span class="scan-cash-settlement-header-title">{{ t('scan.amount-change') }}:</span>
       <div class="flex-1">
         <ElInputNumber
           ref="wipedAmountInput"
@@ -810,6 +805,7 @@ defineExpose({
           class="w-full"
           :precision="2"
           :step="0.01"
+          :disabled="tenderedAmount >= totalAmount"
           :max="totalAmount"
           controls-position="right"
           @focus="handleWipeFocus"
@@ -896,9 +892,7 @@ defineExpose({
       class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
       <span class="text-status-partial">{{ t('scan.change') }}:</span>
-      <span class="text-status-terminated"
-        >{{ changeAmount }} {{ currentSymbol }}</span
-      >
+      <span class="text-status-terminated">{{ changeAmount }} {{ currentSymbol }}</span>
     </div>
 
     <div

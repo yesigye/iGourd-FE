@@ -6,6 +6,8 @@ import { useI18n } from '@igourd/locales';
 
 import {
   getReceiptOrderPageListApi,
+  createReceiptOrderApi,
+  modifyReceiptOrderApi,
   removeReceiptOrderApi,
 } from '@@/account/apis';
 import { CollectionVoucherDrawer } from '@@/account/components';
@@ -19,70 +21,101 @@ export function useCollectionVoucher() {
   const baseColumns: VxeGridPropTypes.Column<ReceiptOrderPageModel>[] = [
     {
       field: 'receipt_order_no',
-      width: 190,
+      minWidth: 190,
       title: t('account.receipt_order_no'),
       sortable: true,
     },
     {
       field: 'customer_name',
-      width: 190,
+      minWidth: 190,
       title: t('printTemp.printReceipt.receipt_customer_name'),
       sortable: true,
     },
     {
       field: 'receipt_time',
-      width: 170,
+      minWidth: 170,
       title: t('account.orderDate'),
+      align: 'right',
       sortable: true,
     },
     {
       field: 'total_amount',
-      width: 150,
+      minWidth: 150,
       title: t('account.collected_amt'),
       sortable: true,
+      align: 'right',
+      formatter: 'formatMoney',
     },
     {
       field: 'receipt_direction',
-      width: 140,
+      minWidth: 140,
       title: t('account.order_dir'),
       sortable: true,
+      formatter({ cellValue }) {
+        return t(
+          `collection-voucher.receipt_direction.${cellValue.toLocaleLowerCase()}`,
+        );
+      },
     },
     {
       field: 'business_type',
-      width: 140,
+      minWidth: 140,
       title: t('account.businessType'),
       sortable: true,
+      formatter({ cellValue }) {
+        return t(
+          `collection-voucher.business_type.${cellValue.toLocaleLowerCase()}`,
+        );
+      },
     },
     {
       field: 'ledger_type',
-      width: 130,
+      minWidth: 130,
       title: t('account.accountType'),
       sortable: true,
+      formatter({ cellValue }) {
+        return t(
+          `collection-voucher.ledger_type_enum.${cellValue.toLocaleLowerCase()}`,
+        );
+      },
     },
     {
       field: 'remark',
-      width: 150,
+      minWidth: 150,
       title: t('account.remarks'),
       sortable: true,
     },
     {
       field: 'review_time',
-      width: 170,
+      minWidth: 170,
       title: t('account.review_time'),
+      align: 'right',
       sortable: true,
     },
     {
       field: 'reviewer_name',
-      width: 110,
+      minWidth: 110,
       title: t('account.reviewer'),
       sortable: true,
     },
     {
       field: 'review_status',
-      width: 130,
+      minWidth: 130,
       title: t('common.review'),
       sortable: true,
       fixed: 'right',
+      formatter({ cellValue }) {
+        return t(`common.review_status.${cellValue}`);
+      },
+    },
+    {
+      field: 'actions',
+      fixed: 'right',
+      title: t('common.action'),
+      minWidth: 100,
+      slots: {
+        default: 'operation',
+      },
     },
   ];
 
@@ -90,7 +123,9 @@ export function useCollectionVoucher() {
   const service = {
     // 获取列表数据
     query: getReceiptOrderPageListApi,
-
+    create: createReceiptOrderApi,
+    update: modifyReceiptOrderApi,
+    
     // 删除收款单
     remove: async (data: { receipt_order_ids: number[] }) => {
       return await removeReceiptOrderApi(data);

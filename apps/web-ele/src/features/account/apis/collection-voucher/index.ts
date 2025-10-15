@@ -38,6 +38,11 @@ export function removeReceiptOrderApi(data: ReceiptOrderRemoveVO) {
 
 // 创建收款单
 export function createReceiptOrderApi(data: ReceiptOrderCreateVO) {
+  // const {payment_order_item_list:[first],...reset} = data
+  // data = {
+  //   ...reset,
+  //   ...data.[]
+  // }
   return requestClient.post(
     `/v1/merchant/order/receipt-order/create`,
     data,

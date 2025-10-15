@@ -96,7 +96,6 @@ const printParams = {
 };
 const newOrderDetails = ref({});
 const getReturnedDetail = async () => {
-  console.log(createReturedInfo.value, 'createReturedInfo');
   const res = await orderReturnedDetails({
     order_returned_no: createReturedInfo.value?.order_returned_no,
   });

@@ -10,20 +10,15 @@ defineOptions({
 
 const { t } = useI18n();
 
-const {
-  Grid,
-  Drawer,
-  handleEdit,
-  handleBatchDelete,
-  canBatchOperate,
-} = useCollectionVoucher();
+const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
+  useCollectionVoucher();
 </script>
 
 <template>
   <Page auto-content-height>
     <Grid>
-    <template #table-actions>
-        <ElButton type="primary">
+      <template #table-actions>
+        <ElButton type="primary" @click="handleEdit()">
           {{ t('common.add') }}
         </ElButton>
         <ElButton
@@ -43,9 +38,9 @@ const {
         >
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text">
-          {{ t('inventory.details') }}
-        </ElButton>
+        <!-- <ElButton type="text">
+          {{ t('common.detail') }}
+        </ElButton> -->
         <ElButton type="text">
           {{ t('account.print') }}
         </ElButton>

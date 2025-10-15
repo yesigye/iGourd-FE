@@ -11,5 +11,7 @@
   "tendered": "实付金额",
   "give-change": "找零",
   "status": "状态",
-  "actuaily_paid": "实际实付金额"
+  "actuaily-paid": "实际实付金额",
+  "basic-information": "基本信息",
+  "repayment-history": "付款历史"
 }

@@ -1,15 +1,16 @@
 import { useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { SaleOrderPrintReceiptDrawer } from '@@/sale/components';
+import { ScanOrderSettle } from '@@/sale/components/scan';
 
-export function useSaleOrderPrintReceiptDrawer() {
+export function useScanOrderSettle() {
   const { t } = useI18n();
   const [Drawer, drawerApi] = useIgourdDrawer({
-    connectedComponent: SaleOrderPrintReceiptDrawer,
+    connectedComponent: ScanOrderSettle,
     appendToMain: true,
-    class: 'w-1/3',
-    title: '打印小票',
+    class: 'w-2/3',
+    title: '支付',
+    footer: false,
   });
   return {
     Drawer,

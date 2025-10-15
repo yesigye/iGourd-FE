@@ -532,5 +532,7 @@
   "please_input_amount": "请输入金额",
   "amount_exceeded": "单笔记账笔记金额超出限制最高{max}",
   "confirm_reset": "确定要\"重置\"清空此页面吗？",
-  "business_original_amount": "业务原始金额"
+  "business_original_amount": "业务原始金额",
+  "totalAmount": "总金额",
+  "transaction_amount": "交易金额"
 }
