@@ -97,21 +97,53 @@ export function useSaleRefundOrder() {
       slots: { default: 'operation' },
     },
   ];
-
+  const searchFormSchema = {
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
+      'x-component-props': {
+        placeholder: "{{t('order.order-no')}}",
+        clearable: true,
+      },
+    },
+    date_range: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'DatePicker',
+      'x-component-props': {
+        type: 'daterange',
+        rangeSeparator: '至',
+        startPlaceholder: '开始日期',
+        endPlaceholder: '结束日期',
+        format: 'YYYY-MM-DD',
+        valueFormat: 'YYYY-MM-DD',
+      },
+    },
+  };
   // 服务函数
   const service = {
     query: async ({
       page_num,
       page_size,
+      keywords,
+      date_range,
     }: {
+      date_range: string[];
+      keywords?: string;
       page_num: number;
       page_size: number;
     }) => {
+      const params = {};
+      if (date_range && date_range.length > 0) {
+        params.start_create_time = `${date_range[0]} 00:00:00`;
+        params.end_create_time = `${date_range[1]} 23:59:59`;
+      }
       const response = await getSaleRefundOrderPageListApi({
         page_num,
         page_size,
-        is_shift_settlement: true,
-        keywords: '',
+        keywords,
+        ...params,
       });
 
       return {
@@ -132,16 +164,7 @@ export function useSaleRefundOrder() {
   } = useCrud({
     service,
     columns: baseColumns,
-    searchFormSchema: {
-      keywords: {
-        type: 'input',
-        name: 'keywords',
-        title: t('refund-order.search'),
-        'x-component-props': {
-          placeholder: t('refund-order.search-placeholder'),
-        },
-      },
-    },
+    searchFormSchema,
     connectedComponent: SaleRefundOrderDrawer,
   });
 
