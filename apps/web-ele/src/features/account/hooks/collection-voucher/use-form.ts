@@ -13,7 +13,7 @@ export function useCollectionVoucherForm() {
       repaid_amount: `${record.repaid_amount}`,
       business_type: 'SALES_ORDER_RETURNED',
     };
-    formAPI.setValues({ payment_order_item_list: [record] });
+    formAPI.setValues({ receipt_order_item_list: [record] });
   }
   const { Drawer, Form, formAPI } = useDrawerForm({
     drawerOptions: {

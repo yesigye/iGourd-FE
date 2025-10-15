@@ -235,7 +235,7 @@ export function useCollectionVoucherSchema({
           },
         },
         properties: {
-          payment_order_item_list: {
+          receipt_order_item_list: {
             type: 'array',
             'x-component': 'ArrayTable',
             'x-component-props': {},

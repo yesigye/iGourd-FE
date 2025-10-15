@@ -6,6 +6,8 @@ import { useI18n } from '@igourd/locales';
 
 import {
   getReceiptOrderPageListApi,
+  createReceiptOrderApi,
+  modifyReceiptOrderApi,
   removeReceiptOrderApi,
 } from '@@/account/apis';
 import { CollectionVoucherDrawer } from '@@/account/components';
@@ -121,7 +123,9 @@ export function useCollectionVoucher() {
   const service = {
     // 获取列表数据
     query: getReceiptOrderPageListApi,
-
+    create: createReceiptOrderApi,
+    update: modifyReceiptOrderApi,
+    
     // 删除收款单
     remove: async (data: { receipt_order_ids: number[] }) => {
       return await removeReceiptOrderApi(data);
