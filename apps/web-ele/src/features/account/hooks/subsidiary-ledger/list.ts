@@ -59,6 +59,7 @@ export function useSubsidiaryLedger() {
     getChartOfAccountsTreeApi({
       category,
     }).then((res) => {
+      console.log(res)
       treeList.value = res;
     });
   }

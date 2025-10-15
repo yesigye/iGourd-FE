@@ -122,25 +122,32 @@ export function useSaleRefundOrder() {
   };
 
   // 使用 CRUD Hook
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
-    useCrud({
-      service,
-      columns: baseColumns,
-      searchFormSchema: {
-        keywords: {
-          type: 'input',
-          name: 'keywords',
-          title: t('refund-order.search'),
-          'x-component-props': {
-            placeholder: t('refund-order.search-placeholder'),
-          },
+  const {
+    Grid,
+    gridApi,
+    canBatchOperate,
+    Drawer,
+    handleEdit,
+    handleBatchDelete,
+  } = useCrud({
+    service,
+    columns: baseColumns,
+    searchFormSchema: {
+      keywords: {
+        type: 'input',
+        name: 'keywords',
+        title: t('refund-order.search'),
+        'x-component-props': {
+          placeholder: t('refund-order.search-placeholder'),
         },
       },
-      connectedComponent: SaleRefundOrderDrawer,
-    });
+    },
+    connectedComponent: SaleRefundOrderDrawer,
+  });
 
   return {
     Grid,
+    gridApi,
     Drawer,
     handleEdit,
     handleBatchDelete,

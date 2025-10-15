@@ -292,13 +292,11 @@ const openRefund = () => {
     .open();
 };
 const openRefundNonOrigin = () => {
-  const refund_no = 'SO-20251011-00000003';
   drawerApiReturnedOrderNonOrigin
     .setData({
       createReturnedInfo: createReturedInfo.value,
       compuredReturnedinfo: compuredReturnedinfo.value,
       type: refundType.value,
-      refund_no,
     })
     .open();
 };
@@ -723,7 +721,7 @@ onMounted(async () => {
     /> -->
     <ElDialog
       v-model="dialogVisible"
-      :title="t('common.prompt_message')"
+      :title="t('common.prompt-message')"
       width="720"
       type="warning"
     >
@@ -777,7 +775,7 @@ onMounted(async () => {
             </ElButton>
             <ElButton type="primary" @click="handleContinueCreate">
               <span class="text-white">{{
-                t('returned.continue_create')
+                t('returned.continue-create')
               }}</span>
             </ElButton>
           </div>

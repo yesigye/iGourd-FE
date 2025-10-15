@@ -1,20 +1,22 @@
 <script setup lang="ts">
-import { computed, reactive, ref, toRefs, watch } from 'vue';
+import { reactive, ref, toRefs, watch } from 'vue';
 
 import {
   ElButton,
   ElIcon,
+  ElInput,
   ElMessage,
   ElMessageBox,
+  ElScrollbar,
   useIgourdDrawer,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import {
   getCustomTemplateListApi,
-  orderRefundOffline,
+  getOrderPaymentMethodConfigListApi,
   orderReturnedDetails,
-  refundableAmount,
+  refundOrderNonOriginApi,
 } from '@@/sale/apis';
 
 import {
@@ -35,33 +37,18 @@ const printObj = {
   popTitle: '页面打印',
 };
 const { t } = useI18n();
-const createReturedInfo = ref({});
+const createReturedInfo = ref<{
+  order_returned_no: string;
+  remaining_amount: number;
+  total_amount: number;
+  total_paid_amount: number;
+}>({}) as any;
 const compuredReturnedinfo = ref({});
-const stillBalance = computed(() => {
-  const totalAmt =
-    refundableAmountData.value?.remaining_amount -
-    compuredReturnedinfo.value?.total_amount;
-
-  return Math.max(totalAmt, 0);
-});
-const actualRefundAmount = computed(() => {
-  const totalAmt =
-    compuredReturnedinfo.value?.total_paid_amount -
-    refundableAmountData.value?.remaining_amount;
-  return Math.max(totalAmt, 0);
-});
-const balanceDeduction = computed(() => {
-  return Math.min(
-    compuredReturnedinfo.value?.total_amount,
-    refundableAmountData.value?.remaining_amount,
-  );
-});
 const state = reactive({
   loading: false,
   unitFrom: {
     name: '',
   },
-
   roleList: [] as any[],
   countriesList: [] as any[],
   currentSymbol: '',
@@ -70,11 +57,10 @@ const state = reactive({
   receiptTemplates: {} as any,
   column_option_list: [] as any,
   settlementInfo: {} as any,
-
   printTemplate: {} as any,
 });
 const { currentSymbol, printTemplate } = toRefs(state);
-
+const currentPayItem = ref({});
 const { receiptRoles, setOrderDetail } = useReceiptTemplate({
   title: 'printTemp.refund',
   printTemplate,
@@ -92,8 +78,23 @@ const printParams = {
   id: 'receiptPrintId5',
 };
 const newOrderDetails = ref({});
+const paymentOptions = ref([] as any[]);
+const getPaymentMethods = async () => {
+  const data = await getOrderPaymentMethodConfigListApi({
+    payment_scene_type: 'RETAIL_SALES',
+    is_filter_balance: true,
+  });
+
+  if (data) {
+    const newData = data.map((item) => {
+      return {
+        ...item,
+      };
+    });
+    paymentOptions.value = newData;
+  }
+};
 const getReturnedDetail = async () => {
-  console.log(createReturedInfo.value, 'createReturedInfo');
   const res = await orderReturnedDetails({
     order_returned_no: createReturedInfo.value?.order_returned_no,
   });
@@ -101,6 +102,26 @@ const getReturnedDetail = async () => {
   createReturedInfo.value = res;
   newOrderDetails.value.order_item_model_list =
     res.order_returned_item_model_list;
+};
+// 已选择的支付方式
+const refundPayMethod = ref([] as any[]);
+const handSelectPayMenthod = (item: any) => {
+  const index = refundPayMethod.value.findIndex((payItem) => {
+    return payItem.id == item.id;
+  });
+  if (index === -1) {
+    if (refundPayMethod.value.length >= 2) {
+      return false;
+    }
+    item.refund_amount = '';
+    refundPayMethod.value.push(item);
+  } else {
+    refundPayMethod.value.splice(index, 1);
+  }
+};
+/** 获取支付方式*/
+const isActivePayMentond = (item: any) => {
+  return refundPayMethod.value.some((i: any) => i.id === item.id);
 };
 watch(
   () => [compuredReturnedinfo.value, createReturedInfo.value],
@@ -133,113 +154,133 @@ watch(
     deep: true,
   },
 );
+const handlePayItem = (item: any) => {
+  currentPayItem.value = item;
+};
+/** 输入限制
+ * 限制:
+ * 1、不得小于0
+ * 2、其他支付方式相加不得超过订单总和
+ */
+watch(
+  () => currentPayItem.value,
+  (val) => {
+    if (val === '-') {
+      currentPayItem.value.refund_amount = 0;
+      return;
+    }
+
+    // 限制1：不得小于0
+    if (Number(val.refund_amount) < 0) {
+      currentPayItem.value.refund_amount = 0;
+      ElMessage.warning(t('returned.amount-cannot-be-less-than-zero'));
+      return;
+    }
+
+    // 限制2：其他支付方式相加不得超过订单总和
+    const totalAmount = Math.abs(compuredReturnedinfo.value.total_amount);
+    let currentTotal = 0;
+
+    refundPayMethod.value.forEach((item) => {
+      currentTotal += Number(item.refund_amount || 0);
+    });
+
+    if (currentTotal > totalAmount) {
+      // 超出订单总额，将当前输入值调整为允许的最大值
+      const otherTotal =
+        currentTotal - Number(currentPayItem.value.refund_amount);
+      const maxAllowed = Math.max(0, totalAmount - otherTotal);
+      currentPayItem.value.refund_amount = maxAllowed.toString();
+
+      ElMessage.warning(t('returned.amount-entered-must-not-exceed'));
+    }
+  },
+  {
+    immediate: true,
+    deep: true,
+  },
+);
 function renderQuantUnit() {
   return 'x';
 }
-const settlementParams = ref({
-  order_returned_no: '', // 退款单号
-  payment_balance_amount: 0, // 余额
-  payment_card_amount: 0, // 卡支付
-  payment_card_type: 'CREDIT_CARD', // 卡类型
-  payment_cash_amount: 0, // 现金支付
-  payment_method: [], // 支付方式
-  payment_third_party_amount: 0, // 第三方支付
-  payment_third_party_type: 'ALIPAY', // 第三方支付类型
-  payment_third_party_ids: [], // 第三方支付ids
-  payment_card_type_ids: [], // 银行卡类型ids
-  refund_method_amount: {}, // 退款方式于退款金额
-  remaining_amount: 0, // 剩余欠款
-  sale_discount_amount: 0, // 销售折扣金额
-  total_paid_amount: 0, // 实际退款金额
-  refund_difference_amount: 0, // 退款差异金额
-  debt_deduction_amount: 0, // 欠款抵扣金额
-});
 const isRefundSuccess = ref(false);
 
 const checkPaymentMethod = (name) => {
   ElMessageBox.confirm(
-    t('common.payment_method_delisting_reminder', {
+    t('common.payment-method-delisting-reminder', {
       pay_name: name,
     }),
-    t('common.prompt_message'),
+    t('common.prompt-message'),
     {
-      confirmButtonText: t('common.confirmBtn'),
+      confirmButtonText: t('common.confirm'),
       showCancelButton: false,
       type: 'warning',
     },
   );
 };
 const handleRefundOrder = async () => {
-  settlementParams.value.refund_method_amount = {};
-  settlementParams.value.order_returned_no =
-    createReturedInfo.value.order_returned_no;
-  /** 银行卡ids*/
-  const bankCardIds = [];
-  /** 三方支付ids*/
-  const thirdPartyPaymentIds = [];
+  /** 现金金额*/
   let cashAmount = 0;
-  let cardAmount = 0;
-  let thirdPartyAmount = 0;
-  let balanceAmount = 0;
-  if (refundableAmountData.value?.refund_method_amount.length > 0) {
-    settlementParams.value.payment_method = [];
-    refundableAmountData.value.refund_method_amount.forEach((item: any) => {
-      settlementParams.value.refund_method_amount[item.refund_method_mark] =
-        item.refund_amount;
-      // 数组去重
-      if (
-        !settlementParams.value.payment_method.indexOf(
-          item.refund_method_type,
-        ) === -1
-      ) {
-        settlementParams.value.payment_method.push(item.refund_method_type);
+  /** 支付方式*/
+  const payment_method = [] as string[];
+  /** 余额*/
+  let payment_balance_amount = 0;
+  /** 银行卡*/
+  let payment_card_amount = 0;
+  /** 退款方式于退款金额*/
+  let refund_method_amount = '';
+  // 第三方支付金额
+  let payment_third_party_amount = 0;
+  // 银行卡类型ids
+  const payment_card_type_ids = [] as string[];
+  const payment_third_party_ids = [] as string[];
+  const payment_card_type_marks = [] as string[];
+  const payment_third_party_marks = [] as string[];
+  const sale_discount_amount = 0;
+  const refund_difference_amount = 0;
+  const refund_method_amount_list = {} as Record<string, number>;
+  refundPayMethod.value.forEach((item) => {
+    if (Number(item.refund_amount) > 0) {
+      refund_method_amount_list[item.payment_method_mark] = item.refund_amount;
+      payment_method.push(item.payment_method_type);
+      if (item.payment_method_type === 'CASH') {
+        cashAmount += Number(item.refund_amount);
       }
-
-      if (item.refund_method_type === 'CASH') {
-        cashAmount += item.refund_amount;
+      if (item.payment_method_type === 'BALANCE') {
+        payment_balance_amount += Number(item.refund_amount);
       }
-      if (item.refund_method_type === 'BALANCE') {
-        balanceAmount += item.refund_amount;
+      if (item.payment_method_type === 'THIRD_PARTY') {
+        payment_third_party_ids.push(item.payment_method_id);
+        payment_third_party_marks.push(item.payment_method_mark);
+        payment_third_party_amount += Number(item.refund_amount);
       }
-      if (item.refund_method_type === 'THIRD_PARTY') {
-        thirdPartyPaymentIds.push(item.refund_method_id);
-        thirdPartyAmount += item.refund_amount;
+      if (item.payment_method_type === 'CARD') {
+        payment_card_type_ids.push(item.payment_method_id);
+        payment_card_type_marks.push(item.payment_method_mark);
+        payment_card_amount += Number(item.refund_amount);
       }
-      if (item.refund_method_type === 'CARD') {
-        bankCardIds.push(item.refund_method_id);
-        cardAmount += item.refund_amount;
-      }
-    });
-  }
-  settlementParams.value.payment_cash_amount = cashAmount;
-  settlementParams.value.payment_card_amount = cardAmount;
-  settlementParams.value.payment_third_party_amount = thirdPartyAmount;
-  settlementParams.value.payment_balance_amount = balanceAmount;
-  settlementParams.value.payment_card_type_ids = bankCardIds;
-  settlementParams.value.payment_third_party_ids = thirdPartyPaymentIds;
-  // 退款方式于退款方式
-  // let RefundMethodAndAmountRecord = {}
-  settlementParams.value.refund_method_amount = JSON.stringify(
-    settlementParams.value.refund_method_amount,
-  );
-
-  settlementParams.value.remaining_amount = stillBalance.value;
-  settlementParams.value.total_paid_amount = actualRefundAmount.value;
-  settlementParams.value.sale_discount_amount =
-    compuredReturnedinfo.value.vip_discount_amount +
-    compuredReturnedinfo.value.promotion_discount_amount;
-  settlementParams.value.round_down_amount =
-    compuredReturnedinfo.value.round_down_amount;
-  settlementParams.value.debt_deduction_amount =
-    compuredReturnedinfo.value.debt_deduction_amount;
-  settlementParams.value.refund_difference_amount =
-    compuredReturnedinfo.value.promotion_discount_amount +
-    compuredReturnedinfo.value.round_down_amount +
-    compuredReturnedinfo.value.debt_deduction_amount +
-    compuredReturnedinfo.value.vip_discount_amount;
-  // settlementParams.value.cash_change_amount = parseFloat(changeAmount.value);
+    }
+  });
+  refund_method_amount = JSON.stringify(refund_method_amount_list);
+  // 新的非原单退款参数
+  const refundParams = {
+    order_returned_no: createReturedInfo.value.order_returned_no,
+    payment_cash_amount: cashAmount,
+    payment_method,
+    payment_balance_amount,
+    payment_card_amount,
+    refund_method_amount,
+    total_paid_amount: createReturedInfo.value.total_paid_amount,
+    payment_third_party_amount,
+    payment_card_type_ids,
+    payment_third_party_ids,
+    payment_card_type_marks,
+    payment_third_party_marks,
+    sale_discount_amount,
+    refund_difference_amount,
+  };
   try {
-    const res = await orderRefundOffline(settlementParams.value);
+    const res = await refundOrderNonOriginApi(refundParams);
     isRefundSuccess.value = true;
     emit('close-tkr');
     emit('handleEmpty');
@@ -250,7 +291,7 @@ const handleRefundOrder = async () => {
       checkPaymentMethod(error.message);
     } else {
       ElMessage.error(error);
-      console.log(error);
+      console.error(error);
     }
   }
 };
@@ -260,7 +301,6 @@ const getTemplateList = async (type: string) => {
     is_default: true,
   };
   const res = await getCustomTemplateListApi(params);
-  console.log(res);
   if (type === 'REFUND_RECEIPT') {
     const data = res || [];
     const templateList = data.find((item) => item.is_default) || {};
@@ -272,13 +312,6 @@ const getTemplateList = async (type: string) => {
     }
   }
 };
-const refundableAmountData = ref({});
-const getRefundableAmountData = async () => {
-  const res = await refundableAmount({
-    order_returned_no: createReturedInfo.value.order_returned_no,
-  });
-  refundableAmountData.value = res;
-};
 async function initMounted() {
   currentSymbol.value = await initializeCurrencySymbol();
   getTemplateList('REFUND_RECEIPT');
@@ -287,6 +320,18 @@ async function initMounted() {
 const [Drawer, drawerApi] = useIgourdDrawer({
   onOpenChange: (val) => {
     if (val) {
+      const data = drawerApi.getData();
+
+      Promise.all([
+        (createReturedInfo.value = data.createReturnedInfo),
+        (compuredReturnedinfo.value = data.compuredReturnedinfo),
+      ]).then(() => {
+        isRefundSuccess.value = false;
+        getReturnedDetail();
+        getPaymentMethods();
+        // getRefundableAmountData();
+        initMounted();
+      });
     }
   },
 });
@@ -294,26 +339,87 @@ const [Drawer, drawerApi] = useIgourdDrawer({
 <template>
   <Drawer>
     <section class="flex h-full gap-2">
-      <div class="w-1/3 overflow-auto pr-2" style="height: calc(100vh - 88px)">
-        <ReceiptTemplate
-          :print-id="printParams.id"
-          :option-content="printTemplate.option_content"
-          :image-url="printTemplate.profile_photo"
-          :print-info="[{ ...newOrderDetails, Template: { ...printTemplate } }]"
-          :roles="receiptRoles"
-          template-type="REFUND_RECEIPT"
-        />
+      <div class="w-1/3">
+        <ElScrollbar>
+          <ReceiptTemplate
+            :print-id="printParams.id"
+            :option-content="printTemplate.option_content"
+            :image-url="printTemplate.profile_photo"
+            :print-info="[
+              { ...newOrderDetails, Template: { ...printTemplate } },
+            ]"
+            :roles="receiptRoles"
+            template-type="REFUND_RECEIPT"
+          />
+        </ElScrollbar>
       </div>
       <div class="bg-bg relative w-2/3">
         <div v-if="!isRefundSuccess" class="refunded-data ml-1">
           <!-- 非原单支付方式选择 -->
-          <!-- <ElScrollbar>
-            <div class="scrollbar-flex-content">
-              <p v-for="item in 50" :key="item" class="scrollbar-demo-item">
-                {{ item }}
+          <ElScrollbar class="mt-2.5">
+            <div class="flex gap-2.5" style="width: fit-content">
+              <p
+                v-for="item in paymentOptions"
+                :key="item"
+                class="border-primary flex-shrink-0 cursor-pointer border border-solid p-4"
+                :class="
+                  isActivePayMentond(item)
+                    ? 'bg-primary text-white'
+                    : 'bg-card text-primary'
+                "
+                @click="handSelectPayMenthod(item)"
+              >
+                {{ item.payment_method_name }}
               </p>
             </div>
-          </ElScrollbar> -->
+          </ElScrollbar>
+          <div class="mt-3 flex gap-1">
+            <div
+              class="flex flex-grow justify-between rounded-sm bg-gray-50 pb-4 pl-5 pr-5 pt-4"
+            >
+              <span class="text-bold">{{ t('returned.this-refund') }}</span>
+              <span>{{ createReturedInfo?.total_amount }}</span>
+            </div>
+            <div
+              class="flex flex-grow justify-between rounded-sm bg-gray-50 pb-4 pl-5 pr-5 pt-4"
+            >
+              <span class="text-bold">{{ t('returned.refund-discount') }}</span>
+              <span>-{{ compuredReturnedinfo?.sale_discount_amount || 0 }}</span>
+            </div>
+          </div>
+          <div
+            class="mt-1 flex justify-between rounded-sm bg-gray-50 pb-4 pl-5 pr-5 pt-4"
+          >
+            <span class="text-bold text-[#FF9800]">{{
+              t('returned.actual-refund')
+            }}</span>
+            <span>{{ createReturedInfo?.total_paid_amount || 0 }}</span>
+          </div>
+          <div
+            v-if="refundPayMethod.length > 0"
+            class="mt-1 flex flex-wrap gap-1 bg-gray-50 pb-2.5 pl-5 pr-5 pt-2.5"
+          >
+            <div
+              class="pay-item border-primary flex gap-5 border-b border-solid pb-1.5 pt-1.5"
+              v-for="item in refundPayMethod"
+              :key="item.id"
+            >
+              <div class="flex-grow">{{ item.payment_method_name }}</div>
+              <div class="bg-primary h-6 w-[2px]"></div>
+              <div class="w-[40%] flex-grow">
+                <ElInput
+                  v-model="item.refund_amount"
+                  style="box-shadow: none"
+                  :clearable="true"
+                  type="number"
+                  :min="0"
+                  @input="handleInput"
+                  @focus="handlePayItem(item)"
+                  @click="handlePayItem(item)"
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <div
           v-if="isRefundSuccess"
@@ -325,7 +431,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
             </ElIcon>
 
             <p class="mt-2.5 text-center text-sm">
-              {{ $t('sales.refund_success') }}
+              {{ $t('returned.refund-success') }}
             </p>
           </div>
         </div>
@@ -341,9 +447,9 @@ const [Drawer, drawerApi] = useIgourdDrawer({
               v-if="!isRefundSuccess"
               class="h-11"
               @click="handleRefundOrder"
-              type="primary"
+              type="danger"
             >
-              <span>{{ t('common.pay') }}</span>
+              <span>{{ t('common.refund') }}</span>
             </ElButton>
           </div>
         </div>
@@ -351,3 +457,13 @@ const [Drawer, drawerApi] = useIgourdDrawer({
     </section>
   </Drawer>
 </template>
+<style scoped>
+.scrollbar-flex-content {
+  display: flex;
+  width: fit-content;
+}
+
+.pay-item {
+  width: calc(50% - 2.5px);
+}
+</style>

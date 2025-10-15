@@ -18,9 +18,8 @@ import { padStart } from '@igourd/utils';
 const convertToElTreeFormat = (data: any) => {
   return data.map((item: any) => {
     const node = {
-      ...item.account_ledger,
-      id: item.account_ledger.id,
-      label: item.account_ledger.name,
+      ...item,
+      label: item.name,
       children: [],
     };
 
