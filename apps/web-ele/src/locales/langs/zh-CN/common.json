@@ -322,5 +322,10 @@
   "sub-total": "总金额",
   "empty": "清空",
   "close": "关闭",
-  "open":"打开"
+  "open": "打开",
+  "review_status": {
+    "APPROVED": "审核通过",
+    "PENDING": "待审核",
+    "REJECTED": "驳回"
+  }
 }
