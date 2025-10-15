@@ -1,5 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useCollectionVoucherForm } from '@@/account/hooks';
+
+const { Drawer, Form } = useCollectionVoucherForm();
+</script>
 
 <template>
-  <div>ddd</div>
+  <Drawer>
+    <Form />
+  </Drawer>
 </template>
