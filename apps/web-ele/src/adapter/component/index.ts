@@ -41,6 +41,7 @@ import {
   TimePicker,
   Transfer,
   TransferTable,
+  ElTag
 } from '@igourd/common-ui';
 
 import { FormilySearchSelect } from "#/components/SearchSelect"
@@ -97,7 +98,8 @@ async function initComponentAdapter() {
     Transfer,
     ApiComponent,
     Button: ElButton,
-    FormilySearchSelect
+    FormilySearchSelect,
+    Tag:ElTag
   };
 
   // 将组件注册到全局共享状态中

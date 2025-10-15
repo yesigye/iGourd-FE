@@ -124,7 +124,6 @@ export function useFeatureForm() {
                   'x-component-props': {
                     title: "{{t('common.operations')}}",
                     width: 180,
-                    fixed: 'right',
                   },
                   properties: {
                     ops: {

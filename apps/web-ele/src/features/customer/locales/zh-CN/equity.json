@@ -30,5 +30,10 @@
     "cashback": "返现",
     "gift": "礼品",
     "other": "其他"
+  },
+  "rounding-off": {
+    "round-high": "向上取整",
+    "round-middle": "四舍五入",
+    "round-low": "向下取整"
   }
 }
