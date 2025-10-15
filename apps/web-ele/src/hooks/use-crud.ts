@@ -326,7 +326,9 @@ function useCrud<T extends { id?: number | string }, P extends object>(
           return (checkedKeys as Ref<unknown[]>).value;
         }
         // 调用服务的删除方法
-        return options.service?.drop((checkedKeys as Ref<string[]>).value);
+        return options.service?.drop({
+          ids: (checkedKeys as Ref<string[]>).value,
+        });
       })
       .then(() => {
         // 重新加载表格数据
@@ -351,7 +353,7 @@ function useCrud<T extends { id?: number | string }, P extends object>(
     })
       .then(() => {
         // 调用服务的删除方法
-        return options.service?.drop?.(ids);
+        return options.service?.drop?.({ ids });
       })
       .then(() => {
         // 重新加载表格数据

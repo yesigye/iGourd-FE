@@ -105,8 +105,7 @@ export function useInventoryProductFeatureList() {
       query: withEntityParam({ entity: 'PRODUCT' })(getDynamicColumnList),
       create: withEntityParam({ entity: 'PRODUCT' })(createDynamicColumn),
       update: withEntityParam({ entity: 'PRODUCT' })(updateDynamicColumn),
-      drop: (params)=>{ 
-        return  deleteDynamicColumn({dynamic_column_id_list:params})}
+      drop: deleteDynamicColumn
     },
   });
 }

@@ -151,11 +151,7 @@ export function useInventorySkuList() {
         query: withEntityParam({})(getSkuList),
         create: withEntityParam({})(modifySku),
         update: withEntityParam({})(modifySku),
-        drop: async (data) => {
-          const params = { product_info_ids: data };
-          // @ts-ignore
-          return await deleteSku(params);
-        },
+        drop: deleteSku,
       },
     });
 

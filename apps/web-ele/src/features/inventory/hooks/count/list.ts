@@ -100,10 +100,7 @@ export function useInventoryCountList() {
 
   const service = {
     query: getCountList,
-    drop: async (data) => {
-      const params = { physical_stock_take_ids: data };
-      return await removeCount(params);
-    },
+    drop: removeCount
   };
 
   const {
