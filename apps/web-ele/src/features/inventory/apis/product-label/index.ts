@@ -21,7 +21,7 @@ export function getProductLabelList(params: ProductLabelParams) {
  */
 export function deleteProductLabel(params: {
   merchant_id: number;
-  product_label_ids: number[];
+  ids: number[];
 }) {
   return request.post('/inventory/product/label/delete', params);
 }

@@ -105,7 +105,7 @@ const handleRemove = async (node: SecondGroupItem) => {
   }).then(
     async () => {
       const params = {
-        product_group_ids: [node.data.id],
+        ids: [node.data.id],
       };
       removeGroup(params).then(() => {
         getFirstLevelCategory();

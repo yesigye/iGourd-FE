@@ -15,7 +15,7 @@ import {
 import { orderNoGenerate } from '#/api/common';
 import { useWarehouseSelect } from '#/hooks';
 import { useDrawerForm } from '#/hooks/use-drawer-form';
-import { floorDecimal, retainDecimal8,} from '#/utils/eleValidate';
+import { floorDecimal, retainDecimal8,stayFloatSub} from '#/utils/eleValidate';
 
 import { useMerchantSelect } from './use-merchant-select';
 
@@ -536,7 +536,7 @@ export function useTransferForm() {
       effects() {
         onFieldValueChange('transfer_type', (field, form: Form) => {
           initForm(form);
-          // 同门店
+
           switch (field.value) {
             case 'TRANSFER_DIFFERENT_STORE': {
               form.setFieldState('source_merchant_id', (f) => {
@@ -548,17 +548,23 @@ export function useTransferForm() {
               form.setFieldState('destination_warehouse_id', (f) => {
                 f.disabled = true;
               });
+             form.setValuesIn('source_merchant_id', currentLoginUserApp.owner_id);
 
               break;
             }
             case 'TRANSFER_IN_ONLY': {
+
               form.setFieldState('row_0', (f) => {
                 f.hidden = true;
               });
               form.setFieldState('row_1', (f) => {
                 f.hidden = false;
               });
+              form.setFieldState('destination_merchant_id', (f) => {
+                f.disabled = true;
+              });
 
+              form.setValuesIn('destination_merchant_id', currentLoginUserApp.owner_id);
               break;
             }
             case 'TRANSFER_OUT_ONLY': {
@@ -568,8 +574,13 @@ export function useTransferForm() {
               form.setFieldState('row_1', (f) => {
                 f.hidden = true;
               });
+              form.setFieldState('source_merchant_id', (f) => {
+                f.disabled = true;
+              });
+              form.setValuesIn('source_merchant_id', currentLoginUserApp.owner_id);
               break;
             }
+            // 同门店
             case 'TRANSFER_SAME_STORE': {
               form.setFieldState('source_merchant_id', (f) => {
                 f.disabled = true;
@@ -580,6 +591,9 @@ export function useTransferForm() {
               form.setFieldState('destination_warehouse_id', (f) => {
                 f.disabled = false;
               });
+               // 设置门店 为当前门店
+              form.setValuesIn('source_merchant_id', currentLoginUserApp.owner_id);
+              form.setValuesIn('destination_merchant_id', currentLoginUserApp.owner_id);
 
               break;
             }

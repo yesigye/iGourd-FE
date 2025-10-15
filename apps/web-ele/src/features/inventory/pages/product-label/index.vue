@@ -83,7 +83,7 @@ const handleRemove = async (item) => {
   }).then(
     async () => {
       removeProductLabel({
-        product_label_ids: [item.id],
+        ids: [item.id],
       }).then(() => {
         handleGetProductLabelList();
       });
