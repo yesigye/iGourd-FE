@@ -1,5 +1,6 @@
 import type { ISchema } from '@igourd/common-ui';
-
+import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
+import { inject } from 'vue';
 import { onFieldValueChange } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
@@ -14,7 +15,7 @@ import {
 import { orderNoGenerate } from '#/api/common';
 import { useWarehouseSelect } from '#/hooks';
 import { useDrawerForm } from '#/hooks/use-drawer-form';
-import { floorDecimal, retainDecimal8 } from '#/utils/eleValidate';
+import { floorDecimal, retainDecimal8,stayFloatSub} from '#/utils/eleValidate';
 
 import { useMerchantSelect } from './use-merchant-select';
 
@@ -23,6 +24,9 @@ export function useTransferForm() {
   const warehouse = useWarehouseSelect();
   const userName = useUserStore().userInfo?.user_model.name;
   const userLabel = `${t('count.creator')}:`;
+  const { gridApi } = inject<{
+      gridApi: ExtendedVxeGridApi;
+  }>(Symbol.for('PageGrid'));
 
   // 调拨类型
   const transferTypeList = [
@@ -423,9 +427,9 @@ export function useTransferForm() {
       formData.exchange_rate = 0.14;
       // 结算货币编码
       formData.currency_code = 'CNY';
-      return ({ totalTransferQuantity, subTotalAmount, totalAmount } = totalFun(
+      const { totalTransferQuantity, subTotalAmount, totalAmount } = totalFun(
         formData.stock_transfer_item_list,
-      ));
+      );
       formData.subtotal_amount = subTotalAmount;
       formData.total_amount = totalAmount;
       formData.total_transfer_quantity = totalTransferQuantity;
@@ -450,10 +454,7 @@ export function useTransferForm() {
             ? floorDecimal(stockQty + convertedTransferQty, 0)
             : stayFloatSub(stockQty, convertedTransferQty);
         item.product_cost_price = item.cost_price;
-        // 新增时 id 是产品id；编辑时,id 是数据id 不能设置给产品id  2025年10月10日18:38:12
-        if (!formData.id) {
-          item.product_id = item.id;
-        }
+
       });
       // 如果仅入库和仅出库 初始化id 0
       if (params.transfer_type === 'TRANSFER_IN_ONLY') {
@@ -472,6 +473,7 @@ export function useTransferForm() {
         : createTransfer({
             ...params,
           }));
+      gridApi.reload();
       return response;
     } catch (error) {
       console.error('调拨单 customized form submission error:', error);
@@ -534,7 +536,7 @@ export function useTransferForm() {
       effects() {
         onFieldValueChange('transfer_type', (field, form: Form) => {
           initForm(form);
-          // 同门店
+
           switch (field.value) {
             case 'TRANSFER_DIFFERENT_STORE': {
               form.setFieldState('source_merchant_id', (f) => {
@@ -546,17 +548,23 @@ export function useTransferForm() {
               form.setFieldState('destination_warehouse_id', (f) => {
                 f.disabled = true;
               });
+             form.setValuesIn('source_merchant_id', currentLoginUserApp.owner_id);
 
               break;
             }
             case 'TRANSFER_IN_ONLY': {
+
               form.setFieldState('row_0', (f) => {
                 f.hidden = true;
               });
               form.setFieldState('row_1', (f) => {
                 f.hidden = false;
               });
+              form.setFieldState('destination_merchant_id', (f) => {
+                f.disabled = true;
+              });
 
+              form.setValuesIn('destination_merchant_id', currentLoginUserApp.owner_id);
               break;
             }
             case 'TRANSFER_OUT_ONLY': {
@@ -566,8 +574,13 @@ export function useTransferForm() {
               form.setFieldState('row_1', (f) => {
                 f.hidden = true;
               });
+              form.setFieldState('source_merchant_id', (f) => {
+                f.disabled = true;
+              });
+              form.setValuesIn('source_merchant_id', currentLoginUserApp.owner_id);
               break;
             }
+            // 同门店
             case 'TRANSFER_SAME_STORE': {
               form.setFieldState('source_merchant_id', (f) => {
                 f.disabled = true;
@@ -578,6 +591,9 @@ export function useTransferForm() {
               form.setFieldState('destination_warehouse_id', (f) => {
                 f.disabled = false;
               });
+               // 设置门店 为当前门店
+              form.setValuesIn('source_merchant_id', currentLoginUserApp.owner_id);
+              form.setValuesIn('destination_merchant_id', currentLoginUserApp.owner_id);
 
               break;
             }

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { reactive, ref, toRefs } from 'vue';
 
-import { useIgourdDrawer } from '@igourd/common-ui';
+import { ElButton, useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { getCustomTemplateListApi, orderDetailApi } from '@@/sale/apis';
+import { getCustomTemplateListApi, orderReturnedDetails } from '@@/sale/apis';
 
 import {
   ReceiptTemplate,
@@ -16,24 +16,16 @@ defineOptions({
   name: 'SaleOrderPrintReceiptDrawer',
 });
 const props = defineProps({
-  draweListShow: {
-    type: Boolean,
-    default: false,
-  },
-  title: {
+  type: {
     type: String,
-    default: '',
-  },
-  editId: {
-    type: String,
-    default: '',
+    default: 'REFUND_RECEIPT',
   },
 });
-
 /**
  * emit组合
  */
 const emit = defineEmits(['close-tkr', 'refresh']);
+const { t } = useI18n();
 const order_no = ref('');
 
 const [Drawer, drawerApi] = useIgourdDrawer({
@@ -41,28 +33,15 @@ const [Drawer, drawerApi] = useIgourdDrawer({
     if (val) {
       const { order_no: no } = drawerApi.getData();
       order_no.value = no;
-      console.log(order_no.value);
       initMounted();
     }
   },
 });
 
-const { t } = useI18n();
-
-const isListShow = ref(false);
-const handleClose = () => {
-  printTemplate.value = {};
-  orderDetail.value = {};
-  isListShow.value = false;
-  emit('close-tkr');
-};
-
 const state = reactive({
   loading: false,
-
   roleList: [] as any[],
   countriesList: [] as any[],
-
   currentSymbol: '',
   orderDetail: {} as any,
   printTemplate: {} as any,
@@ -100,7 +79,7 @@ const { receiptRoles, setOrderDetail } = useReceiptTemplate({
 async function initMounted() {
   currentSymbol.value = await initializeCurrencySymbol();
   fetchOrderDetail();
-  getTemplateList('RECEIPT');
+  getTemplateList('REFUND_RECEIPT');
 }
 // 01-模板数据
 const getTemplateList = async (type: string) => {
@@ -110,15 +89,15 @@ const getTemplateList = async (type: string) => {
     is_default: true,
   };
   const res = await getCustomTemplateListApi(params);
-  if (type === 'RECEIPT') {
+  if (type === 'REFUND_RECEIPT') {
     printTemplate.value = res?.find((item) => item.is_default) || {};
   }
 };
 // 02-订单数据
 async function fetchOrderDetail() {
   try {
-    const res = await orderDetailApi({
-      order_no: order_no.value,
+    const res = await orderReturnedDetails({
+      order_returned_no: order_no.value,
     });
     orderDetail.value = res;
     setOrderDetail({
@@ -136,15 +115,23 @@ async function fetchOrderDetail() {
 </script>
 <template>
   <Drawer>
-    <div>
-      <ReceiptTemplate
-        :roles="receiptRoles"
-        :print-id="printParams.ids"
-        :option-content="printTemplate.option_content"
-        :image-url="printTemplate.profile_photo"
-        :print-info="[{ ...orderDetail, Template: { ...printTemplate } }]"
-        template-type="RECEIPT"
-      />
-    </div>
+    <ReceiptTemplate
+      :roles="receiptRoles"
+      :print-id="printParams.ids"
+      :option-content="printTemplate.option_content"
+      :image-url="printTemplate.profile_photo"
+      :print-info="[{ ...orderDetail, Template: { ...printTemplate } }]"
+      template-type="REFUND_RECEIPT"
+    />
+    <template #footer>
+      <div class="flex justify-end">
+        <ElButton size="default" @click="drawerApi.close()">
+          {{ t('common.cancel') }}
+        </ElButton>
+        <ElButton type="primary" size="default" v-print="printParams.ids">
+          {{ t('common.print') }}
+        </ElButton>
+      </div>
+    </template>
   </Drawer>
 </template>

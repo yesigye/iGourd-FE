@@ -155,11 +155,7 @@ export function useInventorySpoilageList() {
     // 获取列表数据
     query: getSpoilageList,
     // 删除损耗
-    drop: async (data) => {
-      // @ts-ignore
-      const params = { stock_consumption_ids: data };
-      return await removeSpoilage(params);
-    },
+    drop: removeSpoilage,
   };
 
   // 使用 CRUD Hook

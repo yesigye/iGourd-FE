@@ -181,6 +181,12 @@ export const createQuantityColumn = (
 export const createSimpleColumns = (): ColumnDescriptor[] => [
   {
     name: 'major_name',
+    type: 'string',
+    title: 'product_id',
+    'x-hidden': true,
+  },
+  {
+    name: 'product_id',
     title: '商品',
     'x-component-props': {
       width: 260,

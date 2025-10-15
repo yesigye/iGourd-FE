@@ -125,11 +125,7 @@ export function useInventoryTransferList() {
     query: getTransferList,
 
     // 删除调拨
-    drop: async (data) => {
-      const params = { stock_transfer_ids: data };
-      // @ts-ignore
-      return await removeTransfer(params);
-    },
+    drop: removeTransfer,
   };
 
   // 使用 CRUD Hook

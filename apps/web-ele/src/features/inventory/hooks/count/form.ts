@@ -1,8 +1,11 @@
 import type { ISchema } from '@igourd/common-ui';
-
+import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
+import { inject } from 'vue';
 import { onFieldValueChange } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
+
+
 
 import { createCount, getCountDetail, updateCount } from '@@/inventory/apis';
 import { dayjs } from 'element-plus';
@@ -16,6 +19,7 @@ import { wareHouseProductSearch } from '../../apis';
 
 const summary = (list) => {
   // 盘点商品总成本差值金额 总成本差值金额 = 原数量 * 成本价 - 盘点数量 * 成本价
+  debugger
   const totalVarianceCost = list.reduce(
     (acc, item) =>
       acc + Number(item.returned_quantity || 0) * Number(item.cost_price || 0),
@@ -74,6 +78,9 @@ export function useCountForm() {
   const warehouse = useWarehouseSelect();
   const userName = useUserStore().userInfo?.user_model.name;
   const userLabel = `${t('count.creator')}:`;
+  const { gridApi } = inject<{
+      gridApi: ExtendedVxeGridApi;
+  }>(Symbol.for('PageGrid'));
 
   // 表单提交处理
   const handleSubmit = async (formData: PurchaseCodeRulesFormData) => {
@@ -106,17 +113,11 @@ export function useCountForm() {
       params.physical_stock_take_item_list.forEach((item) => {
         item.basic_unit_radio = 1;
         item.product_name = item.major_name;
-
         // 盘点差额数量
         item.variance_quantity = countVarianceQuantity(item);
         // 盘点商品原有数量
         item.origin_quantity = item.stock_total_quantity;
-        // 盘点商品数量
-        // item.physical_quantity = item.physical_quantity;
-        // 新增时 id 是产品id；编辑时,id 是数据id 不能设置给产品id  2025年10月10日18:38:12
-        if (!formData.id) {
-          item.product_id = item.id;
-        }
+
       });
 
       const {
@@ -135,6 +136,7 @@ export function useCountForm() {
         : createCount({
             ...params,
           }));
+          gridApi.reload()
       return response;
     } catch (error) {
       console.error('盘点单 customized form submission error:', error);

@@ -1,5 +1,6 @@
 import type { ISchema } from '@igourd/common-ui';
-
+import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
+import { inject } from 'vue';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
@@ -18,6 +19,9 @@ import { floorDecimal } from '#/utils/eleValidate';
 
 export function useSpoilageForm() {
   const { t } = useI18n();
+  const { gridApi } = inject<{
+      gridApi: ExtendedVxeGridApi;
+  }>(Symbol.for('PageGrid'));
   // 枚举报损原因
   const consumptionReason = [
     {
@@ -243,10 +247,7 @@ export function useSpoilageForm() {
         item.stock_quantity = item.stock_total_quantity;
 
         item.product_cost_price = item.cost_price;
-        // 新增时 id 是产品id；编辑时,id 是数据id 不能设置给产品id  2025年10月10日18:38:12
-        if (!formData.id) {
-          item.product_id = item.id;
-        }
+
       });
       // 调用 API
       response = await (params.id
@@ -256,6 +257,7 @@ export function useSpoilageForm() {
         : createSpoilage({
             ...params,
           }));
+      gridApi.reload();
       return response;
     } catch (error) {
       console.error('调拨单 customized form submission error:', error);
@@ -276,8 +278,6 @@ export function useSpoilageForm() {
             const detail = await getSpoilageDetail({
               stock_consumption_id: data.id,
             });
-            detail.stock_consumption_item_list =
-              detail.physical_stock_take_item_models;
             detail.returned_quantity = detail.physical_total_quantity;
             formAPI.setValues(detail);
           } else {

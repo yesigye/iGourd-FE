@@ -6,7 +6,9 @@ import { cancelRefundOrder } from '@@/sale/apis';
 import {
   useReturnedOrderDrawer,
   useReturnedOrderNonOriginDrawer,
+  useSaleOrderRefundOrderDetailsDrawer,
   useSaleRefundOrder,
+  useSaleRefundOrderPrintReceiptDrawer,
 } from '@@/sale/hooks';
 
 defineOptions({
@@ -16,12 +18,24 @@ defineOptions({
 const { t } = useI18n();
 
 const { Grid, gridApi, Drawer, canBatchOperate } = useSaleRefundOrder();
+/** 原订单退款*/
 const { Drawer: ReturnedOrderDrawer, drawerApi: returnedOrderDrawerApi } =
   useReturnedOrderDrawer();
+/** 非原订单退款*/
 const {
   Drawer: ReturnedOrderNonOriginDrawer,
   drawerApi: drawerApiReturnedOrderNonOrigin,
 } = useReturnedOrderNonOriginDrawer();
+/** 退款小票打印*/
+const {
+  Drawer: RefundOrderPrintReceiptDrawer,
+  drawerApi: refundOrderPrintReceiptDrawerApi,
+} = useSaleRefundOrderPrintReceiptDrawer();
+/** 退款订单详情*/
+const {
+  Drawer: SaleOrderRefundOrderDetails,
+  drawerApi: SaleOrderRefundOrderDetailsApi,
+} = useSaleOrderRefundOrderDetailsDrawer();
 /**
  * 处理退款
  * @param row 退款订单行数据
@@ -62,14 +76,14 @@ const handleRefund = (row) => {
  * 取消退款订单
  * @param id 退款订单ID
  */
-const cancelRefund = async (row: { id: string }) => {
+const cancelRefund = async (row: { order_id: string }) => {
   try {
     confirm({
       title: t('common.prompt-message'),
       content: t('refund-order.cancel-order-tips'),
     }).then(async () => {
       const res = await cancelRefundOrder({
-        order_id: row.id,
+        order_id: row.order_id,
       });
       ElMessage.success(t('common.cancelSuccess'));
       gridApi.reload();
@@ -77,6 +91,20 @@ const cancelRefund = async (row: { id: string }) => {
   } catch (error) {
     console.error(error);
   }
+};
+/** 查看退款订单小票*/
+const handlePrintReceipt = (row: { order_returned_no: string }) => {
+  refundOrderPrintReceiptDrawerApi
+    .setData({
+      order_no: row.order_returned_no,
+    })
+    .open();
+};
+/** 查看退款订单详情*/
+const handleDetails = (row: { order_returned_no: string }) => {
+  SaleOrderRefundOrderDetailsApi.setData({
+    order_no: row.order_returned_no,
+  }).open();
 };
 </script>
 
@@ -90,11 +118,11 @@ const cancelRefund = async (row: { id: string }) => {
       </template>
 
       <template #operation="{ row }">
-        <ElButton type="text">
+        <ElButton type="text" @click="handleDetails(row)">
           {{ t('common.detail') }}
         </ElButton>
 
-        <ElButton type="text">
+        <ElButton type="text" @click="handlePrintReceipt(row)">
           {{ t('common.print') }}
         </ElButton>
         <ElButton
@@ -117,5 +145,7 @@ const cancelRefund = async (row: { id: string }) => {
     <Drawer />
     <ReturnedOrderDrawer />
     <ReturnedOrderNonOriginDrawer />
+    <RefundOrderPrintReceiptDrawer />
+    <SaleOrderRefundOrderDetails />
   </Page>
 </template>

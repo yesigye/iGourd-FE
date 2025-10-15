@@ -59,7 +59,7 @@ export interface GroupListResponse {
 // 删除分组参数
 export interface DeleteGroupParams {
   merchant_id: string;
-  product_group_ids: string[];
+  ids: string[];
 }
 
 export interface ProductGroupParams {

@@ -1,3 +1,4 @@
+import { disabledTimeListsProps } from 'element-plus/es/components/time-picker/src/props/shared.mjs';
 import type { ModePlugin } from '../types';
 
 export const TransferMode: ModePlugin = {
@@ -6,11 +7,17 @@ export const TransferMode: ModePlugin = {
     return [
       {
         name: 'major_name',
+        type: 'string',
+        title: 'product_id',
+        'x-hidden': true,
+      },
+      {
+        name: 'product_id',
         title: '商品',
         'x-component': 'ProductTable.ProductCell',
         'x-decorator': 'FormItem',
         'x-component-props': {
-          style: { width: 260 },
+          style: { width: 360 },
         },
         'x-decorator-props': {
           required: true,
@@ -26,12 +33,13 @@ export const TransferMode: ModePlugin = {
         },
       },
       {
-        name: 'sku_id',
-        title: 'SKU',
-        'x-component': 'ProductTable.SkuSelect',
+        name: 'sku_barcode',
+        title: 'SKU条形码',
+        'x-component': 'Input',
         'x-decorator': 'FormItem',
         'x-component-props': {
           style: { width: 200 },
+          disabled:true
         },
       },
       {
@@ -57,6 +65,7 @@ export const TransferMode: ModePlugin = {
           style: { width: 120 },
         },
       },
+
       {
         name: 'remark',
         title: '备注',

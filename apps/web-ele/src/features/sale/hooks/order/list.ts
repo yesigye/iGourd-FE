@@ -86,7 +86,7 @@ export function useSaleOrder() {
     },
     {
       field: 'subtotal_amount',
-      title: t('order.actuaily_paid'),
+      title: t('order.actuaily-paid'),
       minWidth: 150,
       sortable: true,
       align: 'center',
@@ -140,7 +140,7 @@ export function useSaleOrder() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('sale.orderNo')}}",
+        placeholder: "{{t('order.order-no')}}",
         clearable: true,
       },
     },
