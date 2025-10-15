@@ -76,14 +76,14 @@ const handleRefund = (row) => {
  * 取消退款订单
  * @param id 退款订单ID
  */
-const cancelRefund = async (row: { id: string }) => {
+const cancelRefund = async (row: { order_id: string }) => {
   try {
     confirm({
       title: t('common.prompt-message'),
       content: t('refund-order.cancel-order-tips'),
     }).then(async () => {
       const res = await cancelRefundOrder({
-        order_id: row.id,
+        order_id: row.order_id,
       });
       ElMessage.success(t('common.cancelSuccess'));
       gridApi.reload();

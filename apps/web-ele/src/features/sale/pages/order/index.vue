@@ -4,7 +4,11 @@ import { useRouter } from 'vue-router';
 import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { useSaleOrder, useSaleOrderPrintReceiptDrawer } from '@@/sale/hooks';
+import {
+  useSaleOrder,
+  useSaleOrderDetailsDrawer,
+  useSaleOrderPrintReceiptDrawer,
+} from '@@/sale/hooks';
 
 defineOptions({
   name: 'ISaleOrder',
@@ -28,8 +32,14 @@ const handleRefund = (row) => {
 };
 const { Drawer: PrintReceiptDrawer, drawerApi: printReceiptDrawerApi } =
   useSaleOrderPrintReceiptDrawer();
+const { Drawer: OrderDetailsDrawer, drawerApi: orderDetailsDrawerApi } =
+  useSaleOrderDetailsDrawer();
+
 const handlePrintReceipt = (row: { order_no: string }) => {
   printReceiptDrawerApi.setData({ order_no: row.order_no }).open();
+};
+const handleOrderDetails = (row: { order_no: string }) => {
+  orderDetailsDrawerApi.setData({ order_no: row.order_no }).open();
 };
 </script>
 
@@ -60,7 +70,7 @@ const handlePrintReceipt = (row: { order_no: string }) => {
         >
           {{ t('common.print-receipt') }}
         </ElButton>
-        <ElButton type="text" @click="handleEdit(row)">
+        <ElButton type="text" @click="handleOrderDetails(row)">
           {{ t('common.details') }}
         </ElButton>
         <ElButton
@@ -87,7 +97,7 @@ const handlePrintReceipt = (row: { order_no: string }) => {
       </template>
     </Grid>
     <Drawer />
-    <ReturnedOrderDrawer />
     <PrintReceiptDrawer />
+    <OrderDetailsDrawer />
   </Page>
 </template>
