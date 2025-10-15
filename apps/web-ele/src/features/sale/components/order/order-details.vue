@@ -176,7 +176,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
 </script>
 <template>
   <Drawer>
-    <PageTitle :title="t('refund-order.refund-information')" />
+    <PageTitle :title="t('order.basic-information')" />
     <section class="px-3">
       <ElDescriptions :column="3" :size="size" border>
         <ElDescriptionsItem :label="t('refund-order.customer')">
@@ -210,7 +210,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
     </section>
     <PageTitle :title="t('refund-order.product-details')" />
     <section><RefundOrderDetailProductGrid /></section>
-    <PageTitle :title="t('refund-order.refund-history')" />
+    <PageTitle :title="t('order.repayment-history')" />
     <section><RefundOrderDetailPayHistoryGrid /></section>
     <template #footer>
       <ElButton type="primary" size="default" @click="drawerApi.close()">

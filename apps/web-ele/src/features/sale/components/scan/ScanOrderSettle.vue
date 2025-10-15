@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref, toRefs, watch } from 'vue';
 
-import { ElDrawer } from '@igourd/common-ui';
+import { useIgourdDrawer } from '@igourd/common-ui';
 
 import { getCustomTemplateListApi } from '@@/sale/apis';
 
@@ -32,6 +32,14 @@ const props = defineProps({
   },
 });
 const emit = defineEmits(['close-tkr', 'handleEmpty']);
+const [Drawer, drawerApi] = useIgourdDrawer({
+  async onOpenChange(val) {
+    if (val) {
+      isModalShow.value = true;
+      initMounted();
+    }
+  },
+});
 const isModalShow = ref(false);
 const scanCashSettlementRef = ref<any>(null);
 const state = reactive({
@@ -58,11 +66,21 @@ const {
   orderDetail,
   printTemplate,
 } = toRefs(state);
-
+function renderQuantUnit() {
+  return 'x';
+}
 const { receiptRoles } = useReceiptTemplate({
-  title: 'printTemp.settle',
-  orderDetail,
+  title: 'printTemp.refund',
   printTemplate,
+  fieldColumns: [
+    { column_option_code: 'refund_total_amount', is_selected: true },
+    { column_option_code: 'order_returned_no', is_selected: true },
+  ],
+  callbackBefore: {
+    quantity: renderQuantUnit,
+    total_quantity: renderQuantUnit,
+    refund_total_amount: () => '-',
+  },
 });
 
 const handleClose = () => {
@@ -102,17 +120,6 @@ async function initMounted() {
 const handleSettlementSuccess = (settlementData) => {
   settlementInfo.value = settlementData;
 };
-// 关键词搜索
-watch(
-  () => props.showDialog,
-  (val) => {
-    if (val) {
-      isModalShow.value = true;
-      initMounted();
-      // scanCashSettlementRef.value.isSettled = true;
-    }
-  },
-);
 
 watch(
   () => props.orderData,
@@ -129,7 +136,7 @@ watch(
 
 <template>
   <div class="coupon-send">
-    <ElDrawer
+    <!-- <ElDrawer
       v-model="isModalShow"
       :append-to-body="true"
       :with-header="false"
@@ -138,18 +145,20 @@ watch(
       custom-class="coupon-drawer-prevent-send"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
-    >
-      <div class="close65" @click="handleClose">
+    > -->
+    <Drawer>
+      <!-- <div class="close65" @click="handleClose">
         <i class="iconfont icon-guanbi"></i>
-      </div>
+      </div> -->
       <div class="innerDrawer">
         <div class="innerLeft overflow-y-auto">
           <ReceiptTemplate
-            :print-id="printParams.id"
+            :roles="receiptRoles"
+            :print-id="printParams.ids"
             :option-content="printTemplate.option_content"
             :image-url="printTemplate.profile_photo"
             :print-info="[{ ...orderDetail, Template: { ...printTemplate } }]"
-            :roles="receiptRoles"
+            template-type="RECEIPT"
           />
         </div>
         <div class="innerRight">
@@ -166,7 +175,8 @@ watch(
           />
         </div>
       </div>
-    </ElDrawer>
+    </Drawer>
+    <!-- </ElDrawer> -->
   </div>
 </template>
 
