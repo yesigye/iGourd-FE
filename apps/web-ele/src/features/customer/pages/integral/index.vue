@@ -28,16 +28,48 @@ const formSchema: ISchema = {
             // header: '{{t("discount.form.basicInfo")}}',
           },
           properties: {
-            card_0: {
-              type: 'void',
-              'x-component': 'Card',
-              'x-component-props': {
-                header: '基本信息',
+            row_0: {
+              type: 'void', // 表示空字段
+              title: '初始获得积分', // formItem 的 label
+              'x-component': 'Space',
+              'x-decorator': 'FormItem',
+              'x-decorator-props': {
+                asterisk: true,
+                feedbackLayout: 'none',
+              },
+              properties: {
+                product_spec_value: {
+                  type: 'string',
+                  title: '',
+                  required: true,
+                  'x-decorator': 'FormItem',
+                  'x-component': 'Input',
+                  'x-component-props': {
+                    placeholder: '请输入初始积分',
+                    clearable: true,
+                  },
+                },
+                checkbox: {
+                  type: 'number',
+                  title: '默认',
+                  'x-decorator': 'FormItem',
+                  'x-component': 'Checkbox',
+                },
+              },
+            },
+            row_1: {
+              type: 'void', // 表示空字段
+              title: '每消费', // formItem 的 label
+              'x-component': 'Space',
+              'x-decorator': 'FormItem',
+              'x-decorator-props': {
+                asterisk: true,
+                feedbackLayout: 'none',
               },
               properties: {
                 product_spec_value1: {
                   type: 'string',
-                  title: '默认VIP等级',
+                  title: '',
                   required: true,
                   'x-decorator': 'FormItem',
                   'x-component': 'Input',
@@ -45,113 +77,76 @@ const formSchema: ISchema = {
                     // addonAfter: '',
                   },
                   'x-component-props': {
-                    placeholder: '请输入默认VIP等级',
+                    placeholder: '请输入消费金额',
                     clearable: true,
                   },
                 },
-                product_spec_value2: {
-                  type: 'string',
-                  title: '最大会员等级',
-                  required: true,
+                checkbox: {
+                  type: 'void',
+                  title: '',
                   'x-decorator': 'FormItem',
-                  'x-component': 'Input',
-                  'x-decorator-props': {
-                    // addonAfter: '',
-                  },
-                  'x-component-props': {
-                    placeholder: '请输入最大会员等级（1-10）',
-                    clearable: true,
-                  },
+                  'x-component': 'div',
+                  'x-content': '获得1积分',
                 },
-                product_spec_value3: {
-                  type: 'string',
-                  title: 'VIP编码',
-                  required: true,
-                  'x-decorator': 'FormItem',
-                  'x-component': 'Input',
-                  'x-decorator-props': {
-                    // addonAfter: '',
-                  },
-                  'x-component-props': {
-                    placeholder: '请输入VIP编码',
-                    clearable: true,
-                  },
-                },
+              },
+            },
 
-                array: {
-                  type: 'array',
-                  title: ' ',
+            card_0: {
+              type: 'void',
+              'x-component': 'Card',
+              'x-component-props': {
+                header: '积分兑换规则',
+              },
+              properties: {
+                radio: {
+                  type: 'boolean',
+                  title: '兑换方式设置',
+                  enum: [
+                    {
+                      label: '兑换奖品',
+                      value: 1,
+                    },
+                  ],
                   'x-decorator': 'FormItem',
-                  'x-component': 'ArrayTable',
+                  'x-component': 'Radio.Group',
+                  'x-component-props': {},
+                },
+                string_array: {
+                  type: 'array',
+                  'x-component': 'ArrayItems',
+                  'x-decorator': 'FormItem',
+                  title: ' ',
                   items: {
-                    type: 'object',
+                    type: 'void',
+                    'x-component': 'Space',
                     properties: {
-                      column1: {
+                      checkbox: {
                         type: 'void',
-                        'x-component': 'ArrayTable.Column',
-                        'x-component-props': {
-                          width: 80,
-                          title: '序号',
-                          align: 'center',
-                        },
-                        properties: {
-                          index: {
-                            type: 'void',
-                            'x-component': 'ArrayTable.Index',
-                          },
+                        title: '',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'div',
+                        'x-content': '可用',
+                      },
+                      input: {
+                        type: 'string',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Input',
+                        'x-decorator-props': {
+                          addonAfter: '兑换礼品 0 种',
                         },
                       },
-                      column3: {
+                      remove: {
                         type: 'void',
-                        'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: 'A2' },
-                        properties: {
-                          a2: {
-                            type: 'string',
-                            'x-decorator': 'FormItem',
-                            'x-component': 'Select',
-                          },
-                        },
-                      },
-                      column4: {
-                        type: 'void',
-                        'x-component': 'ArrayTable.Column',
-                        'x-component-props': { title: 'A3' },
-                        properties: {
-                          a3: {
-                            type: 'string',
-                            'x-decorator': 'FormItem',
-                            'x-component': 'Input',
-                          },
-                        },
-                      },
-                      column5: {
-                        type: 'void',
-                        'x-component': 'ArrayTable.Column',
-                        'x-component-props': {
-                          title: '操作',
-                          prop: 'operations',
-                          width: 200,
-                          fixed: 'right',
-                        },
-                        properties: {
-                          add: {
-                            type: 'void',
-                            'x-component': 'ArrayTable.Addition',
-                          },
-                          remove: {
-                            type: 'void',
-                            'x-component': 'ArrayTable.Remove',
-                          },
-                        },
+                        'x-decorator': 'FormItem',
+                        'x-component': 'ArrayItems.Remove',
                       },
                     },
                   },
                   properties: {
                     add: {
                       type: 'void',
-                      'x-component': 'ArrayTable.Addition',
-                      title: '添加条目',
+                      title: '添加兑换规则',
+                      'x-component': 'ArrayItems.Addition',
                     },
                   },
                 },
@@ -161,81 +156,12 @@ const formSchema: ISchema = {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
-                header: '升级模式设置',
-              },
-              properties: {
-                radio: {
-                  type: 'boolean',
-                  title: '会员升级模式',
-                  enum: [
-                    {
-                      label: '充值',
-                      value: 1,
-                    },
-                    {
-                      label: '累计消费',
-                      value: 2,
-                    },
-                  ],
-                  'x-decorator': 'FormItem',
-                  'x-component': 'Radio.Group',
-                  'x-component-props': {
-                  },
-                },
-                
-              },
-            },
-            card_2: {
-              type: 'void',
-              'x-component': 'Card',
-              'x-component-props': {
-                header: '优惠模式设置',
-              },
-              properties: {
-               radio: {
-                  type: 'boolean',
-                  title: '优惠模式',
-                  enum: [
-                    {
-                      label: '现金',
-                      value: 1,
-                    },
-                    {
-                      label: '折扣',
-                      value: 2,
-                    },
-                  ],
-                  'x-decorator': 'FormItem',
-                  'x-component': 'Radio.Group',
-                  'x-component-props': {
-                  },
-                },
-              },
-            },
-            card_3: {
-              type: 'void',
-              'x-component': 'Card',
-              'x-component-props': {
                 header: '其他设置',
               },
               properties: {
                 status: {
                   type: 'string',
-                  title: '积分倍数',
-                  'x-decorator': 'FormItem',
-                  'x-component': 'Switch',
-                  'x-decorator-props': {
-                    asterisk: false, // label 上显示必填的 * 号
-                    feedbackLayout: 'none',
-                  },
-                  'x-component-props': {
-                    'active-value': 'OPEN',
-                    'inactive-value': 'CLOSED',
-                  },
-                },
-                status1: {
-                  type: 'string',
-                  title: '享受优惠有效期',
+                  title: '每年1月1日零点重置积分为0',
                   'x-decorator': 'FormItem',
                   'x-component': 'Switch',
                   'x-decorator-props': {

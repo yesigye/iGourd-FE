@@ -723,7 +723,7 @@ onMounted(() => {
   <!-- 确认 -->
   <ElDialog
     v-model="accountNoteTipsVisible"
-    :title="t('final-transfer.prompt_message')"
+    :title="t('final-transfer.prompt-message')"
     width="800"
     :before-close="handleClose"
   >

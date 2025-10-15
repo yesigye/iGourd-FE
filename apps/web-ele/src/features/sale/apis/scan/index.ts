@@ -239,3 +239,12 @@ export function productGroupSecondPageListApi(data: any) {
     data,
   );
 }
+/**
+ * 非原始订单退款
+ */
+export function refundOrderNonOriginApi(data: any) {
+  return requestClient.post(
+    `/v1/merchant/order/returned/offline/refund-no-origin`,
+    data,
+  );
+}

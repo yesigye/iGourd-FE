@@ -1,1 +1,1 @@
-export { default as SaleOrderDrawer } from './drawer.vue';
+export { default as SaleOrderPrintReceiptDrawer } from './drawer.vue';

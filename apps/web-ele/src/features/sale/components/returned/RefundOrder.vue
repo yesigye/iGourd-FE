@@ -161,10 +161,10 @@ const isRefundSuccess = ref(false);
 
 const checkPaymentMethod = (name) => {
   ElMessageBox.confirm(
-    t('common.payment_method_delisting_reminder', {
+    t('common.payment-method-delisting-reminder', {
       pay_name: name,
     }),
-    t('common.prompt_message'),
+    t('common.prompt-message'),
     {
       confirmButtonText: t('common.confirmBtn'),
       showCancelButton: false,
@@ -263,7 +263,6 @@ const getTemplateList = async (type: string) => {
     is_default: true,
   };
   const res = await getCustomTemplateListApi(params);
-  console.log(res);
   if (type === 'REFUND_RECEIPT') {
     const data = res || [];
     const templateList = data.find((item) => item.is_default) || {};
@@ -324,7 +323,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
               class="border-border-disabled flex items-center gap-1 border-b border-solid pl-1"
             >
               <span class="bg-primary block h-2.5 w-1 rounded"></span>
-              <span>{{ $t('sales.sales_order_information') }}</span>
+              <span>{{ t('returned.sales-order-information') }}</span>
             </div>
             <div class="mt-2.5">
               <ElDescriptions
@@ -336,7 +335,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
                 <ElDescriptionsItem>
                   <template #label>
                     <div class="cell-item">
-                      {{ $t('sales.sales_total') }} ({{ currentSymbol }})
+                      {{ t('returned.sales-total') }} ({{ currentSymbol }})
                     </div>
                   </template>
                   {{ refundableAmountData?.order_total_amount || '0' }}
@@ -344,7 +343,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
                 <ElDescriptionsItem>
                   <template #label>
                     <div class="cell-item">
-                      {{ $t('sales.balance_debt') }} ({{ currentSymbol }})
+                      {{ t('returned.balance-debt') }} ({{ currentSymbol }})
                     </div>
                   </template>
                   {{ refundableAmountData?.remaining_amount || '0' }}
@@ -352,7 +351,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
                 <ElDescriptionsItem>
                   <template #label>
                     <div class="cell-item">
-                      {{ $t('sales.refunded') }}({{ currentSymbol }})
+                      {{ t('returned.refunded') }}({{ currentSymbol }})
                     </div>
                   </template>
                   {{ refundableAmountData?.refund_total_amount || '0' }}
@@ -360,7 +359,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
                 <ElDescriptionsItem>
                   <template #label>
                     <div class="cell-item">
-                      {{ $t('sales.tendered_amount') }} ({{ currentSymbol }})
+                      {{ t('returned.tendered-amount') }} ({{ currentSymbol }})
                     </div>
                   </template>
                   <div class="font-bold">
@@ -383,7 +382,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
               class="border-border-disabled flex items-center gap-1 border-b border-solid pl-1"
             >
               <span class="bg-primary block h-2.5 w-1 rounded"></span>
-              <span>{{ $t('sales.refund_information') }}</span>
+              <span>{{ t('returned.refund-information') }}</span>
             </div>
             <div class="mt-2.5">
               <ElDescriptions
@@ -395,7 +394,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
                 <ElDescriptionsItem :span="1">
                   <template #label>
                     <div class="cell-item">
-                      {{ $t('sales.refundable_value') }}
+                      {{ t('returned.refundable-value') }}
                     </div>
                   </template>
                   {{ refundableAmountData?.returnable_value || '--' }}
@@ -403,7 +402,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
                 <ElDescriptionsItem :span="2">
                   <template #label>
                     <div class="cell-item">
-                      {{ $t('sales.returnable_amt') }}
+                      {{ t('returned.returnable-amount') }}
                     </div>
                   </template>
                   <p class="text-error">
@@ -417,7 +416,9 @@ const [Drawer, drawerApi] = useIgourdDrawer({
             <div
               class="flex h-[52px] w-full items-center justify-between bg-white pl-5 pr-5"
             >
-              <span class="font-700 text-sm">{{ t('sales.this_refund') }}</span>
+              <span class="font-700 text-sm">{{
+                t('returned.this-refund')
+              }}</span>
 
               <span class="text-status-blocked text-2xl">{{
                 compuredReturnedinfo?.total_amount || '--'
@@ -427,7 +428,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
               class="flex h-[52px] w-full items-center justify-between bg-white pl-5 pr-5"
             >
               <span class="font-700 text-sm">{{
-                $t('sales.still_balance')
+                t('returned.still-balance')
               }}</span>
 
               <span class="text-status-blocked text-2xl">{{
@@ -439,7 +440,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
             class="font-700 mt-1 flex h-[52px] w-full items-center justify-between bg-white pl-5 pr-5"
           >
             <span class="text-status-partial">{{
-              $t('sales.actual_refund')
+              t('returned.actual-refund')
             }}</span>
 
             <span class="text-status-blocked text-2xl">{{
@@ -448,19 +449,19 @@ const [Drawer, drawerApi] = useIgourdDrawer({
           </div>
           <div class="mt-1 bg-white pb-1.5 pl-5 pr-5 pt-1.5">
             <p class="text-xs">
-              {{ $t('sales.source_of_payment_discount') }}：
+              {{ t('returned.source-of-payment-discount') }}：
             </p>
             <p class="font-700 mt-2.5 flex flex-wrap gap-7 text-sm">
               <span
-                >{{ $t('sales.sales_wipe') }}：{{
+                >{{ t('returned.sales-wipe') }}：{{
                   createReturedInfo?.round_down_amount || '0'
                 }}</span
               ><span
-                >{{ $t('sales.sales_discount') }}：{{
+                >{{ t('returned.sales-discount') }}：{{
                   createReturedInfo?.promotion_discount_amount || '0'
                 }}</span
               ><span
-                >{{ $t('sales.balance_deduction') }}：{{
+                >{{ t('returned.balance-deduction') }}：{{
                   balanceDeduction
                 }}</span
               >
@@ -506,7 +507,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
             </ElIcon>
 
             <p class="mt-2.5 text-center text-sm">
-              {{ $t('sales.refund_success') }}
+              {{ t('returned.refund-success') }}
             </p>
           </div>
         </div>
