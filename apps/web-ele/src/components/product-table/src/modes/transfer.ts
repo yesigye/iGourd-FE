@@ -6,6 +6,12 @@ export const TransferMode: ModePlugin = {
     return [
       {
         name: 'major_name',
+        type: 'string',
+        title: 'product_id',
+        'x-hidden': true,
+      },
+      {
+        name: 'product_id',
         title: '商品',
         'x-component': 'ProductTable.ProductCell',
         'x-decorator': 'FormItem',
