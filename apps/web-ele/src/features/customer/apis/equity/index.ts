@@ -10,7 +10,7 @@ import type {
 
 import { requestClient } from '#/api/request';
 
-const CUSTOMER_EQUITY_BASE_URL = '/v1/merchant/customer/equity';
+const CUSTOMER_EQUITY_BASE_URL = '/v1/merchant/basics/customer/setting-customer-rights/';
 
 // 获取客户股权分页列表
 export function getCustomerEquityPageListApi(data: CustomerEquityQueryPageVO) {
@@ -21,9 +21,9 @@ export function getCustomerEquityPageListApi(data: CustomerEquityQueryPageVO) {
 }
 
 // 创建客户股权
-export function createCustomerEquityApi(data: CustomerEquityCreateVO) {
+export function saveCustomerEquityApi(data: CustomerEquityCreateVO) {
   return requestClient.post(
-    `${CUSTOMER_EQUITY_BASE_URL}/create`,
+    `${CUSTOMER_EQUITY_BASE_URL}/save`,
     data,
   );
 }
@@ -44,7 +44,7 @@ export function deleteCustomerEquityApi(data: CustomerEquityRemoveVO) {
   );
 }
 
-// 获取客户股权详情
+// 获取客户权益详情
 export function getCustomerEquityDetailApi(data: { equity_id: number; merchant_id?: number }) {
   return requestClient.post(
     `${CUSTOMER_EQUITY_BASE_URL}/detail`,

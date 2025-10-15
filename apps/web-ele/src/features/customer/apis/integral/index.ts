@@ -9,8 +9,7 @@ import type {
 } from '@@/customer/types';
 
 import { requestClient } from '#/api/request';
-
-const CUSTOMER_INTEGRAL_BASE_URL = '/v1/merchant/customer/integral';
+const CUSTOMER_INTEGRAL_BASE_URL = '/v1/merchant/basics/customer/setting-point';
 
 // 获取客户积分分页列表
 export function getCustomerIntegralPageListApi(data: CustomerIntegralQueryPageVO) {
@@ -20,10 +19,10 @@ export function getCustomerIntegralPageListApi(data: CustomerIntegralQueryPageVO
   );
 }
 
-// 创建客户积分
-export function createCustomerIntegralApi(data: CustomerIntegralCreateVO) {
+// 保存客户积分
+export function saveCustomerIntegralApi(data: CustomerIntegralCreateVO) {
   return requestClient.post(
-    `${CUSTOMER_INTEGRAL_BASE_URL}/create`,
+    `${CUSTOMER_INTEGRAL_BASE_URL}/save`,
     data,
   );
 }
