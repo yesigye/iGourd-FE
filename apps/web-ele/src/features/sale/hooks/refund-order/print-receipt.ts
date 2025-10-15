@@ -1,12 +1,12 @@
 import { useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { SaleOrderPrintReceiptDrawer } from '@@/sale/components';
+import { SaleRefundOrderPrintReceipt } from '@@/sale/components';
 
-export function useSaleOrderPrintReceiptDrawer() {
+export function useSaleRefundOrderPrintReceiptDrawer() {
   const { t } = useI18n();
   const [Drawer, drawerApi] = useIgourdDrawer({
-    connectedComponent: SaleOrderPrintReceiptDrawer,
+    connectedComponent: SaleRefundOrderPrintReceipt,
     appendToMain: true,
     class: 'w-1/3',
     title: '打印小票',

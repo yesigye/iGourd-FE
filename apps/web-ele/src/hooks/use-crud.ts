@@ -230,7 +230,6 @@ function useCrud<T extends { id?: number | string }, P extends object>(
       schema: options.searchFormSchema,
       scope: options.scope,
       initialValues: options.initialValues,
-      
     },
     ...vxeTableProps,
     gridOptions: {

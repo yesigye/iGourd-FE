@@ -1,18 +1,18 @@
 // 退款订单状态枚举
 export enum RefundOrderStatus {
+  CANCELLED = 'CANCELLED', // 已取消
+  COMPLETED = 'COMPLETED', // 已完成
   PENDING = 'PENDING', // 待处理
   PROCESSING = 'PROCESSING', // 处理中
-  COMPLETED = 'COMPLETED', // 已完成
-  CANCELLED = 'CANCELLED', // 已取消
   REJECTED = 'REJECTED', // 已拒绝
 }
 
 // 退款方式枚举
 export enum RefundMethod {
-  CASH = 'CASH', // 现金退款
   CARD = 'CARD', // 刷卡退款
-  TRANSFER = 'TRANSFER', // 转账退款
+  CASH = 'CASH', // 现金退款
   CREDIT = 'CREDIT', // 信用退款
+  TRANSFER = 'TRANSFER', // 转账退款
 }
 
 // 查询参数
@@ -120,4 +120,9 @@ export interface RefundOrderProductVO {
   quantity: number;
   unit_price: number;
   remark?: string;
+}
+export interface RefundOrderDetail {
+  code: string;
+  current_debit_amount: number;
+  current_credit_amount: number;
 }
