@@ -8,6 +8,7 @@ import {
   createLabelBind,
   inventoryProductProfilePageList,
   updateProductLabel,
+  getProductList,
   getProductlabelProductPage,
 } from '@@/inventory/apis';
 
@@ -94,15 +95,15 @@ export function useSelectProductForm(func) {
                 },
                 {
                   label: 'sku编码',
-                  prop: 'product_barcode',
+                  prop: 'sku_barcode',
                 },
                 {
                   label: '单位',
-                  prop: 'product_unit_names',
+                  prop: 'product_unit_name',
                 },
                 {
                   label: '售卖价格',
-                  prop: 'major_name1',
+                  prop: 'selling_price',
                 },
               ],
               fetchLeft: '{{ actions.fetchProducts }}',
@@ -144,7 +145,7 @@ export function useSelectProductForm(func) {
     scope: {
       loadData,
       actions: {
-        fetchProducts: inventoryProductProfilePageList,
+        fetchProducts: getProductList,
         fetchSelectedProducts: (params) => {
           params.product_label_id = detailData.id;
           getProductlabelProductPage(params);
