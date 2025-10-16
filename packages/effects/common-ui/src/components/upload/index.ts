@@ -275,7 +275,7 @@ export default connect(
 
       // —— 只读态渲染（Preview）——
       const readPretty = computed(
-        () => field.value.readPretty || props.disabled,
+        () => field.value?.readPretty || props.disabled,
       );
 
       const renderReadPretty = () => {
