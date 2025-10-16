@@ -33,5 +33,11 @@
     "expired": "Expired",
     "used": "Used",
     "cancelled": "Cancelled"
-  }
+  },
+  "initialearnedintegral-placeholder": "Please enter initial points",
+  "amount-placeholder": "Please enter the consumption amount",
+  "everyyearonjanuary1resetpointstozero": "Points reset to zero at 00:00 on January 1st every year",
+  "gain-money": "Get 1 cash",
+  "gain-points": "Get 1 point",
+  "product": "Product"
 }

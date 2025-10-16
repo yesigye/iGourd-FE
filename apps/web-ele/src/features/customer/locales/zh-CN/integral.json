@@ -33,5 +33,11 @@
     "expired": "已过期",
     "used": "已使用",
     "cancelled": "已取消"
-  }
+  },
+  "initialearnedintegral-placeholder": "请输入初始积分",
+  "amount-placeholder": "请输入消费金额",
+  "everyyearonjanuary1resetpointstozero": "每年1月1日零点重置积分为0",
+  "gain-money": "获得1现金",
+  "gain-points": "获得1积分",
+  "product": "商品"
 }

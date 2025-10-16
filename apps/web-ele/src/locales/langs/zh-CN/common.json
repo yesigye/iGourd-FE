@@ -329,5 +329,6 @@
     "APPROVED": "审核通过",
     "PENDING": "待审核",
     "REJECTED": "驳回"
-  }
+  },
+  "default":"默认"
 }
