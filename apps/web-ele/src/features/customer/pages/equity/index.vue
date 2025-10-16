@@ -633,10 +633,10 @@ const formSchema: ISchema = {
                   type: 'boolean',
                   title: '享受优惠有效日期',
                   'x-decorator': 'FormItem',
-                  'x-component': 'Tag',
-                  enum: validityPeriods,
+                  'x-component': 'Radio.Group',
                   'x-component-props': {
-
+                    options: validityPeriods,
+                    optionType: 'button',
                   },
                 },
               },

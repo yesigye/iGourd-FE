@@ -7,6 +7,7 @@
         <ElButton type="primary" @click="handleSave">保存</ElButton>
       </div>
     </ElCard>
+    <Drawer @confirm="handleConfirm"></Drawer>
   </Page>
 </template>
 
@@ -19,13 +20,19 @@ import {
   ElMessage,
   ElCard,
   onFieldValueChange,
+  useIgourdDrawer,
+  useIgourdForm
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import {
   getCustomerIntegralDetailApi,
   saveCustomerIntegralApi,
 } from '@@/customer/apis';
-import { useIgourdForm } from '@igourd/common-ui';
+import drawer from '../../components/integral/drawer.vue';
+const [Drawer, drawerApi] = useIgourdDrawer({
+  connectedComponent: drawer,
+  appendToMain: true,
+});
 
 const formSchema: ISchema = {
   type: 'object',
@@ -155,7 +162,7 @@ const formSchema: ISchema = {
                     },
                   },
                 },
-                string_array: {
+                setting_merchant_point_gift_list: {
                   type: 'array',
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
@@ -192,43 +199,99 @@ const formSchema: ISchema = {
                       column3: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: '礼品' },
+                        'x-component-props': { width: 400, title: '礼品' },
                         properties: {
-                          a1: {
-                            type: 'string',
-                            'x-component': 'Input',
-                          },
-                        },
-                      },
-                      column5: {
-                        type: 'void',
-                        'x-component': 'ArrayTable.Column',
-                        'x-component-props': {
-                          title: 'Operations',
-                          prop: 'operations',
-                          width: 200,
-                          fixed: 'right',
-                        },
-                        properties: {
-                          item: {
+                          name: {
                             type: 'void',
-                            'x-component': 'FormItem',
+                            title: '',
+                            'x-decorator': 'FormItem',
+                            'x-decorator-props': {
+                              asterisk: true,
+                              feedbackLayout: 'none',
+                            },
+                            'x-component': 'Space',
                             properties: {
-                              remove: {
-                                type: 'void',
-                                'x-component': 'ArrayTable.Remove',
+                              list: {
+                                type: 'string',
+                                'x-decorator': 'FormItem',
+                                'x-component': 'Select',
+                                enum:[
+                                  {value:'1',label:'111'},
+                                  {value:'2',label:'222'}
+                                ],
+                                'x-component-props': {
+                                  multiple: true,
+                                  // disabled: true,
+                                },
+                              },
+                              lastName: {
+                                type: 'string',
+                                'x-decorator': 'FormItem',
+                                'x-component': 'div',
+                                'x-content': '选择',
+                                'x-component-props': {
+                                  class:"cursor-pointer",
+                                  '@click':()=>{
+                                    console.log("1111")
+                                    handleSelectProduct()
+                                  }
+                                },
+                              },
+                              lastName1: {
+                                type: 'string',
+                                'x-decorator': 'FormItem',
+                                'x-component': 'PreviewText.Input',
+                                default: '8选择',
                               },
                             },
                           },
                         },
                       },
-                    },
-                  },
-                  properties: {
-                    add: {
-                      type: 'void',
-                      'x-component': 'ArrayTable.Addition',
-                      title: '添加条目',
+                      col_actions: {
+                        type: 'void',
+                        'x-component': 'ArrayTable.Column',
+                        'x-component-props': {
+                          title: '操作',
+                          width: 100,
+                          fixed: 'right',
+                        },
+                        properties: {
+                          addition: {
+                            type: 'void',
+                            title: '添加',
+                            'x-component': 'ArrayTable.Addition',
+                            'x-reactions': {
+                              dependencies: [
+                                'setting_merchant_point_gift_list',
+                              ],
+                              fulfill: {
+                                state: {
+                                  componentProps: {
+                                    disabled: false,
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          remove: {
+                            type: 'void',
+                            'x-component': 'ArrayTable.Remove',
+                            title: "{{ t('common.delete') }}",
+                            'x-reactions': {
+                              dependencies: [
+                                'setting_merchant_point_gift_list',
+                              ],
+                              fulfill: {
+                                state: {
+                                  componentProps: {
+                                    disabled: '{{ $deps[0]?.length ==1 }}',
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
                     },
                   },
                 },
@@ -265,7 +328,7 @@ const hideField = (type, form) => {
       form.setFieldState('deduction_rate', (f) => {
         f.hidden = false;
       });
-      form.setFieldState('string_array', (f) => {
+      form.setFieldState('setting_merchant_point_gift_list', (f) => {
         f.hidden = true;
       });
       break;
@@ -274,7 +337,7 @@ const hideField = (type, form) => {
       form.setFieldState('deduction_rate', (f) => {
         f.hidden = true;
       });
-      form.setFieldState('string_array', (f) => {
+      form.setFieldState('setting_merchant_point_gift_list', (f) => {
         f.hidden = false;
       });
 
@@ -287,10 +350,15 @@ const { Form, formAPI } = useIgourdForm({
   useI18n,
   schema: formSchema,
   readPretty: false,
-  initialValues: {},
+  initialValues: {
+    setting_merchant_point_gift_list: [{}],
+  },
   effects() {
     onFieldValueChange('point_exchange_type', (field, form: Form) => {
       hideField(field.value, form);
+      if (field.value === 'EXCHANGE_GIFTS') {
+        form.setValuesIn('setting_merchant_point_gift_list', [{}]);
+      }
     });
   },
   scope: {},
@@ -310,6 +378,12 @@ const getData = () => {
     formAPI.setValues(res);
   });
 };
+const handleSelectProduct = () =>{
+  drawerApi.open()
+}
+const handleConfirm = (data) =>{
+
+}
 
 defineOptions({
   name: 'ICustomerIntegral',
