@@ -46,5 +46,6 @@
   "upload-failed": "上传失败",
   "profile-photo": "商品图片",
   "other-information": "其他信息",
-  "select-spec-values": "选择规格值"
+  "select-spec-values": "选择规格值",
+  "product-details": "商品详情"
 }

@@ -79,6 +79,8 @@ export interface TopFilterField {
  */
 const props = withDefaults(
   defineProps<{
+    // top-bottom 上线布局   left-right 左右布局 默认
+    layout:string,
     columns: Column[];
     excludeSelectedFromLeft?: boolean;
     fetchLeft: (
@@ -101,6 +103,7 @@ const props = withDefaults(
     topFilterFields?: TopFilterField[];
   }>(),
   {
+    layout:"left-right",
     modelValue: () => [],
     leftTitle: '可选择',
     rightTitle: '已选择',
@@ -468,11 +471,11 @@ defineExpose({ leftRefresh, rightRefresh });
       <ElButton text @click="clearAll">Clear</ElButton>
       <div class="flex-1"></div>
       <div class="font-medium text-blue-600">
-        已选择 {{ valueIds.length }} 项
+        已选择 {{ valueIds.length }} 项{{layout}}
       </div>
     </div>
 
-    <div class="grid grid-cols-[1fr_auto_1fr] gap-3">
+    <div :class="['grid','gap-3',layout ==='top-bottom'?'grid-cols-1':'grid-cols-[1fr_auto_1fr]']">
       <!-- LEFT: available list -->
       <div class="flex flex-col overflow-hidden rounded-xl border">
         <div
