@@ -33,5 +33,11 @@
     "expired": "Expiré",
     "used": "Utilisé",
     "cancelled": "Annulé"
-  }
+  },
+  "initialearnedintegral-placeholder": "Veuillez saisir les points initiaux",
+  "amount-placeholder": "Veuillez saisir le montant de la dépense",
+  "everyyearonjanuary1resetpointstozero": "Les points sont remis à zéro à 00h00 chaque 1er janvier",
+  "gain-money": "Obtenir 1 argent",
+  "gain-points": "Obtenir 1 point",
+  "product": "Produit"
 }

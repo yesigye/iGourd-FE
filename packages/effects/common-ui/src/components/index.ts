@@ -77,10 +77,12 @@ export { globalShareState } from '@igourd-core/shared/global-state';
 
 export {
   ElAutocomplete,
+  ElAutoResizer,
   ElBadge,
   ElButton,
   ElCalendar,
   ElCheckbox,
+  ElCheckboxGroup,
   ElCol,
   ElConfigProvider,
   ElDatePicker,
@@ -132,7 +134,6 @@ export {
   ElTooltip,
   ElTree,
   ElUpload,
-  ElAutoResizer,
   formContextKey,
 } from 'element-plus';
 

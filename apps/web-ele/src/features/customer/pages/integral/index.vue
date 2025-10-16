@@ -3,8 +3,8 @@
     <ElCard>
       <Form></Form>
       <div class="mt-4 text-center">
-        <ElButton type="danger" plain @click="handleReset">重置</ElButton>
-        <ElButton type="primary" @click="handleSave">保存</ElButton>
+        <ElButton type="danger" plain @click="handleReset">{{t('common.reset')}}</ElButton>
+        <ElButton type="primary" @click="handleSave">{{t('common.save')}}</ElButton>
       </div>
     </ElCard>
     <Drawer @confirm="handleConfirm"></Drawer>
@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted,ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import type { ISchema } from '@igourd/common-ui';
 import {
   ElButton,
@@ -21,9 +21,12 @@ import {
   ElCard,
   onFieldValueChange,
   useIgourdDrawer,
-  useIgourdForm
+  useIgourdForm,
+  observable,
 } from '@igourd/common-ui';
+import { useUserStore } from '@igourd/stores';
 import { useI18n } from '@igourd/locales';
+const { t } = useI18n();
 import {
   getCustomerIntegralDetailApi,
   saveCustomerIntegralApi,
@@ -31,9 +34,15 @@ import {
 import drawer from '../../components/integral/drawer.vue';
 const [Drawer, drawerApi] = useIgourdDrawer({
   connectedComponent: drawer,
-  appendToMain: true
+  appendToMain: true,
 });
+interface ListItem {
+  value: any;
+  label: string;
+}
+const { currentLoginUserApp } = useUserStore();
 const index = ref();
+const dataSource = observable<{ value: ListItem[] }>({ value: [] });
 const handleSelectProduct = (...args) => {
   index.value = args[0];
   drawerApi.open();
@@ -58,7 +67,7 @@ const formSchema: ISchema = {
           properties: {
             row_0: {
               type: 'void', // 表示空字段
-              title: '初始获得积分', // formItem 的 label
+              title: "{{t('customer.initialearnedintegral')}}", // formItem 的 label
               'x-component': 'Space',
               'x-decorator': 'FormItem',
               'x-decorator-props': {
@@ -73,7 +82,7 @@ const formSchema: ISchema = {
                   'x-decorator': 'FormItem',
                   'x-component': 'Input',
                   'x-component-props': {
-                    placeholder: '请输入初始积分',
+                    placeholder: "{{t('integral.initialearnedintegral-placeholder')}}",
                     clearable: true,
                     style: {
                       width: '120px',
@@ -82,7 +91,7 @@ const formSchema: ISchema = {
                 },
                 checkbox: {
                   type: 'number',
-                  title: '默认',
+                  title: "{{t('common.default')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'Checkbox',
                 },
@@ -90,7 +99,7 @@ const formSchema: ISchema = {
             },
             row_1: {
               type: 'void', // 表示空字段
-              title: '每消费', // formItem 的 label
+              title: "{{t('customer.everyconsumption')}}", // formItem 的 label
               'x-component': 'Space',
               'x-decorator': 'FormItem',
               'x-decorator-props': {
@@ -111,7 +120,7 @@ const formSchema: ISchema = {
                     },
                   },
                   'x-component-props': {
-                    placeholder: '请输入消费金额',
+                    placeholder: "{{t('customer.amount-placeholder')}}",
                     clearable: true,
                   },
                 },
@@ -120,7 +129,7 @@ const formSchema: ISchema = {
                   title: '',
                   'x-decorator': 'FormItem',
                   'x-component': 'div',
-                  'x-content': '获得1积分',
+                  'x-content': "{{t('integral.gain-points')}}",
                 },
               },
             },
@@ -129,19 +138,19 @@ const formSchema: ISchema = {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
-                header: '积分兑换规则',
+                header: "{{t('customer.pointredemptionrule')}}",
               },
               properties: {
                 point_exchange_type: {
                   type: 'boolean',
-                  title: '兑换方式设置',
+                  title: "{{t('customer.exchangemode')}}",
                   enum: [
                     {
-                      label: '抵扣现金',
+                      label: t('customer.deductiblecash'),
                       value: 'DEDUCTIBLE_CASH',
                     },
                     {
-                      label: '兑换奖品',
+                      label: t('customer.redeem'),
                       value: 'EXCHANGE_GIFTS',
                     },
                   ],
@@ -151,15 +160,15 @@ const formSchema: ISchema = {
                 },
                 deduction_rate: {
                   type: 'string',
-                  title: '积分规则',
+                  title: "{{t('customer.integrationrule')}}",
                   required: true,
                   'x-decorator': 'FormItem',
                   'x-component': 'Input',
                   'x-decorator-props': {
-                    addonAfter: '获得 1 现金',
+                    addonAfter: "{{t('integral.gain-money')}}",
                   },
                   'x-component-props': {
-                    placeholder: '请输入消费金额',
+                    placeholder: "{{t('customer.amount-placeholder')}}",
                     clearable: true,
                     style: {
                       width: '120px',
@@ -170,7 +179,7 @@ const formSchema: ISchema = {
                   type: 'array',
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
-                  title: '积分规则',
+                  title: "{{t('customer.integrationrule')}}",
                   items: {
                     type: 'object',
                     properties: {
@@ -192,7 +201,7 @@ const formSchema: ISchema = {
                       column2: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: '积分' },
+                        'x-component-props': { width: 200, title: "{{t('equity.equityType.point')}}" },
                         properties: {
                           points: {
                             type: 'string',
@@ -203,7 +212,7 @@ const formSchema: ISchema = {
                       column3: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 400, title: '礼品' },
+                        'x-component-props': { title: "{{t('equity.equityType.gift')}}" },
                         properties: {
                           name: {
                             type: 'void',
@@ -215,36 +224,46 @@ const formSchema: ISchema = {
                             },
                             'x-component': 'Space',
                             properties: {
-                              list: {
-                                type: 'array',
+                              gift_product_ids: {
+                                type: 'string',
                                 'x-decorator': 'FormItem',
                                 'x-component': 'Select',
-                                enum: [
-                                  { value: '1', label: '111' },
-                                  { value: '2', label: '222' },
-                                ],
+                                'x-reactions': {
+                                  fulfill: {
+                                    state: {
+                                      dataSource:
+                                        '{{ dataSource.value[$index] }}',
+                                    },
+                                  },
+                                },
                                 'x-component-props': {
+                                  style: {
+                                    'min-width': '200px',
+                                  },
                                   multiple: true,
-                                  // disabled: true,
+                                  disabled: true,
+                                  'collapse-tags': true,
+                                  'max-collapse-tags': 3,
                                 },
                               },
                               lastName: {
                                 type: 'string',
                                 'x-decorator': 'FormItem',
                                 'x-component': 'div',
-                                'x-content': '选择',
+                                'x-content': "{{t('common.select')}}",
                                 'x-component-props': {
                                   class: 'cursor-pointer',
+                                  style: { color: 'var(--el-color-primary)' },
                                   '@click': `{{
                                     ()=> handleSelectProduct($index,$record)
                                   }}`,
                                 },
                               },
-                              lastName1: {
+                              count: {
                                 type: 'string',
                                 'x-decorator': 'FormItem',
                                 'x-component': 'PreviewText.Input',
-                                default: '8选择',
+                                'x-content': "{{$self.value?$self.value:'0'}}",
                               },
                             },
                           },
@@ -254,14 +273,14 @@ const formSchema: ISchema = {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
                         'x-component-props': {
-                          title: '操作',
+                          title: "{{t('common.operation')}}",
                           width: 100,
                           fixed: 'right',
                         },
                         properties: {
                           addition: {
                             type: 'void',
-                            title: '添加',
+                            title: "{{t('common.addBtn')}}",
                             'x-component': 'ArrayTable.Addition',
                             'x-reactions': {
                               dependencies: [
@@ -304,12 +323,12 @@ const formSchema: ISchema = {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
-                header: '其他设置',
+                header: "{{t('customer.otherSettings')}}",
               },
               properties: {
                 is_annually_resettable: {
                   type: 'string',
-                  title: '每年1月1日零点重置积分为0',
+                  title: "{{t('integral.everyyearonjanuary1resetpointstozero')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'Switch',
                   'x-decorator-props': {
@@ -359,35 +378,80 @@ const { Form, formAPI } = useIgourdForm({
   effects() {
     onFieldValueChange('point_exchange_type', (field, form: Form) => {
       hideField(field.value, form);
-      if (field.value === 'EXCHANGE_GIFTS') {
+      if (field.value === 'EXCHANGE_GIFTS' && formAPI.values.setting_merchant_point_gift_list.lenght ===0 ) {
         form.setValuesIn('setting_merchant_point_gift_list', [{}]);
       }
     });
   },
   scope: {
     handleSelectProduct,
+    dataSource,
   },
 });
 const handleReset = () => {
   formAPI.reset();
-  ElMessage.success('重置成功');
+  ElMessage.success(t('customer.resetSuccess'));
 };
 const handleSave = () => {
-  //gift_product_ids:[]
-  // setting_merchant_point_gift_list:[]
-  saveCustomerIntegralApi(formAPI.values).then((res) => {
-    ElMessage.success('保存成功');
+  let params = JSON.parse(JSON.stringify(formAPI.values));
+  //对象转json
+  params.setting_merchant_point_gift_list.forEach((element) => {
+    element.merchant_id = currentLoginUserApp.owner_id;
+    if (element.gift_product_ids && element.gift_product_ids.length > 0) {
+      element.gift_product_ids = JSON.stringify(element.gift_product_ids);
+    }
+    element.setting_merchant_point_id = null;
+  });
+  saveCustomerIntegralApi(params).then((res) => {
+    ElMessage.success(t('customer.saveSuccess'));
   });
 };
 const getData = () => {
   getCustomerIntegralDetailApi().then((res) => {
     hideField(res.point_exchange_type, formAPI);
+    res.setting_merchant_point_gift_list.forEach((element) => {
+      const list = element.product_model_list.map((item) => {
+        return {
+          value: item.id,
+          label: item.major_name,
+        };
+      });
+      const selectedList = element.product_model_list.map((item) => item.id);
+      element.gift_product_ids = selectedList;
+      element.count = selectedList.length+t("integral.product");
+      dataSource.value.push(list);
+    });
     formAPI.setValues(res);
   });
 };
 
+
 const handleConfirm = (data) => {
-  formAPI.setValuesIn("setting_merchant_point_gift_list["+index.value+"].list",data.product_list)
+  if (!data.product_list) {
+    return;
+  }
+  // 新添加 dataSource里还没有
+  if (!dataSource.value[index.value]) {
+    dataSource.value.push([{}]);
+  }
+  const list = data.product_list.map((item) => {
+    return {
+      value: item.id,
+      label: item.major_name,
+    };
+  });
+  const selectedList = data.product_list.map((item) => item.id);
+  dataSource.value[index.value] = list;
+  formAPI.setValuesIn(
+    'setting_merchant_point_gift_list[' +
+      index.value +
+      '].gift_product_ids',
+    selectedList,
+  );
+  formAPI.setValuesIn(
+    'setting_merchant_point_gift_list[' + index.value + '].count',
+    data.product_list.length + t("integral.product"),
+  );
 };
 
 defineOptions({

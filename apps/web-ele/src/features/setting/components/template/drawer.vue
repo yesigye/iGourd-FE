@@ -68,7 +68,7 @@ const printComponents = ref({
 });
 const templateType = ref('');
 const isNewTemplate = ref(true);
-const isAddNewTemplate = ref(true);
+const isAddNewTemplate = ref(false);
 const currentTemplateData = ref<any>({});
 const titleName = ref('');
 const imageUrl = ref('');
@@ -301,11 +301,12 @@ const buildPrintData = (previewDataIds: any[]) => {
     })
     .filter(Boolean); // 过滤掉null值
 
+  console.log(printDataResult, 'printDataResult1');
   return { printDataResult, tableTemplate };
 };
 
 const printData = ref([]);
-
+const business_type = ref('');
 /**
  * 通用模板数据处理方法
  * @param {Array} apiData - API返回的字段数据
@@ -321,7 +322,6 @@ const processTemplateData = async (
     let optionContent: any;
     let businessType: string;
     let profilePhoto: string;
-
     if (isNewTemplate) {
       // 新建模板：获取系统模板数据
       const data = await printTemplateSystemApi({
@@ -399,11 +399,10 @@ const processTemplateData = async (
 
     // 构建最终的打印数据
     const { printDataResult, tableTemplate } = buildPrintData(previewDataIds);
-
+    console.log(tableIds, 'tableIds');
     // 处理表格模板的特殊逻辑
     defaultCheckedKeys.value.push(...tableIds);
     printData.value = printDataResult;
-
     // 如果存在表格模板，将其插入到正确的位置
     if (tableTemplate) {
       printData.value.splice(tableIndex, 0, {
@@ -416,7 +415,7 @@ const processTemplateData = async (
     }
 
     // 设置其他模板属性
-    // business_type.value = businessType;
+    business_type.value = businessType;
 
     // 处理图片组件（仅新建模板需要）
     printData.value.forEach((item) => {
@@ -450,6 +449,7 @@ const getTemplateInit = async (apiData: any[]) => {
  * @param {Array} apiData - API返回的字段数据
  */
 const handleExistingTemplateData = async (apiData: any[]) => {
+  console.log(apiData, 'apiData');
   await processTemplateData(apiData, false);
 };
 const specList = ref<any[]>([]);
@@ -472,7 +472,7 @@ const fetchTemplateList = async () => {
     }
     // }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 /**
@@ -509,7 +509,6 @@ const fetchTemplateColumnList = async () => {
 
     // // 更新左侧树形结构数据
     data.value = [...treeData];
-
     if (isNewTemplate.value) {
       // 新建模板的话，获取系统初始化模板，选中数据
       // TODO 因为tree组件获取默认值后会触发 check-change 事件，所以需要加一个标记来控制是否执行逻辑
@@ -529,8 +528,13 @@ const fetchTemplateColumnList = async () => {
 };
 
 const handleCheckChange = (node: TreeNode) => {
-  // && !isAddNewTemplate.value 一会处理
-  if (!node.isPenultimate) {
+  console.log(node, 'node');
+  console.log(
+    !node.isPenultimate && !isAddNewTemplate.value,
+    '!node.isPenultimate && !isAddNewTemplate.value',
+  );
+  if (!node.isPenultimate && !isAddNewTemplate.value) {
+    console.log(node, 'node');
     treeSelectChange(printData, node, tableDefault.value);
   }
 };
@@ -676,6 +680,7 @@ const handDelDivider = () => {
           <p class="border-b border-t border-dashed border-[#99999999]">
             <ElCheckbox
               v-model="isAllChecked"
+              :indeterminate="isIndeterminate"
               :label="t('template.select-all')"
             />
           </p>
@@ -705,8 +710,7 @@ const handDelDivider = () => {
               <template #default="{ node }">
                 <div class="custom-tree-node">
                   <span v-if="node.data.id === 'type-other'">
-                    {{ t(`template.${node.data.name}`) }}</span
-                  >
+                    {{ t(`template.${node.data.name}`) }}</span>
                   <span v-else>{{ node.data.name }}</span>
                 </div>
               </template>
@@ -751,8 +755,7 @@ const handDelDivider = () => {
                       </div>
                       <div v-else>
                         <span class="text-gray-neutral">
-                          {{ t('template.empty') }}</span
-                        >
+                          {{ t('template.empty') }}</span>
                       </div>
                     </div>
                   </template>
@@ -799,7 +802,9 @@ const handDelDivider = () => {
                           />
                         </div>
                         <div v-else>
-                          <span class="text-textColor-tertiary">组件未定义</span>
+                          <span class="text-textColor-tertiary"
+                            >组件未定义</span
+                          >
                         </div>
                       </div>
                     </template>
@@ -926,10 +931,10 @@ const handDelDivider = () => {
                     <ElFormItem :label="`${t('template.line_type')}:`">
                       <ElRadioGroup v-model="printForm.style.borderCount">
                         <ElRadio :value="1">
-                          {{ t('template.single_line') }}
+                          {{ t('template.single-line') }}
                         </ElRadio>
                         <ElRadio :value="2">
-                          {{ t('template.double_lines') }}
+                          {{ t('template.double-line') }}
                         </ElRadio>
                       </ElRadioGroup>
                     </ElFormItem>
