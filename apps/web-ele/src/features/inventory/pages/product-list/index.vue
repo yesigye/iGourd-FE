@@ -16,8 +16,11 @@ import {
   productLabelPage,
   productProfileDetail,
 } from '@@/inventory/apis';
-import { useInventoryProductList } from '@@/inventory/hooks';
-import { useAddProduct } from '@@/inventory/hooks/product-list/addProduct';
+import {
+  useAddProduct,
+  useInventoryProductList,
+  useProductDetails,
+} from '@@/inventory/hooks';
 
 defineOptions({
   name: 'IInventoryProductList',
@@ -28,6 +31,8 @@ const mode = ref('add');
 const { Grid, gridApi, handleBatchDelete, canBatchOperate } =
   useInventoryProductList();
 const { Drawer, drawerApi } = useAddProduct();
+const { Drawer: DetailsDrawer, drawerApi: detailsDrawerApi } =
+  useProductDetails();
 const drawerRef = ref<Drawer>(null);
 // 商品信息详情
 const getProductDetail = async (id) => {
@@ -157,6 +162,10 @@ const getProductAllLabel = async () => {
 
   searchResults.value = res?.list;
 };
+const handleDetailsProduct = (row) => {
+  detailsDrawerApi.setData({ data: row });
+  detailsDrawerApi.open();
+};
 </script>
 
 <template>
@@ -198,7 +207,7 @@ const getProductAllLabel = async () => {
         <ElButton type="text" @click="handleAddProduct('edit', row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleAddProduct('details', row)">
+        <ElButton type="text" @click="handleDetailsProduct(row)">
           {{ t('common.detail') }}
         </ElButton>
         <ElButton type="text" @click="handleAddProduct('copy', row)">
@@ -257,5 +266,6 @@ const getProductAllLabel = async () => {
       </div>
     </Modal>
     <Drawer ref="drawerRef" :mode="mode" @saved="gridApi.reload()" />
+    <DetailsDrawer />
   </Page>
 </template>
