@@ -24,6 +24,7 @@ import {
   useIgourdForm,
   observable,
 } from '@igourd/common-ui';
+import { useUserStore } from '@igourd/stores';
 import { useI18n } from '@igourd/locales';
 import {
   getCustomerIntegralDetailApi,
@@ -38,6 +39,7 @@ interface ListItem {
   value: any;
   label: string;
 }
+const { currentLoginUserApp } = useUserStore();
 const index = ref();
 const dataSource = observable<{ value: ListItem[] }>({ value: [] });
 const handleSelectProduct = (...args) => {
@@ -209,7 +211,7 @@ const formSchema: ISchema = {
                       column3: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 400, title: '礼品' },
+                        'x-component-props': { title: '礼品' },
                         properties: {
                           name: {
                             type: 'void',
@@ -228,13 +230,19 @@ const formSchema: ISchema = {
                                 'x-reactions': {
                                   fulfill: {
                                     state: {
-                                      dataSource:"{{ dataSource.value[$index] }}"
+                                      dataSource:
+                                        '{{ dataSource.value[$index] }}',
                                     },
                                   },
                                 },
                                 'x-component-props': {
+                                  style: {
+                                    'min-width': '200px',
+                                  },
                                   multiple: true,
                                   disabled: true,
+                                  'collapse-tags': true,
+                                  'max-collapse-tags': 3,
                                 },
                               },
                               lastName: {
@@ -244,6 +252,7 @@ const formSchema: ISchema = {
                                 'x-content': '选择',
                                 'x-component-props': {
                                   class: 'cursor-pointer',
+                                  style: { color: 'var(--el-color-primary)' },
                                   '@click': `{{
                                     ()=> handleSelectProduct($index,$record)
                                   }}`,
@@ -253,8 +262,7 @@ const formSchema: ISchema = {
                                 type: 'string',
                                 'x-decorator': 'FormItem',
                                 'x-component': 'PreviewText.Input',
-                                'x-content':
-                                  "{{$self.value?$self.value+'选择':'0'}}",
+                                'x-content': "{{$self.value?$self.value:'0'}}",
                               },
                             },
                           },
@@ -369,17 +377,14 @@ const { Form, formAPI } = useIgourdForm({
   effects() {
     onFieldValueChange('point_exchange_type', (field, form: Form) => {
       hideField(field.value, form);
-      if (field.value === 'EXCHANGE_GIFTS') {
+      if (field.value === 'EXCHANGE_GIFTS' && formAPI.values.setting_merchant_point_gift_list.lenght ===0 ) {
         form.setValuesIn('setting_merchant_point_gift_list', [{}]);
       }
     });
-
-
-
   },
   scope: {
     handleSelectProduct,
-    dataSource
+    dataSource,
   },
 });
 const handleReset = () => {
@@ -387,10 +392,15 @@ const handleReset = () => {
   ElMessage.success('重置成功');
 };
 const handleSave = () => {
-  //gift_product_ids:[]
-  // setting_merchant_point_gift_list:[]
-  debugger
-  let params = JSON.parse(JSON.stringify(formAPI.values))
+  let params = JSON.parse(JSON.stringify(formAPI.values));
+  //对象转json
+  params.setting_merchant_point_gift_list.forEach((element) => {
+    element.merchant_id = currentLoginUserApp.owner_id;
+    if (element.gift_product_ids && element.gift_product_ids.length > 0) {
+      element.gift_product_ids = JSON.stringify(element.gift_product_ids);
+    }
+    element.setting_merchant_point_id = null;
+  });
   saveCustomerIntegralApi(params).then((res) => {
     ElMessage.success('保存成功');
   });
@@ -398,28 +408,48 @@ const handleSave = () => {
 const getData = () => {
   getCustomerIntegralDetailApi().then((res) => {
     hideField(res.point_exchange_type, formAPI);
+    res.setting_merchant_point_gift_list.forEach((element) => {
+      const list = element.product_model_list.map((item) => {
+        return {
+          value: item.id,
+          label: item.major_name,
+        };
+      });
+      const selectedList = element.product_model_list.map((item) => item.id);
+      element.gift_product_ids = selectedList;
+      element.count = selectedList.length+"商品";
+      dataSource.value.push(list);
+    });
     formAPI.setValues(res);
   });
 };
 
+
 const handleConfirm = (data) => {
-  // 新添加 dataSource里还没有
-  if(!dataSource.value[index.value]){
-      dataSource.value.push([{}])
+  if (!data.product_list) {
+    return;
   }
-  const list = data.product_list.map(item => { return {
-    value:item.id,
-    label:item.major_name
-  }})
-  const selectedList = data.product_list.map(item => item.id)
-  dataSource.value[index.value] = list
+  // 新添加 dataSource里还没有
+  if (!dataSource.value[index.value]) {
+    dataSource.value.push([{}]);
+  }
+  const list = data.product_list.map((item) => {
+    return {
+      value: item.id,
+      label: item.major_name,
+    };
+  });
+  const selectedList = data.product_list.map((item) => item.id);
+  dataSource.value[index.value] = list;
   formAPI.setValuesIn(
-    'setting_merchant_point_gift_list[' + index.value + '].gift_product_ids',
+    'setting_merchant_point_gift_list[' +
+      index.value +
+      '].gift_product_ids',
     selectedList,
   );
   formAPI.setValuesIn(
     'setting_merchant_point_gift_list[' + index.value + '].count',
-    data.product_list.length,
+    data.product_list.length + ' 商品',
   );
 };
 

@@ -66,3 +66,13 @@ export function updateCustomerIntegralSettingApi(data: CustomerIntegralSettingVO
     data,
   );
 }
+
+/**
+ * 获取商品列表
+ */
+export function getProductList(params: ProductListParams) {
+  return requestClient.post<ProductListResponse>(
+    '/v1/merchant/basics/inventory/product-info/page-list',
+    params,
+  );
+}
