@@ -19,7 +19,39 @@ export function useCollectionVoucherSchema({
         'x-component-props': {
           class: '_first-line_f38ti_72',
         },
+
         properties: {
+          channel: {
+            type: 'string',
+            default: 'WEB',
+            'x-hidden': true,
+          },
+          currency_code: {
+            type: 'string',
+            'x-hidden': true,
+            'x-reactions': {
+              fulfill: {
+                state: {
+                  value: '{{ currencySymbol }}',
+                },
+              },
+            },
+          },
+          receipt_direction: {
+            type: 'string',
+            'x-decorator': 'FormItem',
+          },
+          business_type: {
+            type: 'string',
+            'x-hidden': true,
+            'x-reactions': {
+              fulfill: {
+                state: {
+                  value: '{{ business_type }}',
+                },
+              },
+            },
+          },
           customer_id: {
             type: 'string',
             'x-component': 'FormilySearchSelect',
@@ -235,7 +267,7 @@ export function useCollectionVoucherSchema({
           },
         },
         properties: {
-          payment_order_item_list: {
+          receipt_order_item_list: {
             type: 'array',
             'x-component': 'ArrayTable',
             'x-component-props': {},
@@ -384,7 +416,7 @@ export function useCollectionVoucherSchema({
         'x-validator': [null],
       },
       attachment_url: {
-        type: 'array',
+        type: 'string',
         title: "{{t('common.Attachment')}}",
         'x-decorator': 'FormItem',
         'x-component': 'Upload',
