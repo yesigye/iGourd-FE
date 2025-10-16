@@ -7,7 +7,7 @@ import { useUserStore } from '@igourd/stores';
 
 export function useCollectionVoucherForm(props: any) {
   const { t } = useI18n();
-  const { currencySymbol } = useUserStore();
+  const { currencySymbol, merchant_id } = useUserStore();
   function onSelectOrder(record: any) {
     record = {
       ...record,
@@ -15,18 +15,23 @@ export function useCollectionVoucherForm(props: any) {
       repaid_amount: `${record.repaid_amount}`,
       business_type: props.business_type,
     };
-    formAPI.setValues({ receipt_order_item_list: [record] });
+    formAPI.setValues({ order_info: [record], receipt_order_item_list: [{}] });
   }
   const { Drawer, Form, formAPI } = useDrawerForm({
     drawerOptions: {
       title: t('classification.add-class'),
       appendToMain: true,
-      class: 'w-full',
+      class: 'w-3/4',
     },
     formOptions: {
+      initialValues: {
+        receipt_order_item_list: [{}],
+        receipt_direction:"POSITIVE_ORDER"
+      },
       scope: {
         business_type: props.business_type,
         currencySymbol,
+        merchant_id,
       },
       schema: useCollectionVoucherSchema({
         onBeforeOpen() {

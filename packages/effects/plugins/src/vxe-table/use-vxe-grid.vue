@@ -104,12 +104,17 @@ const showTableTabs = computed(() => {
   return !!unref(tabs);
 });
 const emit = defineEmits(['update:tabsActiveKey']);
-
+const tabActiveKey = ref();
 const tabsValue = computed({
   get() {
-    return unref(tabsActiveKey) ?? unref(tabsOption)?.defaultActiveValue;
+    return (
+      unref(tabsActiveKey) ??
+      tabActiveKey.value ??
+      unref(tabsOption)?.defaultActiveValue
+    );
   },
   set(value) {
+    tabActiveKey.value = value;
     emit('update:tabsActiveKey', value);
   },
 });
@@ -145,8 +150,9 @@ const { Form, formAPI: formApi } = useTableSearchForm({
   ...(formOptions.value || {}),
 });
 
-async function handleTabsChange() {
-  if (options.value.proxyConfig?.autoLoad) {
+async function handleTabsChange(name: any) {
+  tabsValue.value = name;
+  if (unref(options).proxyConfig?.autoLoad) {
     handleSubmit();
   }
 }
@@ -240,7 +246,7 @@ const options = computed(() => {
     const { ajax } = mergedOptions.proxyConfig;
     mergedOptions.proxyConfig.enabled = !!ajax;
     // 不自动加载数据, 由组件控制
-    mergedOptions.proxyConfig.autoLoad = false;
+    // mergedOptions.proxyConfig.autoLoad = false;
   }
 
   if (mergedOptions.pagerConfig) {
