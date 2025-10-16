@@ -78,7 +78,6 @@ const getCountryList = async () => {
       value: item.country_id,
     }),
   );
-  console.log(countryList.value, '国家列表');
 };
 /**
  * 店铺类型列表
@@ -174,8 +173,8 @@ onMounted(() => {
 });
 </script>
 <template>
-  <Page auto-content-height>
-    <section class="h-full text-xs">
+  <Page auto-content-height class="p-2">
+    <section class="h-full text-sm">
       <div class="mb-4 flex items-center gap-2">
         <div class="bg-primary h-2.5 w-1 rounded-md"></div>
         {{ t('storeset.basic-information') }}
