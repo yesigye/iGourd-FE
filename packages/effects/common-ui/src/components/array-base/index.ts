@@ -156,7 +156,6 @@ const ArrayBaseInner = defineComponent({
   setup(props, { slots, attrs }) {
     const field = useField<ArrayField>();
     const schema = useFieldSchema();
-
     provide(ArrayBaseSymbol, {
       field,
       schema,
@@ -274,6 +273,7 @@ const ArrayBaseRemove = defineComponent<
   ElButtonProps & { index?: number; title?: string }
 >({
   name: 'ArrayBaseRemove',
+  props: ['method', 'defaultValue', 'title'],
   setup(props, { attrs }) {
     const indexRef = useIndex(props.index);
     const base = useArray();

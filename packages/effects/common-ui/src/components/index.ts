@@ -48,6 +48,8 @@ export * from './switch';
 export * from './time-picker';
 export * from './transfer';
 
+export { Card as ElCard } from './card';
+
 export { TransferTable } from './transfer-table';
 
 export { default as Upload } from './upload';
@@ -79,7 +81,6 @@ export {
   ElBadge,
   ElButton,
   ElCalendar,
-  ElCard,
   ElCheckbox,
   ElCheckboxGroup,
   ElCol,
