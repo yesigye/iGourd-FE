@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted,ref } from 'vue';
 import type { ISchema } from '@igourd/common-ui';
 import {
   ElButton,
@@ -31,9 +31,13 @@ import {
 import drawer from '../../components/integral/drawer.vue';
 const [Drawer, drawerApi] = useIgourdDrawer({
   connectedComponent: drawer,
-  appendToMain: true,
+  appendToMain: true
 });
-
+const index = ref();
+const handleSelectProduct = (...args) => {
+  index.value = args[0];
+  drawerApi.open();
+};
 const formSchema: ISchema = {
   type: 'object',
   properties: {
@@ -190,7 +194,7 @@ const formSchema: ISchema = {
                         'x-component': 'ArrayTable.Column',
                         'x-component-props': { width: 200, title: '积分' },
                         properties: {
-                          a1: {
+                          points: {
                             type: 'string',
                             'x-component': 'Input',
                           },
@@ -212,12 +216,12 @@ const formSchema: ISchema = {
                             'x-component': 'Space',
                             properties: {
                               list: {
-                                type: 'string',
+                                type: 'array',
                                 'x-decorator': 'FormItem',
                                 'x-component': 'Select',
-                                enum:[
-                                  {value:'1',label:'111'},
-                                  {value:'2',label:'222'}
+                                enum: [
+                                  { value: '1', label: '111' },
+                                  { value: '2', label: '222' },
                                 ],
                                 'x-component-props': {
                                   multiple: true,
@@ -230,11 +234,10 @@ const formSchema: ISchema = {
                                 'x-component': 'div',
                                 'x-content': '选择',
                                 'x-component-props': {
-                                  class:"cursor-pointer",
-                                  '@click':()=>{
-                                    console.log("1111")
-                                    handleSelectProduct()
-                                  }
+                                  class: 'cursor-pointer',
+                                  '@click': `{{
+                                    ()=> handleSelectProduct($index,$record)
+                                  }}`,
                                 },
                               },
                               lastName1: {
@@ -361,13 +364,17 @@ const { Form, formAPI } = useIgourdForm({
       }
     });
   },
-  scope: {},
+  scope: {
+    handleSelectProduct,
+  },
 });
 const handleReset = () => {
   formAPI.reset();
   ElMessage.success('重置成功');
 };
 const handleSave = () => {
+  //gift_product_ids:[]
+  // setting_merchant_point_gift_list:[]
   saveCustomerIntegralApi(formAPI.values).then((res) => {
     ElMessage.success('保存成功');
   });
@@ -378,12 +385,10 @@ const getData = () => {
     formAPI.setValues(res);
   });
 };
-const handleSelectProduct = () =>{
-  drawerApi.open()
-}
-const handleConfirm = (data) =>{
 
-}
+const handleConfirm = (data) => {
+  formAPI.setValuesIn("setting_merchant_point_gift_list["+index.value+"].list",data.product_list)
+};
 
 defineOptions({
   name: 'ICustomerIntegral',
