@@ -43,7 +43,7 @@ const props = withDefaults(defineProps<Partial<ModalTableProps>>(), {
 const emits = defineEmits<{
   (e: 'update:modelValue', v: any): void;
   (e: 'change', v: any): void;
-  (e: 'confirm', payload: { rows: any[]; values: any }): void;
+  (e: 'confirm', v: any): void;
   (e: 'cancel'): void;
   (e: 'open'): void;
   (e: 'close'): void;
@@ -55,7 +55,12 @@ const [Modal, modalApi] = useIgourdModal({
   class: props.class,
   destroyOnClose: true,
   onConfirm() {
-    emits('confirm', gridApi.grid.getRadioRecord(true));
+    if (gridApi.grid.getRadioRecord(true)) {
+      emits('confirm', [gridApi.grid.getRadioRecord(true)]);
+    }
+    if (gridApi.grid.getCheckboxRecords(true)) {
+      emits('confirm', gridApi.grid.getCheckboxRecords(true));
+    }
     modalApi.close();
   },
 });

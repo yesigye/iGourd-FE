@@ -156,7 +156,6 @@ const ArrayBaseInner = defineComponent({
   setup(props, { slots, attrs }) {
     const field = useField<ArrayField>();
     const schema = useFieldSchema();
-    console.log(schema);
     provide(ArrayBaseSymbol, {
       field,
       schema,

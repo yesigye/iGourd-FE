@@ -535,5 +535,7 @@
   "confirm_reset": "确定要\"重置\"清空此页面吗？",
   "business_original_amount": "业务原始金额",
   "totalAmount": "总金额",
-  "transaction_amount": "交易金额"
+  "transaction_amount": "交易金额",
+  "order-amount": "订单金额",
+  "order": "订单"
 }

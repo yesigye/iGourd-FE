@@ -4,18 +4,38 @@ import { useI18n } from '@igourd/locales';
 import { useCollectionVoucherSchema } from './form-schema';
 import { getSaleOrderListApi } from '#/features/sale';
 import { useUserStore } from '@igourd/stores';
+import { sum } from '@igourd/utils';
+import { getAccountManagementOptionList } from '../../apis';
+import { merchantPaymentMethodOption } from '#/features/setting';
 
 export function useCollectionVoucherForm(props: any) {
   const { t } = useI18n();
   const { currencySymbol, merchant_id } = useUserStore();
-  function onSelectOrder(record: any) {
-    record = {
-      ...record,
-      order_total_amount: record.total_amount,
-      repaid_amount: `${record.repaid_amount}`,
-      business_type: props.business_type,
-    };
-    formAPI.setValues({ order_info: [record], receipt_order_item_list: [{}] });
+  function onSelectOrder(records: any) {
+    if (!records) {
+      return;
+    }
+    const last_debt = sum(records.map((item: any) => item.repaid_amount));
+    const total_amount = sum(
+      records.map((item: any) => item.total_amount),
+    );
+    formAPI.setValues({
+      order_info: records,
+      receipt_order_item_list: [{}],
+      total_amount,
+      last_debt: last_debt,
+    });
+  }
+  //@ts-ignore
+  function accountChange(_, op, record, index) {
+    if (!op) {
+      return;
+    }
+    formAPI.setValuesIn(
+      `receipt_order_item_list.${index}.account_ledger_id`,
+      op.account_ledger_id,
+    );
+    // record.account_ledger_id = op.account_ledger_id;
   }
   const { Drawer, Form, formAPI } = useDrawerForm({
     drawerOptions: {
@@ -26,13 +46,16 @@ export function useCollectionVoucherForm(props: any) {
     },
     formOptions: {
       initialValues: {
-        receipt_order_item_list: [{}],
         receipt_direction: 'POSITIVE_ORDER',
       },
       scope: {
         business_type: props.business_type,
         currencySymbol,
         merchant_id,
+        getAccountManagementOptionList,
+        accountChange,
+        sum,
+        merchantPaymentMethodOption,
       },
       schema: useCollectionVoucherSchema({
         onBeforeOpen() {

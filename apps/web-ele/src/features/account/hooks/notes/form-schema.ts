@@ -323,7 +323,7 @@ const noteFormSchema: ISchema = {
                         type: 'number',
                         'x-decorator': 'FormItem',
                         'x-decorator-props': { required: true },
-                        'x-component': 'InputNumber',
+                        'x-component': 'NumberInput',
                         'x-component-props': {
                           min: 0,
                           placeholder: "{{ t('account.enter') }}",
