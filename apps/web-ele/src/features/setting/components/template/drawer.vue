@@ -931,10 +931,10 @@ const handDelDivider = () => {
                     <ElFormItem :label="`${t('template.line_type')}:`">
                       <ElRadioGroup v-model="printForm.style.borderCount">
                         <ElRadio :value="1">
-                          {{ t('template.single_line') }}
+                          {{ t('template.single-line') }}
                         </ElRadio>
                         <ElRadio :value="2">
-                          {{ t('template.double_lines') }}
+                          {{ t('template.double-line') }}
                         </ElRadio>
                       </ElRadioGroup>
                     </ElFormItem>
