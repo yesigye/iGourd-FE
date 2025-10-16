@@ -126,6 +126,9 @@ export const useUserStore = defineStore('core-user', {
     owner_id(state) {
       return state.currentLoginUserApp?.owner_id;
     },
+    merchant_id(state) {
+      return state.currentLoginUserApp?.owner_id;
+    },
     owner_type(state) {
       return state.currentLoginUserApp?.owner_type;
     },

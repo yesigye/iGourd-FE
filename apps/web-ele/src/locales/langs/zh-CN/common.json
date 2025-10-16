@@ -323,6 +323,8 @@
   "empty": "清空",
   "close": "关闭",
   "open": "打开",
+  "basic-info": "基础信息",
+  "other-info": "其他信息",
   "review_status": {
     "APPROVED": "审核通过",
     "PENDING": "待审核",
