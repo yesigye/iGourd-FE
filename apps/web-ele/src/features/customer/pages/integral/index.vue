@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted,ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import type { ISchema } from '@igourd/common-ui';
 import {
   ElButton,
@@ -21,7 +21,8 @@ import {
   ElCard,
   onFieldValueChange,
   useIgourdDrawer,
-  useIgourdForm
+  useIgourdForm,
+  observable,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import {
@@ -31,9 +32,14 @@ import {
 import drawer from '../../components/integral/drawer.vue';
 const [Drawer, drawerApi] = useIgourdDrawer({
   connectedComponent: drawer,
-  appendToMain: true
+  appendToMain: true,
 });
+interface ListItem {
+  value: any;
+  label: string;
+}
 const index = ref();
+const dataSource = observable<{ value: ListItem[] }>({ value: [] });
 const handleSelectProduct = (...args) => {
   index.value = args[0];
   drawerApi.open();
@@ -215,17 +221,20 @@ const formSchema: ISchema = {
                             },
                             'x-component': 'Space',
                             properties: {
-                              list: {
-                                type: 'array',
+                              gift_product_ids: {
+                                type: 'string',
                                 'x-decorator': 'FormItem',
                                 'x-component': 'Select',
-                                enum: [
-                                  { value: '1', label: '111' },
-                                  { value: '2', label: '222' },
-                                ],
+                                'x-reactions': {
+                                  fulfill: {
+                                    state: {
+                                      dataSource:"{{ dataSource.value[$index] }}"
+                                    },
+                                  },
+                                },
                                 'x-component-props': {
                                   multiple: true,
-                                  // disabled: true,
+                                  disabled: true,
                                 },
                               },
                               lastName: {
@@ -240,11 +249,12 @@ const formSchema: ISchema = {
                                   }}`,
                                 },
                               },
-                              lastName1: {
+                              count: {
                                 type: 'string',
                                 'x-decorator': 'FormItem',
                                 'x-component': 'PreviewText.Input',
-                                default: '8选择',
+                                'x-content':
+                                  "{{$self.value?$self.value+'选择':'0'}}",
                               },
                             },
                           },
@@ -363,9 +373,13 @@ const { Form, formAPI } = useIgourdForm({
         form.setValuesIn('setting_merchant_point_gift_list', [{}]);
       }
     });
+
+
+
   },
   scope: {
     handleSelectProduct,
+    dataSource
   },
 });
 const handleReset = () => {
@@ -375,7 +389,9 @@ const handleReset = () => {
 const handleSave = () => {
   //gift_product_ids:[]
   // setting_merchant_point_gift_list:[]
-  saveCustomerIntegralApi(formAPI.values).then((res) => {
+  debugger
+  let params = JSON.parse(JSON.stringify(formAPI.values))
+  saveCustomerIntegralApi(params).then((res) => {
     ElMessage.success('保存成功');
   });
 };
@@ -387,7 +403,24 @@ const getData = () => {
 };
 
 const handleConfirm = (data) => {
-  formAPI.setValuesIn("setting_merchant_point_gift_list["+index.value+"].list",data.product_list)
+  // 新添加 dataSource里还没有
+  if(!dataSource.value[index.value]){
+      dataSource.value.push([{}])
+  }
+  const list = data.product_list.map(item => { return {
+    value:item.id,
+    label:item.major_name
+  }})
+  const selectedList = data.product_list.map(item => item.id)
+  dataSource.value[index.value] = list
+  formAPI.setValuesIn(
+    'setting_merchant_point_gift_list[' + index.value + '].gift_product_ids',
+    selectedList,
+  );
+  formAPI.setValuesIn(
+    'setting_merchant_point_gift_list[' + index.value + '].count',
+    data.product_list.length,
+  );
 };
 
 defineOptions({
