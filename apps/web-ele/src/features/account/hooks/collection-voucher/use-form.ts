@@ -22,11 +22,12 @@ export function useCollectionVoucherForm(props: any) {
       title: t('classification.add-class'),
       appendToMain: true,
       class: 'w-3/4',
+      contentClass: 'bg-muted px-0',
     },
     formOptions: {
       initialValues: {
         receipt_order_item_list: [{}],
-        receipt_direction:"POSITIVE_ORDER"
+        receipt_direction: 'POSITIVE_ORDER',
       },
       scope: {
         business_type: props.business_type,

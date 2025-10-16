@@ -401,32 +401,26 @@ export function useCollectionVoucherSchema({
                   },
                 },
               },
-            },
-          },
-          'pay-card': {
-            type: 'void',
-            'x-component': 'Card',
-            properties: {
               'count-row': {
                 type: 'void',
                 'x-component': 'Space',
                 properties: {
                   discount: {
-                    title: 'discount',
+                    title: `{{t('account.discount')}}`,
                     'x-decorator': 'FormItem',
-                    'x-component': 'Input',
+                    'x-component': 'InputNumber',
                     type: 'number',
                   },
                   'discount-rate': {
-                    title: 'discount Rate%',
+                    title: `{{t('account.total_discount_rate')}}`,
                     'x-decorator': 'FormItem',
-                    'x-component': 'Input',
+                    'x-component': 'InputNumber',
                     type: 'number',
                   },
                   total: {
-                    title: 'total',
+                    title: '{{t("account.total_discount")}}',
                     'x-decorator': 'FormItem',
-                    'x-component': 'Input',
+                    'x-component': 'InputNumber',
                     type: 'number',
                   },
                   service_fee_amount: {
@@ -438,97 +432,127 @@ export function useCollectionVoucherSchema({
               receipt_order_item_list: {
                 type: 'array',
                 'x-component': 'ArrayItems',
-                'x-decorator': 'FormItem',
+
                 items: {
                   type: 'object',
                   'x-decorator': 'ArrayItems.Item',
                   properties: {
-                    account_ledger_id: {
-                      type: 'string',
-                      'x-hidden': true,
-                    },
-                    business_id: {
-                      type: 'string',
-                      'x-hidden': true,
-                    },
-                    business_type: {
-                      type: 'string',
-                      'x-hidden': true,
-                      'x-reactions': {
-                        fulfill: {
-                          state: {
-                            value: '{{ business_type }}',
-                          },
-                        },
-                      },
-                    },
-                    merchant_id: {
-                      type: 'string',
-                      'x-hidden': true,
-                      'x-reactions': {
-                        fulfill: {
-                          state: {
-                            value: '{{ merchant_id }}',
-                          },
-                        },
-                      },
-                    },
-                    payment_method_mark: {
-                      type: 'string',
-                      'x-hidden': true,
-                    },
                     space: {
+                      account_ledger_id: {
+                        type: 'string',
+                        'x-hidden': true,
+                      },
+                      business_id: {
+                        type: 'string',
+                        'x-hidden': true,
+                      },
+                      business_type: {
+                        type: 'string',
+                        'x-hidden': true,
+                        'x-reactions': {
+                          fulfill: {
+                            state: {
+                              value: '{{ business_type }}',
+                            },
+                          },
+                        },
+                      },
+                      merchant_id: {
+                        type: 'string',
+                        'x-hidden': true,
+                        'x-reactions': {
+                          fulfill: {
+                            state: {
+                              value: '{{ merchant_id }}',
+                            },
+                          },
+                        },
+                      },
+                      payment_method_mark: {
+                        type: 'string',
+                        'x-hidden': true,
+                      },
                       type: 'void',
                       'x-component': 'Space',
+                      'x-component-props': {
+                        align: 'end',
+                      },
                       properties: {
                         account_id: {
                           type: 'string',
-                          title: '付款账户',
+                          title: `{{t("account.pay_account")}}`,
                           'x-component': 'Select',
                           'x-decorator': 'FormItem',
                           'x-decorator-props': {
                             labelAlign: 'left',
                             layout: 'vertical',
-                            wrapperWidth: 100,
+                            wrapperWidth: 146,
                           },
                         },
                         payment_method_type: {
-                          title: '付款方式',
+                          title: `{{t("account.pay_method")}}`,
                           'x-decorator': 'FormItem',
                           'x-decorator-props': {
                             labelAlign: 'left',
                             layout: 'vertical',
-                            wrapperWidth: 100,
+                            wrapperWidth: 146,
                           },
                           type: 'string',
                           'x-component': 'Select',
                         },
                         amount: {
                           type: 'InputNumber',
-                          title: '金额',
+                          title: `{{t("account.pay_amount")}}`,
                           'x-decorator': 'FormItem',
-                          'x-component': 'DatePicker',
+                          'x-component': 'InputNumber',
                           'x-decorator-props': {
                             labelAlign: 'left',
                             layout: 'vertical',
-                            wrapperWidth: 100,
+                            wrapperWidth: 146,
                           },
                           'x-component-props': {
                             type: 'daterange',
                           },
                         },
-                        date1: {
-                          type: 'string',
-                          title: '日期',
-                          'x-decorator-props': {
-                            labelAlign: 'left',
-                            layout: 'vertical',
-                            wrapperWidth: 100,
-                          },
+                        add: {
+                          type: 'void',
+                          'x-component': 'ArrayItems.Addition',
                           'x-decorator': 'FormItem',
-                          'x-component': 'DatePicker',
+                          'x-decorator-props': {
+                            wrapperWidth: 32,
+                          },
                           'x-component-props': {
-                            type: 'daterange',
+                            title: 'Add',
+                          },
+                          'x-reactions': {
+                            dependencies: ['receipt_order_item_list'],
+                            fulfill: {
+                              state: {
+                                componentProps: {
+                                  disabled:
+                                    '{{ $index == 0  && $deps[0].length > 1}}',
+                                },
+                              },
+                            },
+                          },
+                        },
+                        remove: {
+                          type: 'void',
+                          'x-component': 'ArrayItems.Remove',
+                          'x-decorator': 'FormItem',
+                          'x-component-props': {
+                            title: 'Remove',
+                          },
+                          'x-reactions': {
+                            dependencies: ['receipt_order_item_list'],
+                            fulfill: {
+                              state: {
+                                componentProps: {
+                                  disabled:
+                                    '{{ $index === 0 &&  $deps[0].length <= 1 }}',
+                                },
+                              },
+                            },
                           },
                         },
                       },

@@ -419,6 +419,7 @@
   "collection_voucher": "收款单",
   "source_order_information": "源订单信息",
   "select_source_order": "选择源订单",
+  "discount": "优惠",
   "total_discount": "总优惠",
   "total_discount_rate": "总优惠率",
   "enter_order_no": "输入订单号",
