@@ -30,5 +30,11 @@
     "cashback": "Remise en Argent",
     "gift": "Cadeau",
     "other": "Autre"
-  }
+  },
+  "default-vip-level-placeholder":"Niveau VIP par défaut",
+  "max-mummember-level-placeholder":"Niveau maximum de membre (1-10)",
+  "timestamp": "Génération d'horodatage",
+  "vip-name":"Nom VIP",
+  "rounding-amount ":"Montant d'arrondi",
+  "discount-rate":"Taux de réduction"
 }

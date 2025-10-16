@@ -2,8 +2,8 @@
   <Page auto-content-height>
     <Form></Form>
     <div class="mt-4 text-center">
-      <ElButton type="danger" plain @click="handleReset">重置</ElButton>
-      <ElButton type="primary" @click="handleSave">保存</ElButton>
+      <ElButton type="danger" plain @click="handleReset">{{t('common.reset')}}</ElButton>
+      <ElButton type="primary" @click="handleSave">{{t('common.save')}}</ElButton>
     </div>
   </Page>
 </template>
@@ -93,12 +93,12 @@ const formSchema: ISchema = {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
-                header: '基本信息',
+                header: "{{t('common.basic-information')}}",
               },
               properties: {
                 default_vip_level: {
                   type: 'number',
-                  title: '默认VIP等级',
+                  title: "{{t('customer.defaultVIPlevel')}}",
                   required: true,
                   'x-decorator': 'FormItem',
                   'x-component': 'Input',
@@ -106,13 +106,13 @@ const formSchema: ISchema = {
                     // addonAfter: '',
                   },
                   'x-component-props': {
-                    placeholder: '请输入默认VIP等级',
+                    placeholder:  "{{t('equity.default-vip-level-placeholder')}}",
                     clearable: true,
                   },
                 },
                 maximum_vip_level: {
                   type: 'number',
-                  title: '最大会员等级',
+                  title:  "{{t('customer.maximummembershiplevel')}}",
                   required: true,
                   'x-decorator': 'FormItem',
                   'x-component': 'Input',
@@ -120,14 +120,14 @@ const formSchema: ISchema = {
                     // addonAfter: '',
                   },
                   'x-component-props': {
-                    placeholder: '请输入最大会员等级（1-10）',
+                    placeholder: "{{t('equity.max-mummember-level-placeholder')}}",
                     clearable: true,
                   },
                 },
 
                 vip_code_type: {
                   type: 'string',
-                  title: 'VIP编码',
+                  title: "{{t('customer.vipcode')}}",
                   required: true,
                   'x-decorator': 'FormItem',
                   'x-component': 'Select',
@@ -136,12 +136,12 @@ const formSchema: ISchema = {
                   },
                   enum: [
                     {
-                      label: '时间戳生产',
+                      label: t('equity.timestamp'),
                       value: 'TIMESTAMP',
                     },
                   ],
                   'x-component-props': {
-                    placeholder: '请选择',
+                    placeholder: "{{t('common.form.select_required')}}",
                     clearable: true,
                   },
                 },
@@ -149,7 +149,7 @@ const formSchema: ISchema = {
                   type: 'array',
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
-                  title: 'VIP等级名称',
+                  title: "{{t('customer.viplevelname')}}",
                   items: {
                     type: 'object',
                     properties: {
@@ -171,7 +171,7 @@ const formSchema: ISchema = {
                       column2: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: 'VIP等级' },
+                        'x-component-props': { width: 200, title: "{{t('customer.customerListTable.vip_level')}}" },
                         properties: {
                           vip_level: {
                             type: 'string',
@@ -190,7 +190,7 @@ const formSchema: ISchema = {
                       column3: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: 'VIP名称' },
+                        'x-component-props': { width: 200, title: "{{t('equity.vip-name')}}" },
                         properties: {
                           vip_level_name: {
                             type: 'string',
@@ -202,14 +202,14 @@ const formSchema: ISchema = {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
                         'x-component-props': {
-                          title: '操作',
+                          title: "{{t('common.operation')}}",
                           width: 100,
                           fixed: 'right',
                         },
                         properties: {
                           addition: {
                             type: 'void',
-                            title: '添加',
+                            title: "{{t('common.addBtn')}}",
                             'x-component': 'ArrayTable.Addition',
                             'x-reactions': {
                               dependencies: [
@@ -254,19 +254,19 @@ const formSchema: ISchema = {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
-                header: '升级模式设置',
+                header: "{{t('customer.upgradeModeSetting')}}",
               },
               properties: {
                 rights_type: {
                   type: 'boolean',
-                  title: '会员升级模式',
+                  title: "{{t('customer.memberupgrademode')}}",
                   enum: [
                     {
-                      label: '现金',
+                      label: t('customer.cash'),
                       value: 'CASH',
                     },
                     {
-                      label: '折扣',
+                      label: t('customer.discount'),
                       value: 'DISCOUNT',
                     },
                   ],
@@ -278,7 +278,7 @@ const formSchema: ISchema = {
                   type: 'array',
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
-                  title: '充值金额',
+                  title: "{{t('customer.rechargeamount')}}" ,
                   items: {
                     type: 'object',
                     properties: {
@@ -300,7 +300,7 @@ const formSchema: ISchema = {
                       column2: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: 'VIP等级' },
+                        'x-component-props': { width: 200, title: "{{t('customer.customerListTable.vip_level')}}" },
                         properties: {
                           vip_level: {
                             type: 'string',
@@ -319,7 +319,7 @@ const formSchema: ISchema = {
                       total_order_amount_column: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: '金额' },
+                        'x-component-props': { width: 200, title: "{{t('common.amount')}}" },
                         'x-reactions': {
                           dependencies: ['rights_type'],
                           fulfill: {
@@ -336,7 +336,7 @@ const formSchema: ISchema = {
                       recharge_amount_column: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: '金额' },
+                        'x-component-props': { width: 200, title: "{{t('common.amount')}}"},
                         'x-reactions': {
                           dependencies: ['rights_type'],
                           fulfill: {
@@ -354,14 +354,14 @@ const formSchema: ISchema = {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
                         'x-component-props': {
-                          title: '操作',
+                          title: "{{t('common.operation')}}",
                           width: 100,
                           fixed: 'right',
                         },
                         properties: {
                           addition: {
                             type: 'void',
-                            title: '添加',
+                            title: "{{t('common.addBtn')}}",
                             'x-component': 'ArrayTable.Addition',
                             'x-reactions': {
                               dependencies: [
@@ -404,19 +404,19 @@ const formSchema: ISchema = {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
-                header: '优惠模式设置',
+                header: "{{t('customer.preferentialModeSetting')}}",
               },
               properties: {
                 upgrade_type: {
                   type: 'boolean',
-                  title: '优惠模式',
+                  title: "{{t('customer.preferentialmode')}}",
                   enum: [
                     {
-                      label: '充值',
+                      label: t('customer.topup'),
                       value: 'RECHARGE',
                     },
                     {
-                      label: '累计消费',
+                      label: t('customer.cumulativeconsumption'),
                       value: 'CONSUMPTION',
                     },
                   ],
@@ -428,7 +428,7 @@ const formSchema: ISchema = {
                   type: 'array',
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
-                  title: '兑换方式设置',
+                  title: "{{t('customer.exchangemode')}}",
                   items: {
                     type: 'object',
                     properties: {
@@ -450,7 +450,7 @@ const formSchema: ISchema = {
                       column2: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: 'VIP等级' },
+                        'x-component-props': { width: 200, title: "{{t('customer.customerListTable.vip_level')}}" },
                         properties: {
                           vip_level: {
                             type: 'string',
@@ -469,7 +469,7 @@ const formSchema: ISchema = {
                       column3: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: '金额' },
+                        'x-component-props': { width: 200, title: "{{t('common.amount')}}" },
                         'x-reactions': {
                           dependencies: ['upgrade_type'],
                           fulfill: {
@@ -486,7 +486,7 @@ const formSchema: ISchema = {
                       discount_percentage_column: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: '优惠比例' },
+                        'x-component-props': { width: 200, title: "{{t('equity.discount-rate')}}"},
                         'x-reactions': {
                           dependencies: ['upgrade_type'],
                           fulfill: {
@@ -503,7 +503,7 @@ const formSchema: ISchema = {
                       rounding_off_column: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: '取整类型' },
+                        'x-component-props': { width: 200, title: "{{t('equity.rounding-off.type')}}" },
                         'x-reactions': {
                           dependencies: ['upgrade_type'],
                           fulfill: {
@@ -521,7 +521,7 @@ const formSchema: ISchema = {
                       rounding_amount_column: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: '舍入量' },
+                        'x-component-props': { width: 200, title: "{{t('equity.rounding-amount')}}" },
                         'x-reactions': {
                           dependencies: ['upgrade_type'],
                           fulfill: {
@@ -540,14 +540,14 @@ const formSchema: ISchema = {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
                         'x-component-props': {
-                          title: '操作',
+                          title: "{{t('common.operation')}}",
                           width: 100,
                           fixed: 'right',
                         },
                         properties: {
                           addition: {
                             type: 'void',
-                            title: '添加',
+                            title: "{{t('common.addBtn')}}",
                             'x-component': 'ArrayTable.Addition',
                             'x-reactions': {
                               dependencies: [
@@ -590,12 +590,12 @@ const formSchema: ISchema = {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
-                header: '其他设置',
+                header: "{{t('customer.otherSettings')}}",
               },
               properties: {
                 is_points_multiple: {
                   type: 'boolean',
-                  title: '积分倍数',
+                  title: "{{t('customer.integralmultiple')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'Switch',
                   'x-decorator-props': {
@@ -607,7 +607,7 @@ const formSchema: ISchema = {
                   type: 'array',
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
-                  title: '积分倍数',
+                  title: "{{t('customer.integralmultiple')}}",
                   items: {
                     type: 'object',
                     properties: {
@@ -629,7 +629,7 @@ const formSchema: ISchema = {
                       column2: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: 'VIP等级' },
+                        'x-component-props': { width: 200, title: "{{t('customer.customerListTable.vip_level')}}" },
                         properties: {
                           vip_level: {
                             type: 'string',
@@ -648,7 +648,7 @@ const formSchema: ISchema = {
                       total_order_amount_column: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: '积分' },
+                        'x-component-props': { width: 200, title: "{{t('customer.customerListTable.points')}}" },
                         properties: {
                           points_multiple: {
                             type: 'string',
@@ -660,14 +660,14 @@ const formSchema: ISchema = {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
                         'x-component-props': {
-                          title: '操作',
+                          title: "{{t('common.operation')}}",
                           width: 100,
                           fixed: 'right',
                         },
                         properties: {
                           addition: {
                             type: 'void',
-                            title: '添加',
+                            title: "{{t('common.addBtn')}}",
                             'x-component': 'ArrayTable.Addition',
                             'x-reactions': {
                               dependencies: [
@@ -706,7 +706,7 @@ const formSchema: ISchema = {
                 },
                 is_setting_validity_period: {
                   type: 'boolean',
-                  title: '享受优惠有效期',
+                  title: "{{t('customer.enjoytheoffervalidityperiod')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'Switch',
                   'x-decorator-props': {
@@ -717,7 +717,7 @@ const formSchema: ISchema = {
 
                 validity_month: {
                   type: 'boolean',
-                  title: '享受优惠有效日期',
+                  title: "{{t('customer.enjoytheoffervaliddate')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'Radio.Group',
                   'x-reactions': {
@@ -782,7 +782,7 @@ const { Form, formAPI } = useIgourdForm({
 
 const handleReset = () => {
   formAPI.reset();
-  ElMessage.success('重置成功');
+  ElMessage.success(t('customer.resetSuccess'));
 };
 const handleSave = async () => {
   await formAPI.validate();
@@ -809,122 +809,8 @@ const handleSave = async () => {
   formAPI.values.setting_merchant_customer_rights_level_list = list;
   //合并
   saveCustomerEquityApi(formAPI.values).then((res) => {
-    ElMessage.success('保存成功');
+    ElMessage.success(t('customer.saveSuccess'));
   });
-};
-/**
- * 后台数据转换为表单数据的回显函数
- * @param {Array} backendData - 后台返回的数据数组
- * @param {Object} formStructure - 表单结构对象
- * @returns {Object} - 转换后的表单数据
- */
-const convertBackendDataToForm = (backendData, formStructure) => {
-  // 创建结果对象，基于原有表单结构
-  const result = {};
-  // 遍历表单结构中的每个数组
-  Object.keys(formStructure).forEach((arrayKey) => {
-    // 初始化结果数组
-    result[arrayKey] = [];
-
-    // 根据不同的数组类型处理数据
-    switch (arrayKey) {
-      case 'levelItems':
-        // 处理会员等级数据
-        backendData?.forEach((item) => {
-          result[arrayKey].push({
-            vip_level: item.vip_level,
-            vip_level_name: item.vip_level_name,
-          });
-        });
-        break;
-
-      case 'rechargeItems':
-        // 处理充值金额数据
-        backendData.forEach((item) => {
-          result[arrayKey].push({
-            recharge_amount: parseInt(item.recharge_amount),
-            total_order_amount: parseInt(item.total_order_amount || 0),
-            vip_level: item.vip_level,
-          });
-        });
-        break;
-      case 'exchangeItems':
-        // 处理充值金额数据
-        backendData.forEach((item) => {
-          result[arrayKey].push({
-            vip_level: item.vip_level,
-            discount_percentage: item.discount_percentage,
-            // 折扣范围
-            rounding_off: item.rounding_off,
-            // 折扣金额新值
-            gift_amount: item.gift_amount,
-            // 舍入量
-            rounding_amount: item.rounding_amount,
-          });
-        });
-        break;
-      case 'setting_level_list_points':
-        // 处理充值金额数据
-        backendData.forEach((item) => {
-          result[arrayKey].push({
-            points_multiple: item.points_multiple,
-            vip_level: item.vip_level,
-          });
-        });
-        break;
-      // 可以根据需要添加其他类型的数组处理
-      default:
-        // 如果有其他类型的数组，在这里添加处理逻辑
-        break;
-    }
-  });
-
-  return result;
-};
-// 表单结构数据
-const dynamicItems = {
-  levelItems: [
-    {
-      // 会员等级
-      vip_level: null,
-      vip_level_name: '',
-    },
-  ],
-  rechargeItems: [
-    {
-      // 充值金额现金充值
-      recharge_amount: '',
-      // 累计消费金额
-      total_order_amount: '',
-      vip_level: null,
-    },
-  ],
-  exchangeItems: [
-    {
-      points: null,
-      //旧值
-      amount: null,
-      //折扣百分比
-      discount_percentage: '',
-      // 折扣范围
-      rounding_off: '',
-      // 折扣金额新值
-      gift_amount: '',
-      // 舍入量
-      rounding_amount: '',
-      vip_level: null,
-    },
-  ],
-
-  setting_level_list_points: [
-    {
-      vip_level: null,
-      // 旧值
-      multiple: null,
-      // 积分倍数
-      points_multiple: '',
-    },
-  ],
 };
 const getData = () => {
   let setting_merchant_customer_rights_level_list = [];
@@ -935,7 +821,6 @@ const getData = () => {
     // hideField(res.point_exchange_type, formAPI);
     const list = res.setting_merchant_customer_rights_level_model_list.forEach(
       (element) => {
-        debugger;
         setting_merchant_customer_rights_level_list.push({
           vip_level: element.vip_level,
           vip_level_name: element.vip_level_name,

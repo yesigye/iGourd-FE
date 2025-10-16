@@ -30,5 +30,6 @@
   "system-prompt": "System Prompt",
   "close": "close",
   "open":"open",
-  "default":"default"
+  "default":"default",
+  "basic-information":"Basic Information"
 }

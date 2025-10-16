@@ -30,5 +30,11 @@
     "cashback": "Cashback",
     "gift": "Gift",
     "other": "Other"
-  }
+  },
+  "default-vip-level-placeholder": "Please enter the default VIP level",
+  "max-mummember-level-placeholder": "Please enter the maximum member level (1-10)",
+  "timestamp": "Timestamp generation",
+  "vip-name": "VIP name",
+  "rounding-amount ": "Rounding amount",
+  "discount-rate": "Discount rate"
 }
