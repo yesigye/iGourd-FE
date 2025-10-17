@@ -14,7 +14,7 @@ import { PurchaseBillDrawer } from '@@/purchase/components';
 
 import { useCrud } from '#/hooks';
 
-export function usePurchaseBills() {
+export function usePurchaseBills(defaultQueryParams?: Record<string, any>) {
   const { t } = useI18n();
   const columns: VxeGridPropTypes.Column<PurchaseBillRow>[] = [
     {
@@ -107,6 +107,7 @@ export function usePurchaseBills() {
 
   return useCrud<PurchaseBillRow, PurchaseBillDTO>({
     columns,
+    params: defaultQueryParams,
     searchFormSchema,
     batchOperate: true,
     connectedComponent: PurchaseBillDrawer,

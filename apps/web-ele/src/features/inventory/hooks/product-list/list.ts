@@ -70,8 +70,8 @@ export function useInventoryProductList() {
     {
       field: 'product_label_list',
       title: t('inventory.productLabel'),
-      minWidth: 280,
-      height: 'auto',
+      minWidth: 180,
+      showOverflow: false,
       slots: { default: 'label' },
     },
     {
@@ -148,6 +148,9 @@ export function useInventoryProductList() {
     // @ts-ignore
     service,
     columns,
+    gridOptions: {
+      showOverflow: false,
+    },
     searchFormSchema,
     batchOperate: true,
     connectedComponent: ProductListDrawer,
