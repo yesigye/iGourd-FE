@@ -1,15 +1,8 @@
 import { getCustomerPageListApi } from '#/features/customer';
-import { Space, type ISchema } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-import ModalTable from '@igourd/plugins/modal-table';
-import type { VxeTableGridOptions } from '@igourd/plugins/vxe-table';
+import { type ISchema } from '@igourd/common-ui';
+import { CollectionTableModal } from '@@/account/components';
 import { h } from 'vue';
-export function useCollectionVoucherSchema({
-  onSelectOrder,
-  orderListApi,
-  onBeforeOpen,
-}: any) {
-  const { t } = useI18n();
+export function useCollectionVoucherSchema() {
   return {
     type: 'object',
     properties: {
@@ -35,7 +28,7 @@ export function useCollectionVoucherSchema({
               },
               ledger_type: {
                 type: 'string',
-                default: 'REVENUE',
+                default: 'RECEIVABLE',
                 'x-hidden': true,
               },
               type: {
@@ -209,91 +202,7 @@ export function useCollectionVoucherSchema({
             'x-component-props': {},
             'x-content': {
               header: () => {
-                return h(Space, null, {
-                  default: () => [
-                    h('div', null, t('account.source_order_information')),
-                    h(ModalTable, {
-                      onBeforeOpen,
-                      onConfirm: onSelectOrder,
-                      text: t('account.select_source_order'),
-                      title: t('account.source_order_information'),
-                      grid: {
-                        height: 350,
-                        rowConfig: {
-                          keyField: 'id',
-                        },
-                        proxyConfig: {
-                          ajax: {
-                            query: ({ page }, form) => {
-                              return orderListApi({
-                                ...page,
-                                ...form,
-                              });
-                            },
-                          },
-                        },
-                        columns: [
-                          {
-                            title: '',
-                            type: 'checkbox',
-                            fixed: 'left',
-                          },
-                          {
-                            field: 'order_create_time',
-                            minWidth: 200,
-                            title: t('account.orderDate'),
-                          },
-                          {
-                            field: 'order_no',
-                            minWidth: 200,
-                            title: t('printTemp.order_no'),
-                          },
-                          {
-                            field: 'subtotal_amount',
-                            minWidth: 200,
-                            title: t('account.totalAmount'),
-                          },
-                          {
-                            field: 'round_down_amount',
-                            minWidth: 200,
-                            title: t('printTemp.wipe'),
-                          },
-                          {
-                            field: 'total_amount',
-                            minWidth: 200,
-                            title: t('account.transaction_amount'),
-                          },
-                          {
-                            field: 'customer_name',
-                            minWidth: 200,
-                            title: t('account.customer'),
-                          },
-                          {
-                            field: 'currency_code',
-                            minWidth: 200,
-                            title: t('account.currency'),
-                          },
-                          {
-                            field: 'exchange_rate',
-                            minWidth: 200,
-                            title: t('account.exchangeRate'),
-                          },
-                          {
-                            field: 'creator_name',
-                            title: t('account.creator'),
-                            minWidth: 200,
-                          },
-                          {
-                            field: 'create_time',
-                            minWidth: 200,
-                            title: t('account.createTime'),
-                          },
-                        ],
-                      } as VxeTableGridOptions,
-                      class: 'w-[78%] m-w-[1920px]',
-                    }),
-                  ],
-                });
+                return h(CollectionTableModal);
               },
             },
             properties: {

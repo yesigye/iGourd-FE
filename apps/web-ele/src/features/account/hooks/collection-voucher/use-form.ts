@@ -11,21 +11,6 @@ import { merchantPaymentMethodOption } from '#/features/setting';
 export function useCollectionVoucherForm(props: any) {
   const { t } = useI18n();
   const { currencySymbol, merchant_id } = useUserStore();
-  function onSelectOrder(records: any) {
-    if (!records) {
-      return;
-    }
-    const last_debt = sum(records.map((item: any) => item.repaid_amount));
-    const total_amount = sum(
-      records.map((item: any) => item.total_amount),
-    );
-    formAPI.setValues({
-      order_info: records,
-      receipt_order_item_list: [{}],
-      total_amount,
-      last_debt: last_debt,
-    });
-  }
   //@ts-ignore
   function accountChange(_, op, record, index) {
     if (!op) {
@@ -61,7 +46,6 @@ export function useCollectionVoucherForm(props: any) {
         onBeforeOpen() {
           return formAPI.validate('customer_id');
         },
-        onSelectOrder,
         orderListApi(data: any) {
           const customer_id = formAPI.getValuesIn('customer_id');
           return getSaleOrderListApi({
