@@ -8,5 +8,12 @@
   "payment-account": "支付账户",
   "payment-method": "支付方式",
   "prepayment-amount": "预支付金额",
-  "add-purchase-returned": "添加采购退单"
+  "add-purchase-returned": "添加采购退单",
+  "source-order-information": "源订单信息",
+  "select-source-order": "选择源订单",
+  "receipt-order-no": "收款单号",
+  "order-date": "订单日期",
+  "total-amount": "总金额",
+  "creator": "创建人",
+  "create-time": "创建时间"
 }
