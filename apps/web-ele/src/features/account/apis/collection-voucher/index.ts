@@ -19,11 +19,24 @@ export function getReceiptOrderPageListApi(data: ReceiptOrderQueryPageVO) {
 }
 
 // 获取收款单详情
-export function getReceiptOrderDetailApi(data: {
-  receipt_order_id: number;
-  merchant_id?: number;
-}) {
-  return requestClient.post(`/v1/merchant/order/receipt-order/detail`, data);
+export function getReceiptOrderDetailApi({ id }: { id: number }) {
+  return requestClient
+    .post(`/v1/merchant/order/receipt-order/detail`, {
+      receipt_order_id: id,
+    })
+    .then((res) => {
+      return {
+        ...res,
+        receipt_order_item_list: res.receipt_order_item_detail_models,
+        business_order: res.receipt_order_item_detail_models?.map((i: any) => {
+          return {
+            ...i.business_order,
+            receipt_order_id: i.receipt_order_id,
+            create_time: i.create_time,
+          };
+        }),
+      };
+    });
 }
 
 // 删除收款单

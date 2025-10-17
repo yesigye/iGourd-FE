@@ -14,7 +14,7 @@ import {
 
 import { useCrud } from '#/hooks';
 
-export function useSaleOrder() {
+export function useSaleOrder(defaultQueryParams?: Record<string, any>) {
   const { t } = useI18n();
   const columns: VxeGridPropTypes.Column<SaleOrderRow>[] = [
     {
@@ -165,9 +165,10 @@ export function useSaleOrder() {
     start_create_time?: string;
     end_create_time?: string;
   }
-  return useCrud<SaleOrderRow, SaleOrderDTO>({
+  const crud = useCrud<SaleOrderRow, SaleOrderDTO>({
     columns,
     searchFormSchema,
+    params: defaultQueryParams ?? {},
     batchOperate: true,
     service: {
       query: async (data: {
@@ -187,4 +188,8 @@ export function useSaleOrder() {
       update: updateSaleOrderApi,
     },
   });
+  return {
+    ...crud,
+    columns,
+  };
 }

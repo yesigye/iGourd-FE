@@ -2,7 +2,6 @@ import { useDrawerForm } from '#/hooks';
 import { useI18n } from '@igourd/locales';
 // import { useUserStore } from '@igourd/stores';
 import { useCollectionVoucherSchema } from './form-schema';
-import { getSaleOrderListApi } from '#/features/sale';
 import { useUserStore } from '@igourd/stores';
 import { sum } from '@igourd/utils';
 import { getAccountManagementOptionList } from '../../apis';
@@ -11,21 +10,6 @@ import { merchantPaymentMethodOption } from '#/features/setting';
 export function useCollectionVoucherForm(props: any) {
   const { t } = useI18n();
   const { currencySymbol, merchant_id } = useUserStore();
-  function onSelectOrder(records: any) {
-    if (!records) {
-      return;
-    }
-    const last_debt = sum(records.map((item: any) => item.repaid_amount));
-    const total_amount = sum(
-      records.map((item: any) => item.total_amount),
-    );
-    formAPI.setValues({
-      order_info: records,
-      receipt_order_item_list: [{}],
-      total_amount,
-      last_debt: last_debt,
-    });
-  }
   //@ts-ignore
   function accountChange(_, op, record, index) {
     if (!op) {
@@ -36,6 +20,16 @@ export function useCollectionVoucherForm(props: any) {
       op.account_ledger_id,
     );
     // record.account_ledger_id = op.account_ledger_id;
+  }
+  //@ts-ignore
+  function payment_method_change(_, op, record, index) {
+    if (!op) {
+      return;
+    }
+    formAPI.setValuesIn(
+      `receipt_order_item_list.${index}.payment_method_mark`,
+      op.mark,
+    );
   }
   const { Drawer, Form, formAPI } = useDrawerForm({
     drawerOptions: {
@@ -56,22 +50,9 @@ export function useCollectionVoucherForm(props: any) {
         accountChange,
         sum,
         merchantPaymentMethodOption,
+        payment_method_change,
       },
-      schema: useCollectionVoucherSchema({
-        onBeforeOpen() {
-          return formAPI.validate('customer_id');
-        },
-        onSelectOrder,
-        orderListApi(data: any) {
-          const customer_id = formAPI.getValuesIn('customer_id');
-          return getSaleOrderListApi({
-            ...data,
-            customer_id,
-            payment_type: 'CREDIT',
-            status_list: ['NO_REPAID', 'PARTIAL_REPAID'],
-          });
-        },
-      }),
+      schema: useCollectionVoucherSchema(),
     },
   });
   return { Drawer, Form, formAPI };

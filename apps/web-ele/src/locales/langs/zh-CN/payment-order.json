@@ -1,0 +1,17 @@
+{
+  "order-no": "订单号",
+  "vendor-name": "客户名称",
+  "order-date": "订单日期",
+  "collected-amt": "已收款金额",
+  "order-dir": "订单方向",
+  "business-type": "业务类型",
+  "account-type": "账户类型",
+  "data-source": "数据来源",
+  "service-fee": "服务费",
+  "remarks": "备注",
+  "payment-information": "支付信息",
+  "payment-method": "支付方式",
+  "payment-account": "支付账户",
+  "payment-amount": "支付金额",
+  "review": "审核"
+}
