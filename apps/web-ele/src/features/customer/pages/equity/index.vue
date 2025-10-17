@@ -257,7 +257,7 @@ const formSchema: ISchema = {
                                 state: {
                                   componentProps: {
                                     disabled:
-                                      '{{ $deps[0]?.length == $deps[1]}}',
+                                      '{{ !$deps[1] || $deps[0]?.length >= $deps[1]}}',
                                   },
                                 },
                               },
@@ -413,14 +413,14 @@ const formSchema: ISchema = {
                             'x-component': 'ArrayTable.Addition',
                             'x-reactions': {
                               dependencies: [
-                                'setting_level_list_rights_type',
+                                'setting_level_list_upgrade_type',
                                 'maximum_vip_level',
                               ],
                               fulfill: {
                                 state: {
                                   componentProps: {
                                     disabled:
-                                      '{{ $deps[0]?.length == $deps[1]}}',
+                                      '{{ !$deps[1] || $deps[0]?.length >= $deps[1]}}',
                                   },
                                 },
                               },
@@ -431,7 +431,7 @@ const formSchema: ISchema = {
                             'x-component': 'ArrayTable.Remove',
                             title: "{{ t('common.delete') }}",
                             'x-reactions': {
-                              dependencies: ['setting_level_list_rights_type'],
+                              dependencies: ['setting_level_list_upgrade_type'],
                               fulfill: {
                                 state: {
                                   componentProps: {
@@ -617,14 +617,14 @@ const formSchema: ISchema = {
                             'x-component': 'ArrayTable.Addition',
                             'x-reactions': {
                               dependencies: [
-                                'setting_level_list_upgrade_type',
+                                'setting_level_list_rights_type',
                                 'maximum_vip_level',
                               ],
                               fulfill: {
                                 state: {
                                   componentProps: {
                                     disabled:
-                                      '{{ $deps[0]?.length == $deps[1]}}',
+                                      '{{ !$deps[1] || $deps[0]?.length >= $deps[1]}}',
                                   },
                                 },
                               },
@@ -635,7 +635,7 @@ const formSchema: ISchema = {
                             'x-component': 'ArrayTable.Remove',
                             title: "{{ t('common.delete') }}",
                             'x-reactions': {
-                              dependencies: ['setting_level_list_upgrade_type'],
+                              dependencies: ['setting_level_list_rights_type'],
                               fulfill: {
                                 state: {
                                   componentProps: {
@@ -751,7 +751,7 @@ const formSchema: ISchema = {
                                 state: {
                                   componentProps: {
                                     disabled:
-                                      '{{ $deps[0]?.length == $deps[1]}}',
+                                      '{{ !$deps[1] || $deps[0]?.length >= $deps[1]}}',
                                   },
                                 },
                               },
