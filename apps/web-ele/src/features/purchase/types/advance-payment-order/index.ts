@@ -62,13 +62,14 @@ export interface advancePaymentOrderModifyV0 {
   total_amount: number;
 }
 export interface advancePaymentOrderPageListV0 {
+
   business_type: string;
   id_list: number[];
   keywords: string;
   merchant_id: number;
   page_num: number;
   page_size: number;
-  payment_direction: string;
+  payment_direction?: string;
   payment_end_time: string;
   payment_order_no: string;
   payment_start_time: string;

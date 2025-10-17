@@ -1,7 +1,6 @@
 import type {
   advancePaymentOrderDetails,
   advancePaymentOrderModifyV0,
-  advancePaymentOrderPageListV0,
   advancePaymentOrderRemoveV0,
   advancePaymentOrderReviewStatusModifyV0,
   RootObject,
@@ -11,9 +10,10 @@ import { requestClient } from '#/api/request';
 /**
  * @description 获取付款单单分页列表
  */
-export function getAdvancePaymentOrderPageListApi(
-  data: advancePaymentOrderPageListV0,
-) {
+export function getAdvancePaymentOrderPageListApi(data: any) {
+  if (Reflect.get(data, 'payment_direction') === 'ALL') {
+    delete data.payment_direction;
+  }
   return requestClient.post(
     `/v1/merchant/purchase/advance-payment-order/page-list`,
     data,
@@ -48,7 +48,7 @@ export function getAdvancePaymentOrderDetailApi(
   return requestClient.post(
     `/v1/merchant/purchase/advance-payment-order/detail`,
     data,
-  )
+  );
 }
 /**
  * @description 获取付款单删除
