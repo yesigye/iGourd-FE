@@ -13,7 +13,7 @@ import {
   getPurchaseListApi,
   getPurchaseOrderDetailApi,
   updatePurchaseOrderApi,
-  getPurchaseReceiptPageListApi
+  getPurchaseReceiptPageListApi,
 } from '@@/purchase/apis';
 import { getAccountManagementOptionList } from '#/features/account';
 import { merchantPaymentMethodOption } from '#/features/setting';
@@ -511,6 +511,53 @@ export function useOrderForm() {
                                     size: 'small',
                                   },
                                 },
+
+                                col_actions: {
+                                  type: 'void',
+                                  'x-component': 'ArrayItems.Item',
+                                  'x-component-props': {
+                                    title: "{{t('common.operation')}}",
+                                    width: 100,
+                                    fixed: 'right',
+                                  },
+                                  properties: {
+                                    addition: {
+                                      type: 'void',
+                                      title: "{{t('common.addBtn')}}",
+                                      'x-component': 'ArrayItems.Addition',
+                                      'x-reactions': {
+                                        dependencies: [
+                                          'purchase_order_deposit_list',
+                                        ],
+                                        fulfill: {
+                                          state: {
+                                            componentProps: {
+                                              disabled:
+                                                '{{  $deps[0]?.length >= 2 }}',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    remove: {
+                                      type: 'void',
+                                      'x-component': 'ArrayItems.Remove',
+                                      title: "{{ t('common.delete') }}",
+                                      'x-reactions': {
+                                        dependencies: [
+                                          'purchase_order_deposit_list',
+                                        ],
+                                        fulfill: {
+                                          state: {
+                                            componentProps: {
+                                              disabled: false,
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 account_ledger_id: {
                                   type: 'string',
                                   'x-hidden': true,
@@ -852,7 +899,7 @@ export function useOrderForm() {
     formOptions: {
       initialValues: {
         purchase_order_item_list: [{}],
-        purchase_order_deposit_list:[{}]
+        purchase_order_deposit_list: [{}],
       },
       scope: {
         warehouse,
