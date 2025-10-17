@@ -34,7 +34,7 @@ export function deletePurchaseReturnedApi(data: PurchaseReturnedRemoveVO) {
 // 获取退货单详情
 export function getPurchaseReturnedDetailApi(data: {
   merchant_id?: number;
-  returned_id: number;
+  purchase_returned_id: number;
 }) {
   return requestClient.post(`${PURCHASE_RETURNED_BASE_URL}/detail`, data);
 }
@@ -46,5 +46,5 @@ export function auditPurchaseReturnedApi(data: {
   returned_id: number;
   status: string;
 }) {
-  return requestClient.post(`${PURCHASE_RETURNED_BASE_URL}/audit`, data);
+  return requestClient.post(`${PURCHASE_RETURNED_BASE_URL}/review`, data);
 }

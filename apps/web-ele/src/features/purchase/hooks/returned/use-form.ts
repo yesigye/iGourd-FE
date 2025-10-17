@@ -15,7 +15,7 @@ import {
   getPurchaseListApi,
   createPurchaseReturnedApi,
   updatePurchaseReturnedApi,
-  getPurchaseReceiptDetailApi,
+  getPurchaseReturnedDetailApi,
   getPurchaseReceiptPageListApi,
 } from '@@/purchase/apis';
 import { basicsCurrencyList } from '#/api';
@@ -74,7 +74,6 @@ export function useReturnForm() {
     if (!records) {
       return;
     }
-    debugger;
 
     formAPI.setValues({
       order_info: records,
@@ -814,13 +813,16 @@ export function useReturnForm() {
           formAPI.reset();
           const data = drawerApi.getData();
           // 编辑
+          debugger
           if (data.id) {
-            const detail = await getPurchaseReceiptDetailApi({
-              goods_receipt_note_id: data.id,
+            const detail = await getPurchaseReturnedDetailApi({
+              purchase_returned_id: data.id,
               purchase_order_id: data.purchase_order_id,
             });
             detail.purchase_returned_item_list =
-              detail.goods_receipt_note_item_model_list;
+              detail.purchase_returned_item_model_list;
+               detail.purchase_payment_plan_list =
+              detail.purchase_payment_plan_detail_model_list;
 
             formAPI.setValues(detail);
           } else {
