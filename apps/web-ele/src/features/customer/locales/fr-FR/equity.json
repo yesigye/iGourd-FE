@@ -35,7 +35,7 @@
   "max-mummember-level-placeholder": "Niveau maximum de membre (1-10)",
   "timestamp": "Génération d'horodatage",
   "vip-name": "Nom VIP",
-  "rounding-amount ": "Montant d'arrondi",
+  "rounding-amount": "Montant d'arrondi",
   "discount-rate": "Taux de réduction",
   "defaultviplevel-validator-msg": "Le niveau VIP par défaut ne peut pas dépasser le niveau d'adhésion maximal",
   "please-enter-defaultviplevel": "Saisissez le niveau VIP par défaut",

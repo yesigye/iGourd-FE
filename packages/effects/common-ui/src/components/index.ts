@@ -80,6 +80,7 @@ export {
   ElAutoResizer,
   ElBadge,
   ElButton,
+  ElButtonGroup,
   ElCalendar,
   ElCheckbox,
   ElCheckboxGroup,

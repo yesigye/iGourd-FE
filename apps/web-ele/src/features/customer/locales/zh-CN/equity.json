@@ -41,7 +41,7 @@
    "max-mummember-level-placeholder":"请输入最大会员等级（1-10）",
    "timestamp": "时间戳生成",
    "vip-name":"VIP名称",
-   "rounding-amount ":"舍入量",
+   "rounding-amount":"舍入量",
    "discount-rate":"优惠比例",
    "defaultviplevel-validator-msg":"默认VIP等级不能大于最大会员等级",
    "please-enter-defaultviplevel": "输入默认VIP等级",

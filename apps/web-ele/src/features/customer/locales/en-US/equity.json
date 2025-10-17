@@ -35,7 +35,7 @@
   "max-mummember-level-placeholder": "Please enter the maximum member level (1-10)",
   "timestamp": "Timestamp generation",
   "vip-name": "VIP name",
-  "rounding-amount ": "Rounding amount",
+  "rounding-amount": "Rounding amount",
   "discount-rate": "Discount rate",
   "defaultviplevel-validator-msg": "Default VIP level cannot be higher than the maximum membership level",
   "please-enter-defaultviplevel": "Enter default VIP level",

@@ -257,7 +257,7 @@ const formSchema: ISchema = {
                                 state: {
                                   componentProps: {
                                     disabled:
-                                      '{{ $deps[0]?.length == $deps[1]}}',
+                                      '{{ !$deps[1] || $deps[0]?.length >= $deps[1]}}',
                                   },
                                 },
                               },
@@ -287,31 +287,32 @@ const formSchema: ISchema = {
                 },
               },
             },
-            card_1: {
+            // 升级模式设置
+             card_2: {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
                 header: "{{t('customer.upgradeModeSetting')}}",
               },
               properties: {
-                rights_type: {
+                upgrade_type: {
                   type: 'boolean',
                   title: "{{t('customer.memberupgrademode')}}",
                   enum: [
                     {
-                      label: t('customer.cash'),
-                      value: 'CASH',
+                      label: t('customer.topup'),
+                      value: 'RECHARGE',
                     },
                     {
-                      label: t('customer.discount'),
-                      value: 'DISCOUNT',
+                      label: t('customer.cumulativeconsumption'),
+                      value: 'CONSUMPTION',
                     },
                   ],
                   'x-decorator': 'FormItem',
                   'x-component': 'Radio.Group',
                   'x-component-props': {},
                 },
-                setting_level_list_rights_type: {
+                setting_level_list_upgrade_type: {
                   type: 'array',
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
@@ -365,9 +366,9 @@ const formSchema: ISchema = {
                           title: "{{t('common.amount')}}",
                         },
                         'x-reactions': {
-                          dependencies: ['rights_type'],
+                          dependencies: ['upgrade_type'],
                           fulfill: {
-                            state: { visible: "{{$deps[0]==='DISCOUNT'}}" },
+                            state: { visible: "{{$deps[0]==='CONSUMPTION'}}" },
                           },
                         },
                         properties: {
@@ -385,9 +386,9 @@ const formSchema: ISchema = {
                           title: "{{t('common.amount')}}",
                         },
                         'x-reactions': {
-                          dependencies: ['rights_type'],
+                          dependencies: ['upgrade_type'],
                           fulfill: {
-                            state: { visible: "{{$deps[0]==='CASH'}}" },
+                            state: { visible: "{{$deps[0]==='RECHARGE'}}" },
                           },
                         },
                         properties: {
@@ -412,14 +413,14 @@ const formSchema: ISchema = {
                             'x-component': 'ArrayTable.Addition',
                             'x-reactions': {
                               dependencies: [
-                                'setting_level_list_rights_type',
+                                'setting_level_list_upgrade_type',
                                 'maximum_vip_level',
                               ],
                               fulfill: {
                                 state: {
                                   componentProps: {
                                     disabled:
-                                      '{{ $deps[0]?.length == $deps[1]}}',
+                                      '{{ !$deps[1] || $deps[0]?.length >= $deps[1]}}',
                                   },
                                 },
                               },
@@ -430,7 +431,7 @@ const formSchema: ISchema = {
                             'x-component': 'ArrayTable.Remove',
                             title: "{{ t('common.delete') }}",
                             'x-reactions': {
-                              dependencies: ['setting_level_list_rights_type'],
+                              dependencies: ['setting_level_list_upgrade_type'],
                               fulfill: {
                                 state: {
                                   componentProps: {
@@ -445,33 +446,35 @@ const formSchema: ISchema = {
                     },
                   },
                 },
+
               },
             },
-            card_2: {
+            //优惠模式设置
+            card_1: {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
                 header: "{{t('customer.preferentialModeSetting')}}",
               },
               properties: {
-                upgrade_type: {
+                rights_type: {
                   type: 'boolean',
                   title: "{{t('customer.preferentialmode')}}",
                   enum: [
                     {
-                      label: t('customer.topup'),
-                      value: 'RECHARGE',
+                      label: t('customer.cash'),
+                      value: 'CASH',
                     },
                     {
-                      label: t('customer.cumulativeconsumption'),
-                      value: 'CONSUMPTION',
+                      label: t('customer.discount'),
+                      value: 'DISCOUNT',
                     },
                   ],
                   'x-decorator': 'FormItem',
                   'x-component': 'Radio.Group',
                   'x-component-props': {},
                 },
-                setting_level_list_upgrade_type: {
+                setting_level_list_rights_type: {
                   type: 'array',
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
@@ -525,9 +528,9 @@ const formSchema: ISchema = {
                           title: "{{t('common.amount')}}",
                         },
                         'x-reactions': {
-                          dependencies: ['upgrade_type'],
+                          dependencies: ['rights_type'],
                           fulfill: {
-                            state: { visible: "{{$deps[0]==='RECHARGE'}}" },
+                            state: { visible: "{{$deps[0]==='CASH'}}" },
                           },
                         },
                         properties: {
@@ -545,9 +548,9 @@ const formSchema: ISchema = {
                           title: "{{t('equity.discount-rate')}}",
                         },
                         'x-reactions': {
-                          dependencies: ['upgrade_type'],
+                          dependencies: ['rights_type'],
                           fulfill: {
-                            state: { visible: "{{$deps[0]==='CONSUMPTION'}}" },
+                            state: { visible: "{{$deps[0]==='DISCOUNT'}}" },
                           },
                         },
                         properties: {
@@ -565,9 +568,9 @@ const formSchema: ISchema = {
                           title: "{{t('equity.rounding-off.type')}}",
                         },
                         'x-reactions': {
-                          dependencies: ['upgrade_type'],
+                          dependencies: ['rights_type'],
                           fulfill: {
-                            state: { visible: "{{$deps[0]==='CONSUMPTION'}}" },
+                            state: { visible: "{{$deps[0]==='DISCOUNT'}}" },
                           },
                         },
                         properties: {
@@ -586,9 +589,9 @@ const formSchema: ISchema = {
                           title: "{{t('equity.rounding-amount')}}",
                         },
                         'x-reactions': {
-                          dependencies: ['upgrade_type'],
+                          dependencies: ['rights_type'],
                           fulfill: {
-                            state: { visible: "{{$deps[0]==='CONSUMPTION'}}" },
+                            state: { visible: "{{$deps[0]==='DISCOUNT'}}" },
                           },
                         },
                         properties: {
@@ -614,14 +617,14 @@ const formSchema: ISchema = {
                             'x-component': 'ArrayTable.Addition',
                             'x-reactions': {
                               dependencies: [
-                                'setting_level_list_upgrade_type',
+                                'setting_level_list_rights_type',
                                 'maximum_vip_level',
                               ],
                               fulfill: {
                                 state: {
                                   componentProps: {
                                     disabled:
-                                      '{{ $deps[0]?.length == $deps[1]}}',
+                                      '{{ !$deps[1] || $deps[0]?.length >= $deps[1]}}',
                                   },
                                 },
                               },
@@ -632,7 +635,7 @@ const formSchema: ISchema = {
                             'x-component': 'ArrayTable.Remove',
                             title: "{{ t('common.delete') }}",
                             'x-reactions': {
-                              dependencies: ['setting_level_list_upgrade_type'],
+                              dependencies: ['setting_level_list_rights_type'],
                               fulfill: {
                                 state: {
                                   componentProps: {
@@ -748,7 +751,7 @@ const formSchema: ISchema = {
                                 state: {
                                   componentProps: {
                                     disabled:
-                                      '{{ $deps[0]?.length == $deps[1]}}',
+                                      '{{ !$deps[1] || $deps[0]?.length >= $deps[1]}}',
                                   },
                                 },
                               },
@@ -821,7 +824,9 @@ const { Form, formAPI } = useIgourdForm({
     upgrade_type: 'RECHARGE',
     is_points_multiple: false,
     is_setting_validity_period: false,
+    //优惠模式设置
     setting_level_list_rights_type: [{}],
+    //升级模式设置
     setting_level_list_upgrade_type: [{}],
     setting_level_list_points: [{}],
   },
@@ -851,11 +856,11 @@ const { Form, formAPI } = useIgourdForm({
       formAPI.setValuesIn('default_vip_level', value);
     });
     // 会员升级模式设置录入数据项目
-    onFieldValueChange('rights_type', (field, form: Form) => {
+    onFieldValueChange('upgrade_type', (field, form: Form) => {
       console.log(field.value);
     });
     // 优惠模式设置 设置录入数据项目
-    onFieldValueChange('upgrade_type', (field, form: Form) => {
+    onFieldValueChange('rights_type', (field, form: Form) => {
       console.log(field.value);
     });
   },
@@ -873,10 +878,12 @@ const handleSave = async () => {
   await formAPI.validate();
   const list = formAPI.values.setting_merchant_customer_rights_level_list.map(
     (element) => {
-      //会员升级模式
+      debugger
+      // 惠模式设置
       let hasItemRights = formAPI.values.setting_level_list_rights_type.find(
         (item) => item.vip_level == element.vip_level,
       );
+      //会员升级模式
       let hasItemUp = formAPI.values.setting_level_list_upgrade_type.find(
         (item) => item.vip_level == element.vip_level,
       );
@@ -899,9 +906,11 @@ const handleSave = async () => {
 };
 const getData = () => {
   let setting_merchant_customer_rights_level_list = [];
-  let setting_level_list_rights_type = [];
-  let setting_level_list_upgrade_type = [];
-  let setting_level_list_points = [];
+  // 优惠模式设置
+  let setting_level_list_rights_type:any = [];
+  //升级模式设置
+  let setting_level_list_upgrade_type:any = [];
+  let setting_level_list_points:any = [];
   getCustomerEquityDetailApi().then((res) => {
     // hideField(res.point_exchange_type, formAPI);
     const list = res.setting_merchant_customer_rights_level_model_list.forEach(
@@ -910,12 +919,12 @@ const getData = () => {
           vip_level: element.vip_level,
           vip_level_name: element.vip_level_name,
         });
-        setting_level_list_rights_type.push({
-          vip_level: element.vip_level,
-          total_order_amount_column: element.total_order_amount_column,
-          recharge_amount_column: element.recharge_amount_column,
-        });
         setting_level_list_upgrade_type.push({
+          vip_level: element.vip_level,
+          total_order_amount: element.total_order_amount,
+          recharge_amount: element.recharge_amount,
+        });
+        setting_level_list_rights_type.push({
           vip_level: element.vip_level,
           discount_percentage: element.discount_percentage,
           rounding_off: element.rounding_off,
@@ -930,8 +939,7 @@ const getData = () => {
         });
       },
     );
-    res.setting_merchant_customer_rights_level_list =
-      setting_merchant_customer_rights_level_list;
+    res.setting_merchant_customer_rights_level_list = setting_merchant_customer_rights_level_list;
     res.setting_level_list_rights_type = setting_level_list_rights_type;
     res.setting_level_list_upgrade_type = setting_level_list_upgrade_type;
     res.setting_level_list_points = setting_level_list_points;
