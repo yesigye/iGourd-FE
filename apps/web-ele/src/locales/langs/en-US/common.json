@@ -29,5 +29,7 @@
   "add": "Add",
   "system-prompt": "System Prompt",
   "close": "close",
-  "open":"open"
+  "open":"open",
+  "default":"default",
+  "basic-information":"Basic Information"
 }

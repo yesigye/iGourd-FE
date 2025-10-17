@@ -1,0 +1,17 @@
+{
+  "order-no": "订单号",
+  "customer": "客户",
+  "order-date": "订单日期",
+  "total-qty": "总数量",
+  "total-amt": "总金额",
+  "discount": "折扣",
+  "tax": "税额",
+  "wipe": "抹零",
+  "paid": "实付",
+  "tendered": "实付金额",
+  "give-change": "找零",
+  "status": "状态",
+  "actuaily-paid": "实际实付金额",
+  "basic-information": "基本信息",
+  "repayment-history": "付款历史"
+}

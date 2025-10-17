@@ -1,15 +1,8 @@
 import { getCustomerPageListApi } from '#/features/customer';
-import { Space, type ISchema } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-import ModalTable from '@igourd/plugins/modal-table';
-import type { VxeTableGridOptions } from '@igourd/plugins/vxe-table';
+import { type ISchema } from '@igourd/common-ui';
+import { CollectionTableModal } from '@@/account/components';
 import { h } from 'vue';
-export function useCollectionVoucherSchema({
-  onSelectOrder,
-  orderListApi,
-  onBeforeOpen,
-}: any) {
-  const { t } = useI18n();
+export function useCollectionVoucherSchema() {
   return {
     type: 'object',
     properties: {
@@ -29,15 +22,26 @@ export function useCollectionVoucherSchema({
               header: '{{ t("common.basic-info") }}',
             },
             properties: {
+              receipt_order_no: {
+                type: 'string',
+                'x-hidden': true,
+              },
+              ledger_type: {
+                type: 'string',
+                default: 'RECEIVABLE',
+                'x-hidden': true,
+              },
+              type: {
+                type: 'string',
+                default: 'SALES_ORDER',
+                'x-hidden': true,
+              },
               receipt_direction: {
                 type: 'string',
-                'x-decorator': 'FormItem',
                 'x-component': 'Radio.Group',
                 'x-component-props': {
                   optionType: 'button',
-                },
-                'x-decorator-props': {
-                  layout: 'horizontal',
+                  class: 'w-full',
                 },
                 enum: [
                   {
@@ -49,6 +53,18 @@ export function useCollectionVoucherSchema({
                     value: 'NEGATIVE_ORDER',
                   },
                 ],
+              },
+              received_amount: {
+                type: 'number',
+                'x-hidden': true,
+                'x-reactions': {
+                  dependencies: ['receipt_order_item_list.*.amount'],
+                  fulfill: {
+                    state: {
+                      value: `{{ sum($deps[0]??[]) }}`,
+                    },
+                  },
+                },
               },
               b9n9mq008fu: {
                 type: 'void',
@@ -126,7 +142,7 @@ export function useCollectionVoucherSchema({
                       disabled: false,
                     },
                   },
-                  receivable_balance: {
+                  total_amount: {
                     type: 'string',
                     'x-component': 'Input',
                     'x-decorator': 'FormItem',
@@ -186,95 +202,11 @@ export function useCollectionVoucherSchema({
             'x-component-props': {},
             'x-content': {
               header: () => {
-                return h(Space, null, {
-                  default: () => [
-                    h('div', null, t('account.source_order_information')),
-                    h(ModalTable, {
-                      onBeforeOpen,
-                      onConfirm: onSelectOrder,
-                      text: t('account.select_source_order'),
-                      title: t('account.source_order_information'),
-                      grid: {
-                        height: 350,
-                        rowConfig: {
-                          keyField: 'id',
-                        },
-                        proxyConfig: {
-                          ajax: {
-                            query: ({ page }, form) => {
-                              return orderListApi({
-                                ...page,
-                                ...form,
-                              });
-                            },
-                          },
-                        },
-                        columns: [
-                          {
-                            title: '',
-                            type: 'radio',
-                            fixed: 'left',
-                          },
-                          {
-                            field: 'order_create_time',
-                            minWidth: 200,
-                            title: t('account.orderDate'),
-                          },
-                          {
-                            field: 'order_no',
-                            minWidth: 200,
-                            title: t('printTemp.order_no'),
-                          },
-                          {
-                            field: 'subtotal_amount',
-                            minWidth: 200,
-                            title: t('account.totalAmount'),
-                          },
-                          {
-                            field: 'round_down_amount',
-                            minWidth: 200,
-                            title: t('printTemp.wipe'),
-                          },
-                          {
-                            field: 'total_amount',
-                            minWidth: 200,
-                            title: t('account.transaction_amount'),
-                          },
-                          {
-                            field: 'customer_name',
-                            minWidth: 200,
-                            title: t('account.customer'),
-                          },
-                          {
-                            field: 'currency_code',
-                            minWidth: 200,
-                            title: t('account.currency'),
-                          },
-                          {
-                            field: 'exchange_rate',
-                            minWidth: 200,
-                            title: t('account.exchangeRate'),
-                          },
-                          {
-                            field: 'creator_name',
-                            title: t('account.creator'),
-                            minWidth: 200,
-                          },
-                          {
-                            field: 'create_time',
-                            minWidth: 200,
-                            title: t('account.createTime'),
-                          },
-                        ],
-                      } as VxeTableGridOptions,
-                      class: 'w-[78%] m-w-[1920px]',
-                    }),
-                  ],
-                });
+                return h(CollectionTableModal);
               },
             },
             properties: {
-              order_info: {
+              business_order: {
                 type: 'array',
                 'x-component': 'ArrayTable',
                 'x-component-props': {},
@@ -283,18 +215,9 @@ export function useCollectionVoucherSchema({
                   properties: {
                     col_index: {
                       type: 'void',
-                      'x-component': 'ArrayTable.Column',
-                      'x-component-props': {
-                        title: '#',
-                        width: 60,
-                        align: 'center',
-                      },
+                      'x-component': 'ArrayTable.Index',
                       properties: {
-                        id: {
-                          type: 'string',
-                          'x-hidden': true,
-                        },
-                        merchant_id: {
+                        business_id: {
                           type: 'string',
                           'x-hidden': true,
                         },
@@ -322,7 +245,7 @@ export function useCollectionVoucherSchema({
                         minWidth: 150,
                       },
                       properties: {
-                        order_create_time: {
+                        business_create_time: {
                           type: 'string',
                           'x-component': 'PreviewText.Input',
                         },
@@ -360,11 +283,11 @@ export function useCollectionVoucherSchema({
                       type: 'void',
                       'x-component': 'ArrayTable.Column',
                       'x-component-props': {
-                        title: '{{ t("account.receivedAmount") }}',
+                        title: '{{ t("account.order-amount") }}',
                         minWidth: 150,
                       },
                       properties: {
-                        order_total_amount: {
+                        total_amount: {
                           type: 'string',
                           'x-component': 'PreviewText.Input',
                         },
@@ -374,11 +297,25 @@ export function useCollectionVoucherSchema({
                       type: 'void',
                       'x-component': 'ArrayTable.Column',
                       'x-component-props': {
-                        title: '{{ t("account.collect_amount") }}',
+                        title: '{{ t("account.receivedAmount") }}',
                         minWidth: 150,
                       },
                       properties: {
                         repaid_amount: {
+                          type: 'string',
+                          'x-component': 'PreviewText.Input',
+                        },
+                      },
+                    },
+                    remaining_amount_col: {
+                      type: 'void',
+                      'x-component': 'ArrayTable.Column',
+                      'x-component-props': {
+                        title: '{{ t("account.pendingReceivableAmount") }}',
+                        minWidth: 150,
+                      },
+                      properties: {
+                        remaining_amount: {
                           type: 'string',
                           'x-component': 'PreviewText.Input',
                         },
@@ -406,27 +343,38 @@ export function useCollectionVoucherSchema({
           'pay-card': {
             type: 'void',
             'x-component': 'Card',
+            'x-component-props': {
+              header: '支付信息',
+            },
             properties: {
               'count-row': {
                 type: 'void',
                 'x-component': 'Space',
+                'x-reactions': {
+                  dependencies: ['.order_info'],
+                  fulfill: {
+                    state: {
+                      hidden: '{{ $deps[0]?.length <= 0 }}',
+                    },
+                  },
+                },
                 properties: {
                   discount: {
-                    title: 'discount',
+                    title: `{{t('account.discount')}}`,
                     'x-decorator': 'FormItem',
-                    'x-component': 'Input',
+                    'x-component': 'InputNumber',
                     type: 'number',
                   },
                   'discount-rate': {
-                    title: 'discount Rate%',
+                    title: `{{t('account.total_discount_rate')}}`,
                     'x-decorator': 'FormItem',
-                    'x-component': 'Input',
+                    'x-component': 'InputNumber',
                     type: 'number',
                   },
                   total: {
-                    title: 'total',
+                    title: '{{t("account.total_discount")}}',
                     'x-decorator': 'FormItem',
-                    'x-component': 'Input',
+                    'x-component': 'InputNumber',
                     type: 'number',
                   },
                   service_fee_amount: {
@@ -437,99 +385,168 @@ export function useCollectionVoucherSchema({
               },
               receipt_order_item_list: {
                 type: 'array',
-                'x-component': 'ArrayItems',
-                'x-decorator': 'FormItem',
+                'x-component': 'ArrayTable',
                 items: {
                   type: 'object',
-                  'x-decorator': 'ArrayItems.Item',
+                  'x-decorator': 'ArrayTable.Item',
                   properties: {
-                    account_ledger_id: {
-                      type: 'string',
-                      'x-hidden': true,
-                    },
-                    business_id: {
-                      type: 'string',
-                      'x-hidden': true,
-                    },
-                    business_type: {
-                      type: 'string',
-                      'x-hidden': true,
-                      'x-reactions': {
-                        fulfill: {
-                          state: {
-                            value: '{{ business_type }}',
-                          },
-                        },
-                      },
-                    },
-                    merchant_id: {
-                      type: 'string',
-                      'x-hidden': true,
-                      'x-reactions': {
-                        fulfill: {
-                          state: {
-                            value: '{{ merchant_id }}',
-                          },
-                        },
-                      },
-                    },
-                    payment_method_mark: {
-                      type: 'string',
-                      'x-hidden': true,
-                    },
-                    space: {
+                    col_index: {
                       type: 'void',
-                      'x-component': 'Space',
+                      'x-component': 'ArrayTable.Column',
+                      'x-component-props': {
+                        title: '#',
+                        width: 40,
+                      },
+                      properties: {
+                        index: {
+                          type: 'void',
+                          'x-component': 'ArrayTable.Index',
+                        },
+                        merchant_id: {
+                          type: 'string',
+                          'x-hidden': true,
+                          'x-reactions': {
+                            fulfill: {
+                              state: {
+                                value: '{{ merchant_id }}',
+                              },
+                            },
+                          },
+                        },
+                        business_type: {
+                          type: 'string',
+                          'x-hidden': true,
+                          'x-reactions': {
+                            fulfill: {
+                              state: {
+                                value: '{{ business_type }}',
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+
+                    col_account_ledger_id: {
+                      type: 'void',
+                      'x-component': 'ArrayTable.Column',
+                      properties: {
+                        account_ledger_id: {
+                          type: 'string',
+                        },
+                      },
+                      'x-hidden': true,
+                    },
+                    col_business_id: {
+                      type: 'void',
+                      'x-component': 'ArrayTable.Column',
+                      properties: {
+                        business_id: {
+                          type: 'string',
+                        },
+                      },
+                      'x-hidden': true,
+                    },
+                    col_payment_method_mark: {
+                      type: 'void',
+                      'x-component': 'ArrayTable.Column',
+                      properties: {
+                        payment_method_mark: {
+                          type: 'string',
+                        },
+                      },
+                      'x-hidden': true,
+                    },
+                    col_order_id: {
+                      type: 'void',
+                      'x-component-props': {
+                        title: `{{t("account.order")}}`,
+                      },
+                      'x-component': 'ArrayTable.Column',
+                      properties: {
+                        business_id: {
+                          type: 'string',
+                          'x-component': 'Select',
+                          'x-reactions': {
+                            dependencies: ['business_order'],
+                            fulfill: {
+                              state: {
+                                dataSource:
+                                  '{{ $deps[0]?.map(i=> ({value:i.id,label:i.order_no})) }}',
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                    col_account_id: {
+                      type: 'void',
+                      'x-component-props': {
+                        title: `{{t("account.payAccount")}}`,
+                      },
+                      'x-component': 'ArrayTable.Column',
                       properties: {
                         account_id: {
                           type: 'string',
-                          title: '付款账户',
-                          'x-component': 'Select',
-                          'x-decorator': 'FormItem',
-                          'x-decorator-props': {
-                            labelAlign: 'left',
-                            layout: 'vertical',
-                            wrapperWidth: 100,
+                          'x-component': 'FormilySearchSelect',
+                          'x-component-props': {
+                            multiple: false,
+                            onSearch: ' {{ getAccountManagementOptionList }}',
+                            '@change': `{{(value,op)=> accountChange(value,op,$self,$index) }}`,
                           },
                         },
+                      },
+                    },
+                    col_payment_method_type: {
+                      type: 'void',
+                      'x-component-props': {
+                        title: `{{t("account.pay_method")}}`,
+                      },
+                      'x-component': 'ArrayTable.Column',
+                      properties: {
                         payment_method_type: {
-                          title: '付款方式',
-                          'x-decorator': 'FormItem',
-                          'x-decorator-props': {
-                            labelAlign: 'left',
-                            layout: 'vertical',
-                            wrapperWidth: 100,
-                          },
                           type: 'string',
-                          'x-component': 'Select',
+                          'x-component': 'FormilySearchSelect',
+                          'x-component-props': {
+                            multiple: false,
+                            onChange:
+                              '{{ (value,op)=> payment_method_change(value,op,$self,$index) }}',
+                            onSearch: '{{ merchantPaymentMethodOption }}',
+                          },
                         },
+                      },
+                    },
+                    col_amount: {
+                      type: 'void',
+                      'x-component-props': {
+                        title: `{{t("account.pay_amount")}}`,
+                      },
+                      'x-component': 'ArrayTable.Column',
+                      properties: {
                         amount: {
-                          type: 'InputNumber',
-                          title: '金额',
-                          'x-decorator': 'FormItem',
-                          'x-component': 'DatePicker',
-                          'x-decorator-props': {
-                            labelAlign: 'left',
-                            layout: 'vertical',
-                            wrapperWidth: 100,
-                          },
-                          'x-component-props': {
-                            type: 'daterange',
-                          },
-                        },
-                        date1: {
                           type: 'string',
-                          title: '日期',
-                          'x-decorator-props': {
-                            labelAlign: 'left',
-                            layout: 'vertical',
-                            wrapperWidth: 100,
-                          },
-                          'x-decorator': 'FormItem',
-                          'x-component': 'DatePicker',
-                          'x-component-props': {
-                            type: 'daterange',
-                          },
+                          'x-component': 'InputNumber',
+                        },
+                      },
+                    },
+                    op: {
+                      type: 'void',
+                      'x-component': 'ArrayTable.Column',
+                      'x-component-props': {
+                        title: "{{ t('account.operation') }}",
+                        width: 100,
+                        fixed: 'right',
+                      },
+                      properties: {
+                        add: {
+                          type: 'void',
+                          title: "{{ t('account.add') }}",
+                          'x-component': 'ArrayTable.Addition',
+                        },
+                        remove: {
+                          type: 'void',
+                          title: "{{ t('common.delete') }}",
+                          'x-component': 'ArrayTable.Remove',
                         },
                       },
                     },
@@ -570,7 +587,7 @@ export function useCollectionVoucherSchema({
                   drag: true,
                 },
                 'x-decorator-props': {
-                  wrapperWidth: '100%',
+                  wrapperWidth: '300',
                 },
               },
             },

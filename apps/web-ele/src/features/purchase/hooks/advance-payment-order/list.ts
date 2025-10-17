@@ -18,153 +18,102 @@ export function useAdvancePaymentOrder() {
   const { t } = useI18n();
   const columns: VxeGridPropTypes.Column<CustomizedRow>[] = [
     {
-      type: 'checkbox',
-      width: 80,
-      fixed: 'left',
+      field: 'receipt_order_no',
+      minWidth: 190,
+      title: t('account.receipt_order_no'),
+      sortable: true,
     },
     {
-      field: 'name',
-      title: t('payment-order.order-no'),
+      field: 'customer_name',
+      minWidth: 190,
+      title: t('printTemp.printReceipt.receipt_customer_name'),
+      sortable: true,
+    },
+    {
+      field: 'receipt_time',
       minWidth: 170,
+      title: t('account.orderDate'),
+      align: 'right',
       sortable: true,
-      align: 'center',
-      filters: [{ label: 'test', value: 'test' }],
     },
     {
-      field: 'type',
-      title: t('payment-order.vendor-name'),
-      minWidth: 120,
-      sortable: true,
-      align: 'center',
-      formatter: ({ cellValue }) => {
-        if (cellValue === 'SELECT') return t('purchase.select');
-        return t('purchase.input');
-      },
-    },
-    {
-      field: 'is_fixed_option',
-      title: t('payment-order.order-date'),
-      minWidth: 200,
-      sortable: true,
-      align: 'center',
-      formatter: ({ cellValue }) => {
-        if (cellValue) return t('purchase.fixed');
-        return t('purchase.userCreated');
-      },
-    },
-    {
-      field: 'is_compulsory',
-      title: t('payment-order.payment-amount'),
+      field: 'total_amount',
       minWidth: 150,
+      title: t('account.collected_amt'),
       sortable: true,
-      align: 'center',
-      formatter: ({ cellValue }) => {
-        if (cellValue) return t('purchase.yes');
-        return t('purchase.no');
+      align: 'right',
+      formatter: 'formatMoney',
+    },
+    {
+      field: 'receipt_direction',
+      minWidth: 140,
+      title: t('account.order_dir'),
+      sortable: true,
+      formatter({ cellValue }) {
+        return t(
+          `collection-voucher.receipt_direction.${cellValue.toLocaleLowerCase()}`,
+        );
       },
     },
     {
-      field: 'creator_name',
-      title: t('payment-order.order-dir'),
-      minWidth: 180,
+      field: 'business_type',
+      minWidth: 140,
+      title: t('account.businessType'),
       sortable: true,
-      align: 'center',
+      formatter({ cellValue }) {
+        return t(
+          `collection-voucher.business_type.${cellValue.toLocaleLowerCase()}`,
+        );
+      },
     },
     {
-      field: 'create_time',
-      title: t('payment-order.business-type'),
+      field: 'ledger_type',
+      minWidth: 130,
+      title: t('account.accountType'),
       sortable: true,
-      align: 'center',
-      minWidth: 180,
-      formatter: 'formatDateTime',
+      formatter({ cellValue }) {
+        return t(
+          `collection-voucher.ledger_type_enum.${cellValue.toLocaleLowerCase()}`,
+        );
+      },
     },
     {
-      field: 'create_time',
-      title: t('payment-order.account-type'),
+      field: 'remark',
+      minWidth: 150,
+      title: t('account.remarks'),
       sortable: true,
-      align: 'center',
-      minWidth: 180,
-      formatter: 'formatDateTime',
     },
     {
-      field: 'create_time',
-      title: t('payment-order.data-source'),
+      field: 'review_time',
+      minWidth: 170,
+      title: t('account.review_time'),
+      align: 'right',
       sortable: true,
-      align: 'center',
-      minWidth: 180,
-      formatter: 'formatDateTime',
     },
     {
-      field: 'create_time',
-      title: t('payment-order.service-fee'),
+      field: 'reviewer_name',
+      minWidth: 110,
+      title: t('account.reviewer'),
       sortable: true,
-      align: 'center',
-      minWidth: 180,
-      formatter: 'formatDateTime',
     },
     {
-      field: 'create_time',
-      title: t('payment-order.remarks'),
+      field: 'review_status',
+      minWidth: 130,
+      title: t('common.review'),
       sortable: true,
-      align: 'center',
-      minWidth: 180,
-      formatter: 'formatDateTime',
+      fixed: 'right',
+      formatter({ cellValue }) {
+        return t(`common.review_status.${cellValue}`);
+      },
     },
     {
-      field: 'create_time',
-      title: t('payment-order.payment-information'),
-      align: 'center',
-      minWidth: 180,
-      formatter: 'formatDateTime',
-      children: [
-        {
-          field: 'payment_account',
-          title: t('payment-order.payment-account'),
-          sortable: true,
-          align: 'center',
-          minWidth: 180,
-          formatter: 'formatDateTime',
-        },
-        {
-          field: 'payment_method',
-          title: t('payment-order.payment-method'),
-          sortable: true,
-          align: 'center',
-          minWidth: 180,
-          formatter: 'formatDateTime',
-        },
-        {
-          field: 'payment_amount',
-          title: t('payment-order.payment-amount'),
-          sortable: true,
-          align: 'center',
-          minWidth: 180,
-          formatter: 'formatDateTime',
-        },
-        {
-          field: 'service_fee',
-          title: t('payment-order.service-fee'),
-          sortable: true,
-          align: 'center',
-          minWidth: 180,
-          formatter: 'formatDateTime',
-        },
-      ],
-    },
-    {
-      field: 'review',
-      title: t('payment-order.review'),
-      sortable: true,
-      align: 'center',
-      minWidth: 180,
-      formatter: 'formatDateTime',
-    },
-    {
-      field: 'operation',
-      title: t('purchase.operation'),
-      sortable: true,
-      minWidth: 180,
-      slots: { default: 'operation' },
+      field: 'actions',
+      fixed: 'right',
+      title: t('common.action'),
+      minWidth: 100,
+      slots: {
+        default: 'operation',
+      },
     },
   ];
   const searchFormSchema = {
@@ -185,6 +134,15 @@ export function useAdvancePaymentOrder() {
       zoom: true,
       custom: true,
     },
+    tabsOption: {
+      defaultActiveValue: '蓝单',
+      formKey: 'type',
+    },
+    tabs: [
+      { label: '红单', value: '红单' },
+      { label: '蓝单', value: '蓝单' },
+    ],
+
     searchFormSchema,
     batchOperate: true,
     connectedComponent: CustomizedDrawerForm,

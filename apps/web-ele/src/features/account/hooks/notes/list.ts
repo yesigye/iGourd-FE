@@ -146,7 +146,7 @@ export function useAccountNotes() {
     },
   };
 
-  return useCrud<AccountingNotePageModel, GetFinanceNoteListRequest>({
+  const crud = useCrud<AccountingNotePageModel, GetFinanceNoteListRequest>({
     columns,
     searchFormSchema,
     batchOperate: true,
@@ -171,4 +171,8 @@ export function useAccountNotes() {
       drop: removeAccountingNoteApi,
     },
   });
+  return {
+    ...crud,
+    columns,
+  };
 }

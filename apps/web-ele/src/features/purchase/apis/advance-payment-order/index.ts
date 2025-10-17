@@ -48,7 +48,7 @@ export function getAdvancePaymentOrderDetailApi(
   return requestClient.post(
     `/v1/merchant/purchase/advance-payment-order/detail`,
     data,
-  );
+  )
 }
 /**
  * @description 获取付款单删除

@@ -9,6 +9,20 @@ export function getAccountManagementListApi(data: any) {
     data,
   );
 }
+export function getAccountManagementOptionList(data: any) {
+  return getAccountManagementListApi(data).then((res) => {
+    return {
+      ...res,
+      list: res.list?.map((i) => {
+        return {
+          ...i,
+          label: i.name,
+          value: i.id,
+        };
+      }),
+    };
+  });
+}
 
 // // 创建账户
 // export function createAccountApi(data: AccountCreateVO) {

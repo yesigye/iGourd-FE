@@ -8,5 +8,12 @@
   "payment-account": "Payment Account",
   "payment-method": "Payment Method",
   "prepayment-amount": "Prepayment Amount",
-  "add-purchase-returned": "Add Purchase Returned"
+  "add-purchase-returned": "Add Purchase Returned",
+  "source-order-information": "Source Order Information",
+  "select-source-order": "Select Source Order",
+  "receipt-order-no": "Receipt Order No.",
+  "order-date": "Order Date",
+  "total-amount": "Total Amount",
+  "creator": "Creator",
+  "create-time": "Create Time"
 }
