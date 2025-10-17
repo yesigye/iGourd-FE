@@ -8,13 +8,15 @@ import { wareHouseProductSearch } from '#/features/inventory';
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
 import { orderNoGenerate } from '#/api/common';
 import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
-
+import { getAccountManagementOptionList } from '#/features/account';
+import { merchantPaymentMethodOption } from '#/features/setting';
+import { onFieldValueChange } from '@igourd/common-ui';
 import {
   getPurchaseListApi,
   createPurchaseReturnedApi,
   updatePurchaseReturnedApi,
   getPurchaseReceiptDetailApi,
-  getPurchaseReceiptPageListApi
+  getPurchaseReceiptPageListApi,
 } from '@@/purchase/apis';
 import { basicsCurrencyList } from '#/api';
 function remoteMethod(keywords: string) {
@@ -72,11 +74,11 @@ export function useReturnForm() {
     if (!records) {
       return;
     }
-    debugger
+    debugger;
 
     formAPI.setValues({
       order_info: records,
-      receipt_order_item_list: [{}]
+      receipt_order_item_list: [{}],
     });
   };
   const orderListApi = (data: any) => {
@@ -87,6 +89,34 @@ export function useReturnForm() {
       payment_type: '',
       status_list: [],
     });
+  };
+  const accountChange = (_, op, record, index) => {
+    debugger
+    if (!op) {
+      return;
+    }
+    formAPI.setValuesIn(
+      `purchase_payment_plan_list.${index}.account_ledger_id`,
+      op.account_ledger_id,
+    );
+     formAPI.setValuesIn(
+      `purchase_payment_plan_list.${index}.currency_code`,
+      op.currency_code,
+    );
+  };
+  const payment_method_change = (_, op, record, index) => {
+    if (!op) {
+      return;
+    }
+
+    formAPI.setValuesIn(
+      `purchase_payment_plan_list.${index}.payment_method_id`,
+      op.id,
+    );
+    formAPI.setValuesIn(
+      `purchase_payment_plan_list.${index}.payment_method_mark`,
+      op.mark,
+    );
   };
   // 配置form
   const schema: ISchema = {
@@ -109,6 +139,11 @@ export function useReturnForm() {
               class: 'border-0',
             },
             properties: {
+              type: {
+                type: 'string',
+                'x-hidden': true,
+                //采购退单类型(ORIGINAL_ORDER:原单,NO_ORIGINAL_ORDER:非原单)
+              },
               row_0: {
                 type: 'void', // 表示空字段
                 title: "{{t('transfer.source-warehouse-name')}}", // formItem 的 label
@@ -220,7 +255,7 @@ export function useReturnForm() {
                           },
                         },
                       },
-                      receipt_date: {
+                      returned_date: {
                         type: 'string',
                         title: "{{t('order.order-date')}}",
                         required: true,
@@ -339,7 +374,6 @@ export function useReturnForm() {
                                 title: t('returned.total-amount'),
                               },
 
-
                               {
                                 field: 'creator_name',
                                 title: t('returned.creator'),
@@ -420,7 +454,122 @@ export function useReturnForm() {
                       class: 'w-2/3',
                       style: {},
                     },
-                    properties: {},
+                    properties: {
+                      space_0: {
+                        type: 'void',
+                        'x-component': 'Space',
+                        title: '选择账号',
+                        properties: {
+                          amount_0: {
+                            type: 'string',
+                            title: '优惠',
+                            'x-decorator': 'FormItem',
+                            'x-decorator-props': {
+                              size: 'small',
+                            },
+                            'x-component': 'Input',
+                          },
+                          amount_1: {
+                            type: 'string',
+                            title: '优惠比例',
+                            'x-decorator': 'FormItem',
+                            'x-component': 'Input',
+                            'x-decorator-props': {
+                              size: 'small',
+                            },
+                          },
+                          amount_2: {
+                            type: 'string',
+                            title: '合计',
+                            'x-decorator': 'FormItem',
+                            'x-component': 'Input',
+                            'x-decorator-props': {
+                              size: 'small',
+                            },
+                          },
+                        },
+                      },
+                      purchase_payment_plan_list: {
+                        type: 'array',
+                        'x-component': 'ArrayItems',
+                        'x-decorator': '',
+                        title: '',
+                        items: {
+                          type: 'object',
+                          'x-decorator': 'ArrayItems.Item',
+                          properties: {
+                            space: {
+                              type: 'void',
+                              'x-component': 'Space',
+                              properties: {
+
+                                account_id: {
+                                  type: 'string',
+                                  title: '选择账号',
+                                  'x-decorator': 'FormItem',
+                                  'x-component': 'FormilySearchSelect',
+                                  'x-decorator-props': {
+                                    size: 'small',
+                                  },
+                                  'x-component-props': {
+                                    multiple: false,
+                                    onSearch:
+                                      ' {{ getAccountManagementOptionList }}',
+                                    '@change': `{{(value,op)=> accountChange(value,op,$self,$index) }}`,
+                                  },
+                                },
+                                payment_method_type: {
+                                  type: 'string',
+                                  title: '支付方式',
+                                  'x-decorator': 'FormItem',
+                                  'x-component': 'FormilySearchSelect',
+                                  'x-decorator-props': {
+                                    size: 'small',
+                                  },
+                                  'x-component-props': {
+                                    multiple: false,
+                                    onChange:
+                                      '{{ (value,op)=> payment_method_change(value,op,$self,$index) }}',
+                                    onSearch:
+                                      '{{ merchantPaymentMethodOption }}',
+                                  },
+                                },
+                                amount: {
+                                  type: 'string',
+                                  title: '金额',
+                                  'x-decorator': 'FormItem',
+                                  'x-component': 'Input',
+                                  'x-decorator-props': {
+                                    size: 'small',
+                                  },
+                                },
+                                account_ledger_id: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                },
+                                currency_code: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                },
+                                payment_method_id: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                },
+                                business_type: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                  default:"PURCHASE_ORDER_REFUND"
+                                },
+                                payment_method_mark: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
                   },
                   row_col_1: {
                     type: 'void',
@@ -616,15 +765,27 @@ export function useReturnForm() {
         });
         formData.purchase_returned_no = result.order_no;
       }
-
+      // 合计金额
+      const total = formData.purchase_returned_item_list.reduce(
+        (acc: any, item: any) => acc + item.returned_quantity * item.cost_price,
+        0,
+      );
       formData.purchase_returned_item_list.forEach((item) => {
         item.product_name = item.label;
 
         item.other_tax_amount = 0;
         item.vat_amount = 0;
-        item.subtotal_amount = item.received_quantity * item.cost_price;
-        item.total_amount = item.received_quantity * item.cost_price;
+        item.subtotal_amount = item.returned_quantity * item.cost_price;
+        item.total_amount = item.returned_quantity * item.cost_price;
+        // 商品原价
+        item.product_cost_price = item.cost_price;
       });
+      formData.purchase_payment_plan_list.forEach((item) => {
+        item.merchant_id = currentLoginUserApp.owner_id;
+      })
+
+
+
       // 	汇率(选择币种和系统币种的换算比例)
       formData.exchange_rate = 0;
       formData.vat_amount = 0;
@@ -689,12 +850,37 @@ export function useReturnForm() {
     formOptions: {
       initialValues: {
         purchase_returned_item_list: [{}],
-        //goods_receipt_note_no: '11',
+        // 采购退单类型(ORIGINAL_ORDER:原单,NO_ORIGINAL_ORDER:非原单)
+        type: 'NO_ORIGINAL_ORDER',
+        purchase_payment_plan_list: [{}],
       },
       scope: {
         warehouse,
+        getAccountManagementOptionList,
+        accountChange,
+        payment_method_change,
+        merchantPaymentMethodOption,
       },
       schema: schema,
+      effects() {
+        // // 账户
+        // onFieldValueChange('account_id', (field, form) => {
+        //   console.log(`target值变化：${field.value}`);
+
+
+        //   // form.setValuesIn('vendor_name', currObj?.name);
+        // });
+
+        // // 支付方式
+        // onFieldValueChange('payment_method_type', (field, form) => {
+        //   console.log(`target值变化：${field.value}`);
+
+
+        //   // form.setValuesIn('vendor_name', currObj?.name);
+        // });
+
+
+      },
     },
   });
   return {

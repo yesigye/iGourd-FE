@@ -13,7 +13,7 @@ const PURCHASE_RETURNED_BASE_URL = '/v1/merchant/purchase/purchase-returned';
 export function getPurchaseReturnedPageListApi(
   data: PurchaseReturnedQueryPageVO,
 ) {
-  return requestClient.post(`${PURCHASE_RETURNED_BASE_URL}/list`, data);
+  return requestClient.post(`${PURCHASE_RETURNED_BASE_URL}/page-list`, data);
 }
 
 // 创建退货单
