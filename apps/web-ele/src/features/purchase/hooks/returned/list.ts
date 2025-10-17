@@ -18,7 +18,7 @@ export function usePurchaseReturned() {
   const baseColumns: VxeGridPropTypes.Column<PurchaseReturnedPageModel>[] = [
     {
       field: 'purchase_returned_no',
-      width: 180,
+      minWidth:150,
       align: 'left',
       fixed: 'left',
       title: t('returned.purchase-returned-no'),
@@ -31,8 +31,8 @@ export function usePurchaseReturned() {
     },
     {
       field: 'vendor_name',
-      width: 180,
       align: 'center',
+      minWidth:150,
       title: t('returned.vendor-name'),
     },
     {
@@ -70,6 +70,7 @@ export function usePurchaseReturned() {
       cellRender: {
         name: 'review',
       },
+      slots: { default: 'modal' },
     },
     {
       field: 'options',

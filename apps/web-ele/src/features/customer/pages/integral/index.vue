@@ -42,6 +42,7 @@ interface ListItem {
 }
 const { currentLoginUserApp } = useUserStore();
 const index = ref();
+const id = ref();
 const dataSource = observable<{ value: ListItem[] }>({ value: [] });
 const handleSelectProduct = (...args) => {
   index.value = args[0];
@@ -402,7 +403,9 @@ const handleSave = () => {
     }
     element.setting_merchant_point_id = null;
   });
+  params.id = id.value;
   saveCustomerIntegralApi(params).then((res) => {
+    id.value = res;
     ElMessage.success(t('customer.saveSuccess'));
   });
 };
@@ -421,6 +424,7 @@ const getData = () => {
       element.count = selectedList.length+t("integral.product");
       dataSource.value.push(list);
     });
+    id.value = res.id;
     formAPI.setValues(res);
   });
 };

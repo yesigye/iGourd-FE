@@ -13,7 +13,10 @@ import {
   getPurchaseListApi,
   getPurchaseOrderDetailApi,
   updatePurchaseOrderApi,
+  getPurchaseReceiptPageListApi,
 } from '@@/purchase/apis';
+import { getAccountManagementOptionList } from '#/features/account';
+import { merchantPaymentMethodOption } from '#/features/setting';
 
 import { basicsCurrencyList } from '#/api';
 import { orderNoGenerate } from '#/api/common';
@@ -420,7 +423,164 @@ export function useOrderForm() {
                       class: 'w-2/3',
                       style: {},
                     },
-                    properties: {},
+                    properties: {
+                      space_0: {
+                        type: 'void',
+                        'x-component': 'Space',
+                        title: '选择账号',
+                        properties: {
+                          amount_0: {
+                            type: 'string',
+                            title: '优惠',
+                            'x-decorator': 'FormItem',
+                            'x-decorator-props': {
+                              size: 'small',
+                            },
+                            'x-component': 'Input',
+                          },
+                          amount_1: {
+                            type: 'string',
+                            title: '优惠比例',
+                            'x-decorator': 'FormItem',
+                            'x-component': 'Input',
+                            'x-decorator-props': {
+                              size: 'small',
+                            },
+                          },
+                          amount_2: {
+                            type: 'string',
+                            title: '合计',
+                            'x-decorator': 'FormItem',
+                            'x-component': 'Input',
+                            'x-decorator-props': {
+                              size: 'small',
+                            },
+                          },
+                        },
+                      },
+                      purchase_order_deposit_list: {
+                        type: 'array',
+                        'x-component': 'ArrayItems',
+                        'x-decorator': '',
+                        title: '',
+                        items: {
+                          type: 'object',
+                          'x-decorator': 'ArrayItems.Item',
+                          properties: {
+                            space: {
+                              type: 'void',
+                              'x-component': 'Space',
+                              properties: {
+                                account_id: {
+                                  type: 'string',
+                                  title: '选择账号',
+                                  'x-decorator': 'FormItem',
+                                  'x-component': 'FormilySearchSelect',
+                                  'x-decorator-props': {
+                                    size: 'small',
+                                  },
+                                  'x-component-props': {
+                                    multiple: false,
+                                    onSearch:
+                                      ' {{ getAccountManagementOptionList }}',
+                                    '@change': `{{(value,op)=> accountChange(value,op,$self,$index) }}`,
+                                  },
+                                },
+                                payment_method_type: {
+                                  type: 'string',
+                                  title: '支付方式',
+                                  'x-decorator': 'FormItem',
+                                  'x-component': 'FormilySearchSelect',
+                                  'x-decorator-props': {
+                                    size: 'small',
+                                  },
+                                  'x-component-props': {
+                                    multiple: false,
+                                    onChange:
+                                      '{{ (value,op)=> payment_method_change(value,op,$self,$index) }}',
+                                    onSearch:
+                                      '{{ merchantPaymentMethodOption }}',
+                                  },
+                                },
+                                amount: {
+                                  type: 'string',
+                                  title: '金额',
+                                  'x-decorator': 'FormItem',
+                                  'x-component': 'Input',
+                                  'x-decorator-props': {
+                                    size: 'small',
+                                  },
+                                },
+
+                                col_actions: {
+                                  type: 'void',
+                                  'x-component': 'ArrayItems.Item',
+                                  'x-component-props': {
+                                    title: "{{t('common.operation')}}",
+                                    width: 100,
+                                    fixed: 'right',
+                                  },
+                                  properties: {
+                                    addition: {
+                                      type: 'void',
+                                      title: "{{t('common.addBtn')}}",
+                                      'x-component': 'ArrayItems.Addition',
+                                      'x-reactions': {
+                                        dependencies: [
+                                          'purchase_order_deposit_list',
+                                        ],
+                                        fulfill: {
+                                          state: {
+                                            componentProps: {
+                                              disabled:
+                                                '{{  $deps[0]?.length >= 2 }}',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    remove: {
+                                      type: 'void',
+                                      'x-component': 'ArrayItems.Remove',
+                                      title: "{{ t('common.delete') }}",
+                                      'x-reactions': {
+                                        dependencies: [
+                                          'purchase_order_deposit_list',
+                                        ],
+                                        fulfill: {
+                                          state: {
+                                            componentProps: {
+                                              disabled: false,
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                account_ledger_id: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                },
+                                payment_method_id: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                },
+                                business_type: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                  default: 'PURCHASE_ORDER_REFUND',
+                                },
+                                payment_method_mark: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
                   },
                   row_col_1: {
                     type: 'void',
@@ -436,7 +596,7 @@ export function useOrderForm() {
                         type: 'void',
                         'x-component': 'div',
                         'x-component-props': {
-                          class:"p-4"
+                          class: 'p-4',
                         },
                         properties: {
                           label_1: {
@@ -451,7 +611,7 @@ export function useOrderForm() {
                                 'x-component': 'div',
                                 'x-content': "{{t('purchase.subtotal')+' : '}}",
                                 'x-component-props': {
-                                  class:"w-20 text-right",
+                                  class: 'w-20 text-right',
                                   style: { fontSize: '14px' },
                                 },
                               },
@@ -477,7 +637,7 @@ export function useOrderForm() {
                                 'x-component': 'div',
                                 'x-content': "{{t('purchase.vat')+' : '}}",
                                 'x-component-props': {
-                                  class:"w-20 text-right",
+                                  class: 'w-20 text-right',
                                   style: { fontSize: '14px' },
                                 },
                               },
@@ -504,7 +664,7 @@ export function useOrderForm() {
                                 'x-content':
                                   "{{t('purchase.other_tax')+' : '}}",
                                 'x-component-props': {
-                                  class:"w-20 text-right",
+                                  class: 'w-20 text-right',
                                   style: { fontSize: '14px' },
                                 },
                               },
@@ -530,7 +690,7 @@ export function useOrderForm() {
                                 'x-component': 'div',
                                 'x-content': "{{t('purchase.total')+' : '}}",
                                 'x-component-props': {
-                                  class:"w-20 text-right",
+                                  class: 'w-20 text-right',
                                   style: { fontSize: '14px' },
                                 },
                               },
@@ -646,6 +806,53 @@ export function useOrderForm() {
     }
   };
 
+  const onBeforeOpen = () => {
+    return formAPI.validate('customer_id');
+  };
+  const onSelectOrder = (records: any) => {
+    if (!records) {
+      return;
+    }
+
+    formAPI.setValues({
+      order_info: records,
+      receipt_order_item_list: [{}],
+    });
+  };
+  const orderListApi = (data: any) => {
+    const customer_id = formAPI.getValuesIn('customer_id');
+    return getPurchaseReceiptPageListApi({
+      ...data,
+      customer_id,
+      payment_type: '',
+      status_list: [],
+    });
+  };
+  const accountChange = (_, op, record, index) => {
+    if (!op) {
+      return;
+    }
+    formAPI.setValuesIn(
+      `purchase_payment_plan_list.${index}.account_ledger_id`,
+      op.account_ledger_id,
+    );
+    // record.account_ledger_id = op.account_ledger_id;
+  };
+  const payment_method_change = (_, op, record, index) => {
+    if (!op) {
+      return;
+    }
+
+    formAPI.setValuesIn(
+      `purchase_payment_plan_list.${index}.payment_method_id`,
+      op.id,
+    );
+    formAPI.setValuesIn(
+      `purchase_payment_plan_list.${index}.payment_method_mark`,
+      op.mark,
+    );
+  };
+
   const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
     drawerOptions: {
       class: 'w-full',
@@ -692,9 +899,14 @@ export function useOrderForm() {
     formOptions: {
       initialValues: {
         purchase_order_item_list: [{}],
+        purchase_order_deposit_list: [{}],
       },
       scope: {
         warehouse,
+        getAccountManagementOptionList,
+        accountChange,
+        payment_method_change,
+        merchantPaymentMethodOption,
       },
       effects() {
         onFieldValueChange('vendor_id', (field, form) => {

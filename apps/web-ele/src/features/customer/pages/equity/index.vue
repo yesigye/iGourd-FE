@@ -75,6 +75,7 @@ const validityPeriods = [
   { label: '3 years', value: 36 },
   { label: '5 years', value: 60 },
 ];
+const id = ref();
 const validatorDefaultVIP = (val, msg) => {
   const max = formAPI.values.maximum_vip_level;
   if (max && val > max) {
@@ -878,7 +879,6 @@ const handleSave = async () => {
   await formAPI.validate();
   const list = formAPI.values.setting_merchant_customer_rights_level_list.map(
     (element) => {
-      debugger
       // 惠模式设置
       let hasItemRights = formAPI.values.setting_level_list_rights_type.find(
         (item) => item.vip_level == element.vip_level,
@@ -900,7 +900,9 @@ const handleSave = async () => {
   );
   formAPI.values.setting_merchant_customer_rights_level_list = list;
   //合并
+  formAPI.values.id = id.value
   saveCustomerEquityApi(formAPI.values).then((res) => {
+    id.value = res;
     ElMessage.success(t('customer.saveSuccess'));
   });
 };
@@ -943,6 +945,7 @@ const getData = () => {
     res.setting_level_list_rights_type = setting_level_list_rights_type;
     res.setting_level_list_upgrade_type = setting_level_list_upgrade_type;
     res.setting_level_list_points = setting_level_list_points;
+    id.value = res.id;
     formAPI.setValues(res);
   });
 };
