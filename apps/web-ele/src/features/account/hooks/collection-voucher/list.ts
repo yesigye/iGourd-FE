@@ -9,6 +9,7 @@ import {
   createReceiptOrderApi,
   modifyReceiptOrderApi,
   removeReceiptOrderApi,
+  getReceiptOrderDetailApi,
 } from '@@/account/apis';
 import { CollectionVoucherDrawer } from '@@/account/components';
 
@@ -125,7 +126,7 @@ export function useCollectionVoucher() {
     query: getReceiptOrderPageListApi,
     create: createReceiptOrderApi,
     update: modifyReceiptOrderApi,
-    
+    detail: getReceiptOrderDetailApi,
     // 删除收款单
     remove: async (data: { receipt_order_ids: number[] }) => {
       return await removeReceiptOrderApi(data);

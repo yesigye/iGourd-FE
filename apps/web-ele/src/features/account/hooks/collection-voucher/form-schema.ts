@@ -206,7 +206,7 @@ export function useCollectionVoucherSchema() {
               },
             },
             properties: {
-              order_info: {
+              business_order: {
                 type: 'array',
                 'x-component': 'ArrayTable',
                 'x-component-props': {},
@@ -217,7 +217,7 @@ export function useCollectionVoucherSchema() {
                       type: 'void',
                       'x-component': 'ArrayTable.Index',
                       properties: {
-                        id: {
+                        business_id: {
                           type: 'string',
                           'x-hidden': true,
                         },
@@ -245,7 +245,7 @@ export function useCollectionVoucherSchema() {
                         minWidth: 150,
                       },
                       properties: {
-                        order_create_time: {
+                        business_create_time: {
                           type: 'string',
                           'x-component': 'PreviewText.Input',
                         },
@@ -259,7 +259,7 @@ export function useCollectionVoucherSchema() {
                         minWidth: 150,
                       },
                       properties: {
-                        type: {
+                        business_type: {
                           type: 'string',
                           'x-component': 'PreviewText.Input',
                         },
@@ -468,7 +468,7 @@ export function useCollectionVoucherSchema() {
                           type: 'string',
                           'x-component': 'Select',
                           'x-reactions': {
-                            dependencies: ['order_info'],
+                            dependencies: ['business_order'],
                             fulfill: {
                               state: {
                                 dataSource:
@@ -509,6 +509,8 @@ export function useCollectionVoucherSchema() {
                           'x-component': 'FormilySearchSelect',
                           'x-component-props': {
                             multiple: false,
+                            onChange:
+                              '{{ (value,op)=> payment_method_change(value,op,$self,$index) }}',
                             onSearch: '{{ merchantPaymentMethodOption }}',
                           },
                         },

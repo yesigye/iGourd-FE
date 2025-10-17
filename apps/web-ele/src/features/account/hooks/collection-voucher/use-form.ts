@@ -2,7 +2,6 @@ import { useDrawerForm } from '#/hooks';
 import { useI18n } from '@igourd/locales';
 // import { useUserStore } from '@igourd/stores';
 import { useCollectionVoucherSchema } from './form-schema';
-import { getSaleOrderListApi } from '#/features/sale';
 import { useUserStore } from '@igourd/stores';
 import { sum } from '@igourd/utils';
 import { getAccountManagementOptionList } from '../../apis';
@@ -21,6 +20,16 @@ export function useCollectionVoucherForm(props: any) {
       op.account_ledger_id,
     );
     // record.account_ledger_id = op.account_ledger_id;
+  }
+  //@ts-ignore
+  function payment_method_change(_, op, record, index) {
+    if (!op) {
+      return;
+    }
+    formAPI.setValuesIn(
+      `receipt_order_item_list.${index}.payment_method_mark`,
+      op.mark,
+    );
   }
   const { Drawer, Form, formAPI } = useDrawerForm({
     drawerOptions: {
@@ -41,21 +50,9 @@ export function useCollectionVoucherForm(props: any) {
         accountChange,
         sum,
         merchantPaymentMethodOption,
+        payment_method_change,
       },
-      schema: useCollectionVoucherSchema({
-        onBeforeOpen() {
-          return formAPI.validate('customer_id');
-        },
-        orderListApi(data: any) {
-          const customer_id = formAPI.getValuesIn('customer_id');
-          return getSaleOrderListApi({
-            ...data,
-            customer_id,
-            payment_type: 'CREDIT',
-            status_list: ['NO_REPAID', 'PARTIAL_REPAID'],
-          });
-        },
-      }),
+      schema: useCollectionVoucherSchema(),
     },
   });
   return { Drawer, Form, formAPI };
