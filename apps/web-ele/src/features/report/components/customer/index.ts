@@ -1,1 +1,1 @@
-export { default as CustomerReportDrawer } from './drawer.vue';
+export { default as EachartItem } from './eachart-item.vue';

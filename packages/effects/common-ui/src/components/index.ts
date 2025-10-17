@@ -78,6 +78,7 @@ export {
   ElAutoResizer,
   ElBadge,
   ElButton,
+  ElButtonGroup,
   ElCalendar,
   ElCard,
   ElCheckbox,

@@ -1,9 +1,10 @@
 {
-  "customerName": "客户名称",
-  "customerCode": "客户编码",
-  "totalOrders": "总订单数",
-  "totalAmount": "总金额",
-  "avgOrderAmount": "平均订单金额",
-  "lastOrderDate": "最后订单日期",
-  "exportReport": "导出报表"
+  "total-member-balance": "总会员余额",
+  "total-membership": "总会员数",
+  "total-number-of-customers": "总客户数",
+  "customers": "客户",
+  "gmv": "GMV",
+  "sales-order": "订单数",
+  "recharge-amount": "充值金额",
+  "vip-qty": "VIP数量"
 }
