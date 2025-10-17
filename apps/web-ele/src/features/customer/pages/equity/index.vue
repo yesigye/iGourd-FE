@@ -2,8 +2,12 @@
   <Page auto-content-height>
     <Form></Form>
     <div class="mt-4 text-center">
-      <ElButton type="danger" plain @click="handleReset">{{t('common.reset')}}</ElButton>
-      <ElButton type="primary" @click="handleSave">{{t('common.save')}}</ElButton>
+      <ElButton type="danger" plain @click="handleReset">{{
+        t('common.reset')
+      }}</ElButton>
+      <ElButton type="primary" @click="handleSave">{{
+        t('common.save')
+      }}</ElButton>
     </div>
   </Page>
 </template>
@@ -71,6 +75,14 @@ const validityPeriods = [
   { label: '3 years', value: 36 },
   { label: '5 years', value: 60 },
 ];
+const validatorDefaultVIP = (val, msg) => {
+  const max = formAPI.values.maximum_vip_level;
+  if (max && val > max) {
+    return t('equity.defaultviplevel-validator-msg');
+  } else {
+    return true;
+  }
+};
 const formSchema: ISchema = {
   type: 'object',
   properties: {
@@ -99,30 +111,48 @@ const formSchema: ISchema = {
                 default_vip_level: {
                   type: 'number',
                   title: "{{t('customer.defaultVIPlevel')}}",
-                  required: true,
                   'x-decorator': 'FormItem',
                   'x-component': 'Input',
                   'x-decorator-props': {
                     // addonAfter: '',
                   },
                   'x-component-props': {
-                    placeholder:  "{{t('equity.default-vip-level-placeholder')}}",
+                    placeholder:
+                      "{{t('equity.default-vip-level-placeholder')}}",
                     clearable: true,
                   },
+                  'x-validator': [
+                    {
+                      required: true,
+                      message: "{{t('equity.please-enter-defaultviplevel')}}",
+                      triggerType: 'onBlur',
+                    },
+                    {
+                      validator: validatorDefaultVIP,
+                      triggerType: 'onBlur',
+                    },
+                  ],
                 },
                 maximum_vip_level: {
                   type: 'number',
-                  title:  "{{t('customer.maximummembershiplevel')}}",
-                  required: true,
+                  title: "{{t('customer.maximummembershiplevel')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'Input',
                   'x-decorator-props': {
                     // addonAfter: '',
                   },
                   'x-component-props': {
-                    placeholder: "{{t('equity.max-mummember-level-placeholder')}}",
+                    placeholder:
+                      "{{t('equity.max-mummember-level-placeholder')}}",
                     clearable: true,
                   },
+                  'x-validator': [
+                    {
+                      required: true,
+                      message: "{{t('equity.please-enter-maximummembershiplevel')}}",
+                      triggerType: 'onBlur',
+                    }
+                  ],
                 },
 
                 vip_code_type: {
@@ -171,7 +201,11 @@ const formSchema: ISchema = {
                       column2: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: "{{t('customer.customerListTable.vip_level')}}" },
+                        'x-component-props': {
+                          width: 200,
+                          title:
+                            "{{t('customer.customerListTable.vip_level')}}",
+                        },
                         properties: {
                           vip_level: {
                             type: 'string',
@@ -190,7 +224,10 @@ const formSchema: ISchema = {
                       column3: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: "{{t('equity.vip-name')}}" },
+                        'x-component-props': {
+                          width: 200,
+                          title: "{{t('equity.vip-name')}}",
+                        },
                         properties: {
                           vip_level_name: {
                             type: 'string',
@@ -278,7 +315,7 @@ const formSchema: ISchema = {
                   type: 'array',
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
-                  title: "{{t('customer.rechargeamount')}}" ,
+                  title: "{{t('customer.rechargeamount')}}",
                   items: {
                     type: 'object',
                     properties: {
@@ -300,7 +337,11 @@ const formSchema: ISchema = {
                       column2: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: "{{t('customer.customerListTable.vip_level')}}" },
+                        'x-component-props': {
+                          width: 200,
+                          title:
+                            "{{t('customer.customerListTable.vip_level')}}",
+                        },
                         properties: {
                           vip_level: {
                             type: 'string',
@@ -319,7 +360,10 @@ const formSchema: ISchema = {
                       total_order_amount_column: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: "{{t('common.amount')}}" },
+                        'x-component-props': {
+                          width: 200,
+                          title: "{{t('common.amount')}}",
+                        },
                         'x-reactions': {
                           dependencies: ['rights_type'],
                           fulfill: {
@@ -336,7 +380,10 @@ const formSchema: ISchema = {
                       recharge_amount_column: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: "{{t('common.amount')}}"},
+                        'x-component-props': {
+                          width: 200,
+                          title: "{{t('common.amount')}}",
+                        },
                         'x-reactions': {
                           dependencies: ['rights_type'],
                           fulfill: {
@@ -450,7 +497,11 @@ const formSchema: ISchema = {
                       column2: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: "{{t('customer.customerListTable.vip_level')}}" },
+                        'x-component-props': {
+                          width: 200,
+                          title:
+                            "{{t('customer.customerListTable.vip_level')}}",
+                        },
                         properties: {
                           vip_level: {
                             type: 'string',
@@ -469,7 +520,10 @@ const formSchema: ISchema = {
                       column3: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: "{{t('common.amount')}}" },
+                        'x-component-props': {
+                          width: 200,
+                          title: "{{t('common.amount')}}",
+                        },
                         'x-reactions': {
                           dependencies: ['upgrade_type'],
                           fulfill: {
@@ -486,7 +540,10 @@ const formSchema: ISchema = {
                       discount_percentage_column: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: "{{t('equity.discount-rate')}}"},
+                        'x-component-props': {
+                          width: 200,
+                          title: "{{t('equity.discount-rate')}}",
+                        },
                         'x-reactions': {
                           dependencies: ['upgrade_type'],
                           fulfill: {
@@ -503,7 +560,10 @@ const formSchema: ISchema = {
                       rounding_off_column: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: "{{t('equity.rounding-off.type')}}" },
+                        'x-component-props': {
+                          width: 200,
+                          title: "{{t('equity.rounding-off.type')}}",
+                        },
                         'x-reactions': {
                           dependencies: ['upgrade_type'],
                           fulfill: {
@@ -521,7 +581,10 @@ const formSchema: ISchema = {
                       rounding_amount_column: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: "{{t('equity.rounding-amount')}}" },
+                        'x-component-props': {
+                          width: 200,
+                          title: "{{t('equity.rounding-amount')}}",
+                        },
                         'x-reactions': {
                           dependencies: ['upgrade_type'],
                           fulfill: {
@@ -629,7 +692,11 @@ const formSchema: ISchema = {
                       column2: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: "{{t('customer.customerListTable.vip_level')}}" },
+                        'x-component-props': {
+                          width: 200,
+                          title:
+                            "{{t('customer.customerListTable.vip_level')}}",
+                        },
                         properties: {
                           vip_level: {
                             type: 'string',
@@ -648,7 +715,10 @@ const formSchema: ISchema = {
                       total_order_amount_column: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: "{{t('customer.customerListTable.points')}}" },
+                        'x-component-props': {
+                          width: 200,
+                          title: "{{t('customer.customerListTable.points')}}",
+                        },
                         properties: {
                           points_multiple: {
                             type: 'string',
@@ -759,12 +829,26 @@ const { Form, formAPI } = useIgourdForm({
     // 动态设置等级数据
     onFieldValueChange('maximum_vip_level', (field, form: Form) => {
       vipList.value = [];
-      for (let i = 1; i <= field.value; i++) {
+      let value = field.value;
+      if (value && !/[0-9]/.test(value)) {
+        value = value.replace(/[^0-9]/g, '');
+      }
+      const max = value > 10 ? 10 : value;
+      formAPI.setValuesIn('maximum_vip_level', max);
+      console.log(max);
+      for (let i = 1; i <= max; i++) {
         vipList.value.push({
           value: i,
           label: i,
         });
       }
+    });
+    onFieldValueChange('default_vip_level', (field, form: Form) => {
+      let value = field.value;
+      if (value && !/[0-9]/.test(value)) {
+        value = value.replace(/[^0-9]/g, '');
+      }
+      formAPI.setValuesIn('default_vip_level', value);
     });
     // 会员升级模式设置录入数据项目
     onFieldValueChange('rights_type', (field, form: Form) => {
@@ -777,6 +861,7 @@ const { Form, formAPI } = useIgourdForm({
   },
   scope: {
     vipList,
+    validatorDefaultVIP,
   },
 });
 

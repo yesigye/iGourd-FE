@@ -86,7 +86,7 @@ export function usePurchaseReturned() {
     // 获取列表数据
     query: getPurchaseReturnedPageListApi,
     // 删除退货单
-    remove: async (data: { returned_id_list: number[] }) => {
+    drop: async (data: { returned_id_list: number[] }) => {
       return await deletePurchaseReturnedApi(data);
     },
   };

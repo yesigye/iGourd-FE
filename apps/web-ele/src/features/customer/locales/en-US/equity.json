@@ -36,5 +36,8 @@
   "timestamp": "Timestamp generation",
   "vip-name": "VIP name",
   "rounding-amount ": "Rounding amount",
-  "discount-rate": "Discount rate"
+  "discount-rate": "Discount rate",
+  "defaultviplevel-validator-msg": "Default VIP level cannot be higher than the maximum membership level",
+  "please-enter-defaultviplevel": "Enter default VIP level",
+  "please-enter-maximummembershiplevel": "Enter maximum VIP level (1-10)"
 }

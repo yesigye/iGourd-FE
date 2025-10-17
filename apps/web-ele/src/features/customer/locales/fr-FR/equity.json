@@ -31,10 +31,13 @@
     "gift": "Cadeau",
     "other": "Autre"
   },
-  "default-vip-level-placeholder":"Niveau VIP par défaut",
-  "max-mummember-level-placeholder":"Niveau maximum de membre (1-10)",
+  "default-vip-level-placeholder": "Niveau VIP par défaut",
+  "max-mummember-level-placeholder": "Niveau maximum de membre (1-10)",
   "timestamp": "Génération d'horodatage",
-  "vip-name":"Nom VIP",
-  "rounding-amount ":"Montant d'arrondi",
-  "discount-rate":"Taux de réduction"
+  "vip-name": "Nom VIP",
+  "rounding-amount ": "Montant d'arrondi",
+  "discount-rate": "Taux de réduction",
+  "defaultviplevel-validator-msg": "Le niveau VIP par défaut ne peut pas dépasser le niveau d'adhésion maximal",
+  "please-enter-defaultviplevel": "Saisissez le niveau VIP par défaut",
+  "please-enter-maximummembershiplevel": "Saisissez le niveau VIP maximum (1-10)"
 }
