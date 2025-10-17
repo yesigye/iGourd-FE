@@ -38,6 +38,7 @@ export async function initializeCurrencySymbol() {
     const useStore = useUserStore();
     const { merchantInfo } = useStore;
     const currencySymbol = merchantInfo?.currency_symbol || '';
+    console.log('currencySymbol', currencySymbol);
     return currencySymbol;
   } catch (error) {
     console.error('获取货币符号失败:', error);
