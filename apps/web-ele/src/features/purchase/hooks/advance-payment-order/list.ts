@@ -35,7 +35,7 @@ export function useAdvancePaymentOrder() {
       sortable: true,
     },
     {
-      field: 'receipt_direction',
+      field: 'payment_direction',
       minWidth: 140,
       title: t('account.order_dir'),
       sortable: true,
@@ -72,17 +72,6 @@ export function useAdvancePaymentOrder() {
       formatter({ cellValue }) {
         return t(
           `collection-voucher.business_type.${cellValue.toLocaleLowerCase()}`,
-        );
-      },
-    },
-    {
-      field: 'ledger_type',
-      minWidth: 130,
-      title: t('account.accountType'),
-      sortable: true,
-      formatter({ cellValue }) {
-        return t(
-          `collection-voucher.ledger_type_enum.${cellValue.toLocaleLowerCase()}`,
         );
       },
     },
@@ -144,8 +133,8 @@ export function useAdvancePaymentOrder() {
     },
     tabs: [
       { label: '全部', value: 'ALL' },
-      { label: '红单', value: 'POSITIVE_ORDER' },
-      { label: '蓝单', value: 'NEGATIVE_ORDER' },
+      { label: '蓝单', value: 'POSITIVE_ORDER' },
+      { label: '红单', value: 'NEGATIVE_ORDER' },
     ],
 
     searchFormSchema,

@@ -76,7 +76,7 @@ export function useReturnForm() {
 
     formAPI.setValues({
       order_info: records,
-      receipt_order_item_list: [{}]
+      advance_payment_order_item_list: [{}]
     });
   };
   const orderListApi = (data: any) => {

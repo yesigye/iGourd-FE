@@ -2,7 +2,7 @@
 import { useAdvancePaymentOrderForm } from '@@/purchase/hooks';
 
 const { Drawer, Form } = useAdvancePaymentOrderForm({
-  business_type: 'SALES_ORDER',
+  business_type: 'PREPAYMENT',
 });
 </script>
 

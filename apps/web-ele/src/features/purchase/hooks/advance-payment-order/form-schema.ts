@@ -1,7 +1,7 @@
-import { getCustomerPageListApi } from '#/features/customer';
 import { type ISchema } from '@igourd/common-ui';
 import { AdvancePaymentModalTable } from '@@/purchase/components';
 import { h } from 'vue';
+import { getVendorList } from '#/features/inventory';
 export function useCollectionVoucherSchema() {
   return {
     type: 'object',
@@ -36,7 +36,7 @@ export function useCollectionVoucherSchema() {
                 default: 'SALES_ORDER',
                 'x-hidden': true,
               },
-              receipt_direction: {
+              payment_direction: {
                 type: 'string',
                 'x-component': 'Radio.Group',
                 'x-component-props': {
@@ -54,11 +54,11 @@ export function useCollectionVoucherSchema() {
                   },
                 ],
               },
-              received_amount: {
+              actual_amount: {
                 type: 'number',
                 'x-hidden': true,
                 'x-reactions': {
-                  dependencies: ['receipt_order_item_list.*.amount'],
+                  dependencies: ['advance_payment_order_item_list.*.amount'],
                   fulfill: {
                     state: {
                       value: `{{ sum($deps[0]??[]) }}`,
@@ -70,7 +70,7 @@ export function useCollectionVoucherSchema() {
                 type: 'void',
                 'x-component': 'Space',
                 properties: {
-                  customer_id: {
+                  vendor_id: {
                     type: 'string',
                     'x-component': 'FormilySearchSelect',
                     'x-decorator': 'FormItem',
@@ -81,7 +81,7 @@ export function useCollectionVoucherSchema() {
                       disabled: false,
                       remoteShowSuffix: true,
                       onSearch: (params: any) =>
-                        getCustomerPageListApi(params).then((res) => {
+                        getVendorList(params).then((res) => {
                           return {
                             ...res,
                             list: res.list.map((item: any) => {
@@ -121,7 +121,7 @@ export function useCollectionVoucherSchema() {
                       disabled: false,
                     },
                   },
-                  receipt_time: {
+                  payment_time: {
                     type: 'string',
                     'x-component': 'DatePicker',
                     'x-decorator': 'FormItem',
@@ -383,7 +383,7 @@ export function useCollectionVoucherSchema() {
                   },
                 },
               },
-              receipt_order_item_list: {
+              advance_payment_order_item_list: {
                 type: 'array',
                 'x-component': 'ArrayTable',
                 items: {

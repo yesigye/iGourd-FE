@@ -16,7 +16,7 @@ export function useAdvancePaymentOrderForm(props: any) {
       return;
     }
     formAPI.setValuesIn(
-      `receipt_order_item_list.${index}.account_ledger_id`,
+      `advance_payment_order_item_list.${index}.account_ledger_id`,
       op.account_ledger_id,
     );
     // record.account_ledger_id = op.account_ledger_id;
@@ -27,7 +27,7 @@ export function useAdvancePaymentOrderForm(props: any) {
       return;
     }
     formAPI.setValuesIn(
-      `receipt_order_item_list.${index}.payment_method_mark`,
+      `advance_payment_order_item_list.${index}.payment_method_mark`,
       op.mark,
     );
   }
@@ -40,7 +40,7 @@ export function useAdvancePaymentOrderForm(props: any) {
     },
     formOptions: {
       initialValues: {
-        receipt_direction: 'POSITIVE_ORDER',
+        payment_direction: 'POSITIVE_ORDER',
       },
       scope: {
         business_type: props.business_type,

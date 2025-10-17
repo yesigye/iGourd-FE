@@ -37,8 +37,8 @@ const [Modal, modalApi] = useIgourdModal({
     const last_debt = sum(records.map((item: any) => item.repaid_amount));
     const total_amount = sum(records.map((item: any) => item.total_amount));
     formAPI.setValues({
-      order_info: records,
-      receipt_order_item_list: [{}],
+      business_order: records,
+      advance_payment_order_item_list: [{}],
       total_amount,
       last_debt: last_debt,
     });
