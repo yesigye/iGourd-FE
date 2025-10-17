@@ -90,7 +90,6 @@ export function useReturnForm() {
     });
   };
   const accountChange = (_, op, record, index) => {
-    debugger
     if (!op) {
       return;
     }
@@ -813,7 +812,6 @@ export function useReturnForm() {
           formAPI.reset();
           const data = drawerApi.getData();
           // 编辑
-          debugger
           if (data.id) {
             const detail = await getPurchaseReturnedDetailApi({
               purchase_returned_id: data.id,

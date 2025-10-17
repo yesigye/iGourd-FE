@@ -766,7 +766,6 @@ export function useOrderForm() {
     if (!records) {
       return;
     }
-    debugger;
 
     formAPI.setValues({
       order_info: records,
@@ -783,7 +782,6 @@ export function useOrderForm() {
     });
   };
   const accountChange = (_, op, record, index) => {
-    debugger;
     if (!op) {
       return;
     }
