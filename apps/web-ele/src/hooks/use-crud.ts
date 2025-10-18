@@ -4,12 +4,13 @@ import type { Component, Ref } from 'vue';
 import type { ISchema } from '@igourd/common-ui';
 
 import type {
+  ExtendedVxeGridApi,
   VxeGridListeners,
   VxeGridProps,
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
 
-import { computed, provide, reactive, ref } from 'vue';
+import { computed, inject, provide, reactive, ref } from 'vue';
 
 import { confirm, useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
@@ -384,6 +385,13 @@ function useCrud<T extends { id?: number | string }, P extends object>(
     handleDelete,
     handleView,
   };
+}
+
+export function useGridInstance<T extends object, P extends object>() {
+  return inject<{
+    gridApi: ExtendedVxeGridApi;
+    service: Partial<CRUDOptions<T, P>>;
+  }>(Symbol.for('PageGrid'));
 }
 
 export { useBatchOperate, useCrud };

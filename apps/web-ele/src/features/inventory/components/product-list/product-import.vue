@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, inject, ref, unref, watch } from 'vue';
 
 import {
   Card,
@@ -12,9 +12,12 @@ import {
 import { useI18n } from '@igourd/locales';
 
 import { UploadFiles } from '#/adapter/component/upload';
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
+import { useIgourdVxeGrid, type VxeGridProps } from '#/adapter/vxe-table';
+import { useGridInstance } from '#/hooks';
 
 const { t } = useI18n();
+
+const { gridApi } = useGridInstance() || {};
 // 支付历史表格配置
 const productColumns = computed(() => {
   return [
@@ -67,37 +70,52 @@ const productColumns = computed(() => {
       minWidth: 170,
       align: 'left',
     },
-  ];
+  ] as VxeGridPropTypes.Column[any][];
 });
-const productGridOptions: VxeGridProps<ProductDetail> = {
-  columns: productColumns.value,
+const selected = ref<string[]>([]);
+const productGridOptions: VxeGridProps<any> = {
+  gridOptions: {
+    columns: unref(productColumns),
+  },
   height: '',
   keepSource: true,
   pagerConfig: {
     enabled: false,
   },
+
   proxyConfig: {
     ajax: {
       query: async () => {},
     },
   },
 };
-const [ProductPreviewGrid, ProductPreviewGridApi] = useIgourdVxeGrid({
-  gridOptions: productGridOptions,
-});
-const [Drawer, drawerApi] = useIgourdDrawer({
+const [ProductPreviewGrid] = useIgourdVxeGrid(productGridOptions);
+const [Drawer] = useIgourdDrawer({
   async onOpenChange(val) {
     if (val) {
     }
   },
+});
+watch(productColumns, (value) => {
+  gridApi?.grid.reloadColumn(value);
+});
+const columns = computed(() => {
+  return gridApi?.grid
+    .getFullColumns()
+    .filter((i) => {
+      return i.type !== 'checkbox';
+    })
+    .filter((i) => {
+      return i.field !== 'operation';
+    });
 });
 </script>
 <template>
   <Drawer>
     <Card :header="t('product-list.import-fields')" class="mb-2.5 border-0">
       <section class="flex flex-wrap gap-2">
-        <div v-for="item in 40">
-          <ElButton>测试字段</ElButton>
+        <div v-for="item in columns" :key="item.field">
+          <ElButton @click="">{{ item.title }}</ElButton>
         </div>
       </section>
       <p class="text-gray mt-2.5 text-sm">
@@ -147,7 +165,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
           </ElButton>
         </div>
         <div class="mt-2.5">
-          <ProductPreviewGrid class="pl-0 pr-0" />
+          <ProductPreviewGrid :columns="productColumns" class="pl-0 pr-0" />
         </div>
       </section>
     </Card>
