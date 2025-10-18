@@ -18,7 +18,7 @@ export const overridesPreferences = defineOverridesPreferences({
   },
   logo: {
     fit: 'fill',
-    source: 'https://element-plus.org/images/element-plus-logo.svg',
+    source: '/logo.svg',
   },
   breadcrumb: {
     enable: false,
