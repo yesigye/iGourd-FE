@@ -71,6 +71,12 @@ interface MenuRecordRaw extends MenuRecordBadgeRaw {
    * @default true
    */
   show?: boolean;
+
+  collect_status?: string;
+  /**
+   * 菜单ID
+   */
+  menu_id?: string;
 }
 
 export type { ExRouteRecordRaw, MenuRecordBadgeRaw, MenuRecordRaw };

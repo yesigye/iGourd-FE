@@ -7,6 +7,8 @@ interface SessionOptions {
   user_id: string;
   owner_id: string;
   owner_type: string;
+  app_id: string;
+  app_key: string;
 }
 
 export function useSession() {
@@ -14,14 +16,22 @@ export function useSession() {
   const authStore = useAuthStore();
   const appStore = useAppStore();
   async function setSession(options?: Partial<SessionOptions>) {
-    const { token_id, user_id, owner_id, owner_type } = options ?? {};
+    const { token_id, app_key, app_id, user_id, owner_id, owner_type } =
+      options ?? {};
     if (owner_id) {
       userStore.setUserInfo({
-        current_login_user_app: { owner_id, owner_type, user_id },
+        current_login_user_app: {
+          app_key,
+          app_id,
+          owner_id,
+          owner_type,
+          user_id,
+        },
         jwt_token: { token_id },
       });
     }
-    await authStore.fetchUserInfo();
+    const { function_trees } = await authStore.fetchUserInfo();
+    await authStore.fetchCollect(function_trees);
     await appStore.fetchApps();
   }
   return { setSession };

@@ -22,7 +22,7 @@ function generateMenus(
   const finalRoutesMap: { [key: string]: string } = Object.fromEntries(
     router.getRoutes().map(({ name, path }) => [name, path]),
   );
-
+  console.log(routes)
   let menus = mapTree<ExRouteRecordRaw, MenuRecordRaw>(routes, (route) => {
     // 获取最终的路由路径
     const path = finalRoutesMap[route.name as string] ?? route.path ?? '';
@@ -43,6 +43,8 @@ function generateMenus(
       link,
       order,
       title = '',
+      id,
+      collect_status,
     } = meta;
 
     // 确保菜单名称不为空
@@ -77,6 +79,8 @@ function generateMenus(
       path: resultPath,
       show: !meta.hideInMenu,
       children: resultChildren,
+      menu_id: id,
+      collect_status,
     };
   });
 

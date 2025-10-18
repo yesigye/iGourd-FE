@@ -4,11 +4,12 @@ import type { MenuRecordRaw } from '@igourd/types';
 import type { MenuProps } from '@igourd-core/menu-ui';
 
 import { Menu } from '@igourd-core/menu-ui';
+import { useAccessStore } from '@igourd/stores';
 
 interface Props extends MenuProps {
   menus?: MenuRecordRaw[];
 }
-
+const { toggleCollect } = useAccessStore();
 const props = withDefaults(defineProps<Props>(), {
   accordion: true,
   menus: () => [],
@@ -40,6 +41,7 @@ function handleMenuOpen(key: string, path: string[]) {
     :rounded="rounded"
     scroll-to-active
     :theme="theme"
+    :onToggleCollect="toggleCollect"
     @open="handleMenuOpen"
     @select="handleMenuSelect"
   />

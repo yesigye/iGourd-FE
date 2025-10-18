@@ -35,8 +35,11 @@ import { useMenuScroll } from '../hooks/use-menu-scroll';
 import { flattedChildren } from '../utils';
 import Search from './search.vue';
 import SubMenu from './sub-menu.vue';
+import type { MenuRecordRaw } from '@igourd-core/typings';
 
-interface Props extends MenuProps {}
+interface Props extends MenuProps {
+  onToggleCollect: (subMenu: MenuRecordRaw) => Promise<any>;
+}
 
 defineOptions({ name: 'Menu' });
 
@@ -63,6 +66,8 @@ const sliceIndex = ref(-1);
 const openedMenus = ref<MenuProvider['openedMenus']>(
   props.defaultOpeneds && !props.collapse ? [...props.defaultOpeneds] : [],
 );
+
+
 const activePath = ref<MenuProvider['activePath']>(props.defaultActive);
 const items = ref<MenuProvider['items']>({});
 const subMenus = ref<MenuProvider['subMenus']>({});
@@ -136,6 +141,7 @@ createMenuContext(
     subMenus,
     theme: toRef(props, 'theme'),
     items,
+    onToggleCollect:props.onToggleCollect,
   }),
 );
 

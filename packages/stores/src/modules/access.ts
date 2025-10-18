@@ -3,6 +3,7 @@ import type { RouteRecordRaw } from 'vue-router';
 import type { MenuRecordRaw } from '@igourd-core/typings';
 
 import { acceptHMRUpdate, defineStore } from 'pinia';
+import { traverseTreeValues } from '@igourd-core/shared/utils';
 
 type AccessToken = null | string;
 interface AnyObject {
@@ -25,6 +26,9 @@ interface AccessState {
    * 登录 accessToken
    */
   accessToken: AccessToken;
+  /**
+   *菜单、权限树
+   */
   functionTrees?: AnyObject[];
   /**
    * 是否已经检查过权限
@@ -46,6 +50,17 @@ interface AccessState {
    * 登录 accessToken
    */
   refreshToken: AccessToken;
+
+  /**
+   * 收藏的菜单
+   */
+  collect: AnyObject[];
+  /**
+   * 设置菜单收藏
+   * @param menuItem
+   * @returns
+   */
+  toggleCollectFn: (menuItem: AnyObject) => Promise<any>;
 }
 
 /**
@@ -102,6 +117,38 @@ export const useAccessStore = defineStore('core-access', {
       this.isLockScreen = false;
       this.lockScreenPassword = undefined;
     },
+    async toggleCollect(menuItem: AnyObject) {
+      const collect_status =
+        menuItem.collect_status === 'CANCEL' ? 'COLLECTED' : 'CANCEL';
+      traverseTreeValues(this.accessMenus, (menu) => {
+        if (menu.menu_id === menuItem.menu_id) {
+          menu.collect_status = collect_status;
+          if (collect_status === 'COLLECTED') {
+            this.collect.push({
+              ...menu,
+              menu_model: menu,
+            });
+          } else {
+            const index = this.collect.findIndex(
+              (i) => i.menu_id === menuItem.menu_id,
+            );
+            this.collect.splice(index, 1);
+          }
+        }
+      });
+      traverseTreeValues(
+        this.functionTrees as AnyObject[],
+        (node) => {
+          if (node.function.menu_id === menuItem.menu_id) {
+            node.function.menu.collect_status = collect_status;
+          }
+        },
+        {
+          childProps: 'sub_function_trees',
+        },
+      );
+      await this.toggleCollectFn(menuItem);
+    },
   },
   persist: {
     // 持久化
@@ -113,6 +160,7 @@ export const useAccessStore = defineStore('core-access', {
       'refreshToken',
       'accessCodes',
       'isLockScreen',
+      'collect',
       'lockScreenPassword',
     ],
   },
@@ -127,6 +175,8 @@ export const useAccessStore = defineStore('core-access', {
     lockScreenPassword: undefined,
     loginExpired: false,
     refreshToken: null,
+    collect: [],
+    toggleCollectFn: () => Promise.resolve(),
   }),
 });
 
