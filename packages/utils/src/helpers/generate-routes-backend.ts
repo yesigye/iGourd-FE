@@ -18,7 +18,6 @@ async function generateRoutesByBackend(
 
   try {
     const menuRoutes = await fetchMenuListAsync?.();
-    console.log(`menuRoutes`, menuRoutes);
     if (!menuRoutes) {
       return [];
     }

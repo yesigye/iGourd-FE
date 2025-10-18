@@ -22,7 +22,6 @@ function generateMenus(
   const finalRoutesMap: { [key: string]: string } = Object.fromEntries(
     router.getRoutes().map(({ name, path }) => [name, path]),
   );
-  console.log(routes)
   let menus = mapTree<ExRouteRecordRaw, MenuRecordRaw>(routes, (route) => {
     // 获取最终的路由路径
     const path = finalRoutesMap[route.name as string] ?? route.path ?? '';
