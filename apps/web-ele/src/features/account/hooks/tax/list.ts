@@ -96,6 +96,7 @@ export function useTax() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'tax',
       columns: baseColumns,
       searchFormSchema: {
         keywords: {

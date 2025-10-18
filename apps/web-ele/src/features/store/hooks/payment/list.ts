@@ -153,6 +153,7 @@ export function useStorePayment() {
         first_level_merchant_id: owner_id,
       },
       service,
+      id: 'payment_1',
       columns: baseColumns,
       searchFormSchema: {
         keywords: {

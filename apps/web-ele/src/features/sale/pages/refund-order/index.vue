@@ -46,7 +46,7 @@ const handleRefund = (row) => {
     promotion_discount_amount: row.promotion_discount_amount,
     round_down_amount: row.round_down_amount,
     debt_deduction_amount: row.debt_deduction_amount,
-    promotion_discount_amount: row.promotion_discount_amount,
+
     total_amount: row.total_amount,
     remaining_amount: row.remaining_amount,
     total_paid_amount: row.total_paid_amount,

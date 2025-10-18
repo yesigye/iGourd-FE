@@ -174,6 +174,7 @@ export function useChartOfAccounts() {
       },
     },
     service,
+    id: 'chart-of-accounts',
     stripe: false,
     columns,
     pagerConfig: {

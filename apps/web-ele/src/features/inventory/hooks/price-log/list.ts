@@ -107,6 +107,7 @@ export function useInventoryPriceLogList() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'price-log',
       columns,
       searchFormSchema: {
         keywords: {

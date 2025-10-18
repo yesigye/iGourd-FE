@@ -103,6 +103,7 @@ export function useSettingSaleset() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'saleset',
       columns: baseColumns,
       searchFormSchema: {
         keywords: {

@@ -137,6 +137,7 @@ export function useCollectionVoucher() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'collection-voucher',
       columns: baseColumns,
       searchFormSchema: {
         keywords: {

@@ -150,6 +150,7 @@ export function useInventoryProductList() {
   } = useCrud({
     // @ts-ignore
     service,
+    id: 'product-list',
     columns,
     gridOptions: {
       showOverflow: false,

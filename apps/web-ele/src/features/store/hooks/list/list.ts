@@ -186,6 +186,7 @@ export function useStoreList() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'list',
       columns: baseColumns,
       params: {
         first_level_merchant_id: currentLoginUserApp.owner_id,

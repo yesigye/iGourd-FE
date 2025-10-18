@@ -74,6 +74,7 @@ export function useOperationLog() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'operation-log',
       columns: baseColumns,
       searchFormSchema: {
         keywords: {

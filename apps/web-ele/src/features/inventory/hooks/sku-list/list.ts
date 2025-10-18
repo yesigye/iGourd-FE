@@ -144,6 +144,7 @@ export function useInventorySkuList() {
       // @ts-ignore
       // service,
       columns,
+      id: 'sku-list',
       searchFormSchema,
       batchOperate: true,
       connectedComponent: SkuListDrawer,

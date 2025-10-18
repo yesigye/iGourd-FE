@@ -87,6 +87,7 @@ export function useClassification() {
     handleBatchDelete,
   } = useCrud({
     service,
+    id: 'class-ification',
     tabs: [
       {
         label: '全部',
