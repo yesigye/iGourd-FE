@@ -129,7 +129,15 @@ onMounted(async () => {
 </script>
 
 <template>
-  <ColPage auto-content-height>
+  <ColPage  headerClass="px-0 py-1 bg-muted border-0"
+    contentClass="pt-0"
+    auto-content-height
+    :left-width="20">
+    <template #description>
+      <div>
+        <div id="product-group-search" class="bg-card px-1"></div>
+      </div>
+    </template>
     <template #left="{ isCollapsed, expand }">
       <section class="bg-card h-full rounded p-2.5">
         <p class="flex justify-between text-sm font-medium">

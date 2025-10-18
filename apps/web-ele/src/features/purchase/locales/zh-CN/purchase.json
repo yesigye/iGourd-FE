@@ -346,5 +346,6 @@
     "total": "合计",
     "payment-method": "支付方式",
     "amount": "金额"
-  }
+  },
+  "number":"编号"
 }
