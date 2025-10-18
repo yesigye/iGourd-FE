@@ -43,5 +43,6 @@
     "offline": "Hors Ligne",
     "maintenance": "Maintenance",
     "error": "Erreur"
-  }
+  },
+  "device-name-device-code-placeholder": "Entrez les mots-clés pour rechercher (Nom de l'Appareil, Code de l'Appareil)"
 }
