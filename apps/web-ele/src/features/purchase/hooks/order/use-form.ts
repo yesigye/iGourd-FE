@@ -24,6 +24,8 @@ import { wareHouseProductSearch } from '#/features/inventory';
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
 // 供应商数据
 const purchaseList = ref([]);
+// 货币数据
+const currencyList = ref([]);
 function remoteMethod(keywords: string) {
   return getPurchaseListApi({
     page_num: 1,
@@ -43,6 +45,7 @@ function remoteMethod(keywords: string) {
 // 获取货币列表
 const getCurrencyList = async () => {
   const result = await basicsCurrencyList({});
+  currencyList.value = result;
   return result.map((item: any) => {
     return {
       ...item,
@@ -279,7 +282,7 @@ export function useOrderForm() {
                       },
                       row_0: {
                         type: 'void', // 表示空字段
-                        title: "{{t('order.deposit')}}", // formItem 的 label
+                        title: "{{t('purchase.currency')}}", // formItem 的 label
                         'x-component': 'Space',
                         'x-decorator': 'FormItem',
                         'x-decorator-props': {
@@ -305,7 +308,7 @@ export function useOrderForm() {
                               },
                             ],
                           },
-                          deposit_amount: {
+                          exchange_rate: {
                             type: 'string',
                             'x-decorator': 'FormItem',
                             'x-component': 'Input',
@@ -321,6 +324,7 @@ export function useOrderForm() {
                             'x-component-props': {
                               style: 'width: 240px;',
                               colon: false,
+                              disabled: true,
                             },
                             'x-reactions': {
                               fulfill: {
@@ -413,10 +417,10 @@ export function useOrderForm() {
                 'x-component': 'div',
                 'x-component-props': {
                   class: 'w-full flex my-10',
-                  style:{
-                    "padding-left":"var(--el-card-padding)",
-                    "padding-right":"var(--el-card-padding)"
-                  }
+                  style: {
+                    'padding-left': 'var(--el-card-padding)',
+                    'padding-right': 'var(--el-card-padding)',
+                  },
                 },
                 properties: {
                   row_col_0: {
@@ -442,7 +446,7 @@ export function useOrderForm() {
                             },
                             'x-component': 'Input',
                           },
-                          amount_1: {
+                          discount_percentage: {
                             type: 'string',
                             title: "{{t('purchase.order-pay.discount-rate')}}",
                             'x-decorator': 'FormItem',
@@ -452,7 +456,7 @@ export function useOrderForm() {
                               feedbackLayout: 'terse',
                             },
                           },
-                          amount_2: {
+                          deposit_amount: {
                             type: 'string',
                             title: "{{t('purchase.order-pay.total')}}",
                             'x-decorator': 'FormItem',
@@ -476,15 +480,16 @@ export function useOrderForm() {
                             space: {
                               type: 'void',
                               'x-component': 'Space',
-                               'x-component-props': {
-                                  style:{
-                                    "align-items": "end"
-                                  }
-                               },
+                              'x-component-props': {
+                                style: {
+                                  'align-items': 'end',
+                                },
+                              },
                               properties: {
                                 account_id: {
                                   type: 'string',
-                                  title: "{{t('purchase.order-pay.select-account')}}",
+                                  title:
+                                    "{{t('purchase.order-pay.select-account')}}",
                                   'x-decorator': 'FormItem',
                                   'x-component': 'FormilySearchSelect',
                                   'x-decorator-props': {
@@ -501,7 +506,8 @@ export function useOrderForm() {
                                 },
                                 payment_method_type: {
                                   type: 'string',
-                                  title: "{{t('purchase.order-pay.payment-method')}}",
+                                  title:
+                                    "{{t('purchase.order-pay.payment-method')}}",
                                   'x-decorator': 'FormItem',
                                   'x-component': 'FormilySearchSelect',
                                   'x-decorator-props': {
@@ -534,9 +540,9 @@ export function useOrderForm() {
                                     title: "{{t('common.operation')}}",
                                     width: 100,
                                     fixed: 'right',
-                                    style:{
-                                      "margin-bottom":"8px"
-                                    }
+                                    style: {
+                                      'margin-bottom': '8px',
+                                    },
                                   },
                                   properties: {
                                     addition: {
@@ -568,7 +574,8 @@ export function useOrderForm() {
                                         fulfill: {
                                           state: {
                                             componentProps: {
-                                              disabled: '{{  $deps[0]?.length === 1 }}',
+                                              disabled:
+                                                '{{  $deps[0]?.length === 1 }}',
                                             },
                                           },
                                         },
@@ -577,6 +584,10 @@ export function useOrderForm() {
                                   },
                                 },
                                 account_ledger_id: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                },
+                                currency_code: {
                                   type: 'string',
                                   'x-hidden': true,
                                 },
@@ -633,7 +644,7 @@ export function useOrderForm() {
                                   style: { fontSize: '14px' },
                                 },
                               },
-                              diffNum: {
+                              subtotal_amount: {
                                 type: 'string',
                                 'x-component': 'div',
                                 'x-content': "{{$self.value?$self.value:'0'}}",
@@ -659,7 +670,7 @@ export function useOrderForm() {
                                   style: { fontSize: '14px' },
                                 },
                               },
-                              diffCost: {
+                              vat_amount: {
                                 type: 'string',
                                 'x-component': 'div',
                                 'x-content': "{{$self.value?$self.value:'0'}}",
@@ -686,7 +697,7 @@ export function useOrderForm() {
                                   style: { fontSize: '14px' },
                                 },
                               },
-                              diffSale: {
+                              other_tax_amount: {
                                 type: 'string',
                                 'x-component': 'div',
                                 'x-content': "{{$self.value?$self.value:'0'}}",
@@ -712,7 +723,7 @@ export function useOrderForm() {
                                   style: { fontSize: '14px' },
                                 },
                               },
-                              diffSale: {
+                              total_amount: {
                                 type: 'string',
                                 'x-component': 'div',
                                 'x-content': "{{$self.value?$self.value:'0'}}",
@@ -807,7 +818,7 @@ export function useOrderForm() {
       });
       formData.purchase_order_deposit_list.forEach((item) => {
         item.merchant_id = currentLoginUserApp.owner_id;
-      })
+      });
 
       // 	汇率(选择币种和系统币种的换算比例)
       formData.exchange_rate = 0;
@@ -854,24 +865,37 @@ export function useOrderForm() {
       return;
     }
     formAPI.setValuesIn(
-      `purchase_payment_plan_list.${index}.account_ledger_id`,
+      `purchase_order_deposit_list.${index}.account_ledger_id`,
       op.account_ledger_id,
     );
-    // record.account_ledger_id = op.account_ledger_id;
+    formAPI.setValuesIn(
+      `purchase_order_deposit_list.${index}.currency_code`,
+      op.currency_code,
+    );
   };
   const payment_method_change = (_, op, record, index) => {
     if (!op) {
       return;
     }
-
     formAPI.setValuesIn(
-      `purchase_payment_plan_list.${index}.payment_method_id`,
+      `purchase_order_deposit_list.${index}.payment_method_id`,
       op.id,
     );
     formAPI.setValuesIn(
-      `purchase_payment_plan_list.${index}.payment_method_mark`,
+      `purchase_order_deposit_list.${index}.payment_method_mark`,
       op.mark,
     );
+  };
+
+  const summary = (list) => {
+    const total = list.reduce(
+      (acc: any, item: any) => acc + (item.quantity?item.quantity:0) * item.cost_price,
+      0,
+    );
+    return {
+      subtotalAmount: total.toFixed(2),
+      totalAmount: total.toFixed(2),
+    };
   };
 
   const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
@@ -891,7 +915,7 @@ export function useOrderForm() {
             });
             detail.purchase_order_item_list =
               detail.purchase_order_item_model_list;
-
+            detail.purchase_order_deposit_list = detail.purchase_order_deposit_detail_models;
             formAPI.setValues(detail);
           } else {
             // 增加时，保留1条数据
@@ -930,6 +954,7 @@ export function useOrderForm() {
         merchantPaymentMethodOption,
       },
       effects() {
+        // 选中供应商
         onFieldValueChange('vendor_id', (field, form) => {
           console.log(`target值变化：${field.value}`);
           const currObj = purchaseList.value.find(
@@ -945,6 +970,20 @@ export function useOrderForm() {
           form.setFieldState('info_1', (f) => {
             f.visible = true;
           });
+        });
+        //选中 货币
+        onFieldValueChange('currency_code', (field, form) => {
+          const currObj = currencyList.value.find(
+            (item) => (item.id = field.value),
+          );
+          form.setValuesIn('exchange_rate', currObj?.exchange_rate);
+        });
+        // 商品数据变化 计算合计
+        onFieldValueChange('purchase_order_item_list.*', (field, form) => {
+          const {subtotalAmount,totalAmount} =summary(field.records);
+          form.setValuesIn('subtotal_amount', subtotalAmount);
+          form.setValuesIn('total_amount', totalAmount);
+
         });
       },
       schema,
