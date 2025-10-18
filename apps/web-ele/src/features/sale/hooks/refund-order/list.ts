@@ -163,6 +163,7 @@ export function useSaleRefundOrder() {
     handleBatchDelete,
   } = useCrud({
     service,
+    id: 'refund-order',
     columns: baseColumns,
     searchFormSchema,
     connectedComponent: SaleRefundOrderDrawer,

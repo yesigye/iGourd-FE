@@ -54,6 +54,7 @@ export function useCurrency() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'currency',
       columns: baseColumns,
       searchFormSchema: {
         keywords: {

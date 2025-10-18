@@ -23,6 +23,8 @@ import {
   useProductImport,
 } from '@@/inventory/hooks';
 
+import StatusTemplate from '#/components/status/index.vue';
+
 defineOptions({
   name: 'IInventoryProductList',
 });
@@ -135,6 +137,20 @@ const [Modal, modalApi] = useIgourdModal({
 const searchKeyword = ref('');
 const selectedLabels = ref([]);
 const searchResults = ref([]);
+
+const STATUS_CONFIG = [
+  {
+    name: 'inventory.offSale',
+    value: 'OFF_SALE',
+    iconColor: '#9e9e9e',
+  },
+  {
+    name: 'inventory.onSale',
+    value: 'ON_SALE',
+    iconColor: '#4caf51',
+  },
+
+];
 const handleAddLabel = (item) => {
   modalApi.setData({ type: 'add', data: item });
   modalApi.open();
@@ -192,6 +208,12 @@ const handleImportProduct = () => {
         >
           {{ t('common.delete') }}
         </ElButton>
+      </template>
+      <template #status="{ row }">
+        <StatusTemplate
+          :value="row.status"
+          :status-list="STATUS_CONFIG"
+        />
       </template>
       <template #label="{ row }">
         <div class="flex flex-wrap items-center">

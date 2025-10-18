@@ -13,7 +13,14 @@ import { resetAllStores, useAccessStore, useUserStore } from '@igourd/stores';
 
 import { defineStore } from 'pinia';
 
-import { getAccessCodesApi, getUserInfoApi, loginApi } from '#/api';
+import { isEmpty, mapTree, traverseTreeValues } from '@igourd/utils';
+
+import {
+  getAccessCodesApi,
+  getMenuCollect,
+  getUserInfoApi,
+  loginApi,
+} from '#/api';
 import { $t } from '#/locales';
 
 export const useAuthStore = defineStore('auth', () => {
@@ -107,6 +114,7 @@ export const useAuthStore = defineStore('auth', () => {
       owner_id: currentInfo.owner_id,
       owner_type: currentInfo.owner_type,
     });
+
     userStore.setMerchantInfo({
       // @ts-ignore
       owner_id: userInfo.owner_id,
@@ -118,14 +126,53 @@ export const useAuthStore = defineStore('auth', () => {
     if (!userInfo) {
       throw new TypeError('UserInfo is Null');
     }
-
     userStore.setTokenId(userInfo.jwt_token.token_id);
     userStore.setUserInfo(userInfo);
     userStore.setLoginAccount(userInfo.login_account || '');
     userStore.setLoginType(userInfo.type || '');
-    accessStore.setFunctionTrees(userInfo.function_trees);
     accessStore.setAccessToken(userInfo.jwt_token.token_id);
     return userInfo;
+  }
+
+  async function fetchCollect(function_trees: any) {
+    const { currentLoginUserApp } = userStore;
+    const collect = (await getMenuCollect(currentLoginUserApp)) ?? [];
+    function_trees = mapTree(
+      function_trees,
+      (node: any) => {
+        return {
+          ...node,
+          function: {
+            ...node.function,
+            menu: {
+              ...node.function.menu,
+              collect_status: collect.find((col: any) => {
+                return col.menu_id === node.function.menu_id;
+              })
+                ? 'COLLECTED'
+                : 'CANCEL',
+            },
+          },
+        };
+      },
+      {
+        childProps: 'sub_function_trees',
+      },
+    );
+    accessStore.setFunctionTrees(function_trees);
+    const actions = traverseTreeValues(
+      function_trees,
+      (node) => {
+        return node.function.actions;
+      },
+      {
+        childProps: 'sub_function_trees',
+      },
+    ).reduce((total, current) => {
+      return total.concat(current);
+    }, []);
+    accessStore.setAccessCodes(actions);
+    accessStore.collect = collect;
   }
 
   function $reset() {
@@ -138,5 +185,6 @@ export const useAuthStore = defineStore('auth', () => {
     fetchUserInfo,
     loginLoading,
     logout,
+    fetchCollect,
   };
 });

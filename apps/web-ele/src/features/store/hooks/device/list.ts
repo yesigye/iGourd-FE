@@ -131,6 +131,7 @@ export function useStoreDevice() {
     handleBatchDelete,
   } = useCrud({
     service,
+    id: 'device',
     columns: baseColumns,
     searchFormSchema: {
       keywords: {

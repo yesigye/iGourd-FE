@@ -30,6 +30,7 @@ const nsMenu = useNamespace('menu');
  */
 const hasChildren = computed(() => {
   const { menu } = props;
+
   return (
     Reflect.has(menu, 'children') && !!menu.children && menu.children.length > 0
   );
@@ -59,7 +60,9 @@ function hasSubGroup(menu?: MenuRecordRaw[]) {
         <span>{{ menu.name }}</span>
         <IgourdIcon
           v-show="menu.parents"
+          @click.stop="rootMenu.onToggleCollect(menu)"
           class="text-muted-foreground ml-1 size-5 cursor-pointer rounded-sm p-1"
+          :class="{ 'text-warning': menu.collect_status === 'COLLECTED' }"
           icon="material-symbols:kid-star"
         />
       </div>

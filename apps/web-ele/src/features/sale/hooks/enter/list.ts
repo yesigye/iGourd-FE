@@ -178,6 +178,7 @@ export function useSaleEnter() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'enter',
       columns: baseColumns,
       searchFormSchema: {
         keywords: {

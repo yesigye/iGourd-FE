@@ -280,6 +280,7 @@ const options = computed(() => {
   if (mergedOptions.formConfig) {
     mergedOptions.formConfig.enabled = false;
   }
+  console.log('mergedOptions', mergedOptions);
   return mergedOptions;
 });
 
@@ -335,6 +336,7 @@ async function init() {
     toRaw(gridOptions.value),
     toRaw(globalGridConfig),
   );
+  console.log(defaultGridOptions);
   // 内部主动加载数据，防止form的默认值影响
   const autoLoad = defaultGridOptions.proxyConfig?.autoLoad;
   const enableProxyConfig = options.value.proxyConfig?.enabled;

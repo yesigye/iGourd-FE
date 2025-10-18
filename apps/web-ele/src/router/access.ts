@@ -6,14 +6,14 @@ import type {
 
 import { generateAccessible } from '@igourd/access';
 import { preferences } from '@igourd/preferences';
-import { useUserStore } from '@igourd/stores';
+import { useAccessStore } from '@igourd/stores';
 
 import { BasicLayout, IFrameView } from '#/layouts';
 
 const forbiddenComponent = () => import('#/views/_core/fallback/forbidden.vue');
 
 async function generateAccess(options: GenerateMenuAndRoutesOptions) {
-  const { userInfo } = useUserStore();
+  const { functionTrees } = useAccessStore();
   const pageMap: ComponentRecordType = import.meta.glob([
     '../views/**/*.vue',
     '../features/*/pages/**/*.vue',
@@ -27,7 +27,7 @@ async function generateAccess(options: GenerateMenuAndRoutesOptions) {
     ...options,
     // @ts-ignore
     fetchMenuListAsync: () => {
-      return Promise.resolve(userInfo.function_trees);
+      return Promise.resolve(functionTrees);
     },
     // 可以指定没有权限跳转403页面
     forbiddenComponent,

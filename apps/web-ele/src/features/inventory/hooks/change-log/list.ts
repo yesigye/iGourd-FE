@@ -133,6 +133,7 @@ export function useInventoryChangeLogList() {
     handleBatchDelete,
   } = useCrud({
     service,
+    id: 'change-log',
     columns,
     searchFormSchema: {
       keywords: {

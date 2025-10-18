@@ -96,6 +96,7 @@ export function usePurchaseReturned() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'returned',
       columns: baseColumns,
       searchFormSchema: {
         keywords: {

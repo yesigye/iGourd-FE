@@ -6,7 +6,7 @@ import type {
   RouteRecordStringComponent,
 } from '@igourd-core/typings';
 
-import { mapTree } from '@igourd-core/shared/utils';
+import { cloneDeep, mapTree } from '@igourd-core/shared/utils';
 
 /**
  * 动态生成路由 - 后端方式
@@ -25,7 +25,7 @@ async function generateRoutesByBackend(
     for (const [key, value] of Object.entries(pageMap)) {
       normalizePageMap[normalizeViewPath(key)] = value;
     }
-    const routeNodes = functionTreesToRouteNodes(menuRoutes);
+    const routeNodes = functionTreesToRouteNodes(cloneDeep(menuRoutes));
     const routes = convertRoutes(routeNodes, layoutMap, normalizePageMap);
     return routes;
   } catch (error) {
@@ -38,7 +38,6 @@ function functionTreesToRouteNodes(
   functionTrees: Record<string, any>[],
 ): RouteRecordStringComponent[] {
   const nodes: RouteRecordStringComponent[] = [];
-
   functionTrees.forEach((tree) => {
     const fn = tree.function;
     if (!fn || !fn.menu) return;
@@ -46,14 +45,13 @@ function functionTreesToRouteNodes(
     const menu = fn.menu;
     const menuUrl = menu.url || '';
     const routeName = menuUrl.split('/').filter(Boolean).join('_') || 'home';
-
     // 生成组件路径
     const componentPath = menu.component_paths as string;
-
     const node: any = {
       path: menuUrl,
       name: routeName,
       meta: {
+        ...menu,
         hideInMenu: menu.is_displayed === false,
         title: menu.menu_key,
         icon: menu.style_class,

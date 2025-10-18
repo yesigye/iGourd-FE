@@ -12,6 +12,10 @@ import { moneyFormat } from '@igourd/utils';
 
 import StatusTemplate from '#/components/status/index.vue';
 import { formatNumber } from '#/utils';
+import {
+  asyncTableColumn,
+  findTableColumn,
+} from '#/api/core/dynamic-table-column';
 
 // import { useIgourdForm } from './form';
 
@@ -67,6 +71,7 @@ setupIgourdVxeTable({
           refresh: true,
         },
         customConfig: {
+          storage: true,
           checkMethod({ column }) {
             if (column.type === 'checkbox') {
               return false;
@@ -82,6 +87,12 @@ setupIgourdVxeTable({
               return false;
             }
             return true;
+          },
+          restoreStore({ id }) {
+            return findTableColumn(id)
+          },
+          updateStore({ storeData, id }) {
+            asyncTableColumn(id, JSON.stringify(storeData));
           },
         },
         round: true,

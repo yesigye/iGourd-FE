@@ -128,6 +128,7 @@ export function useCustomerAccount() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'account',
       columns: baseColumns,
       searchFormSchema: {
         keywords: {

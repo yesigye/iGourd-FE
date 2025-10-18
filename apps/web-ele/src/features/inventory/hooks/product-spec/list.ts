@@ -79,6 +79,8 @@ export function useInventoryProductSpec() {
   const uCrud = useCrud({
     // @ts-ignore
     columns: tableColumns.value,
+    id: 'label',
+    searchFormAppendTo: '#product-spec-search',
     searchFormSchema: {
       keywords: {
         type: 'string',

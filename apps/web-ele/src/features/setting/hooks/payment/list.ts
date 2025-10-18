@@ -116,6 +116,7 @@ export function useSettingPayment() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'payment',
       columns: baseColumns,
       searchFormSchema: {
         keywords: {

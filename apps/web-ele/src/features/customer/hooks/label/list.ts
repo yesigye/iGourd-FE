@@ -57,6 +57,7 @@ export function useCustomerLabel() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'label',
       columns: baseColumns,
       searchFormSchema: "",
       batchOperate: true, // 支持批量删除

@@ -146,6 +146,7 @@ export function usePurchaseReceipt() {
     handleBatchDelete,
   } = useCrud({
     service,
+    id: 'receipt',
     columns: baseColumns,
     searchFormSchema: searchFormSchema,
     batchOperate: true, // 支持批量删除

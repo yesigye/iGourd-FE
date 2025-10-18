@@ -88,6 +88,7 @@ export function useCustomerFeature() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'feature',
       columns: baseColumns,
       searchFormSchema: {
         keywords: {

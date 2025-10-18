@@ -218,6 +218,7 @@ export function useSaleShifts() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'shifts',
       columns: baseColumns,
       searchFormSchema: {
         keywords: {

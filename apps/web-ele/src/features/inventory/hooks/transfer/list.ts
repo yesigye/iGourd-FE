@@ -140,6 +140,7 @@ export function useInventoryTransferList() {
   } = useCrud({
     // @ts-ignore
     service,
+    id: 'transfer',
     columns,
     searchFormSchema,
     batchOperate: true,

@@ -638,7 +638,6 @@ const addOrder = async () => {
       product_profile_photo: item.product_profile_photo, // 将 profile_photo 映射到 product_profile_photo
       product_unit_id: item.product_unit_id,
       product_unit_name: item.product_unit_name,
-      promotion_discount_amount: item.promotion_discount_amount,
       promotion_discount_description: item.promotion_discount_description,
       promotion_id: item.promotion_id,
       selling_price: item.selling_price,

@@ -61,6 +61,9 @@ export function useInventoryProductList() {
       field: 'status',
       title: t('inventory.status'),
       minWidth: 110,
+      slots: {
+        default: 'status',
+      },
     },
     {
       field: 'product_group_name',
@@ -147,6 +150,7 @@ export function useInventoryProductList() {
   } = useCrud({
     // @ts-ignore
     service,
+    id: 'product-list',
     columns,
     gridOptions: {
       showOverflow: false,

@@ -31,6 +31,7 @@ import {
   useMixedMenu,
 } from './menu';
 import { LayoutTabbar } from './tabbar';
+import { useAccessStore } from '@igourd/stores';
 
 defineOptions({ name: 'BasicLayout' });
 
@@ -120,6 +121,7 @@ const {
   handleSideMouseLeave,
   sidebarExtraVisible,
 } = useExtraMenu(mixHeaderMenus);
+const { toggleCollect } = useAccessStore();
 
 /**
  * 包装菜单，翻译菜单名称
@@ -253,7 +255,7 @@ const headerSlots = computed(() => {
         v-if="preferences.logo.enable"
         :fit="preferences.logo.fit"
         :class="logoClass"
-        :logo-size="92"
+        :logo-size="78"
         :collapsed="logoCollapsed"
         :src="preferences.logo.source"
         text=""
@@ -303,6 +305,7 @@ const headerSlots = computed(() => {
             :rounded="isMenuRounded"
             :theme="headerTheme"
             class="w-full"
+            :onToggleCollect="toggleCollect"
             mode="horizontal"
             @select="handleMenuSelect"
           />
@@ -331,6 +334,7 @@ const headerSlots = computed(() => {
         :rounded="isMenuRounded"
         :theme="sidebarTheme"
         mode="vertical"
+        :onToggleCollect="toggleCollect"
         @open="handleMenuOpen"
         @select="handleMenuSelect"
       />
@@ -354,6 +358,7 @@ const headerSlots = computed(() => {
         :menus="wrapperMenus(extraMenus)"
         :rounded="isMenuRounded"
         :theme="sidebarTheme"
+        :onToggleCollect="toggleCollect"
       />
     </template>
     <template #side-extra-title>

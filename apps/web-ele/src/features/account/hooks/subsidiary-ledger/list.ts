@@ -176,6 +176,7 @@ export function useSubsidiaryLedger() {
   } = useCrud({
     params,
     service,
+    id: 'subsidiary-ledger',
     proxyConfig: {
       autoLoad: false,
     },

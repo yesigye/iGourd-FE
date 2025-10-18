@@ -114,6 +114,7 @@ export function useInventoryCountList() {
     handleDelete,
   } = useCrud({
     service,
+    id: 'count',
     columns,
     connectedComponent: CountDrawer,
     searchFormSchema: {

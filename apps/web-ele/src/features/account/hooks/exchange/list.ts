@@ -79,6 +79,7 @@ export function useExchange() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
+      id: 'exchange',
       columns: baseColumns,
       searchFormSchema: {
         keywords: {

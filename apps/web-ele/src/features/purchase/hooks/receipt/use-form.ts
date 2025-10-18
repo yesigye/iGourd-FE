@@ -698,7 +698,7 @@ export function useReceiptForm() {
     try {
       let response = null;
       //固定写一个测试
-      formData.purchase_order_id = '1976912925254823938';
+      //formData.purchase_order_id = '1976912925254823938';
       // 其他税额
       formData.other_tax_amount = 0;
       formData.merchant_id = currentLoginUserApp.owner_id;
@@ -822,7 +822,7 @@ export function useReceiptForm() {
             });
             detail.goods_receipt_note_item_list =
               detail.goods_receipt_note_item_model_list;
-
+            detail.purchase_payment_plan_list = detail.purchase_payment_plan_detail_model_list
             formAPI.setValues(detail);
           } else {
             // 增加时，保留1条数据
