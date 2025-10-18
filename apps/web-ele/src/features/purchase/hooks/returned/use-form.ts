@@ -1,6 +1,6 @@
 import { useI18n } from '@igourd/locales';
 import type { ISchema } from '@igourd/common-ui';
-import { h, inject } from 'vue';
+import { h, inject,ref} from 'vue';
 import { Space } from '@igourd/common-ui';
 import ModalTable from '@igourd/plugins/modal-table';
 import { useUserStore } from '@igourd/stores';
@@ -34,9 +34,12 @@ function remoteMethod(keywords: string) {
     });
   });
 }
+// 货币数据
+const currencyList = ref([]);
 // 获取货币列表
 const getCurrencyList = async () => {
   const result = await basicsCurrencyList({});
+  currencyList.value = result;
   return result.map((item: any) => {
     return {
       ...item,
@@ -162,7 +165,7 @@ export function useReturnForm() {
                     properties: {
                       vendor_id: {
                         type: 'string',
-                        title: '供应商',
+                        title: "{{t('purchase.venderName')}}",
                         'x-decorator': 'FormItem',
                         'x-component': 'RemoteSelect',
                         'x-component-props': {
@@ -200,7 +203,7 @@ export function useReturnForm() {
                       },
                       row_0: {
                         type: 'void', // 表示空字段
-                        title: '货币', // formItem 的 label
+                        title: "{{t('purchase.currency')}}", // formItem 的 label
                         'x-component': 'Space',
                         'x-decorator': 'FormItem',
                         'x-decorator-props': {
@@ -226,7 +229,7 @@ export function useReturnForm() {
                               },
                             ],
                           },
-                          deposit_amount: {
+                          exchange_rate: {
                             type: 'string',
                             'x-decorator': 'FormItem',
                             'x-component': 'Input',
@@ -235,13 +238,14 @@ export function useReturnForm() {
                             },
                             'x-validator': [
                               {
-                                required: true,
+                                required: false,
                                 message: "{{t('order.input-deposit')}}",
                               },
                             ],
                             'x-component-props': {
                               style: 'width: 100px;',
                               colon: false,
+                              disabled: true,
                             },
                             'x-reactions': {
                               fulfill: {
@@ -875,6 +879,13 @@ export function useReturnForm() {
 
         //   // form.setValuesIn('vendor_name', currObj?.name);
         // });
+         //选中 货币
+        onFieldValueChange('currency_code', (field, form) => {
+          const currObj = currencyList.value.find(
+            (item) => (item.id = field.value),
+          );
+          form.setValuesIn('exchange_rate', currObj?.exchange_rate);
+        });
 
 
       },

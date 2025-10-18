@@ -822,7 +822,7 @@ export function useReceiptForm() {
             });
             detail.goods_receipt_note_item_list =
               detail.goods_receipt_note_item_model_list;
-
+            detail.purchase_payment_plan_list = detail.purchase_payment_plan_detail_model_list
             formAPI.setValues(detail);
           } else {
             // 增加时，保留1条数据
