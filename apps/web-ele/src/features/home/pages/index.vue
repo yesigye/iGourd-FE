@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Page } from '@igourd/common-ui';
+import { ElCol, ElRow, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { useHomeData, useHomeStats } from '@@/home/hooks';
@@ -15,9 +15,8 @@ const { stats, loading: statsLoading, loadStats } = useHomeStats();
 
 <template>
   <Page auto-content-height>
-    <div>
-      <h1>{{ t('home.title') }}</h1>
-      <p>首页</p>
-    </div>
+    <ElRow>
+      <ElCol :span="12"> 1 </ElCol>
+    </ElRow>
   </Page>
 </template>
