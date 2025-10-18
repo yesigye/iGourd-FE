@@ -1,17 +1,15 @@
 <script lang="ts" setup>
 import { ModalTable } from '#/components/modal-table';
 import { useForm, useIgourdModal } from '@igourd/common-ui';
-import { useOrderList } from '@@/account/hooks';
+import { usePurchaseOrderList } from '@@/purchase/hooks';
 import { useI18n } from '@igourd/locales';
 import { unref } from 'vue';
 import { sum } from '@igourd/utils';
 const defaultQueryParams = {
-  customer_id: '',
-  payment_type: 'CREDIT',
-  status_list: ['NO_REPAID', 'PARTIAL_REPAID'],
+  // customer_id: '',
 };
 const { Grid: SaleGrid, gridApi: saleGridApi } =
-  useOrderList(defaultQueryParams);
+  usePurchaseOrderList(defaultQueryParams);
 
 // const { Grid: AccountNotesGrid } = useNotesList(defaultQueryParams);
 const { t } = useI18n();
@@ -19,7 +17,7 @@ const form = useForm();
 
 async function onBeforeOpen() {
   await unref(form).validate('customer_id');
-  defaultQueryParams.customer_id = unref(form).getValuesIn('customer_id');
+  // defaultQueryParams.customer_id = unref(form).getValuesIn('customer_id');
 }
 
 const [Modal, modalApi] = useIgourdModal({
@@ -34,8 +32,8 @@ const [Modal, modalApi] = useIgourdModal({
     if (!records) {
       return;
     }
-    const last_debt = sum(records.map((item: any) => item.repaid_amount));
-    const total_amount = sum(records.map((item: any) => item.total_amount));
+    const last_debt = sum(records.map((item: any) => item.unpaid_amount));
+    const total_amount = sum(records.map((item: any) => item.subtotal_amount));
     formAPI.setValues({
       business_order: records,
       advance_payment_order_item_list: [{}],

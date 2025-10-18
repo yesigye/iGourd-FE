@@ -19,7 +19,6 @@ import { wareHouseProductSearch } from '../../apis';
 
 const summary = (list) => {
   // 盘点商品总成本差值金额 总成本差值金额 = 原数量 * 成本价 - 盘点数量 * 成本价
-  debugger
   const totalVarianceCost = list.reduce(
     (acc, item) =>
       acc + Number(item.returned_quantity || 0) * Number(item.cost_price || 0),

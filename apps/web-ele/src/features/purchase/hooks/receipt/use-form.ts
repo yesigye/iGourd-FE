@@ -1,7 +1,7 @@
 import { useI18n } from '@igourd/locales';
 import type { ISchema } from '@igourd/common-ui';
-import { h, inject } from 'vue';
-import { Space } from '@igourd/common-ui';
+import { h, inject, ref } from 'vue';
+import { Space, onFieldValueChange } from '@igourd/common-ui';
 import ModalTable from '@igourd/plugins/modal-table';
 import { useUserStore } from '@igourd/stores';
 import { wareHouseProductSearch } from '#/features/inventory';
@@ -16,6 +16,8 @@ import {
   getPurchaseReceiptDetailApi,
 } from '@@/purchase/apis';
 import { basicsCurrencyList } from '#/api';
+import { getAccountManagementOptionList } from '#/features/account';
+import { merchantPaymentMethodOption } from '#/features/setting';
 function remoteMethod(keywords: string) {
   return getPurchaseListApi({
     page_num: 1,
@@ -31,9 +33,12 @@ function remoteMethod(keywords: string) {
     });
   });
 }
+// 货币数据
+const currencyList = ref([]);
 // 获取货币列表
 const getCurrencyList = async () => {
   const result = await basicsCurrencyList({});
+  currencyList.value = result;
   return result.map((item: any) => {
     return {
       ...item,
@@ -42,6 +47,7 @@ const getCurrencyList = async () => {
     };
   });
 };
+
 export function useReceiptForm() {
   const { t } = useI18n();
   const { gridApi } = inject<{
@@ -87,7 +93,7 @@ export function useReceiptForm() {
                     type: 'void',
                     'x-component': 'div',
                     'x-component-props': {
-                      class: 'grid grid-cols-3 gap-4',
+                      class: 'grid grid-cols-5 gap-x-4 gap-y-0',
                       style: {
                         width: '100%',
                       },
@@ -95,7 +101,7 @@ export function useReceiptForm() {
                     properties: {
                       goods_receipt_note_no: {
                         type: 'string',
-                        title: '编号',
+                        title: "{{t('purchase.number')}}",
                         'x-decorator': 'FormItem',
                         'x-component': 'Input',
                         'x-decorator-props': {
@@ -105,7 +111,7 @@ export function useReceiptForm() {
                       },
                       vendor_id: {
                         type: 'string',
-                        title: '供应商',
+                        title: "{{t('purchase.venderName')}}",
                         'x-decorator': 'FormItem',
                         'x-component': 'RemoteSelect',
                         'x-component-props': {
@@ -117,44 +123,6 @@ export function useReceiptForm() {
                             message: "{{t('order.please-select-supplier')}}",
                           },
                         ],
-                      },
-                      receipt_date: {
-                        type: 'string',
-                        title: "{{t('order.order-date')}}",
-                        required: true,
-                        'x-decorator': 'FormItem',
-                        'x-component': 'DatePicker',
-                        'x-decorator-props': {
-                          feedbackLayout: 'terse',
-                        },
-                        'x-component-props': {
-                          maxLength: 32,
-                          placeholder: "{{t('common.select')}}",
-                          clearable: true,
-                        },
-                        'x-validator': [
-                          {
-                            required: true,
-                            message: "{{t('order.please-select-order-date')}}",
-                          },
-                        ],
-                      },
-                      vat_configuration: {
-                        type: 'string',
-                        title: "{{t('order.vat')}}",
-                        'x-decorator': 'FormItem',
-                        'x-component': 'Select',
-                        'x-decorator-props': {
-                          feedbackLayout: 'terse',
-                        },
-                        'x-component-props': {},
-                        'x-validator': [
-                          {
-                            required: true,
-                            message: "{{t('order.please-selectVat')}}",
-                          },
-                        ],
-                        enum: vatConfigurationEnums,
                       },
                       warehouse_id: {
                         type: 'string',
@@ -179,9 +147,30 @@ export function useReceiptForm() {
                           },
                         },
                       },
+                      receipt_date: {
+                        type: 'string',
+                        title: "{{t('order.order-date')}}",
+                        required: true,
+                        'x-decorator': 'FormItem',
+                        'x-component': 'DatePicker',
+                        'x-decorator-props': {
+                          feedbackLayout: 'terse',
+                        },
+                        'x-component-props': {
+                          maxLength: 32,
+                          placeholder: "{{t('common.select')}}",
+                          clearable: true,
+                        },
+                        'x-validator': [
+                          {
+                            required: true,
+                            message: "{{t('order.please-select-order-date')}}",
+                          },
+                        ],
+                      },
                       row_0: {
                         type: 'void', // 表示空字段
-                        title: "{{t('order.deposit')}}", // formItem 的 label
+                        title: "{{t('purchase.currency')}}", // formItem 的 label
                         'x-component': 'Space',
                         'x-decorator': 'FormItem',
                         'x-decorator-props': {
@@ -207,7 +196,7 @@ export function useReceiptForm() {
                               },
                             ],
                           },
-                          deposit_amount: {
+                          exchange_rate: {
                             type: 'string',
                             'x-decorator': 'FormItem',
                             'x-component': 'Input',
@@ -221,8 +210,9 @@ export function useReceiptForm() {
                               },
                             ],
                             'x-component-props': {
-                              style: 'width: 240px;',
+                              style: 'width: 140px;',
                               colon: false,
+                              disabled: true,
                             },
                             'x-reactions': {
                               fulfill: {
@@ -233,6 +223,23 @@ export function useReceiptForm() {
                             },
                           },
                         },
+                      },
+                      vat_configuration: {
+                        type: 'string',
+                        title: "{{t('order.vat')}}",
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Select',
+                        'x-decorator-props': {
+                          feedbackLayout: 'terse',
+                        },
+                        'x-component-props': {},
+                        'x-validator': [
+                          {
+                            required: true,
+                            message: "{{t('order.please-selectVat')}}",
+                          },
+                        ],
+                        enum: vatConfigurationEnums,
                       },
                     },
                   },
@@ -308,12 +315,15 @@ export function useReceiptForm() {
                   },
                 },
               },
-               row_1: {
+              row_1: {
                 type: 'void',
                 'x-component': 'div',
                 'x-component-props': {
-                  class: 'w-full flex mt-10 mb-10',
-                  style: {},
+                  class: 'w-full flex my-10',
+                  style: {
+                    'padding-left': 'var(--el-card-padding)',
+                    'padding-right': 'var(--el-card-padding)',
+                  },
                 },
                 properties: {
                   row_col_0: {
@@ -323,7 +333,186 @@ export function useReceiptForm() {
                       class: 'w-2/3',
                       style: {},
                     },
-                    properties: {},
+                    properties: {
+                      space_0: {
+                        type: 'void',
+                        'x-component': 'Space',
+                        title: "{{t('purchase.order-pay.select-account')}}",
+                        properties: {
+                          amount_0: {
+                            type: 'string',
+                            title: "{{t('purchase.order-pay.discount')}}",
+                            'x-decorator': 'FormItem',
+                            'x-decorator-props': {
+                              size: 'small',
+                              feedbackLayout: 'terse',
+                            },
+                            'x-component': 'Input',
+                          },
+                          discount_percentage: {
+                            type: 'string',
+                            title: "{{t('purchase.order-pay.discount-rate')}}",
+                            'x-decorator': 'FormItem',
+                            'x-component': 'Input',
+                            'x-decorator-props': {
+                              size: 'small',
+                              feedbackLayout: 'terse',
+                            },
+                          },
+                          deposit_amount: {
+                            type: 'string',
+                            title: "{{t('purchase.order-pay.total')}}",
+                            'x-decorator': 'FormItem',
+                            'x-component': 'Input',
+                            'x-decorator-props': {
+                              size: 'small',
+                              feedbackLayout: 'terse',
+                            },
+                          },
+                        },
+                      },
+                      purchase_payment_plan_list: {
+                        type: 'array',
+                        'x-component': 'ArrayItems',
+                        'x-decorator': '',
+                        title: '',
+                        items: {
+                          type: 'object',
+                          'x-decorator': 'ArrayItems.Item',
+                          properties: {
+                            space: {
+                              type: 'void',
+                              'x-component': 'Space',
+                              'x-component-props': {
+                                style: {
+                                  'align-items': 'end',
+                                },
+                              },
+                              properties: {
+                                account_id: {
+                                  type: 'string',
+                                  title:
+                                    "{{t('purchase.order-pay.select-account')}}",
+                                  'x-decorator': 'FormItem',
+                                  'x-component': 'FormilySearchSelect',
+                                  'x-decorator-props': {
+                                    size: 'small',
+                                    feedbackLayout: 'terse',
+                                  },
+                                  'x-component-props': {
+                                    multiple: false,
+
+                                    onSearch:
+                                      ' {{ getAccountManagementOptionList }}',
+                                    '@change': `{{(value,op)=> accountChange(value,op,$self,$index) }}`,
+                                  },
+                                },
+                                payment_method_type: {
+                                  type: 'string',
+                                  title:
+                                    "{{t('purchase.order-pay.payment-method')}}",
+                                  'x-decorator': 'FormItem',
+                                  'x-component': 'FormilySearchSelect',
+                                  'x-decorator-props': {
+                                    size: 'small',
+                                    feedbackLayout: 'terse',
+                                  },
+                                  'x-component-props': {
+                                    multiple: false,
+                                    onChange:
+                                      '{{ (value,op)=> payment_method_change(value,op,$self,$index) }}',
+                                    onSearch:
+                                      '{{ merchantPaymentMethodOption }}',
+                                  },
+                                },
+                                amount: {
+                                  type: 'string',
+                                  title: "{{t('purchase.order-pay.amount')}}",
+                                  'x-decorator': 'FormItem',
+                                  'x-component': 'Input',
+                                  'x-decorator-props': {
+                                    size: 'small',
+                                    feedbackLayout: 'terse',
+                                  },
+                                },
+
+                                col_actions: {
+                                  type: 'void',
+                                  'x-component': 'ArrayItems.Item',
+                                  'x-component-props': {
+                                    title: "{{t('common.operation')}}",
+                                    width: 100,
+                                    fixed: 'right',
+                                    style: {
+                                      'margin-bottom': '8px',
+                                    },
+                                  },
+                                  properties: {
+                                    addition: {
+                                      type: 'void',
+                                      title: "{{t('common.addBtn')}}",
+                                      'x-component': 'ArrayItems.Addition',
+                                      'x-reactions': {
+                                        dependencies: [
+                                          'purchase_payment_plan_list',
+                                        ],
+                                        fulfill: {
+                                          state: {
+                                            componentProps: {
+                                              disabled:
+                                                '{{  $deps[0]?.length >= 2 }}',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    remove: {
+                                      type: 'void',
+                                      'x-component': 'ArrayItems.Remove',
+                                      title: "{{ t('common.delete') }}",
+                                      'x-reactions': {
+                                        dependencies: [
+                                          'purchase_payment_plan_list',
+                                        ],
+                                        fulfill: {
+                                          state: {
+                                            componentProps: {
+                                              disabled:
+                                                '{{  $deps[0]?.length === 1 }}',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                account_ledger_id: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                },
+                                currency_code: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                },
+                                payment_method_id: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                },
+                                business_type: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                  //default: 'PURCHASE_ORDER_REFUND',
+                                },
+                                payment_method_mark: {
+                                  type: 'string',
+                                  'x-hidden': true,
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
                   },
                   row_col_1: {
                     type: 'void',
@@ -339,7 +528,7 @@ export function useReceiptForm() {
                         type: 'void',
                         'x-component': 'div',
                         'x-component-props': {
-                          class:"p-4"
+                          class: 'p-4',
                         },
                         properties: {
                           label_1: {
@@ -354,11 +543,11 @@ export function useReceiptForm() {
                                 'x-component': 'div',
                                 'x-content': "{{t('purchase.subtotal')+' : '}}",
                                 'x-component-props': {
-                                  class:"w-20 text-right",
+                                  class: 'w-20 text-right',
                                   style: { fontSize: '14px' },
                                 },
                               },
-                              diffNum: {
+                              subtotal_amount: {
                                 type: 'string',
                                 'x-component': 'div',
                                 'x-content': "{{$self.value?$self.value:'0'}}",
@@ -380,11 +569,11 @@ export function useReceiptForm() {
                                 'x-component': 'div',
                                 'x-content': "{{t('purchase.vat')+' : '}}",
                                 'x-component-props': {
-                                  class:"w-20 text-right",
+                                  class: 'w-20 text-right',
                                   style: { fontSize: '14px' },
                                 },
                               },
-                              diffCost: {
+                              vat_amount: {
                                 type: 'string',
                                 'x-component': 'div',
                                 'x-content': "{{$self.value?$self.value:'0'}}",
@@ -407,11 +596,11 @@ export function useReceiptForm() {
                                 'x-content':
                                   "{{t('purchase.other_tax')+' : '}}",
                                 'x-component-props': {
-                                  class:"w-20 text-right",
+                                  class: 'w-20 text-right',
                                   style: { fontSize: '14px' },
                                 },
                               },
-                              diffSale: {
+                              other_tax_amount: {
                                 type: 'string',
                                 'x-component': 'div',
                                 'x-content': "{{$self.value?$self.value:'0'}}",
@@ -433,11 +622,11 @@ export function useReceiptForm() {
                                 'x-component': 'div',
                                 'x-content': "{{t('purchase.total')+' : '}}",
                                 'x-component-props': {
-                                  class:"w-20 text-right",
+                                  class: 'w-20 text-right',
                                   style: { fontSize: '14px' },
                                 },
                               },
-                              diffSale: {
+                              total_amount: {
                                 type: 'string',
                                 'x-component': 'div',
                                 'x-content': "{{$self.value?$self.value:'0'}}",
@@ -533,6 +722,10 @@ export function useReceiptForm() {
         item.subtotal_amount = item.received_quantity * item.cost_price;
         item.total_amount = item.received_quantity * item.cost_price;
       });
+      formData.purchase_payment_plan_list.forEach((item) => {
+        item.merchant_id = currentLoginUserApp.owner_id;
+        item.business_type = 'GOODS_RECEIPT_NOTE';
+      });
       // 	汇率(选择币种和系统币种的换算比例)
       formData.exchange_rate = 0;
       formData.vat_amount = 0;
@@ -549,6 +742,67 @@ export function useReceiptForm() {
       console.error('收货单 customized form submission error:', error);
       throw error;
     }
+  };
+
+  const onBeforeOpen = () => {
+    return formAPI.validate('customer_id');
+  };
+  const onSelectOrder = (records: any) => {
+    if (!records) {
+      return;
+    }
+
+    formAPI.setValues({
+      order_info: records,
+      receipt_order_item_list: [{}],
+    });
+  };
+  // const orderListApi = (data: any) => {
+  //   const customer_id = formAPI.getValuesIn('customer_id');
+  //   return getPurchaseReceiptPageListApi({
+  //     ...data,
+  //     customer_id,
+  //     payment_type: '',
+  //     status_list: [],
+  //   });
+  // };
+  const accountChange = (_, op, record, index) => {
+    if (!op) {
+      return;
+    }
+    formAPI.setValuesIn(
+      `purchase_payment_plan_list.${index}.account_ledger_id`,
+      op.account_ledger_id,
+    );
+    formAPI.setValuesIn(
+      `purchase_payment_plan_list.${index}.currency_code`,
+      op.currency_code,
+    );
+  };
+  const payment_method_change = (_, op, record, index) => {
+    if (!op) {
+      return;
+    }
+    formAPI.setValuesIn(
+      `purchase_payment_plan_list.${index}.payment_method_id`,
+      op.id,
+    );
+    formAPI.setValuesIn(
+      `purchase_payment_plan_list.${index}.payment_method_mark`,
+      op.mark,
+    );
+  };
+
+  const summary = (list) => {
+    const total = list.reduce(
+      (acc: any, item: any) =>
+        acc + (item.received_quantity ? item.received_quantity : 0) * item.cost_price,
+      0,
+    );
+    return {
+      subtotalAmount: total.toFixed(2),
+      totalAmount: total.toFixed(2),
+    };
   };
 
   const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
@@ -597,12 +851,31 @@ export function useReceiptForm() {
     formOptions: {
       initialValues: {
         goods_receipt_note_item_list: [{}],
-        //goods_receipt_note_no: '11',
+        purchase_payment_plan_list: [{}],
       },
       scope: {
         warehouse,
+        getAccountManagementOptionList,
+        accountChange,
+        payment_method_change,
+        merchantPaymentMethodOption,
       },
       schema: schema,
+      effects() {
+        //选中 货币
+        onFieldValueChange('currency_code', (field, form) => {
+          const currObj = currencyList.value.find(
+            (item) => (item.id = field.value),
+          );
+          form.setValuesIn('exchange_rate', currObj?.exchange_rate);
+        });
+        // 商品数据变化 计算合计
+        onFieldValueChange('goods_receipt_note_item_list.*', (field, form) => {
+          const { subtotalAmount, totalAmount } = summary(field.records);
+          form.setValuesIn('subtotal_amount', subtotalAmount);
+          form.setValuesIn('total_amount', totalAmount);
+        });
+      },
     },
   });
   return {

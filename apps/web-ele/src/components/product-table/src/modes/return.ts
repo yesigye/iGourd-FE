@@ -17,12 +17,23 @@ export const ReturnMode: ModePlugin = {
       'received_quantity',
     );
 
+     const quantityIndex = baseColumns.findIndex(
+      (col) => col.name === 'display_quantity',
+    );
+    if (quantityIndex !== -1) {
+      baseColumns[quantityIndex] = {
+        ...baseColumns[quantityIndex],
+        title: '退货数量',
+        name: 'returned_quantity',
+      };
+    }
+
     // 在cost_price列后插入数量列
     const costPriceIndex = baseColumns.findIndex(
       (col) => col.name === 'sku_barcode',
     );
     const columns = [...baseColumns];
-    columns.splice(costPriceIndex + 1, 0, quantityColumn);
+    // columns.splice(costPriceIndex + 1, 0, quantityColumn);
 
     return columns;
   },

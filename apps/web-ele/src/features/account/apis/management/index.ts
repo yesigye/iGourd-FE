@@ -10,6 +10,7 @@ export function getAccountManagementListApi(data: any) {
   );
 }
 export function getAccountManagementOptionList(data: any) {
+  data.belong_type ="NONE";
   return getAccountManagementListApi(data).then((res) => {
     return {
       ...res,

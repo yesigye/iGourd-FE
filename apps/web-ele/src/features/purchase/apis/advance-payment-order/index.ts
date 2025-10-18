@@ -1,19 +1,20 @@
 import type {
   advancePaymentOrderDetails,
   advancePaymentOrderModifyV0,
-  advancePaymentOrderPageListV0,
   advancePaymentOrderRemoveV0,
   advancePaymentOrderReviewStatusModifyV0,
   RootObject,
 } from '@@/purchase/types/advance-payment-order';
 
 import { requestClient } from '#/api/request';
+import { orderNoGenerate } from '#/api';
 /**
  * @description 获取付款单单分页列表
  */
-export function getAdvancePaymentOrderPageListApi(
-  data: advancePaymentOrderPageListV0,
-) {
+export function getAdvancePaymentOrderPageListApi(data: any) {
+  if (Reflect.get(data, 'payment_direction') === 'ALL') {
+    delete data.payment_direction;
+  }
   return requestClient.post(
     `/v1/merchant/purchase/advance-payment-order/page-list`,
     data,
@@ -22,10 +23,16 @@ export function getAdvancePaymentOrderPageListApi(
 /**
  * @description 获取付款单创建
  */
-export function createAdvancePaymentOrderApi(data: RootObject) {
+export async function createAdvancePaymentOrderApi(data: RootObject) {
+  const { order_no } = await orderNoGenerate({
+    category_type: 'PREPAYMENT',
+  });
   return requestClient.post(
     `/v1/merchant/purchase/advance-payment-order/create`,
-    data,
+    {
+      advance_payment_order_no: order_no,
+      ...data,
+    },
   );
 }
 /**
@@ -48,7 +55,7 @@ export function getAdvancePaymentOrderDetailApi(
   return requestClient.post(
     `/v1/merchant/purchase/advance-payment-order/detail`,
     data,
-  )
+  );
 }
 /**
  * @description 获取付款单删除

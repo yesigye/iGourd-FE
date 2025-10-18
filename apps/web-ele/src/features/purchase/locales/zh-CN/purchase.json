@@ -338,5 +338,14 @@
   "FileImportSuccessful": "文件导入成功",
   "unpaid_amount": "待付金额",
   "are_you_sure_delete_vendor": "确定删除该供应商吗？",
-  "are_you_sure_delete_vendor_tip": "若删除,该供应商对应的财务账户将会被禁用,无法再产生交易!"
+  "are_you_sure_delete_vendor_tip": "若删除,该供应商对应的财务账户将会被禁用,无法再产生交易!",
+  "order-pay": {
+    "select-account": "选择账号",
+    "discount": "优惠",
+    "discount-rate": "优惠比例",
+    "total": "合计",
+    "payment-method": "支付方式",
+    "amount": "金额"
+  },
+  "number":"编号"
 }

@@ -1,5 +1,3 @@
-import type { CustomizedDTO, CustomizedRow } from '@@/purchase/types';
-
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
@@ -10,31 +8,42 @@ import {
   getAdvancePaymentOrderPageListApi,
   updateAdvancePaymentOrderApi,
 } from '@@/purchase/apis';
-import { CustomizedDrawerForm } from '@@/purchase/components';
+import { AdvancePaymentOrder } from '@@/purchase/components';
 
 import { useCrud, withEntityParam } from '#/hooks';
 
 export function useAdvancePaymentOrder() {
   const { t } = useI18n();
-  const columns: VxeGridPropTypes.Column<CustomizedRow>[] = [
+  const columns: VxeGridPropTypes.Column<any>[] = [
     {
-      field: 'receipt_order_no',
+      field: 'advance_payment_order_no',
       minWidth: 190,
-      title: t('account.receipt_order_no'),
+      title: t('advance-payment-order.order-no'),
       sortable: true,
     },
     {
-      field: 'customer_name',
+      field: 'vendor_name',
       minWidth: 190,
-      title: t('printTemp.printReceipt.receipt_customer_name'),
+      title: t('advance-payment-order.vendor-name'),
       sortable: true,
     },
     {
-      field: 'receipt_time',
+      field: 'payment_time',
       minWidth: 170,
       title: t('account.orderDate'),
       align: 'right',
       sortable: true,
+    },
+    {
+      field: 'payment_direction',
+      minWidth: 140,
+      title: t('account.order_dir'),
+      sortable: true,
+      formatter({ cellValue }) {
+        return t(
+          `collection-voucher.receipt_direction.${cellValue.toLocaleLowerCase()}`,
+        );
+      },
     },
     {
       field: 'total_amount',
@@ -45,15 +54,15 @@ export function useAdvancePaymentOrder() {
       formatter: 'formatMoney',
     },
     {
-      field: 'receipt_direction',
+      field: 'actual_amount',
       minWidth: 140,
-      title: t('account.order_dir'),
+      title: '付款金额',
+    },
+        {
+      field: 'remark',
+      minWidth: 150,
+      title: t('account.remarks'),
       sortable: true,
-      formatter({ cellValue }) {
-        return t(
-          `collection-voucher.receipt_direction.${cellValue.toLocaleLowerCase()}`,
-        );
-      },
     },
     {
       field: 'business_type',
@@ -66,23 +75,7 @@ export function useAdvancePaymentOrder() {
         );
       },
     },
-    {
-      field: 'ledger_type',
-      minWidth: 130,
-      title: t('account.accountType'),
-      sortable: true,
-      formatter({ cellValue }) {
-        return t(
-          `collection-voucher.ledger_type_enum.${cellValue.toLocaleLowerCase()}`,
-        );
-      },
-    },
-    {
-      field: 'remark',
-      minWidth: 150,
-      title: t('account.remarks'),
-      sortable: true,
-    },
+
     {
       field: 'review_time',
       minWidth: 170,
@@ -127,7 +120,7 @@ export function useAdvancePaymentOrder() {
       },
     },
   };
-  return useCrud<CustomizedRow, CustomizedDTO>({
+  return useCrud<any, any>({
     columns,
     toolbarConfig: {
       export: true,
@@ -135,21 +128,20 @@ export function useAdvancePaymentOrder() {
       custom: true,
     },
     tabsOption: {
-      defaultActiveValue: '蓝单',
-      formKey: 'type',
+      defaultActiveValue: 'ALL',
+      formKey: 'payment_direction',
     },
     tabs: [
-      { label: '红单', value: '红单' },
-      { label: '蓝单', value: '蓝单' },
+      { label: '全部', value: 'ALL' },
+      { label: '蓝单', value: 'POSITIVE_ORDER' },
+      { label: '红单', value: 'NEGATIVE_ORDER' },
     ],
 
     searchFormSchema,
     batchOperate: true,
-    connectedComponent: CustomizedDrawerForm,
+    connectedComponent: AdvancePaymentOrder,
     service: {
-      query: withEntityParam({ entity: 'VENDOR' })(
-        getAdvancePaymentOrderPageListApi,
-      ),
+      query: getAdvancePaymentOrderPageListApi,
       drop: withEntityParam({ entity: 'VENDOR' })(deleteAdvancePaymentOrderApi),
       create: withEntityParam({ entity: 'VENDOR' })(
         createAdvancePaymentOrderApi,
