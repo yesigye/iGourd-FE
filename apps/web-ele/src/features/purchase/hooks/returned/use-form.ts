@@ -456,11 +456,11 @@ export function useReturnForm() {
                       space_0: {
                         type: 'void',
                         'x-component': 'Space',
-                        title: '选择账号',
+                        title: "{{t('purchase.order-pay.select-account')}}",
                         properties: {
                           amount_0: {
                             type: 'string',
-                            title: '优惠',
+                            title: "{{t('purchase.order-pay.discount')}}",
                             'x-decorator': 'FormItem',
                             'x-decorator-props': {
                               size: 'small',
@@ -469,7 +469,7 @@ export function useReturnForm() {
                           },
                           amount_1: {
                             type: 'string',
-                            title: '优惠比例',
+                            title: "{{t('purchase.order-pay.discount-rate')}}",
                             'x-decorator': 'FormItem',
                             'x-component': 'Input',
                             'x-decorator-props': {
@@ -478,7 +478,7 @@ export function useReturnForm() {
                           },
                           amount_2: {
                             type: 'string',
-                            title: '合计',
+                            title: "{{t('purchase.order-pay.total')}}",
                             'x-decorator': 'FormItem',
                             'x-component': 'Input',
                             'x-decorator-props': {
@@ -503,7 +503,7 @@ export function useReturnForm() {
 
                                 account_id: {
                                   type: 'string',
-                                  title: '选择账号',
+                                  title: "{{t('purchase.order-pay.select-account')}}",
                                   'x-decorator': 'FormItem',
                                   'x-component': 'FormilySearchSelect',
                                   'x-decorator-props': {
@@ -518,7 +518,7 @@ export function useReturnForm() {
                                 },
                                 payment_method_type: {
                                   type: 'string',
-                                  title: '支付方式',
+                                  title: "{{t('purchase.order-pay.payment-method')}}",
                                   'x-decorator': 'FormItem',
                                   'x-component': 'FormilySearchSelect',
                                   'x-decorator-props': {
@@ -534,7 +534,7 @@ export function useReturnForm() {
                                 },
                                 amount: {
                                   type: 'string',
-                                  title: '金额',
+                                  title: "{{t('purchase.order-pay.amount')}}",
                                   'x-decorator': 'FormItem',
                                   'x-component': 'Input',
                                   'x-decorator-props': {
@@ -556,7 +556,6 @@ export function useReturnForm() {
                                 business_type: {
                                   type: 'string',
                                   'x-hidden': true,
-                                  default:"PURCHASE_ORDER_REFUND"
                                 },
                                 payment_method_mark: {
                                   type: 'string',
@@ -752,8 +751,7 @@ export function useReturnForm() {
   const handleSubmit = async (formData: any) => {
     try {
       let response = null;
-      //固定写一个测试
-      formData.purchase_order_id = '1976912925254823938';
+
       // 其他税额
       formData.other_tax_amount = 0;
       formData.merchant_id = currentLoginUserApp.owner_id;
@@ -780,9 +778,8 @@ export function useReturnForm() {
       });
       formData.purchase_payment_plan_list.forEach((item) => {
         item.merchant_id = currentLoginUserApp.owner_id;
+        item.business_type = "PURCHASE_ORDER_REFUND"
       })
-
-
 
       // 	汇率(选择币种和系统币种的换算比例)
       formData.exchange_rate = 0;

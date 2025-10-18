@@ -30,9 +30,11 @@ interface RowType {
 
 const gridOptions: VxeGridProps<RowType> = {
   columns: [
-    { title: '商品名称', field: 'major_name' },
     { title: '商品编码', field: 'product_code' },
-    { title: '单位', field: 'major_unit_name' },
+    { title: '商品名称', field: 'major_name' },
+    { title: 'SKU编码', field: 'sku_barcode' },
+    { title: '退款数量', field: 'major_unit_name' },
+    { title: '单位', field: 'basic_unit_name' },
     {
       title: '单位比率',
       field: 'price',
@@ -40,8 +42,9 @@ const gridOptions: VxeGridProps<RowType> = {
         default: 'unit',
       },
     },
+    { title: '主单位', field: 'product_unit_name' },
+    { title: '规格', field: 'product_spec_kvmessage' },
     { title: '成本价格', field: 'cost_price' },
-    { title: '数量', field: 'stock_total_quantity_message' },
   ],
   editConfig: {
     mode: 'cell',
@@ -66,15 +69,17 @@ const gridOptions: VxeGridProps<RowType> = {
 };
 
 const detailData = ref(null);
+const paymentDetail = ref(null);
 const modeRef = ref<string>('');
 const { currentLoginUserApp } = useUserStore();
 const [Grid] = useIgourdVxeGrid({ gridOptions });
 
 const [Drawer, drawerApi] = useIgourdDrawer({
-  async onOpenChange(isOpen,a,b) {
+  async onOpenChange(isOpen, a, b) {
     if (isOpen) {
       const data = drawerApi.getData();
       detailData.value = data;
+      paymentDetail.value = data.purchase_payment_plan_detail_model_list[0]
     }
   },
 });
@@ -105,7 +110,8 @@ defineExpose({ open, close });
       <div class="text-sm">
         订单号：<span class="text-red-500">{{
           detailData.purchase_order_no
-        }}</span>创建者：<span class="text-red-500">{{ detailData.creator_name }}</span>
+        }}</span
+        >创建者：<span class="text-red-500">{{ detailData.creator_name }}</span>
       </div>
     </ElCard>
     <ElCard class="mt-1">
@@ -113,38 +119,57 @@ defineExpose({ open, close });
         <div class="title">基础信息</div>
       </template>
       <ElDescriptions title="" :column="3" border>
-        <ElDescriptionsItem label="商户名称">
-          {{ detailData.merchant_name }}
+        <ElDescriptionsItem label="退货日期">
+          {{ detailData.returned_date }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="采购单号">
-          {{ detailData.purchase_order_no }}
+        <ElDescriptionsItem label="VAT配置">
+          {{ detailData.vat_configuration }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="仓库">
-          {{ detailData.warehouse_name }}
+        <ElDescriptionsItem label="退货原因">
+          {{ detailData.return_reason }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="供应商">
-          {{ detailData.vendor_name }}
+        <ElDescriptionsItem label="订单状态">
+          {{ detailData.review_status }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="日期">
-          {{ detailData.purchase_date }}
-        </ElDescriptionsItem>
-        <ElDescriptionsItem label="增值税">
+        <ElDescriptionsItem label="VAT税额">
           {{ detailData.vat_amount }}
         </ElDescriptionsItem>
+        <ElDescriptionsItem label="退款账号">
+          {{ paymentDetail.account_name }}
+        </ElDescriptionsItem>
+        <ElDescriptionsItem label="供应商名称">
+          {{ detailData.vendor_name }}
+        </ElDescriptionsItem>
+
         <ElDescriptionsItem label="其他税">
           {{ detailData.other_tax_amount }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="货币">
-          {{ detailData.currency_code }}
+        <ElDescriptionsItem label="退款方式">
+          {{ paymentDetail.payment_method_name }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="备注">
-          {{ detailData.remark }}
+
+        <ElDescriptionsItem label="仓库">
+          {{ detailData.warehouse_name }}
         </ElDescriptionsItem>
+        <ElDescriptionsItem label="优惠">
+          {{ detailData.discount_amount }}
+        </ElDescriptionsItem>
+
         <ElDescriptionsItem label="总金额">
           {{ detailData.subtotal_amount }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="定金">
-          {{ detailData.deposit_amount }}
+
+        <ElDescriptionsItem label="货币">
+          {{ detailData.currency_code }}
+        </ElDescriptionsItem>
+        <ElDescriptionsItem label="合计">
+          {{ detailData.total_amount }}
+        </ElDescriptionsItem>
+        <ElDescriptionsItem label="订单号">
+          {{ detailData.purchase_returned_no }}
+        </ElDescriptionsItem>
+        <ElDescriptionsItem label="备注">
+          {{ detailData.remark }}
         </ElDescriptionsItem>
       </ElDescriptions>
     </ElCard>
