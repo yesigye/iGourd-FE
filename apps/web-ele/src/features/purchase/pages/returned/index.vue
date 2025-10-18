@@ -90,7 +90,7 @@ const handleDetail = async (row: tableItem, mode: string) => {
   });
   detailDrawerApi
     .setData(
-      { ...detail, productList: detail.purchase_order_item_model_list },
+      { ...detail, productList: detail.purchase_returned_item_model_list },
       mode,
     )
     .open();
