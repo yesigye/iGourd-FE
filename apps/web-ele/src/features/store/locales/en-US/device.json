@@ -43,5 +43,6 @@
     "offline": "Offline",
     "maintenance": "Maintenance",
     "error": "Error"
-  }
+  },
+  "device-name-device-code-placeholder": "Enter keywords to search(Device Name，Device Code)"
 }

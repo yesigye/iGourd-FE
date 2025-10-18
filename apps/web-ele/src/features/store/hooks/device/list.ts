@@ -139,7 +139,7 @@ export function useStoreDevice() {
         'x-decorator': 'FormItem',
         'x-component': 'Input',
         'x-component-props': {
-          placeholder: t('common.search'),
+          placeholder: t('device.device-name-device-code-placeholder'),
         },
       },
     },
