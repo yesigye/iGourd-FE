@@ -53,6 +53,10 @@ export async function getMenuCollect(data: MenuCollectParams) {
  * @returns
  */
 export async function toggleCollect(data: MenuCollectToggleParams) {
-  console.log(data)
+  if (Reflect.get(data, 'status') === 'COLLECTED') {
+    Reflect.set(data, 'status', 'CANCEL');
+  } else {
+    Reflect.set(data, 'status', 'COLLECTED');
+  }
   return requestClient.post('/v1/passport/menucollect/operate', data);
 }

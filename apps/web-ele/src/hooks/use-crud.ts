@@ -182,6 +182,7 @@ function useCrud<T extends { id?: number | string }, P extends object>(
     'separator',
     'tabs',
     'tabsOption',
+
   ]);
   const vxeTableProps = pick(options, [
     'tableTitle',
@@ -194,6 +195,7 @@ function useCrud<T extends { id?: number | string }, P extends object>(
     'gridClass',
     'searchFormAppendTo',
     'tabsAppenTo',
+    'customConfig'
   ]);
   // 确保代理配置存在
   if (!gridOptions.proxyConfig) {

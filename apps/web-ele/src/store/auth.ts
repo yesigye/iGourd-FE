@@ -13,7 +13,7 @@ import { resetAllStores, useAccessStore, useUserStore } from '@igourd/stores';
 
 import { defineStore } from 'pinia';
 
-import { isEmpty, mapTree } from '@igourd/utils';
+import { isEmpty, mapTree, traverseTreeValues } from '@igourd/utils';
 
 import {
   getAccessCodesApi,
@@ -110,7 +110,6 @@ export const useAuthStore = defineStore('auth', () => {
   async function fetchUserInfo() {
     let userInfo: null | UserInfo = null;
     const currentInfo = userStore.currentLoginUserApp;
-    console.log(currentInfo);
     userInfo = await getUserInfoApi({
       owner_id: currentInfo.owner_id,
       owner_type: currentInfo.owner_type,
@@ -161,7 +160,18 @@ export const useAuthStore = defineStore('auth', () => {
       },
     );
     accessStore.setFunctionTrees(function_trees);
-
+    const actions = traverseTreeValues(
+      function_trees,
+      (node) => {
+        return node.function.actions;
+      },
+      {
+        childProps: 'sub_function_trees',
+      },
+    ).reduce((total, current) => {
+      return total.concat(current);
+    }, []);
+    accessStore.setAccessCodes(actions);
     accessStore.collect = collect;
   }
 

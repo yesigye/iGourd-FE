@@ -168,6 +168,7 @@ export function usePurchaseOrder() {
     handleBatchDelete,
   } = useCrud({
     service,
+    id: 'purchase-order-list',
     columns: baseColumns,
     searchFormSchema,
     printConfig: {

@@ -21,7 +21,6 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const forward = useForwardProps(props);
-console.log(props.menus)
 </script>
 
 <template>

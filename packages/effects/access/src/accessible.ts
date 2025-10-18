@@ -148,5 +148,4 @@ async function generateRoutes(
 
   return resultRoutes;
 }
-
 export { generateAccessible };
