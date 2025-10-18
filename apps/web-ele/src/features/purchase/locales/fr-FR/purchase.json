@@ -346,5 +346,6 @@
     "total": "Total",
     "payment-method": "Moyen de paiement",
     "amount": "Montant"
-  }
+  },
+  "number":"Numéro"
 }

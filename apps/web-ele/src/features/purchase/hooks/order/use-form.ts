@@ -108,7 +108,7 @@ export function useOrderForm() {
                     properties: {
                       vendor_id: {
                         type: 'string',
-                        title: '供应商',
+                        title: "{{t('purchase.venderName')}}",
                         'x-decorator': 'FormItem',
                         'x-component': 'RemoteSelect',
                         'x-component-props': {
@@ -211,7 +211,7 @@ export function useOrderForm() {
                     properties: {
                       no: {
                         type: 'string',
-                        title: '编号',
+                        title: "{{t('purchase.number')}}",
                         'x-decorator': 'FormItem',
                         'x-component': 'Input',
                         'x-decorator-props': {
@@ -322,7 +322,7 @@ export function useOrderForm() {
                               },
                             ],
                             'x-component-props': {
-                              style: 'width: 240px;',
+                              style: 'width: 140px;',
                               colon: false,
                               disabled: true,
                             },

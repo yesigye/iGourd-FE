@@ -37,5 +37,6 @@
     "total": "Total",
     "payment-method": "Payment Method",
     "amount": "Amount"
-  }
+  },
+  "number":"Number"
 }
