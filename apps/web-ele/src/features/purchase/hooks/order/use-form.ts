@@ -200,7 +200,7 @@ export function useOrderForm() {
                     type: 'void',
                     'x-component': 'div',
                     'x-component-props': {
-                      class: 'grid grid-cols-3 gap-4',
+                      class: 'grid grid-cols-3 gap-x-4 gap-y-0',
                       style: {
                         width: '100%',
                       },
@@ -412,8 +412,11 @@ export function useOrderForm() {
                 type: 'void',
                 'x-component': 'div',
                 'x-component-props': {
-                  class: 'w-full flex mt-10 mb-10',
-                  style: {},
+                  class: 'w-full flex my-10',
+                  style:{
+                    "padding-left":"var(--el-card-padding)",
+                    "padding-right":"var(--el-card-padding)"
+                  }
                 },
                 properties: {
                   row_col_0: {
@@ -427,33 +430,36 @@ export function useOrderForm() {
                       space_0: {
                         type: 'void',
                         'x-component': 'Space',
-                        title: '选择账号',
+                        title: "{{t('purchase.order-pay.select-account')}}",
                         properties: {
                           amount_0: {
                             type: 'string',
-                            title: '优惠',
+                            title: "{{t('purchase.order-pay.discount')}}",
                             'x-decorator': 'FormItem',
                             'x-decorator-props': {
                               size: 'small',
+                              feedbackLayout: 'terse',
                             },
                             'x-component': 'Input',
                           },
                           amount_1: {
                             type: 'string',
-                            title: '优惠比例',
+                            title: "{{t('purchase.order-pay.discount-rate')}}",
                             'x-decorator': 'FormItem',
                             'x-component': 'Input',
                             'x-decorator-props': {
                               size: 'small',
+                              feedbackLayout: 'terse',
                             },
                           },
                           amount_2: {
                             type: 'string',
-                            title: '合计',
+                            title: "{{t('purchase.order-pay.total')}}",
                             'x-decorator': 'FormItem',
                             'x-component': 'Input',
                             'x-decorator-props': {
                               size: 'small',
+                              feedbackLayout: 'terse',
                             },
                           },
                         },
@@ -470,17 +476,24 @@ export function useOrderForm() {
                             space: {
                               type: 'void',
                               'x-component': 'Space',
+                               'x-component-props': {
+                                  style:{
+                                    "align-items": "end"
+                                  }
+                               },
                               properties: {
                                 account_id: {
                                   type: 'string',
-                                  title: '选择账号',
+                                  title: "{{t('purchase.order-pay.select-account')}}",
                                   'x-decorator': 'FormItem',
                                   'x-component': 'FormilySearchSelect',
                                   'x-decorator-props': {
                                     size: 'small',
+                                    feedbackLayout: 'terse',
                                   },
                                   'x-component-props': {
                                     multiple: false,
+
                                     onSearch:
                                       ' {{ getAccountManagementOptionList }}',
                                     '@change': `{{(value,op)=> accountChange(value,op,$self,$index) }}`,
@@ -488,11 +501,12 @@ export function useOrderForm() {
                                 },
                                 payment_method_type: {
                                   type: 'string',
-                                  title: '支付方式',
+                                  title: "{{t('purchase.order-pay.payment-method')}}",
                                   'x-decorator': 'FormItem',
                                   'x-component': 'FormilySearchSelect',
                                   'x-decorator-props': {
                                     size: 'small',
+                                    feedbackLayout: 'terse',
                                   },
                                   'x-component-props': {
                                     multiple: false,
@@ -504,11 +518,12 @@ export function useOrderForm() {
                                 },
                                 amount: {
                                   type: 'string',
-                                  title: '金额',
+                                  title: "{{t('purchase.order-pay.amount')}}",
                                   'x-decorator': 'FormItem',
                                   'x-component': 'Input',
                                   'x-decorator-props': {
                                     size: 'small',
+                                    feedbackLayout: 'terse',
                                   },
                                 },
 
@@ -519,6 +534,9 @@ export function useOrderForm() {
                                     title: "{{t('common.operation')}}",
                                     width: 100,
                                     fixed: 'right',
+                                    style:{
+                                      "margin-bottom":"8px"
+                                    }
                                   },
                                   properties: {
                                     addition: {
@@ -550,7 +568,7 @@ export function useOrderForm() {
                                         fulfill: {
                                           state: {
                                             componentProps: {
-                                              disabled: false,
+                                              disabled: '{{  $deps[0]?.length === 1 }}',
                                             },
                                           },
                                         },
@@ -569,7 +587,7 @@ export function useOrderForm() {
                                 business_type: {
                                   type: 'string',
                                   'x-hidden': true,
-                                  default: 'PURCHASE_ORDER_REFUND',
+                                  //default: 'PURCHASE_ORDER_REFUND',
                                 },
                                 payment_method_mark: {
                                   type: 'string',
@@ -782,12 +800,15 @@ export function useOrderForm() {
 
       formData.purchase_order_item_list.forEach((item) => {
         item.product_name = item.label;
-
         item.other_tax_amount = 0;
         item.vat_amount = 0;
         item.subtotal_amount = item.quantity * item.cost_price;
         item.total_amount = item.quantity * item.cost_price;
       });
+      formData.purchase_order_deposit_list.forEach((item) => {
+        item.merchant_id = currentLoginUserApp.owner_id;
+      })
+
       // 	汇率(选择币种和系统币种的换算比例)
       formData.exchange_rate = 0;
       formData.vat_amount = 0;

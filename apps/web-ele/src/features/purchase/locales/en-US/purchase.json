@@ -29,5 +29,13 @@
   "pleaseSelectVendor": "Please select vendor",
   "pleaseSelectStatus": "Please select status",
   "startDate": "Start Date",
-  "endDate": "End Date"
+  "endDate": "End Date",
+  "order-pay": {
+    "select-account": "Select Account",
+    "discount": "Discount",
+    "discount-rate": "Discount Rate",
+    "total": "Total",
+    "payment-method": "Payment Method",
+    "amount": "Amount"
+  }
 }
