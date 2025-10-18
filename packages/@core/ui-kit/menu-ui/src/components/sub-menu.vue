@@ -266,6 +266,7 @@ onBeforeUnmount(() => {
         ]"
         :content-props="contentProps"
         v-model:open="popoverShow"
+        :close-delay="0"
         :open-delay="0"
       >
         <template #trigger>
