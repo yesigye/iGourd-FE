@@ -255,7 +255,7 @@ const headerSlots = computed(() => {
         v-if="preferences.logo.enable"
         :fit="preferences.logo.fit"
         :class="logoClass"
-        :logo-size="92"
+        :logo-size="78"
         :collapsed="logoCollapsed"
         :src="preferences.logo.source"
         text=""
