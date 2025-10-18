@@ -1,110 +1,56 @@
-<script lang="ts" setup>
-import type { VxeGridListeners, VxeGridProps } from '#/adapter/vxe-table';
-import Form from './components/form.vue';
-import { IgourdButton, ColPage, useIgourdDrawer } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
 
-import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { requestClient } from '#/api/request';
+import { Page } from '@igourd/common-ui';
 
-defineOptions({
-  name: 'IPurchaseList',
-});
+import { merchantOverviewApi } from '#/api';
 
-function getVendorPageListApi(data: any) {
-  return requestClient.post('v1/merchant/purchase/vendor/page-list', data);
-}
+import HomeNotice from './components/home-notice.vue';
+import ProductEchartData from './components/product-echart.data.vue';
+import SalesOrderStatistics from './components/sales-order-statistics.vue';
 
-const { t } = useI18n();
-interface RowType {
-  category: string;
-  color: string;
-  id: string;
-  price: string;
-  productName: string;
-  releaseDate: string;
-}
-const gridEvents: VxeGridListeners<RowType> = {
-  cellClick: ({ row }) => {
-    drawerApi.setData(row).open();
-  },
-  filterChange({ $grid, filterList }) {
-    const query: Record<string, any> = {};
-    filterList.forEach((item) => {
-      query[item.field] = item.values;
-    });
-    $grid.commitProxy('reload', query);
-  },
+const merchantOverviewData = ref({});
+const getMerchantOverview = () => {
+  try {
+    const res = merchantOverviewApi({});
+    merchantOverviewData.value = res;
+  } catch (error) {
+    console.error(error);
+  }
 };
-const gridOptions: VxeGridProps<RowType> = {
-  checkboxConfig: {
-    highlight: true,
-    labelField: 'name',
-  },
-  filterConfig: {
-    remote: true,
-  },
-  columns: [
-    { title: t('common.search'), type: 'seq', width: 80 },
-    { align: 'left', title: 'Name', type: 'checkbox', width: 100 },
-    { field: 'category', title: 'Category' },
-    {
-      field: 'color',
-      title: 'Color',
-      filters: [
-        { label: '28', value: 28 },
-        { label: '22', value: 22 },
-        { label: '38', value: 38 },
-      ],
-    },
-    { field: 'productName', title: 'Product Name' },
-    { field: 'price', title: 'Price' },
-    { field: 'releaseDate', formatter: 'formatDateTime', title: 'DateTime' },
-  ],
-  exportConfig: {},
-  height: 'auto', // 如果设置为 auto，则必须确保存在父节点且不允许存在相邻元素，否则会出现高度闪动问题
-  keepSource: true,
-  proxyConfig: {
-    form: false,
-    ajax: {
-      query: async ({ page }, form = {}) => {
-        return await getVendorPageListApi({
-          page_num: page.currentPage,
-          page_size: page.pageSize,
-          merchant_id: '1938848394566025217',
-          ...form,
-        });
-      },
-    },
-  },
-};
-const schema = {
-  username: {
-    type: 'string',
-    'x-decorator': 'FormItem',
-    'x-decorator-props': {
-      gridSpan: 'span 2',
-    },
-    'x-component': 'Input',
-    'x-class': 'w-full',
-    'x-component-props': {
-      placeholder: '输入(供应商名称,联系人,联系人号码)',
-    },
-  },
-};
-
-const [Grid, gridApi] = useIgourdVxeGrid({
-  gridEvents,
-  gridOptions,
+onMounted(() => {
+  getMerchantOverview();
 });
 </script>
-
 <template>
-  <ColPage auto-content-height :left-max-width="10">
-    <template #left>
-      <section class="w-full gap-2">1</section>
-    </template>
-
-    <Grid> </Grid>
-  </ColPage>
+  <Page class="p-2.5">
+    <!-- 警示部分 -->
+    <section class="bg-card break-words rounded-md px-2.5 pt-2.5">
+      <HomeNotice :data="merchantOverviewData" />
+    </section>
+    <section class="mt-2.5 break-words rounded-md">
+      <SalesOrderStatistics :data="merchantOverviewData" />
+    </section>
+    <section>
+      <ProductEchartData :data="merchantOverviewData" />
+    </section>
+  </Page>
 </template>
+<style>
+.card-px-0 {
+  .el-card__body {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+.card-no-header-before {
+  .formily-element-plus-card-header::before {
+    display: none;
+  }
+
+  .el-card__body {
+    height: 100%;
+  }
+}
+</style>
