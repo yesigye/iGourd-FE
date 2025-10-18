@@ -11,6 +11,7 @@ import { loadFeatureLocal, loadRemoteLocale, updateLocale } from '#/locales';
 import { accessRoutes, coreRouteNames } from '#/router/routes';
 
 import { generateAccess } from './access';
+import { toggleCollect } from '#/api';
 
 /**
  * 通用守卫配置
@@ -41,7 +42,7 @@ function setupCommonGuard(router: Router) {
   });
 }
 
-function setupAuthGurd(router: Router) {
+function setupAuthGuard(router: Router) {
   router.beforeEach(async (to, _) => {
     const accessStore = useAccessStore();
     const userStore = useUserStore();
@@ -59,6 +60,16 @@ function setupAuthGurd(router: Router) {
       }
       // return true;
     }
+    //@ts-ignore
+    accessStore.toggleCollectFn = (data: any) => {
+      const { currentLoginUserApp } = userStore;
+      toggleCollect(
+        Object.assign({}, currentLoginUserApp, {
+          ...data,
+          status: data.collect_status,
+        }),
+      );
+    };
     if (!accessStore.isAccessChecked) {
       const { roles } = userStore.userInfo;
       const { accessibleMenus, accessibleRoutes } = await generateAccess({
@@ -87,7 +98,15 @@ function setupAccessGuard(router: Router) {
     const { redirectToLogin } = useAccount();
     const userStore = useUserStore();
     const { setSession } = useSession();
-    const { token_id, user_id, owner_id, owner_type, ...reset } = to.query;
+    const {
+      token_id,
+      user_id,
+      owner_id,
+      owner_type,
+      app_id,
+      app_key,
+      ...reset
+    } = to.query;
     // 基本路由，这些路由不需要进入权限拦截
     if (coreRouteNames.includes(to.name as string)) {
       return true;
@@ -111,6 +130,7 @@ function setupAccessGuard(router: Router) {
       // @ts-ignore
       await setSession({ token_id, user_id, owner_id, owner_type });
     }
+
     return {
       path: to.path,
       query: {
@@ -139,6 +159,7 @@ function setupI18n(router: Router) {
     return true;
   });
 }
+
 /**
  * 项目守卫配置
  * @param router
@@ -153,7 +174,7 @@ function createRouterGuard(router: Router) {
   /**
    * 认证访问
    */
-  setupAuthGurd(router);
+  setupAuthGuard(router);
 
   /** 国际化 */
   setupI18n(router);

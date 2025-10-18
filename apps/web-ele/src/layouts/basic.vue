@@ -1,18 +1,26 @@
 <script lang="ts" setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
-import { IgourdIcon, IgourdSpinner } from '@igourd/common-ui';
+import {
+  IgourdIcon,
+  IgourdSpinner,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem,
+} from '@igourd/common-ui';
 import { SUPPORT_LANGUAGES } from '@igourd/constants';
 import { ChevronDown } from '@igourd/icons';
 import { BasicLayout, UserDropdown } from '@igourd/layouts';
 import { useI18n } from '@igourd/locales';
 import { preferences } from '@igourd/preferences';
-import { useUserStore } from '@igourd/stores';
+import { useAccessStore, useUserStore } from '@igourd/stores';
 import { now } from '@igourd/utils';
 
 import { useSession } from '#/hooks/use-session';
 import { updateLocale } from '#/locales';
 import { useAppStore, useAuthStore } from '#/store';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const {
   userInfo,
@@ -22,10 +30,28 @@ const {
   userApps,
   tokenId,
 } = useUserStore();
+const { collect } = useAccessStore();
+
 const authStore = useAuthStore();
+
 const { apps } = useAppStore();
 const { setSession } = useSession();
 const { t } = useI18n();
+const collectMenus = computed(() => {
+  return collect.map((i) => {
+    if (Reflect.has(i, 'name')) {
+      return {
+        ...i,
+        text: t(i.name),
+      };
+    }
+    return {
+      ...i.menu_model,
+      text: t(i.menu_model.menu_key),
+      path: i.menu_model.url,
+    };
+  });
+});
 const spinning = ref(false);
 const nowTime = ref<string>('');
 const menus = computed(() => [
@@ -92,6 +118,12 @@ onBeforeUnmount(() => {
   }
   timer = null;
 });
+
+function handleCommand(command: string) {
+  router.replace({
+    path: command,
+  });
+}
 </script>
 
 <template>
@@ -103,10 +135,23 @@ onBeforeUnmount(() => {
       <span class="text-muted-foreground text-sm">
         {{ nowTime }}
       </span>
-      <IgourdIcon
-        class="bg-primary-background-lighter text-muted-foreground ml-1 size-6 cursor-pointer rounded-sm p-1"
-        icon="material-symbols:kid-star"
-      />
+      <ElDropdown trigger="click" @command="handleCommand">
+        <IgourdIcon
+          class="bg-primary-background-lighter text-muted-foreground ml-1 size-6 cursor-pointer rounded-sm p-1"
+          icon="material-symbols:kid-star"
+        />
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item
+              :command="path"
+              v-for="{ text, id, path } in collectMenus"
+              :key="id"
+            >
+              {{ text }}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </ElDropdown>
       <UserDropdown
         :avatar
         :menus

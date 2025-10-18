@@ -18,7 +18,6 @@ async function generateRoutesByFrontend(
   if (!forbiddenComponent) {
     return finalRoutes;
   }
-
   // 如果有禁止访问的页面，将禁止访问的页面替换为403页面
   return mapTree(finalRoutes, (route) => {
     if (menuHasVisibleWithForbidden(route)) {

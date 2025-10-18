@@ -1,6 +1,10 @@
 import type { Component, Ref } from 'vue';
 
-import type { MenuRecordBadgeRaw, ThemeModeType } from '@igourd-core/typings';
+import type {
+  MenuRecordBadgeRaw,
+  MenuRecordRaw,
+  ThemeModeType,
+} from '@igourd-core/typings';
 
 interface MenuProps {
   /**
@@ -69,6 +73,13 @@ interface MenuProps {
    * @default dark
    */
   theme?: ThemeModeType;
+
+  /**
+   * 菜单收藏
+   * @param subMenu
+   * @returns
+   */
+  onToggleCollect: (subMenu: MenuRecordRaw) => Promise<any>;
 }
 
 interface SubMenuProps extends MenuRecordBadgeRaw {
@@ -130,7 +141,7 @@ interface MenuProvider {
   handleSubMenuClick: (subMenu: MenuItemRegistered) => void;
   isMenuPopup: boolean;
   items: Record<string, MenuItemRegistered>;
-
+  onToggleCollect: (menu: MenuRecordRaw) => Promise<any>;
   openedMenus: string[];
   openMenu: (path: string, parentLinks: string[]) => void;
   props: MenuProps;
