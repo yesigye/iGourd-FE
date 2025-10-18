@@ -43,5 +43,6 @@
     "offline": "离线",
     "maintenance": "维护中",
     "error": "故障"
-  }
+  },
+  "device-name-device-code-placeholder": "输入要搜索的关键字（设备名称、设备代码）"
 }

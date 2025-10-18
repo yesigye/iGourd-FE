@@ -31,6 +31,9 @@
     "./print": {
       "types": "./src/print/index.ts",
       "default": "./src/print/index.ts"
+    },
+    "./grid-style": {
+      "default": "./src/vxe-table/style.css"
     }
   },
   "publishConfig": {
@@ -57,6 +60,9 @@
       },
       "./style": {
         "default": "./dist/index.css"
+      },
+      "./grid-style": {
+        "default": "./dist/use-vxe-grid.css"
       }
     },
     "registry": "https://packages.aliyun.com/6676817b8549dcfe6e4c1c30/npm/npm-registry/",

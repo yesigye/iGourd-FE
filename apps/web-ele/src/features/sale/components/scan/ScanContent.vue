@@ -52,7 +52,7 @@ const handleDelete = (goodsId: number) => {
 
 const handleImageError = (e) => {
   e.target.src = new URL(
-    '@/assets/img/productDefault.png',
+    '#/assets/img/productDefault.png',
     import.meta.url,
   ).href;
 };
@@ -104,7 +104,7 @@ defineExpose({
             />
             <img
               v-else
-              src="@/assets/img/productDefault.png"
+              src="#/assets/img/productDefault.png"
               alt=""
               class="product-pic"
             />
