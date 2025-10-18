@@ -334,15 +334,15 @@ const sendBasicsMerchantPackagePlaceOrder = async (params) => {
         background-size: 100% 100%;
         // 不需要支付
         // &.NO_PAYMENT {
-        //   // background-image: url(@/assets/img/store/icon-no-payment.png);
+        //   // background-image: url(#/assets/img/store/icon-no-payment.png);
         // }
         // 现金支付
         &.CASH {
-          background-image: url('@/assets/img/store/CASH.png');
+          background-image: url('#/assets/img/store/CASH.png');
         }
 
         &.OFFLINE_BANK_TRANSFER {
-          background-image: url('@/assets/img/store/OFFLINE_BANK_TRANSFER.png');
+          background-image: url('#/assets/img/store/OFFLINE_BANK_TRANSFER.png');
         }
       }
     }
@@ -408,7 +408,7 @@ const sendBasicsMerchantPackagePlaceOrder = async (params) => {
         display: inline-block;
         width: 52px;
         height: 52px;
-        background-image: url('@/assets/img/store/icon.png');
+        background-image: url('#/assets/img/store/icon.png');
         background-repeat: no-repeat;
         background-size: 100% 100%;
       }

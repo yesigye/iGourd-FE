@@ -29,6 +29,12 @@ setupIgourdVxeTable({
         rowConfig: {
           isCurrent: true,
         },
+        headerCellConfig: {
+          height: 30,
+        },
+        cellConfig: {
+          height: 30,
+        },
         columnConfig: {
           resizable: true,
           drag: true,
@@ -89,7 +95,7 @@ setupIgourdVxeTable({
             return true;
           },
           restoreStore({ id }) {
-            return findTableColumn(id)
+            return findTableColumn(id);
           },
           updateStore({ storeData, id }) {
             asyncTableColumn(id, JSON.stringify(storeData));

@@ -94,7 +94,7 @@ function openAuditecordDrawer() {
     background-color: #eaf9e6;
 
     .Comp-top-icon {
-      background-image: url('@/assets/img/store/success.png');
+      background-image: url('#/assets/img/store/success.png');
     }
 
     .Comp-bottom-text {
@@ -106,7 +106,7 @@ function openAuditecordDrawer() {
     background-color: #ffe6e6;
 
     .Comp-top-icon {
-      background-image: url('@/assets/img/store/error.png');
+      background-image: url('#/assets/img/store/error.png');
     }
 
     .Comp-bottom-text {
@@ -118,7 +118,7 @@ function openAuditecordDrawer() {
     background-color: #eaf9e6;
 
     .Comp-top-icon {
-      background-image: url('@/assets/img/store/wrning.png');
+      background-image: url('#/assets/img/store/wrning.png');
     }
 
     .Comp-bottom-text {

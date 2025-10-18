@@ -947,7 +947,7 @@ onMounted(async () => {
                           <div class="image-slot">
                             <img
                               @error="handleImageError"
-                              src="@/assets/img/productDefault.png"
+                              src="#/assets/img/productDefault.png"
                               alt=""
                               class="product-pic"
                             />
