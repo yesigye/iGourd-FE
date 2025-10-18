@@ -1,11 +1,22 @@
 import { requestClient } from '#/api/request';
 
 // 获取首页数据
-export function getHomeDataApi() {
-  return requestClient.get('/v1/merchant/home/data');
+export function getFirstHomeOverviewApi(data) {
+  return requestClient.post(
+    '/v1/merchant/basics/dashboard/boss/overview',
+    data,
+  );
 }
 
-// 获取首页统计
-export function getHomeStatsApi() {
-  return requestClient.get('/v1/merchant/home/stats');
+export function getFirstHomeNewsApi(data) {
+  return requestClient.post(
+    '/v1/merchant/basics/merchant-news/page-list',
+    data,
+  );
+}
+export function getFirstHomeStatisticsApi(data) {
+  return requestClient.post(
+    '/v1/merchant/basics/dashboard/boss/report-merchant/statistics',
+    data,
+  );
 }
