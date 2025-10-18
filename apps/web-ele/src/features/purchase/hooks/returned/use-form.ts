@@ -17,6 +17,7 @@ import {
   updatePurchaseReturnedApi,
   getPurchaseReturnedDetailApi,
   getPurchaseReceiptPageListApi,
+  getPurchaseReceiptDetailApi
 } from '@@/purchase/apis';
 import { basicsCurrencyList } from '#/api';
 function remoteMethod(keywords: string) {
@@ -73,14 +74,22 @@ export function useReturnForm() {
   const onBeforeOpen = () => {
     return formAPI.validate('customer_id');
   };
-  const onSelectOrder = (records: any) => {
+  const onSelectOrder = async(records: any) => {
+    debugger
     if (!records) {
       return;
     }
+    // 根据订单查询订单详情
+    // const detail = await getPurchaseReceiptDetailApi({
+    //               goods_receipt_note_id: data.id,
+    //               purchase_order_id: data.purchase_order_id,
+    //             });
+
+    const row = records[0]
 
     formAPI.setValues({
-      order_info: records,
-      advance_payment_order_item_list: [{}]
+      order_info: row,
+      purchase_returned_item_list: [records]
     });
   };
   const orderListApi = (data: any) => {
@@ -357,7 +366,7 @@ export function useReturnForm() {
                             columns: [
                               {
                                 title: '',
-                                type: 'checkbox',
+                                type: 'radio',
                                 fixed: 'left',
                               },
                               {
