@@ -95,6 +95,7 @@ export function useInventoryProductLabelList() {
   const uCrud = useCrud<ProductLabelItem, ProductLabelParams>({
     columns,
     searchFormSchema,
+    searchFormAppendTo: '#product-label-search',
     batchOperate: true,
     service: {
       // @ts-ignore
