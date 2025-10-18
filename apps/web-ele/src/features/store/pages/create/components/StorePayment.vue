@@ -278,7 +278,7 @@ onMounted(() => {
     &-icon {
       width: 100px;
       height: 100px;
-      background-image: url('@/assets/img/store/frame.png');
+      background-image: url('#/assets/img/store/frame.png');
       background-repeat: no-repeat;
       background-size: 100% 100%;
     }
