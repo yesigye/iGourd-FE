@@ -23,7 +23,7 @@ export const ReturnMode: ModePlugin = {
     if (quantityIndex !== -1) {
       baseColumns[quantityIndex] = {
         ...baseColumns[quantityIndex],
-        title: '退货数量',
+        title: "{{t('common.returned_quantity')}}",
         name: 'returned_quantity',
       };
     }

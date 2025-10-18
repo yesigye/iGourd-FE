@@ -64,11 +64,13 @@
   "please-selectVat": "请选择VAT",
   "input-deposit": "输入定金",
   "please-warehouse": "选择仓库",
-  "please-enter-exchange-rate": "输入货币代码",
+  "please-enter-exchange-rate": "请选择货币代码",
   "vat": "VAT",
   "quick-select":"快速选择",
   "product-details":"商品明细",
   "product-selection-list":"选择商品列表"
+
+
 
 
 
