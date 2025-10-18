@@ -150,6 +150,7 @@ export function useAccountNotes() {
     columns,
     searchFormSchema,
     batchOperate: true,
+    id: 'account-nots-list',
     tabs: [
       { value: 'ALL', label: '全部' },
       { value: 'REVENUE', label: '收入' },

@@ -6,9 +6,8 @@
 @use './scss/index.scss';
 @use './entry.scss';
 @use './base.scss';
-
+@use 'element-plus/theme-chalk/src/index.scss' as *;
 // @use '@/ag-grid-table/reset-ag-grid.scss';
-
 .cursor-not-allowed.cursor-not-allowed.cursor-not-allowed {
   cursor: not-allowed;
 }
