@@ -430,7 +430,6 @@ defineExpose({ handlePickOrder });
 .good-info-box {
   width: 100%;
   overflow: hidden;
-  font-family: 'Microsoft YaHei';
   border: 1px solid #e1e5eb;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgb(0 0 0 / 10%);

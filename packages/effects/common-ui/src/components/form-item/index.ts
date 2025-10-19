@@ -10,7 +10,7 @@ import {
 } from '@element-plus/icons-vue';
 import { isVoidField } from '@formily/core';
 import { connect, mapProps } from '@formily/vue';
-import { ElIcon, ElTooltip } from 'element-plus';
+import { ElIcon, ElTooltip, ElPopover } from 'element-plus';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import {
@@ -214,7 +214,7 @@ export const FormBaseItem = defineComponent({
       const formatChildren =
         feedbackLayout === 'popover'
           ? h(
-              'el-popover',
+              ElPopover,
               {
                 props: {
                   disabled: !feedbackText,

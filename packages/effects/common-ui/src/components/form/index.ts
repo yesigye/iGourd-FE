@@ -1,4 +1,8 @@
-import type { Form as FormType, IFormFeedback } from '@formily/core';
+import {
+  onFormValidateFailed,
+  type Form as FormType,
+  type IFormFeedback,
+} from '@formily/core';
 
 import type { Component, SetupContext, VNode } from 'vue';
 
@@ -32,7 +36,6 @@ export const Form = defineComponent({
   ],
   setup(props: FormProps, { attrs, slots }: SetupContext) {
     const top = useForm();
-
     return () => {
       const {
         form,

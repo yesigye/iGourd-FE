@@ -2,7 +2,7 @@
   /** 弹出层的基础层级 **/
   --popup-z-index: 2000;
   --font-family:
-    -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, 'Helvetica Neue',
+    -apple-system,blinkmacsystemfont, 'Segoe UI', roboto, 'Helvetica Neue',
     arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', 'Noto Color Emoji';
 
@@ -55,8 +55,7 @@
   --warning-foreground: 0 0% 98%;
 
   /* Secondary colors for <Button /> */
-
-  --secondary: 240 5% 96%;
+  --secondary: 220 3% 39%;
   --secondary-foreground: 240 6% 10%;
 
   /* Used for accents such as hover effects on <DropdownMenuItem>, <SelectItem>...etc */
