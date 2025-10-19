@@ -151,5 +151,7 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
 export const requestClient = createRequestClient(apiURL, {
   responseReturn: 'data',
 });
-
+export const arrayRequestClient = createRequestClient(apiURL, {
+  responseReturn: 'array',
+});
 export const baseRequestClient = new RequestClient({ baseURL: apiURL });

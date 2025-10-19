@@ -27,9 +27,13 @@ export const defaultResponseInterceptor = ({
       }
 
       if (status >= 200 && status < 400) {
+        if (config.responseReturn === 'array') {
+          return [responseData.data, null];
+        }
         if (config.responseReturn === 'body') {
           return responseData;
-        } else if (
+        }
+        if (
           isFunction(successCode)
             ? successCode(responseData[codeField])
             : responseData[codeField] === successCode

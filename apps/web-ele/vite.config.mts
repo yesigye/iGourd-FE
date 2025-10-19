@@ -34,7 +34,12 @@ export default defineConfig(async () => {
           '/api': {
             changeOrigin: true,
             secure: false,
-            rewrite: (path) => path.replace(/^\/api/, ''),
+            rewrite: (path) => {
+              if (path.startsWith('/api/passport')) {
+                return path.replace(/^\/api/, '/v1');
+              }
+              return path.replace(/^\/api/, '');
+            },
             // mock代理目标地址
             target: 'https://dev-api.seller100.com',
             ws: true,

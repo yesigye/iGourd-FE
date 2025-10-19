@@ -6,6 +6,7 @@ import { VuePrintPlugin } from '@igourd/plugins/print';
 // import '@igourd/common-ui/style';
 import { preferences } from '@igourd/preferences';
 import { initStores } from '@igourd/stores';
+import microApp from '@micro-zoe/micro-app';
 import '@igourd/styles';
 import '@igourd/styles/ele';
 
@@ -17,6 +18,7 @@ import { $t, setupI18n } from '#/locales';
 import { initComponentAdapter } from './adapter/component';
 import App from './app.vue';
 import { router } from './router';
+import { arrayRequestClient } from './api/request';
 
 async function bootstrap(namespace: string) {
   // 初始化组件适配器
@@ -58,8 +60,11 @@ async function bootstrap(namespace: string) {
       useTitle(pageTitle);
     }
   });
-
+  microApp.start();
   app.mount('#app');
+  microApp.setGlobalData({
+    request: arrayRequestClient,
+  });
 }
 
 export { bootstrap };
