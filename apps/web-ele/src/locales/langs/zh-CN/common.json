@@ -332,5 +332,10 @@
   },
   "default": "默认",
   "basic-information": "基本信息",
-  "image": "图片"
+  "image": "图片",
+  "range-separator": "至",
+  "yesterday": "昨天",
+  "today": "今天",
+  "last-week": "近一周",
+  "last-month": "近一月"
 }

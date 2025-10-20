@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { EchartsUIType } from '@igourd/plugins/echarts';
 
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 import { Card, ElButton, ElButtonGroup, ElCol, ElRow } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
@@ -25,6 +25,10 @@ const props = defineProps({
   data: {
     type: Object,
     default: () => {},
+  },
+  time: {
+    type: Array,
+    default: () => [],
   },
 });
 const { t } = useI18n();
@@ -86,8 +90,8 @@ const timeRanges = ref('DAY');
 const handleTimeRange = async (value: string) => {
   timeRange.value = value;
   const res = await getStatisticsApi({
-    end_date: '2025-10-17 13:39:57',
-    start_date: '2025-09-17 00:00:00',
+    end_date: props.time[1],
+    start_date: props.time[0],
     time_range: value,
   });
   handleEchartInit(res);
@@ -95,16 +99,16 @@ const handleTimeRange = async (value: string) => {
 const handleTimeRanges = async (value: string) => {
   timeRanges.value = value;
   const res = await getStatisticsApi({
-    end_date: '2025-10-17 13:39:57',
-    start_date: '2025-09-17 00:00:00',
+    end_date: props.time[1],
+    start_date: props.time[0],
     time_range: value,
   });
   handleEchartQtyInit(res);
 };
 const getStatistics = async (range: string) => {
   const res = await getStatisticsApi({
-    end_date: '2025-10-17 13:39:57',
-    start_date: '2025-09-17 00:00:00',
+    end_date: props.time[1],
+    start_date: props.time[0],
     time_range: range,
   });
   handleEchartInit(res);
@@ -113,8 +117,8 @@ const getStatistics = async (range: string) => {
 const accountingStatistics = ref({});
 const getAccountingStatistics = async () => {
   const res = await getAccountingStatisticsApi({
-    end_date: '2025-10-17 13:39:57',
-    start_date: '2025-09-17 00:00:00',
+    end_date: props.time[1],
+    start_date: props.time[0],
     time_range: timeRange.value,
   });
   accountingStatistics.value = res;
@@ -238,7 +242,13 @@ const detailsOfFunds = computed(() => {
   }, 0);
   return funds;
 });
-
+watch(
+  () => props.time,
+  async () => {
+    await getStatistics('DAY');
+    await getAccountingStatistics();
+  },
+);
 onMounted(() => {
   getStatistics('DAY');
   getAccountingStatistics();
