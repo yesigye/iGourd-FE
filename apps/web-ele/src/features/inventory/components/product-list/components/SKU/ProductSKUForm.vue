@@ -891,6 +891,9 @@ watch(
   },
   { deep: true },
 );
+const getStockWarnData = () => {
+  return specsConfigRef.value.stockWarnData;
+};
 
 // 确保暴露这个方法
 defineExpose({
@@ -904,6 +907,7 @@ defineExpose({
   backupSpecRows,
   backupUnitsConfig,
   handleMergeForm,
+  getStockWarnData,
 });
 </script>
 

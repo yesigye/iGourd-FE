@@ -84,5 +84,7 @@
   "major-unit": "主单位",
   "minor-unit": "副单位",
   "unit-rate": "单位比例",
-  "sku": "SKU"
+  "sku": "SKU",
+  "enable-sub-warehouse-early-warning": "启用子仓库预警",
+  "enable-spec-settings": "启用规格设置"
 }

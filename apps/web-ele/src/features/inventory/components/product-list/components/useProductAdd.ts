@@ -614,11 +614,13 @@ export function useProductAdd() {
    * 提交表单数据
    * @param sku - SKU相关数据
    * @param ismerge - 是否为合并操作
+   * @param stockWarnData - 库存警告数据
    * @returns API响应结果
    */
-  const onSubmit = async (sku, ismerge) => {
+  const onSubmit = async (sku, ismerge, stockWarnData) => {
     try {
       // 表单验证
+      debugger;
       const isValid = await ruleFormRef.value.validate();
       if (!isValid) return;
 
@@ -709,7 +711,26 @@ export function useProductAdd() {
           return false;
         }
       }
-
+      // 库存预警设置
+      if (stockWarnData) {
+        stockWarnData.list.forEach((item) => {
+          item.stock_warning_quantity_maximum = Number(
+            item.stock_warning_quantity_maximum,
+          );
+          item.stock_warning_quantity_minimum = Number(
+            item.stock_warning_quantity_minimum,
+          );
+          item.stock_warning_quantity_safety = Number(
+            item.stock_warning_quantity_safety,
+          );
+        });
+        productForm.stock_warning_list = stockWarnData.list;
+        productForm.is_per_spec_warning = stockWarnData.isPerSpecWarning;
+        productForm.is_per_warehouse_warning =
+          stockWarnData.isPerWarehouseWarning;
+        productForm.is_enabled_stock_warning =
+          stockWarnData.is_enabled_stock_warning;
+      }
       // 根据操作模式调用不同的API
       if (formMode.value === 'add') {
         response = await productProfileCreate(productForm);
