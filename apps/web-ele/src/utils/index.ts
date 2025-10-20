@@ -4,6 +4,8 @@ export * from './eleValidate';
 export * from './functions';
 export * from './global';
 export * from './language';
+export * from './time';
+
 interface EventShim {
   new (...args: any[]): {
     $props: {

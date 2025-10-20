@@ -3,15 +3,21 @@ import { onMounted, ref } from 'vue';
 
 import { ElButton, ElButtonGroup, ElDatePicker, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+import { useUserStore } from '@igourd/stores';
 
 import dayjs from 'dayjs';
 
 import { merchantOverviewApi } from '#/api';
+import { quickSwitchTime } from '#/utils';
 
 import HomeNotice from './components/home-notice.vue';
 import ProductEchartData from './components/product-echart.data.vue';
 import SalesOrderStatistics from './components/sales-order-statistics.vue';
 
+const useStore = useUserStore();
+
+const { merchantInfo } = useStore;
+const currencySymbol = merchantInfo?.currency_symbol || '';
 const { t } = useI18n();
 const merchantOverviewData = ref({});
 // 默认问最近一个月 开始00：00：00 结束23：59：59
@@ -24,36 +30,7 @@ const handleQuickSwitchTime = (
   val: 'last-month' | 'last-week' | 'today' | 'yesterday',
 ) => {
   selectQuickTime.value = val;
-  switch (val) {
-    case 'last-month': {
-      time.value = [
-        dayjs().subtract(1, 'month').format('YYYY-MM-DD 00:00:00'),
-        dayjs().format('YYYY-MM-DD 23:59:59'),
-      ];
-      break;
-    }
-    case 'last-week': {
-      time.value = [
-        dayjs().subtract(1, 'week').format('YYYY-MM-DD 00:00:00'),
-        dayjs().format('YYYY-MM-DD 23:59:59'),
-      ];
-      break;
-    }
-    case 'today': {
-      time.value = [
-        dayjs().format('YYYY-MM-DD 00:00:00'),
-        dayjs().format('YYYY-MM-DD 23:59:59'),
-      ];
-      break;
-    }
-    case 'yesterday': {
-      time.value = [
-        dayjs().subtract(1, 'day').format('YYYY-MM-DD 00:00:00'),
-        dayjs().subtract(1, 'day').format('YYYY-MM-DD 23:59:59'),
-      ];
-      break;
-    }
-  }
+  time.value = quickSwitchTime(val);
 };
 // 将开始时间改为00:00:00 将结束时间改为23:59:59
 const handleDateChange = (val: string[]) => {
@@ -131,13 +108,23 @@ onMounted(() => {
     </section>
     <!-- 警示部分 -->
     <section class="bg-card break-words rounded-md px-2.5 pt-2.5">
-      <HomeNotice :data="merchantOverviewData" />
+      <HomeNotice
+        :currency-symbol="currencySymbol"
+        :data="merchantOverviewData"
+      />
     </section>
     <section class="mt-2.5 break-words rounded-md">
-      <SalesOrderStatistics :data="merchantOverviewData" />
+      <SalesOrderStatistics
+        :currency-symbol="currencySymbol"
+        :data="merchantOverviewData"
+      />
     </section>
     <section>
-      <ProductEchartData :data="merchantOverviewData" :time="eachartTime" />
+      <ProductEchartData
+        :currency-symbol="currencySymbol"
+        :data="merchantOverviewData"
+        :time="eachartTime"
+      />
     </section>
   </Page>
 </template>

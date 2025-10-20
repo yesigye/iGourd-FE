@@ -1,10 +1,8 @@
 {
-  "stock-alert-min-stock": "库存警报(最低库存)",
-  "warning-alert-expiring-soon": "警告提醒(即将过期)",
   "unpaid-sales-order": "未付款销售订单",
   "goods-receipt-not-posted": "货物收据未过账",
   "go-handle": "去处理",
-  "products-value-cost": "产品价值($)(成本)",
+  "products-value-cost": "产品价值({currency})(成本)",
   "sales-received-amount": "销售收款金额($)",
   "actual-transaction-order": "实际交易订单",
   "sales-product-qty": "销售产品数量",
@@ -39,5 +37,10 @@
   "vendor-number": "供应商数量",
   "accounts-payable": "应付账款",
   "customer-number": "客户数量",
-  "accounts-receivable": "应收账款"
+  "accounts-receivable": "应收账款",
+  "stock-alert-min-stock": "库存警报(最低库存)",
+  "stock-alert-safety-stock": "库存警报(安全库存)",
+  "stock-alert-max-stock": "库存警报(最大库存)",
+  "warning-alert-expiring-soon": "警告提醒(即将过期)",
+  "warning-alert-expired": "警告提醒(已过期)"
 }
