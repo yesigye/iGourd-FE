@@ -126,7 +126,18 @@ export function useStockWarningTable() {
       'x-component': 'Select',
       'x-component-props': {
         placeholder: "{{t('stock-warning-table.stock-warning')}}",
+        class: 'w-44',
         clearable: true,
+        options: [
+          {
+            label: t('stock-warning-table.product-name'),
+            value: 'product_name',
+          },
+          {
+            label: t('stock-warning-table.product-code'),
+            value: 'product_code',
+          },
+        ],
       },
     },
     product_code: {
@@ -134,11 +145,11 @@ export function useStockWarningTable() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('stock-warning-table.enter-product-code-product-name')}}",
+        placeholder:
+          "{{t('stock-warning-table.enter-product-code-product-name')}}",
         clearable: true,
       },
     },
-
   };
 
   return useCrud<InventoryRow, InventoryUpdateDTO>({
