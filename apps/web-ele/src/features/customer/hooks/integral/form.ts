@@ -41,9 +41,14 @@ export function useSelectProductForm(func) {
     async onOpenChange(isOpen) {
       if (isOpen) {
         formAPI.reset();
-        const data = drawerApi.getData();
+        let data = drawerApi.getData();
+        if(!Array.isArray(data)){
+          data = []
+        }
         detailData.value = data;
-        formAPI.setValues(data);
+        formAPI.setValues({
+          product_list:data
+        });
       } else {
         formAPI.values = {};
       }
@@ -107,7 +112,7 @@ export function useSelectProductForm(func) {
                 },
               ],
               fetchLeft: '{{ actions.fetchProducts }}',
-              fetchRight: '{{ actions.fetchSelectedProducts }}',
+              //fetchRight: '{{ actions.fetchSelectedProducts }}',
               fetchByIds: '{{ actions.fetchProductsByIds }}',
               getAllIdsUnderFilter: '{{ actions.getAllIdsUnderFilter }}',
               topFilterFields: [
@@ -147,7 +152,7 @@ export function useSelectProductForm(func) {
       actions: {
         fetchProducts: getProductList,
         fetchSelectedProducts: (params) => {
-          params.product_label_id = detailData.id;
+          params.product_label_id = detailData.value.id;
           getProductlabelProductPage(params);
           return [{}];
         },

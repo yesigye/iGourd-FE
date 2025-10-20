@@ -41,12 +41,15 @@ interface ListItem {
   label: string;
 }
 const { currentLoginUserApp } = useUserStore();
-const index = ref();
+const currentIndex = ref();
 const id = ref();
 const dataSource = observable<{ value: ListItem[] }>({ value: [] });
-const handleSelectProduct = (...args) => {
-  index.value = args[0];
-  drawerApi.open();
+// 已有礼物数据
+const giftList = ref([])
+const handleSelectProduct = (_, op, record, index) => {
+  currentIndex.value = index;
+  const  gift =  dataSource.value[index];
+  drawerApi.setData(gift).open();
 };
 const formSchema: ISchema = {
   type: 'object',
@@ -145,6 +148,7 @@ const formSchema: ISchema = {
                 point_exchange_type: {
                   type: 'boolean',
                   title: "{{t('customer.exchangemode')}}",
+                  required: true,
                   enum: [
                     {
                       label: t('customer.deductiblecash'),
@@ -180,6 +184,7 @@ const formSchema: ISchema = {
                   type: 'array',
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
+                  required: true,
                   title: "{{t('customer.integrationrule')}}",
                   items: {
                     type: 'object',
@@ -256,7 +261,7 @@ const formSchema: ISchema = {
                                   class: 'cursor-pointer',
                                   style: { color: 'var(--el-color-primary)' },
                                   '@click': `{{
-                                    ()=> handleSelectProduct($index,$record)
+                                    (value,op)=> handleSelectProduct(value,op,$self,$index)
                                   }}`,
                                 },
                               },
@@ -375,11 +380,12 @@ const { Form, formAPI } = useIgourdForm({
   readPretty: false,
   initialValues: {
     setting_merchant_point_gift_list: [{}],
+    is_annually_resettable:false
   },
   effects() {
     onFieldValueChange('point_exchange_type', (field, form: Form) => {
       hideField(field.value, form);
-      if (field.value === 'EXCHANGE_GIFTS' && formAPI.values.setting_merchant_point_gift_list.lenght ===0 ) {
+      if (field.value === 'EXCHANGE_GIFTS' && (!formAPI.values.setting_merchant_point_gift_list || formAPI.values.setting_merchant_point_gift_list?.lenght ===0) ) {
         form.setValuesIn('setting_merchant_point_gift_list', [{}]);
       }
     });
@@ -393,7 +399,8 @@ const handleReset = () => {
   formAPI.reset();
   ElMessage.success(t('customer.resetSuccess'));
 };
-const handleSave = () => {
+const handleSave = async () => {
+  await formAPI.validate();
   let params = JSON.parse(JSON.stringify(formAPI.values));
   //对象转json
   params.setting_merchant_point_gift_list.forEach((element) => {
@@ -412,9 +419,11 @@ const handleSave = () => {
 const getData = () => {
   getCustomerIntegralDetailApi().then((res) => {
     hideField(res.point_exchange_type, formAPI);
-    res.setting_merchant_point_gift_list.forEach((element) => {
+    giftList.value = res.setting_merchant_point_gift_list;
+    res.setting_merchant_point_gift_list?.forEach((element) => {
       const list = element.product_model_list.map((item) => {
         return {
+          ...item,
           value: item.id,
           label: item.major_name,
         };
@@ -430,30 +439,31 @@ const getData = () => {
 };
 
 
-const handleConfirm = (data) => {
+const handleConfirm = async (data) => {
   if (!data.product_list) {
     return;
   }
   // 新添加 dataSource里还没有
-  if (!dataSource.value[index.value]) {
+  if (!dataSource.value[currentIndex.value]) {
     dataSource.value.push([{}]);
   }
   const list = data.product_list.map((item) => {
     return {
+      ...item,
       value: item.id,
       label: item.major_name,
     };
   });
   const selectedList = data.product_list.map((item) => item.id);
-  dataSource.value[index.value] = list;
+  dataSource.value[currentIndex.value] = list;
   formAPI.setValuesIn(
     'setting_merchant_point_gift_list[' +
-      index.value +
+      currentIndex.value +
       '].gift_product_ids',
     selectedList,
   );
   formAPI.setValuesIn(
-    'setting_merchant_point_gift_list[' + index.value + '].count',
+    'setting_merchant_point_gift_list[' + currentIndex.value + '].count',
     data.product_list.length + t("integral.product"),
   );
 };

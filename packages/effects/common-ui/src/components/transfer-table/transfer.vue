@@ -81,6 +81,8 @@ const props = withDefaults(
   defineProps<{
     // top-bottom 上线布局   left-right 左右布局 默认
     layout:string,
+    // 选择数据的模式 select左边勾选直接添加(默认的)   move 通过中间按钮添加
+    selectMode:string,
     columns: Column[];
     excludeSelectedFromLeft?: boolean;
     fetchLeft: (
@@ -104,6 +106,7 @@ const props = withDefaults(
   }>(),
   {
     layout:"left-right",
+    selectMode:'select',
     modelValue: () => [],
     leftTitle: '可选择',
     rightTitle: '已选择',
@@ -281,7 +284,9 @@ watch(
 );
 
 watchEffect(() => {
+  leftSelection.value = [];
   leftRefresh();
+  rightRefresh();
 });
 
 /** ****************************
@@ -379,6 +384,13 @@ function removeRow(row: KV) {
   const next = value.value.filter((r) => r[props.rowKey] !== id);
   setValue(next);
 }
+// 左边选择事件
+function leftSelectionChange(rows:KV[]){
+  leftSelection.value = rows
+  if(props.selectMode === 'select'){
+    addRows(rows)
+  }
+}
 
 // expose refresh for parent if needed
 defineExpose({ leftRefresh, rightRefresh });
@@ -391,7 +403,7 @@ defineExpose({ leftRefresh, rightRefresh });
       <ElInput
         v-model="keyword"
         :placeholder="searchPlaceholder"
-        class="w-[360px]"
+        class="!w-[360px]"
         clearable
         @keyup.enter="leftRefresh()"
       >
@@ -468,10 +480,10 @@ defineExpose({ leftRefresh, rightRefresh });
         </div>
       </ElPopover>
 
-      <ElButton text @click="clearAll">Clear</ElButton>
+      <ElButton text @click="clearAll">重置</ElButton>
       <div class="flex-1"></div>
       <div class="font-medium text-blue-600">
-        已选择 {{ valueIds.length }} 项{{layout}}
+        已选择 {{ valueIds.length }} 项
       </div>
     </div>
 
@@ -492,7 +504,7 @@ defineExpose({ leftRefresh, rightRefresh });
           height="420"
           :row-key="props.rowKey"
           :reserve-selection="true"
-          @selection-change="(rows: any[]) => (leftSelection = rows)"
+          @selection-change="leftSelectionChange"
           :row-class-name="leftRowClass"
         >
           <!-- 选择列：不显示“本页全选”复选框 -->
@@ -611,8 +623,8 @@ defineExpose({ leftRefresh, rightRefresh });
       </div>
 
       <!-- MIDDLE actions -->
-      <div class="flex flex-col justify-center gap-2">
-        <ElButton
+      <div  class="flex flex-col justify-center gap-2">
+        <ElButton v-if="props.selectMode ==='move'"
           :disabled="leftSelection.length === 0"
           @click="addRows(leftSelection)"
         >
