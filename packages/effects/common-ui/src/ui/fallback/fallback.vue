@@ -153,7 +153,7 @@ function refresh() {
       <slot v-if="$slots.action" name="action"></slot>
       <IgourdButton v-else-if="showBack" size="lg" @click="back">
         <ArrowLeft class="mr-2 size-4" />
-        {{ $t('common.backToHome') }}
+        {{ $t('common.back-to-home') }}
       </IgourdButton>
       <IgourdButton v-else-if="showRefresh" size="lg" @click="refresh">
         <RotateCw class="mr-2 size-4" />

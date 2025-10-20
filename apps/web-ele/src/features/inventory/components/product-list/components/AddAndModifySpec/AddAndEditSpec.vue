@@ -262,7 +262,7 @@ const createSpecValue = async (closeDialogOnSuccess = true) => {
     product_spec_name: formData.value.product_spec_name,
     product_spec_value: formData.value.product_spec_value,
   });
-  ElMessage.success(t('common.addSuccess'));
+  ElMessage.success(t('common.add-success'));
 
   emit('success', {
     type: 'specValue',
@@ -282,7 +282,7 @@ const createSpec = async () => {
     const res = await productSpecCreate({
       product_spec_name: formData.value.product_spec_name,
     });
-    ElMessage.success(t('common.addSuccess'));
+    ElMessage.success(t('common.add-success'));
     handleClose();
     emit('success', {
       type: 'spec',
@@ -304,7 +304,7 @@ const modifySpec = async () => {
       product_spec_name: formData.value.product_spec_name,
       status: formData.value.status,
     });
-    ElMessage.success(t('common.modifySuccess'));
+    ElMessage.success(t('common.modify-success'));
     handleClose();
     emit('success', {
       type: 'spec',
@@ -328,7 +328,7 @@ const modifySpecValue = async () => {
     product_spec_value: formData.value.product_spec_value,
     status: formData.value.status,
   });
-  ElMessage.success(t('common.modifySuccess'));
+  ElMessage.success(t('common.modify-success'));
   handleClose();
   emit('success', {
     type: 'specValue',
@@ -436,13 +436,13 @@ defineExpose({
           <div v-else></div>
           <div class="right-actions">
             <ElButton @click="handleClose">{{
-              t('common.cancelBtn')
+              t('common.cancel-btn')
             }}</ElButton>
             <ElButton type="primary" @click="handleSubmit">{{
               t('common.submit')
             }}</ElButton>
             <ElButton v-if="!isEdit" type="primary" @click="handleSubmitAndAdd">
-              {{ t('common.submit_and_add') }}
+              {{ t('common.submit-and-add') }}
             </ElButton>
           </div>
         </div>

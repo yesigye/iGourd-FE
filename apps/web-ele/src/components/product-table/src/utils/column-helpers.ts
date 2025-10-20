@@ -10,7 +10,7 @@ export const createBaseColumns = (): ColumnDescriptor[] => [
   {
     name: 'product_code',
     type: 'string',
-    title: '{{t("common.purchase.product_code")}}',
+    title: '{{t("common.purchase.product-code")}}',
     'x-component-props': {
       width: 160,
     },
@@ -25,7 +25,7 @@ export const createBaseColumns = (): ColumnDescriptor[] => [
   {
     name: 'product_id',
     type: 'string',
-    title: '{{t("common.purchase.major_name")}}',
+    title: '{{t("common.purchase.major-name")}}',
     'x-component-props': {
       width: 260,
     },
@@ -39,7 +39,7 @@ export const createBaseColumns = (): ColumnDescriptor[] => [
   {
     name: 'sku_barcode',
     type: 'string',
-    title: '{{t("common.purchase.product_barcode")}}',
+    title: '{{t("common.purchase.product-barcode")}}',
     'x-component-props': {
       width: 160,
     },
@@ -76,7 +76,7 @@ export const createBaseColumns = (): ColumnDescriptor[] => [
   },
   {
     name: 'product_unit_code',
-    title: '{{t("common.purchase.sub_product_stock_search_models")}}',
+    title: '{{t("common.purchase.sub-product-stock-search-models")}}',
     'x-component-props': {
       width: 150,
     },
@@ -90,7 +90,7 @@ export const createBaseColumns = (): ColumnDescriptor[] => [
   },
   {
     name: 'basic_unit_radio_display',
-    title: '{{t("common.purchase.basic_unit_radio")}}',
+    title: '{{t("common.purchase.basic-unit-radio")}}',
     type: 'void',
     'x-component-props': {
       width: 160,
@@ -107,7 +107,7 @@ export const createBaseColumns = (): ColumnDescriptor[] => [
   },
   {
     name: 'major_unit_name',
-    title: '{{t("common.purchase.major_unit_name")}}',
+    title: '{{t("common.purchase.major-unit-name")}}',
     'x-component-props': {
       width: 100,
     },
@@ -116,7 +116,7 @@ export const createBaseColumns = (): ColumnDescriptor[] => [
   {
     name: 'cost_price',
     type: 'number',
-    title: '{{t("common.purchase.cost_price")}}',
+    title: '{{t("common.purchase.cost-price")}}',
     'x-component-props': {
       width: 140,
     },
@@ -127,7 +127,7 @@ export const createBaseColumns = (): ColumnDescriptor[] => [
   {
     name: 'total_amount',
     type: 'number',
-    title: '{{t("common.purchase.total_amount")}}',
+    title: '{{t("common.purchase.total-amount")}}',
     'x-component-props': {
       width: 200,
     },
@@ -136,7 +136,7 @@ export const createBaseColumns = (): ColumnDescriptor[] => [
   },
   {
     name: 'product_spec_kvmessage',
-    title: '{{t("common.purchase.product_spec_kvmessage")}}',
+    title: '{{t("common.purchase.product-spec-kvmessage")}}',
     'x-component-props': {
       width: 200,
     },

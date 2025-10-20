@@ -111,7 +111,7 @@ const deleteFn = (item: Item, index: number) => {
     !currentList.value[_drawIndex].isSelect;
 };
 const saveTableFieldsFn = () => {
-  ElMessage.success(t('common.saveSuccess'));
+  ElMessage.success(t('common.save-success'));
   console.log(
     '保存的数据啊啊啊啊啊',
     JSON.parse(JSON.stringify(checkDrawList.value)),
@@ -277,7 +277,7 @@ watch(
           <div class="left_box">
             <div class="select-all">
               <ElCheckbox v-model="selectAll" @change="handleSelectAll">
-                {{ t('common.selectAll') }}
+                {{ t('common.select-all') }}
               </ElCheckbox>
             </div>
             <div class="el-checkbox-group">
@@ -312,7 +312,7 @@ watch(
             </div>
             <div class="btn_group">
               <ElButton class="cancel-btn" @click="handleClose">
-                {{ t(`common.cancelBtn`) }}
+                {{ t(`common.cancel-btn`) }}
               </ElButton>
               <ElButton class="save-btn" @click="saveTableFieldsFn">
                 {{ t('common.save') }}
@@ -321,9 +321,9 @@ watch(
           </div>
           <div class="right_box">
             <div class="r_title">
-              <p>{{ t('common.selectedFields') }}</p>
+              <p>{{ t('common.selected-fields') }}</p>
               <p class="drag-hint">
-                {{ t('common.supportsDragAndDropSorting') }}
+                {{ t('common.supports-drag-and-drop-sorting') }}
               </p>
             </div>
             <div class="item_list" ref="draggableBox">

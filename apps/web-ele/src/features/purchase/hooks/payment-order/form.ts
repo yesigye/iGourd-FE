@@ -143,7 +143,7 @@ export function usePaymentOrderForm() {
               add: {
                 type: 'void',
                 'x-component': 'ArrayTable.Addition',
-                title: "{{t('common.addOption')}}",
+                title: "{{t('common.add-option')}}",
               },
             },
           },

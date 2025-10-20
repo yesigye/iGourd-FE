@@ -392,7 +392,7 @@ export function useCountForm() {
           },
           attachment_url: {
             type: 'string',
-            title: "{{t('common.Attachment')}}",
+            title: "{{t('common.attachment')}}",
             'x-decorator': 'FormItem',
             'x-component': 'Upload',
             'x-component-props': {

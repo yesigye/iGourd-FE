@@ -736,7 +736,7 @@ export function useReturnForm() {
                 type: 'void',
                 'x-component': 'Card',
                 'x-component-props': {
-                  header: '{{t("common.Attachment")}}',
+                  header: '{{t("common.attachment")}}',
                   style: {
                     border: '0px',
                   },

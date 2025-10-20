@@ -457,13 +457,13 @@ defineExpose({
           <div v-else></div>
           <div class="right-actions">
             <ElButton @click="handleClose">{{
-              $t('common.cancelBtn')
+              $t('common.cancel-btn')
             }}</ElButton>
             <ElButton type="primary" @click="handleSubmit">{{
               $t('common.submit')
             }}</ElButton>
             <ElButton type="primary" @click="handleSubmitAndAdd" v-if="!isEdit">
-              {{ $t('common.submit_and_add') }}
+              {{ $t('common.submit-and-add') }}
             </ElButton>
           </div>
         </div>

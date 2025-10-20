@@ -22,7 +22,7 @@ export function useIntegralLogList() {
     },
     {
       field: 'change_type',
-      title: t('customer.changeType'),
+      title: t('customer.change-type'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -36,7 +36,7 @@ export function useIntegralLogList() {
     },
     {
       field: 'order_id',
-      title: t('customer.relatedOrders'),
+      title: t('customer.related-orders'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -51,21 +51,21 @@ export function useIntegralLogList() {
     },
     {
       field: 'origin_points',
-      title: t('customer.originalValueOfPoints'),
+      title: t('customer.original-value-of-points'),
       minWidth: 100,
       sortable: true,
       align: 'left',
     },
     {
       field: 'change_points',
-      title: t('customer.changeValue'),
+      title: t('customer.change-value'),
       minWidth: 100,
       sortable: true,
       align: 'left',
     },
     {
       field: 'final_points',
-      title: t('customer.afterTheChange'),
+      title: t('customer.after-the-change'),
       minWidth: 120,
       sortable: true,
       align: 'left',
@@ -79,7 +79,7 @@ export function useIntegralLogList() {
     },
     {
       field: 'create_time',
-      title: t('customer.creationTime'),
+      title: t('customer.creation-time'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -93,7 +93,7 @@ export function useIntegralLogList() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('customer.customerPlaceholder')}}",
+        placeholder: "{{t('customer.customer-placeholder')}}",
         clearable: true,
       },
     },

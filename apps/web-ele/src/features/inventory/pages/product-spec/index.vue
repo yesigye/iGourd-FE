@@ -68,7 +68,7 @@ const handleEditLabel = (item) => {
 const handleRemove = async (item) => {
   confirm({
     title: t('common.prompt'),
-    content: t('common.confirmPrompt', {
+    content: t('common.confirm-prompt', {
       value: t('product-label.add-product-label'),
     }),
   }).then(

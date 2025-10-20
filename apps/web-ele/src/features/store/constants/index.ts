@@ -1,8 +1,8 @@
 export const BUSINESS_TYPE_CONFIG = [
-  { name: 'common.businessType_RETAIL', value: 'RETAIL' },
-  { name: 'common.businessType_WHOLESALE', value: 'WHOLESALE' },
-  { name: 'common.businessType_RESTAURANT', value: 'RESTAURANT' },
-  { name: 'common.businessType_COUNTING_GOODS', value: 'COUNTING_GOODS' },
+  { name: 'common.business-type-retail', value: 'RETAIL' },
+  { name: 'common.business-type-wholesale', value: 'WHOLESALE' },
+  { name: 'common.business-type-restaurant', value: 'RESTAURANT' },
+  { name: 'common.business-type-counting-goods', value: 'COUNTING_GOODS' },
 ];
 
 export const STATUS_CONFIG = [

@@ -467,12 +467,12 @@ export function useSpecsConfiguration() {
 
   function validatePrices(productListContent, unitsConfig) {
     if (!productListContent.cost_price) {
-      ElMessage.error(t('common.pleaseEnterCostPrice'));
+      ElMessage.error(t('common.please-enter-cost-price'));
       return false;
     }
 
     if (!productListContent.selling_price) {
-      ElMessage.error(t('common.pleaseEnterSellingPrice'));
+      ElMessage.error(t('common.please-enter-selling-price'));
       return false;
     }
 

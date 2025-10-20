@@ -441,7 +441,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
               v-print="printObj"
               class="border-primary h-11 border border-solid"
             >
-              <span class="text-primary">{{ t('common.print_receipt') }}</span>
+              <span class="text-primary">{{ t('common.print-receipt') }}</span>
             </ElButton>
             <ElButton
               v-if="!isRefundSuccess"

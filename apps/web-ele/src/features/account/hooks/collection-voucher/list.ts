@@ -72,7 +72,7 @@ export function useCollectionVoucher() {
     {
       field: 'ledger_type',
       minWidth: 130,
-      title: t('account.accountType'),
+      title: t('account.account-type'),
       sortable: true,
       formatter({ cellValue }) {
         return t(
@@ -89,7 +89,7 @@ export function useCollectionVoucher() {
     {
       field: 'review_time',
       minWidth: 170,
-      title: t('account.review_time'),
+      title: t('account.review-time'),
       align: 'right',
       sortable: true,
     },
@@ -106,7 +106,7 @@ export function useCollectionVoucher() {
       sortable: true,
       fixed: 'right',
       formatter({ cellValue }) {
-        return t(`common.review_status.${cellValue}`);
+        return t(`common.review-status.${cellValue}`);
       },
     },
     {

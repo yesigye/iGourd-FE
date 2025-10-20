@@ -21,7 +21,7 @@ export const PhysicalMode: ModePlugin = {
 
     columns.push({
       name: 'variance_quantity',
-      title: '{{t("common.purchase.variance_quantity")}}',
+      title: '{{t("common.purchase.variance-quantity")}}',
       'x-component-props': {
         width: 200,
       },

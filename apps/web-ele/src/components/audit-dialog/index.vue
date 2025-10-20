@@ -22,7 +22,7 @@ const formSchema: ISchema = {
           type: 'string',
           required: true,
 
-          title: "{{t('common.review_results')}}",
+          title: "{{t('common.review-results')}}",
           'x-decorator': 'FormItem',
           'x-component': 'Radio.Group',
           enum: [
@@ -36,7 +36,7 @@ const formSchema: ISchema = {
             },
           ],
           'x-component-props': {
-            placeholder: "{{t('common.form.select_required')}}",
+            placeholder: "{{t('common.form.select-required')}}",
             clearable: true,
           },
         },
@@ -50,7 +50,7 @@ const formSchema: ISchema = {
           'x-component-props': {
             maxlength: 256,
             rows: 5,
-            placeholder: "{{t('common.pleaseEnterRejectReason')}}",
+            placeholder: "{{t('common.please-enter-reject-reason')}}",
             'show-word-limit': true,
           },
         },
@@ -90,7 +90,7 @@ const [Modal, modalApi] = useIgourdModal({
       });
     }
   },
-  title: t('common.auditOpinion'),
+  title: t('common.audit-opinion'),
 });
 
 const openModal = () => {

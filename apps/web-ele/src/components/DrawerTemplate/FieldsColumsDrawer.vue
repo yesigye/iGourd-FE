@@ -102,7 +102,7 @@ function handleCancel() {
         <div class="Col-border">
           <div class="Col-header">
             <el-checkbox v-model="checkAll" @change="handleCheckAllChange">
-              {{ $t('common.selectAll') }}
+              {{ $t('common.select-all') }}
             </el-checkbox>
           </div>
 
@@ -127,9 +127,9 @@ function handleCancel() {
       <el-col :span="8">
         <div class="Col-border">
           <div class="Col-right">
-            <div class="Col-right-title">{{ $t('common.selectedFields') }}</div>
+            <div class="Col-right-title">{{ $t('common.selected-fields') }}</div>
             <div class="Col-right-subtitle">
-              {{ $t('common.supportsDragAndDropSorting') }}
+              {{ $t('common.supports-drag-and-drop-sorting') }}
             </div>
           </div>
           <Draggable

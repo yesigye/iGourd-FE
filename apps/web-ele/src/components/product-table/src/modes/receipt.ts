@@ -9,7 +9,7 @@ export const ReceiptMode: ModePlugin = {
     return [
       {
         name: 'product_code',
-        title: '{{t("common.purchase.product_code")}}',
+        title: '{{t("common.purchase.product-code")}}',
         'x-component': 'PreviewText.Input',
         'x-component-props': {
           width: 150,
@@ -23,7 +23,7 @@ export const ReceiptMode: ModePlugin = {
       },
       {
         name: 'product_id',
-        title: '{{t("common.purchase.major_name")}}',
+        title: '{{t("common.purchase.major-name")}}',
         'x-component': 'ProductTable.ProductCell',
         'x-decorator': 'FormItem',
         'x-component-props': {
@@ -38,7 +38,7 @@ export const ReceiptMode: ModePlugin = {
       },
       {
         name: 'sku_barcode',
-        title: '{{t("common.purchase.product_barcode")}}',
+        title: '{{t("common.purchase.product-barcode")}}',
         'x-component': 'PreviewText.Input',
         'x-component-props': {
           width: 160,
@@ -83,7 +83,7 @@ export const ReceiptMode: ModePlugin = {
       },
       {
         name: 'product_unit_code',
-        title: '{{t("common.purchase.sub_product_stock_search_models")}}',
+        title: '{{t("common.purchase.sub-product-stock-search-models")}}',
         'x-component': 'ProductTable.UnitCell',
         'x-decorator': 'FormItem',
         'x-component-props': {
@@ -97,7 +97,7 @@ export const ReceiptMode: ModePlugin = {
       },
       {
         name: 'basic_unit_radio_display',
-        title: '{{t("common.purchase.basic_unit_radio")}}',
+        title: '{{t("common.purchase.basic-unit-radio")}}',
         type: 'void',
         'x-component': 'PreviewText.Input',
         'x-decorator': 'FormItem',
@@ -114,7 +114,7 @@ export const ReceiptMode: ModePlugin = {
       },
       {
         name: 'major_unit_name',
-        title: '{{t("common.purchase.major_unit_name")}}',
+        title: '{{t("common.purchase.major-unit-name")}}',
         'x-component': 'PreviewText.Input',
         'x-component-props': {
           width: 100,
@@ -123,7 +123,7 @@ export const ReceiptMode: ModePlugin = {
       {
         name: 'cost_price',
         type: 'number',
-        title: '{{t("common.purchase.cost_price")}}',
+        title: '{{t("common.purchase.cost-price")}}',
         'x-component': 'PreviewText.Input',
         'x-decorator': 'FormItem',
         'x-component-props': {
@@ -137,7 +137,7 @@ export const ReceiptMode: ModePlugin = {
       {
         name: 'total_amount',
         type: 'number',
-        title: '{{t("common.purchase.total_amount")}}',
+        title: '{{t("common.purchase.total-amount")}}',
         'x-component': 'PreviewText.Input',
         'x-decorator': 'FormItem',
         'x-component-props': {
@@ -146,7 +146,7 @@ export const ReceiptMode: ModePlugin = {
       },
       {
         name: 'product_spec_kvmessage',
-        title: '{{t("common.purchase.product_spec_kvmessage")}}',
+        title: '{{t("common.purchase.product-spec-kvmessage")}}',
         'x-component': 'PreviewText.Input',
         'x-decorator': 'FormItem',
         'x-component-props': {

@@ -148,10 +148,10 @@ const handleSpecValueAdded = async (result) => {
       />
       <div class="mt-5 text-right">
         <ElButton @click="handleCancel">
-          {{ $t('common.cancelBtn') }}
+          {{ $t('common.cancel-btn') }}
         </ElButton>
         <ElButton type="primary" @click="handleConfirm">
-          {{ $t('common.confirmBtn') }}
+          {{ $t('common.confirm-btn') }}
         </ElButton>
       </div>
     </div>

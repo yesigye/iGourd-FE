@@ -208,7 +208,7 @@ const [Modal, modalApi] = useIgourdModal({
               >
                 <div class="text-center">
                   <img :src="tableEmpty" alt="" />
-                  <p>{{ t('common.add_quick_tag_tips') }}</p>
+                  <p>{{ t('common.add-quick-tag-tips') }}</p>
                 </div>
               </div>
             </div>
@@ -259,7 +259,7 @@ const [Modal, modalApi] = useIgourdModal({
                 >
                   <div class="text-center">
                     <img :src="tableEmpty" alt="" />
-                    <p>{{ t('common.add_quick_tag_value_tips') }}</p>
+                    <p>{{ t('common.add-quick-tag-value-tips') }}</p>
                   </div>
                 </div>
               </el-scrollbar>

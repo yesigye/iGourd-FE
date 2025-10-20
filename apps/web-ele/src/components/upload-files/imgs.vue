@@ -127,14 +127,14 @@ const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
   const imgType = props.fileType.includes(rawFile.type as File.ImageMimeType);
   if (!imgType)
     ElNotification({
-      title: t('common.titleTips'),
-      message: t('common.fileNotSupport'),
+      title: t('common.title-tips'),
+      message: t('common.file-not-support'),
       type: 'warning',
     });
   if (!imgSize)
     setTimeout(() => {
       ElNotification({
-        title: t('common.titleTips'),
+        title: t('common.title-tips'),
         message: t('inventory.imageSizeShouldBeLessThan2MB'),
         type: 'warning',
       });

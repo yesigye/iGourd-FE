@@ -450,7 +450,7 @@ export function useReceiptForm() {
                                   properties: {
                                     addition: {
                                       type: 'void',
-                                      title: "{{t('common.addBtn')}}",
+                                      title: "{{t('common.add-btn')}}",
                                       'x-component': 'ArrayItems.Addition',
                                       'x-reactions': {
                                         dependencies: [
@@ -669,7 +669,7 @@ export function useReceiptForm() {
                 type: 'void',
                 'x-component': 'Card',
                 'x-component-props': {
-                  header: '{{t("common.Attachment")}}',
+                  header: '{{t("common.attachment")}}',
                   style: {
                     border: '0px',
                   },

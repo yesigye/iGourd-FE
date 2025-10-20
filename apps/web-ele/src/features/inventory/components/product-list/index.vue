@@ -1088,7 +1088,7 @@ onMounted(() => {
         <!--  共享库存-->
         <template v-if="showAllFiles">
           <div class="form-row">
-            <ElFormItem :label="`${t('common.otherTax')}:`">
+            <ElFormItem :label="`${t('common.other-tax')}:`">
               <ElInput
                 v-model="otherTaxRate"
                 :disabled="!forms.tax_other_id || newDisabled"

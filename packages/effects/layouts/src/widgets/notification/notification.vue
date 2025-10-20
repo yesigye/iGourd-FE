@@ -126,7 +126,7 @@ function handleClick(item: NotificationItem) {
 
       <template v-else>
         <div class="flex-center text-muted-foreground min-h-[150px] w-full">
-          {{ $t('common.noData') }}
+          {{ $t('common.no-data') }}
         </div>
       </template>
 

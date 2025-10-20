@@ -832,7 +832,7 @@ onMounted(async () => {
                 </div>
                 <template #tip>
                   <div class="el-upload__tip">
-                    {{ t('common.fileTip', { size: '20M' }) }}
+                    {{ t('common.file-tip', { size: '20M' }) }}
                   </div>
                 </template>
               </ElUpload>

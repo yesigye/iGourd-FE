@@ -605,7 +605,7 @@ onMounted(() => {});
                         class="Sale-button text-white"
                         @click="handleProductConfirm"
                       >
-                        {{ t('common.save_text') }}
+                        {{ t('common.save-text') }}
                       </el-button>
                     </div>
                   </div>

@@ -543,7 +543,7 @@ const deleteTip = (good) => {
 const handleDeleteUnit = async (item, index) => {
   ElMessageBox.confirm(
     createMessageBox(item.is_basic_unit === 1, item.secondary_unit_name),
-    t('common.systeMmessage'),
+    t('common.system-message'),
     {
       confirmButtonText: t('set.confirm'),
       cancelButtonText: t('common.cancel'),
@@ -576,7 +576,7 @@ const handleDeleteUnit = async (item, index) => {
               }
               ElMessageBox.confirm(
                 deleteTip(productList)[data?.remove_check_enum],
-                t('common.systeMmessage'),
+                t('common.system-message'),
                 {
                   dangerouslyUseHTMLString: true,
                   type: 'warning',
@@ -602,7 +602,7 @@ const handleDeleteUnit = async (item, index) => {
             }
             ElMessageBox.confirm(
               getTipHtml(message, productList),
-              t('common.systeMmessage'),
+              t('common.system-message'),
               {
                 dangerouslyUseHTMLString: true,
                 type: 'warning',
@@ -680,7 +680,7 @@ const handleDeleteUnit = async (item, index) => {
                 }
                 ElMessageBox.confirm(
                   deleteTip(productList)[data?.remove_check_enum],
-                  t('common.systeMmessage'),
+                  t('common.system-message'),
                   {
                     dangerouslyUseHTMLString: true,
                     type: 'warning',
@@ -706,7 +706,7 @@ const handleDeleteUnit = async (item, index) => {
               }
               ElMessageBox.confirm(
                 getTipHtml(message, productList),
-                t('common.systeMmessage'),
+                t('common.system-message'),
                 {
                   dangerouslyUseHTMLString: true,
                   type: 'warning',
@@ -840,7 +840,7 @@ const handleUnitSelect = async (row, unitId) => {
           }
           ElMessageBox.confirm(
             deleteTip(productList)[data?.remove_check_enum],
-            t('common.systeMmessage'),
+            t('common.system-message'),
             {
               dangerouslyUseHTMLString: true,
               type: 'warning',
@@ -869,7 +869,7 @@ const handleUnitSelect = async (row, unitId) => {
         }
         ElMessageBox.confirm(
           getTipHtml(message, productList),
-          t('common.systeMmessage'),
+          t('common.system-message'),
           {
             dangerouslyUseHTMLString: true,
             type: 'warning',

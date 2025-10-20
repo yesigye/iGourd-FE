@@ -1,24 +1,3 @@
 {
-  "accountManagement": "客户账户管理",
-  "customerName": "客户姓名",
-  "phoneNumber": "电话号码",
-  "accountType": "账户类型",
-  "revenue": "收入",
-  "expenditures": "支出",
-  "accountDate": "账户日期",
-  "remark": "备注",
-  "transactionNumber": "交易单号",
-  "balance": "余额",
-  "creator": "创建人",
-  "creationTime": "创建时间",
-  "addRevenue": "添加收入",
-  "addExpenditures": "添加支出",
-  "import": "导入",
-  "please_select_customer": "请选择客户",
-  "please_enter_amount": "请输入金额",
-  "please_select_date": "请选择日期",
-  "please_enter_transaction_number": "请输入交易单号",
-  "please_enter_remark": "请输入备注",
-  "amount": "金额",
-  "date": "日期"
+
 }

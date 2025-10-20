@@ -159,7 +159,7 @@ const searchProductsByWarehouseAndCode = async (
     if (response?.data?.list && response.data.list.length > 0) {
       return response.data.list;
     } else {
-      ElMessage.warning(t('common.product_not_exist'));
+      ElMessage.warning(t('common.product-not-exist'));
       barcodeForm.value.code = '';
       return null;
     }
@@ -195,7 +195,7 @@ const searchProductsByCode = async (code: string) => {
     if (response.data && response.data.list && response.data.list.length > 0) {
       return response.data.list;
     } else {
-      ElMessage.warning(t('common.product_not_exist'));
+      ElMessage.warning(t('common.product-not-exist'));
       barcodeForm.value.code = '';
       return null;
     }
@@ -222,7 +222,7 @@ defineExpose({
 
 <template>
   <div class="header-box">
-    <span>{{ $t(`common.purchase.major_name`) }}</span>
+    <span>{{ $t(`common.purchase.major-name`) }}</span>
     <ElPopover
       :visible="popoverVisible"
       trigger="hover"
@@ -237,7 +237,7 @@ defineExpose({
           size="small"
           plain
         >
-          {{ $t('common.scanCodeEntry') }}
+          {{ $t('common.scan-code-entry') }}
         </ElButton>
       </template>
 
