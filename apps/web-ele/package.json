@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@element-plus/icons-vue": "catalog:",
+    "@micro-zoe/micro-app": "1.0.0-rc.27",
     "clipboard": "^2.0.11",
     "pinia-plugin-persistedstate": "catalog:",
     "resize-observer-polyfill": "catalog:",

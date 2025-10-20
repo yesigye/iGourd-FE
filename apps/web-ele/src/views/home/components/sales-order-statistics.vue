@@ -55,18 +55,18 @@ const { t } = useI18n();
           <div class="flex min-w-0 flex-1 items-center gap-4">
             <div class="min-w-0 flex-1">
               <p class="flex w-full items-center justify-between">
-                <span class="text-[#666666]">{{ t('home.sales-amt') }}</span>
+                <span class="text-secondary">{{ t('home.sales-amt') }}</span>
                 <span class="font-bold text-[#303133]">{{
                   props?.data?.total_received_amount ?? 0
                 }}</span>
               </p>
               <p class="mt-2 flex w-full items-center justify-between">
-                <span class="text-[#666666]">{{ t('home.includ-debt') }}</span>
+                <span class="text-secondary">{{ t('home.includ-debt') }}</span>
                 <span class="font-bold text-[#FC5C65]">({{ props?.data?.debt_total_amount ?? 0 }})</span>
               </p>
 
               <p class="mt-2 flex w-full items-center justify-between">
-                <span class="text-[#666666]">{{ t('home.refund-amt') }}</span>
+                <span class="text-secondary">{{ t('home.refund-amt') }}</span>
                 <span class="font-bold text-[#303133]">{{
                   props?.data?.refund_total_amount ?? 0
                 }}</span>

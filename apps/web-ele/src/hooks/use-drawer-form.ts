@@ -66,7 +66,17 @@ export function useDrawerForm(options: DrawerFormOptions) {
     }
 
     // 验证表单数据
-    await formAPI.validate();
+    await formAPI.validate().catch((error: any) => {
+      document
+        .querySelector('.formily-element-plus-form-item-error-help')
+        ?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'end',
+          inline: 'nearest',
+        });
+
+      throw error;
+    });
 
     // 锁定抽屉，防止重复提交
     drawerApi.lock();

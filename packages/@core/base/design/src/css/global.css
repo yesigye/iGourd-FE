@@ -14,9 +14,9 @@
   }
 
   html {
-    @apply text-foreground bg-background font-sans text-[100%];
-
+    @apply text-foreground bg-background font-sans text-[100%] font-normal;
     font-variation-settings: normal;
+    font-variant-numeric: tabular-nums;
     line-height: 1.15;
     text-size-adjust: 100%;
     font-synthesis-weight: none;
@@ -32,13 +32,12 @@
   body,
   html {
     @apply size-full;
-
     /* scrollbar-gutter: stable; */
   }
 
   body {
     min-height: 100vh;
-
+    @apply text-sm;
     /* pointer-events: auto !important; */
 
     /* overflow: overlay; */
