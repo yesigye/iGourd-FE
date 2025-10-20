@@ -407,15 +407,7 @@ let handleInputDebounced;
 onMounted(() => {
   getSkuSet();
   handleInputDebounced = debounce(async () => {
-    ruleFormRef.value.validate((valid) => {
-      if (valid) {
-        console.log('表单验证通过');
-      } else {
-        console.log('表单验证失败');
-      }
-    });
     const stockWarnData = productSKUFormRef.value.getStockWarnData();
-    console.log('库存警告数据', stockWarnData);
     // 提交前sku检查
     if (productSKUFormRef.value) {
       const confirmed = await productSKUFormRef.value.checkSKUChanges();

@@ -1958,17 +1958,17 @@ const is_enabled_stock_warning = ref(false);
 const stockWarnColumns = ref([
   {
     prop: 'stock_warning_quantity_maximum',
-    label: 'Min stock',
+    label: t('product-list.min-stock'),
     type: 'input',
   },
   {
     prop: 'stock_warning_quantity_minimum',
-    label: 'Safety stock',
+    label: t('product-list.safety-stock'),
     type: 'input',
   },
   {
     prop: 'stock_warning_quantity_safety',
-    label: 'Max stock',
+    label: t('product-list.max-stock'),
     type: 'input',
   },
 ]);
@@ -1992,7 +1992,7 @@ const addOptionColumn = () => {
     if (!stockWarnColumns.value.find((item) => item.prop === 'option')) {
       stockWarnColumns.value.push({
         prop: 'option',
-        label: 'Operation',
+        label: t('common.option'),
       });
     }
   } else {
@@ -2012,7 +2012,7 @@ const handlePerWarehouseWarningChange = (val) => {
     // 如果开启子仓库预警，默认开启规格预警向库存预警字段列在第一列添加子仓库ID
     stockWarnColumns.value.unshift({
       prop: 'warehouse_id',
-      label: 'Warehouse',
+      label: t('product-list.warehouse'),
       type: 'select',
     });
   } else {
@@ -2032,13 +2032,13 @@ const handlePerSpecWarningChange = (val) => {
     if (isPerWarehouseWarning.value) {
       stockWarnColumns.value.splice(1, 0, {
         prop: 'spec_code',
-        label: 'Spec',
+        label: t('product-list.spec'),
         type: 'select',
       });
     } else {
       stockWarnColumns.value.unshift({
         prop: 'spec_code',
-        label: 'Spec',
+        label: t('product-list.spec'),
         type: 'select',
       });
     }
@@ -2217,6 +2217,16 @@ const setSpecConfig = (newConfig) => {
   }
 };
 const stockWarnData = computed(() => {
+  // 如果没有开启直接返回
+  if (!is_enabled_stock_warning.value) {
+    return {
+      list: [],
+      isPerSpecWarning: false,
+      isPerWarehouseWarning: false,
+      is_enabled_stock_warning: false,
+    };
+  }
+
   return {
     list: stockWarnTableData.value,
     isPerSpecWarning: isPerSpecWarning.value,
@@ -2394,10 +2404,10 @@ defineExpose({
         <!-- 库存预警设置 -->
         <div class="mb-5">
           <p>
-            库存预警设置
+            {{ t('product-list.stock-warning-settings') }}
             <ElSwitch v-model="is_enabled_stock_warning" />
           </p>
-          <div>
+          <div v-if="is_enabled_stock_warning">
             <div>
               <ElCheckbox
                 v-model="isPerWarehouseWarning"
