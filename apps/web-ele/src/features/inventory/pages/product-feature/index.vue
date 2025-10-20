@@ -2,15 +2,21 @@
 import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { useInventoryProductFeatureList } from '@@/inventory/hooks';
+import { useCustomizedFeature } from '#/hooks';
 
 defineOptions({
   name: 'IInventoryProductFeature',
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, handleEdit,handleView, canBatchOperate, handleBatchDelete } =
-  useInventoryProductFeatureList();
+const {
+  Grid,
+  Drawer,
+  handleEdit,
+  handleView,
+  canBatchOperate,
+  handleBatchDelete,
+} = useCustomizedFeature('PRODUCT');
 </script>
 
 <template>
@@ -33,7 +39,7 @@ const { Grid, Drawer, handleEdit,handleView, canBatchOperate, handleBatchDelete 
           {{ t('common.delete') }}
         </ElButton>
       </template>
-      <template #operation="{ row }">
+      <template #operations="{ row }">
         <ElButton
           v-auth="'inventory_product_feature_edit'"
           type="text"
@@ -41,13 +47,26 @@ const { Grid, Drawer, handleEdit,handleView, canBatchOperate, handleBatchDelete 
         >
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton
-          v-auth="'inventory_product_feature_detail'"
-          type="text"
-          @click="handleView(row)"
-        >
-          {{ t('common.detail') }}
+        <ElButton type="text" @click="handleBatchDelete()">
+          {{ t('common.delete') }}
         </ElButton>
+      </template>
+      <template #type="{ row }">
+        {{
+          row.type === 'INPUT'
+            ? t('add-customized.input-box')
+            : t('add-customized.select-box')
+        }}
+      </template>
+      <template #is_fixed_option="{ row }">
+        {{
+          row.is_fixed_option ? t('add-customized.yes') : t('add-customized.no')
+        }}
+      </template>
+      <template #is_compulsory="{ row }">
+        {{
+          row.is_compulsory ? t('add-customized.yes') : t('add-customized.no')
+        }}
       </template>
     </Grid>
     <Drawer />

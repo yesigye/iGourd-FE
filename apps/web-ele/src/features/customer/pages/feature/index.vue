@@ -2,7 +2,7 @@
 import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { useCustomerFeature } from '@@/customer/hooks';
+import { useCustomizedFeature } from '#/hooks';
 
 defineOptions({
   name: 'ICustomerFeature',
@@ -11,7 +11,7 @@ defineOptions({
 const { t } = useI18n();
 
 const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
-  useCustomerFeature();
+  useCustomizedFeature('CUSTOMER');
 </script>
 
 <template>
@@ -39,6 +39,16 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
           row.type === 'INPUT'
             ? t('feature.input-box')
             : t('feature.select-box')
+        }}
+      </template>
+      <template #is_fixed_option="{ row }">
+        {{
+          row.is_fixed_option ? t('add-customized.yes') : t('add-customized.no')
+        }}
+      </template>
+      <template #is_compulsory="{ row }">
+        {{
+          row.is_compulsory ? t('add-customized.yes') : t('add-customized.no')
         }}
       </template>
     </Grid>
