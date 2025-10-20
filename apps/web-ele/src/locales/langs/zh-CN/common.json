@@ -330,6 +330,7 @@
     "PENDING": "待审核",
     "REJECTED": "驳回"
   },
-  "default":"默认",
-  "basic-information":"基本信息"
+  "default": "默认",
+  "basic-information": "基本信息",
+  "image": "图片"
 }

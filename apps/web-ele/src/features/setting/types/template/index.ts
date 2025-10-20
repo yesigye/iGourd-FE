@@ -2,11 +2,14 @@ export interface TemplateTypeListItem {
   label: string;
   title: string;
   type: string;
+  key: string;
+  labelKey: string;
 }
 export interface TemplateTypeItem {
   list: TemplateTypeListItem[];
   title: string;
   type: string;
+  key: string;
 }
 export enum PrintTemplateBusinessTypeEnum {
   /** 条码标签 */

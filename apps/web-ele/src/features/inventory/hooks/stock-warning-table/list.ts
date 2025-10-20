@@ -19,7 +19,7 @@ export function useStockWarningTable() {
     },
     {
       field: 'product_code',
-      title: t('stock-warning-table.product-code'),
+      title: t('common.image'),
       minWidth: 150,
       fixed: 'left',
       sortable: true,
@@ -124,9 +124,11 @@ export function useStockWarningTable() {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
+      'x-decorator-props': {
+        style: { 'margin-bottom': '0', width: '140px' },
+      },
       'x-component-props': {
         placeholder: "{{t('stock-warning-table.stock-warning')}}",
-        class: 'w-44',
         clearable: true,
         options: [
           {
@@ -140,10 +142,13 @@ export function useStockWarningTable() {
         ],
       },
     },
-    product_code: {
+    keyworks: {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
+      'x-decorator-props': {
+        style: { 'margin-bottom': '0', width: '300px' },
+      },
       'x-component-props': {
         placeholder:
           "{{t('stock-warning-table.enter-product-code-product-name')}}",
