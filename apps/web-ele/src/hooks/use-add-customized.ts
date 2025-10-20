@@ -4,7 +4,7 @@ import { useI18n } from '@igourd/locales';
 
 import { useDrawerForm } from '#/hooks/use-drawer-form';
 
-export function useCustomizedForm() {
+export function useAddCustomizedForm() {
   const { t } = useI18n();
 
   const schema: ISchema = {
@@ -20,19 +20,19 @@ export function useCustomizedForm() {
         properties: {
           name: {
             type: 'string',
-            title: "{{t('purchase.featureName')}}",
+            title: "{{t('add-customized.feature-name')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-component-props': {
               maxLength: 32,
-              placeholder: "{{t('purchase.pleaseEnterFeatureName')}}",
+              placeholder: "{{t('add-customized.enter-feature-name')}}",
               clearable: true,
             },
             'x-validator': [
               {
                 required: true,
-                message: "{{t('purchase.pleaseEnterFeatureName')}}",
+                message: "{{t('add-customized.enter-feature-name')}}",
               },
               { max: 64, message: "{{t('common.maxChars', { n: 64 })}}" },
             ],
@@ -40,7 +40,7 @@ export function useCustomizedForm() {
 
           type: {
             type: 'string',
-            title: "{{t('purchase.featureType')}}",
+            title: "{{t('add-customized.feature-type')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Radio.Group',
@@ -48,14 +48,14 @@ export function useCustomizedForm() {
             'x-validator': [
               {
                 required: true,
-                message: "{{t('purchase.pleaseSelectFeatureType')}}",
+                message: "{{t('add-customized.select-feature-type')}}",
               },
             ],
           },
 
           is_fixed_option: {
             type: 'boolean',
-            title: "{{t('purchase.selectionType')}}",
+            title: "{{t('add-customized.selection-type')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Radio.Group',
@@ -64,14 +64,14 @@ export function useCustomizedForm() {
             'x-validator': [
               {
                 required: true,
-                message: "{{t('purchase.pleaseSelectIsFixedValue')}}",
+                message: "{{t('add-customized.select-is-fixed-value')}}",
               },
             ],
           },
 
           selectionOptions: {
             type: 'array',
-            title: "{{t('purchase.selectionOptions')}}",
+            title: "{{t('add-customized.selection-options')}}",
             'x-decorator': 'FormItem',
             'x-visible': "{{$values.type === 'SELECT'}}",
             'x-component': 'ArrayTable',
@@ -102,7 +102,7 @@ export function useCustomizedForm() {
                   type: 'void',
                   'x-component': 'ArrayTable.Column',
                   'x-component-props': {
-                    title: "{{t('purchase.optionName')}}",
+                    title: "{{t('add-customized.option-name')}}",
                   },
                   properties: {
                     name: {
@@ -110,7 +110,8 @@ export function useCustomizedForm() {
                       'x-decorator': 'FormItem',
                       'x-component': 'Input',
                       'x-component-props': {
-                        placeholder: "{{t('purchase.pleaseEnterOptionName')}}",
+                        placeholder:
+                          "{{t('add-customized.enter-option-name')}}",
                         clearable: true,
                       },
                     },
@@ -150,7 +151,7 @@ export function useCustomizedForm() {
 
           is_compulsory: {
             type: 'boolean',
-            title: "{{t('purchase.compulsorySelection')}}",
+            title: "{{t('add-customized.compulsory-selection')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Radio.Group',
@@ -158,7 +159,7 @@ export function useCustomizedForm() {
             'x-validator': [
               {
                 required: true,
-                message: "{{t('purchase.pleaseSelectIsCompulsory')}}",
+                message: "{{t('add-customized.select-is-compulsory')}}",
               },
             ],
           },
@@ -188,7 +189,7 @@ export function useCustomizedForm() {
   };
   return useDrawerForm({
     drawerOptions: {
-      title: t('customized.addCustomized'),
+      title: t('add-customized.add-customized'),
       appendToMain: true,
       class: 'w-full',
     },
@@ -196,21 +197,21 @@ export function useCustomizedForm() {
       schema,
       scope: {
         featureTypes: [
-          { label: t('purchase.inputBox'), value: 'INPUT' },
-          { label: t('purchase.selectBox'), value: 'SELECT' },
+          { label: t('add-customized.input-box'), value: 'INPUT' },
+          { label: t('add-customized.select-box'), value: 'SELECT' },
         ],
 
         // 选择类型（用户创建 / 固定值）
         // 注意：你原文件里 true=用户创建, false=固定值；保留相同语义
         selectTypes: [
-          { label: t('purchase.userCreated'), value: true },
-          { label: t('purchase.fixedValue'), value: false },
+          { label: t('add-customized.user-created'), value: true },
+          { label: t('add-customized.fixed-value'), value: false },
         ],
 
         // 是否必填
         compulsoryTypes: [
-          { label: t('purchase.yes'), value: true },
-          { label: t('purchase.no'), value: false },
+          { label: t('add-customized.yes'), value: true },
+          { label: t('add-customized.no'), value: false },
         ],
       },
     },

@@ -13,7 +13,7 @@ import {
 import addCustomized from '#/components/add-customized/add-customized.vue';
 import { useCrud, withEntityParam } from '#/hooks';
 
-export function useCustomerFeature() {
+export function useCustomizedFeature(type: string) {
   const { t } = useI18n();
 
   // 基础列定义
@@ -23,13 +23,13 @@ export function useCustomerFeature() {
       minWidth: 200,
       align: 'center',
       fixed: 'left',
-      title: t('customer.name'),
+      title: t('add-customized.name'),
     },
     {
       field: 'type',
       minWidth: 150,
       align: 'center',
-      title: t('customer.type'),
+      title: t('add-customized.type'),
       slots: { default: 'type' },
     },
 
@@ -37,27 +37,27 @@ export function useCustomerFeature() {
       field: 'is_fixed_option',
       minWidth: 100,
       align: 'center',
-      title: t('customer.is-fixed-option'),
+      title: t('add-customized.is-fixed-option'),
+      slots: { default: 'is_fixed_option' },
     },
     {
       field: 'is_compulsory',
       minWidth: 120,
       align: 'center',
-      title: t('customer.is-compulsory'),
-
+      title: t('add-customized.is-compulsory'),
+      slots: { default: 'is_compulsory' },
     },
     {
       field: 'creator_name',
       minWidth: 100,
       align: 'center',
-      title: t('customer.creator'),
+      title: t('add-customized.creator'),
     },
     {
       field: 'create_time',
       minWidth: 100,
       align: 'center',
-      title: t('customer.creation-time'),
-
+      title: t('add-customized.creation-time'),
     },
     {
       field: 'operations',
@@ -71,16 +71,10 @@ export function useCustomerFeature() {
 
   // 服务函数
   const service = {
-    query: withEntityParam({ entity: 'CUSTOMER' })(
-      getPurchaseCustomizedListApi,
-    ),
-    drop: withEntityParam({ entity: 'CUSTOMER' })(deleteDynamicColumn),
-    create: withEntityParam({ entity: 'CUSTOMER' })(
-      createOrUpdateCustomizedField,
-    ),
-    update: withEntityParam({ entity: 'CUSTOMER' })(
-      createOrUpdateCustomizedField,
-    ),
+    query: withEntityParam({ entity: type })(getPurchaseCustomizedListApi),
+    drop: withEntityParam({ entity: type })(deleteDynamicColumn),
+    create: withEntityParam({ entity: type })(createOrUpdateCustomizedField),
+    update: withEntityParam({ entity: type })(createOrUpdateCustomizedField),
   };
 
   // 使用 CRUD Hook
@@ -95,7 +89,7 @@ export function useCustomerFeature() {
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: t('customer.search-placeholder'),
+            placeholder: t('add-customized.search-placeholder'),
           },
         },
       },

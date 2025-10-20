@@ -9,8 +9,9 @@ import {
   deleteDynamicColumn,
   getPurchaseCustomizedListApi,
 } from '@@/purchase/apis';
-import { CustomizedDrawerForm } from '@@/purchase/components';
 
+// import { CustomizedDrawerForm } from '@@/purchase/components';
+import addCustomized from '#/components/add-customized/add-customized.vue';
 import { useCrud, withEntityParam } from '#/hooks';
 
 export function useCustomized() {
@@ -106,7 +107,7 @@ export function useCustomized() {
     },
     searchFormSchema,
     batchOperate: true,
-    connectedComponent: CustomizedDrawerForm,
+    connectedComponent: addCustomized,
     service: {
       query: withEntityParam({ entity: 'VENDOR' })(
         getPurchaseCustomizedListApi,

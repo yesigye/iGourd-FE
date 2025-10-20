@@ -273,12 +273,10 @@ onMounted(() => {
                 class="flex flex-wrap justify-between rounded-sm bg-[#ECF5FF] p-2.5"
               >
                 <span>{{ t('home.purchase-product-per') }} 2</span>
-                <span
-                  >{{ props?.currencySymbol }}
+                <span>{{ props?.currencySymbol }}
                   {{
                     thousandSeparator(props.data?.purchase_total_amount ?? 0)
-                  }}</span
-                >
+                  }}</span>
               </div>
             </Card>
             <Card
@@ -289,12 +287,10 @@ onMounted(() => {
                 class="flex flex-wrap justify-between rounded-sm bg-[#ECF5FF] p-2.5"
               >
                 <span>{{ t('home.expense-expenditure-per') }} 2</span>
-                <span
-                  >{{ props?.currencySymbol }}
+                <span>{{ props?.currencySymbol }}
                   {{
                     thousandSeparator(props.data?.expenditure_total_amount ?? 0)
-                  }}</span
-                >
+                  }}</span>
               </div>
             </Card>
           </section>
@@ -393,7 +389,11 @@ onMounted(() => {
                   class="h-3 w-3 rounded-[50%]"
                   :class="`bg-[${item.color}]`"
                 ></div>
-                <div>{{ t('home.bank-deposit') }}- {{ item.code }}</div>
+                <div>
+                  {{
+                    t('home.bank-deposit', { currency: props?.currencySymbol })
+                  }}- {{ item.code }}
+                </div>
                 <div>
                   {{ item.currency_code }}
                   {{ thousandSeparator(item.current_balance) }}
@@ -402,7 +402,9 @@ onMounted(() => {
             </div>
           </div>
           <div class="mb-2.5 flex flex-col gap-2.5 bg-[#ECF5FF] p-3">
-            <p>{{ t('home.cash-on-hand') }} ({{ props?.currencySymbol }})</p>
+            <p>
+              {{ t('home.cash-on-hand', { currency: props?.currencySymbol }) }}
+            </p>
             <p>
               {{
                 thousandSeparator(
