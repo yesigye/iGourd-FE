@@ -3,8 +3,12 @@
     <ElCard>
       <Form></Form>
       <div class="mt-4 text-center">
-        <ElButton type="danger" plain @click="handleReset">{{t('common.reset')}}</ElButton>
-        <ElButton type="primary" @click="handleSave">{{t('common.save')}}</ElButton>
+        <ElButton type="danger" plain @click="handleReset">{{
+          t('common.reset')
+        }}</ElButton>
+        <ElButton type="primary" @click="handleSave">{{
+          t('common.save')
+        }}</ElButton>
       </div>
     </ElCard>
     <Drawer @confirm="handleConfirm"></Drawer>
@@ -45,10 +49,10 @@ const currentIndex = ref();
 const id = ref();
 const dataSource = observable<{ value: ListItem[] }>({ value: [] });
 // 已有礼物数据
-const giftList = ref([])
+const giftList = ref([]);
 const handleSelectProduct = (_, op, record, index) => {
   currentIndex.value = index;
-  const  gift =  dataSource.value[index];
+  const gift = dataSource.value[index];
   drawerApi.setData(gift).open();
 };
 const formSchema: ISchema = {
@@ -86,7 +90,8 @@ const formSchema: ISchema = {
                   'x-decorator': 'FormItem',
                   'x-component': 'Input',
                   'x-component-props': {
-                    placeholder: "{{t('integral.initialearnedintegral-placeholder')}}",
+                    placeholder:
+                      "{{t('integral.initialearnedintegral-placeholder')}}",
                     clearable: true,
                     style: {
                       width: '120px',
@@ -124,7 +129,7 @@ const formSchema: ISchema = {
                     },
                   },
                   'x-component-props': {
-                    placeholder: "{{t('customer.amount-placeholder')}}",
+                    placeholder: "{{t('integral.amount-placeholder')}}",
                     clearable: true,
                   },
                 },
@@ -163,23 +168,43 @@ const formSchema: ISchema = {
                   'x-component': 'Radio.Group',
                   'x-component-props': {},
                 },
-                deduction_rate: {
-                  type: 'string',
-                  title: "{{t('customer.integrationrule')}}",
-                  required: true,
+                row_deduction_rate: {
+                  type: 'void', // 表示空字段
+                  title: "{{t('customer.integrationrule')}}", // formItem 的 label
+                  'x-component': 'Space',
                   'x-decorator': 'FormItem',
-                  'x-component': 'Input',
                   'x-decorator-props': {
-                    addonAfter: "{{t('integral.gain-money')}}",
+                    asterisk: true,
+                    feedbackLayout: 'none',
                   },
-                  'x-component-props': {
-                    placeholder: "{{t('customer.amount-placeholder')}}",
-                    clearable: true,
-                    style: {
-                      width: '120px',
+                  properties: {
+                    deduction_rate: {
+                      type: 'string',
+                      title: '',
+                      required: true,
+                      'x-decorator': 'FormItem',
+                      'x-component': 'Input',
+                      'x-decorator-props': {
+                        // addonAfter: '',
+                        style: {
+                          width: '120px',
+                        },
+                      },
+                      'x-component-props': {
+                        placeholder: "{{t('integral.amount-placeholder')}}",
+                        clearable: true,
+                      },
+                    },
+                    checkbox: {
+                      type: 'void',
+                      title: '',
+                      'x-decorator': 'FormItem',
+                      'x-component': 'div',
+                      'x-content': "{{t('integral.gain-money')}}",
                     },
                   },
                 },
+
                 setting_merchant_point_gift_list: {
                   type: 'array',
                   'x-component': 'ArrayTable',
@@ -207,7 +232,10 @@ const formSchema: ISchema = {
                       column2: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { width: 200, title: "{{t('equity.equityType.point')}}" },
+                        'x-component-props': {
+                          width: 200,
+                          title: "{{t('equity.equityType.point')}}",
+                        },
                         properties: {
                           points: {
                             type: 'string',
@@ -218,7 +246,9 @@ const formSchema: ISchema = {
                       column3: {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
-                        'x-component-props': { title: "{{t('equity.equityType.gift')}}" },
+                        'x-component-props': {
+                          title: "{{t('equity.equityType.gift')}}",
+                        },
                         properties: {
                           name: {
                             type: 'void',
@@ -334,7 +364,8 @@ const formSchema: ISchema = {
               properties: {
                 is_annually_resettable: {
                   type: 'string',
-                  title: "{{t('integral.everyyearonjanuary1resetpointstozero')}}",
+                  title:
+                    "{{t('integral.everyyearonjanuary1resetpointstozero')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'Switch',
                   'x-decorator-props': {
@@ -353,7 +384,7 @@ const formSchema: ISchema = {
 const hideField = (type, form) => {
   switch (type) {
     case 'DEDUCTIBLE_CASH': {
-      form.setFieldState('deduction_rate', (f) => {
+      form.setFieldState('row_deduction_rate', (f) => {
         f.hidden = false;
       });
       form.setFieldState('setting_merchant_point_gift_list', (f) => {
@@ -362,7 +393,7 @@ const hideField = (type, form) => {
       break;
     }
     case 'EXCHANGE_GIFTS': {
-      form.setFieldState('deduction_rate', (f) => {
+      form.setFieldState('row_deduction_rate', (f) => {
         f.hidden = true;
       });
       form.setFieldState('setting_merchant_point_gift_list', (f) => {
@@ -380,12 +411,16 @@ const { Form, formAPI } = useIgourdForm({
   readPretty: false,
   initialValues: {
     setting_merchant_point_gift_list: [{}],
-    is_annually_resettable:false
+    is_annually_resettable: false,
   },
   effects() {
     onFieldValueChange('point_exchange_type', (field, form: Form) => {
       hideField(field.value, form);
-      if (field.value === 'EXCHANGE_GIFTS' && (!formAPI.values.setting_merchant_point_gift_list || formAPI.values.setting_merchant_point_gift_list?.lenght ===0) ) {
+      if (
+        field.value === 'EXCHANGE_GIFTS' &&
+        (!formAPI.values.setting_merchant_point_gift_list ||
+          formAPI.values.setting_merchant_point_gift_list?.lenght === 0)
+      ) {
         form.setValuesIn('setting_merchant_point_gift_list', [{}]);
       }
     });
@@ -396,8 +431,13 @@ const { Form, formAPI } = useIgourdForm({
   },
 });
 const handleReset = () => {
-  formAPI.reset();
-  ElMessage.success(t('customer.resetSuccess'));
+  // 判断勾选 default，需要重新获取数据
+  if (formAPI.values.checkbox) {
+    getData();
+  } else {
+    formAPI.reset();
+    ElMessage.success(t('customer.resetSuccess'));
+  }
 };
 const handleSave = async () => {
   await formAPI.validate();
@@ -430,14 +470,13 @@ const getData = () => {
       });
       const selectedList = element.product_model_list.map((item) => item.id);
       element.gift_product_ids = selectedList;
-      element.count = selectedList.length+t("integral.product");
+      element.count = selectedList.length + t('integral.product');
       dataSource.value.push(list);
     });
     id.value = res.id;
     formAPI.setValues(res);
   });
 };
-
 
 const handleConfirm = async (data) => {
   if (!data.product_list) {
@@ -464,7 +503,7 @@ const handleConfirm = async (data) => {
   );
   formAPI.setValuesIn(
     'setting_merchant_point_gift_list[' + currentIndex.value + '].count',
-    data.product_list.length + t("integral.product"),
+    data.product_list.length + t('integral.product'),
   );
 };
 
