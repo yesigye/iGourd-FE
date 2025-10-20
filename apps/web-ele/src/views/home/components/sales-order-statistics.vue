@@ -8,11 +8,16 @@ import grossProfitIcon from '#/assets/home/gross-profit.svg';
 import salesProductQtyIcon from '#/assets/home/sales-product-qty.svg';
 import salesReceivedAmountIcon from '#/assets/home/sales-received-amount.svg';
 import walletIcon from '#/assets/home/wallet.svg';
+import { thousandSeparator } from '#/utils/sale';
 
 const props = defineProps({
   data: {
     type: Object,
     default: () => ({}),
+  },
+  currencySymbol: {
+    type: String,
+    default: '',
   },
 });
 const { t } = useI18n();
@@ -25,7 +30,10 @@ const { t } = useI18n();
       >
         <div class="w-full">
           <div class="flex items-center gap-1">
-            <span>{{ t('home.products-value-cost') }}</span> <ArrayDown />
+            <span>{{
+              t('home.products-value-cost', { currency: props?.currencySymbol })
+            }}</span>
+            <ArrayDown />
           </div>
           <div class="flex justify-end">
             <div
@@ -34,7 +42,13 @@ const { t } = useI18n();
               <img :src="walletIcon" alt="" />
             </div>
           </div>
-          <div>{{ props?.data?.total_value_of_cost_product_amount ?? 0 }}</div>
+          <div>
+            {{
+              thousandSeparator(
+                props?.data?.total_value_of_cost_product_amount ?? 0,
+              )
+            }}
+          </div>
         </div>
       </div>
     </ElCol>
@@ -46,7 +60,11 @@ const { t } = useI18n();
           <div class="min-w-0 flex-1">
             <p class="text-[#606266]">{{ t('home.sales-received-amount') }}</p>
             <p class="mt-2 font-bold text-[#303133]">
-              {{ props?.data?.total_value_of_selling_product_amount ?? 0 }}
+              {{
+                thousandSeparator(
+                  props?.data?.total_value_of_selling_product_amount ?? 0,
+                )
+              }}
             </p>
           </div>
           <div
@@ -57,18 +75,22 @@ const { t } = useI18n();
               <p class="flex w-full items-center justify-between">
                 <span class="text-secondary">{{ t('home.sales-amt') }}</span>
                 <span class="font-bold text-[#303133]">{{
-                  props?.data?.total_received_amount ?? 0
+                  thousandSeparator(props?.data?.total_received_amount ?? 0)
                 }}</span>
               </p>
               <p class="mt-2 flex w-full items-center justify-between">
                 <span class="text-secondary">{{ t('home.includ-debt') }}</span>
-                <span class="font-bold text-[#FC5C65]">({{ props?.data?.debt_total_amount ?? 0 }})</span>
+                <span class="font-bold text-[#FC5C65]"
+                  >({{
+                    thousandSeparator(props?.data?.debt_total_amount ?? 0)
+                  }})</span
+                >
               </p>
 
               <p class="mt-2 flex w-full items-center justify-between">
                 <span class="text-secondary">{{ t('home.refund-amt') }}</span>
                 <span class="font-bold text-[#303133]">{{
-                  props?.data?.refund_total_amount ?? 0
+                  thousandSeparator(props?.data?.refund_total_amount ?? 0)
                 }}</span>
               </p>
             </div>
@@ -89,7 +111,9 @@ const { t } = useI18n();
               {{ t('home.actual-transaction-order') }}
             </p>
             <p class="mt-2 font-bold text-[#303133]">
-              {{ props?.data?.sales_order_total_quantity ?? 0 }}
+              {{
+                thousandSeparator(props?.data?.sales_order_total_quantity ?? 0)
+              }}
             </p>
           </div>
           <div
@@ -100,20 +124,24 @@ const { t } = useI18n();
               <p class="flex w-full items-center justify-between">
                 <span class="text-[#666666]">{{ t('home.sales-qty') }}</span>
                 <span class="font-bold text-[#303133]">{{
-                  props?.data?.actual_sales_order_total_quantity ?? 0
+                  thousandSeparator(
+                    props?.data?.actual_sales_order_total_quantity ?? 0,
+                  )
                 }}</span>
               </p>
               <p class="mt-2 flex w-full items-center justify-between">
                 <span class="text-[#666666]">{{ t('home.includ-debt') }}</span>
                 <span class="font-bold text-[#FC5C65]">{{
-                  props?.data?.debt_order_total_quantity ?? 0
+                  thousandSeparator(props?.data?.debt_order_total_quantity ?? 0)
                 }}</span>
               </p>
 
               <p class="mt-2 flex w-full items-center justify-between">
                 <span class="text-[#666666]">{{ t('home.refund-qty') }}</span>
                 <span class="font-bold text-[#303133]">{{
-                  props?.data?.returned_order_total_quantity ?? 0
+                  thousandSeparator(
+                    props?.data?.returned_order_total_quantity ?? 0,
+                  )
                 }}</span>
               </p>
             </div>
@@ -136,7 +164,11 @@ const { t } = useI18n();
           <div class="min-w-0 flex-1">
             <p class="text-[#606266]">{{ t('home.sales-product-qty') }}</p>
             <p class="mt-2 font-bold text-[#303133]">
-              {{ props?.data?.sales_product_total_quantity ?? 0 }}
+              {{
+                thousandSeparator(
+                  props?.data?.sales_product_total_quantity ?? 0,
+                )
+              }}
             </p>
           </div>
           <div
@@ -147,7 +179,9 @@ const { t } = useI18n();
               <p class="flex w-full items-center justify-between">
                 <span class="text-[#666666]">{{ t('home.sales-qty') }}</span>
                 <span class="font-bold text-[#303133]">{{
-                  props?.data?.sales_product_total_quantity ?? 0
+                  thousandSeparator(
+                    props?.data?.sales_product_total_quantity ?? 0,
+                  )
                 }}</span>
               </p>
               <p

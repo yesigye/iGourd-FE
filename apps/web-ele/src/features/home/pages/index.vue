@@ -24,6 +24,11 @@ import {
 } from '@@/home/apis';
 import { dayjs } from 'element-plus';
 
+import circleIcon from '#/assets/home/circle-icon.svg';
+import symbolIcon from '#/assets/home/symbol-icon.svg';
+import { quickSwitchTime } from '#/utils';
+import { thousandSeparator } from '#/utils/sale';
+
 defineOptions({
   name: 'IHome',
 });
@@ -32,6 +37,13 @@ const time = ref([
   dayjs().subtract(1, 'month').format('YYYY-MM-DD 00:00:00'),
   dayjs().format('YYYY-MM-DD 23:59:59'),
 ]);
+const selectQuickTime = ref('last-month');
+const handleQuickSwitchTime = (
+  val: 'last-month' | 'last-week' | 'today' | 'yesterday',
+) => {
+  selectQuickTime.value = val;
+  time.value = quickSwitchTime(val);
+};
 const chartSaleAmountRef = ref<EchartsUIType>();
 const chartNumberoSellsRef = ref<EchartsUIType>();
 const chartSalesOrderNumberRef = ref<EchartsUIType>();
@@ -167,11 +179,11 @@ const newsListData = ref({
 });
 const newListOption = ref([
   {
-    label: 'Unread',
+    label: t('index.unread'),
     value: 'UNREAD',
   },
   {
-    label: 'Read',
+    label: t('index.read'),
     value: 'READ',
   },
 ]);
@@ -228,31 +240,86 @@ onMounted(() => {
       <ElButton type="primary" class="ml-2" @click="handleSearch">
         {{ t('common.search') }}
       </ElButton>
+      <ElButtonGroup>
+        <ElButton
+          :type="selectQuickTime === 'yesterday' ? 'primary' : 'default'"
+          class="ml-2"
+          @click="handleQuickSwitchTime('yesterday')"
+        >
+          {{ t('common.yesterday') }}
+        </ElButton>
+        <ElButton
+          :type="selectQuickTime === 'today' ? 'primary' : 'default'"
+          class="ml-2"
+          @click="handleQuickSwitchTime('today')"
+        >
+          {{ t('common.today') }}
+        </ElButton>
+        <ElButton
+          :type="selectQuickTime === 'last-week' ? 'primary' : 'default'"
+          class="ml-2"
+          @click="handleQuickSwitchTime('last-week')"
+        >
+          {{ t('common.last-week') }}
+        </ElButton>
+        <ElButton
+          :type="selectQuickTime === 'last-month' ? 'primary' : 'default'"
+          class="ml-2"
+          @click="handleQuickSwitchTime('last-month')"
+        >
+          {{ t('common.last-month') }}
+        </ElButton>
+      </ElButtonGroup>
     </section>
     <section class="bg-card break-words rounded-md px-2.5 pt-2.5">
       <ElRow :gutter="10">
         <ElCol :lg="12" :xs="24">
           <div
-            class="sale-order-statistics min-h-[118px] rounded-md p-2.5 px-3"
+            class="sale-order-statistics relative min-h-[118px] rounded-md p-2.5 px-3"
           >
-            <p>Sales Order Quantity (Total of all stores)</p>
-            <p class="mt-1.5 font-bold">
-              {{ merchantOverviewData?.sales_order_total_quantity ?? 0 }}
+            <p>
+              {{ t('index.sales-order-quantity') }} ({{
+                t('index.total-of-all-stores')
+              }})
             </p>
-            <p class="mt-5"><span>than yesterday</span> <span>24</span></p>
+            <p class="mt-1.5 font-bold">
+              {{
+                thousandSeparator(
+                  merchantOverviewData?.sales_order_total_quantity ?? 0,
+                )
+              }}
+            </p>
+            <p class="mt-5">
+              <span>{{ t('index.than-yesterday') }}</span> <span>24</span>
+            </p>
+            <div class="absolute right-6 top-1 h-[108px] w-[90px]">
+              <img :src="symbolIcon" class="h-[108px] w-[90px]" alt="" />
+            </div>
           </div>
         </ElCol>
         <ElCol :lg="12" :xs="24">
           <div
-            class="sale-product-statistics min-h-[118px] rounded-md px-3 py-[14px]"
+            class="sale-product-statistics relative min-h-[118px] rounded-md px-3 py-[14px]"
           >
-            <p>Sales Product Quantity (Total of all stores)</p>
+            <p>
+              {{ t('index.sales-product-quantity') }} ({{
+                t('index.total-of-all-stores')
+              }})
+            </p>
             <p class="mt-1.5 font-bold">
               {{
-                merchantOverviewData?.actual_sales_product_total_quantity ?? 0
+                thousandSeparator(
+                  merchantOverviewData?.actual_sales_product_total_quantity ??
+                    0,
+                )
               }}
             </p>
-            <p class="mt-5"><span>than yesterday</span> <span>24</span></p>
+            <p class="mt-5">
+              <span>{{ t('index.than-yesterday') }}</span> <span>24</span>
+            </p>
+            <div class="absolute right-6 top-1 h-[108px] w-[90px]">
+              <img :src="circleIcon" class="h-[108px] w-[90px]" alt="" />
+            </div>
           </div>
         </ElCol>
       </ElRow>
@@ -297,7 +364,7 @@ onMounted(() => {
           <div class="bg-card h-full px-2.5 py-4">
             <div class="font-bold">
               <div class="flex items-center gap-2.5">
-                <span>My News</span>
+                <span>{{ t('index.my-news') }}</span>
                 <ElSelect
                   v-model="newsStatus"
                   :options="newListOption"
@@ -338,7 +405,7 @@ onMounted(() => {
       <Card header="">
         <template #header>
           <div class="flex w-full items-center justify-between">
-            <div class="font-bold">Sales Amount</div>
+            <div class="font-bold">{{ t('index.sales-amount') }}</div>
             <ElButtonGroup class="ml-4">
               <ElButton
                 :type="saleAmountTimeRange === 'DAY' ? 'primary' : 'default'"
@@ -400,7 +467,7 @@ onMounted(() => {
       <Card header="">
         <template #header>
           <div class="flex w-full items-center justify-between">
-            <div class="font-bold">Qty Of Sells</div>
+            <div class="font-bold">{{ t('index.qty-of-sells') }}</div>
             <ElButtonGroup class="ml-4">
               <ElButton
                 :type="saleQtyTimeRange === 'DAY' ? 'primary' : 'default'"
@@ -456,7 +523,7 @@ onMounted(() => {
       <Card header="">
         <template #header>
           <div class="flex w-full items-center justify-between">
-            <div class="font-bold">Sales Order Qty</div>
+            <div class="font-bold">{{ t('index.sales-order-qty') }}</div>
             <ElButtonGroup class="ml-4">
               <ElButton
                 :type="saleQtyTimeRange === 'DAY' ? 'primary' : 'default'"

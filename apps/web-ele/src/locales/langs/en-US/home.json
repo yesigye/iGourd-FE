@@ -1,6 +1,4 @@
 {
-  "stock-alert-min-stock": "Stock Alert(Min Stock)",
-  "warning-alert-expiring-soon": "Warning Alert(Expiring Soon)",
   "unpaid-sales-order": "Unpaid Sales Order",
   "goods-receipt-not-posted": "Goods Receipt Not Posted",
   "go-handle": "Go Handle",
@@ -39,5 +37,10 @@
   "vendor-number": "Vendor Number",
   "accounts-payable": "Accounts Payable",
   "customer-number": "Customer Number",
-  "accounts-receivable": "Accounts Receivable"
+  "accounts-receivable": "Accounts Receivable",
+  "stock-alert-min-stock": "Stock Alert(Min Stock)",
+  "stock-alert-safety-stock": "Stock Alert(Safety Stock)",
+  "stock-alert-max-stock": "Stock Alert(Max Stock)",
+  "warning-alert-expiring-soon": "Warning Alert(Expiring Soon)",
+  "warning-alert-expired": "Warning Alert(Expired)"
 }

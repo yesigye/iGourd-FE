@@ -20,6 +20,7 @@ import roleManagementIcon from '#/assets/home/role-management.svg';
 import upgradeTaskIcon from '#/assets/home/upgrade-task.svg';
 import versionMonitoringIcon from '#/assets/home/version-monitoring.svg';
 import versionIcon from '#/assets/home/version.svg';
+import { thousandSeparator } from '#/utils/sale';
 
 const props = defineProps({
   data: {
@@ -29,6 +30,10 @@ const props = defineProps({
   time: {
     type: Array,
     default: () => [],
+  },
+  currencySymbol: {
+    type: String,
+    default: '',
   },
 });
 const { t } = useI18n();
@@ -268,7 +273,12 @@ onMounted(() => {
                 class="flex flex-wrap justify-between rounded-sm bg-[#ECF5FF] p-2.5"
               >
                 <span>{{ t('home.purchase-product-per') }} 2</span>
-                <span>$ {{ props.data?.purchase_total_amount ?? 0 }}</span>
+                <span
+                  >{{ props?.currencySymbol }}
+                  {{
+                    thousandSeparator(props.data?.purchase_total_amount ?? 0)
+                  }}</span
+                >
               </div>
             </Card>
             <Card
@@ -279,7 +289,12 @@ onMounted(() => {
                 class="flex flex-wrap justify-between rounded-sm bg-[#ECF5FF] p-2.5"
               >
                 <span>{{ t('home.expense-expenditure-per') }} 2</span>
-                <span>$ {{ props.data?.expenditure_total_amount ?? 0 }}</span>
+                <span
+                  >{{ props?.currencySymbol }}
+                  {{
+                    thousandSeparator(props.data?.expenditure_total_amount ?? 0)
+                  }}</span
+                >
               </div>
             </Card>
           </section>
@@ -360,7 +375,12 @@ onMounted(() => {
             <div class="min-w-0 flex-1">
               <EchartsUI height="156px" width="100%" ref="chartLineBarRef" />
               <p class="text-center">
-                {{ t('home.details-of-funds') }} ($): {{ detailsOfFunds }}
+                {{ t('home.details-of-funds') }} ({{ props?.currencySymbol }}):
+                {{
+                  thousandSeparator(
+                    accountingStatistics?.total_balance_amount ?? 0,
+                  )
+                }}
               </p>
             </div>
             <div class="flex min-w-0 flex-1 flex-col gap-8">
@@ -374,26 +394,37 @@ onMounted(() => {
                   :class="`bg-[${item.color}]`"
                 ></div>
                 <div>{{ t('home.bank-deposit') }}- {{ item.code }}</div>
-                <div>{{ item.currency_code }} {{ item.current_balance }}</div>
+                <div>
+                  {{ item.currency_code }}
+                  {{ thousandSeparator(item.current_balance) }}
+                </div>
               </div>
             </div>
           </div>
           <div class="mb-2.5 flex flex-col gap-2.5 bg-[#ECF5FF] p-3">
-            <p>{{ t('home.cash-on-hand') }} ($)</p>
+            <p>{{ t('home.cash-on-hand') }} ({{ props?.currencySymbol }})</p>
             <p>
               {{
-                accountingStatistics?.cash_statistics
-                  ?.cash_on_hand_balance_amount ?? 0
+                thousandSeparator(
+                  accountingStatistics?.cash_statistics
+                    ?.cash_on_hand_balance_amount ?? 0,
+                )
               }}
             </p>
           </div>
           <div class="mb-2.5 flex items-center gap-7 bg-[#ECF5FF] p-3">
             <div class="mb-2.5 flex min-w-0 flex-1 flex-col gap-2.5">
-              <p>{{ t('home.accounts-receivable') }} ($)</p>
+              <p>
+                {{ t('home.accounts-receivable') }} ({{
+                  props?.currencySymbol
+                }})
+              </p>
               <p>
                 {{
-                  accountingStatistics?.receivable_statistics
-                    ?.receivable_balance_amount ?? 0
+                  thousandSeparator(
+                    accountingStatistics?.receivable_statistics
+                      ?.receivable_balance_amount ?? 0,
+                  )
                 }}
               </p>
             </div>
@@ -414,11 +445,15 @@ onMounted(() => {
           </div>
           <div class="flex items-center gap-7 bg-[#ECF5FF] p-3">
             <div class="mb-2.5 flex min-w-0 flex-1 flex-col gap-2.5">
-              <p>{{ t('home.accounts-payable') }} ($)</p>
+              <p>
+                {{ t('home.accounts-payable') }} ({{ props?.currencySymbol }})
+              </p>
               <p>
                 {{
-                  accountingStatistics?.receivable_statistics
-                    ?.payable_balance_amount ?? 0
+                  thousandSeparator(
+                    accountingStatistics?.receivable_statistics
+                      ?.payable_balance_amount ?? 0,
+                  )
                 }}
               </p>
             </div>
