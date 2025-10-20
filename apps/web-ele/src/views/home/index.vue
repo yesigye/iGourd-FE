@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 
-import { Page } from '@igourd/common-ui';
+import { ElButton, ElButtonGroup, ElDatePicker, Page } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
+import dayjs from 'dayjs';
 
 import { merchantOverviewApi } from '#/api';
 
@@ -9,14 +12,71 @@ import HomeNotice from './components/home-notice.vue';
 import ProductEchartData from './components/product-echart.data.vue';
 import SalesOrderStatistics from './components/sales-order-statistics.vue';
 
+const { t } = useI18n();
 const merchantOverviewData = ref({});
+// 默认问最近一个月 开始00：00：00 结束23：59：59
+const time = ref<string[]>([
+  dayjs().subtract(1, 'month').format('YYYY-MM-DD 00:00:00'),
+  dayjs().format('YYYY-MM-DD 23:59:59'),
+]);
+const selectQuickTime = ref('last-month');
+const handleQuickSwitchTime = (
+  val: 'last-month' | 'last-week' | 'today' | 'yesterday',
+) => {
+  selectQuickTime.value = val;
+  switch (val) {
+    case 'last-month': {
+      time.value = [
+        dayjs().subtract(1, 'month').format('YYYY-MM-DD 00:00:00'),
+        dayjs().format('YYYY-MM-DD 23:59:59'),
+      ];
+      break;
+    }
+    case 'last-week': {
+      time.value = [
+        dayjs().subtract(1, 'week').format('YYYY-MM-DD 00:00:00'),
+        dayjs().format('YYYY-MM-DD 23:59:59'),
+      ];
+      break;
+    }
+    case 'today': {
+      time.value = [
+        dayjs().format('YYYY-MM-DD 00:00:00'),
+        dayjs().format('YYYY-MM-DD 23:59:59'),
+      ];
+      break;
+    }
+    case 'yesterday': {
+      time.value = [
+        dayjs().subtract(1, 'day').format('YYYY-MM-DD 00:00:00'),
+        dayjs().subtract(1, 'day').format('YYYY-MM-DD 23:59:59'),
+      ];
+      break;
+    }
+  }
+};
+// 将开始时间改为00:00:00 将结束时间改为23:59:59
+const handleDateChange = (val: string[]) => {
+  if (val.length === 2) {
+    val[0] = `${val[0]} 00:00:00`;
+    val[1] = `${val[1]} 23:59:59`;
+  }
+};
 const getMerchantOverview = () => {
   try {
-    const res = merchantOverviewApi({});
+    const res = merchantOverviewApi({
+      end_date: time.value[1],
+      start_date: time.value[0],
+    });
     merchantOverviewData.value = res;
   } catch (error) {
     console.error(error);
   }
+};
+const eachartTime = ref<string[]>([]);
+const handleSearch = () => {
+  eachartTime.value = time.value;
+  getMerchantOverview();
 };
 onMounted(() => {
   getMerchantOverview();
@@ -24,6 +84,51 @@ onMounted(() => {
 </script>
 <template>
   <Page class="p-2.5">
+    <section class="pb-2.5">
+      <ElDatePicker
+        v-model="time"
+        type="daterange"
+        :range-separator="t('common.range-separator')"
+        start-placeholder="Start date"
+        end-placeholder="End date"
+        format="YYYY-MM-DD"
+        value-format="YYYY-MM-DD"
+        @change="handleDateChange"
+      />
+      <ElButton type="primary" class="ml-2" @click="handleSearch">
+        {{ t('common.search') }}
+      </ElButton>
+      <ElButtonGroup>
+        <ElButton
+          :type="selectQuickTime === 'yesterday' ? 'primary' : 'default'"
+          class="ml-2"
+          @click="handleQuickSwitchTime('yesterday')"
+        >
+          {{ t('common.yesterday') }}
+        </ElButton>
+        <ElButton
+          :type="selectQuickTime === 'today' ? 'primary' : 'default'"
+          class="ml-2"
+          @click="handleQuickSwitchTime('today')"
+        >
+          {{ t('common.today') }}
+        </ElButton>
+        <ElButton
+          :type="selectQuickTime === 'last-week' ? 'primary' : 'default'"
+          class="ml-2"
+          @click="handleQuickSwitchTime('last-week')"
+        >
+          {{ t('common.last-week') }}
+        </ElButton>
+        <ElButton
+          :type="selectQuickTime === 'last-month' ? 'primary' : 'default'"
+          class="ml-2"
+          @click="handleQuickSwitchTime('last-month')"
+        >
+          {{ t('common.last-month') }}
+        </ElButton>
+      </ElButtonGroup>
+    </section>
     <!-- 警示部分 -->
     <section class="bg-card break-words rounded-md px-2.5 pt-2.5">
       <HomeNotice :data="merchantOverviewData" />
@@ -32,7 +137,7 @@ onMounted(() => {
       <SalesOrderStatistics :data="merchantOverviewData" />
     </section>
     <section>
-      <ProductEchartData :data="merchantOverviewData" />
+      <ProductEchartData :data="merchantOverviewData" :time="eachartTime" />
     </section>
   </Page>
 </template>

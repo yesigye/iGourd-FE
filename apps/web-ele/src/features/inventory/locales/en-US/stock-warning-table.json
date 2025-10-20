@@ -1,0 +1,20 @@
+{
+  "product-code": "Product Code",
+  "product-name": "Product Name",
+  "spec": "Spec",
+  "category": "Category",
+  "major-unit": "Major Unit",
+  "unit": "Unit",
+  "min-stock": "Minimum Stock",
+  "safety-stock": "Safety Stock",
+  "max-stock": "Maximum Stock",
+  "immediate-stock": "Immediate Stock",
+  "inbound-in-transit-stock": "Inbound in Transit Stock",
+  "min-stock-shortage-qty": "Minimum Stock Shortage Quantity",
+  "safety-stock-shortage-qty": "Safety Stock Shortage Quantity",
+  "max-stock-shortage-qty": "Maximum Stock Shortage Quantity",
+  "suggested-purchase-qty": "Suggested Purchase Quantity",
+  "stock-warning": "Stock Warning",
+  "enter-product-code-product-name": "Enter Product Code/Product Name",
+  "create-pruchase-order": "Create Purchase Order"
+}

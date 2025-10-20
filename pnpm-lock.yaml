@@ -741,6 +741,9 @@ importers:
       '@element-plus/icons-vue':
         specifier: 'catalog:'
         version: 2.3.2(vue@3.5.17(typescript@5.8.3))
+      '@micro-zoe/micro-app':
+        specifier: 1.0.0-rc.27
+        version: 1.0.0-rc.27
       clipboard:
         specifier: ^2.0.11
         version: 2.0.11
@@ -3944,6 +3947,9 @@ packages:
     resolution: {integrity: sha512-llMXd39jtP0HpQLVI37Bf1m2ADlEb35GYSh1SDSLsBhR+5iCxiNGlT31yqbNtVHygHAtMy6dWFERpU2JgufhPg==}
     engines: {node: '>=18'}
     hasBin: true
+
+  '@micro-zoe/micro-app@1.0.0-rc.27':
+    resolution: {integrity: sha512-FctYIwS1lfzaduCKHzMB8dpOg1ugGYejeeV+tE7LvLMmmbxRl2HaO4dlydUYu/pTXTFEGMsnNul+6kx/8rfcAQ==}
 
   '@microsoft/api-extractor-model@7.30.5':
     resolution: {integrity: sha512-0ic4rcbcDZHz833RaTZWTGu+NpNgrxVNjVaor0ZDUymfDFzjA/Uuk8hYziIUIOEOSTfmIQqyzVwlzxZxPe7tOA==}
@@ -14224,6 +14230,8 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
+
+  '@micro-zoe/micro-app@1.0.0-rc.27': {}
 
   '@microsoft/api-extractor-model@7.30.5(@types/node@22.16.0)':
     dependencies:

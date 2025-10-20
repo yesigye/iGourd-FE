@@ -99,7 +99,7 @@ function transformComponent(
 <template>
   <div class="relative h-full">
     <IFrameRouterView />
-    <RouterView v-slot="{ Component, route }">
+    <RouterView v-slot="{ Component, route }" :key="$route.name">
       <Transition
         v-if="getEnabledTransition"
         :name="getTransitionName(route)"

@@ -30,10 +30,10 @@ setupIgourdVxeTable({
           isCurrent: true,
         },
         headerCellConfig: {
-          height: 30,
+          height: 35,
         },
         cellConfig: {
-          height: 30,
+          height: 35,
         },
         columnConfig: {
           resizable: true,

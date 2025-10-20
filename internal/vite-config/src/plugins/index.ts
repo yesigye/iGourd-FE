@@ -54,6 +54,11 @@ async function loadCommonPlugins(
       condition: true,
       plugins: () => [
         viteVue({
+          template: {
+            compilerOptions: {
+              isCustomElement: (tag: string) => /^micro-app/.test(tag),
+            },
+          },
           script: {
             defineModel: true,
             // propsDestructure: true,

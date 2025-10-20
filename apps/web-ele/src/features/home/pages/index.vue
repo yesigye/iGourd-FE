@@ -50,7 +50,7 @@ const saleAmountTimeRange = ref('DAY');
 const saleQtyTimeRange = ref('DAY');
 
 // 获取统计信息
-const getFirstHomeStatisticsRload = async (range) => {
+const getFirstHomeStatisticsRload = async (range: string) => {
   const res = await getFirstHomeStatisticsApi({
     end_date: time.value[1],
     report_statistics: 'ORDER_PRODUCT_NUMBER',
@@ -76,7 +76,10 @@ const getFirstHomeStatisticsOrderNumberRload = async (range: string) => {
   handlSalesOrderNumberEchartInit(res);
 };
 // 排名
-const handlSaleAmountEchartInit = (event) => {
+const handlSaleAmountEchartInit = (event: {
+  ranking_statistics: any[];
+  trend_statistics: any[];
+}) => {
   const xAxisData = event?.trend_statistics?.map(
     (item: any) => item.report_date,
   );
@@ -222,8 +225,8 @@ onMounted(() => {
         value-format="YYYY-MM-DD"
         @change="handleDateChange"
       />
-      <ElButton type="primary" class="ml-2" size="small" @click="handleSearch">
-        查询
+      <ElButton type="primary" class="ml-2" @click="handleSearch">
+        {{ t('common.search') }}
       </ElButton>
     </section>
     <section class="bg-card break-words rounded-md px-2.5 pt-2.5">

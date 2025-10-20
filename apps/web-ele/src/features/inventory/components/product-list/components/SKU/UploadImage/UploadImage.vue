@@ -9,7 +9,6 @@ import { useI18n } from '@igourd/locales';
 import { Plus } from '@element-plus/icons-vue';
 
 import { upload } from '#/api/upload';
-import { uploadIconColor } from '#/styles/variables';
 
 const props = defineProps({
   imgUrl: {
@@ -66,10 +65,15 @@ watchEffect(() => {
     :before-upload="beforeUpload"
     :http-request="handleUpload"
   >
-    <img v-if="imageUrl" :src="imageUrl" class="avatar" style="width: 36px" />
+    <img
+      v-if="imageUrl"
+      :src="imageUrl"
+      class="avatar text-primary-text"
+      style="width: 36px"
+    />
     <ElIcon
       v-else
-      :color="uploadIconColor"
+      color="hsl(var(--primary-500))"
       class="text-28 avatar-uploader-icon"
     >
       <Plus />
@@ -82,10 +86,6 @@ watchEffect(() => {
   display: block;
   width: 36px;
   height: 36px;
-}
-
-.avatar-uploader .avatar {
-  width: 36px;
 }
 </style>
 

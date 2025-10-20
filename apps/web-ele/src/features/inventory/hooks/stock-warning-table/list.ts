@@ -19,7 +19,7 @@ export function useStockWarningTable() {
     },
     {
       field: 'product_code',
-      title: t('stock-warning-table.product-code'),
+      title: t('common.image'),
       minWidth: 150,
       fixed: 'left',
       sortable: true,
@@ -124,21 +124,37 @@ export function useStockWarningTable() {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
+      'x-decorator-props': {
+        style: { 'margin-bottom': '0', width: '140px' },
+      },
       'x-component-props': {
         placeholder: "{{t('stock-warning-table.stock-warning')}}",
         clearable: true,
+        options: [
+          {
+            label: t('stock-warning-table.product-name'),
+            value: 'product_name',
+          },
+          {
+            label: t('stock-warning-table.product-code'),
+            value: 'product_code',
+          },
+        ],
       },
     },
-    product_code: {
+    keyworks: {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
+      'x-decorator-props': {
+        style: { 'margin-bottom': '0', width: '300px' },
+      },
       'x-component-props': {
-        placeholder: "{{t('stock-warning-table.enter-product-code-product-name')}}",
+        placeholder:
+          "{{t('stock-warning-table.enter-product-code-product-name')}}",
         clearable: true,
       },
     },
-
   };
 
   return useCrud<InventoryRow, InventoryUpdateDTO>({
