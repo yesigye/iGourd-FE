@@ -620,8 +620,16 @@ export function useProductAdd() {
   const onSubmit = async (sku, ismerge, stockWarnData) => {
     try {
       // 表单验证
-      debugger;
-      const isValid = await ruleFormRef.value.validate();
+      let isValid = false;
+      ruleFormRef.value.validate((valid, fields) => {
+        if (valid) {
+          isValid = true;
+          console.log('表单验证通过1', fields);
+        } else {
+          isValid = true;
+          console.log('表单验证失败2', fields);
+        }
+      });
       if (!isValid) return;
 
       let response;

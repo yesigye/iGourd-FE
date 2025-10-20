@@ -407,6 +407,13 @@ let handleInputDebounced;
 onMounted(() => {
   getSkuSet();
   handleInputDebounced = debounce(async () => {
+    ruleFormRef.value.validate((valid) => {
+      if (valid) {
+        console.log('表单验证通过');
+      } else {
+        console.log('表单验证失败');
+      }
+    });
     const stockWarnData = productSKUFormRef.value.getStockWarnData();
     console.log('库存警告数据', stockWarnData);
     // 提交前sku检查
@@ -726,10 +733,10 @@ onMounted(() => {
         <div class="drawer-top-buttons"></div>
       </div>
     </template>
-
     <div class="m-2.5">
       <ElForm
         ref="ruleFormRef"
+        :show-message="true"
         class="demo-ruleForm"
         style="min-width: 1100px"
         label-width="160px"
@@ -1309,7 +1316,7 @@ onMounted(() => {
         <ElButton type="default" @click="handleClose">
           {{ t('inventory.cancel') }}
         </ElButton>
-        <ElButton type="primary" @click="handleInputDebounced">
+        <ElButton type="primary" @click="handleInputDebounced()">
           {{ t('inventory.save') }}
         </ElButton>
       </div>
