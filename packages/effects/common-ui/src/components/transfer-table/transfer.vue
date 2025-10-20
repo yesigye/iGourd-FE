@@ -81,6 +81,8 @@ const props = withDefaults(
   defineProps<{
     // top-bottom 上线布局   left-right 左右布局 默认
     layout:string,
+    // 选择数据的模式 select左边勾选直接添加(默认的)   move 通过中间按钮添加
+    selectMode:string,
     columns: Column[];
     excludeSelectedFromLeft?: boolean;
     fetchLeft: (
@@ -104,6 +106,7 @@ const props = withDefaults(
   }>(),
   {
     layout:"left-right",
+    selectMode:'select',
     modelValue: () => [],
     leftTitle: '可选择',
     rightTitle: '已选择',
@@ -282,6 +285,7 @@ watch(
 
 watchEffect(() => {
   leftRefresh();
+  rightRefresh();
 });
 
 /** ****************************
@@ -378,6 +382,13 @@ function removeRow(row: KV) {
   const id = row[props.rowKey];
   const next = value.value.filter((r) => r[props.rowKey] !== id);
   setValue(next);
+}
+// 左边选择事件
+function leftSelectionChange(rows:KV[]){
+  leftSelection.value = rows
+  if(props.selectMode === 'select'){
+    addRows(rows)
+  }
 }
 
 // expose refresh for parent if needed
@@ -492,7 +503,7 @@ defineExpose({ leftRefresh, rightRefresh });
           height="420"
           :row-key="props.rowKey"
           :reserve-selection="true"
-          @selection-change="(rows: any[]) => (leftSelection = rows)"
+          @selection-change="leftSelectionChange"
           :row-class-name="leftRowClass"
         >
           <!-- 选择列：不显示“本页全选”复选框 -->
@@ -611,7 +622,7 @@ defineExpose({ leftRefresh, rightRefresh });
       </div>
 
       <!-- MIDDLE actions -->
-      <div class="flex flex-col justify-center gap-2">
+      <div v-if="props.selectMode ==='move'" class="flex flex-col justify-center gap-2">
         <ElButton
           :disabled="leftSelection.length === 0"
           @click="addRows(leftSelection)"

@@ -43,7 +43,9 @@ export function useSelectProductForm(func) {
         formAPI.reset();
         const data = drawerApi.getData();
         detailData.value = data;
-        formAPI.setValues(data);
+        formAPI.setValues({
+          product_list:data
+        });
       } else {
         formAPI.values = {};
       }
@@ -107,7 +109,7 @@ export function useSelectProductForm(func) {
                 },
               ],
               fetchLeft: '{{ actions.fetchProducts }}',
-              fetchRight: '{{ actions.fetchSelectedProducts }}',
+              //fetchRight: '{{ actions.fetchSelectedProducts }}',
               fetchByIds: '{{ actions.fetchProductsByIds }}',
               getAllIdsUnderFilter: '{{ actions.getAllIdsUnderFilter }}',
               topFilterFields: [

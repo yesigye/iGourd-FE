@@ -598,7 +598,7 @@ export function useOrderForm() {
                                 business_type: {
                                   type: 'string',
                                   'x-hidden': true,
-                                  //default: 'PURCHASE_ORDER_REFUND',
+                                  // default: 'PURCHASE_ORDER_REFUND',
                                 },
                                 payment_method_mark: {
                                   type: 'string',
