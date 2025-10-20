@@ -75,7 +75,7 @@ const formSchema: ISchema = {
           properties: {
             row_0: {
               type: 'void', // 表示空字段
-              title: "{{t('customer.initialearnedintegral')}}", // formItem 的 label
+              title: "{{t('customer.initial-earned-integral')}}", // formItem 的 label
               'x-component': 'Space',
               'x-decorator': 'FormItem',
               'x-decorator-props': {
@@ -108,7 +108,7 @@ const formSchema: ISchema = {
             },
             row_1: {
               type: 'void', // 表示空字段
-              title: "{{t('customer.everyconsumption')}}", // formItem 的 label
+              title: "{{t('customer.every-consumption')}}", // formItem 的 label
               'x-component': 'Space',
               'x-decorator': 'FormItem',
               'x-decorator-props': {
@@ -147,16 +147,16 @@ const formSchema: ISchema = {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
-                header: "{{t('customer.pointredemptionrule')}}",
+                header: "{{t('customer.point-redemption-rule')}}",
               },
               properties: {
                 point_exchange_type: {
                   type: 'boolean',
-                  title: "{{t('customer.exchangemode')}}",
+                  title: "{{t('customer.exchange-mode')}}",
                   required: true,
                   enum: [
                     {
-                      label: t('customer.deductiblecash'),
+                      label: t('customer.deductible-cash'),
                       value: 'DEDUCTIBLE_CASH',
                     },
                     {
@@ -170,7 +170,7 @@ const formSchema: ISchema = {
                 },
                 row_deduction_rate: {
                   type: 'void', // 表示空字段
-                  title: "{{t('customer.integrationrule')}}", // formItem 的 label
+                  title: "{{t('customer.integration-rule')}}", // formItem 的 label
                   'x-component': 'Space',
                   'x-decorator': 'FormItem',
                   'x-decorator-props': {
@@ -210,7 +210,7 @@ const formSchema: ISchema = {
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
                   required: true,
-                  title: "{{t('customer.integrationrule')}}",
+                  title: "{{t('customer.integration-rule')}}",
                   items: {
                     type: 'object',
                     properties: {
@@ -234,7 +234,7 @@ const formSchema: ISchema = {
                         'x-component': 'ArrayTable.Column',
                         'x-component-props': {
                           width: 200,
-                          title: "{{t('equity.equityType.point')}}",
+                          title: "{{t('equity.equity-type.point')}}",
                         },
                         properties: {
                           points: {
@@ -247,7 +247,7 @@ const formSchema: ISchema = {
                         type: 'void',
                         'x-component': 'ArrayTable.Column',
                         'x-component-props': {
-                          title: "{{t('equity.equityType.gift')}}",
+                          title: "{{t('equity.equity-type.gift')}}",
                         },
                         properties: {
                           name: {
@@ -359,7 +359,7 @@ const formSchema: ISchema = {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
-                header: "{{t('customer.otherSettings')}}",
+                header: "{{t('customer.other-settings')}}",
               },
               properties: {
                 is_annually_resettable: {
@@ -436,7 +436,7 @@ const handleReset = () => {
     getData();
   } else {
     formAPI.reset();
-    ElMessage.success(t('customer.resetSuccess'));
+    ElMessage.success(t('customer.reset-success'));
   }
 };
 const handleSave = async () => {
@@ -453,7 +453,7 @@ const handleSave = async () => {
   params.id = id.value;
   saveCustomerIntegralApi(params).then((res) => {
     id.value = res;
-    ElMessage.success(t('customer.saveSuccess'));
+    ElMessage.success(t('customer.save-success'));
   });
 };
 const getData = () => {

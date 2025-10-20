@@ -37,13 +37,13 @@ export function useCustomerFeature() {
       field: 'is_fixed_option',
       minWidth: 100,
       align: 'center',
-      title: t('customer.isFixedOption'),
+      title: t('customer.is-fixed-option'),
     },
     {
       field: 'is_compulsory',
       minWidth: 120,
       align: 'center',
-      title: t('customer.isCompulsory'),
+      title: t('customer.is-compulsory'),
 
     },
     {
@@ -57,7 +57,7 @@ export function useCustomerFeature() {
       field: 'create_time',
       minWidth: 100,
       align: 'center',
-      title: t('customer.creationTime'),
+      title: t('customer.creation-time'),
 
     },
     {
@@ -96,7 +96,7 @@ export function useCustomerFeature() {
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: t('customer.searchPlaceholder'),
+            placeholder: t('customer.search-placeholder'),
           },
         },
       },

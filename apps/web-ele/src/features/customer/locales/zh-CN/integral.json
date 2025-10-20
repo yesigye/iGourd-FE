@@ -1,39 +1,7 @@
 {
-  "customerName": "客户名称",
-  "integralType": "积分类型",
-  "points": "积分数量",
-  "status": "状态",
-  "description": "描述",
-  "earnDate": "获得日期",
-  "expireDate": "过期日期",
-  "creatorName": "创建人",
-  "createTime": "创建时间",
-  "addCustomerIntegral": "添加客户积分",
-  "editCustomerIntegral": "编辑客户积分",
-  "customerIntegralDetail": "客户积分详情",
-  "customerIntegral": "客户积分",
-  "integralSetting": "积分设置",
-  "please_select_customer": "请选择客户",
-  "please_select_integral_type": "请选择积分类型",
-  "please_enter_points": "请输入积分数量",
-  "please_enter_description": "请输入描述",
-  "please_select_earn_date": "请选择获得日期",
-  "please_select_expire_date": "请选择过期日期",
-  "search": "搜索",
-  "searchPlaceholder": "请输入客户名称或积分类型",
-  "integralType": {
-    "earn": "获得积分",
-    "spend": "消费积分",
-    "expire": "积分过期",
-    "adjust": "积分调整",
-    "refund": "积分退还"
-  },
-  "status": {
-    "active": "有效",
-    "expired": "已过期",
-    "used": "已使用",
-    "cancelled": "已取消"
-  },
+
+
+
   "initialearnedintegral-placeholder": "请输入初始积分",
   "amount-placeholder": "请输入消费金额",
   "everyyearonjanuary1resetpointstozero": "每年1月1日零点重置积分为0",

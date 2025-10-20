@@ -111,7 +111,7 @@ const formSchema: ISchema = {
               properties: {
                 default_vip_level: {
                   type: 'number',
-                  title: "{{t('customer.defaultVIPlevel')}}",
+                  title: "{{t('customer.default-vip-level')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'Input',
                   'x-decorator-props': {
@@ -136,7 +136,7 @@ const formSchema: ISchema = {
                 },
                 maximum_vip_level: {
                   type: 'number',
-                  title: "{{t('customer.maximummembershiplevel')}}",
+                  title: "{{t('customer.maximu-mmembership-level')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'Input',
                   'x-decorator-props': {
@@ -158,7 +158,7 @@ const formSchema: ISchema = {
 
                 vip_code_type: {
                   type: 'string',
-                  title: "{{t('customer.vipcode')}}",
+                  title: "{{t('customer.vip-code')}}",
                   required: true,
                   'x-decorator': 'FormItem',
                   'x-component': 'Select',
@@ -180,7 +180,7 @@ const formSchema: ISchema = {
                   type: 'array',
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
-                  title: "{{t('customer.viplevelname')}}",
+                  title: "{{t('customer.vip-level-name')}}",
                   items: {
                     type: 'object',
                     properties: {
@@ -205,7 +205,7 @@ const formSchema: ISchema = {
                         'x-component-props': {
                           width: 200,
                           title:
-                            "{{t('customer.customerListTable.vip_level')}}",
+                            "{{t('customer.customer-list-table.vip-level')}}",
                         },
                         properties: {
                           vip_level: {
@@ -293,19 +293,19 @@ const formSchema: ISchema = {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
-                header: "{{t('customer.upgradeModeSetting')}}",
+                header: "{{t('customer.upgrade-mode-setting')}}",
               },
               properties: {
                 upgrade_type: {
                   type: 'boolean',
-                  title: "{{t('customer.memberupgrademode')}}",
+                  title: "{{t('customer.member-upgrade-mode')}}",
                   enum: [
                     {
                       label: t('customer.topup'),
                       value: 'RECHARGE',
                     },
                     {
-                      label: t('customer.cumulativeconsumption'),
+                      label: t('customer.cumulative-consumption'),
                       value: 'CONSUMPTION',
                     },
                   ],
@@ -317,7 +317,7 @@ const formSchema: ISchema = {
                   type: 'array',
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
-                  title: "{{t('customer.rechargeamount')}}",
+                  title: "{{t('customer.recharge-amount')}}",
                   items: {
                     type: 'object',
                     properties: {
@@ -342,7 +342,7 @@ const formSchema: ISchema = {
                         'x-component-props': {
                           width: 200,
                           title:
-                            "{{t('customer.customerListTable.vip_level')}}",
+                            "{{t('customer.customer-list-table.vip-level')}}",
                         },
                         properties: {
                           vip_level: {
@@ -455,12 +455,12 @@ const formSchema: ISchema = {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
-                header: "{{t('customer.preferentialModeSetting')}}",
+                header: "{{t('customer.preferential-mode-setting')}}",
               },
               properties: {
                 rights_type: {
                   type: 'boolean',
-                  title: "{{t('customer.preferentialmode')}}",
+                  title: "{{t('customer.preferential-mode')}}",
                   enum: [
                     {
                       label: t('customer.cash'),
@@ -479,7 +479,7 @@ const formSchema: ISchema = {
                   type: 'array',
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
-                  title: "{{t('customer.exchangemode')}}",
+                  title: "{{t('customer.exchange-mode')}}",
                   items: {
                     type: 'object',
                     properties: {
@@ -504,7 +504,7 @@ const formSchema: ISchema = {
                         'x-component-props': {
                           width: 200,
                           title:
-                            "{{t('customer.customerListTable.vip_level')}}",
+                            "{{t('customer.customer-list-table.vip-level')}}",
                         },
                         properties: {
                           vip_level: {
@@ -657,12 +657,12 @@ const formSchema: ISchema = {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
-                header: "{{t('customer.otherSettings')}}",
+                header: "{{t('customer.other-settings')}}",
               },
               properties: {
                 is_points_multiple: {
                   type: 'boolean',
-                  title: "{{t('customer.integralmultiple')}}",
+                  title: "{{t('customer.integral-multiple')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'Switch',
                   'x-decorator-props': {
@@ -674,7 +674,7 @@ const formSchema: ISchema = {
                   type: 'array',
                   'x-component': 'ArrayTable',
                   'x-decorator': 'FormItem',
-                  title: "{{t('customer.integralmultiple')}}",
+                  title: "{{t('customer.integral-multiple')}}",
                   items: {
                     type: 'object',
                     properties: {
@@ -699,7 +699,7 @@ const formSchema: ISchema = {
                         'x-component-props': {
                           width: 200,
                           title:
-                            "{{t('customer.customerListTable.vip_level')}}",
+                            "{{t('customer.customer-list-table.vip-level')}}",
                         },
                         properties: {
                           vip_level: {
@@ -721,7 +721,7 @@ const formSchema: ISchema = {
                         'x-component': 'ArrayTable.Column',
                         'x-component-props': {
                           width: 200,
-                          title: "{{t('customer.customerListTable.points')}}",
+                          title: "{{t('customer.customer-list-table.points')}}",
                         },
                         properties: {
                           points_multiple: {
@@ -873,7 +873,7 @@ const { Form, formAPI } = useIgourdForm({
 
 const handleReset = () => {
   formAPI.reset();
-  ElMessage.success(t('customer.resetSuccess'));
+  ElMessage.success(t('customer.reset-success'));
 };
 const handleSave = async () => {
   await formAPI.validate();
@@ -903,7 +903,7 @@ const handleSave = async () => {
   formAPI.values.id = id.value
   saveCustomerEquityApi(formAPI.values).then((res) => {
     id.value = res;
-    ElMessage.success(t('customer.saveSuccess'));
+    ElMessage.success(t('customer.save-success'));
   });
 };
 const getData = () => {
