@@ -9,8 +9,8 @@ import {
   deleteDynamicColumn,
   getPurchaseCustomizedListApi,
 } from '@@/purchase/apis';
-import { CustomerFeatureDrawer } from '@@/customer/components';
 
+import addCustomized from '#/components/add-customized/add-customized.vue';
 import { useCrud, withEntityParam } from '#/hooks';
 
 export function useCustomerFeature() {
@@ -44,21 +44,18 @@ export function useCustomerFeature() {
       minWidth: 120,
       align: 'center',
       title: t('customer.isCompulsory'),
-
     },
     {
       field: 'creator_name',
       minWidth: 100,
       align: 'center',
       title: t('customer.creator'),
-
     },
     {
       field: 'create_time',
       minWidth: 100,
       align: 'center',
       title: t('customer.creationTime'),
-
     },
     {
       field: 'operations',
@@ -72,16 +69,16 @@ export function useCustomerFeature() {
 
   // 服务函数
   const service = {
-      query: withEntityParam({ entity: 'CUSTOMER' })(
-        getPurchaseCustomizedListApi,
-      ),
-      drop: withEntityParam({ entity: 'CUSTOMER' })(deleteDynamicColumn),
-      create: withEntityParam({ entity: 'CUSTOMER' })(
-        createOrUpdateCustomizedField,
-      ),
-      update: withEntityParam({ entity: 'CUSTOMER' })(
-        createOrUpdateCustomizedField,
-      ),
+    query: withEntityParam({ entity: 'CUSTOMER' })(
+      getPurchaseCustomizedListApi,
+    ),
+    drop: withEntityParam({ entity: 'CUSTOMER' })(deleteDynamicColumn),
+    create: withEntityParam({ entity: 'CUSTOMER' })(
+      createOrUpdateCustomizedField,
+    ),
+    update: withEntityParam({ entity: 'CUSTOMER' })(
+      createOrUpdateCustomizedField,
+    ),
   };
 
   // 使用 CRUD Hook
@@ -101,7 +98,7 @@ export function useCustomerFeature() {
         },
       },
       batchOperate: true, // 支持批量删除
-      connectedComponent: CustomerFeatureDrawer,
+      connectedComponent: addCustomized,
     });
 
   return {

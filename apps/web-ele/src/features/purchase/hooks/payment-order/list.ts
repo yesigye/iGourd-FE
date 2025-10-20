@@ -10,8 +10,8 @@ import {
   getPaymentOrderPageListApi,
   updatePaymentOrderApi,
 } from '@@/purchase/apis';
-import { CustomizedDrawerForm } from '@@/purchase/components';
 
+import addCustomized from '#/components/add-customized/add-customized.vue';
 import { useCrud, withEntityParam } from '#/hooks';
 
 export function usePaymentOrder() {
@@ -187,7 +187,7 @@ export function usePaymentOrder() {
     },
     searchFormSchema,
     batchOperate: true,
-    connectedComponent: CustomizedDrawerForm,
+    connectedComponent: addCustomized,
     service: {
       query: withEntityParam({ entity: 'VENDOR' })(getPaymentOrderPageListApi),
       drop: withEntityParam({ entity: 'VENDOR' })(deletePaymentOrderApi),

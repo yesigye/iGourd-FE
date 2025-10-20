@@ -13,8 +13,8 @@ import {
   getDynamicColumnList,
   updateDynamicColumn,
 } from '@@/inventory/apis';
-import { FeatureDrawer } from '@@/inventory/components';
 
+import addCustomized from '#/components/add-customized/add-customized.vue';
 import { useCrud, withEntityParam } from '#/hooks';
 
 export function useInventoryProductFeatureList() {
@@ -100,12 +100,12 @@ export function useInventoryProductFeatureList() {
     columns,
     searchFormSchema,
     batchOperate: true,
-    connectedComponent: FeatureDrawer,
+    connectedComponent: addCustomized,
     service: {
       query: withEntityParam({ entity: 'PRODUCT' })(getDynamicColumnList),
       create: withEntityParam({ entity: 'PRODUCT' })(createDynamicColumn),
       update: withEntityParam({ entity: 'PRODUCT' })(updateDynamicColumn),
-      drop: deleteDynamicColumn
+      drop: deleteDynamicColumn,
     },
   });
 }
