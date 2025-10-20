@@ -482,7 +482,7 @@ defineExpose({ leftRefresh, rightRefresh });
       <ElButton text @click="clearAll">Clear</ElButton>
       <div class="flex-1"></div>
       <div class="font-medium text-blue-600">
-        已选择 {{ valueIds.length }} 项{{layout}}
+        已选择 {{ valueIds.length }} 项
       </div>
     </div>
 

@@ -41,7 +41,10 @@ export function useSelectProductForm(func) {
     async onOpenChange(isOpen) {
       if (isOpen) {
         formAPI.reset();
-        const data = drawerApi.getData();
+        let data = drawerApi.getData();
+        if(!Array.isArray(data)){
+          data = []
+        }
         detailData.value = data;
         formAPI.setValues({
           product_list:data
