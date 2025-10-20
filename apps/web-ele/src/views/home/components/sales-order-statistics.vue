@@ -58,7 +58,13 @@ const { t } = useI18n();
           class="bg-card flex min-h-[82px] flex-1 items-center gap-4 px-4 py-5"
         >
           <div class="min-w-0 flex-1">
-            <p class="text-[#606266]">{{ t('home.sales-received-amount') }}</p>
+            <p class="text-[#606266]">
+              {{
+                t('home.sales-received-amount', {
+                  currency: props?.currencySymbol,
+                })
+              }}
+            </p>
             <p class="mt-2 font-bold text-[#303133]">
               {{
                 thousandSeparator(
@@ -80,11 +86,9 @@ const { t } = useI18n();
               </p>
               <p class="mt-2 flex w-full items-center justify-between">
                 <span class="text-secondary">{{ t('home.includ-debt') }}</span>
-                <span class="font-bold text-[#FC5C65]"
-                  >({{
+                <span class="font-bold text-[#FC5C65]">({{
                     thousandSeparator(props?.data?.debt_total_amount ?? 0)
-                  }})</span
-                >
+                  }})</span>
               </p>
 
               <p class="mt-2 flex w-full items-center justify-between">
@@ -211,7 +215,9 @@ const { t } = useI18n();
           class="bg-card flex min-h-[82px] flex-1 items-center gap-4 px-4 py-5"
         >
           <div class="min-w-0 flex-1">
-            <p class="text-[#606266]">{{ t('home.gross-profit') }}</p>
+            <p class="text-[#606266]">
+              {{ t('home.gross-profit', { currency: props?.currencySymbol }) }}
+            </p>
             <p class="mt-2 font-bold text-[#303133]">
               {{ props?.data?.gross_margin ?? 0 }}
             </p>
