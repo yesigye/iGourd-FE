@@ -152,7 +152,7 @@ export function useSelectProductForm(func) {
       actions: {
         fetchProducts: getProductList,
         fetchSelectedProducts: (params) => {
-          params.product_label_id = detailData.id;
+          params.product_label_id = detailData.value.id;
           getProductlabelProductPage(params);
           return [{}];
         },

@@ -284,6 +284,7 @@ watch(
 );
 
 watchEffect(() => {
+  leftSelection.value = [];
   leftRefresh();
   rightRefresh();
 });
@@ -402,7 +403,7 @@ defineExpose({ leftRefresh, rightRefresh });
       <ElInput
         v-model="keyword"
         :placeholder="searchPlaceholder"
-        class="w-[360px]"
+        class="!w-[360px]"
         clearable
         @keyup.enter="leftRefresh()"
       >
@@ -479,7 +480,7 @@ defineExpose({ leftRefresh, rightRefresh });
         </div>
       </ElPopover>
 
-      <ElButton text @click="clearAll">Clear</ElButton>
+      <ElButton text @click="clearAll">重置</ElButton>
       <div class="flex-1"></div>
       <div class="font-medium text-blue-600">
         已选择 {{ valueIds.length }} 项
@@ -622,8 +623,8 @@ defineExpose({ leftRefresh, rightRefresh });
       </div>
 
       <!-- MIDDLE actions -->
-      <div v-if="props.selectMode ==='move'" class="flex flex-col justify-center gap-2">
-        <ElButton
+      <div  class="flex flex-col justify-center gap-2">
+        <ElButton v-if="props.selectMode ==='move'"
           :disabled="leftSelection.length === 0"
           @click="addRows(leftSelection)"
         >
