@@ -1,43 +1,27 @@
 {
-  "customerName": "Customer Name",
-  "equityType": "Equity Type",
-  "equityValue": "Equity Value",
-  "equityUnit": "Equity Unit",
-  "description": "Description",
-  "grantedDate": "Granted Date",
-  "expiryDate": "Expiry Date",
-  "status": "Status",
-  "creatorName": "Creator",
-  "createTime": "Create Time",
-  "addCustomerEquity": "Add Customer Equity",
-  "editCustomerEquity": "Edit Customer Equity",
-  "customerEquityDetail": "Customer Equity Detail",
-  "customerEquity": "Customer Equity",
-  "equitySetting": "Equity Setting",
-  "please_select_customer": "Please select customer",
-  "please_select_equity_type": "Please select equity type",
-  "please_enter_equity_value": "Please enter equity value",
-  "please_enter_equity_unit": "Please enter equity unit",
-  "please_enter_description": "Please enter description",
-  "please_select_granted_date": "Please select granted date",
-  "please_select_expiry_date": "Please select expiry date",
-  "search": "Search",
-  "searchPlaceholder": "Please enter customer name or equity type",
-  "equityType": {
+  "equity-type": {
     "vipLevel": "VIP Level",
     "discount": "Discount",
-    "point": "Point",
+    "point": "Points",
     "cashback": "Cashback",
     "gift": "Gift",
     "other": "Other"
   },
-  "default-vip-level-placeholder": "Please enter the default VIP level",
-  "max-mummember-level-placeholder": "Please enter the maximum member level (1-10)",
-  "timestamp": "Timestamp generation",
-  "vip-name": "VIP name",
-  "rounding-amount": "Rounding amount",
-  "discount-rate": "Discount rate",
-  "defaultviplevel-validator-msg": "Default VIP level cannot be higher than the maximum membership level",
-  "please-enter-defaultviplevel": "Enter default VIP level",
-  "please-enter-maximummembershiplevel": "Enter maximum VIP level (1-10)"
+  "rounding-off": {
+    "type": "Rounding Type",
+    "round-high": "Round Up",
+    "round-middle": "Round Half",
+    "round-low": "Round Down"
+  },
+  "default-vip-level-placeholder": "Please enter default VIP level",
+  "max-mummember-level-placeholder": "Please enter maximum membership level (1-10)",
+  "timestamp": "Timestamp Generation",
+  "vip-name": "VIP Name",
+  "rounding-amount": "Rounding Amount",
+  "discount-rate": "Discount Rate",
+  "defaultviplevel-validator-msg": "Default VIP level cannot be greater than maximum membership level",
+  "please-enter-defaultviplevel": "Please enter default VIP level",
+  "please-enter-maximummembershiplevel": "Please enter maximum VIP level (1-10)"
 }
+
+

@@ -204,8 +204,8 @@ const toolbarOptions = computed(() => {
     circle: true,
     status: showSearchForm.value ? 'primary' : undefined,
     title: showSearchForm.value
-      ? $t('common.hideSearchPanel')
-      : $t('common.showSearchPanel'),
+      ? $t('common.hide-search-panel')
+      : $t('common.show-search-panel'),
   };
   // 将搜索按钮合并到用户配置的toolbarConfig.tools中
   const toolbarConfig: VxeGridPropTypes.ToolbarConfig = {
@@ -572,7 +572,7 @@ const openMoreActions = computed(() => {
       <template v-if="showDefaultEmpty" #empty>
         <slot name="empty">
           <EmptyIcon class="mx-auto" />
-          <div class="mt-2">{{ $t('common.noData') }}</div>
+          <div class="mt-2">{{ $t('common.no-data') }}</div>
         </slot>
       </template>
     </VxeGrid>

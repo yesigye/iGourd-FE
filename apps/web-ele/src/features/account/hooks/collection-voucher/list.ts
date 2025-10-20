@@ -106,7 +106,7 @@ export function useCollectionVoucher() {
       sortable: true,
       fixed: 'right',
       formatter({ cellValue }) {
-        return t(`common.review_status.${cellValue}`);
+        return t(`common.review-status.${cellValue}`);
       },
     },
     {

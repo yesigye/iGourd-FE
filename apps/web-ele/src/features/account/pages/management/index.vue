@@ -28,7 +28,7 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete, type } =
           v-if="canBatchOperate"
           @click="handleBatchDelete"
         >
-          {{ t('common.deleteBtn') }}
+          {{ t('common.delete-btn') }}
         </ElButton>
       </template>
       <template #operation="{ row }">

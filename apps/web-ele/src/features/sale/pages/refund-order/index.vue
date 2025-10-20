@@ -85,7 +85,7 @@ const cancelRefund = async (row: { order_id: string }) => {
       const res = await cancelRefundOrder({
         order_id: row.order_id,
       });
-      ElMessage.success(t('common.cancelSuccess'));
+      ElMessage.success(t('common.cancel-success'));
       gridApi.reload();
     });
   } catch (error) {

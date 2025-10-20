@@ -331,7 +331,7 @@ onMounted(() => {
                   :indeterminate="isIndeterminate"
                   @change="handleCheckAll"
                 >
-                  {{ t('common.selectAll') }}
+                  {{ t('common.select-all') }}
                 </ElCheckbox>
               </div>
               <div v-for="(group, groupKey) in groupConfig" :key="groupKey">
@@ -364,7 +364,7 @@ onMounted(() => {
             </div>
             <div class="btn_group">
               <ElButton @click="handleClose">
-                {{ t(`common.cancelBtn`) }}
+                {{ t(`common.cancel-btn`) }}
               </ElButton>
               <ElButton type="primary" @click="saveTableFieldsFn">
                 {{ t('common.save') }}
@@ -374,9 +374,9 @@ onMounted(() => {
 
           <div class="right_box">
             <div class="r_title">
-              <p>{{ t('common.selectedFields') }}</p>
+              <p>{{ t('common.selected-fields') }}</p>
               <p style="font-size: 12px; color: #005cff">
-                (* {{ t('common.supportsDragAndDropSorting') }})
+                (* {{ t('common.supports-drag-and-drop-sorting') }})
               </p>
             </div>
             <div class="item_list" ref="draggableBox">

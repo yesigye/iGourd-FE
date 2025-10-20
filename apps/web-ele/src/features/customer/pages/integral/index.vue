@@ -316,7 +316,7 @@ const formSchema: ISchema = {
                         properties: {
                           addition: {
                             type: 'void',
-                            title: "{{t('common.addBtn')}}",
+                            title: "{{t('common.add-btn')}}",
                             'x-component': 'ArrayTable.Addition',
                             'x-reactions': {
                               dependencies: [

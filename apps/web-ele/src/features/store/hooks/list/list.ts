@@ -120,7 +120,7 @@ export function useStoreList() {
       title: t('store.storeList.package'),
       formatter({ cellValue }) {
         const info = cellValue?.pop();
-        return info ? t(`common.package_${info.package_id}`) : '-';
+        return info ? t(`common.package-${info.package_id}`) : '-';
       },
     },
     {

@@ -37,7 +37,7 @@ export const getRules = (t) => ({
       validator: (rule, value, callback) => {
         if (value && value.length > 64) {
           callback(
-            new Error(t('common.charactersLimitExceeded', { value: 64 })),
+            new Error(t('common.characters-limit-exceeded', { value: 64 })),
           );
         } else {
           callback();
@@ -51,7 +51,7 @@ export const getRules = (t) => ({
       validator: (rule, value, callback) => {
         if (value && value.length > 64) {
           callback(
-            new Error(t('common.charactersLimitExceeded', { value: 64 })),
+            new Error(t('common.characters-limit-exceeded', { value: 64 })),
           );
         } else {
           callback();
@@ -114,9 +114,9 @@ export const getRules = (t) => ({
     {
       validator: (rule, value, callback) => {
         if (value && !/^\d+(\.\d{1,4})?$/.test(value)) {
-          callback(new Error(t('common.validate.amountFormat', { value: 4 })));
+          callback(new Error(t('common.validate.amount-format', { value: 4 })));
         } else if (value && value.toString().replace('.', '').length > 15) {
-          callback(new Error(t('common.maxLength', { value: 15 })));
+          callback(new Error(t('common.max-length', { value: 15 })));
         } else {
           callback();
         }
@@ -133,9 +133,9 @@ export const getRules = (t) => ({
     {
       validator: (rule, value, callback) => {
         if (value && !/^\d+(\.\d{1,4})?$/.test(value)) {
-          callback(new Error(t('common.validate.amountFormat', { value: 4 })));
+          callback(new Error(t('common.validate.amount-format', { value: 4 })));
         } else if (value && value.toString().replace('.', '').length > 15) {
-          callback(new Error(t('common.maxLength', { value: 15 })));
+          callback(new Error(t('common.max-length', { value: 15 })));
         } else {
           callback();
         }

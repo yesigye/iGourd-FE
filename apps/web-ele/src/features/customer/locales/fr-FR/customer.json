@@ -58,5 +58,7 @@
   "original-value-of-points": "Valeur originale des points",
   "change-value": "Valeur modifiée",
   "after-the-change": "Après modification",
-  "debt": "Dette"
+  "debt": "Dette",
+  "enjoytheoffervalidityperiod": "Période de validité de l'offre",
+  "enjoytheoffervaliddate": "Date de validité de l'offre"
 }

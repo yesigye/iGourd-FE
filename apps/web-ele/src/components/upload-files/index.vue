@@ -15,7 +15,7 @@
       <div class="el-upload__text">
         <el-icon class="el-icon--upload"><upload-filled /></el-icon>
         <div>
-          {{ t('common.fileDrop') }} <em>{{ t('common.clickUp') }}</em>
+          {{ t('common.file-drop') }} <em>{{ t('common.click-up') }}</em>
         </div>
       </div>
       <!-- <template #file="{ file }">
@@ -27,9 +27,9 @@
       </template> -->
       <template #tip>
         <div class="el-upload__tip">
-          {{ t('common.fileTip', { size: '5M' }) }}
+          {{ t('common.file-tip', { size: '5M' }) }}
           <br />
-          {{ t('common.fileSupport') }}
+          {{ t('common.file-support') }}
         </div>
       </template>
     </el-upload>
@@ -149,10 +149,10 @@ const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
     'swf',
   ].includes(rawFile.type);
   if (!type) {
-    ElMessage.warning(t('common.fileNotSupport'));
+    ElMessage.warning(t('common.file-not-support'));
   }
   if (!imgSize) {
-    ElMessage.warning(`${t('common.fileSizeNotExceeding')} 5M！`);
+    ElMessage.warning(`${t('common.file-size-not-exceeding')} 5M！`);
   }
   return type && imgSize;
 };
@@ -177,9 +177,9 @@ const handleHttpUpload = async ({ file }) => {
     uploadedFiles.value.push({ name: file.name, url: data.url });
     emit('handleUploadFiles', data, toRaw(uploadedFiles.value));
     emit('onUploadSuccess', data.url);
-    ElMessage.success(t('common.uploadSuccess'));
+    ElMessage.success(t('common.upload-success'));
   } catch (error) {
-    ElMessage.error(t('common.uploadFail'));
+    ElMessage.error(t('common.upload-fail'));
   }
 };
 

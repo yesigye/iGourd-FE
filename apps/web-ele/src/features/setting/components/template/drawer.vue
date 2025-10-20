@@ -961,7 +961,7 @@ const handDelDivider = () => {
                         :label="`${t('template.action')}:`"
                       >
                         <ElButton type="warning" @click="handRichText">
-                          {{ t('common.deleteBtn') }}
+                          {{ t('common.delete-btn') }}
                         </ElButton>
                       </ElFormItem>
                     </div>

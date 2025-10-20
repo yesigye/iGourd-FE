@@ -11,7 +11,7 @@ export function validateAlphaNumeric(
 ) {
   const reg = /^[A-Z0-9]+$/i;
   if (value && !reg.test(value)) {
-    callback(new Error(i18n('common.pleaseEnterAlphaNumeric')));
+    callback(new Error(i18n('common.please-enter-alpha-mumeric')));
   } else {
     callback();
   }
@@ -22,7 +22,7 @@ export const validateAlphaChinese = (rule, value, callback) => {
   const { t } = useI18n();
   const reg = /^[\u4E00-\u9FA5a-z]+$/i;
   if (value && !reg.test(value)) {
-    callback(new Error(t('common.pleaseEnterEnglishOrChinese')));
+    callback(new Error(t('common.please-enter-english-or-chinese')));
   } else {
     return callback();
   }
@@ -33,7 +33,7 @@ export const validateNumericChinese = (rule, value, callback) => {
   const reg = /^[\u4E00-\u9FA5\d]+$/;
   const { t } = useI18n();
   if (value && !reg.test(value)) {
-    callback(new Error(t('common.pleaseEnterNumericChinese')));
+    callback(new Error(t('common.please-enter-numeric-chinese')));
   } else {
     return callback();
   }
@@ -43,7 +43,7 @@ export const validateNumericChinese = (rule, value, callback) => {
 export const validateEnglish = (rule, value, callback) => {
   const reg = /^[A-Z]+$/i;
   if (value && !reg.test(value)) {
-    callback(new Error(t('common.pleaseEnterEnglish')));
+    callback(new Error(t('common.please-enter-english')));
   } else {
     return callback();
   }
@@ -53,7 +53,7 @@ export const validateEnglish = (rule, value, callback) => {
 export const validateChinese = (rule, value, callback) => {
   const reg = /^[\u4E00-\u9FA5]+$/;
   if (value && !reg.test(value)) {
-    callback(new Error(t('common.pleaseEnterChinese')));
+    callback(new Error(t('common.please-enter-chinese')));
   } else {
     callback();
   }
@@ -72,7 +72,7 @@ export const validateNoWhitespace = (rule, value, callback) => {
 export const validateLength = (rule, value, callback) => {
   if (value && value.length > 40) {
     const { t } = useI18n();
-    callback(new Error(t('common.pleaseEnterLessThan40Characters')));
+    callback(new Error(t('common.please-enter-less-than-40-characters')));
   } else {
     callback();
   }
@@ -83,7 +83,7 @@ export function validateNoSpecialChar(rule, value, callback) {
     /[`~!@#$%^&*()_\-+=<>?:"{}|,./;'\\[\]·！￥…（）—《》？：【】、；，。]/;
   if (value && reg.test(value)) {
     const { t } = useI18n();
-    callback(new Error(t('common.pleaseEnterNoSpecialChar')));
+    callback(new Error(t('common.please-enter-no-special-char')));
   } else {
     callback();
   }
@@ -100,7 +100,7 @@ export function validateEmail(t: (s: string) => string, rule, value, callback) {
     callback();
   } else {
     const { t } = useI18n();
-    callback(new Error(t('common.pleaseEnterCorrectEmail')));
+    callback(new Error(t('common.please-enter-correct-email')));
   }
 }
 // 11. 验证手机号
@@ -114,7 +114,7 @@ export function validatePhone(
   const phoneRegex = /^(\+\d{1,3}[- ]?)?\d{10,14}$/;
 
   if (value && !phoneRegex.test(value)) {
-    callback(new Error(i18n('common.pleaseEnterCorrectPhone'))); // Please enter a valid phone number
+    callback(new Error(i18n('common.please-enter-correct-phone'))); // Please enter a valid phone number
   } else {
     callback();
   }
@@ -125,7 +125,7 @@ export const validateAlphaChineseWithSpace = (rule, value, callback) => {
   const reg = /^[\u4E00-\u9FA5a-z\s]+$/i;
   if (value && !reg.test(value)) {
     const { t } = useI18n();
-    callback(new Error(t('common.pleaseEnterEnglishOrChineseWithSpace')));
+    callback(new Error(t('common.please-enter-english-or-chineseWithSpace')));
   } else {
     return callback();
   }
@@ -136,7 +136,7 @@ export const validateAlphaNumericChineseWithSpace = (rule, value, callback) => {
   const reg = /^[\u4E00-\u9FA5a-z0-9\s]+$/i;
   if (value && !reg.test(value)) {
     const { t } = useI18n();
-    callback(new Error(t('common.pleaseEnterEnglishChineseNumericWithSpace')));
+    callback(new Error(t('common.please-enter-englishChineseNumericWithSpace')));
   } else {
     return callback();
   }
@@ -146,7 +146,7 @@ export const validateAmount = (rule, value, callback) => {
   const reg = /^(([1-9]\d*)|\d)(\.\d{1,2})?$/;
   if (value && !reg.test(value)) {
     const { t } = useI18n();
-    callback(new Error(t('common.validate.amountFormat', { value: 2 })));
+    callback(new Error(t('common.validate.amount-format', { value: 2 })));
   } else {
     callback();
   }
@@ -167,11 +167,11 @@ export function checkPhoneNumber(
 ) {
   const regexp =
     /^(((13\d)|(15\d)|(16\d)|(17[3-8])|(18\d)|(19\d)|(14[5-7]))+\d{8})$/;
-  if (value === '') callback(t('common.pleaseEnterPhoneNumber'));
+  if (value === '') callback(t('common.please-enter-phone-number'));
   if (regexp.test(value)) {
     return callback();
   } else {
-    callback(new Error(t('common.pleaseEnterCorrectPhoneNumber')));
+    callback(new Error(t('common.please-enter-correct-phone-number')));
   }
 }
 
@@ -211,7 +211,7 @@ export const SelectRequestOrValidator = (
  */
 export const dateValidator = (t: Function) => ({
   required: true,
-  message: t('common.pleaseSelectDate'),
+  message: t('common.please-select-date'),
   trigger: 'blur',
 });
 
@@ -238,7 +238,7 @@ export const validateNumeric = (rule, value, callback) => {
   const reg = /^\d+$/;
   if (value && !reg.test(value)) {
     const { t } = useI18n();
-    callback(new Error(t('common.pleaseEnterNumeric')));
+    callback(new Error(t('common.please-enter-numeric')));
   } else {
     callback();
   }
@@ -251,7 +251,7 @@ export const validateEightNumeric = (rule, value, callback) => {
   }
   if (value && !reg.test(value)) {
     const { t } = useI18n();
-    callback(new Error(t('common.pleaseEnterEightNumeric')));
+    callback(new Error(t('common.please-enter-eight-numeric')));
   } else {
     callback();
   }
@@ -304,7 +304,7 @@ export const validateChar =
     if (value && (value.length > maxLength || specialChars.test(value))) {
       callback(
         new Error(
-          i18n('common.validate.maxLengthAndNoSpecialChars', {
+          i18n('common.validate.max-length-and-no-special-chars', {
             length: maxLength,
           }),
         ),
@@ -330,7 +330,7 @@ export const validateAddress = (
     const { t } = useI18n();
     callback(
       new Error(
-        t('common.validate.maxLengthAndNoSpecialChars', { length: 256 }),
+        t('common.validate.max-length-and-no-special-chars', { length: 256 }),
       ),
     );
   } else {
@@ -358,7 +358,7 @@ export const validateEmailAll = (
     callback();
   } else {
     const { t } = useI18n();
-    callback(new Error(t('common.validate.emailFormat')));
+    callback(new Error(t('common.validate.email-format')));
   }
 };
 
@@ -395,7 +395,7 @@ export const validatePhoneAll = (countryCode: string) => {
       callback();
     } else {
       const { t } = useI18n();
-      callback(new Error(t('common.validate.phoneFormat')));
+      callback(new Error(t('common.validate.phone-format')));
     }
   };
 };
@@ -420,7 +420,7 @@ const validateAmountAll = (
     callback();
   } else {
     const { t } = useI18n();
-    callback(new Error(t('common.validate.amountFormat', { value: 2 })));
+    callback(new Error(t('common.validate.amount-format', { value: 2 })));
   }
 };
 
@@ -464,7 +464,7 @@ const validateSpecialChars = (
   const specialChars = /[!~#^`<>+=\\|?/]/;
   if (specialChars.test(value)) {
     const { t } = useI18n();
-    callback(new Error(t('common.validate.noSpecialChars')));
+    callback(new Error(t('common.validate.no-special-chars')));
   } else {
     callback();
   }

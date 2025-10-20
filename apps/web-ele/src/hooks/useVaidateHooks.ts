@@ -13,7 +13,7 @@ export const useVaidateHooks = () => {
 
   // // 特殊字符校验
   // const validateSymbolRules: FormItemRule[] = [
-  //   { pattern: specialChars, message: t('common.validateSymbol'), trigger: 'blur' }
+  //   { pattern: specialChars, message: t('common.validate-symbol'), trigger: 'blur' }
   // ];
 
   const validateSymbolCallback = (
@@ -21,7 +21,7 @@ export const useVaidateHooks = () => {
     value: string,
     callback: (errorMessage?: string) => void,
   ) => {
-    if (specialChars.test(value)) return callback(t('common.validateSymbol'));
+    if (specialChars.test(value)) return callback(t('common.validate-symbol'));
     return callback();
   };
 

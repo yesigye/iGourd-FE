@@ -547,7 +547,7 @@ export function useOrderForm() {
                                   properties: {
                                     addition: {
                                       type: 'void',
-                                      title: "{{t('common.addBtn')}}",
+                                      title: "{{t('common.add-btn')}}",
                                       'x-component': 'ArrayItems.Addition',
                                       'x-reactions': {
                                         dependencies: [
@@ -766,7 +766,7 @@ export function useOrderForm() {
                 type: 'void',
                 'x-component': 'Card',
                 'x-component-props': {
-                  header: '{{t("common.Attachment")}}',
+                  header: '{{t("common.attachment")}}',
                   style: {
                     border: '0px',
                   },

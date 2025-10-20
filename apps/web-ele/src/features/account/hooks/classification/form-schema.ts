@@ -85,7 +85,7 @@ export default (account_set_id: string) =>
                   null,
                   {
                     required: true,
-                    message: '{{t("common.form.select_required")}}',
+                    message: '{{t("common.form.select-required")}}',
                   },
                 ],
               },
@@ -109,7 +109,7 @@ export default (account_set_id: string) =>
                   null,
                   {
                     required: true,
-                    message: '{{t("common.form.select_required")}}',
+                    message: '{{t("common.form.select-required")}}',
                   },
                 ],
               },

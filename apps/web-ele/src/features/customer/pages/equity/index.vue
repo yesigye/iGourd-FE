@@ -136,7 +136,7 @@ const formSchema: ISchema = {
                 },
                 maximum_vip_level: {
                   type: 'number',
-                  title: "{{t('customer.maximu-mmembership-level')}}",
+                  title: "{{t('customer.maximum-membership-level')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'Input',
                   'x-decorator-props': {
@@ -172,7 +172,7 @@ const formSchema: ISchema = {
                     },
                   ],
                   'x-component-props': {
-                    placeholder: "{{t('common.form.select_required')}}",
+                    placeholder: "{{t('common.form.select-required')}}",
                     clearable: true,
                   },
                 },
@@ -247,7 +247,7 @@ const formSchema: ISchema = {
                         properties: {
                           addition: {
                             type: 'void',
-                            title: "{{t('common.addBtn')}}",
+                            title: "{{t('common.add-btn')}}",
                             'x-component': 'ArrayTable.Addition',
                             'x-reactions': {
                               dependencies: [
@@ -410,7 +410,7 @@ const formSchema: ISchema = {
                         properties: {
                           addition: {
                             type: 'void',
-                            title: "{{t('common.addBtn')}}",
+                            title: "{{t('common.add-btn')}}",
                             'x-component': 'ArrayTable.Addition',
                             'x-reactions': {
                               dependencies: [
@@ -614,7 +614,7 @@ const formSchema: ISchema = {
                         properties: {
                           addition: {
                             type: 'void',
-                            title: "{{t('common.addBtn')}}",
+                            title: "{{t('common.add-btn')}}",
                             'x-component': 'ArrayTable.Addition',
                             'x-reactions': {
                               dependencies: [
@@ -741,7 +741,7 @@ const formSchema: ISchema = {
                         properties: {
                           addition: {
                             type: 'void',
-                            title: "{{t('common.addBtn')}}",
+                            title: "{{t('common.add-btn')}}",
                             'x-component': 'ArrayTable.Addition',
                             'x-reactions': {
                               dependencies: [

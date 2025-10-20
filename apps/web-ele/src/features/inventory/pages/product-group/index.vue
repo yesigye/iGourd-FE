@@ -99,7 +99,7 @@ const handleEditGroup = (node: SecondGroupItem) => {
 const handleRemove = async (node: SecondGroupItem) => {
   confirm({
     title: t('common.prompt'),
-    content: t('common.confirmPrompt', {
+    content: t('common.confirm-prompt', {
       value: t('product-group.category'),
     }),
   }).then(

@@ -467,7 +467,7 @@ const handleRemoveSpecValueLocal = async (row, value) => {
         }
         ElMessageBox.confirm(
           deleteTip(productList)[data?.remove_check_enum],
-          t('common.systeMmessage'),
+          t('common.system-message'),
           {
             dangerouslyUseHTMLString: true,
             type: 'warning',
@@ -511,7 +511,7 @@ const handleRemoveSpecValueLocal = async (row, value) => {
       }
       ElMessageBox.confirm(
         getTipHtml(message, productList),
-        t('common.systeMmessage'),
+        t('common.system-message'),
         {
           dangerouslyUseHTMLString: true,
           type: 'warning',
@@ -746,11 +746,11 @@ async function onDataChange() {
   if (!compare && localConfig.value.bundleGenerated) {
     try {
       await ElMessageBox.confirm(
-        t('common.sku_change_prompt'),
+        t('common.sku-change-prompt'),
         t('common.warning'),
         {
-          confirmButtonText: t('common.confirmBtn'),
-          cancelButtonText: t('common.cancelBtn'),
+          confirmButtonText: t('common.confirm-btn'),
+          cancelButtonText: t('common.cancel-btn'),
           closeOnClickModal: false,
           showCancelButton: false,
           showClose: false,
@@ -1340,7 +1340,7 @@ async function handleDeleteRow(item, index) {
       }
       ElMessageBox.confirm(
         deleteTip(productList)[resultData?.remove_check_enum],
-        t('common.systeMmessage'),
+        t('common.system-message'),
         {
           dangerouslyUseHTMLString: true,
           type: 'warning',
@@ -1359,7 +1359,7 @@ async function handleDeleteRow(item, index) {
     }
     ElMessageBox.confirm(
       getTipHtml(resultMessage, productList),
-      t('common.systeMmessage'),
+      t('common.system-message'),
       {
         dangerouslyUseHTMLString: true,
         type: 'warning',

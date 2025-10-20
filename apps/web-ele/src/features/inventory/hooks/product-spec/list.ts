@@ -44,7 +44,7 @@ export function useInventoryProductSpec() {
     },
     {
       field: 'status',
-      title: t('common.commonStatus'),
+      title: t('common.common-status'),
       minWidth: 120,
       slots: {
         default: 'status',

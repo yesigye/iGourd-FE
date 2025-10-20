@@ -1,42 +1,5 @@
 {
-  "labelName": "Nom de l'Étiquette",
-  "labelCode": "Code de l'Étiquette",
-  "labelType": "Type d'Étiquette",
-  "color": "Couleur",
-  "sortOrder": "Ordre de Tri",
-  "customerCount": "Nombre de Clients",
-  "status": "Statut",
-  "description": "Description",
-  "creatorName": "Créateur",
-  "createTime": "Heure de Création",
-  "addCustomerLabel": "Ajouter une Étiquette Client",
-  "editCustomerLabel": "Modifier l'Étiquette Client",
-  "customerLabelDetail": "Détail de l'Étiquette Client",
-  "customerLabel": "Étiquette Client",
-  "please_enter_label_name": "Veuillez entrer le nom de l'étiquette",
-  "please_enter_label_code": "Veuillez entrer le code de l'étiquette",
-  "please_select_label_type": "Veuillez sélectionner le type d'étiquette",
-  "please_select_color": "Veuillez sélectionner la couleur",
-  "please_enter_sort_order": "Veuillez entrer l'ordre de tri",
-  "please_enter_description": "Veuillez entrer une description",
-  "search": "Rechercher",
-  "searchPlaceholder": "Veuillez entrer le nom ou le code de l'étiquette",
-  "labelType": {
-    "category": "Étiquette de Catégorie",
-    "status": "Étiquette de Statut",
-    "level": "Étiquette de Niveau",
-    "behavior": "Étiquette de Comportement",
-    "preference": "Étiquette de Préférence",
-    "other": "Autre"
-  },
-  "color": {
-    "red": "Rouge",
-    "orange": "Orange",
-    "yellow": "Jaune",
-    "green": "Vert",
-    "blue": "Bleu",
-    "purple": "Violet",
-    "pink": "Rose",
-    "gray": "Gris"
-  }
+  "curtomer-label": "Étiquette client",
+  "customer-qty": "Quantité de clients",
+  "name": "Nom du client"
 }
