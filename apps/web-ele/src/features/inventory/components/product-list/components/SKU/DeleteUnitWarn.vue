@@ -20,7 +20,7 @@ const { t } = useI18n();
     <div class="text-slate-gray">
       <p class="">{{ t('inventory.save_major_unit_delete_tips') }}</p>
       <p class="text-watermelon">
-        {{ t('inventory.save_major_unit_delete_error') }}
+        {{ t('inventory.save-major-unit-delete-error') }}
       </p>
       <div class="mt-2">
         <ElTable

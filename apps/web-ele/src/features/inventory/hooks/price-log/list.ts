@@ -46,7 +46,7 @@ export function useInventoryPriceLogList() {
     },
     {
       field: 'sku_barcode',
-      title: t('inventory.sku_barcode'),
+      title: t('inventory.sku-barcode'),
       minWidth: 160,
     },
     {

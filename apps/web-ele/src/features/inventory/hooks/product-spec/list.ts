@@ -28,18 +28,18 @@ export function useInventoryProductSpec() {
 
     {
       field: 'product_spec_code',
-      title: t('inventory.product_spec.product_spec_code'),
+      title: t('inventory.product-spec.product-spec-code'),
       minWidth: 150,
     },
     {
       field: 'product_spec_value',
-      title: t('inventory.product_spec.product_spec_value'),
+      title: t('inventory.product-spec.product-spec-value'),
 
       minWidth: 150,
     },
     {
       field: 'product_spec_name',
-      title: t('inventory.product_spec.product_spec_name'),
+      title: t('inventory.product-spec.product-spec-name'),
       width: 120,
     },
     {
@@ -52,7 +52,7 @@ export function useInventoryProductSpec() {
     },
     {
       field: 'source_type',
-      title: t('inventory.product_spec.source_type'),
+      title: t('inventory.product-spec.source-type'),
       minWidth: 150,
       formatter: ({ cellValue }) => {
         const option = sourceTypeOptions.find((opt) => {

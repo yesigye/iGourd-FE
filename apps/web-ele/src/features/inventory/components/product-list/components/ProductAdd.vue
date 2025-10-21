@@ -224,7 +224,7 @@ const basicInfoFields = reactive({
   //     onChange: val => handleInputChange('cost_price', val)
   //   },
   //   {
-  //     labelKey: 'inventory.profit_rate',
+  //     labelKey: 'inventory.profit-rate',
   //     prop: 'profit_rate',
   //     component: 'el-input',
   //     props: { type: 'number' },

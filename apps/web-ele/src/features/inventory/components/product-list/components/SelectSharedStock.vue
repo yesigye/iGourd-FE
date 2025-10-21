@@ -48,7 +48,7 @@ const columns = [
     minWidth: 100,
   },
   {
-    label: 'inventory.unit_rate',
+    label: 'inventory.unit-rate',
     field: 'basic_unit_radio',
     minWidth: 120,
     renderTemplate: renderUnitRateBlock,

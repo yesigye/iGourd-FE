@@ -49,7 +49,7 @@ export function useInventoryProductList() {
     },
     {
       field: 'major_unit_name',
-      title: t('inventory.major_unit_name'),
+      title: t('inventory.major-unit-name'),
       minWidth: 110,
     },
     {

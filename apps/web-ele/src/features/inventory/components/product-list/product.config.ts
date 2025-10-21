@@ -262,7 +262,7 @@ export const getDynamicFieldsQueryParams = () =>
 // Shared stock validation rules
 export const validateSharedStock = (t) => (_, value, callback) => {
   if (!value.basic_product_id || !value.basic_unit_radio) {
-    return callback(new Error(t('inventory.please_shared_stock')));
+    return callback(new Error(t('inventory.please-shared-stock')));
   }
   return callback();
 };

@@ -33,7 +33,7 @@ export function createUnitsTableConfig(t: TranslationFunction): TableColumn[] {
         return h(
           'span',
           {},
-          $index === 0 ? t('inventory.major_unit') : t('inventory.minor_unit'),
+          $index === 0 ? t('inventory.major-unit') : t('inventory.minor-unit'),
         );
       },
     },
@@ -104,7 +104,7 @@ export function createUnitsTableConfig(t: TranslationFunction): TableColumn[] {
       },
     },
     {
-      label: 'unit_rate',
+      label: 'unit-rate',
       prop: 'basic_unit_radio',
       render: ({ row, $index, mode, handleUnitChange, unitList }) => {
         if ($index === 0) {
@@ -165,7 +165,7 @@ export function createUnitsTableConfig(t: TranslationFunction): TableColumn[] {
     //   }
     // },
     {
-      label: 'unit_conversion',
+      label: 'unit-conversion',
       prop: 'basic_unit_name',
       render: ({ row }) => {
         return h('span', {}, row.basic_unit_name);
@@ -335,7 +335,7 @@ export function createSkuSpecTableConfig(
     },
     {
       prop: 'skuBarcode',
-      label: 'inventory.sku_barcode',
+      label: 'inventory.sku-barcode',
       maxWidth: 140,
       align: 'center',
       render: ({ row, mode, handChangeValue }) => {
@@ -373,7 +373,7 @@ export function createSkuSpecTableConfig(
     },
     {
       prop: 'specCode',
-      label: 'inventory.spec_code',
+      label: 'inventory.spec-code',
       width: 120,
       align: 'center',
       render: ({ row, mode, handleInputChange }) => {
@@ -405,7 +405,7 @@ export function createSkuSpecTableConfig(
     },
     {
       prop: 'initialStock',
-      label: 'inventory.initial_stock',
+      label: 'inventory.initial-stock',
       align: 'center',
       render: ({
         row,
@@ -672,7 +672,7 @@ export const deleteUnitTableConfig = [
   },
   {
     prop: 'sku_barcode',
-    label: 'inventory.sku_barcode',
+    label: 'inventory.sku-barcode',
     width: 140,
     align: 'center',
   },

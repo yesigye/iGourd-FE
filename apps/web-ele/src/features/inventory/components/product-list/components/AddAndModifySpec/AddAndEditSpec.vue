@@ -50,12 +50,12 @@ const isSpecValue = computed(() => type.value === 'specValue');
 const modalTitle = computed(() => {
   if (isEdit.value) {
     return isSpecValue.value
-      ? t('inventory.product_spec.edit_spec_value')
-      : t('inventory.product_spec.edit_spec');
+      ? t('inventory.product-spec.add-spec-value')
+      : t('inventory.product-spec.edit-spec');
   } else {
     return isSpecValue.value
-      ? t('inventory.product_spec.add_spec_value')
-      : t('inventory.product_spec.add_spec');
+      ? t('inventory.product-spec.add-spec_value')
+      : t('inventory.product-spec.add-spec');
   }
 });
 
@@ -65,7 +65,7 @@ const rules = computed(() => {
     product_spec_name: [
       {
         required: true,
-        message: t('inventory.product_spec.please_enter_spec_name'),
+        message: t('inventory.product-spec.please-enter-spec-name'),
         trigger: 'blur',
       },
     ],
@@ -77,7 +77,7 @@ const rules = computed(() => {
       product_spec_code: [
         {
           required: true,
-          message: t('inventory.product_spec.please_enter_spec_code'),
+          message: t('inventory.product-spec.please-enter-spec-code'),
           trigger: 'blur',
         },
         {
@@ -87,7 +87,7 @@ const rules = computed(() => {
               (value.toString().length > 2 || Number.parseInt(value) > 99)
             ) {
               callback(
-                new Error(t('inventory.product_spec.code_max_two_digits')),
+                new Error(t('inventory.product-spec.code-max-two-digits')),
               );
             } else {
               callback();
@@ -99,7 +99,7 @@ const rules = computed(() => {
       product_spec_value: [
         {
           required: true,
-          message: t('inventory.product_spec.please_enter_spec_value'),
+          message: t('inventory.product-spec.please-enter-spec-value'),
           trigger: 'blur',
         },
       ],
@@ -252,7 +252,7 @@ const handleSubmitAndAdd = async () => {
 
 const createSpecValue = async (closeDialogOnSuccess = true) => {
   if (!formData.value.product_spec_id) {
-    ElMessage.error(t('inventory.product_spec.please_select_spec'));
+    ElMessage.error(t('inventory.product-spec.please-select-spec'));
     return false;
   }
 
@@ -383,7 +383,7 @@ defineExpose({
       <div class="form-wrapper-content">
         <!-- 规格 -->
         <ElFormItem
-          :label="$t('inventory.product_spec.product_spec_name')"
+          :label="$t('inventory.product-spec.product-spec-name')"
           prop="product_spec_name"
         >
           <ElInput
@@ -397,7 +397,7 @@ defineExpose({
         <!-- 规格值 -->
         <template v-if="isSpecValue">
           <ElFormItem
-            :label="$t('inventory.product_spec.product_spec_code')"
+            :label="$t('inventory.product-spec.product-spec-code')"
             prop="product_spec_code"
           >
             <ElInput
@@ -408,7 +408,7 @@ defineExpose({
             />
           </ElFormItem>
           <ElFormItem
-            :label="$t('inventory.product_spec.product_spec_value')"
+            :label="$t('inventory.product-spec.product-spec-value')"
             prop="product_spec_value"
           >
             <ElInput

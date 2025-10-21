@@ -59,7 +59,7 @@ export function useInventorySpoilageList() {
     },
     {
       field: 'total_spoilage_quantity',
-      title: t('inventory.total_spoilage_quantity'),
+      title: t('inventory.total-spoilage-quantity'),
       minWidth: 150,
       formatter: ({ cellValue }) => {
         return formatNumber(cellValue) && retainDecimal8(cellValue, 8);
@@ -67,12 +67,12 @@ export function useInventorySpoilageList() {
     },
     {
       field: 'warehouse_name',
-      title: t('inventory.warehouse_name'),
+      title: t('inventory.warehouse-name'),
       minWidth: 150,
     },
     {
       field: 'consumption_reason',
-      title: t('inventory.consumption_reason'),
+      title: t('inventory.consumption-reason'),
       minWidth: 150,
       formatter: ({ cellValue }) => t(`inventory.${cellValue}`),
     },

@@ -408,20 +408,20 @@ const deleteTip = (good) => {
   };
   return {
     RECENT_SALES_RECORD: `
-    ${t('inventory.delete_tips_recent_sales_recor')}
+    ${t('inventory.delete-tips-recent-sales-recorder')}
     ${createGoodsHtml()}
     `,
     PROMOTION_ACTIVITY: `
      <div style="display:flex;gap:8px"></div>
-    ${t('inventory.delete_tips_recent_sales_recor')}
+    ${t('inventory.delete-tips-recent-sales-recorder')}
        ${createGoodsHtml()}
     `,
     ASSOCIATED_BOM: `
     <div style="display:flex;gap:8px"></div>
-    ${t('inventory.delete_tips_assoclated_bom')}
+    ${t('inventory.delete-tips-associated-bom')}
       ${createGoodsHtml()}
     `,
-    WARRANTY_INFO: `${t('inventory.delete_tips_warranty_info')}
+    WARRANTY_INFO: `${t('inventory.delete-tips-warranty-info')}
         ${createGoodsHtml()}
     `,
   };
@@ -1304,7 +1304,7 @@ async function handleDeleteRow(item, index) {
       // 否则删除当前行
       deletedProductData.push({ ...newTableData[index] });
       newTableData.splice(index, 1);
-      ElMessage.success(t('inventory.row_delete'));
+      ElMessage.success(t('inventory.row-delete'));
     }
 
     // 更新数据
@@ -1614,7 +1614,7 @@ const handleClearBundle = async () => {
     bulkEditEnabled.value = false;
     bulkEditSelection.value = '';
 
-    ElMessage.success(t('inventory.clear_success'));
+    ElMessage.success(t('inventory.clear-success'));
   }
 };
 
@@ -2257,7 +2257,7 @@ defineExpose({
 
 <template>
   <div class="specs-configuration">
-    <FormSection :title="$t('inventory.specs_configuration')">
+    <FormSection :title="$t('inventory.specs-configuration')">
       <template #header-right>
         <ElTooltip
           class="box-item"
@@ -2271,7 +2271,7 @@ defineExpose({
             v-show="showUnits"
             v-model="multiSpecs"
             v-auth="'inventory_product-list_product-add_specs'"
-            :active-text="t('inventory.multi_specs')"
+            :active-text="t('inventory.multi-specs')"
             :disabled="
               mode === 'view' ||
               (is_update_config && mode == 'edit') ||
@@ -2282,7 +2282,7 @@ defineExpose({
         </ElTooltip>
 
         <span class="hint-text">{{
-          $t('inventory.spec_purchase_and_sales_units')
+          $t('inventory.spec-purchase-and-sales-units')
         }}</span>
       </template>
 
@@ -2290,7 +2290,7 @@ defineExpose({
         <div v-show="multiSpecs || (mode === 'view' && specRows.length > 0)">
           <div class="spec-settings">
             <!-- 规格设置 -->
-            <span>{{ $t('inventory.spec_setting') }}:</span>
+            <span>{{ $t('inventory.spec-setting') }}:</span>
             <div class="spec-checkboxes">
               <ElCheckbox
                 v-for="spec in productSpecList"
@@ -2322,7 +2322,7 @@ defineExpose({
               </template>
             </ElTableColumn>
 
-            <ElTableColumn :label="t('inventory.spec_range')">
+            <ElTableColumn :label="t('inventory.spec-range')">
               <template #default="{ row }">
                 <div class="value-range">
                   <template>
@@ -2357,7 +2357,7 @@ defineExpose({
           </ElTable>
           <div class="generate-part">
             <div class="spec-bundle">
-              <span>{{ t('inventory.spec_bundle') }}:</span>
+              <span>{{ t('inventory.spec-bundle') }}:</span>
               <ElButton
                 v-if="mode !== 'view'"
                 v-auth="'inventory_product-list_product-add_unit-bundle'"
@@ -2367,11 +2367,11 @@ defineExpose({
                 {{
                   bundleGenerated
                     ? $t('inventory.regenerate_bundle')
-                    : $t('inventory.generate_bundle')
+                    : $t('inventory.generate-bundle')
                 }}
               </ElButton>
               <span class="hint-text hint-text2">{{
-                t('inventory.after_selecting_the_product')
+                t('inventory.after-selecting-the-product')
               }}</span>
             </div>
             <span
@@ -2385,7 +2385,7 @@ defineExpose({
         </div>
         <div v-if="mode !== 'view'" class="bulk-edit">
           <!-- 批量编辑 -->
-          <span>{{ $t('inventory.bulk_edit') }}:</span>
+          <span>{{ $t('inventory.bulk-edit') }}:</span>
           <ElSwitch v-model="bulkEditEnabled" />
           <ElSelect
             v-model="bulkEditSelection"

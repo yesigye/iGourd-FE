@@ -118,7 +118,7 @@ const localConfig = ref({
   units: [
     {
       id: '',
-      type: t('inventory.major_unit_name'),
+      type: t('inventory.major-unit-name'),
       is_basic_unit: 1,
       selling_price: props.sellingPrice,
       cost_price: props.costPrice,
@@ -253,7 +253,7 @@ const handleMultiUnitsToggle = (val) => {
     localConfig.value.units = [
       {
         id: '',
-        type: t('inventory.major_unit_name'),
+        type: t('inventory.major-unit-name'),
         is_basic_unit: 1,
         selling_price: props.sellingPrice,
         cost_price: props.costPrice,
@@ -401,10 +401,10 @@ const quickAddUnit = () => {
 // 修改 handleAddUnit 函数
 const handleAddUnit = () => {
   //   if (units.value.length >= 4 && !props.unitCountExceeded) {
-  //       ElMessage.warning(t('inventory.max_units_limit', { value: 4 }));
+  //       ElMessage.warning(t('inventory.max-units-limit', { value: 4 }));
   //   return;
   // } else if (units.value.length >= 50) {
-  //   ElMessage.warning(t('inventory.max_units_limit', { value: 50 }));
+  //   ElMessage.warning(t('inventory.max-units-limit', { value: 50 }));
   //       return;
   //   }
 
@@ -415,7 +415,7 @@ const handleAddUnit = () => {
 
   newUnits.push({
     id: '',
-    type: t('inventory.minor_unit_name'),
+    type: t('inventory.minor-unit-name'),
     is_basic_unit: 0,
     selling_price: '',
     cost_price: '',
@@ -447,7 +447,7 @@ const resetData = () => {
   units.value = [
     {
       id: '',
-      type: t('inventory.major_unit_name'),
+      type: t('inventory.major-unit-name'),
       is_basic_unit: 1,
       selling_price: props.sellingPrice,
       cost_price: props.costPrice,
@@ -476,7 +476,7 @@ const resetData = () => {
 // 生成对话框html
 const createMessageBox = (isMainUnit: boolean, unit: string) => {
   return `<div class="message-box">
-    <div class="message-box-title">${isMainUnit ? t('inventory.major_main_unit_delete_tips') : t('inventory.major_unit_delete_tips')}</div>
+    <div class="message-box-title">${isMainUnit ? t('inventory.major-main-unit-delete-tips') : t('inventory.major_unit_delete_tips')}</div>
     <div class="message-box-content mt-2"><spn class="text-slate-gray">${t('inventory.unit')}:</span><span class="text-watermelon pl-2">${unit}</span></div>
     `;
 };
@@ -520,20 +520,20 @@ const deleteTip = (good) => {
   };
   return {
     RECENT_SALES_RECORD: `
-    ${t('inventory.delete_tips_recent_sales_recor')}
+    ${t('inventory.delete-tips-recent-sales-recorder')}
     ${createGoodsHtml()}
     `,
     PROMOTION_ACTIVITY: `
      <div style="display:flex;gap:8px"></div>
-    ${t('inventory.delete_tips_recent_sales_recor')}
+    ${t('inventory.delete-tips-recent-sales-recorder')}
        ${createGoodsHtml()}
     `,
     ASSOCIATED_BOM: `
     <div style="display:flex;gap:8px"></div>
-    ${t('inventory.delete_tips_assoclated_bom')}
+    ${t('inventory.delete-tips-associated-bom')}
       ${createGoodsHtml()}
     `,
-    WARRANTY_INFO: `${t('inventory.delete_tips_warranty_info')}
+    WARRANTY_INFO: `${t('inventory.delete-tips-warranty-info')}
         ${createGoodsHtml()}
     `,
   };
@@ -642,7 +642,7 @@ const handleDeleteUnit = async (item, index) => {
             const deletedUnit = newUnits[index];
             newUnits.splice(index, 1);
             localConfig.value.units = newUnits;
-            ElMessage.success(t('inventory.unit_detele'));
+            ElMessage.success(t('inventory.unit-detele'));
             emitChange();
 
             // 通知单位数量变化
@@ -1026,7 +1026,7 @@ watch(
         localConfig.value.units = [
           {
             id: '',
-            type: t('inventory.major_unit_name'),
+            type: t('inventory.major-unit-name'),
             is_basic_unit: 1,
             selling_price: props.sellingPrice,
             cost_price: props.costPrice,
@@ -1061,7 +1061,7 @@ onMounted(() => {
     localConfig.value.units = [
       {
         id: '',
-        type: t('inventory.major_unit_name'),
+        type: t('inventory.major-unit-name'),
         is_basic_unit: 1,
         selling_price: props.sellingPrice,
         cost_price: props.costPrice,
@@ -1124,7 +1124,7 @@ defineExpose({
 
 <template>
   <div class="units-configuration">
-    <FormSection :title="$t('inventory.units_configuration')">
+    <FormSection :title="$t('inventory.units-configuration')">
       <template #header-right>
         <ElTooltip
           class="box-item"
@@ -1137,7 +1137,7 @@ defineExpose({
           <ElSwitch
             v-model="multiUnits"
             v-auth="'inventory_product-list_product-add_units'"
-            :active-text="t('inventory.multi_units')"
+            :active-text="t('inventory.multi-units')"
             :disabled="
               (mode === 'view' || (is_update_config && mode == 'edit')) &&
               !isDeleteMainUnit
@@ -1147,7 +1147,7 @@ defineExpose({
         </ElTooltip>
 
         <span class="hint-text">{{
-          $t('inventory.unit_purchase_and_sales_units')
+          $t('inventory.unit-purchase-and-sales-units')
         }}</span>
       </template>
       <div>
@@ -1177,7 +1177,7 @@ defineExpose({
         </ElTable>
         <div v-if="multiUnits" class="unit-selectors">
           <div class="unit-selector">
-            <span>{{ $t('inventory.purchase_unit') }}:</span>
+            <span>{{ $t('inventory.purchase-unit') }}:</span>
             <ElSelect
               :key="`purchase-${purchaseUnit.id}-${Date.now()}`"
               v-model="purchaseUnit.id"
@@ -1195,7 +1195,7 @@ defineExpose({
           </div>
 
           <div class="unit-selector">
-            <span>{{ $t('inventory.sales_unit') }}:</span>
+            <span>{{ $t('inventory.sales-unit') }}:</span>
             <ElSelect
               :key="`salesUnit-${purchaseUnit.id}-${Date.now()}`"
               v-model="salesUnit.id"
