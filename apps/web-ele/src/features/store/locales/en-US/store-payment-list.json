@@ -1,0 +1,37 @@
+{
+  "title": "Order Records",
+  "merchant_order_no": "Order Number",
+  "storename": "Store Name",
+  "package_name": "Service Name",
+  "total_day": "Days",
+  "discount_amount": "Discount",
+  "total_amount": "Amount",
+  "payment_method": "Payment Method",
+  "type": "Payment Type",
+  "status": "Status",
+  "create_time": "Creation Time",
+
+  "payment_method_NO_PAYMENT": "No Payment Required",
+  "payment_method_CASH": "Cash",
+  "payment_method_OFFLINE_WECHAT": "Offline WeChat Pay",
+  "payment_method_OFFLINE_ALIPAY": "Offline Alipay",
+  "payment_method_ONLINE_WECHAT": "Online WeChat Pay",
+  "payment_method_ONLINE_ALIPAY": "Online Alipay",
+  "payment_method_ONLINE_BANKING": "Online Banking",
+  "payment_method_OFFLINE_BANK_TRANSFER": "Offline Bank Transfer",
+
+  "type_INNER_TRADE": "Internal Transaction",
+  "type_MERCHANT_PACKAGE_BUY": "Merchant Package Purchase",
+  "type_MERCHANT_GOODS_BUY": "Merchant Goods Purchase",
+  "type_OTHER": "Other",
+  "status_INIT": "Pending Payment",
+  "status_SUCCESS": "Payment Successful",
+  "status_CANCEL": "Cancelled",
+  "status_REFUND": "Refunded",
+  "status_REFUNDING": "Refunding",
+  "status_REFUNDFAIL": "Refund Failed",
+
+  "enroll_status_PENDING": "Pending",
+  "enroll_status_APPROVED": "Approved",
+  "enroll_status_REJECTED": "Rejected"
+}

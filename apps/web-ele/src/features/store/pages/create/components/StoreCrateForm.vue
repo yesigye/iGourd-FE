@@ -82,14 +82,14 @@ const storeRules = computed(() => {
     business_type: [
       {
         required: true,
-        message: t('storeForm.business_type.placeholder'),
+        message: t('store-form.business-type.placeholder'),
         trigger: 'change',
       },
     ],
     full_name: [
       {
         required: true,
-        message: t('storeForm.full_name.placeholder'),
+        message: t('store-form.full-name.placeholder'),
         trigger: 'blur',
       },
       ...validateSymbolRules,
@@ -97,7 +97,7 @@ const storeRules = computed(() => {
     short_name: [
       {
         required: true,
-        message: t('storeForm.short_name.placeholder'),
+        message: t('store-form.short-name.placeholder'),
         trigger: 'blur',
       },
       ...validateSymbolRules,
@@ -105,28 +105,28 @@ const storeRules = computed(() => {
     industry_code: [
       {
         required: true,
-        message: t('storeForm.industry_code.placeholder'),
+        message: t('store-form.industry-code.placeholder'),
         trigger: 'change',
       },
     ],
     time_zone_id: [
       {
         required: true,
-        message: t('storeForm.time_zone_id.placeholder'),
+        message: t('store-form.time-zone-id.placeholder'),
         trigger: 'change',
       },
     ],
     country_id: [
       {
         required: true,
-        message: t('storeForm.country_id.placeholder'),
+        message: t('store-form.country-id.placeholder'),
         trigger: 'change',
       },
     ],
     actual_address: [
       {
         required: true,
-        message: t('storeForm.actual_address.placeholder'),
+        message: t('store-form.actual-address.placeholder'),
         trigger: 'blur',
       },
       ...validateSymbolRules,
@@ -134,17 +134,17 @@ const storeRules = computed(() => {
     basic_currency_code: [
       {
         required: true,
-        message: t('storeForm.basic_currency_code.placeholder'),
+        message: t('store-form.basic-currency-code.placeholder'),
         trigger: 'change',
       },
     ],
     major_country_language_lang_code: [
       {
         required: true,
-        message: t('storeForm.majorCountry_language.placeholder'),
+        message: t('store-form.major-country-language.placeholder'),
       },
     ],
-    // minor_country_language_lang_code: [{ required: true, message: t('storeForm.minorCountry_language.placeholder') }]
+    // minor_country_language_lang_code: [{ required: true, message: t('store-form.minor-country-language.placeholder') }]
   };
 });
 
@@ -266,13 +266,13 @@ onMounted(() => {
         @submit.native.prevent
       >
         <ElFormItem
-          :label="`${$t('storeForm.business_type.label')}:`"
+          :label="`${$t('store-form.business-type.label')}:`"
           prop="business_type"
         >
           <ElSelect
             v-model="storeForm.business_type"
             :disabled="isUpdate"
-            :placeholder="$t('storeForm.business_type.placeholder')"
+            :placeholder="$t('store-form.business-type.placeholder')"
           >
             <ElOption
               v-for="item in state.businessTypeList"
@@ -283,32 +283,32 @@ onMounted(() => {
           </ElSelect>
         </ElFormItem>
         <ElFormItem
-          :label="`${$t('storeForm.full_name.label')}:`"
+          :label="`${$t('store-form.full-name.label')}:`"
           prop="full_name"
         >
           <ElInput
             v-model="storeForm.full_name"
             maxlength="64"
-            :placeholder="$t('storeForm.full_name.placeholder')"
+            :placeholder="$t('store-form.full-name.placeholder')"
           />
         </ElFormItem>
         <ElFormItem
-          :label="`${$t('storeForm.short_name.label')}:`"
+          :label="`${$t('store-form.short-name.label')}:`"
           prop="short_name"
         >
           <ElInput
             v-model="storeForm.short_name"
             :maxlength="64"
-            :placeholder="$t('storeForm.short_name.placeholder')"
+            :placeholder="$t('store-form.short-name.placeholder')"
           />
         </ElFormItem>
         <ElFormItem
-          :label="`${$t('storeForm.industry_code.label')}:`"
+          :label="`${$t('store-form.industry-code.label')}:`"
           prop="industry_code"
         >
           <ElSelect
             v-model="storeForm.industry_code"
-            :placeholder="$t('storeForm.industry_code.placeholder')"
+            :placeholder="$t('store-form.industry-code.placeholder')"
           >
             <ElOption
               v-for="item in state.industryList"
@@ -319,13 +319,13 @@ onMounted(() => {
           </ElSelect>
         </ElFormItem>
         <ElFormItem
-          :label="`${$t('storeForm.time_zone_id.label')}:`"
+          :label="`${$t('store-form.time-zone-id.label')}:`"
           prop="time_zone_id"
         >
           <ElSelect
             v-model="storeForm.time_zone_id"
             filterable
-            :placeholder="$t('storeForm.time_zone_id.placeholder')"
+            :placeholder="$t('store-form.time-zone-id.placeholder')"
           >
             <ElOption
               v-for="item in state.timezoneList"
@@ -336,13 +336,13 @@ onMounted(() => {
           </ElSelect>
         </ElFormItem>
         <ElFormItem
-          :label="`${$t('storeForm.country_id.label')}:`"
+          :label="`${$t('store-form.country-id.label')}:`"
           prop="country_id"
         >
           <ElSelect
             v-model="storeForm.country_id"
             filterable
-            :placeholder="$t('storeForm.country_id.placeholder')"
+            :placeholder="$t('store-form.country-id.placeholder')"
           >
             <ElOption
               v-for="item in state.countriesList"
@@ -353,7 +353,7 @@ onMounted(() => {
           </ElSelect>
         </ElFormItem>
         <ElFormItem
-          :label="`${$t('storeForm.actual_address.label')}:`"
+          :label="`${$t('store-form.actual-address.label')}:`"
           prop="actual_address"
         >
           <ElInput
@@ -361,17 +361,17 @@ onMounted(() => {
             type="textarea"
             maxlength="256"
             :show-word-limit="true"
-            :placeholder="$t('storeForm.actual_address.placeholder')"
+            :placeholder="$t('store-form.actual-address.placeholder')"
             :autosize="{ minRows: 2, maxRows: 2 }"
           />
         </ElFormItem>
         <ElFormItem
-          :label="`${$t('storeForm.basic_currency_code.label')}:`"
+          :label="`${$t('store-form.basic-currency-code.label')}:`"
           prop="basic_currency_code"
         >
           <ElSelect
             v-model="storeForm.basic_currency_code"
-            :placeholder="$t('storeForm.basic_currency_code.placeholder')"
+            :placeholder="$t('store-form.basic-currency-code.placeholder')"
           >
             <ElOption
               v-for="item in state.basicCurrencyList"
@@ -388,7 +388,7 @@ onMounted(() => {
         </ElFormItem>
         <ElFormItem
           class="Cform-language"
-          :label="`${$t('storeForm.majorCountry_language.label')}:`"
+          :label="`${$t('store-form.major-country-language.label')}:`"
           required
         >
           <ElFormItem
@@ -397,7 +397,7 @@ onMounted(() => {
           >
             <ElSelect
               v-model="storeForm.major_country_language_lang_code"
-              :placeholder="$t('storeForm.majorCountry_language.placeholder')"
+              :placeholder="$t('store-form.major-country-language.placeholder')"
             >
               <ElOption
                 v-for="item in state.countryLanguageList"
@@ -420,7 +420,7 @@ onMounted(() => {
           >
             <ElSelect
               v-model="storeForm.minor_country_language_lang_code"
-              :placeholder="$t('storeForm.minorCountry_language.placeholder')"
+              :placeholder="$t('store-form.minor-country-language.placeholder')"
             >
               <ElOption
                 v-for="item in state.countryLanguageList"

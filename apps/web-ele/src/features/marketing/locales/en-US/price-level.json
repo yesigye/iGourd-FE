@@ -1,4 +1,3 @@
-```json
 {
   "form": {
     "name": "Price Strategy Name",
@@ -74,4 +73,4 @@
     "duplicate-product": "This product has been selected, please choose another product"
   }
 }
-```
+

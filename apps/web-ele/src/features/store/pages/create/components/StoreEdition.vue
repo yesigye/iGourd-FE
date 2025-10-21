@@ -47,7 +47,7 @@ function sendSelectPackages(id: string) {
             <!-- <template #footer>
               <div class="SEd-purchase">
                 <el-button class="SEd-purchase-button" type="primary" @click="sendSelectPackages(item)">
-                  {{ $t('storePackage.purchaseBtn') }}
+                  {{ $t('store-package.purchase-btn') }}
                 </el-button>
               </div>
             </template> -->

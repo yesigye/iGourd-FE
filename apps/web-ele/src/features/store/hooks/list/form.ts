@@ -30,7 +30,7 @@ export function useStoreForm<
   }>(Symbol.for('PageGrid'), {} as unknown as any);
 
   const [Drawer, drawerApi] = useIgourdDrawer({
-    title: t('store.storeList.editTitle'),
+    title: t('store.store-list.edit-title'),
     class: 'w-[648px]',
     onOpenChange(isOpen) {
       if (!isOpen) {

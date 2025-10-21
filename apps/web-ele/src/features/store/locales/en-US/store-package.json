@@ -1,0 +1,15 @@
+{
+  "purchase-btn": "Purchase",
+  "month-amount-unit": "month",
+  "payable-title": "Amount Payable",
+  "method-title": "Please select payment method",
+  "method-offline": "Offline Payment",
+  "place-button": "Place Order",
+  "payable-amount": "Amount",
+  "payable-discount": "Discount",
+  "payable-fee": "Initial Service Guidance Fee",
+  "payable-origin": "Original Package Deduction Amount",
+  "total": "Total",
+  "payment-method-cash": "Cash Payment",
+  "payment-method-offline-bank-transfer": "Offline Bank Transfer"
+}

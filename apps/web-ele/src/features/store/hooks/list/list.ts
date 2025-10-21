@@ -41,25 +41,25 @@ export function useStoreList() {
       minWidth: 200,
       align: 'left',
       fixed: 'left',
-      title: t('store.storeList.short_name'),
+      title: t('store.store-list.short-name'),
     },
     {
       field: 'id',
       minWidth: 150,
       align: 'left',
-      title: t('store.storeList.id'),
+      title: t('store.store-list.id'),
     },
     {
       field: 'full_name',
       minWidth: 120,
       align: 'center',
-      title: t('store.storeList.full_name'),
+      title: t('store.store-list.full-name'),
     },
     {
       field: 'business_type',
       minWidth: 100,
       align: 'center',
-      title: t('store.storeList.business_type'),
+      title: t('store.store-list.business-type'),
       formatter({ cellValue }) {
         return t(
           `${BUSINESS_TYPE_CONFIG.find((i) => i.value === cellValue)?.name}`,
@@ -70,13 +70,13 @@ export function useStoreList() {
       field: 'industry_name',
       minWidth: 250,
       align: 'left',
-      title: t('store.storeList.industry_name'),
+      title: t('store.store-list.industry-name'),
     },
     {
       field: 'status',
       minWidth: 120,
       align: 'left',
-      title: t('store.storeList.status'),
+      title: t('store.store-list.status'),
       cellRender: {
         name: 'OpenStatus',
         props: {
@@ -91,13 +91,13 @@ export function useStoreList() {
       field: 'create_time',
       minWidth: 120,
       align: 'left',
-      title: t('store.storeList.create_time'),
+      title: t('store.store-list.create-time'),
     },
     {
       field: 'device_authorization_model',
       minWidth: 150,
       align: 'left',
-      title: t('store.storeList.owned_quantity'),
+      title: t('store.store-list.owned-quantity'),
       formatter({ cellValue }) {
         return cellValue?.owned_quantity;
       },
@@ -106,7 +106,7 @@ export function useStoreList() {
       field: 'device_authorization_model_1',
       minWidth: 120,
       align: 'left',
-      title: t('store.storeList.used_quantity'),
+      title: t('store.store-list.used-quantity'),
       formatter({ row }) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -117,7 +117,7 @@ export function useStoreList() {
       field: 'package_models',
       minWidth: 150,
       align: 'center',
-      title: t('store.storeList.package'),
+      title: t('store.store-list.package'),
       formatter({ cellValue }) {
         const info = cellValue?.pop();
         return info ? t(`common.package-${info.package_id}`) : '-';
@@ -127,14 +127,14 @@ export function useStoreList() {
       field: 'final_expiration_time',
       minWidth: 120,
       align: 'right',
-      title: t('store.storeList.final_expiration_time'),
+      title: t('store.store-list.final-expiration-time'),
     },
     {
       field: 'upgradeService',
       minWidth: 100,
       align: 'center',
       fixed: 'right',
-      title: t('store.storeList.upgradeService'),
+      title: t('store.store-list.upgrade-service'),
       cellRender: {
         name: 'upgradeService',
         props: {
@@ -147,7 +147,7 @@ export function useStoreList() {
       minWidth: 120,
       align: 'left',
       fixed: 'right',
-      title: t('store.storeList.device'),
+      title: t('store.store-list.device'),
       cellRender: {
         name: 'AuthStatus',
         props: {

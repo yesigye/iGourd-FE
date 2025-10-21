@@ -7,25 +7,25 @@ export const BUSINESS_TYPE_CONFIG = [
 
 export const STATUS_CONFIG = [
   {
-    name: 'store.storeList.status_NONACTIVATED',
+    name: 'store.store-list.status-nonactivated',
     value: 'NONACTIVATED',
     iconColor: '#FF7C7C',
     textColor: '#FF7C7C',
     showUnderline: true,
   },
-  { name: 'store.storeList.status_OPEN', value: 'OPEN', iconColor: '#13BA67' },
+  { name: 'store.store-list.status-open', value: 'OPEN', iconColor: '#13BA67' },
   {
-    name: 'store.storeList.status_FROZE',
+    name: 'store.store-list.status-froze',
     value: 'FROZE',
     iconColor: '#C0C8CB',
   },
   {
-    name: 'store.storeList.status_CLOSED',
+    name: 'store.store-list.status-closed',
     value: 'CLOSED',
     iconColor: '#FAB6B6',
   },
   {
-    name: 'store.storeList.status_EXPIRED',
+    name: 'store.store-list.status-expired',
     value: 'EXPIRED',
     iconColor: '#FAE6C9',
   },

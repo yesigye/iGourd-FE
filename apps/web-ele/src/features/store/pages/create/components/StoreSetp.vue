@@ -12,10 +12,10 @@ withDefaults(defineProps<PropsType>(), {
 });
 
 const setpList: SetpItem[] = [
-  { title: 'login.createStore' },
-  { title: 'login.selectPackage' },
+  { title: 'login.create-store' },
+  { title: 'login.select-package' },
   { title: 'login.payment' },
-  { title: 'login.paymentComplete' },
+  { title: 'login.payment-complete' },
 ];
 </script>
 

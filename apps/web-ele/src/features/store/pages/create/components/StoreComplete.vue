@@ -55,10 +55,10 @@ function openAuditecordDrawer() {
         <div class="Comp-top-icon"></div>
         <div class="Comp-content">
           <div class="Comp-content-title">
-            {{ $t(`storeComplete.creationTitle${enroll_status}`) }}
+            {{ $t(`store-complete.creation-title-${enroll_status}`) }}
           </div>
           <div class="Comp-content-message">
-            {{ $t(`storeComplete.creationMessage${enroll_status}`) }}
+            {{ $t(`store-complete.creation-message-${enroll_status}`) }}
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@ function openAuditecordDrawer() {
           href="javascript:void(0)"
           @click="openAuditecordDrawer"
         >
-          {{ $t('storeComplete.auditText') }}>>
+          {{ $t('store-complete.audit-text') }}>>
         </a>
       </div>
     </div>
@@ -78,7 +78,7 @@ function openAuditecordDrawer() {
         type="primary"
         @click="handleButtonClick"
       >
-        {{ $t(`storeComplete.creationBtnText${enroll_status}`) }}
+        {{ $t(`storeComplete.creation-btn-text-${enroll_status}`) }}
       </ElButton>
     </div>
     <AuditecordDrawer @register="auditecordDrawer" />
