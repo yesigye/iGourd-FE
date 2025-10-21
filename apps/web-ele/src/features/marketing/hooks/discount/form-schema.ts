@@ -24,7 +24,7 @@ export function useDiscountSchema(toggleShowMore: () => void) {
             type: 'void',
             'x-component': 'Card',
             'x-component-props': {
-              header: '{{t("discount.form.basicInfo")}}',
+              header: '{{t("discount.form.basic-info")}}',
             },
             properties: {
               type: {
@@ -91,7 +91,7 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                   {
                     format: 'regex',
                     pattern: '^[^`~!@#$^&*()=+\\[\\]{};:\'\\",<>/?\\\\|]+$',
-                    message: "{{t('discount.validate.name.noSpecial')}}",
+                    message: "{{t('discount.validate.name.no-special')}}",
                   },
                 ],
               },
@@ -101,7 +101,7 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                 'x-decorator-props': {
                   wrapperWidth: 300,
                 },
-                title: "{{t('discount.form.applyVip')}}",
+                title: "{{t('discount.form.apply-vip')}}",
                 default: 1,
                 'x-decorator': 'FormItem',
                 'x-component': 'Switch',
@@ -117,12 +117,12 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                 'x-decorator-props': {
                   wrapperWidth: 300,
                 },
-                title: "{{t('discount.form.minimumAmount')}}",
+                title: "{{t('discount.form.minimum-amount')}}",
                 'x-decorator': 'FormItem',
                 'x-component': 'InputNumber',
                 'x-component-props': {
                   min: 0,
-                  placeholder: "{{t('discount.placeholder.minimumAmount')}}",
+                  placeholder: "{{t('discount.placeholder.minimum-amount')}}",
                 },
                 'x-reactions': {
                   dependencies: ['type'],
@@ -132,12 +132,12 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                   {
                     required: true,
                     message:
-                      "{{t('discount.validate.minimumAmount.required')}}",
+                      "{{t('discount.validate.minimum-amount.required')}}",
                     triggerType: 'onBlur',
                   },
                   {
                     minimum: 0,
-                    message: "{{t('discount.validate.number.nonNegative')}}",
+                    message: "{{t('discount.validate.number.non-negative')}}",
                   },
                 ],
               },
@@ -147,12 +147,12 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                 'x-decorator-props': {
                   wrapperWidth: 300,
                 },
-                title: "{{t('discount.form.reduceAmount')}}",
+                title: "{{t('discount.form.reduce-amount')}}",
                 'x-decorator': 'FormItem',
                 'x-component': 'InputNumber',
                 'x-component-props': {
                   min: 0,
-                  placeholder: "{{t('discount.placeholder.reduceAmount')}}",
+                  placeholder: "{{t('discount.placeholder.reduce-amount')}}",
                 },
                 'x-reactions': {
                   dependencies: ['type'],
@@ -161,12 +161,12 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                 'x-validator': [
                   {
                     required: true,
-                    message: "{{t('discount.validate.reduceAmount.required')}}",
+                    message: "{{t('discount.validate.reduce-amount.required')}}",
                     triggerType: 'onBlur',
                   },
                   {
                     minimum: 0,
-                    message: "{{t('discount.validate.number.nonNegative')}}",
+                    message: "{{t('discount.validate.number.non-negative')}}",
                   },
                 ],
               },
@@ -176,7 +176,7 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                 'x-decorator-props': {
                   wrapperWidth: 300,
                 },
-                title: "{{t('discount.form.discountPercentage')}}",
+                title: "{{t('discount.form.discount-percentage')}}",
                 'x-decorator': 'FormItem',
                 'x-component': 'InputNumber',
                 'x-component-props': {
@@ -184,7 +184,7 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                   max: 100,
                   step: 0.1,
                   placeholder:
-                    "{{t('discount.placeholder.discountPercentage')}}",
+                    "{{t('discount.placeholder.discount-percentage')}}",
                 },
                 'x-reactions': {
                   dependencies: ['type'],
@@ -194,17 +194,17 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                   {
                     required: true,
                     message:
-                      "{{t('discount.validate.discountPercentage.required')}}",
+                      "{{t('discount.validate.discount-percentage.required')}}",
                     triggerType: 'onBlur',
                   },
                   {
                     maximum: 100,
                     message:
-                      "{{t('discount.validate.discountPercentage.max')}}",
+                      "{{t('discount.validate.discount-percentage.max')}}",
                   },
                   {
                     minimum: 0,
-                    message: "{{t('discount.validate.number.nonNegative')}}",
+                    message: "{{t('discount.validate.number.non-negative')}}",
                   },
                 ],
               },
@@ -214,11 +214,11 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                 'x-decorator-props': {
                   wrapperWidth: 300,
                 },
-                title: "{{t('discount.form.roundingOff')}}",
+                title: "{{t('discount.form.rounding-off')}}",
                 'x-decorator': 'FormItem',
                 'x-component': 'Select',
                 'x-component-props': {
-                  placeholder: "{{t('discount.placeholder.roundingOff')}}",
+                  placeholder: "{{t('discount.placeholder.rounding-off')}}",
                 },
                 enum: [
                   {
@@ -241,7 +241,7 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                 'x-validator': [
                   {
                     required: true,
-                    message: "{{t('discount.validate.roundingOff.required')}}",
+                    message: "{{t('discount.validate.rounding-off.required')}}",
                   },
                 ],
               },
@@ -251,11 +251,11 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                 'x-decorator-props': {
                   wrapperWidth: 300,
                 },
-                title: "{{t('discount.form.roundingAmount')}}",
+                title: "{{t('discount.form.rounding-amount')}}",
                 'x-decorator': 'FormItem',
                 'x-component': 'Select',
                 'x-component-props': {
-                  placeholder: "{{t('discount.placeholder.roundingAmount')}}",
+                  placeholder: "{{t('discount.placeholder.rounding-amount')}}",
                 },
                 enum: [
                   { label: '0.001', value: 0.001 },
@@ -274,7 +274,7 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                   {
                     required: true,
                     message:
-                      "{{t('discount.validate.roundingAmount.required')}}",
+                      "{{t('discount.validate.rounding-amount.required')}}",
                   },
                 ],
               },
@@ -284,12 +284,12 @@ export function useDiscountSchema(toggleShowMore: () => void) {
             type: 'void',
             'x-component': 'Card',
             'x-component-props': {
-              header: '{{t("discount.form.activeSetting")}}',
+              header: '{{t("discount.form.active-setting")}}',
             },
             properties: {
               effective_time: {
                 type: 'string',
-                title: "{{t('discount.form.effectiveTime')}}",
+                title: "{{t('discount.form.effective-time')}}",
                 'x-decorator': 'FormItem',
                 'x-component': 'DatePicker',
                 'x-decorator-props': {
@@ -298,20 +298,20 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                 'x-component-props': {
                   type: 'date',
                   valueFormat: 'YYYY-MM-DD 00:00:00',
-                  placeholder: "{{t('discount.placeholder.effectiveTime')}}",
+                  placeholder: "{{t('discount.placeholder.effective-time')}}",
                 },
                 'x-validator': [
                   {
                     required: true,
                     message:
-                      "{{t('discount.validate.effectiveTime.required')}}",
+                      "{{t('discount.validate.effective-time.required')}}",
                   },
                 ],
               },
 
               expiration_time: {
                 type: 'string',
-                title: "{{t('discount.form.expirationTime')}}",
+                title: "{{t('discount.form.expiration-time')}}",
                 'x-decorator': 'FormItem',
                 'x-component': 'DatePicker',
                 'x-decorator-props': {
@@ -320,17 +320,17 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                 'x-component-props': {
                   type: 'date',
                   valueFormat: 'YYYY-MM-DD 23:59:59',
-                  placeholder: "{{t('discount.placeholder.expirationTime')}}",
+                  placeholder: "{{t('discount.placeholder.expiration-time')}}",
                 },
                 'x-validator': [
                   {
                     required: true,
                     message:
-                      "{{t('discount.validate.expirationTime.required')}}",
+                      "{{t('discount.validate.expiration-time.required')}}",
                   },
                   // {
                   //   validator:
-                  //     "{{$self.value && $form.values.effective_time && new Date($self.value) < new Date($form.values.effective_time) ? t('discount.validate.expirationTime.gteEffective') : ''}}",
+                  //     "{{$self.value && $form.values.effective_time && new Date($self.value) < new Date($form.values.effective_time) ? t('discount.validate.expiration-time.gte-effective') : ''}}",
                   // },
                 ],
               },
@@ -350,7 +350,7 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                       '@click': toggleShowMore,
                     },
                     'x-content': {
-                      default: '{{ t("discount.moreTimeSetting") }}',
+                      default: '{{ t("discount.more-time-setting") }}',
                     },
                   },
                   tab1: {
@@ -364,7 +364,7 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                         'x-component': 'PeriodPick',
                         'x-component-props': {
                           headerRight: 'text',
-                          label: "{{t('discount.form.activeHours')}}",
+                          label: "{{t('discount.form.active-hours')}}",
                           resetOnModeChange: true,
                         },
                       },
@@ -434,7 +434,7 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                       },
                       exclude_dates: {
                         type: 'array',
-                        title: "{{t('discount.form.excludeDates')}}",
+                        title: "{{t('discount.form.exclude-dates')}}",
                         default: [], // ✅ 必须是数组
                         'x-decorator': 'FormItem',
                         'x-component': 'DatePicker',
@@ -467,7 +467,7 @@ export function useDiscountSchema(toggleShowMore: () => void) {
             properties: {
               relation_type: {
                 type: 'string',
-                title: "{{t('discount.form.relationType')}}",
+                title: "{{t('discount.form.relation-type')}}",
                 default: 'ALL',
                 'x-decorator': 'FormItem',
                 'x-component': 'Radio.Group',

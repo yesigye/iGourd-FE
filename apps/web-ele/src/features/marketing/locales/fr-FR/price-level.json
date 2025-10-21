@@ -1,0 +1,76 @@
+{
+  "form": {
+    "name": "Nom de la stratégie de prix",
+    "change-type": "Type de modification",
+    "change-mode": "Mode de modification",
+    "change-value": "Valeur de modification",
+    "rounding-off": "Méthode d'arrondi",
+    "rounding-amount": "Valeur d'arrondi",
+    "relation-type": "Champ d'application",
+    "product-groups": "Groupes de produits",
+    "product-labels": "Étiquettes de produits",
+    "products": "Produits",
+    "effective-time": "Heure d'effet",
+    "expiration-time": "Heure d'expiration",
+    "remark": "Remarques",
+    "status": "Statut d'activation",
+    "add": "Ajouter"
+  },
+  "placeholder": {
+    "name": "Entrez le nom de la stratégie de prix",
+    "change-type": "Sélectionnez le type de stratégie de prix",
+    "change-mode": "Veuillez sélectionner le mode de modification",
+    "change-value": "Veuillez saisir la valeur de modification",
+    "rounding-off": "Veuillez sélectionner la méthode d'arrondi",
+    "rounding-amount": "Veuillez saisir le montant d'arrondi",
+    "product-group": "Recherche à distance des groupes de produits",
+    "product-label": "Recherche à distance des étiquettes de produits",
+    "product": "Recherche à distance des produits",
+    "effective-time": "Veuillez sélectionner l'heure d'effet",
+    "expiration-time": "Veuillez sélectionner l'heure d'expiration",
+    "remark": "Veuillez saisir des remarques"
+  },
+  "enum": {
+    "change-type": { "decrease": "Diminuer", "increase": "Augmenter" },
+    "change-mode": { "amount": "Montant", "percentage": "Pourcentage" },
+    "rounding": {
+      "high": "Arrondir au supérieur",
+      "middle": "Arrondir",
+      "low": "Arrondir à l'inférieur"
+    },
+    "relation": {
+      "all": "Tous les produits",
+      "group": "Groupe de produits",
+      "label": "Étiquette de produit",
+      "product": "Produit"
+    }
+  },
+  "table": {
+    "columns": {
+      "group": "Groupe de produits",
+      "label": "Étiquette de produit",
+      "product": "Produit",
+      "ops": "Opérations"
+    }
+  },
+  "validate": {
+    "name": { "required": "Veuillez saisir le nom" },
+    "change-type": { "required": "Veuillez sélectionner le type de modification" },
+    "change-mode": { "required": "Veuillez sélectionner le mode de modification" },
+    "change-value": { "required": "Veuillez saisir la valeur de modification" },
+    "effective-time": { "required": "Veuillez saisir l'heure d'effet" },
+    "expiration-time": {
+      "required": "Veuillez saisir l'heure d'expiration",
+      "gte-effective": "L'heure d'expiration doit être supérieure ou égale à l'heure d'effet"
+    }
+  },
+  "toast": {
+    "create-ok": "Stratégie de prix créée avec succès",
+    "update-ok": "Stratégie de prix mise à jour avec succès",
+    "create-fail": "Échec de l'ajout de la stratégie de prix",
+    "duplicate-group": "Ce groupe de produits a déjà été sélectionné, veuillez en choisir un autre",
+    "duplicate-label": "Cette étiquette de produit a déjà été sélectionnée, veuillez en choisir une autre",
+    "duplicate-product": "Ce produit a déjà été sélectionné, veuillez en choisir un autre"
+  }
+}
+

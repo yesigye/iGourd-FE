@@ -1,0 +1,76 @@
+{
+  "form": {
+    "name": "价格策略名称",
+    "change-type": "变化类型",
+    "change-mode": "变化方式",
+    "change-value": "变化值",
+    "rounding-off": "取整方式",
+    "rounding-amount": "取整数值",
+    "relation-type": "适用范围",
+    "product-groups": "商品组",
+    "product-labels": "商品标签",
+    "products": "商品",
+    "effective-time": "生效时间",
+    "expiration-time": "过期时间",
+    "remark": "备注",
+    "status": "启用状态",
+    "add": "新增"
+  },
+  "placeholder": {
+    "name": "输入价格策略名称",
+    "change-type": "选择价格策略类型",
+    "change-mode": "请选择变化方式",
+    "change-value": "请输入变化值",
+    "rounding-off": "请选择取整方式",
+    "rounding-amount": "请输入取整金额",
+    "product-group": "远程搜索商品组",
+    "product-label": "远程搜索商品标签",
+    "product": "远程搜索商品",
+    "effective-time": "请选择有效时间",
+    "expiration-time": "请选择过期时间",
+    "remark": "请输入备注"
+  },
+  "enum": {
+    "change-type": { "decrease": "降低", "increase": "提高" },
+    "change-mode": { "amount": "金额", "percentage": "百分比" },
+    "rounding": {
+      "high": "四舍五入到高位",
+      "middle": "四舍五入",
+      "low": "四舍五入到低位"
+    },
+    "relation": {
+      "all": "全部商品",
+      "group": "商品组",
+      "label": "商品标签",
+      "product": "商品"
+    }
+  },
+  "table": {
+    "columns": {
+      "group": "商品组",
+      "label": "商品标签",
+      "product": "商品",
+      "ops": "操作"
+    }
+  },
+  "validate": {
+    "name": { "required": "请输入名称" },
+    "change-type": { "required": "请选择变化类型" },
+    "change-mode": { "required": "请选择变化方式" },
+    "change-value": { "required": "请输入变化值" },
+    "effective-time": { "required": "请输入有效时间" },
+    "expiration-time": {
+      "required": "请输入过期时间",
+      "gte-effective": "过期时间必须大于或等于生效时间"
+    }
+  },
+  "toast": {
+    "create-ok": "价格策略创建成功",
+    "update-ok": "价格策略更新成功",
+    "create-fail": "价格策略添加失败",
+    "duplicate-group": "该商品组已被选择，请选择其他商品组",
+    "duplicate-label": "该商品标签已被选择，请选择其他商品标签",
+    "duplicate-product": "该商品已被选择，请选择其他商品"
+  }
+}
+

@@ -1,22 +1,80 @@
 {
-  "discountName": "Discount Name",
-  "discountCode": "Discount Code",
-  "discountType": "Discount Type",
-  "discountValue": "Discount Value",
-  "minAmount": "Minimum Amount",
-  "maxAmount": "Maximum Amount",
-  "startTime": "Start Time",
-  "endTime": "End Time",
-  "status": "Status",
-  "addDiscount": "Add Discount",
-  "editDiscount": "Edit Discount",
-  "discountDetail": "Discount Detail",
-  "typeOptions": {
-    "percentage": "Percentage",
-    "fixed": "Fixed Amount"
+  "form": {
+    "edit": "Edit Promotion",
+    "create": "Create Promotion",
+    "basic-info": "Basic Information",
+    "type": "Promotion Type",
+    "channel": "Applicable Scope",
+    "name": "Promotion Name",
+    "apply-vip": "Member Stackable Discount",
+    "minimum-amount": "Spending Threshold",
+    "reduce-amount": "Instant Discount Amount",
+    "discount-percentage": "Discount (%)",
+    "rounding-off": "Rounding Method",
+    "rounding-amount": "Rounding Value",
+    "effective-time": "Effective Date",
+    "expiration-time": "Expiration Date",
+    "relation-type": "Applicable Range",
+    "product-groups": "Product Groups",
+    "product-labels": "Product Labels",
+    "products": "Product Settings",
+    "period": "Activity Period",
+    "active-setting": "Validity Period Settings",
+    "active-hours": "Valid Hours",
+    "exclude-dates": "Suspended Dates",
+    "remark": "Remarks"
   },
-  "statusOptions": {
-    "active": "Active",
-    "inactive": "Inactive"
+  "more-time-setting": "More Time and Date Settings >>",
+  "placeholder": {
+    "name": "Please enter promotion name",
+    "minimum-amount": "Please enter spending threshold",
+    "reduce-amount": "Please enter instant discount amount",
+    "discount-percentage": "Please enter discount (0-100)",
+    "rounding-off": "Please select rounding method",
+    "rounding-amount": "Please select rounding value",
+    "effective-time": "Please select effective date",
+    "expiration-time": "Please select expiration date"
+  },
+  "enum": {
+    "type": { "discount": "Discount", "reduction": "Spend-Based Reduction" },
+    "channel": { "store": "Store", "online": "Online Store" },
+    "rounding": {
+      "high": "Round Up",
+      "middle": "Round Half",
+      "low": "Round Down"
+    },
+    "relation": {
+      "all": "All Products",
+      "group": "Product Group",
+      "label": "Product Label",
+      "product": "Product"
+    }
+  },
+  "table": {
+    "columns": {
+      "group": "Product Group",
+      "label": "Product Label",
+      "product": "Product",
+      "date": "Date",
+      "ops": "Operations"
+    }
+  },
+  "validate": {
+    "name": { "required": "Please enter name", "no-special": "Cannot contain special characters" },
+    "minimum-amount": { "required": "Please enter spending threshold" },
+    "reduce-amount": { "required": "Please enter instant discount amount" },
+    "discount-percentage": {
+      "required": "Please enter discount",
+      "max": "Discount cannot exceed 100"
+    },
+    "rounding-off": { "required": "Please select rounding method" },
+    "rounding-amount": { "required": "Please select rounding value" },
+    "effective-time": { "required": "Please select effective date" },
+    "expiration-time": {
+      "required": "Please select expiration date",
+      "gte-effective": "Expiration date must not be earlier than effective date"
+    },
+    "number": { "non-negative": "Must be a non-negative number" }
   }
 }
+

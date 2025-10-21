@@ -1,0 +1,21 @@
+{
+  "creator": "Créateur",
+  "promotiontype": "Type",
+  "scopeofapplication": "Champ d'application",
+  "promotionalname": "Nom",
+  "effective-time": "Date d'effet",
+  "sumofconsumption": "Montant de dépense",
+  "fulldeduction": "Montant de réduction",
+  "product-name": "Produit",
+  "product-code": "Code produit",
+  "price-level-name": "Nom",
+  "price-level-type": "Type de modification",
+  "price-level-price": "Valeur de modification",
+  "effective-date": "Date d'effet",
+  "create-time": "Date de création",
+  "switch-status": "Basculer",
+  "change-mode": "Mode de modification",
+  "expiration-time": "Date d'expiration",
+  "discount-ptg": "Pourcentage de remise"
+}
+

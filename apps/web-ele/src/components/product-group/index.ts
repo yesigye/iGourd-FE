@@ -37,7 +37,7 @@ export const productGroupSelect: ISchema = {
         type: 'void',
         'x-component': 'ArrayTable.Column',
         'x-component-props': {
-          title: "{{t('discount.form.productGroups')}}",
+          title: "{{t('discount.form.product-groups')}}",
         },
 
         properties: {

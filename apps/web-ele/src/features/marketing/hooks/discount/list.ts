@@ -56,7 +56,7 @@ export function useDiscount() {
     },
     {
       field: 'discount_percentage',
-      title: t('marketing.discountPTG'),
+      title: t('marketing.discount-ptg'),
       width: 120,
       align: 'right',
     },
@@ -74,14 +74,14 @@ export function useDiscount() {
     },
     {
       field: 'effective_time',
-      title: t('marketing.effectiveTime'),
+      title: t('marketing.effective-time'),
       width: 160,
       sortable: true,
       align: 'center',
     },
     {
       field: 'expiration_time',
-      title: t('marketing.expirationTime'),
+      title: t('marketing.expiration-time'),
       width: 160,
       sortable: true,
       align: 'center',

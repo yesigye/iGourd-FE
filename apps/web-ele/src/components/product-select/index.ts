@@ -37,7 +37,7 @@ export const productSelect: ISchema = {
         'x-visible': false,
         'x-component': 'ArrayTable.Column',
         'x-component-props': {
-          title: "{{t('marketing.productCode')}}",
+          title: "{{t('marketing.product-code')}}",
         },
 
         properties: {
@@ -50,7 +50,7 @@ export const productSelect: ISchema = {
         type: 'void',
         'x-component': 'ArrayTable.Column',
         'x-component-props': {
-          title: "{{t('marketing.productCode')}}",
+          title: "{{t('marketing.product-code')}}",
         },
 
         properties: {
@@ -75,7 +75,7 @@ export const productSelect: ISchema = {
         type: 'void',
         'x-component': 'ArrayTable.Column',
         'x-component-props': {
-          title: "{{t('marketing.PRODUCT')}}",
+          title: "{{t('marketing.product-name')}}",
         },
         properties: {
           major_name: {

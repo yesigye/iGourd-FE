@@ -18,23 +18,23 @@ export default {
           type: 'void',
           'x-component': 'Card',
           'x-component-props': {
-            header: "{{t('discount.form.basicInfo')}}",
+            header: "{{t('discount.form.basic-info')}}",
             class: 'mb-1',
           },
           properties: {
             name: {
               type: 'string',
-              title: "{{t('priceLevel.form.name')}}",
+              title: "{{t('price-level.form.name')}}",
               'x-decorator': 'FormItem',
               'x-component': 'Input',
               'x-component-props': {
                 maxLength: 64,
-                placeholder: "{{t('priceLevel.placeholder.name')}}",
+                placeholder: "{{t('price-level.placeholder.name')}}",
               },
               'x-validator': [
                 {
                   required: true,
-                  message: "{{t('priceLevel.validate.name.required')}}",
+                  message: "{{t('price-level.validate.name.required')}}",
                 },
               ],
             },
@@ -45,20 +45,20 @@ export default {
               properties: {
                 change_type: {
                   type: 'string',
-                  title: "{{t('priceLevel.form.changeType')}}",
+                  title: "{{t('price-level.form.change-type')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'Select',
                   'x-component-props': {
-                    placeholder: "{{t('priceLevel.placeholder.changeType')}}",
+                    placeholder: "{{t('price-level.placeholder.change-type')}}",
                     style: { width: '175px' },
                   },
                   enum: [
                     {
-                      label: "{{t('priceLevel.enum.changeType.decrease')}}",
+                      label: "{{t('price-level.enum.change-type.decrease')}}",
                       value: 'DECREASE',
                     },
                     {
-                      label: "{{t('priceLevel.enum.changeType.increase')}}",
+                      label: "{{t('price-level.enum.change-type.increase')}}",
                       value: 'INCREASE',
                     },
                   ],
@@ -66,26 +66,26 @@ export default {
                     {
                       required: true,
                       message:
-                        "{{t('priceLevel.validate.changeType.required')}}",
+                        "{{t('price-level.validate.change-type.required')}}",
                     },
                   ],
                 },
                 change_mode: {
                   type: 'string',
-                  // title: "{{t('priceLevel.form.changeMode')}}",
+                  // title: "{{t('price-level.form.change-mode')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'Select',
                   'x-component-props': {
-                    placeholder: "{{t('priceLevel.placeholder.changeMode')}}",
+                    placeholder: "{{t('price-level.placeholder.change-mode')}}",
                     style: { width: '175px' },
                   },
                   enum: [
                     {
-                      label: "{{t('priceLevel.enum.changeMode.amount')}}",
+                      label: "{{t('price-level.enum.change-mode.amount')}}",
                       value: 'AMOUNT',
                     },
                     {
-                      label: "{{t('priceLevel.enum.changeMode.percentage')}}",
+                      label: "{{t('price-level.enum.change-mode.percentage')}}",
                       value: 'PERCENTAGE',
                     },
                   ],
@@ -93,19 +93,19 @@ export default {
                     {
                       required: true,
                       message:
-                        "{{t('priceLevel.validate.changeMode.required')}}",
+                        "{{t('price-level.validate.change-mode.required')}}",
                     },
                   ],
                 },
 
                 change_value: {
                   type: 'number',
-                  // title: "{{t('priceLevel.form.changeValue')}}",
+                  // title: "{{t('price-level.form.change-value')}}",
                   'x-decorator': 'FormItem',
                   'x-component': 'InputNumber',
                   'x-component-props': {
                     min: 0,
-                    placeholder: "{{t('priceLevel.placeholder.changeValue')}}",
+                    placeholder: "{{t('price-level.placeholder.change-value')}}",
                     style: { width: '300px' },
                   },
                   'x-reactions': [
@@ -123,7 +123,7 @@ export default {
                     {
                       required: true,
                       message:
-                        "{{t('priceLevel.validate.changeValue.required')}}",
+                        "{{t('price-level.validate.change-value.required')}}",
                     },
                   ],
                 },
@@ -131,7 +131,7 @@ export default {
             },
             status: {
               type: 'string',
-              title: "{{t('priceLevel.form.status')}}",
+              title: "{{t('price-level.form.status')}}",
               default: 'OPEN',
               'x-decorator': 'FormItem',
               'x-component': 'Switch',
@@ -146,48 +146,48 @@ export default {
           type: 'void',
           'x-component': 'Card',
           'x-component-props': {
-            header: "{{t('discount.form.activeSetting')}}",
+            header: "{{t('discount.form.active-setting')}}",
             class: 'mb-1',
           },
           properties: {
             effective_time: {
               type: 'string',
-              title: "{{t('priceLevel.form.effectiveTime')}}",
+              title: "{{t('price-level.form.effective-time')}}",
               'x-decorator': 'FormItem',
               'x-component': 'DatePicker',
               'x-component-props': {
                 type: 'date',
                 valueFormat: 'YYYY-MM-DD 00:00:00',
-                placeholder: "{{t('priceLevel.placeholder.effectiveTime')}}",
+                placeholder: "{{t('price-level.placeholder.effective-time')}}",
               },
               'x-validator': [
                 {
                   required: true,
                   message:
-                    "{{t('priceLevel.validate.effectiveTime.required')}}",
+                    "{{t('price-level.validate.effective-time.required')}}",
                 },
               ],
             },
 
             expiration_time: {
               type: 'string',
-              title: "{{t('priceLevel.form.expirationTime')}}",
+              title: "{{t('price-level.form.expiration-time')}}",
               'x-decorator': 'FormItem',
               'x-component': 'DatePicker',
               'x-component-props': {
                 type: 'date',
                 valueFormat: 'YYYY-MM-DD 23:59:59',
-                placeholder: "{{t('priceLevel.placeholder.expirationTime')}}",
+                placeholder: "{{t('price-level.placeholder.expiration-time')}}",
               },
               'x-validator': [
                 {
                   required: true,
                   message:
-                    "{{t('priceLevel.validate.expirationTime.required')}}",
+                    "{{t('price-level.validate.expiration-time.required')}}",
                 },
                 // {
                 //   validator:
-                //     "{{$self.value && $form.values.effective_time && new Date($self.value) < new Date($form.values.effective_time) ? t('priceLevel.validate.expirationTime.gteEffective') : ''}}",
+                //     "{{$self.value && $form.values.effective_time && new Date($self.value) < new Date($form.values.effective_time) ? t('price-level.validate.expiration-time.gte-effective') : ''}}",
                 // },
               ],
             },
@@ -203,25 +203,25 @@ export default {
           properties: {
             relation_type: {
               type: 'string',
-              title: "{{t('priceLevel.form.relationType')}}",
+              title: "{{t('price-level.form.relation-type')}}",
               default: 'ALL',
               'x-decorator': 'FormItem',
               'x-component': 'Radio.Group',
               enum: [
                 {
-                  label: "{{t('priceLevel.enum.relation.all')}}",
+                  label: "{{t('price-level.enum.relation.all')}}",
                   value: 'ALL',
                 },
                 {
-                  label: "{{t('priceLevel.enum.relation.group')}}",
+                  label: "{{t('price-level.enum.relation.group')}}",
                   value: 'PRODUCT_GROUP',
                 },
                 {
-                  label: "{{t('priceLevel.enum.relation.label')}}",
+                  label: "{{t('price-level.enum.relation.label')}}",
                   value: 'PRODUCT_LABEL',
                 },
                 {
-                  label: "{{t('priceLevel.enum.relation.product')}}",
+                  label: "{{t('price-level.enum.relation.product')}}",
                   value: 'PRODUCT',
                 },
               ],
@@ -286,12 +286,12 @@ export default {
             },
             remark: {
               type: 'string',
-              title: "{{t('priceLevel.form.remark')}}",
+              title: "{{t('price-level.form.remark')}}",
               'x-decorator': 'FormItem',
               'x-component': 'Input.TextArea',
               'x-component-props': {
                 rows: 3,
-                placeholder: "{{t('priceLevel.placeholder.remark')}}",
+                placeholder: "{{t('price-level.placeholder.remark')}}",
               },
             },
           },
