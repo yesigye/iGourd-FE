@@ -57,6 +57,7 @@ function functionTreesToRouteNodes(
         icon: menu.style_class,
         // 所有路由强制 KeepAlive
         keepAlive: true,
+        fullPathKey: false,
         sort: menu.sort_number,
         affixTab: routeName.toLowerCase() === 'home',
       },

@@ -614,123 +614,143 @@ export function useProductAdd() {
    * 提交表单数据
    * @param sku - SKU相关数据
    * @param ismerge - 是否为合并操作
+   * @param stockWarnData - 库存警告数据
    * @returns API响应结果
    */
-  const onSubmit = async (sku, ismerge) => {
-    try {
-      // 表单验证
-      const isValid = await ruleFormRef.value.validate();
-      if (!isValid) return;
+  const onSubmit = async (sku, ismerge, stockWarnData) => {
+    // try {
+    // 表单验证
+    const isValid = await ruleFormRef.value.validate();
+    if (!isValid) return;
 
-      let response;
+    let response;
 
-      // 处理初始库存数量，保留8位小数
-      forms.value.initial_stock_quantity = retainDecimal8(
-        forms.value.initial_stock_quantity,
-        8,
+    // 处理初始库存数量，保留8位小数
+    forms.value.initial_stock_quantity = retainDecimal8(
+      forms.value.initial_stock_quantity,
+      8,
+    );
+    forms.value.initial_stock_warehouse_location_id = 1;
+
+    // 默认库存数量为0
+    if (forms.value.initial_stock_quantity === '') {
+      forms.value.initial_stock_quantity = 0;
+    }
+
+    // 构建动态数据
+    const dynamicData = {};
+    res_options.value.forEach((item) => {
+      if (forms.value[item.prop]) {
+        dynamicData[item.prop] = forms.value[item.prop];
+      }
+    });
+    forms.value.dynamic_data = JSON.stringify(dynamicData);
+
+    // 清空一些不需要的字段
+    forms.value.product_info_list = null;
+    forms.value.product_profile_unit_radio_list = null;
+    forms.value.product_profile_spec_list = null;
+    forms.value.product_profile_unit_info = null;
+
+    // 合并表单数据和SKU数据
+    const productForm = merge({}, forms.value, sku);
+
+    // 处理基本单位信息
+    if (
+      sku &&
+      sku.product_profile_unit_radio_list &&
+      Array.isArray(sku.product_profile_unit_radio_list)
+    ) {
+      const basicUnit = sku.product_profile_unit_radio_list.find(
+        (unit) => unit.is_basic_unit === 1,
       );
-      forms.value.initial_stock_warehouse_location_id = 1;
+      if (basicUnit) {
+        productForm.major_unit_id = basicUnit.secondary_unit_id;
+        productForm.major_unit_name = basicUnit.secondary_unit_name;
+      }
+    }
 
-      // 默认库存数量为0
-      if (forms.value.initial_stock_quantity === '') {
-        forms.value.initial_stock_quantity = 0;
+    // 新增模式时清除ID字段
+    if (formMode.value === 'add') {
+      if (productForm.product_info_list) {
+        productForm.product_info_list = clearArrayIds(
+          productForm.product_info_list,
+        );
       }
 
-      // 构建动态数据
-      const dynamicData = {};
-      res_options.value.forEach((item) => {
-        if (forms.value[item.prop]) {
-          dynamicData[item.prop] = forms.value[item.prop];
+      if (productForm.product_profile_unit_radio_list) {
+        productForm.product_profile_unit_radio_list = clearArrayIds(
+          productForm.product_profile_unit_radio_list,
+        );
+      }
+
+      if (productForm.product_profile_spec_list) {
+        productForm.product_profile_spec_list = clearArrayIds(
+          productForm.product_profile_spec_list,
+        );
+      }
+      productForm.id = '';
+    }
+
+    // 检查SKU条形码重复（非合并操作时）
+    if (!ismerge) {
+      let thePreviousItem = {
+        sku_barcode: '',
+      };
+      let samelength = 1;
+      productForm.product_info_list.forEach((item, index) => {
+        if (thePreviousItem.sku_barcode === item.sku_barcode) {
+          samelength += 1;
+        } else {
+          thePreviousItem = item;
         }
       });
-      forms.value.dynamic_data = JSON.stringify(dynamicData);
-
-      // 清空一些不需要的字段
-      forms.value.product_info_list = null;
-      forms.value.product_profile_unit_radio_list = null;
-      forms.value.product_profile_spec_list = null;
-      forms.value.product_profile_unit_info = null;
-
-      // 合并表单数据和SKU数据
-      const productForm = merge({}, forms.value, sku);
-
-      // 处理基本单位信息
-      if (
-        sku &&
-        sku.product_profile_unit_radio_list &&
-        Array.isArray(sku.product_profile_unit_radio_list)
-      ) {
-        const basicUnit = sku.product_profile_unit_radio_list.find(
-          (unit) => unit.is_basic_unit === 1,
-        );
-        if (basicUnit) {
-          productForm.major_unit_id = basicUnit.secondary_unit_id;
-          productForm.major_unit_name = basicUnit.secondary_unit_name;
-        }
+      if (samelength > 1) {
+        ElMessage.error(t('inventory.skuBarcodeTips'));
+        return false;
       }
-
-      // 新增模式时清除ID字段
-      if (formMode.value === 'add') {
-        if (productForm.product_info_list) {
-          productForm.product_info_list = clearArrayIds(
-            productForm.product_info_list,
-          );
-        }
-
-        if (productForm.product_profile_unit_radio_list) {
-          productForm.product_profile_unit_radio_list = clearArrayIds(
-            productForm.product_profile_unit_radio_list,
-          );
-        }
-
-        if (productForm.product_profile_spec_list) {
-          productForm.product_profile_spec_list = clearArrayIds(
-            productForm.product_profile_spec_list,
-          );
-        }
-        productForm.id = '';
-      }
-
-      // 检查SKU条形码重复（非合并操作时）
-      if (!ismerge) {
-        let thePreviousItem = {
-          sku_barcode: '',
-        };
-        let samelength = 1;
-        productForm.product_info_list.forEach((item, index) => {
-          if (thePreviousItem.sku_barcode === item.sku_barcode) {
-            samelength += 1;
-          } else {
-            thePreviousItem = item;
-          }
-        });
-        if (samelength > 1) {
-          ElMessage.error(t('inventory.skuBarcodeTips'));
-          return false;
-        }
-      }
-
-      // 根据操作模式调用不同的API
-      if (formMode.value === 'add') {
-        response = await productProfileCreate(productForm);
-      } else {
-        // 编辑模式时，如果单位比例列表为空，则设为null
-        if (
-          productForm.product_profile_unit_radio_list &&
-          productForm.product_profile_unit_radio_list.length > 0 &&
-          productForm.product_profile_unit_radio_list[0].id === ''
-        ) {
-          productForm.product_profile_unit_radio_list = null;
-        }
-
-        response = await productProfileModify(productForm);
-      }
-
-      return response;
-    } catch (error) {
-      console.error(error);
-      return { code: 'ERROR', message: error.message };
     }
+    // 库存预警设置
+    if (stockWarnData) {
+      stockWarnData.list.forEach((item) => {
+        item.stock_warning_quantity_maximum = Number(
+          item.stock_warning_quantity_maximum,
+        );
+        item.stock_warning_quantity_minimum = Number(
+          item.stock_warning_quantity_minimum,
+        );
+        item.stock_warning_quantity_safety = Number(
+          item.stock_warning_quantity_safety,
+        );
+      });
+      productForm.stock_warning_list = stockWarnData.list;
+      productForm.is_per_spec_warning = stockWarnData.isPerSpecWarning;
+      productForm.is_per_warehouse_warning =
+        stockWarnData.isPerWarehouseWarning;
+      productForm.is_enabled_stock_warning =
+        stockWarnData.is_enabled_stock_warning;
+    }
+    // 根据操作模式调用不同的API
+    if (formMode.value === 'add') {
+      response = await productProfileCreate(productForm);
+    } else {
+      // 编辑模式时，如果单位比例列表为空，则设为null
+      if (
+        productForm.product_profile_unit_radio_list &&
+        productForm.product_profile_unit_radio_list.length > 0 &&
+        productForm.product_profile_unit_radio_list[0].id === ''
+      ) {
+        productForm.product_profile_unit_radio_list = null;
+      }
+
+      response = await productProfileModify(productForm);
+    }
+
+    return response;
+    // } catch (error) {
+    //   console.error(error);
+    //   return { code: 'ERROR', message: error.message };
+    // }
   };
 
   // ==================== 抽屉/对话框管理 ====================

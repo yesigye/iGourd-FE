@@ -97,7 +97,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
       // fetchGoodsList();
     }
   },
-  onConfirm: async () => {
+  onConfirm: async (event) => {
     try {
       handleInputDebounced();
     } catch (error) {
@@ -361,7 +361,7 @@ const customUpload = async ({ file }) => {
 
 const handleClose = () => {
   isReturnShow.value = false;
-
+  // drawerApi.close();
   setTimeout(() => {
     resetAllData();
     emit('close-tkr');
@@ -407,6 +407,7 @@ let handleInputDebounced;
 onMounted(() => {
   getSkuSet();
   handleInputDebounced = debounce(async () => {
+    const stockWarnData = productSKUFormRef.value.getStockWarnData();
     // 提交前sku检查
     if (productSKUFormRef.value) {
       const confirmed = await productSKUFormRef.value.checkSKUChanges();
@@ -418,6 +419,7 @@ onMounted(() => {
       ? productSKUFormRef.value.submitSKU()
       : null;
     const ismerge = productSKUFormRef.value.handleMergeForm();
+
     // skuData.deletedProductTable 根据id去重
     let response = null;
     try {
@@ -434,24 +436,28 @@ onMounted(() => {
             }),
             callback: async (event) => {
               if (event === 'confirm') {
-                response = await onSubmit(skuData.skuList, ismerge);
+                response = await onSubmit(
+                  skuData.skuList,
+                  ismerge,
+                  stockWarnData,
+                );
                 if (response?.code === 'SUCCESS') {
                   handleClose();
-                  emit('saved');
+                  // emit('saved');
                 }
               }
             },
           });
         } else {
-          response = await onSubmit(skuData.skuList, ismerge);
+          response = await onSubmit(skuData.skuList, ismerge, stockWarnData);
         }
       } else {
-        response = await onSubmit(skuData.skuList, ismerge);
+        response = await onSubmit(skuData.skuList, ismerge, stockWarnData);
       }
       // if (response?.code === 'SUCCESS') {
       handleClose();
-      emit('saved');
-      drawerApi.close();
+      // emit('saved');
+      // drawerApi.close();
       // }
     } catch (error) {
       console.error('提交失败:', error);
@@ -719,10 +725,10 @@ onMounted(() => {
         <div class="drawer-top-buttons"></div>
       </div>
     </template>
-
     <div class="m-2.5">
       <ElForm
         ref="ruleFormRef"
+        :show-message="true"
         class="demo-ruleForm"
         style="min-width: 1100px"
         label-width="160px"
@@ -1297,6 +1303,16 @@ onMounted(() => {
     </ElDialog>
 
     <AddWHAndUnit ref="addWHAndUnitRef" @success="handleWHUnitSuccess" />
+    <template #footer>
+      <div>
+        <ElButton type="default" @click="handleClose">
+          {{ t('inventory.cancel') }}
+        </ElButton>
+        <ElButton type="primary" @click="handleInputDebounced()">
+          {{ t('inventory.save') }}
+        </ElButton>
+      </div>
+    </template>
   </Drawer>
 </template>
 <style lang="scss" scoped>

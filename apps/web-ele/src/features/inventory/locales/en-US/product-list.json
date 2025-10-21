@@ -38,5 +38,12 @@
   "labelBindFailed": "Label Bind Failed",
   "delete_tips_recent_sales_recor": "This product has recent sales records, are you sure to delete?",
   "delete_tips_assoclated_bom": "This product has associated BOM, are you sure to delete?",
-  "delete_tips_warranty_info": "This product has warranty information, are you sure to delete?"
+  "delete_tips_warranty_info": "This product has warranty information, are you sure to delete?",
+  "enable-sub-warehouse-early-warning": "Enable Sub-Warehouse Early Warning",
+  "enable-spec-settings": "Enable Spec Settings",
+  "stock-warning-settings": "Stock Warning Settings",
+  "warehouse": "Sub-Warehouse",
+  "min-stock": "Minimum Stock",
+  "safety-stock": "Safety Stock",
+  "max-stock": "Maximum Stock"
 }

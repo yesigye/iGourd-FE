@@ -1,7 +1,6 @@
 <script setup>
-import { useI18n } from '@igourd/locales';
-
 import { ElIcon, ElTable, ElTableColumn } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
 
 import { deleteUnitTableConfig } from './sku.config';
 

@@ -84,5 +84,12 @@
   "major-unit": "主单位",
   "minor-unit": "副单位",
   "unit-rate": "单位比例",
-  "sku": "SKU"
+  "sku": "SKU",
+  "enable-sub-warehouse-early-warning": "启用子仓库预警",
+  "enable-spec-settings": "启用规格设置",
+  "stock-warning-settings": "库存预警设置",
+  "warehouse": "子仓库",
+  "min-stock": "最小库存",
+  "safety-stock": "安全库存",
+  "max-stock": "最大库存"
 }

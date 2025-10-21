@@ -362,6 +362,8 @@ let handleInputDebounced;
 onMounted(() => {
   getSkuSet();
   handleInputDebounced = debounce(async () => {
+    debugger;
+    console.log('获取预警信息', productSKUFormRef.value);
     // 提交前sku检查
     if (productSKUFormRef.value) {
       const confirmed = await productSKUFormRef.value.checkSKUChanges();

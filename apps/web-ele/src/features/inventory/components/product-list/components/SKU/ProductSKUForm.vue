@@ -891,6 +891,57 @@ watch(
   },
   { deep: true },
 );
+const getStockWarnData = () => {
+  const stockWarnData = specsConfigRef.value.stockWarnData || {};
+  // 添加数据校验 开启库存预警设置的情况下
+  // 规则一 不开启分仓和规格警告时 只校验 stockWarnTableData 每一个item的 stock_warning_quantity_maximum: 0,
+  // stock_warning_quantity_minimum: 0, stock_warning_quantity_safety: 0,是否都有值
+  // 规则二  开启分仓时 不仅校验规则一还要校验每个item的warehouse_id是否为空
+  // 规则三 开启规格警告时 不仅校验规则一还要校验每个item的spec_code是否为空
+  // 执行校验逻辑
+  let hasValidationError = false;
+  for (const item of stockWarnData.list || []) {
+    // 规则一：基础字段校验
+    if (
+      item.stock_warning_quantity_maximum === null ||
+      item.stock_warning_quantity_maximum === undefined ||
+      item.stock_warning_quantity_minimum === null ||
+      item.stock_warning_quantity_minimum === undefined ||
+      item.stock_warning_quantity_safety === null ||
+      item.stock_warning_quantity_safety === undefined ||
+      item.stock_warning_quantity_maximum === '' ||
+      item.stock_warning_quantity_minimum === '' ||
+      item.stock_warning_quantity_safety === ''
+    ) {
+      hasValidationError = true;
+      break;
+    }
+
+    // 规则二：开启分仓警告时校验warehouse_id
+    if (
+      stockWarnData.isPerWarehouseWarning &&
+      (!item.warehouse_id || item.warehouse_id === '')
+    ) {
+      hasValidationError = true;
+      break;
+    }
+
+    // 规则三：开启规格警告时校验spec_code
+    if (
+      stockWarnData.isPerSpecWarning &&
+      (!item.spec_code || item.spec_code === '')
+    ) {
+      hasValidationError = true;
+      break;
+    }
+  }
+
+  // 如果有校验错误，显示提示信息
+  if (hasValidationError) {
+    ElMessage.warning('请填写完整库存预警信息');
+  }
+  return stockWarnData || {};
+};
 
 // 确保暴露这个方法
 defineExpose({
@@ -904,6 +955,7 @@ defineExpose({
   backupSpecRows,
   backupUnitsConfig,
   handleMergeForm,
+  getStockWarnData,
 });
 </script>
 

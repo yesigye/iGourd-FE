@@ -29,6 +29,7 @@ import {
   ElButton,
   ElCheckbox,
   ElIcon,
+  ElInput,
   ElMessage,
   ElMessageBox,
   ElOption,
@@ -1952,6 +1953,141 @@ const resetData = () => {
   // 9. 触发变更事件
   emitChange();
 };
+const is_enabled_stock_warning = ref(false);
+/** 库存预警字段列*/
+const stockWarnColumns = ref([
+  {
+    prop: 'stock_warning_quantity_maximum',
+    label: t('product-list.min-stock'),
+    type: 'input',
+  },
+  {
+    prop: 'stock_warning_quantity_minimum',
+    label: t('product-list.safety-stock'),
+    type: 'input',
+  },
+  {
+    prop: 'stock_warning_quantity_safety',
+    label: t('product-list.max-stock'),
+    type: 'input',
+  },
+]);
+/** 库存预警表格数据*/
+const stockWarnTableData = ref([
+  {
+    stock_warning_quantity_maximum: 0,
+    stock_warning_quantity_minimum: 0,
+    stock_warning_quantity_safety: 0,
+    spec_code: '',
+    warehouse_id: '',
+  },
+]);
+// 库存预警相关
+const isPerWarehouseWarning = ref(false);
+const isPerSpecWarning = ref(false);
+
+/** 判断是否有操作列 如果没有则添加操作列，否则不添加*/
+const addOptionColumn = () => {
+  if (isPerWarehouseWarning.value || isPerSpecWarning.value) {
+    if (!stockWarnColumns.value.find((item) => item.prop === 'option')) {
+      stockWarnColumns.value.push({
+        prop: 'option',
+        label: t('common.option'),
+      });
+    }
+  } else {
+    // 否则移除操作列
+    const index = stockWarnColumns.value.findIndex(
+      (item) => item.prop === 'option',
+    );
+    if (index !== -1) {
+      stockWarnColumns.value.splice(index, 1);
+    }
+  }
+};
+
+/** 开启子仓库预警*/
+const handlePerWarehouseWarningChange = (val) => {
+  if (val) {
+    // 如果开启子仓库预警，默认开启规格预警向库存预警字段列在第一列添加子仓库ID
+    stockWarnColumns.value.unshift({
+      prop: 'warehouse_id',
+      label: t('product-list.warehouse'),
+      type: 'select',
+    });
+  } else {
+    // 如果关闭子仓库预警，移除库存预警字段列中的子仓库ID
+    stockWarnColumns.value.shift();
+  }
+  addOptionColumn();
+  // 更新库存预警表格数据中仓库ID
+  stockWarnTableData.value.forEach((item) => {
+    item.warehouse_id = '';
+  });
+};
+/** 开启规格预警*/
+const handlePerSpecWarningChange = (val) => {
+  if (val) {
+    // 如果开启规格预警，判断是否开启子仓库预警如果开启加载子仓库列后面否则的话加载规格ID列在第一列
+    if (isPerWarehouseWarning.value) {
+      stockWarnColumns.value.splice(1, 0, {
+        prop: 'spec_code',
+        label: t('product-list.spec'),
+        type: 'select',
+      });
+    } else {
+      stockWarnColumns.value.unshift({
+        prop: 'spec_code',
+        label: t('product-list.spec'),
+        type: 'select',
+      });
+    }
+  } else {
+    // 如果关闭规格预警，移除规格预警列
+    const index = stockWarnColumns.value.findIndex(
+      (item) => item.prop === 'spec_code',
+    );
+    if (index !== -1) {
+      stockWarnColumns.value.splice(index, 1);
+    }
+  }
+  addOptionColumn();
+  // 更新库存预警表格数据中的规格ID
+  stockWarnTableData.value.forEach((item) => {
+    item.spec_code = '';
+  });
+};
+/** 添加库存预警行*/
+const handleAddStockWarn = () => {
+  stockWarnTableData.value.push({
+    stock_warning_quantity_maximum: 0,
+    stock_warning_quantity_minimum: 0,
+    stock_warning_quantity_safety: 0,
+    spec_code: '',
+    warehouse_id: '',
+  });
+};
+/** 规格列option*/
+const specCodeOptions = computed(() => {
+  const options = [];
+  tableData.value.forEach(
+    (item: {
+      product_info_spec_list: { spec_name: string }[];
+      spec_code: string;
+    }) => {
+      const optionObj = {};
+      optionObj.value = item.spec_code;
+      optionObj.label =
+        item.product_info_spec_list.length > 0
+          ? item.product_info_spec_list
+              .map((item) => item.product_spec_name)
+              .join('-')
+          : item.product_spec_name;
+      options.push(optionObj);
+    },
+  );
+  return options;
+});
 
 // 单位的变化
 watch(
@@ -2080,6 +2216,24 @@ const setSpecConfig = (newConfig) => {
     }
   }
 };
+const stockWarnData = computed(() => {
+  // 如果没有开启直接返回
+  if (!is_enabled_stock_warning.value) {
+    return {
+      list: [],
+      isPerSpecWarning: false,
+      isPerWarehouseWarning: false,
+      is_enabled_stock_warning: false,
+    };
+  }
+
+  return {
+    list: stockWarnTableData.value,
+    isPerSpecWarning: isPerSpecWarning.value,
+    isPerWarehouseWarning: isPerWarehouseWarning.value,
+    is_enabled_stock_warning: is_enabled_stock_warning.value,
+  };
+});
 
 defineExpose({
   handleMultiSpecsToggle,
@@ -2096,6 +2250,7 @@ defineExpose({
   handleMerge,
   resetData,
   tableData,
+  stockWarnData, // 库存警告数据
   setSpecConfig,
 });
 </script>
@@ -2158,6 +2313,7 @@ defineExpose({
               </ElButton>
             </div>
           </div>
+
           <ElTable :data="specRows" style="width: 100%">
             <ElTableColumn type="index" label="#" width="50" />
             <ElTableColumn :label="t('inventory.spec')" width="130">
@@ -2245,6 +2401,93 @@ defineExpose({
             />
           </ElSelect>
         </div>
+        <!-- 库存预警设置 -->
+        <div class="mb-5">
+          <p>
+            {{ t('product-list.stock-warning-settings') }}
+            <ElSwitch v-model="is_enabled_stock_warning" />
+          </p>
+          <div v-if="is_enabled_stock_warning">
+            <div>
+              <ElCheckbox
+                v-model="isPerWarehouseWarning"
+                @change="handlePerWarehouseWarningChange"
+              >
+                {{ t('product-list.enable-sub-warehouse-early-warning') }}
+              </ElCheckbox>
+              <ElCheckbox
+                v-model="isPerSpecWarning"
+                @change="handlePerSpecWarningChange"
+              >
+                {{ t('product-list.enable-spec-settings') }}
+              </ElCheckbox>
+            </div>
+            <!-- 库存预警设置 -->
+            <div>
+              <ElTable :data="stockWarnTableData" style="width: 100%">
+                <ElTableColumn
+                  v-for="(col, colIndex) in stockWarnColumns"
+                  :key="col.prop"
+                  :prop="col.prop"
+                  :label="col.label"
+                >
+                  <template #default="{ row }">
+                    <div v-if="col.prop === 'warehouse_id'">
+                      <ElSelect
+                        class="w-full"
+                        v-model="row[col.prop]"
+                        :placeholder="$t('inventory.all')"
+                      >
+                        <ElOption
+                          v-for="item in warehouseListContent"
+                          :key="item.id"
+                          :label="item.name"
+                          :value="item.id"
+                        />
+                      </ElSelect>
+                    </div>
+                    <div v-else-if="col.prop === 'spec_code'">
+                      <ElSelect
+                        class="w-full"
+                        v-model="row[col.prop]"
+                        :placeholder="$t('inventory.all')"
+                      >
+                        <ElOption
+                          v-for="item in specCodeOptions"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+                        />
+                      </ElSelect>
+                    </div>
+                    <div v-else-if="col.prop === 'option'">
+                      <ElButton
+                        type="primary"
+                        size="small"
+                        round
+                        plain
+                        @click="handleAddStockWarn(row)"
+                      >
+                        {{ $t('common.add') }}
+                      </ElButton>
+                      <ElButton
+                        type="primary"
+                        size="small"
+                        round
+                        plain
+                        @click="handleAddOption(row)"
+                      >
+                        {{ $t('common.del') }}
+                      </ElButton>
+                    </div>
+                    <ElInput class="w-full" v-model="row[col.prop]" v-else />
+                  </template>
+                </ElTableColumn>
+              </ElTable>
+            </div>
+          </div>
+        </div>
+
         <ElTable
           :data="tableData"
           border
