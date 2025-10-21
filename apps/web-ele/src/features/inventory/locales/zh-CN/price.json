@@ -1,16 +1,3 @@
 {
-  "priceChangeLog": "价格变更日志",
-  "enterPriceKeywords": "请输入价格关键词",
-  "selectPriceType": "选择价格类型",
-  "changeType": "变更类型",
-  "productName": "商品名称",
-  "productCode": "商品编码",
-  "preChangePrice": "变更前价格",
-  "postChangePrice": "变更后价格",
-  "changeAmount": "变更金额",
-  "remarks": "备注",
-  "creator": "创建人",
-  "creationTime": "创建时间",
-  "cost_price": "成本价",
-  "selling_price": "销售价"
+
 }
