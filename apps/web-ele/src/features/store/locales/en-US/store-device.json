@@ -1,0 +1,26 @@
+
+{
+  "title": "Device Authorization",
+  "search-placeholder": "Enter keywords to search (device name, device code)",
+  "storename": "Store Full Name",
+  "short-name": "Store Short Name",
+  "code": "Device ID",
+  "name": "Device Name",
+  "mac-address": "MAC Address",
+  "ip-address": "Login IP",
+  "last-login-time": "Login Time",
+  "login-count": "Login Count",
+  "software-version": "Version Number",
+  "version-update-time": "Version Update Time",
+  "os-version": "Device OS Version",
+  "type": "Device Type",
+  "is-authorized": "Authorization",
+  "status": "Disabled Status",
+  "status-active": "Active",
+  "status-frozen": "Frozen",
+  "status-prohibited": "Disabled",
+  "type-pos": "POS Device",
+  "type-handheld-terminal": "Handheld Device",
+  "type-price-increaser": "Price Increaser",
+  "type-scan-print-all-in-one": "Scan & Print All-in-One"
+}

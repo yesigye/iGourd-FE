@@ -35,7 +35,7 @@ function handleCancel() {
   <BasicDrawer
     v-bind="$attrs"
     :size="648"
-    :title="$t('store.storeList.auditRecord')"
+    :title="$t('store.store-list.audit-record')"
     :show-footer="false"
     @register="registerModal"
     @close="handleCancel"
@@ -56,7 +56,7 @@ function handleCancel() {
         </ElTimelineItem>
       </ElTimeline>
       <template v-else>
-        <ElEmpty :description="$t('storeComplete.emptyText')" />
+        <ElEmpty :description="$t('store-complete.empty-text')" />
       </template>
     </div>
   </BasicDrawer>

@@ -1,0 +1,19 @@
+{
+  "business-type": { "label": "Business Type", "placeholder": "Select business type" },
+  "full-name": { "label": "Store Name", "placeholder": "Enter store name" },
+  "short-name": { "label": "Store Short Name", "placeholder": "Enter store short name" },
+  "industry-code": { "label": "Store Industry", "placeholder": "Select store industry" },
+  "time-zone-id": { "label": "Timezone", "placeholder": "Select timezone" },
+  "country-id": { "label": "Country", "placeholder": "Select country" },
+  "actual-address": { "label": "Address", "placeholder": "Enter address" },
+  "basic-currency-code": { "label": "Base Currency", "placeholder": "Select base currency" },
+  "major-country-language": {
+    "label": "Language Settings",
+    "placeholder": "Select primary language"
+  },
+  "minor-country-language": {
+    "label": "Language Settings",
+    "placeholder": "Select secondary language"
+  },
+  "merchant-existed": "Store name already exists"
+}

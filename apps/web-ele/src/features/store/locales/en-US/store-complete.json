@@ -1,0 +1,13 @@
+{
+  "creation-title-APPROVED": "Verification Complete",
+  "creation-title-REJECTED": "Creation Failed",
+  "creation-title-PENDING": "Transaction Under Verification",
+  "creation-message-APPROVED": "Your account verification has been completed. You can now log in and start using our services.",
+  "creation-message-REJECTED": "Your account verification was not approved. Please contact our sales team offline to investigate the reason! Recreate your store.",
+  "creation-message-PENDING": "Your transaction is currently under verification. Please wait patiently. We will complete the verification within one business day. Please check your email or SMS. Once verified successfully, you can log in and access the homepage.",
+  "audit-text": "Audit Records",
+  "creation-btn-text-APPROVED": "Back",
+  "creation-btn-text-REJECTED": "Back",
+  "creation-btn-text-PENDING": "Back",
+  "empty-text": "No Data Available"
+}

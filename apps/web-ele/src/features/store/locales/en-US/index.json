@@ -1,0 +1,18 @@
+{
+  "title": "Store Management",
+  "store-name": "Store Name",
+  "store-code": "Store Code",
+  "description": "Description",
+  "logo": "Logo",
+  "address": "Address",
+  "contact-person": "Contact Person",
+  "contact-phone": "Contact Phone",
+  "contact-email": "Contact Email",
+  "status": "Status",
+  "total-orders": "Total Orders",
+  "total-customers": "Total Customers",
+  "total-products": "Total Products",
+  "total-revenue": "Total Revenue",
+  "monthly-orders": "Monthly Orders",
+  "monthly-revenue": "Monthly Revenue"
+}

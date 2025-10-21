@@ -1,0 +1,15 @@
+{
+  "purchase-btn": "购买",
+  "month-amount-unit": "月",
+  "payable-title": "应付金额",
+  "method-title": "请选择付款方式",
+  "method-offline": "离线支付",
+  "place-button": "下单",
+  "payable-amount": "金额",
+  "payable-discount": "折扣",
+  "payable-fee": "初始服务指导费",
+  "payable-origin": "原套餐抵扣金额",
+  "total": "总计",
+  "payment-method-cash": "现金支付",
+  "payment-method-offline-bank-transfer": "线下银行转帐"
+}

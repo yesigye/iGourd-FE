@@ -39,14 +39,14 @@ function handleClickEvent() {
     <div class="SEd-info-money SEd-border">
       <div class="SEd-info-money__price" @click="handleClickEvent">
         {{ storeParams?.currencySymbol }} {{ standardInfo.amount }}/{{
-          $t('standardCard.monthAmountUnit')
+          $t('standard-card.month-amount-unit')
         }}
       </div>
       <div class="SEd-info-money__describe">{{ standardInfo.remark }}</div>
     </div>
     <div class="SEd-info-function SEd-info-module SEd-border">
       <h3 class="SEd-info-module-title">
-        {{ $t('standardCard.moduleTitle') }}
+        {{ $t('standard-card.module-title') }}
       </h3>
       <ul class="SEd-info-module-list">
         <li
@@ -60,7 +60,7 @@ function handleClickEvent() {
     </div>
     <div class="SEd-info-module">
       <h3 class="SEd-info-module-title">
-        {{ $t('standardCard.employeeTitle') }}
+        {{ $t('standard-card.employee-title') }}
       </h3>
       <ul class="SEd-info-module-list">
         <li class="SEd-info-module-li">
