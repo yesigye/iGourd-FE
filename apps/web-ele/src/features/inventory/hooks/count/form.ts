@@ -406,7 +406,7 @@ export function useCountForm() {
   };
   const { Form, formAPI, Drawer, drawerApi } = useDrawerForm({
     drawerOptions: {
-      title: t('count.addInventoryCountSave'),
+      title: t('count.add-inventory-count-save'),
       appendToMain: true,
       class: 'md:w-2/3',
       async onOpenChange(isOpen) {
