@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 
 import {
@@ -194,7 +193,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="scan-content" style="height: 100%; overflow-y: auto">
+  <div class="scan-content h-full overflow-auto">
     <ElTable
       ref="tableRef"
       :data="mergeGoodsList || []"

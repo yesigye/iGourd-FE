@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref, toRefs } from 'vue';
 
-import { useIgourdDrawer } from '@igourd/common-ui';
+import { ElButton, useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { getCustomTemplateListApi, orderDetailApi } from '@@/sale/apis';
@@ -41,7 +41,6 @@ const [Drawer, drawerApi] = useIgourdDrawer({
     if (val) {
       const { order_no: no } = drawerApi.getData();
       order_no.value = no;
-      console.log(order_no.value);
       initMounted();
     }
   },
@@ -54,6 +53,7 @@ const handleClose = () => {
   printTemplate.value = {};
   orderDetail.value = {};
   isListShow.value = false;
+  drawerApi.close();
   emit('close-tkr');
 };
 
@@ -146,5 +146,15 @@ async function fetchOrderDetail() {
         template-type="RECEIPT"
       />
     </div>
+    <template #footer>
+      <div class="flex justify-end">
+        <ElButton type="default" size="default" @click="handleClose">
+          {{ t('common.close') }}
+        </ElButton>
+        <ElButton type="default" size="default" v-print="printParams">
+          {{ t('common.print') }}
+        </ElButton>
+      </div>
+    </template>
   </Drawer>
 </template>
