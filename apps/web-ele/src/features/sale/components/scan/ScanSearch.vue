@@ -262,7 +262,7 @@ async function getQueryProduct() {
       business_type: 'SALE',
       // status: 'ON_SALE',
       page_num: 1,
-      page_size: 100,
+      page_size: 10,
     });
     return res?.list || [];
   } finally {

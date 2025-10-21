@@ -72,7 +72,7 @@ const printObj = {
   ids: 'receiptPrintId3',
   popTitle: '页面打印',
   breakInside: 'avoid',
-  preview: true,
+  preview: false,
   // 小票模式
   receipt: true,
 };
@@ -785,7 +785,9 @@ defineExpose({
     <div
       class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
-      <span class="scan-cash-settlement-header-title">{{ t('scan.amount-tendered') }}:</span>
+      <span class="scan-cash-settlement-header-title"
+        >{{ t('scan.amount-tendered') }}:</span
+      >
 
       <span class="scan-cash-settlement-header-amount">
         {{ tenderedAmount.toFixed(2) }} {{ currentSymbol }}
@@ -795,7 +797,9 @@ defineExpose({
     <div
       class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
-      <span class="scan-cash-settlement-header-title">{{ t('scan.amount-change') }}:</span>
+      <span class="scan-cash-settlement-header-title"
+        >{{ t('scan.amount-change') }}:</span
+      >
       <div class="flex-1">
         <ElInputNumber
           ref="wipedAmountInput"
@@ -892,17 +896,15 @@ defineExpose({
       class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
       <span class="text-status-partial">{{ t('scan.change') }}:</span>
-      <span class="text-status-terminated">{{ changeAmount }} {{ currentSymbol }}</span>
+      <span class="text-status-terminated"
+        >{{ changeAmount }} {{ currentSymbol }}</span
+      >
     </div>
 
     <div
       class="scan-cash-settlement-button absolute bottom-0 flex w-full justify-end bg-white pb-2.5 pr-5 pt-2.5"
     >
-      <ElButton
-        v-print="printObj"
-        :disabled="!isPrintEnabled"
-        class="scan-cash-settlement-button-print"
-      >
+      <ElButton v-print="printObj" type="default">
         {{ t('scan.print') }}
       </ElButton>
 
