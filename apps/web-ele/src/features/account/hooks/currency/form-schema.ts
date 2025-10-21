@@ -14,7 +14,7 @@ export default {
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-validator': [
-            { required: true, message: "{{$t('account.name_required')}}" },
+            { required: true, message: "{{$t('account.name-required')}}" },
             {
               pattern: '^[^`~!@#$^&*()=+\\[\\]{};:\'\\",<>/?\\\\|]+$',
               message: "{{$t('common.noSpecialChars')}}",
@@ -36,7 +36,7 @@ export default {
         },
         source_account_ledger_code: {
           type: 'string',
-          title: "{{$t('account.classification_form.debit')}}",
+          title: "{{$t('account.classification-form.debit')}}",
           'x-decorator': 'FormItem',
           'x-component': 'FormilySearchSelect',
           'x-component-props': { multiple: true },
@@ -44,7 +44,7 @@ export default {
         },
         target_account_ledger_code: {
           type: 'string',
-          title: "{{$t('account.classification_form.credit')}}",
+          title: "{{$t('account.classification-form.credit')}}",
           'x-decorator': 'FormItem',
           'x-component': 'FormilySearchSelect',
           'x-component-props': { multiple: false },

@@ -21,14 +21,14 @@ export function useNotesList(defaultParams?: Record<string, any>) {
     },
     {
       field: 'trading_time',
-      title: t('account.transaction_time'),
+      title: t('account.transaction-time'),
       minWidth: 150,
       sortable: true,
       align: 'left',
     },
     {
       field: 'accounting_note_no',
-      title: t('account.notes_no'),
+      title: t('account.notes-no'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -56,7 +56,7 @@ export function useNotesList(defaultParams?: Record<string, any>) {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('account.enter_note_no')}}",
+        placeholder: "{{t('account.enter-note-no')}}",
         clearable: true,
       },
     },

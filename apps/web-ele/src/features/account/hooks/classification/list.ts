@@ -26,7 +26,7 @@ export function useClassification() {
     {
       field: 'type',
       minWidth: 120,
-      title: t('account.revenue_and_expenditure'),
+      title: t('account.revenue-and-expenditure'),
       formatter({ cellValue }) {
         return t(`account.${cellValue}`);
       },
@@ -34,12 +34,12 @@ export function useClassification() {
     {
       field: 'ledger_names',
       minWidth: 150,
-      title: t('account.classification_form.debit'),
+      title: t('account.classification-form.debit'),
     },
     {
       field: 'target_ledger_name',
       minWidth: 100,
-      title: t('account.classification_form.credit'),
+      title: t('account.classification-form.credit'),
     },
     {
       field: 'remark',
@@ -49,12 +49,12 @@ export function useClassification() {
     {
       field: 'creator_name',
       minWidth: 100,
-      title: t('account.creatorName'),
+      title: t('account.creator-name'),
     },
     {
       field: 'create_time',
       minWidth: 120,
-      title: t('account.createTime'),
+      title: t('account.create-time'),
     },
     {
       field: 'operation',

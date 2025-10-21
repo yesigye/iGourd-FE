@@ -18,19 +18,19 @@ export function useCurrency() {
       minWidth: 200,
       align: 'left',
       fixed: 'left',
-      title: t('account.currencySymbol'),
+      title: t('account.currency-symbol'),
     },
     {
       field: 'code',
       minWidth: 160,
       align: 'left',
-      title: t('account.currencyCode'),
+      title: t('account.currency-code'),
     },
     {
       field: 'exchange_rate',
       minWidth: 160,
       align: 'left',
-      title: t('account.exchangeRate'),
+      title: t('account.exchange-rate'),
     },
     {
       field: 'symbol',
@@ -62,7 +62,7 @@ export function useCurrency() {
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: t('account.pleaseEnterKeywordsToSearchSelect'),
+            placeholder: t('account.please-enter-keywords-to-search-select'),
           },
         },
       },

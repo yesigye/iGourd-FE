@@ -50,7 +50,7 @@ const {
       <Card
         class="bg-card p-small mr-2 h-full rounded"
         header-class="text-sm"
-        :header="t('account.financialCategory')"
+        :header="t('account.financial-category')"
         shadow="never"
       >
         <ElAutoResizer>

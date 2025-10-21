@@ -28,14 +28,14 @@ export function useAccountNotes() {
     },
     {
       field: 'accounting_note_no',
-      title: t('account.notes_no'),
+      title: t('account.notes-no'),
       minWidth: 150,
       sortable: true,
       align: 'left',
     },
     {
       field: 'finance_category_name',
-      title: t('account.finance_category'),
+      title: t('account.finance-category'),
       minWidth: 120,
       sortable: true,
       align: 'left',
@@ -50,18 +50,18 @@ export function useAccountNotes() {
     },
     {
       field: 'our_account',
-      title: t('account.our_account'),
+      title: t('account.our-account'),
       align: 'center',
       children: [
         {
           field: 'our_account_name',
-          title: t('account.payment_account'),
+          title: t('account.payment-account'),
           align: 'center',
           minWidth: 138,
         },
         {
           field: 'our_payment_method_name',
-          title: t('account.payment_method'),
+          title: t('account.payment-method'),
           align: 'center',
           minWidth: 135,
         },
@@ -79,11 +79,11 @@ export function useAccountNotes() {
     {
       field: 'external_account',
       align: 'center',
-      title: t('account.external_account'),
+      title: t('account.external-account'),
       children: [
         {
           field: 'target_account_name',
-          title: t('account.payment_account'),
+          title: t('account.payment-account'),
           minWidth: 138,
         },
         {
@@ -98,7 +98,7 @@ export function useAccountNotes() {
     },
     {
       field: 'trading_time',
-      title: t('account.transaction_time'),
+      title: t('account.transaction-time'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -112,7 +112,7 @@ export function useAccountNotes() {
     },
     {
       field: 'create_time',
-      title: t('account.creation_time'),
+      title: t('account.creation-time'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -121,7 +121,7 @@ export function useAccountNotes() {
     {
       field: 'reviewer',
       fixed: 'right',
-      title: t('account.Review'),
+      title: t('account.review'),
       minWidth: 165,
     },
     {
@@ -140,7 +140,7 @@ export function useAccountNotes() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('account.enter_note_no')}}",
+        placeholder: "{{t('account.enter-note-no')}}",
         clearable: true,
       },
     },

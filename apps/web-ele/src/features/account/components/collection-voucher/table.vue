@@ -50,7 +50,7 @@ const [Modal, modalApi] = useIgourdModal({
 <template>
   <Modal :onBeforeOpen="onBeforeOpen" title="源订单">
     <template #reference>
-      {{ t('account.source_order_information') }}
+      {{ t('account.source-order-information') }}
     </template>
     <div class="h-[54vh]">
       <SaleGrid />

@@ -55,18 +55,18 @@ export function useChartOfAccounts() {
       width: 165,
       fixed: 'left',
       align: 'left',
-      title: t('account.account_code'),
+      title: t('account.account-code'),
       treeNode: true,
     },
     {
       field: 'name',
       width: 220,
-      title: t('account.account_ledger_name'),
+      title: t('account.account-ledger-name'),
     },
     {
       field: 'balance_direction',
       width: 200,
-      title: t('account.balance_direction'),
+      title: t('account.balance-direction'),
       formatter({ cellValue }) {
         return t(
           accountLedgerBalanceDirectionOptions().find((i) => {
@@ -78,40 +78,40 @@ export function useChartOfAccounts() {
     {
       field: 'initial_balance',
       width: 180,
-      title: t('account.opening_balance'),
+      title: t('account.opening-balance'),
       editRender: { name: 'input' },
     },
     {
       field: 'cumulative_debit_amount',
       width: 180,
-      title: t('account.cumulative_debit'),
+      title: t('account.cumulative-debit'),
       editRender: { name: 'input' },
     },
     {
       field: 'cumulative_credit_amount',
       width: 180,
-      title: t('account.cumulative_credit'),
+      title: t('account.cumulative-credit'),
       editRender: { name: 'input' },
     },
     {
       field: 'current_debit_amount',
       width: 200,
-      title: t('account.current_debit_amount'),
+      title: t('account.current-debit-amount'),
     },
     {
       field: 'current_credit_amount',
       width: 200,
-      title: t('account.current_credit_amount'),
+      title: t('account.current-credit-amount'),
     },
     {
       field: 'beginning_balance',
       width: 200,
-      title: t('account.beginning_balance'),
+      title: t('account.beginning-balance'),
     },
     {
       field: 'ending_balance',
       width: 200,
-      title: t('account.ending_balance'),
+      title: t('account.ending-balance'),
     },
     {
       field: 'actions',
@@ -131,7 +131,7 @@ export function useChartOfAccounts() {
     { label: t('account.equity'), value: 'equity' },
     { label: t('account.revenue'), value: 'revenue' },
     { label: t('account.expense'), value: 'expense' },
-    { label: t('account.profit_and_loss'), value: 'profitAndLoss' },
+    { label: t('account.profit-and-loss'), value: 'profitAndLoss' },
   ];
 
   // 服务函数

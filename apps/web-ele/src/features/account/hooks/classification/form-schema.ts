@@ -16,14 +16,14 @@ export default (account_set_id: string) =>
             type: 'void',
             'x-component': 'Card',
             'x-component-props': {
-              header: `{{ t('account.basic_information') }}`,
+              header: `{{ t('account.basic-information') }}`,
             },
             properties: {
               type: {
                 type: 'boolean',
                 'x-component': 'Radio.Group',
                 'x-decorator': 'FormItem',
-                title: "{{t('account.revenue_expenditure')}}",
+                title: "{{t('account.revenue-expenditure')}}",
                 enum: [
                   {
                     label: '{{t("account.REVENUE")}}',
@@ -63,14 +63,14 @@ export default (account_set_id: string) =>
             type: 'void',
             'x-component': 'Card',
             'x-component-props': {
-              header: `{{t('account.accounting_binding')}}`,
+              header: `{{t('account.accounting-binding')}}`,
             },
             properties: {
               account_ledger_codes: {
                 type: 'string',
                 'x-component': 'FormilySearchSelect',
                 'x-decorator': 'FormItem',
-                title: "{{t('account.classification_form.debit')}}",
+                title: "{{t('account.classification-form.debit')}}",
                 'x-component-props': {
                   placeholder: "{{t('common.select')}}",
                   'multiple-limit': 3,
@@ -93,7 +93,7 @@ export default (account_set_id: string) =>
                 type: 'string',
                 'x-component': 'FormilySearchSelect',
                 'x-decorator': 'FormItem',
-                title: "{{t('account.classification_form.credit')}}",
+                title: "{{t('account.classification-form.credit')}}",
                 'x-component-props': {
                   placeholder: "{{t('common.select')}}",
                   multiple: false,
@@ -121,7 +121,7 @@ export default (account_set_id: string) =>
             'x-component': 'Card',
             'x-decorator': '',
             'x-component-props': {
-              header: `{{t('account.other_information')}}`,
+              header: `{{t('account.other-information')}}`,
             },
             properties: {
               remark: {

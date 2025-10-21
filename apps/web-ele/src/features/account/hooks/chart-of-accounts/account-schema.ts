@@ -83,7 +83,7 @@ const formSchema: ISchema = {
         openingBalance_row: {
           type: 'void',
           'x-decorator': 'FormItem',
-          title: "{{t('account.opening_balance')}}",
+          title: "{{t('account.opening-balance')}}",
           properties: {
             initial_balance: {
               type: 'void',
@@ -144,7 +144,7 @@ const formSchema: ISchema = {
         closing_balance_row: {
           type: 'void',
           'x-decorator': 'FormItem',
-          title: "{{t('account.closing_balance')}}",
+          title: "{{t('account.closing-balance')}}",
           properties: {
             current_balance_row: {
               type: 'void',

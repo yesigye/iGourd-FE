@@ -45,7 +45,7 @@ export function useAccountLedgerCategoryOptions() {
       value: AccountLedgerCategoryEnum.EQUITY,
     },
     {
-      label: 'account.profit_and_loss',
+      label: 'account.profit-and-loss',
       value: AccountLedgerCategoryEnum.PROFIT_AND_LOSS,
     },
   ];
@@ -70,17 +70,17 @@ export enum AccountLedgerBalanceDirectionEnum {
 export const accountLedgerBalanceDirectionOptions = () => {
   return [
     {
-      label: 'account.balance_directions.debit',
+      label: 'account.balance-directions.debit',
       value: AccountLedgerBalanceDirectionEnum.DEBIT,
     },
     {
-      label: 'account.balance_directions.credit',
+      label: 'account.balance-directions.credit',
       value: AccountLedgerBalanceDirectionEnum.CREDIT,
     },
   ];
 };
 
 export const directionCodeLabel = {
-  [AccountLedgerBalanceDirectionEnum.DEBIT]: 'account.balance_directions.debit',
-  [AccountLedgerBalanceDirectionEnum.CREDIT]: 'account.balance_directions.credit',
+  [AccountLedgerBalanceDirectionEnum.DEBIT]: 'account.balance-directions.debit',
+  [AccountLedgerBalanceDirectionEnum.CREDIT]: 'account.balance-directions.credit',
 };

@@ -126,16 +126,16 @@ export function useSubsidiaryLedger() {
 
     {
       field: 'opposite_account_ledger',
-      title: t('account.opposite_accounts'),
+      title: t('account.opposite-accounts'),
     },
     {
       field: 'debit_amount',
-      title: t('account.debit_amount'),
+      title: t('account.debit-amount'),
       formatter: 'formatMoney',
     },
     {
       field: 'credit_amount',
-      title: t('account.credit_amount'),
+      title: t('account.credit-amount'),
       formatter: 'formatMoney',
     },
     {

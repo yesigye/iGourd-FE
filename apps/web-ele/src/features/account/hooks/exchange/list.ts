@@ -25,19 +25,19 @@ export function useExchange() {
       width: 200,
       align: 'left',
       fixed: 'left',
-      title: t('account.sellAmount'),
+      title: t('account.sell-amount'),
     },
     {
       field: 'buy_amount',
       width: 200,
       align: 'left',
-      title: t('account.buyAmount'),
+      title: t('account.buy-amount'),
     },
     {
       field: 'exchange_rate',
       width: 150,
       align: 'center',
-      title: t('account.exchangeRate'),
+      title: t('account.exchange-rate'),
     },
     {
       field: 'remark',
@@ -49,13 +49,13 @@ export function useExchange() {
       field: 'creator_name',
       width: 150,
       align: 'center',
-      title: t('account.creatorName'),
+      title: t('account.creator-name'),
     },
     {
       field: 'create_time',
       width: 200,
       align: 'left',
-      title: t('account.createTime'),
+      title: t('account.create-time'),
     },
     {
       field: 'operation',

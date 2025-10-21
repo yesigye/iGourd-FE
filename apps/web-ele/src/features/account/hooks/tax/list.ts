@@ -19,14 +19,14 @@ export function useTax() {
       minWidth: 200,
       align: 'left',
       fixed: 'left',
-      title: t('account.taxName'),
+      title: t('account.tax-name'),
       sortable: true,
     },
     {
       field: 'tax_type',
       minWidth: 160,
       align: 'left',
-      title: t('account.taxType'),
+      title: t('account.tax-type'),
       sortable: true,
       formatter({ cellValue }) {
         return t(`account.${cellValue}`);
@@ -36,7 +36,7 @@ export function useTax() {
       field: 'calculation_type',
       minWidth: 160,
       align: 'left',
-      title: t('account.calculationType'),
+      title: t('account.calculation-type'),
       sortable: true,
       formatter({ cellValue }) {
         return t(`account.${cellValue}`);
@@ -53,7 +53,7 @@ export function useTax() {
       field: 'tax_amount',
       minWidth: 160,
       align: 'left',
-      title: t('account.taxAmount'),
+      title: t('account.tax-amount'),
       sortable: true,
       formatter: 'formatMoney',
     },
@@ -61,14 +61,14 @@ export function useTax() {
       field: 'creator_name',
       minWidth: 200,
       align: 'left',
-      title: t('account.creatorName'),
+      title: t('account.creator-name'),
       sortable: true,
     },
     {
       field: 'create_time',
       minWidth: 180,
       align: 'left',
-      title: t('account.createTime'),
+      title: t('account.create-time'),
       sortable: true,
     },
     {

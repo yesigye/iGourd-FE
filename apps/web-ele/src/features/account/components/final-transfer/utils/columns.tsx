@@ -25,12 +25,12 @@ export const columnsVisible = (): ElTableColumnProps[] => {
     {
       prop: 'current_debit_amount',
       width: 200,
-      label: 'account.debit_amount',
+      label: 'account.debit-amount',
     },
     {
       prop: 'current_credit_amount',
       width: 200,
-      label: 'account.credit_amount',
+      label: 'account.credit-amount',
     },
   ];
 };
@@ -39,11 +39,11 @@ export const accountNoteColumns = (il8n): ElTableColumnProps[] => {
   return [
     {
       prop: 'accounting_note_no',
-      label: 'account.notes_no',
+      label: 'account.notes-no',
     },
     {
       prop: 'finance_category_name',
-      label: 'account.finance_category',
+      label: 'account.finance-category',
     },
     {
       prop: 'change_type',
