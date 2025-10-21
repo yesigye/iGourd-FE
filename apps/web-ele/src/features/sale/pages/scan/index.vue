@@ -243,7 +243,7 @@ const calculateOrderPrice = async () => {
     orderParams.value.coupon_amount = res?.coupon_amount ?? 0;
     orderParams.value.order_no = res?.order_no;
     orderParams.value.promotion_discount_amount =
-      res?.promotion_discount_amount;
+      res?.promotion_discount_amount ?? 0;
     orderParams.value.round_down_amount = res?.round_down_amount;
     orderParams.value.other_tax_amount = res?.other_tax_amount;
     orderParams.value.total_paid_amount = res?.total_paid_amount;
@@ -638,6 +638,7 @@ const addOrder = async () => {
       product_profile_photo: item.product_profile_photo, // 将 profile_photo 映射到 product_profile_photo
       product_unit_id: item.product_unit_id,
       product_unit_name: item.product_unit_name,
+      promotion_discount_amount: item.promotion_discount_amount ?? 0,
       promotion_discount_description: item.promotion_discount_description,
       promotion_id: item.promotion_id,
       selling_price: item.selling_price,
@@ -765,7 +766,7 @@ onMounted(async () => {
         price_type: item.price_type,
         vip_discount_amount: item.vip_discount_amount,
         vip_discount_description: item.vip_discount_description,
-        promotion_discount_amount: item.promotion_discount_amount,
+        promotion_discount_amount: item.promotion_discount_amount ?? 0,
         promotion_discount_description: item.promotion_discount_description,
         promotion_id: item.promotion_id,
         subtotal_amount: item.subtotal_amount,
@@ -842,7 +843,8 @@ onMounted(async () => {
                     >
                       <span
                         class="scan-order-action-primary text-blue-primary"
-                        >{{ t('scan.take') }}</span>
+                        >{{ t('scan.take') }}</span
+                      >
                     </ElButton>
                   </ElBadge>
                   <!-- 清空 -->
@@ -857,7 +859,9 @@ onMounted(async () => {
                 </div>
                 <div class="scan-action-box-settle-info bg-card">
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray">{{ t('scan.total-amount') }}:</span>
+                    <span class="settle-info-lable text-light-gray"
+                      >{{ t('scan.total-amount') }}:</span
+                    >
                     <span class="settle-info-val text-gray-dark">
                       {{ currentSymbol }}
                       {{
@@ -866,24 +870,31 @@ onMounted(async () => {
                               calculateOrderList.subtotal_amount,
                             )
                           : '--'
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray">{{ t('scan.tax') }}:</span>
+                    <span class="settle-info-lable text-light-gray"
+                      >{{ t('scan.tax') }}:</span
+                    >
                     <span class="settle-info-val text-gray-dark">
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.vat_amount >= 0
                           ? thousandSeparator(calculateOrderList.vat_amount)
                           : '--'
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray">{{ t('scan.discount') }}:</span>
+                    <span class="settle-info-lable text-light-gray"
+                      >{{ t('scan.discount') }}:</span
+                    >
                     <span class="settle-info-val text-gray-dark">
                       <span
                         v-if="calculateOrderList.promotion_discount_amount >= 0"
-                        >-</span>
+                        >-</span
+                      >
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.promotion_discount_amount >= 0
@@ -891,20 +902,23 @@ onMounted(async () => {
                               calculateOrderList.promotion_discount_amount,
                             )
                           : '--'
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                 </div>
                 <div class="scan-action-box-settle-payment">
                   <div class="flex items-center justify-between gap-5">
                     <span class="total-title text-orange-medium">
-                      {{ t('scan.actual-amount') }}:</span>
+                      {{ t('scan.actual-amount') }}:</span
+                    >
                     <span class="total-price text-red-primary">
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.total_amount >= 0
                           ? thousandSeparator(calculateOrderList.total_amount)
                           : '--'
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                 </div>
               </div>
@@ -936,25 +950,33 @@ onMounted(async () => {
                 </div>
                 <div v-if="Object.keys(customerInfo).length > 0">
                   <div class="mt-3 flex items-center justify-between">
-                    <span class="text-gray-mid">{{ t('scan.contact-telephone') }}:</span>
+                    <span class="text-gray-mid"
+                      >{{ t('scan.contact-telephone') }}:</span
+                    >
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.phone_number || '-'
                     }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid">{{ t('scan.points') }}:</span>
+                    <span class="customer-title text-gray-mid"
+                      >{{ t('scan.points') }}:</span
+                    >
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.points || '-'
                     }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid">{{ t('scan.balance') }}:</span>
+                    <span class="customer-title text-gray-mid"
+                      >{{ t('scan.balance') }}:</span
+                    >
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.balance || '0'
                     }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid">{{ t('scan.salesman') }}:</span>
+                    <span class="customer-title text-gray-mid"
+                      >{{ t('scan.salesman') }}:</span
+                    >
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.salesman_name || '0'
                     }}</span>
