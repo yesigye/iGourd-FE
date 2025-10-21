@@ -361,7 +361,7 @@ const customUpload = async ({ file }) => {
 
 const handleClose = () => {
   isReturnShow.value = false;
-  // drawerApi.close();
+  drawerApi.close();
   setTimeout(() => {
     resetAllData();
     emit('close-tkr');
@@ -1227,7 +1227,9 @@ onMounted(() => {
                 show-word-limit
                 maxlength="256"
                 :disabled="newDisabled"
-                :placeholder="t('inventory.please-enter-product-description-major')"
+                :placeholder="
+                  t('inventory.please-enter-product-description-major')
+                "
               />
             </ElFormItem>
 
@@ -1243,7 +1245,9 @@ onMounted(() => {
                 show-word-limit
                 maxlength="256"
                 :disabled="newDisabled"
-                :placeholder="t('inventory.please-enter-product-description-minor')"
+                :placeholder="
+                  t('inventory.please-enter-product-description-minor')
+                "
               />
             </ElFormItem>
 
@@ -1305,10 +1309,10 @@ onMounted(() => {
     <AddWHAndUnit ref="addWHAndUnitRef" @success="handleWHUnitSuccess" />
     <template #footer>
       <div>
-        <ElButton type="default" @click="handleClose">
+        <ElButton type="default" size="default" @click="handleClose">
           {{ t('inventory.cancel') }}
         </ElButton>
-        <ElButton type="primary" @click="handleInputDebounced()">
+        <ElButton type="primary" size="default" @click="handleInputDebounced()">
           {{ t('inventory.save') }}
         </ElButton>
       </div>

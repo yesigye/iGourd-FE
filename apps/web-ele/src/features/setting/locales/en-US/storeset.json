@@ -21,5 +21,6 @@
   "currency": "Currency",
   "currency-tip": "Display store base currency",
   "please-fill-in-full-information": "Please fill in full information",
-  "payment-scenario-add": "Add payment scenario"
+  "payment-scenario-add": "Add payment scenario",
+  "pc-windows-pos": "PC Windows iGourd POS"
 }

@@ -47,7 +47,7 @@ const {
         >
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleBatchDelete()">
+        <ElButton type="text" @click="handleBatchDelete">
           {{ t('common.delete') }}
         </ElButton>
       </template>

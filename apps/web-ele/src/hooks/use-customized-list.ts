@@ -19,6 +19,11 @@ export function useCustomizedFeature(type: string) {
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<CustomerFeaturePageModel>[] = [
     {
+      type: 'checkbox',
+      width: 80,
+      fixed: 'left',
+    },
+    {
       field: 'name',
       minWidth: 200,
       align: 'center',

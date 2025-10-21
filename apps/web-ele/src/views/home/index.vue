@@ -39,9 +39,9 @@ const handleDateChange = (val: string[]) => {
     val[1] = `${val[1]} 23:59:59`;
   }
 };
-const getMerchantOverview = () => {
+const getMerchantOverview = async () => {
   try {
-    const res = merchantOverviewApi({
+    const res = await merchantOverviewApi({
       end_date: time.value[1],
       start_date: time.value[0],
     });

@@ -41,6 +41,6 @@ export function deleteDynamicColumn(
   dynamic_column_id_list: (number | string)[],
 ) {
   return requestClient.post(`/v1/merchant/basics/dynamic-column/remove`, {
-    dynamic_column_id_list,
+    ...dynamic_column_id_list,
   });
 }
