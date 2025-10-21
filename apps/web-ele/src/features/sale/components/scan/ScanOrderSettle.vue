@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref, toRefs, watch } from 'vue';
 
-import { useIgourdDrawer } from '@igourd/common-ui';
+import { ElButton, useIgourdDrawer } from '@igourd/common-ui';
 
 import { getCustomTemplateListApi } from '@@/sale/apis';
 
@@ -96,8 +96,13 @@ const hanleSettledShow = () => {
 };
 const handleEmpty = () => {};
 
-const printParams = {
-  id: 'receiptPrintId3',
+const printObj = {
+  ids: 'receiptPrintId3',
+  popTitle: '页面打印',
+  breakInside: 'avoid',
+  preview: false,
+  // 小票模式
+  receipt: true,
 };
 
 // ======================== 打印相关 ==============================
@@ -120,7 +125,13 @@ async function initMounted() {
 const handleSettlementSuccess = (settlementData) => {
   settlementInfo.value = settlementData;
 };
-
+const printBtn = ref();
+const handlePrint = () => {
+  // 模拟点击
+  if (printBtn.value) {
+    printBtn.value.$el.click();
+  }
+};
 watch(
   () => props.orderData,
   (value) => {
@@ -154,13 +165,14 @@ watch(
         <div class="innerLeft overflow-y-auto">
           <ReceiptTemplate
             :roles="receiptRoles"
-            :print-id="printParams.ids"
+            :print-id="printObj.ids"
             :option-content="printTemplate.option_content"
             :image-url="printTemplate.profile_photo"
             :print-info="[{ ...orderDetail, Template: { ...printTemplate } }]"
             template-type="RECEIPT"
           />
         </div>
+
         <div class="innerRight">
           <ScanCashSettlement
             ref="scanCashSettlementRef"
@@ -172,10 +184,22 @@ watch(
             @hanle-settled-show="hanleSettledShow"
             @settlement-success="handleSettlementSuccess"
             @close-drawer="handleClose"
+            @print="handlePrint"
           />
+          <div>
+            <ElButton
+              style="display: none"
+              ref="printBtn"
+              v-print="printObj"
+              type="primary"
+            >
+              打印
+            </ElButton>
+          </div>
         </div>
       </div>
     </Drawer>
+
     <!-- </ElDrawer> -->
   </div>
 </template>

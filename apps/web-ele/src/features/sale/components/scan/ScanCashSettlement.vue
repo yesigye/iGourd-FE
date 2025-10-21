@@ -64,6 +64,7 @@ const emit = defineEmits([
   'hanleSettledShow',
   'update:detail',
   'close-drawer',
+  'print',
 ]);
 
 const { detail, showDialog } = toRefs(props);
@@ -105,6 +106,9 @@ const formData = ref<PaymentInputType>({} as unknown as PaymentInputType);
 const paymentOptions = ref<
   Record<string, MerchantPaymentMethodConfigModelAddPayField[]>
 >({});
+const handlePrint = () => {
+  emit('print', printObj);
+};
 /** 获取所有的支付方式 */
 const getPaymentMethods = async () => {
   const res = await getOrderPaymentMethodConfigListApi({
@@ -506,8 +510,16 @@ const focusCashInput = () => {
 /** 设置支付金额 ，不处理金额值，最好不要直接使用 */
 const setPaymentAmount = (method: PaymentMethodEnum, cleanValue: string) => {
   // 更新输入框的值
-  formData.value[method].activeItemAmount = cleanValue;
-
+  // formData.value[method].activeItemAmount = cleanValue;
+  // 检查 formData.value[method] 是否存在，如果不存在则初始化
+  if (!formData.value[method]) {
+    formData.value[method] = {
+      activeItemType: method,
+      activeItemMark: '',
+      activeItemName: '',
+      activeItemAmount: undefined,
+    };
+  }
   // 将输入值转换为数字
   const numValue = Number.parseFloat(cleanValue) || 0;
   // 更新支付金额映射
@@ -785,9 +797,7 @@ defineExpose({
     <div
       class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
-      <span class="scan-cash-settlement-header-title"
-        >{{ t('scan.amount-tendered') }}:</span
-      >
+      <span class="scan-cash-settlement-header-title">{{ t('scan.amount-tendered') }}:</span>
 
       <span class="scan-cash-settlement-header-amount">
         {{ tenderedAmount.toFixed(2) }} {{ currentSymbol }}
@@ -797,9 +807,7 @@ defineExpose({
     <div
       class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
-      <span class="scan-cash-settlement-header-title"
-        >{{ t('scan.amount-change') }}:</span
-      >
+      <span class="scan-cash-settlement-header-title">{{ t('scan.amount-change') }}:</span>
       <div class="flex-1">
         <ElInputNumber
           ref="wipedAmountInput"
@@ -896,22 +904,19 @@ defineExpose({
       class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
     >
       <span class="text-status-partial">{{ t('scan.change') }}:</span>
-      <span class="text-status-terminated"
-        >{{ changeAmount }} {{ currentSymbol }}</span
-      >
+      <span class="text-status-terminated">{{ changeAmount }} {{ currentSymbol }}</span>
     </div>
 
     <div
       class="scan-cash-settlement-button absolute bottom-0 flex w-full justify-end bg-white pb-2.5 pr-5 pt-2.5"
     >
-      <ElButton v-print="printObj" type="default">
+      <ElButton @click="handlePrint" type="default">
         {{ t('scan.print') }}
       </ElButton>
 
       <ElButton
         type="danger"
         v-if="paymentWay === PaymentWay.CREDIT"
-        v-print="printObj"
         @click="handleSettleAccount"
       >
         <span class="text-white"> {{ t('scan.on-credit') }} </span>
