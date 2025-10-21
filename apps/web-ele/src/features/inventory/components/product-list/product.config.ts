@@ -16,11 +16,11 @@ export const parseOptions = (options) => {
 // Status options for product
 export const getStatusList = (t) => [
   {
-    label: 'inventory.onSale',
+    label: 'inventory.on-sale',
     value: 'ON_SALE',
   },
   {
-    label: 'inventory.offSale',
+    label: 'inventory.off-sale',
     value: 'OFF_SALE',
   },
 ];
@@ -30,7 +30,7 @@ export const getRules = (t) => ({
   major_name: [
     {
       required: true,
-      message: t('inventory.pleaseInputProductMajorName'),
+      message: t('inventory.please-input-product-major-name'),
       trigger: ['blur', 'change'],
     },
     {
@@ -63,7 +63,7 @@ export const getRules = (t) => ({
   product_barcode: [
     {
       required: true,
-      message: t('inventory.pleaseInputBarcode'),
+      message: t('inventory.please-input-barcode'),
       trigger: ['blur', 'change'],
     },
     {
@@ -80,35 +80,35 @@ export const getRules = (t) => ({
   product_code: [
     {
       required: true,
-      message: t('inventory.pleaseInputProductCode'),
+      message: t('inventory.please-input-product-code'),
       trigger: ['blur', 'change'],
     },
   ],
   // major_unit_id: [
   //   {
   //     required: false,
-  //     message: t('inventory.pleaseSelectProductUnit'),
+  //     message: t('inventory.please-select-product-unit'),
   //     trigger: ['blur', 'change']
   //   }
   // ],
   vendor_id: [
     {
       required: false,
-      message: t('inventory.pleaseSelectVendor'),
+      message: t('inventory.please-select-vendor'),
       trigger: ['blur', 'change'],
     },
   ],
   status: [
     {
       required: true,
-      message: t('inventory.pleaseSelectStatus'),
+      message: t('inventory.please-select-status'),
       trigger: ['blur', 'change'],
     },
   ],
   cost_price: [
     {
       required: true,
-      message: t('inventory.pleaseInputCostPrice'),
+      message: t('inventory.please-input-cost-price'),
       trigger: ['blur', 'change'],
     },
     {
@@ -127,7 +127,7 @@ export const getRules = (t) => ({
   selling_price: [
     {
       required: true,
-      message: t('inventory.pleaseInputSellingPrice'),
+      message: t('inventory.please-input-selling-price'),
       trigger: ['blur', 'change'],
     },
     {
@@ -262,7 +262,7 @@ export const getDynamicFieldsQueryParams = () =>
 // Shared stock validation rules
 export const validateSharedStock = (t) => (_, value, callback) => {
   if (!value.basic_product_id || !value.basic_unit_radio) {
-    return callback(new Error(t('inventory.please_shared_stock')));
+    return callback(new Error(t('inventory.please-shared-stock')));
   }
   return callback();
 };

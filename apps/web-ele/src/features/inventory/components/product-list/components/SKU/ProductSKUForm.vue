@@ -109,7 +109,7 @@ const unitsConfig: any = ref({
   multiUnits: false,
   units: [
     {
-      type: t('inventory.major_unit_name'),
+      type: t('inventory.major-unit-name'),
       unit: '',
       ratio: '1:1',
       is_basic_unit: 1,
@@ -325,7 +325,7 @@ const initEditData = (editData) => {
       sku_group_code: editData.product_info_list?.[0]?.sku_group_code || '',
       sku_barcode: editData.product_info_list?.[0]?.sku_barcode || '',
       spec_code: editData.product_info_list?.[0]?.spec_code || '',
-      type: t('inventory.major_unit_name'),
+      type: t('inventory.major-unit-name'),
       basic_unit_id: editData.major_unit_id,
       basic_unit_name: editData.major_unit_name,
       is_update_config: is_update_config.value,
@@ -429,7 +429,7 @@ const initEditData = (editData) => {
     });
   } catch (error) {
     console.error(error);
-    ElMessage.error(t('inventory.fail_init'));
+    ElMessage.error(t('inventory.fail-init'));
   }
 };
 /**
@@ -500,7 +500,7 @@ const resetSKUForm = () => {
     multiUnits: false,
     units: [
       {
-        type: t('inventory.major_unit_name'),
+        type: t('inventory.major-unit-name'),
         basic_unit_id: '',
         basic_unit_name: '',
         is_basic_unit: 1,
@@ -553,7 +553,7 @@ const resetMultiStatus = () => {
     multiUnits: false,
     units: [
       {
-        type: t('inventory.major_unit_name'),
+        type: t('inventory.major-unit-name'),
         unit: '',
         ratio: '1:1',
         is_basic_unit: 1,

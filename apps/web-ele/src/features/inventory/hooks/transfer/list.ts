@@ -12,10 +12,10 @@ import { useCrud } from '#/hooks';
 import { formatNumber } from '#/utils/functions';
 
 const transferTypeList = {
-  TRANSFER_SAME_STORE: 'sameStoreTransfer',
-  TRANSFER_DIFFERENT_STORE: 'differentStoreTransfer',
-  TRANSFER_IN_ONLY: 'transferOut',
-  TRANSFER_OUT_ONLY: 'transferIn',
+  TRANSFER_SAME_STORE: 'same-store-transfer',
+  TRANSFER_DIFFERENT_STORE: 'different-store-transfer',
+  TRANSFER_IN_ONLY: 'transfer-out',
+  TRANSFER_OUT_ONLY: 'transfer-in',
 };
 type transferTypeKey = keyof typeof transferTypeList;
 
@@ -30,7 +30,7 @@ export function useInventoryTransferList() {
     },
     {
       field: 'transfer_type',
-      title: t('inventory.transferType'),
+      title: t('inventory.transfer-type'),
       minWidth: 200,
       fixed: 'left',
       formatter({ cellValue }: { cellValue: transferTypeKey }) {
@@ -39,35 +39,35 @@ export function useInventoryTransferList() {
     },
     {
       field: 'stock_transfer_no',
-      title: t('inventory.stock_transfer_no'),
+      title: t('inventory.stock-transfer-no'),
       minWidth: 200,
     },
     {
       field: 'transfer_date',
-      title: t('inventory.transfer_date'),
+      title: t('inventory.transfer-date'),
       minWidth: 200,
       sortable: true,
       formatter: ({ cellValue }) => (cellValue ? cellValue.split(' ')[0] : ''),
     },
     {
       field: 'total_transfer_quantity',
-      title: t('inventory.total_transfer_quantity'),
+      title: t('inventory.total-transfer-quantity'),
       minWidth: 150,
       formatter: ({ cellValue }) => formatNumber(cellValue),
     },
     {
       field: 'source_warehouse_name',
-      title: t('inventory.source_warehouse_name'),
+      title: t('inventory.source-warehouse-name'),
       minWidth: 150,
     },
     {
       field: 'destination_warehouse_name',
-      title: t('inventory.destination_warehouse_name'),
+      title: t('inventory.destination-warehouse-name'),
       minWidth: 150,
     },
     {
       field: 'status',
-      title: t('inventory.out_state'),
+      title: t('inventory.out-state'),
       minWidth: 168,
       fixed: 'right',
       slots: { default: 'status' },
@@ -93,7 +93,7 @@ export function useInventoryTransferList() {
     },
     {
       field: 'create_time',
-      title: t('inventory.creationTime'),
+      title: t('inventory.creation-time'),
       minWidth: 180,
       sortable: true,
       formatter: 'formatDateTime',
@@ -113,7 +113,7 @@ export function useInventoryTransferList() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('inventory.enterTransferKeywords')}}",
+        placeholder: "{{t('inventory.enter-transfer-keywords')}}",
         clearable: true,
       },
     },

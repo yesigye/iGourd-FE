@@ -184,7 +184,7 @@ const temFileUpload = async (file) => {
       if (res.code !== 'SUCCESS') {
         return false;
       }
-      ElMessage.success(t('inventory.uploadSuccess'));
+      ElMessage.success(t('inventory.upload-success'));
       excelValue = {
         file_name: res.data.file_name,
         page_num: 1,
@@ -289,7 +289,7 @@ const fileParsing = async (params) => {
 // 解析
 const productPreview = debounce(() => {
   if (Object.keys(excelValue).length === 0) {
-    ElMessage.error(t('inventory.pleaseUploadAnalysisXlsx'));
+    ElMessage.error(t('inventory.please-upload-analysis-xlsx'));
   } else {
     loadingControl(true);
     fileParsing(excelValue);
@@ -342,7 +342,7 @@ const filePreview = (params) => {
 // 文件导入
 const fileImport = () => {
   if (previewValue.value.length === 0)
-    ElMessage.error(t('inventory.pleasePreviewFirst'));
+    ElMessage.error(t('inventory.please-preview-first'));
   const params = {
     is_generate_initial_stock: !!(
       checkedType.value.length > 0 && checkedType.value.includes(1)
@@ -375,11 +375,11 @@ const beforeUpload = async (file) => {
   const isLt20MB = file.size / 1024 / 1024 < 20;
 
   if (!isAcceptedFormat) {
-    ElMessage.error(t('inventory.fileFormatError'));
+    ElMessage.error(t('inventory.file-format-error'));
   }
 
   if (!isLt20MB) {
-    ElMessage.error(t('inventory.fileSizeLimit', { value: 20 }));
+    ElMessage.error(t('inventory.file-size-limit', { value: 20 }));
   }
   // 验证过的文件
   const verifiedFile = await validateAndFilterFile(file);
@@ -394,7 +394,7 @@ const acceptedFormats = '.xlsx';
 // 验证文件并过滤不符合要求的标题
 const validateAndFilterFile = async (file) => {
   if (!file || !file.name.endsWith('.xlsx')) {
-    ElMessage.error(t('inventory.pleaseUploadValidExcel'));
+    ElMessage.error(t('inventory.please-upload-valid-excel'));
     return false;
   }
 
@@ -411,7 +411,7 @@ const validateAndFilterFile = async (file) => {
     const worksheet = workbook.Sheets[firstSheetName];
 
     if (!worksheet) {
-      ElMessage.error(t('inventory.noSheetsFound'));
+      ElMessage.error(t('inventory.no-sheets-found'));
       return false;
     }
 
@@ -447,7 +447,7 @@ const validateAndFilterFile = async (file) => {
     const validHeaders = headerAnalysis.validHeaders;
 
     if (validHeaders.length === 0) {
-      ElMessage.error(t('inventory.noRequiredColumns'));
+      ElMessage.error(t('inventory.no-required-columns'));
       return false;
     }
 

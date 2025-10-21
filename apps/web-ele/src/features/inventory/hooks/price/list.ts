@@ -28,36 +28,36 @@ export function useInventoryPriceList() {
   const columns: VxeGridPropTypes.Column<PriceChangeLogItem>[] = [
     {
       field: 'price_type',
-      title: t('inventory.changeType'),
+      title: t('inventory.change-type'),
       minWidth: 160,
       fixed: 'left',
       formatter: ({ cellValue }) => t(`inventory.${cellValue}`),
     },
     {
       field: 'product_name',
-      title: t('inventory.productName'),
+      title: t('inventory.product-name'),
       minWidth: 240,
     },
     {
       field: 'product_code',
-      title: t('inventory.productCode'),
+      title: t('inventory.product-code'),
       minWidth: 160,
     },
     {
       field: 'origin_price',
-      title: t('inventory.preChangePrice'),
+      title: t('inventory.pre-change-price'),
       minWidth: 180,
       formatter: ({ cellValue }) => cellValue || 0,
     },
     {
       field: 'final_price',
-      title: t('inventory.postChangePrice'),
+      title: t('inventory.post-change-price'),
       minWidth: 180,
       formatter: ({ cellValue }) => cellValue || 0,
     },
     {
       field: 'change_amount',
-      title: t('inventory.changeAmount'),
+      title: t('inventory.change-amount'),
       minWidth: 180,
       formatter: ({ row }) => {
         const diff = calculatePriceDiff(row);
@@ -76,7 +76,7 @@ export function useInventoryPriceList() {
     },
     {
       field: 'create_time',
-      title: t('inventory.creationTime'),
+      title: t('inventory.creation-time'),
       minWidth: 180,
       sortable: true,
       formatter: 'formatDateTime',
@@ -89,7 +89,7 @@ export function useInventoryPriceList() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('inventory.enterPriceKeywords')}}",
+        placeholder: "{{t('inventory.enter-price-keywords')}}",
         clearable: true,
       },
     },
@@ -98,7 +98,7 @@ export function useInventoryPriceList() {
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
-        placeholder: "{{t('inventory.selectPriceType')}}",
+        placeholder: "{{t('inventory.select-price-type')}}",
         clearable: true,
         options: [
           { label: t('inventory.cost_price'), value: 'COST_PRICE' },

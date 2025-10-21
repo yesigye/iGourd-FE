@@ -53,10 +53,10 @@ const currentId = ref('');
 const modalTitle = computed(() => {
   if (type.value === 'warehouse') {
     return isEdit.value
-      ? t('inventory.editWarehouse')
-      : t('inventory.addWarehouse');
+      ? t('inventory.edit-warehouse')
+      : t('inventory.add-warehouse');
   } else {
-    return isEdit.value ? t('inventory.editUnit') : t('inventory.addUnit');
+    return isEdit.value ? t('inventory.edit-unit') : t('inventory.add-unit');
   }
 });
 
@@ -84,7 +84,7 @@ const warehouseRules = computed(() => {
     name: [
       {
         required: true,
-        message: t('inventory.pleaseInputWarehouseName'),
+        message: t('inventory.please-input-warehouse-name'),
         trigger: 'blur',
       },
       {
@@ -113,7 +113,7 @@ const unitRules = computed(() => {
     name: [
       {
         required: true,
-        message: t('inventory.unitNameNotEmpty'),
+        message: t('inventory.unit-name-not-empty'),
         trigger: 'blur',
       },
       {
@@ -432,10 +432,10 @@ defineExpose({
       @submit.native.prevent
     >
       <div class="form-wrapper-content">
-        <ElFormItem :label="$t('inventory.unitName')" required prop="name">
+        <ElFormItem :label="$t('inventory.unit-name')" required prop="name">
           <ElInput
             v-model="unitForm.name"
-            :placeholder="$t('inventory.pleaseInputName')"
+            :placeholder="$t('inventory.please-input-name')"
           />
         </ElFormItem>
       </div>
@@ -450,8 +450,8 @@ defineExpose({
               active-value="OPEN"
               inactive-value="CLOSED"
               inline-prompt
-              :active-text="$t('inventory.product_spec.OPEN')"
-              :inactive-text="$t('inventory.product_spec.CLOSED')"
+              :active-text="$t('inventory.product_spec.open')"
+              :inactive-text="$t('inventory.product_spec.closed')"
             />
           </div>
           <div v-else></div>

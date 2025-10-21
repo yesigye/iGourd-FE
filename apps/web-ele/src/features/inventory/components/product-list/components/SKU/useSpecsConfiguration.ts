@@ -439,16 +439,16 @@ export function useSpecsConfiguration() {
       (row) => row.selectedValues.length === 0,
     );
     if (emptyValueRows.length > 0) {
-      ElMessage.warning(t('inventory.select_spec_values'));
+      ElMessage.warning(t('inventory.select-spec-values'));
       return false;
     }
     if (totalSpecs > 4) {
-      ElMessage.warning(t('inventory.too_many_specs', { value: 4 }));
+      ElMessage.warning(t('inventory.too-many-specs', { value: 4 }));
       return false;
     }
 
     if (totalValues > 5) {
-      ElMessage.warning(t('inventory.too_many_spec_values', { value: 5 }));
+      ElMessage.warning(t('inventory.too-many-spec-values', { value: 5 }));
       return false;
     }
 
@@ -458,7 +458,7 @@ export function useSpecsConfiguration() {
   function validateUnitSelection(tableData) {
     const firstRecord = tableData[0];
     if (!firstRecord || firstRecord.is_basic !== 1) {
-      ElMessage.error(t('inventory.pleaseSelectUnitFirst'));
+      ElMessage.error(t('inventory.please-select-unit-first'));
       return false;
     }
 
@@ -543,7 +543,7 @@ export function useSpecsConfiguration() {
   async function clearBundleData() {
     try {
       await ElMessageBox.confirm(
-        t('inventory.table_clear_propmt'),
+        t('inventory.table-clear-propmt'),
         t('inventory.clearing'),
         {
           confirmButtonText: t('inventory.clearing'),

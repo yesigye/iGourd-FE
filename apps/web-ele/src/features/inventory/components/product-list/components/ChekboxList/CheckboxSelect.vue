@@ -205,7 +205,7 @@ export default {
     </ElOption>
     <template #footer>
       <div class="select-footer" @click.stop="handleAddClick">
-        +{{ $t('inventory.spec_value') }}
+        +{{ $t('inventory.spec-value') }}
       </div>
     </template>
   </ElSelect>

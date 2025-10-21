@@ -33,13 +33,13 @@ export function useInventoryProductList() {
     },
     {
       field: 'major_name',
-      title: t('inventory.productNameMajor'),
+      title: t('inventory.product-name-major'),
       minWidth: 200,
       fixed: 'left',
     },
     {
       field: 'product_code',
-      title: t('inventory.productCode'),
+      title: t('inventory.product-code'),
       minWidth: 160,
     },
     {
@@ -49,7 +49,7 @@ export function useInventoryProductList() {
     },
     {
       field: 'major_unit_name',
-      title: t('inventory.major_unit_name'),
+      title: t('inventory.major-unit-name'),
       minWidth: 110,
     },
     {
@@ -67,12 +67,12 @@ export function useInventoryProductList() {
     },
     {
       field: 'product_group_name',
-      title: t('inventory.productGroup'),
+      title: t('inventory.product-group'),
       minWidth: 200,
     },
     {
       field: 'product_label_list',
-      title: t('inventory.productLabel'),
+      title: t('inventory.product-label'),
       minWidth: 180,
       showOverflow: false,
       slots: { default: 'label' },
@@ -84,7 +84,7 @@ export function useInventoryProductList() {
     },
     {
       field: 'create_time',
-      title: t('inventory.creationTime'),
+      title: t('inventory.creation-time'),
       minWidth: 180,
       sortable: true,
     },
@@ -108,7 +108,7 @@ export function useInventoryProductList() {
       },
       'x-component-props': {
         placeholder:
-          "{{t('inventory.pleaseEnterKeywordsToSearchProductNameProductCode')}}",
+          "{{t('inventory.please-enter-keywords-to-search-product-name-product-code')}}",
         clearable: true,
       },
     },
@@ -120,11 +120,11 @@ export function useInventoryProductList() {
         style: { 'margin-bottom': '0', width: '140px' },
       },
       'x-component-props': {
-        placeholder: "{{t('inventory.saleStatus')}}",
+        placeholder: "{{t('inventory.sale-status')}}",
         clearable: true,
         options: [
-          { label: t('inventory.onSale'), value: 'ON_SALE' },
-          { label: t('inventory.offSale'), value: 'OFF_SALE' },
+          { label: t('inventory.on-sale'), value: 'ON_SALE' },
+          { label: t('inventory.off-sale'), value: 'OFF_SALE' },
         ],
       },
     },

@@ -40,7 +40,7 @@ const STATUS_CONFIG = [
     <Grid>
       <template #table-actions>
         <ElButton type="primary" @click="handleEdit()">
-          {{ t('inventory.addWarehouse') }}
+          {{ t('inventory.add-warehouse') }}
         </ElButton>
         <ElButton
           type="danger"

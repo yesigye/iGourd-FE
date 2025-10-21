@@ -19,7 +19,7 @@ export function useInventory() {
     },
     {
       field: 'profile_photo',
-      title: t('inventory.productName'),
+      title: t('inventory.product-name'),
       minWidth: 150,
       fixed: 'left',
       sortable: true,
@@ -37,34 +37,34 @@ export function useInventory() {
     },
     {
       field: 'product_code',
-      title: t('inventory.productCode'),
+      title: t('inventory.product-code'),
       minWidth: 150,
       sortable: true,
       align: 'left',
     },
     {
       field: 'spec_code',
-      title: t('inventory.spec_code'),
+      title: t('inventory.spec-code'),
       minWidth: 150,
       sortable: true,
       align: 'left',
     },
     {
       field: 'sku_barcode',
-      title: t('inventory.sku_barcode'),
+      title: t('inventory.sku-barcode'),
       minWidth: 150,
       sortable: true,
       align: 'left',
     },
     {
       field: 'product_unit_names',
-      title: t('inventory.product_unit_names'),
+      title: t('inventory.product-unit-names'),
       width: 100,
       align: 'right',
     },
     {
       field: 'warehouse_name',
-      title: t('inventory.warehouse_name'),
+      title: t('inventory.warehouse-name'),
       width: 100,
       align: 'right',
     },
@@ -76,27 +76,27 @@ export function useInventory() {
     },
     {
       field: 'stock_quantity',
-      title: t('inventory.stock_quantity_message'),
+      title: t('inventory.stock-quantity-message'),
       width: 120,
       align: 'right',
     },
     {
       field: 'inbound_in_transit_stock_message',
-      title: t('inventory.inboundTransitStock'),
+      title: t('inventory.inbound-transit-stock'),
       minWidth: 120,
       align: 'center',
       slots: { default: 'tooltipNum' },
     },
     {
       field: 'outbound_in_transit_stock_message',
-      title: t('inventory.outboundTransitStock'),
+      title: t('inventory.outbound-transit-stock'),
       minWidth: 120,
       align: 'center',
       slots: { default: 'tooltipNum' },
     },
     {
       field: 'product_group_name',
-      title: t('inventory.productGroup'),
+      title: t('inventory.product-group'),
       minWidth: 120,
       align: 'center',
     },
@@ -108,7 +108,7 @@ export function useInventory() {
     },
     {
       field: 'create_time',
-      title: t('inventory.creationTime'),
+      title: t('inventory.creation-time'),
       width: 160,
       sortable: true,
       align: 'center',
@@ -130,7 +130,7 @@ export function useInventory() {
       'x-decorator-props': {
       },
       'x-component-props': {
-        placeholder: "{{t('inventory.productName')}}",
+        placeholder: "{{t('inventory.product-name')}}",
         clearable: true,
       },
     },
@@ -141,7 +141,7 @@ export function useInventory() {
       'x-decorator-props': {
       },
       'x-component-props': {
-        placeholder: "{{t('inventory.productCode')}}",
+        placeholder: "{{t('inventory.product-code')}}",
         clearable: true,
       },
     },
@@ -152,7 +152,7 @@ export function useInventory() {
       'x-decorator-props': {
       },
       'x-component-props': {
-        placeholder: "{{t('inventory.warehouseName')}}",
+        placeholder: "{{t('inventory.warehouse-name')}}",
         clearable: true,
       },
     },

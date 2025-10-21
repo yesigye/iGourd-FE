@@ -15,7 +15,7 @@ const { Grid } = useInventoryPriceList();
   <Page auto-content-height>
     <Grid>
     <template #table-actions>
-        <h2>{{ t('inventory.priceChangeLog') }}</h2>
+        <h2>{{ t('inventory.price-change-log') }}</h2>
       </template>
     </Grid>
   </Page>

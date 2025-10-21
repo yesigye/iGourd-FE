@@ -25,54 +25,54 @@ export const aa = [
 export const inventoryReasonList = [
   {
     value: 'RETURN_STOCK',
-    label: 'inventory.RETURNSTOCK',
+    label: 'inventory.returnstock',
   },
   {
     value: 'TRANSFER_IN',
-    label: 'inventory.TRANSFERIN',
+    label: 'inventory.transferin',
   },
   {
     value: 'DONATION_RECEIVING',
-    label: 'inventory.DONATIONRECEIVING',
+    label: 'inventory.donationreceiving',
   },
   {
     value: 'SAMPLE_RECEIVING',
-    label: 'inventory.SAMPLERECEIVING',
+    label: 'inventory.samplereceiving',
   },
   {
     value: 'REPAIRED_RECEIVING',
-    label: 'inventory.REPAIREDRECEIVING',
+    label: 'inventory.repairedreceiving',
   },
   {
     value: 'SEASONAL_STOCKING',
-    label: 'inventory.SEASONALSTOCKING',
+    label: 'inventory.seasonalstocking',
   },
   {
     value: 'PROMOTION_PREPARATION',
-    label: 'inventory.PROMOTIONPREPARATION',
+    label: 'inventory.promotionpreparation',
   },
   {
     value: 'SAFETY_STOCK',
-    label: 'inventory.SAFETYSTOCK',
+    label: 'inventory.safetystock',
   },
   {
     value: 'STOCK_REPLENISHMENT',
-    label: 'inventory.STOCKREPLENISHMENT',
+    label: 'inventory.stockreplenishment',
   },
   {
     value: 'ORDER_FULFILLMENT_PREPARATION',
-    label: 'inventory.ORDERFULFILLMENTPREPARATION',
+    label: 'inventory.orderfulfillmentpreparation',
   },
   {
     value: 'STOCK_IMBALANCE_ADJUSTMENT',
-    label: 'inventory.STOCKIMBALANCEADJUSTMENT',
+    label: 'inventory.stockimbalanceadjustment',
   },
   {
     value: 'EXPIRED_REPLACEMENT',
-    label: 'inventory.EXPIREDREPLACEMENT',
+    label: 'inventory.expiredreplacement',
   },
   {
     value: 'MARKET_CHANGE_RESPONSE',
-    label: 'inventory.MARKETCHANGERESPONSE',
+    label: 'inventory.marketchangeresponse',
   },
 ];

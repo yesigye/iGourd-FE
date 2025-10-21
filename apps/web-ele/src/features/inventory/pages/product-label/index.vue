@@ -49,14 +49,14 @@ const handleGetProductLabelList = async () => {
 // 商品详情相关
 const productShow = ref(false);
 const goodParms = ref({
-  title: t('inventory.productDetails'),
+  title: t('inventory.product-details'),
   visible: true,
   innerDrawerShow: true,
 });
 
 // 处理商品详情显示
 const handleProductDetail = async (row: any) => {
-  goodParms.value.title = t('inventory.productDetails');
+  goodParms.value.title = t('inventory.product-details');
   productShow.value = true;
   // 这里应该调用 API 获取商品详情
 };
@@ -99,12 +99,12 @@ const handleChangeLabel = (value: String) => {
 };
 const STATUS_CONFIG = [
   {
-    name: 'inventory.offSale',
+    name: 'inventory.off-sale',
     value: 'OFF_SALE',
     iconColor: '#9e9e9e',
   },
   {
-    name: 'inventory.onSale',
+    name: 'inventory.on-sale',
     value: 'ON_SALE',
     iconColor: '#4caf51',
   },
@@ -240,7 +240,7 @@ onMounted(() => {
       @close="handleClose"
     >
       <div class="text-center text-gray-500">
-        {{ t('inventory.productDetails') }}
+        {{ t('inventory.product-details') }}
       </div>
     </el-dialog>
   </ColPage>

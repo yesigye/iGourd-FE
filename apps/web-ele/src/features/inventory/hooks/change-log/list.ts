@@ -19,8 +19,8 @@ export function useInventoryChangeLogList() {
   //   { label: t('inventory.sale'), value: 'SALE' },
   //   { label: t('inventory.return'), value: 'RETURN' },
   //   { label: t('inventory.adjustment'), value: 'ADJUSTMENT' },
-  //   { label: t('inventory.transferIn'), value: 'TRANSFER_IN' },
-  //   { label: t('inventory.transferOut'), value: 'TRANSFER_OUT' },
+  //   { label: t('inventory.transfer-in'), value: 'TRANSFER_IN' },
+  //   { label: t('inventory.transfer-out'), value: 'TRANSFER_OUT' },
   //   { label: t('inventory.spoilage'), value: 'SPOILAGE' },
   //   { label: t('inventory.count'), value: 'COUNT' },
   //   { label: t('inventory.other'), value: 'OTHER' },
@@ -36,7 +36,7 @@ export function useInventoryChangeLogList() {
   const columns: VxeGridPropTypes.Column<ChangeLogItem>[] = [
     {
       field: 'change_type',
-      title: t('inventory.changeType'),
+      title: t('inventory.change-type'),
       minWidth: 164,
       fixed: 'left',
       formatter: ({ cellValue }) => {
@@ -45,17 +45,17 @@ export function useInventoryChangeLogList() {
     },
     {
       field: 'receipt_no',
-      title: t('inventory.receiptNumber'),
+      title: t('inventory.receipt-number'),
       minWidth: 176,
     },
     {
       field: 'product_name',
-      title: t('inventory.productName'),
+      title: t('inventory.product-name'),
       minWidth: 240,
     },
     {
       field: 'product_code',
-      title: t('inventory.productCode'),
+      title: t('inventory.product-code'),
       minWidth: 150,
     },
     {
@@ -70,7 +70,7 @@ export function useInventoryChangeLogList() {
     },
     {
       field: 'change_quantity',
-      title: t('inventory.changeQuantity'),
+      title: t('inventory.change-quantity'),
       minWidth: 180,
       formatter: ({ row }) => {
         const changeQty = subtractDecimal(
@@ -82,14 +82,14 @@ export function useInventoryChangeLogList() {
     },
     {
       field: 'origin_quantity',
-      title: t('inventory.preChangedQuantity'),
+      title: t('inventory.pre-changed-quantity'),
       minWidth: 180,
       formatter: ({ row }) =>
         `${formatNumber(row.origin_quantity)} ${row.product_unit_name}`,
     },
     {
       field: 'final_quantity',
-      title: t('inventory.postChangedQuantity'),
+      title: t('inventory.post-changed-quantity'),
       minWidth: 180,
       formatter: ({ row }) =>
         `${formatNumber(row.final_quantity)} ${row.product_unit_name}`,
@@ -106,7 +106,7 @@ export function useInventoryChangeLogList() {
     },
     {
       field: 'create_time',
-      title: t('inventory.creationTime'),
+      title: t('inventory.creation-time'),
       minWidth: 180,
       sortable: true,
       formatter: 'formatDateTime',

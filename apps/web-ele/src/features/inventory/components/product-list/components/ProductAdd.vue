@@ -175,26 +175,26 @@ const getFieldRequiredStatus = (field) => {
 const basicInfoFields = reactive({
   row1: [
     {
-      labelKey: 'inventory.productNameMajor',
+      labelKey: 'inventory.product-name-major',
       prop: 'major_name',
       component: 'el-input',
       required: true,
-      placeholderKey: 'inventory.pleaseInputProductMajorName',
+      placeholderKey: 'inventory.please-input-product-major-name',
     },
     // {
     //   labelKey: 'inventory.barcode',
     //   prop: 'product_barcode',
     //   component: 'el-input',
     //   required: true,
-    //   placeholderKey: 'inventory.pleaseInputBarcode',
+    //   placeholderKey: 'inventory.please-input-barcode',
     //   props: { maxlength: 23 }
     // },
     {
-      labelKey: 'inventory.productCode',
+      labelKey: 'inventory.product-code',
       prop: 'product_code',
       component: 'el-input',
       required: true,
-      placeholderKey: 'inventory.pleaseInputProductCode',
+      placeholderKey: 'inventory.please-input-product-code',
       suffix: true,
       props: { maxlength: 23 },
     },
@@ -214,30 +214,30 @@ const basicInfoFields = reactive({
   ],
   // row2: [
   //   {
-  //     labelKey: 'inventory.costPrice',
+  //     labelKey: 'inventory.cost-price',
   //     prop: 'cost_price',
   //     component: ThousandsInput,
   //     required: true,
-  //     placeholderKey: 'inventory.pleaseEnterCostPrice',
+  //     placeholderKey: 'inventory.please-enter-cost-price',
   //     prefix: 'currency',
   //     props: { maxLength: 15 },
   //     onChange: val => handleInputChange('cost_price', val)
   //   },
   //   {
-  //     labelKey: 'inventory.profit_rate',
+  //     labelKey: 'inventory.profit-rate',
   //     prop: 'profit_rate',
   //     component: 'el-input',
   //     props: { type: 'number' },
-  //     placeholderKey: 'inventory.pleaseEnterProfitRate',
+  //     placeholderKey: 'inventory.please-enter-profit-rate',
   //     prefix: '% ',
   //     onChange: val => handleInputChange('profit_rate', val)
   //   },
   //   {
-  //     labelKey: 'inventory.sellingPrice',
+  //     labelKey: 'inventory.selling-price',
   //     prop: 'selling_price',
   //     component: ThousandsInput,
   //     required: true,
-  //     placeholderKey: 'inventory.pleaseEnterSellingPrice',
+  //     placeholderKey: 'inventory.please-enter-selling-price',
   //     prefix: 'currency',
   //     props: { maxLength: 15 },
   //     onChange: val => handleInputChange('selling_price', val)
@@ -263,16 +263,16 @@ const basicInfoFields = reactive({
 // 处理图片上传和预览
 const handleUploadSuccess = (response) => {
   // if (response.code === 'SUCCESS') {
-  ElMessage.success(t('inventory.uploadSuccess'));
+  ElMessage.success(t('inventory.upload-success'));
   forms.value.profile_photo = response.url;
   fileList.value = [{ name: 'profile', url: response.url }];
   // } else {
-  //   ElMessage.error(response.message || t('inventory.uploadFailed'));
+  //   ElMessage.error(response.message || t('inventory.upload-failed'));
   // }
 };
 
 const handleUploadError = (error) => {
-  ElMessage.error(error.message || t('inventory.uploadFailed'));
+  ElMessage.error(error.message || t('inventory.upload-failed'));
 };
 
 const beforeUpload = (file) => {
@@ -280,11 +280,11 @@ const beforeUpload = (file) => {
   const isLt2M = file.size / 1024 / 1024 < 2;
 
   if (!isImage) {
-    ElMessage.error(t('inventory.uploadImageOnly'));
+    ElMessage.error(t('inventory.upload-image-only'));
     return false;
   }
   if (!isLt2M) {
-    ElMessage.error(t('inventory.imageSizeShouldBeLessThan2MB'));
+    ElMessage.error(t('inventory.image-size-should-be-less-than2-mb'));
     return false;
   }
   return true;
@@ -673,8 +673,8 @@ onMounted(() => {
             >
               {{
                 showAllFiles
-                  ? $t('inventory.primaryFiles')
-                  : $t('inventory.showALlFiles')
+                  ? $t('inventory.primary-files')
+                  : $t('inventory.show-a-ll-files')
               }}
             </ElButton>
           </div>
@@ -766,7 +766,7 @@ onMounted(() => {
                     >
                       <i class="iconfont icon-tianjia-dianpu"></i>
                       <span style="margin-left: 5px">{{
-                        t('inventory.addUnit')
+                        t('inventory.add-unit')
                       }}</span>
                     </div>
                   </template>
@@ -786,7 +786,7 @@ onMounted(() => {
                 <template v-if="field.special === 'warehouse-stock' && formMode != 'edit'">
                   <el-select
                     style="width: 100px; background-color: white"
-                    :placeholder="t('inventory.pleaseSelectWarehouse')"
+                    :placeholder="t('inventory.please-select-warehouse')"
                     :disabled="shouldDisableInitialStock"
                     v-model="forms.initial_stock_warehouse_id"
                   >
@@ -802,7 +802,7 @@ onMounted(() => {
                         @click="handleAddWarehouse"
                       >
                         <i class="iconfont icon-tianjia-dianpu"></i>
-                        <span style="margin-left: 5px">{{ t('inventory.addWarehouse') }}</span>
+                        <span style="margin-left: 5px">{{ t('inventory.add-warehouse') }}</span>
                       </div>
                     </template>
                   </el-select>
@@ -810,7 +810,7 @@ onMounted(() => {
                     class="input-number-control"
                     :controls="false"
                     :disabled="shouldDisableInitialStock || (!isNew ? false : !forms.initial_stock_warehouse_id)"
-                    :placeholder="t('inventory.pleaseEnterInitialStock')"
+                    :placeholder="t('inventory.please-enter-initial-stock')"
                     v-input-number="8"
                     v-model="forms.initial_stock_quantity"
                   >
@@ -841,7 +841,7 @@ onMounted(() => {
                       @click="handleAddUnit"
                     >
                       <i class="iconfont icon-tianjia-dianpu"></i>
-                      <span style="margin-left: 5px">{{ t('inventory.addUnit') }}</span>
+                      <span style="margin-left: 5px">{{ t('inventory.add-unit') }}</span>
                     </div>
                   </template>
                 </component>
@@ -880,7 +880,7 @@ onMounted(() => {
                       :disabled="newDisabled"
                     >
                       <div v-if="!newDisabled" class="upload-content">
-                        <span>{{ $t('inventory.uploadImage') }}</span>
+                        <span>{{ $t('inventory.upload-image') }}</span>
                       </div>
                     </ElUpload>
                     <ElDialog v-model="dialogVisible">
@@ -897,19 +897,19 @@ onMounted(() => {
               <div class="el-form-item-two">
                 <ElFormItem
                   class="specific-el-form-item"
-                  :label="`${t('inventory.productNameMinor')}:`"
+                  :label="`${t('inventory.product-name-minor')}:`"
                   prop="minor_name"
                 >
                   <ElInput
                     v-model="forms.minor_name"
                     maxlength="80"
                     :disabled="newDisabled"
-                    :placeholder="t('inventory.pleaseInputProductMinorName')"
+                    :placeholder="t('inventory.please-input-product-minor-name')"
                   />
                 </ElFormItem>
 
                 <ElFormItem
-                  :label="`${t('inventory.productLable')}:`"
+                  :label="`${t('inventory.product-lable')}:`"
                   prop="product_label_id_list"
                 >
                   <div class="moveSelect_tag">
@@ -919,7 +919,7 @@ onMounted(() => {
                       clearable
                       collapse-tags
                       :disabled="newDisabled || formMode === 'view'"
-                      :placeholder="t('inventory.pleaseSelectProductLable')"
+                      :placeholder="t('inventory.please-select-product-lable')"
                       :max-collapse-tags="2"
                       popper-class="custom-header"
                     >
@@ -941,7 +941,7 @@ onMounted(() => {
                 >
                   <ElSelect
                     v-model="forms.vendor_id"
-                    :placeholder="t('inventory.pleaseSelectVendor')"
+                    :placeholder="t('inventory.please-select-vendor')"
                     filterable
                     :filter-method="handleVendorSearch"
                     :disabled="newDisabled"
@@ -964,7 +964,7 @@ onMounted(() => {
                     v-rpSymbol
                     maxlength="64"
                     :disabled="newDisabled"
-                    :placeholder="t('inventory.pleaseEnterSpec')"
+                    :placeholder="t('inventory.please-enter-spec')"
                   />
                 </ElFormItem>
               </div>
@@ -972,12 +972,12 @@ onMounted(() => {
 
             <div class="form-row">
               <ElFormItem
-                :label="`${t('inventory.productGroup')}:`"
+                :label="`${t('inventory.product-group')}:`"
                 prop="product_group_id"
               >
                 <ElSelect
                   v-model="forms.product_group_id"
-                  :placeholder="t('inventory.pleaseSelectProductGroup')"
+                  :placeholder="t('inventory.please-select-product-group')"
                   :disabled="newDisabled"
                   filterable
                   :filter-method="handleProductGroupSearch"
@@ -995,7 +995,7 @@ onMounted(() => {
                   v-model="taxRate"
                   class="group-resize"
                   :disabled="!forms.tax_vat_id || newDisabled"
-                  :placeholder="t('inventory.pleaseEnterTaxRate')"
+                  :placeholder="t('inventory.please-enter-tax-rate')"
                 >
                   <template #prepend>
                     <ElSelect
@@ -1014,11 +1014,11 @@ onMounted(() => {
                 </ElInput>
               </ElFormItem>
 
-              <ElFormItem :label="`${t('inventory.excisDuty')}:`">
+              <ElFormItem :label="`${t('inventory.excis-duty')}:`">
                 <ElInput
                   v-model="taxExciseRate"
                   :disabled="!forms.tax_excise_id || newDisabled"
-                  :placeholder="t('inventory.pleaseEnterxcisDuty')"
+                  :placeholder="t('inventory.please-enterxcis-duty')"
                 >
                   <template #prepend>
                     <ElSelect
@@ -1046,7 +1046,7 @@ onMounted(() => {
                 <ElInput
                   v-model="otherTaxRate"
                   :disabled="!forms.tax_other_id || newDisabled"
-                  :placeholder="t('inventory.pleaseEnterotherTax')"
+                  :placeholder="t('inventory.please-enterother-tax')"
                 >
                   <template #prepend>
                     <ElSelect
@@ -1176,7 +1176,7 @@ onMounted(() => {
             <div class="form-row">
               <ElFormItem
                 align="right"
-                :label="`${t('inventory.productDescriptionMajor')}:`"
+                :label="`${t('inventory.product-description-major')}:`"
                 prop="major_description"
               >
                 <ElInput
@@ -1187,14 +1187,14 @@ onMounted(() => {
                   maxlength="256"
                   :disabled="newDisabled"
                   :placeholder="
-                    t('inventory.pleaseEnterProductDescriptionMajor')
+                    t('inventory.please-enter-product-description-major')
                   "
                 />
               </ElFormItem>
 
               <ElFormItem
                 align="right"
-                :label="`${t('inventory.productDescriptionMinor')}:`"
+                :label="`${t('inventory.product-description-minor')}:`"
                 prop="minor_description"
               >
                 <ElInput
@@ -1205,7 +1205,7 @@ onMounted(() => {
                   maxlength="256"
                   :disabled="newDisabled"
                   :placeholder="
-                    t('inventory.pleaseEnterProductDescriptionMinor')
+                    t('inventory.please-enter-product-description-minor')
                   "
                 />
               </ElFormItem>
@@ -1218,7 +1218,7 @@ onMounted(() => {
                   show-word-limit
                   maxlength="128"
                   :disabled="newDisabled"
-                  :placeholder="t('inventory.pleaseEnterRemark')"
+                  :placeholder="t('inventory.please-enter-remark')"
                 />
               </ElFormItem>
             </div>

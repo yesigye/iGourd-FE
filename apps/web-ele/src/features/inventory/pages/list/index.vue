@@ -43,7 +43,7 @@ const [Modal, modalApi] = useIgourdModal({
   },
   onConfirm: async () => {},
   onOpenChange() {},
-  title: t('inventory.message_tip'),
+  title: t('inventory.message-tip'),
 });
 
 const [clearModal, clearModalApi] = useIgourdModal({
@@ -54,7 +54,7 @@ const [clearModal, clearModalApi] = useIgourdModal({
   },
   onConfirm: async () => {},
   onOpenChange() {},
-  title: t('inventory.message_tip'),
+  title: t('inventory.message-tip'),
 });
 const {
   Grid,
@@ -231,19 +231,19 @@ const  tableHeaderStyle = {
           <ElTableColumn type="selection"></ElTableColumn>
           <ElTableColumn
             property="product_name"
-            :label="t('inventory.productName')"
+            :label="t('inventory.product-name')"
           ></ElTableColumn>
           <ElTableColumn
             property="product_code"
-            :label="t('inventory.productCode')"
+            :label="t('inventory.product-code')"
           ></ElTableColumn>
           <ElTableColumn
             property="sku_barcode"
-            :label="t('inventory.sku_barcode')"
+            :label="t('inventory.sku-barcode')"
           ></ElTableColumn>
           <ElTableColumn
             property="warehouse_name"
-            :label="t('inventory.warehouse_name')"
+            :label="t('inventory.warehouse-name')"
           ></ElTableColumn>
           <ElTableColumn property="" :label="t('common.action')">
             <template #default="scope">
@@ -269,7 +269,7 @@ const  tableHeaderStyle = {
       <ElTable :data="clearBeforeList" :header-cell-style="tableHeaderStyle">
           <ElTableColumn
             property="product_name"
-            :label="t('inventory.productName')"
+            :label="t('inventory.product-name')"
           ></ElTableColumn>
           <ElTableColumn
             property="stock_origin_quantity"
@@ -285,7 +285,7 @@ const  tableHeaderStyle = {
         <ElTable :data="clearBeforeList" :header-cell-style="tableHeaderStyle">
           <ElTableColumn
             property="product_name"
-            :label="t('inventory.productName')"
+            :label="t('inventory.product-name')"
           ></ElTableColumn>
           <ElTableColumn
             property="stock_origin_quantity"
