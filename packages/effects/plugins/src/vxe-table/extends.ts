@@ -95,6 +95,7 @@ export function extendsColumn(
     columns?.push({
       fixed: 'right',
       sortable: false,
+      field: 'actions',
       width: 32,
       align: 'center',
       slots: {
@@ -110,6 +111,9 @@ export function extendsColumn(
       },
     });
   } else {
+    if (!actions.field) {
+      actions.field = 'actions';
+    }
     actions.slots!.header = () => {
       return h(
         ElSpace,

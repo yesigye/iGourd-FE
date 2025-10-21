@@ -12,7 +12,9 @@ const { Grid, Drawer } = useFlows();
 
 <template>
   <Page auto-content-height>
-    <Grid />
+    <Grid>
+      <template #printContent="{ options }"> 自定义按dsss钮1 </template>
+    </Grid>
     <Drawer />
   </Page>
 </template>
