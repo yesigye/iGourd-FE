@@ -101,6 +101,7 @@ export function useIntegralLogList() {
 
   return useCrud<CustomerInfo, CustomerInfoPageQueryParams>({
     columns,
+    id:"customer-log-list",
     searchFormSchema,
     batchOperate: false,
     connectedComponent: CustomerDrawerForm,

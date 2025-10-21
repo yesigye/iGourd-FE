@@ -78,6 +78,7 @@ export function useFinancialReport() {
 
   return useCrud<FinancialReportRow, any>({
     columns,
+    id:"report-financial-list",
     searchFormSchema,
     batchOperate: false,
     service: {

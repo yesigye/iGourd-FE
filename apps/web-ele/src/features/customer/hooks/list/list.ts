@@ -188,6 +188,7 @@ export function useCustomerList() {
 
   return useCrud<CustomerInfo, CustomerInfoPageQueryParams>({
     columns,
+    id:"customer-list",
     searchFormSchema,
     batchOperate: true,
     connectedComponent: CustomerDrawerForm,

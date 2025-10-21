@@ -122,6 +122,7 @@ export function useAdvancePaymentOrder() {
   };
   return useCrud<any, any>({
     columns,
+    id:"marketing-adavence-payment-order-list",
     toolbarConfig: {
       export: true,
       zoom: true,

@@ -134,6 +134,7 @@ export function usePrice() {
         slots: { default: 'operation' },
       },
     ],
+    id:"marketing-price-list",
     searchFormSchema,
     batchOperate: true,
     connectedComponent: PriceDrawer,

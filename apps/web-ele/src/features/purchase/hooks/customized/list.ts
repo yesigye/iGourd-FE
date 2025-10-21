@@ -100,6 +100,7 @@ export function useCustomized() {
   };
   return useCrud<CustomizedRow, CustomizedDTO>({
     columns,
+    id:"purchase-customized-list",
     toolbarConfig: {
       export: true,
       zoom: true,

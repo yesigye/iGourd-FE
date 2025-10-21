@@ -122,6 +122,7 @@ export function usePurchaseOrderList(defaultQueryParams?: Record<string, any>) {
   }
   const crud = useCrud<SaleOrderRow, SaleOrderDTO>({
     columns,
+    id:"marketing-adavence-payment-order-list-2",
     searchFormSchema,
     params: defaultQueryParams ?? {},
     batchOperate: false,

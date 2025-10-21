@@ -154,6 +154,7 @@ export function useProduct() {
 
   return useCrud<ProductRow, ProductDTO>({
     columns,
+    id:"inventory-product-list",
     searchFormSchema,
     batchOperate: true,
     connectedComponent: ProductDrawer,

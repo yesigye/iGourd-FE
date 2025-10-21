@@ -98,6 +98,7 @@ export function useInventoryProductFeatureList() {
 
   return useCrud<ProductFeatureItem, ProductFeatureParams>({
     columns,
+    id:"inventory-product-feature-list",
     searchFormSchema,
     batchOperate: true,
     connectedComponent: addCustomized,

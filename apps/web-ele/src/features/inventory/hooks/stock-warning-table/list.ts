@@ -161,6 +161,7 @@ export function useStockWarningTable() {
     columns,
     searchFormSchema,
     batchOperate: true,
+    id:"inventory-stock-warning-table",
     connectedComponent: InventoryDrawer,
     service: {
       query: getStockWarningPageListApi,

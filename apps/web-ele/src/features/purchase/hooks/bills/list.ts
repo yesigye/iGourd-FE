@@ -107,6 +107,7 @@ export function usePurchaseBills(defaultQueryParams?: Record<string, any>) {
 
   return useCrud<PurchaseBillRow, PurchaseBillDTO>({
     columns,
+    id:"marketing-bills-order-list",
     params: defaultQueryParams,
     searchFormSchema,
     batchOperate: true,

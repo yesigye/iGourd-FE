@@ -180,6 +180,7 @@ export function usePaymentOrder() {
   };
   return useCrud<CustomizedRow, CustomizedDTO>({
     columns,
+    id:"purchase-payment-order-list",
     toolbarConfig: {
       export: true,
       zoom: true,

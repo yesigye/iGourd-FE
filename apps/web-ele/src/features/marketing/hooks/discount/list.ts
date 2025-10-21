@@ -116,6 +116,7 @@ export function useDiscount() {
 
   return useCrud<DiscountRow, DiscountDTO>({
     columns,
+    id:"marketing-discount-list",
     searchFormSchema,
     batchOperate: true,
     connectedComponent: DiscountDrawer,

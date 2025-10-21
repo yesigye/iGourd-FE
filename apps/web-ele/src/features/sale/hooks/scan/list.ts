@@ -170,6 +170,7 @@ export function useScanSale() {
 
   return useCrud<any, any>({
     columns,
+    id:"sale-scan-list",
     searchFormSchema,
     batchOperate: true,
     connectedComponent: ScanSaleDrawer,

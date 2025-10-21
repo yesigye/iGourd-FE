@@ -59,6 +59,7 @@ export function useInventoryUnitList() {
 
   return useCrud<UnitItem, UnitParams>({
     columns,
+    id:"inventory-unit-list",
     searchFormSchema,
     batchOperate: true,
     connectedComponent: UnitDrawer,

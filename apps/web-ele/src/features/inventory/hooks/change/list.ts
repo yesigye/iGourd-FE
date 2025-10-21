@@ -149,6 +149,7 @@ export function useInventoryChangeList() {
 
   return useCrud<InventoryChangeLogItem, InventoryChangeLogParams>({
     columns,
+    id:"inventory-change-list",
     searchFormSchema,
     batchOperate: false,
     service: {

@@ -64,6 +64,7 @@ export function useNotesList(defaultParams?: Record<string, any>) {
 
   const crud = useCrud<AccountingNotePageModel, GetFinanceNoteListRequest>({
     columns,
+    id:'note-list',
     searchFormSchema,
     params: defaultParams,
     batchOperate: false,
