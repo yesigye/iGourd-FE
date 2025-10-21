@@ -429,8 +429,8 @@ defineExpose({
               active-value="OPEN"
               inactive-value="CLOSED"
               inline-prompt
-              :active-text="$t('inventory.product_spec.OPEN')"
-              :inactive-text="$t('inventory.product_spec.CLOSED')"
+              :active-text="$t('inventory.product_spec.open')"
+              :inactive-text="$t('inventory.product_spec.closed')"
             />
           </div>
           <div v-else></div>

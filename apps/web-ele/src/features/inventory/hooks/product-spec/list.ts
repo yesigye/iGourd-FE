@@ -88,7 +88,7 @@ export function useInventoryProductSpec() {
         'x-component': 'Input',
         'x-component-props': {
           placeholder:
-            "{{t('inventory.pleaseEnterKeywordsToSearchProductNameProductCode')}}",
+            "{{t('inventory.please-enter-keywords-to-search-product-name-product-code')}}",
           clearable: true,
         },
       },

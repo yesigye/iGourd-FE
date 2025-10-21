@@ -16,32 +16,32 @@ export function useInventoryPriceLogList() {
 
   // // 价格类型选项
   // const priceTypeOptions = [
-  //   { label: t('inventory.costPrice'), value: 'COST_PRICE' },
-  //   { label: t('inventory.sellingPrice'), value: 'SELLING_PRICE' },
+  //   { label: t('inventory.cost-price'), value: 'COST_PRICE' },
+  //   { label: t('inventory.selling-price'), value: 'SELLING_PRICE' },
   // ];
 
   const columns: VxeGridPropTypes.Column<PriceLogItem>[] = [
     {
       field: 'price_type',
-      title: t('inventory.changeType'),
+      title: t('inventory.change-type'),
       minWidth: 160,
       fixed: 'left',
       formatter: ({ cellValue }) => {
         const typeMap = {
-          COST_PRICE: t('inventory.costPrice'),
-          SELLING_PRICE: t('inventory.sellingPrice'),
+          COST_PRICE: t('inventory.cost-price'),
+          SELLING_PRICE: t('inventory.selling-price'),
         };
         return typeMap[cellValue as PriceType] || cellValue;
       },
     },
     {
       field: 'product_name',
-      title: t('inventory.productName'),
+      title: t('inventory.product-name'),
       minWidth: 240,
     },
     {
       field: 'product_code',
-      title: t('inventory.productCode'),
+      title: t('inventory.product-code'),
       minWidth: 160,
     },
     {
@@ -56,7 +56,7 @@ export function useInventoryPriceLogList() {
     },
     {
       field: 'change_amount',
-      title: t('inventory.changeAmount'),
+      title: t('inventory.change-amount'),
       minWidth: 180,
       cellRender: {
         name: 'Amount',
@@ -70,13 +70,13 @@ export function useInventoryPriceLogList() {
     },
     {
       field: 'origin_price',
-      title: t('inventory.preChangePrice'),
+      title: t('inventory.pre-change-price'),
       minWidth: 180,
       formatter: ({ cellValue }) => formatNumber(cellValue),
     },
     {
       field: 'final_price',
-      title: t('inventory.postChangePrice'),
+      title: t('inventory.post-change-price'),
       minWidth: 180,
       formatter: ({ cellValue }) => formatNumber(cellValue),
     },
@@ -93,7 +93,7 @@ export function useInventoryPriceLogList() {
     },
     {
       field: 'create_time',
-      title: t('inventory.creationTime'),
+      title: t('inventory.creation-time'),
       minWidth: 180,
       sortable: true,
       formatter: 'formatDateTime',

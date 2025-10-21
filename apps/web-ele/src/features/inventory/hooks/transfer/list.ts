@@ -30,7 +30,7 @@ export function useInventoryTransferList() {
     },
     {
       field: 'transfer_type',
-      title: t('inventory.transferType'),
+      title: t('inventory.transfer-type'),
       minWidth: 200,
       fixed: 'left',
       formatter({ cellValue }: { cellValue: transferTypeKey }) {
@@ -93,7 +93,7 @@ export function useInventoryTransferList() {
     },
     {
       field: 'create_time',
-      title: t('inventory.creationTime'),
+      title: t('inventory.creation-time'),
       minWidth: 180,
       sortable: true,
       formatter: 'formatDateTime',
@@ -113,7 +113,7 @@ export function useInventoryTransferList() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('inventory.enterTransferKeywords')}}",
+        placeholder: "{{t('inventory.enter-transfer-keywords')}}",
         clearable: true,
       },
     },

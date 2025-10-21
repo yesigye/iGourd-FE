@@ -95,7 +95,7 @@ export function createUnitsTableConfig(t: TranslationFunction): TableColumn[] {
                   h(
                     'span',
                     { style: 'margin-left: 5px;' },
-                    t('inventory.addUnit'),
+                    t('inventory.add-unit'),
                   ),
                 ],
               ),
@@ -292,8 +292,8 @@ export function createSkuSpecTableConfig(
             'span',
             {},
             row.status === 'ON_SALE'
-              ? t('inventory.onSale')
-              : t('inventory.offSale'),
+              ? t('inventory.on-sale')
+              : t('inventory.off-sale'),
           );
         }
         return h(ElSwitch, {
@@ -521,7 +521,7 @@ export function createSkuSpecTableConfig(
     },
     {
       prop: 'profitRate',
-      label: 'inventory.SalesProfitMargin',
+      label: 'inventory.sales-profit-margin',
       maxWidth: 100,
       align: 'center',
       render: ({
@@ -607,7 +607,7 @@ export function createSkuSpecTableConfig(
         }
         return h(ElInput, {
           modelValue: row.remark,
-          placeholder: t('inventory.pleaseEnterRemark'),
+          placeholder: t('inventory.please-enter-remark'),
           size: 'small',
           disabled: mode === 'view',
           'onUpdate:modelValue': (value) => {
@@ -660,7 +660,7 @@ export function createSkuSpecTableConfig(
 export const deleteUnitTableConfig = [
   {
     prop: 'major_name',
-    label: 'inventory.productName',
+    label: 'inventory.product-name',
     width: 140,
     align: 'center',
   },

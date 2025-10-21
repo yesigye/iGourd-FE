@@ -46,11 +46,11 @@ export function useInventoryProductFeatureList() {
     },
     {
       field: 'is_fixed_option',
-      title: t('inventory.selectionType'),
+      title: t('inventory.selection-type'),
       minWidth: 165,
       sortable: true,
       formatter: ({ cellValue }) => {
-        return cellValue ? t('inventory.userCreated') : t('inventory.fixed');
+        return cellValue ? t('inventory.user-created') : t('inventory.fixed');
       },
     },
     {
@@ -70,7 +70,7 @@ export function useInventoryProductFeatureList() {
     },
     {
       field: 'create_time',
-      title: t('inventory.creationTime'),
+      title: t('inventory.creation-time'),
       minWidth: 180,
       sortable: true,
       formatter: 'formatDateTime',

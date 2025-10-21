@@ -46,13 +46,13 @@ export function useInventorySpoilageList() {
     },
     {
       field: 'stock_consumption_no',
-      title: t('inventory.stockConsumptionNo'),
+      title: t('inventory.stock-consumption-no'),
       minWidth: 240,
       fixed: 'left',
     },
     {
       field: 'consumption_date',
-      title: t('inventory.stockConsumptionDate'),
+      title: t('inventory.stock-consumption-date'),
       minWidth: 240,
       sortable: true,
       formatter: ({ cellValue }) => (cellValue ? cellValue.split(' ')[0] : ''),
@@ -91,7 +91,7 @@ export function useInventorySpoilageList() {
     },
     {
       field: 'create_time',
-      title: t('inventory.creationTime'),
+      title: t('inventory.creation-time'),
       minWidth: 180,
       sortable: true,
       formatter: 'formatDateTime',
@@ -114,7 +114,7 @@ export function useInventorySpoilageList() {
         // style: { 'margin-bottom': '0' },
       },
       'x-component-props': {
-        placeholder: "{{t('inventory.pleaseEnterKeywordsToSearch')}}",
+        placeholder: "{{t('inventory.please-enter-keywords-to-search')}}",
         clearable: true,
       },
     },
@@ -142,9 +142,9 @@ export function useInventorySpoilageList() {
         placeholder: "{{t('inventory.status')}}",
         clearable: true,
         options: [
-          { label: t('inventory.PENDING'), value: 'PENDING' },
-          { label: t('inventory.APPROVED'), value: 'APPROVED' },
-          { label: t('inventory.REJECTED'), value: 'REJECTED' },
+          { label: t('inventory.pending'), value: 'PENDING' },
+          { label: t('inventory.approved'), value: 'APPROVED' },
+          { label: t('inventory.rejected'), value: 'REJECTED' },
         ],
       },
     },

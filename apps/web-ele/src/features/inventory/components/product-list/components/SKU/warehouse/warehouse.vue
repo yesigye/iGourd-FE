@@ -77,7 +77,7 @@ onMounted(() => {
         @click="handleAddWarehouse"
       >
         <i class="iconfont icon-tianjia-dianpu"></i>
-        <span class=""> {{ t('inventory.addWarehouse') }} </span>
+        <span class=""> {{ t('inventory.add-warehouse') }} </span>
       </div>
     </template>
   </ElSelect>

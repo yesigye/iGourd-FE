@@ -491,7 +491,7 @@ const getTipHtml = (tip, good) => {
   return `<div>
     <p style="fonst-size:16px;">${tip}</p>
     <div class="tip-box" style="margin-top:16px;">
-      <p> <span style="color:#606266;">${t('inventory.productName')} :</span> <span style="color:#FC5C65;">${
+      <p> <span style="color:#606266;">${t('inventory.product-name')} :</span> <span style="color:#FC5C65;">${
         goodName
       }</span> </p>
       <p> <span style="color:#606266;">${t('inventory.sku_list.sku_barcode')} :</span> <span style="color:#FC5C65;">${
@@ -510,7 +510,7 @@ const deleteTip = (good) => {
   });
   const createGoodsHtml = () => {
     return `<div class="tip-box" style="margin-top:16px;">
-      <p> <span style="color:#606266;">${t('inventory.productName')} :</span> <span style="color:#FC5C65;">${
+      <p> <span style="color:#606266;">${t('inventory.product-name')} :</span> <span style="color:#FC5C65;">${
         goodName
       }</span> </p>
       <p> <span style="color:#606266;">${t('inventory.sku_list.sku_barcode')} :</span> <span style="color:#FC5C65;">${

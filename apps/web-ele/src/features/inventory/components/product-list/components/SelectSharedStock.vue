@@ -29,14 +29,14 @@ const emits = defineEmits<{
 const { merchantId } = storeToRefs(useUserStore());
 const columns = [
   {
-    label: 'inventory.productCode',
+    label: 'inventory.product-code',
     field: 'code',
     minWidth: 140,
     fixed: 'left',
     renderTemplate: renderProductBlock,
   },
   {
-    label: 'inventory.productName',
+    label: 'inventory.product-name',
     field: 'major_name',
     showOverflowTooltip: true,
     minWidth: 140,

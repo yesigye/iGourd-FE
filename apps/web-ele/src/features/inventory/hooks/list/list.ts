@@ -19,7 +19,7 @@ export function useInventory() {
     },
     {
       field: 'profile_photo',
-      title: t('inventory.productName'),
+      title: t('inventory.product-name'),
       minWidth: 150,
       fixed: 'left',
       sortable: true,
@@ -37,7 +37,7 @@ export function useInventory() {
     },
     {
       field: 'product_code',
-      title: t('inventory.productCode'),
+      title: t('inventory.product-code'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -82,21 +82,21 @@ export function useInventory() {
     },
     {
       field: 'inbound_in_transit_stock_message',
-      title: t('inventory.inboundTransitStock'),
+      title: t('inventory.inbound-transit-stock'),
       minWidth: 120,
       align: 'center',
       slots: { default: 'tooltipNum' },
     },
     {
       field: 'outbound_in_transit_stock_message',
-      title: t('inventory.outboundTransitStock'),
+      title: t('inventory.outbound-transit-stock'),
       minWidth: 120,
       align: 'center',
       slots: { default: 'tooltipNum' },
     },
     {
       field: 'product_group_name',
-      title: t('inventory.productGroup'),
+      title: t('inventory.product-group'),
       minWidth: 120,
       align: 'center',
     },
@@ -108,7 +108,7 @@ export function useInventory() {
     },
     {
       field: 'create_time',
-      title: t('inventory.creationTime'),
+      title: t('inventory.creation-time'),
       width: 160,
       sortable: true,
       align: 'center',
@@ -130,7 +130,7 @@ export function useInventory() {
       'x-decorator-props': {
       },
       'x-component-props': {
-        placeholder: "{{t('inventory.productName')}}",
+        placeholder: "{{t('inventory.product-name')}}",
         clearable: true,
       },
     },
@@ -141,7 +141,7 @@ export function useInventory() {
       'x-decorator-props': {
       },
       'x-component-props': {
-        placeholder: "{{t('inventory.productCode')}}",
+        placeholder: "{{t('inventory.product-code')}}",
         clearable: true,
       },
     },
@@ -152,7 +152,7 @@ export function useInventory() {
       'x-decorator-props': {
       },
       'x-component-props': {
-        placeholder: "{{t('inventory.warehouseName')}}",
+        placeholder: "{{t('inventory.warehouse-name')}}",
         clearable: true,
       },
     },

@@ -706,7 +706,7 @@ export function useProductAdd() {
         }
       });
       if (samelength > 1) {
-        ElMessage.error(t('inventory.skuBarcodeTips'));
+        ElMessage.error(t('inventory.sku-barcode-tips'));
         return false;
       }
     }

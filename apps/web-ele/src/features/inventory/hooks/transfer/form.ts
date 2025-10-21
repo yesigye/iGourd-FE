@@ -31,19 +31,19 @@ export function useTransferForm() {
   // 调拨类型
   const transferTypeList = [
     {
-      label: t('inventory.sameStoreTransfer'),
+      label: t('inventory.same-store-transfer'),
       value: 'TRANSFER_SAME_STORE',
     },
     {
-      label: t('inventory.differentStoreTransfer'),
+      label: t('inventory.different-store-transfer'),
       value: 'TRANSFER_DIFFERENT_STORE',
     },
     {
-      label: t('inventory.transferOut'),
+      label: t('inventory.transfer-out'),
       value: 'TRANSFER_IN_ONLY',
     },
     {
-      label: t('inventory.transferIn'),
+      label: t('inventory.transfer-in'),
       value: 'TRANSFER_OUT_ONLY',
     },
   ];

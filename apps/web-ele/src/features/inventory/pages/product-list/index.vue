@@ -140,12 +140,12 @@ const searchResults = ref([]);
 
 const STATUS_CONFIG = [
   {
-    name: 'inventory.offSale',
+    name: 'inventory.off-sale',
     value: 'OFF_SALE',
     iconColor: '#9e9e9e',
   },
   {
-    name: 'inventory.onSale',
+    name: 'inventory.on-sale',
     value: 'ON_SALE',
     iconColor: '#4caf51',
   },

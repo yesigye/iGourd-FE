@@ -29,7 +29,7 @@ export function useInventoryProductLabelList() {
 
     {
       field: 'product_label_name',
-      title: t('inventory.productLabelName'),
+      title: t('inventory.product-label-name'),
       minWidth: 220,
     },
     {
@@ -59,7 +59,7 @@ export function useInventoryProductLabelList() {
     },
     {
       field: 'create_time',
-      title: t('inventory.creationTime'),
+      title: t('inventory.creation-time'),
       minWidth: 180,
       sortable: true,
       formatter: 'formatDateTime',
@@ -80,7 +80,7 @@ export function useInventoryProductLabelList() {
       'x-component': 'Input',
       'x-component-props': {
         placeholder:
-          "{{t('inventory.pleaseEnterKeywordsToSearchVendorNameCreditLine')}}",
+          "{{t('inventory.please-enter-keywords-to-search-vendor-name-credit-line')}}",
         clearable: true,
       },
     },

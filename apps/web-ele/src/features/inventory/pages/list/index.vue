@@ -231,11 +231,11 @@ const  tableHeaderStyle = {
           <ElTableColumn type="selection"></ElTableColumn>
           <ElTableColumn
             property="product_name"
-            :label="t('inventory.productName')"
+            :label="t('inventory.product-name')"
           ></ElTableColumn>
           <ElTableColumn
             property="product_code"
-            :label="t('inventory.productCode')"
+            :label="t('inventory.product-code')"
           ></ElTableColumn>
           <ElTableColumn
             property="sku_barcode"
@@ -269,7 +269,7 @@ const  tableHeaderStyle = {
       <ElTable :data="clearBeforeList" :header-cell-style="tableHeaderStyle">
           <ElTableColumn
             property="product_name"
-            :label="t('inventory.productName')"
+            :label="t('inventory.product-name')"
           ></ElTableColumn>
           <ElTableColumn
             property="stock_origin_quantity"
@@ -285,7 +285,7 @@ const  tableHeaderStyle = {
         <ElTable :data="clearBeforeList" :header-cell-style="tableHeaderStyle">
           <ElTableColumn
             property="product_name"
-            :label="t('inventory.productName')"
+            :label="t('inventory.product-name')"
           ></ElTableColumn>
           <ElTableColumn
             property="stock_origin_quantity"

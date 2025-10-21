@@ -39,7 +39,7 @@ export function useInventoryCountList() {
     },
     {
       field: 'origin_total_quantity',
-      title: t('inventory.originTotalQuantity'),
+      title: t('inventory.origin-total-quantity'),
       minWidth: 150,
       formatter: ({ cellValue }) => formatNumber(cellValue),
     },
@@ -84,7 +84,7 @@ export function useInventoryCountList() {
     },
     {
       field: 'create_time',
-      title: t('inventory.creationTime'),
+      title: t('inventory.creation-time'),
       minWidth: 180,
       sortable: true,
       formatter: 'formatDateTime',

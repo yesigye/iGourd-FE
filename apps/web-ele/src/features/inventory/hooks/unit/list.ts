@@ -20,7 +20,7 @@ export function useInventoryUnitList() {
     },
     {
       field: 'name',
-      title: t('inventory.unitName'),
+      title: t('inventory.unit-name'),
       minWidth: 150,
       fixed: 'left',
     },
@@ -32,7 +32,7 @@ export function useInventoryUnitList() {
     },
     {
       field: 'create_time',
-      title: t('inventory.creationTime'),
+      title: t('inventory.creation-time'),
       minWidth: 180,
       sortable: true,
     },
@@ -51,7 +51,7 @@ export function useInventoryUnitList() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('inventory.unitSearchPlaceholder')}}",
+        placeholder: "{{t('inventory.unit-search-placeholder')}}",
         clearable: true,
       },
     },

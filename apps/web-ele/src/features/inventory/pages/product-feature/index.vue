@@ -29,7 +29,7 @@ const {
           @click="handleEdit()"
         >
           <i class="iconfont icon-tianjia-dianpu mr-1"></i>
-          {{ t('inventory.addFeature') }}
+          {{ t('inventory.add-feature') }}
         </ElButton>
         <ElButton
           v-if="canBatchOperate"

@@ -113,7 +113,7 @@ export function useInventorySkuList() {
             style: { 'margin-bottom': '0' },
           },
           'x-component-props': {
-            placeholder: "{{t('inventory.pleaseEnterKeywordsNameAndSku')}}",
+            placeholder: "{{t('inventory.please-enter-keywords-name-and-sku')}}",
             clearable: true,
           },
         },
@@ -128,8 +128,8 @@ export function useInventorySkuList() {
             placeholder: "{{t('inventory.status')}}",
             clearable: true,
             options: [
-              { label: t('inventory.onSale'), value: 'ON_SALE' },
-              { label: t('inventory.offSale'), value: 'OFF_SALE' },
+              { label: t('inventory.on-sale'), value: 'ON_SALE' },
+              { label: t('inventory.off-sale'), value: 'OFF_SALE' },
             ],
           },
         },

@@ -24,14 +24,14 @@ export function useProduct() {
     },
     {
       field: 'name',
-      title: t('inventory.productName'),
+      title: t('inventory.product-name'),
       minWidth: 150,
       sortable: true,
       align: 'left',
     },
     {
       field: 'code',
-      title: t('inventory.productCode'),
+      title: t('inventory.product-code'),
       minWidth: 150,
       sortable: true,
       align: 'left',

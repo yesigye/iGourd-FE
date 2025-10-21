@@ -458,7 +458,7 @@ export function useSpecsConfiguration() {
   function validateUnitSelection(tableData) {
     const firstRecord = tableData[0];
     if (!firstRecord || firstRecord.is_basic !== 1) {
-      ElMessage.error(t('inventory.pleaseSelectUnitFirst'));
+      ElMessage.error(t('inventory.please-select-unit-first'));
       return false;
     }
 
