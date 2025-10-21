@@ -12,10 +12,10 @@ import { useCrud } from '#/hooks';
 import { formatNumber } from '#/utils/functions';
 
 const transferTypeList = {
-  TRANSFER_SAME_STORE: 'sameStoreTransfer',
-  TRANSFER_DIFFERENT_STORE: 'differentStoreTransfer',
-  TRANSFER_IN_ONLY: 'transferOut',
-  TRANSFER_OUT_ONLY: 'transferIn',
+  TRANSFER_SAME_STORE: 'same-store-transfer',
+  TRANSFER_DIFFERENT_STORE: 'different-store-transfer',
+  TRANSFER_IN_ONLY: 'transfer-out',
+  TRANSFER_OUT_ONLY: 'transfer-in',
 };
 type transferTypeKey = keyof typeof transferTypeList;
 

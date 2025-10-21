@@ -38,7 +38,7 @@ export function useSkuListForm() {
           },
           profile_photo: {
             type: 'string',
-            title: "{{t('sku-list.profile_photo')}}",
+            title: "{{t('sku-list.profile-photo')}}",
             'x-decorator': 'FormItem',
             'x-component': 'Upload',
             'x-component-props': {
@@ -49,7 +49,7 @@ export function useSkuListForm() {
           },
           product_unit_name: {
             type: 'string',
-            title: "{{t('sku-list.product_unit_name')}}",
+            title: "{{t('sku-list.product-unit-name')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
@@ -68,7 +68,7 @@ export function useSkuListForm() {
           },
           spec_code: {
             type: 'string',
-            title: "{{t('sku-list.spec_code')}}",
+            title: "{{t('sku-list.spec-code')}}",
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-disabled': true,
@@ -80,7 +80,7 @@ export function useSkuListForm() {
           },
           sku_barcode: {
             type: 'string',
-            title: "{{t('sku-list.sku_barcode')}}",
+            title: "{{t('sku-list.sku-barcode')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
@@ -92,7 +92,7 @@ export function useSkuListForm() {
           },
           cost_price: {
             type: 'string',
-            title: "{{t('sku-list.cost_price')}}",
+            title: "{{t('sku-list.cost-price')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
@@ -110,7 +110,7 @@ export function useSkuListForm() {
           },
           selling_price: {
             type: 'string',
-            title: "{{t('sku-list.selling_price')}}",
+            title: "{{t('sku-list.selling-price')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',

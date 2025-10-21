@@ -1,22 +1,6 @@
 {
-  "productLabel": "Product Label",
-  "productLabelName": "Product Label Name",
-  "productNumber": "Product Number",
-  "productsDetail": "Product Details",
-  "creator": "Creator",
-  "creationTime": "Creation Time",
-  "action": "Action",
-  "addProductLabel": "Add Product Label",
-  "editProductLabel": "Edit Product Label",
-  "productDetails": "Product Details",
-  "pleaseEnterKeywordsToSearchVendorNameCreditLine": "Please enter keywords to search vendor name, credit line",
-  "deleteConfirm": "Are you sure to delete",
-  "tips": "Tips",
-  "confirmButton": "Confirm",
-  "cancelButton": "Cancel",
-  "deleteSuccess": "Delete Success",
-  "cancelDelete": "Cancel Delete",
+  "product-label": "Product Label",
   "product-label-name": "Product Label Name",
   "add-product-label": "Add Product Label",
-  "please-enter-label-name": "Please enter the product label name"
+  "please-enter-label-name": "Please enter label name"
 }

@@ -34,37 +34,37 @@ export function useInventorySkuList() {
     },
     {
       field: 'sku_barcode',
-      title: t('sku-list.sku_barcode'),
+      title: t('sku-list.sku-barcode'),
       minWidth: 180,
     },
     {
       field: 'product_unit_name',
-      title: t('sku-list.product_unit_name'),
+      title: t('sku-list.product-unit-name'),
       minWidth: 160,
     },
     {
       field: 'selling_price',
-      title: t('sku-list.selling_price'),
+      title: t('sku-list.selling-price'),
       minWidth: 200,
     },
     {
       field: 'cost_price',
-      title: t('sku-list.cost_price'),
+      title: t('sku-list.cost-price'),
       minWidth: 200,
     },
     {
       field: 'spec_code',
-      title: t('sku-list.spec_code'),
+      title: t('sku-list.spec-code'),
       minWidth: 200,
     },
     {
       field: 'stock_total_quantity_message',
-      title: t('sku-list.stock_total_quantity'),
+      title: t('sku-list.stock-total-quantity'),
       minWidth: 200,
     },
     {
       field: 'monthly_sales_quantity',
-      title: t('sku-list.monthly_sales_quantity'),
+      title: t('sku-list.monthly-sales-quantity'),
       minWidth: 200,
     },
     {
@@ -77,13 +77,13 @@ export function useInventorySkuList() {
     },
     {
       field: 'creator_name',
-      title: t('sku-list.creator_name'),
+      title: t('sku-list.creator-name'),
       minWidth: 120,
     },
 
     {
       field: 'create_time',
-      title: t('sku-list.creation_time'),
+      title: t('sku-list.creation-time'),
       minWidth: 180,
       sortable: true,
       formatter: 'formatDateTime',
