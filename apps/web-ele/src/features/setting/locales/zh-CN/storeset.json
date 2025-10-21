@@ -20,5 +20,6 @@
   "language-tip": "请选择您要用于输入信息的语言，如产品名称的输入",
   "currency": "货币",
   "currency-tip": "显示店铺基础货币",
-  "please-fill-in-full-information": "请填写完整信息"
+  "please-fill-in-full-information": "请填写完整信息",
+  "pc-windows-pos": "PC Windows iGourd POS"
 }

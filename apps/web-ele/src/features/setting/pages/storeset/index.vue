@@ -207,7 +207,7 @@ onMounted(() => {
           <div class="flex gap-10">
             <!-- 插槽label -->
             <div class="flex w-[173px] items-center gap-2">
-              {{ storeInfo.business_type }}
+              {{ storeInfo?.business_type?.label ?? '--' }}
             </div>
             <div class="w-[500px] text-[#999999]"></div>
           </div>
@@ -222,7 +222,8 @@ onMounted(() => {
           <div class="flex gap-10">
             <!-- 插槽label -->
             <div class="flex w-[173px] items-center gap-2">
-              {{ storeInfo.validity }}
+              {{ storeInfo?.package_start_time }} -
+              {{ storeInfo?.package_expiration_time }}
             </div>
             <div class="w-[500px] text-[#999999]"></div>
           </div>
@@ -255,7 +256,9 @@ onMounted(() => {
           </div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] items-center gap-2"></div>
+            <div class="flex w-[173px] items-center gap-2">
+              {{ t('storeset.pc-windows-pos') }}
+            </div>
             <div class="w-[500px] text-[#999999]"></div>
           </div>
 
@@ -351,8 +354,8 @@ onMounted(() => {
                 {{ storeInfo.contact_telephone }}
               </div>
               <div class="flex items-center gap-2" v-else>
-                <ElSelect />
-                <ElInput />
+                <ElSelect v-model="storeInfo.contact_country_area_code" />
+                <ElInput v-model="storeInfo.contact_telephone" />
               </div>
             </div>
             <div class="w-[500px] text-[#999999]">

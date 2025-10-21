@@ -20,5 +20,6 @@
   "language-tip": "Veuillez sélectionner la langue que vous souhaitez utiliser pour saisir des informations, comme la saisie des noms de produits",
   "currency": "Devise",
   "currency-tip": "Afficher la devise de base du magasin",
-  "please-fill-in-full-information": "Veuillez remplir toutes les informations"
+  "please-fill-in-full-information": "Veuillez remplir toutes les informations",
+  "pc-windows-pos": "PC Windows iGourd POS"
 }
