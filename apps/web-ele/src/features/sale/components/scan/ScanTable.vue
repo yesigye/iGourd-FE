@@ -322,8 +322,8 @@ defineExpose({
   height: 100%;
 
   .Inum-input {
-    width: 30px;
-    height: 30px;
+    width: 22px;
+    height: 22px;
     font-size: 18px;
     font-weight: bold;
     color: #0d99ff;
