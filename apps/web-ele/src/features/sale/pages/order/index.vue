@@ -104,11 +104,7 @@ const handleSettle = (event: {
         >
           {{ t('common.print') }}
         </ElButton>
-        <ElButton
-          type="text"
-          v-if="row.status === 'PAID'"
-          @click="handlePrintReceipt(row)"
-        >
+        <ElButton type="text" @click="handlePrintReceipt(row)">
           {{ t('common.print-receipt') }}
         </ElButton>
         <ElButton type="text" @click="handleOrderDetails(row)">
