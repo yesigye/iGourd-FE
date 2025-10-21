@@ -82,6 +82,7 @@ export function useProductGroupList() {
 
   const uCrud = useCrud<ProductLabelItem, ProductLabelParams>({
     columns,
+    id:"inventory-product-group-list",
     searchFormAppendTo: '#product-group-search',
     searchFormSchema,
     batchOperate: true,

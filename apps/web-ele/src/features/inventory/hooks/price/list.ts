@@ -110,6 +110,7 @@ export function useInventoryPriceList() {
 
   return useCrud<PriceChangeLogItem, PriceChangeLogParams>({
     columns,
+    id:"inventory-price-log-list",
     searchFormSchema,
     batchOperate: false,
     service: {

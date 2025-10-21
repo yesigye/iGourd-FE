@@ -123,6 +123,7 @@ export function useSalesReport() {
 
   return useCrud<SalesReportRow, any>({
     columns,
+    id:"report-sales-list",
     searchFormSchema,
     scope: {
       initialValues: {

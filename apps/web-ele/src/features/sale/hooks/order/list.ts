@@ -167,6 +167,7 @@ export function useSaleOrder(defaultQueryParams?: Record<string, any>) {
   }
   const crud = useCrud<SaleOrderRow, SaleOrderDTO>({
     columns,
+    id:"sale-order-list",
     searchFormSchema,
     params: defaultQueryParams ?? {},
     batchOperate: true,

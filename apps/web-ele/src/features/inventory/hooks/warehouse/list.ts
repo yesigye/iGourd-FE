@@ -89,6 +89,7 @@ export function useWarehouse() {
 
   return useCrud<WarehouseRow, WarehouseDTO>({
     columns,
+    id:"inventory-warehouse-list",
     searchFormSchema,
     batchOperate: true,
     connectedComponent: WarehouseDrawer,

@@ -171,6 +171,7 @@ export function useInventory() {
 
   return useCrud<InventoryRow, InventoryUpdateDTO>({
     columns,
+    id:"inventory-stock-list",
     searchFormSchema,
     batchOperate: true,
     connectedComponent: InventoryDrawer,

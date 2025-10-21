@@ -224,6 +224,7 @@ export function useInventoryReport() {
 
   return useCrud<InventoryReportRow, any>({
     columns,
+    id:"report-inventory-list",
     searchFormSchema,
     batchOperate: false,
     service: {

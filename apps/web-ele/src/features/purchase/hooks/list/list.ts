@@ -91,6 +91,7 @@ export function usePurchaseList() {
 
   return useCrud<PurchaseListRow, PurchaseListDTO>({
     columns,
+    id:"purchase-list",
     searchFormSchema,
     batchOperate: true,
     connectedComponent: PurchaseListDrawer,

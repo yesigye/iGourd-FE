@@ -170,6 +170,7 @@ export function useInventorySpoilageList() {
     // @ts-ignore
     service,
     columns,
+    id:"inventory-spoilage-list",
     searchFormSchema,
     batchOperate: true,
     connectedComponent: SpoilageDrawer,

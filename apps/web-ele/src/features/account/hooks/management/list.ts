@@ -102,6 +102,7 @@ export function useAccountManagement() {
     handleBatchDelete,
   } = useCrud<any, any>({
     columns,
+    id:"management-list",
     searchFormSchema,
     batchOperate: true,
     connectedComponent: AccountDrawerForm,
