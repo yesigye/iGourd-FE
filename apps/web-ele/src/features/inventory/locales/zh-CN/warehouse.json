@@ -1,16 +1,4 @@
 {
-  "warehouseName": "仓库名称",
-  "warehouseCode": "仓库编码",
-  "contactPerson": "联系人",
-  "contactPhone": "联系电话",
-  "status": "状态",
-  "addWarehouse": "添加仓库",
-  "editWarehouse": "编辑仓库",
-  "warehouseDetail": "仓库详情",
-  "statusOptions": {
-    "active": "启用",
-    "inactive": "禁用"
-  },
   "add-warehouse": "添加仓库",
   "warehouse-name": "仓库名称",
   "country": "国家",
