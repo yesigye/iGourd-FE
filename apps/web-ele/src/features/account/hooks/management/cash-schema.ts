@@ -15,7 +15,7 @@ export default {
           type: 'void',
           'x-component': 'Card',
           'x-component-props': {
-            header: `{{ t('account.basic_information')}}`,
+            header: `{{ t('account.basic-information')}}`,
           },
           properties: {
             id: {
@@ -30,7 +30,7 @@ export default {
               type: 'string',
               'x-component': 'Select',
               'x-decorator': 'FormItem',
-              title: "{{t('account.account_ledger')}}",
+              title: "{{t('account.account-ledger')}}",
               enum: '{{ leafLedgers.value }}',
               'x-validator': [
                 null,
@@ -48,7 +48,7 @@ export default {
               type: 'string',
               'x-component': 'Input',
               'x-decorator': 'FormItem',
-              title: "{{t('account.ledger_no')}}",
+              title: "{{t('account.ledger-no')}}",
               'x-validator': [
                 null,
                 {
@@ -64,7 +64,7 @@ export default {
               type: 'string',
               'x-component': 'Input',
               'x-decorator': 'FormItem',
-              title: "{{t('account.ledger_name')}}",
+              title: "{{t('account.ledger-name')}}",
               'x-validator': [
                 null,
                 {
@@ -79,7 +79,7 @@ export default {
             openingBalance: {
               type: 'void',
               'x-decorator': 'FormItem',
-              title: "{{t('account.opening_balance')}}",
+              title: "{{t('account.opening-balance')}}",
               properties: {
                 initial_balance: {
                   type: 'void',
@@ -142,7 +142,7 @@ export default {
             closing_balance: {
               type: 'void',
               'x-decorator': 'FormItem',
-              title: "{{t('account.closing_balance')}}",
+              title: "{{t('account.closing-balance')}}",
               properties: {
                 current_balance_row: {
                   type: 'void',

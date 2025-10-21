@@ -11,37 +11,37 @@ import { useCrud } from '#/hooks';
 
 const sourceTypeMap = {
   ACCOUNTING_NOTE_CREATE: {
-    label: 'account.source_type.accounting_note_create',
+    label: 'account.source-type.accounting-note-create',
   },
   ACCOUNTING_NOTE_MODIFY: {
-    label: 'account.source_type.accounting_note_modify',
+    label: 'account.source-type.accounting-note-modify',
   },
   CUSTOMER_RECHARGE_WITHOUT_VIP: {
-    label: 'account.source_type.customer_recharge_without_vip',
+    label: 'account.source-type.customer-recharge-without-vip',
   },
   CUSTOMER_RECHARGE_WITH_VIP: {
-    label: 'account.source_type.customer_recharge_with_vip',
+    label: 'account.source-type.customer-recharge-with-vip',
   },
   MANUALLY_CREATE: {
-    label: 'account.source_type.manually_create',
+    label: 'account.source-type.manually-create',
   },
   PURCHASE_BILL_GOODS_PAYMENT: {
-    label: 'account.source_type.purchase_bill_goods_payment',
+    label: 'account.source-type.purchase-bill-goods-payment',
   },
   PURCHASE_ORDER_PAYMENT: {
-    label: 'account.source_type.purchase_order_payment',
+    label: 'account.source-type.purchase-order-payment',
   },
   PURCHASE_ORDER_RETURNED: {
-    label: 'account.source_type.purchase_order_returned',
+    label: 'account.source-type.purchase-order-returned',
   },
   SALES_OFFLINE_ORDER_SYNC: {
-    label: 'account.source_type.sales_offline_order_sync',
+    label: 'account.source-type.sales-offline-order-sync',
   },
   SALES_ORDER_PAYMENT: {
-    label: 'account.source_type.sales_order_payment',
+    label: 'account.source-type.sales-order-payment',
   },
   SALES_ORDER_REFUND: {
-    label: 'account.source_type.sales_order_refund',
+    label: 'account.source-type.sales-order-refund',
   },
 };
 
@@ -59,39 +59,39 @@ export function useFlows() {
       minWidth: 165,
       align: 'left',
       fixed: 'left',
-      title: t('account.serialNumber'),
+      title: t('account.serial-number'),
     },
     {
       field: 'finance_category_name',
       minWidth: 200,
       align: 'right',
-      title: t('account.financeCategoryName'),
+      title: t('account.finance-category-name'),
     },
     {
       field: 'revenue_amount',
       minWidth: 150,
       align: 'right',
-      title: t('account.revenueAmount'),
+      title: t('account.revenue-amount'),
       formatter: 'formatMoney',
     },
     {
       field: 'expenditure_amount',
       minWidth: 150,
       align: 'right',
-      title: t('account.expenditureAmount'),
+      title: t('account.expenditure-amount'),
       formatter: 'formatMoney',
     },
     {
       field: 'business_original_amount',
       minWidth: 150,
       align: 'right',
-      title: t('account.business_original_amount'),
+      title: t('account.business-original-amount'),
       formatter: 'formatMoney',
     },
     {
       field: 'trader_name',
       minWidth: 150,
-      title: t('account.trader_name'),
+      title: t('account.trader-name'),
     },
     {
       minWidth: 200,
@@ -100,12 +100,12 @@ export function useFlows() {
         {
           field: 'target_account_name',
           minWidth: 200,
-          title: t('account.target_account_name'),
+          title: t('account.target-account-name'),
         },
         {
           field: 'payment_method_name',
           minWidth: 200,
-          title: t('account.payment_method'),
+          title: t('account.payment-method'),
         },
       ],
     },
@@ -120,7 +120,7 @@ export function useFlows() {
     {
       field: 'trading_no',
       minWidth: 150,
-      title: t('account.tradingNo'),
+      title: t('account.trading-no'),
     },
     {
       field: 'remark',
@@ -130,17 +130,17 @@ export function useFlows() {
     {
       field: 'trading_time',
       minWidth: 150,
-      title: t('account.trading_time'),
+      title: t('account.trading-time'),
     },
     {
       field: 'creator_name',
       minWidth: 200,
-      title: t('account.creatorName'),
+      title: t('account.creator-name'),
     },
     {
       field: 'create_time',
       minWidth: 180,
-      title: t('account.createTime'),
+      title: t('account.create-time'),
     },
   ];
 

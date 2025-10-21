@@ -45,7 +45,7 @@ export function useChartOfAccountsForm(props: IChatOfAccountProps) {
       title:
         props.type === 'ledger'
           ? t('chart-of-accounts.add-account-ledger')
-          : t('account.add_sub_ledger'),
+          : t('account.add-sub-ledger'),
       appendToMain: true,
       class: 'w-1/2',
     },

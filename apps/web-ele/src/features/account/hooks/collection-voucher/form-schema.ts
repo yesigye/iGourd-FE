@@ -45,11 +45,11 @@ export function useCollectionVoucherSchema() {
                 },
                 enum: [
                   {
-                    label: `{{t('collection-voucher.receipt_direction.positive_order')}}`,
+                    label: `{{t('collection-voucher.receipt-direction.positive-order')}}`,
                     value: 'POSITIVE_ORDER',
                   },
                   {
-                    label: `{{t('collection-voucher.receipt_direction.negative_order')}}`,
+                    label: `{{t('collection-voucher.receipt-direction.negative-order')}}`,
                     value: 'NEGATIVE_ORDER',
                   },
                 ],
@@ -106,7 +106,7 @@ export function useCollectionVoucherSchema() {
                     type: 'string',
                     'x-component': 'Input',
                     'x-decorator': 'FormItem',
-                    title: "{{t('account.traderName')}}",
+                    title: "{{t('account.trader-name')}}",
                     'x-validator': [
                       null,
                       {
@@ -146,7 +146,7 @@ export function useCollectionVoucherSchema() {
                     type: 'string',
                     'x-component': 'Input',
                     'x-decorator': 'FormItem',
-                    title: "{{t('account.receivable_balance')}}",
+                    title: "{{t('account.receivable-balance')}}",
                     'x-component-props': {
                       placeholder: "{{t('common.enter')}}",
                       disabled: true,
@@ -157,7 +157,7 @@ export function useCollectionVoucherSchema() {
                     type: 'string',
                     'x-component': 'Input',
                     'x-decorator': 'FormItem',
-                    title: "{{t('account.last_debt')}}",
+                    title: "{{t('account.last-debt')}}",
                     'x-component-props': {
                       placeholder: "{{t('common.enter')}}",
                       disabled: true,
@@ -227,7 +227,7 @@ export function useCollectionVoucherSchema() {
                       type: 'void',
                       'x-component': 'ArrayTable.Column',
                       'x-component-props': {
-                        title: '{{ t("account.createTime") }}',
+                        title: '{{ t("account.create-time") }}',
                         minWidth: 150,
                       },
                       properties: {
@@ -241,7 +241,7 @@ export function useCollectionVoucherSchema() {
                       type: 'void',
                       'x-component': 'ArrayTable.Column',
                       'x-component-props': {
-                        title: '{{ t("account.order_settlement_date") }}',
+                        title: '{{ t("account.order-settlement-date") }}',
                         minWidth: 150,
                       },
                       properties: {
@@ -255,7 +255,7 @@ export function useCollectionVoucherSchema() {
                       type: 'void',
                       'x-component': 'ArrayTable.Column',
                       'x-component-props': {
-                        title: '{{ t("account.source_order_type") }}',
+                        title: '{{ t("account.source-order-type") }}',
                         minWidth: 150,
                       },
                       properties: {
@@ -297,7 +297,7 @@ export function useCollectionVoucherSchema() {
                       type: 'void',
                       'x-component': 'ArrayTable.Column',
                       'x-component-props': {
-                        title: '{{ t("account.receivedAmount") }}',
+                        title: '{{ t("account.received-amount") }}',
                         minWidth: 150,
                       },
                       properties: {
@@ -311,7 +311,7 @@ export function useCollectionVoucherSchema() {
                       type: 'void',
                       'x-component': 'ArrayTable.Column',
                       'x-component-props': {
-                        title: '{{ t("account.pendingReceivableAmount") }}',
+                        title: '{{ t("account.pending-receivable-amount") }}',
                         minWidth: 150,
                       },
                       properties: {
@@ -366,13 +366,13 @@ export function useCollectionVoucherSchema() {
                     type: 'number',
                   },
                   'discount-rate': {
-                    title: `{{t('account.total_discount_rate')}}`,
+                    title: `{{t('account.total-discount-rate')}}`,
                     'x-decorator': 'FormItem',
                     'x-component': 'InputNumber',
                     type: 'number',
                   },
                   total: {
-                    title: '{{t("account.total_discount")}}',
+                    title: '{{t("account.total-discount")}}',
                     'x-decorator': 'FormItem',
                     'x-component': 'InputNumber',
                     type: 'number',
@@ -482,7 +482,7 @@ export function useCollectionVoucherSchema() {
                     col_account_id: {
                       type: 'void',
                       'x-component-props': {
-                        title: `{{t("account.payAccount")}}`,
+                        title: `{{t("account.pay-account")}}`,
                       },
                       'x-component': 'ArrayTable.Column',
                       properties: {
@@ -500,7 +500,7 @@ export function useCollectionVoucherSchema() {
                     col_payment_method_type: {
                       type: 'void',
                       'x-component-props': {
-                        title: `{{t("account.pay_method")}}`,
+                        title: `{{t("account.pay-method")}}`,
                       },
                       'x-component': 'ArrayTable.Column',
                       properties: {
@@ -519,7 +519,7 @@ export function useCollectionVoucherSchema() {
                     col_amount: {
                       type: 'void',
                       'x-component-props': {
-                        title: `{{t("account.pay_amount")}}`,
+                        title: `{{t("account.pay-amount")}}`,
                       },
                       'x-component': 'ArrayTable.Column',
                       properties: {

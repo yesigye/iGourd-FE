@@ -19,7 +19,7 @@ const { Grid, handleEdit, handleBatchDelete, categories, typeRef, Drawer } =
     <Grid :tabs="categories">
       <template #table-actions>
         <ElButton type="primary" @click="handleEdit(undefined, 'ledger')">
-          {{ t('account.add_sub_ledger') }}
+          {{ t('account.add-sub-ledger') }}
         </ElButton>
         <ElButton type="primary" @click="handleEdit(undefined, 'subLedger')">
           {{ t('chart-of-accounts.add-account-ledger') }}

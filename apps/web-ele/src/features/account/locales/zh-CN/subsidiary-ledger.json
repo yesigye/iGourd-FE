@@ -1,17 +1,1 @@
-{
-  "subsidiary_ledger": "明细账",
-  "date": "日期",
-  "account": "科目",
-  "summary": "摘要",
-  "opposite_accounts": "对方科目",
-  "debit_amount": "借方金额",
-  "credit_amount": "贷方金额",
-  "direction": "方向",
-  "balance": "余额",
-  "accountName": "科目名称",
-  "enter_account_name": "请输入科目名称",
-  "asset": "资产",
-  "liability": "负债",
-  "equity": "所有者权益",
-  "profitAndLoss": "损益"
-}
+{}

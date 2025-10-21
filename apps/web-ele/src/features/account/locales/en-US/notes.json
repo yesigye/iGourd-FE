@@ -1,22 +1,6 @@
 {
-  "noteNo": "Note No.",
-  "noteType": "Note Type",
-  "noteContent": "Note Content",
-  "amount": "Amount",
-  "status": "Status",
-  "createTime": "Create Time",
-  "addNote": "Add Note",
-  "editNote": "Edit Note",
-  "noteDetail": "Note Detail",
-  "typeOptions": {
-    "income": "Income",
-    "expense": "Expense",
-    "transfer": "Transfer"
-  },
-  "statusOptions": {
-    "draft": "Draft",
-    "pending": "Pending",
-    "approved": "Approved",
-    "rejected": "Rejected"
-  }
+  "add-note": "Add Note",
+  "base-info": "Basic Information",
+  "transaction-setting": "Transaction Settings",
+  "other-info": "Other Information"
 }

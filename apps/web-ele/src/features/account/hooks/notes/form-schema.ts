@@ -96,7 +96,7 @@ const noteFormSchema: ISchema = {
           properties: {
             change_type: {
               type: 'string',
-              title: "{{ t('account.revenueExpenditure') }}",
+              title: "{{ t('account.revenue-expenditure') }}",
               default: 'REVENUE',
               'x-decorator': 'FormItem',
               'x-component': 'Radio.Group',
@@ -121,7 +121,7 @@ const noteFormSchema: ISchema = {
             },
             finance_category_id: {
               type: 'string',
-              title: "{{ t('account.finance_category') }}",
+              title: "{{ t('account.finance-category') }}",
               'x-decorator': 'FormItem',
               'x-decorator-props': { required: true },
               'x-component': 'RemoteSelect',
@@ -133,7 +133,7 @@ const noteFormSchema: ISchema = {
             },
             payer_name: {
               type: 'string',
-              title: "{{ t('account.traderName') }}",
+              title: "{{ t('account.trader-name') }}",
               'x-decorator': 'FormItem',
               'x-decorator-props': { required: true },
               'x-component': 'Input',
@@ -141,13 +141,13 @@ const noteFormSchema: ISchema = {
             },
             trading_time: {
               type: 'string',
-              title: "{{ t('account.transactionDate') }}",
+              title: "{{ t('account.transaction-date') }}",
               'x-decorator': 'FormItem',
               'x-decorator-props': { required: true },
               'x-component': 'DatePicker',
               'x-component-props': {
                 type: 'date',
-                placeholder: "{{ t('account.pleaseSelectDate') }}",
+                placeholder: "{{ t('account.please-select-date') }}",
                 disabledDate: '{{ tradingDisabledFn }}',
               },
             },
@@ -162,7 +162,7 @@ const noteFormSchema: ISchema = {
           properties: {
             item_create_volist: {
               type: 'array',
-              title: "{{ t('account.ourAccount') }}",
+              title: "{{ t('account.our-account') }}",
               'x-decorator': 'FormItem',
               'x-component': 'ArrayTable',
               'x-decorator-props': {
@@ -278,7 +278,7 @@ const noteFormSchema: ISchema = {
                         'x-component': 'Select',
                         'x-component-props': {
                           filterable: true,
-                          placeholder: "{{ t('account.pleaseSelect') }}",
+                          placeholder: "{{ t('account.please-select') }}",
                         },
                         enum: '{{ accountOptions.value }}',
                         // 'x-reactions': {
@@ -295,7 +295,7 @@ const noteFormSchema: ISchema = {
                     type: 'void',
                     'x-component': 'ArrayTable.Column',
                     'x-component-props': {
-                      title: "{{ t('account.payment_method') }}",
+                      title: "{{ t('account.payment-method') }}",
                     },
                     properties: {
                       payment_method_id: {
@@ -305,7 +305,7 @@ const noteFormSchema: ISchema = {
                         'x-component': 'Select',
                         'x-component-props': {
                           filterable: true,
-                          placeholder: "{{ t('account.pleaseSelect') }}",
+                          placeholder: "{{ t('account.please-select') }}",
                         },
                         enum: '{{ paymentMethodsOptions.value }}',
                       },
@@ -367,7 +367,7 @@ const noteFormSchema: ISchema = {
             },
             external_account_data: {
               type: 'array',
-              title: "{{ t('account.externalAccount') }}",
+              title: "{{ t('account.external-account') }}",
               'x-decorator': 'FormItem',
               'x-decorator-props': {
                 wrapperWidth: '100%',
@@ -413,7 +413,7 @@ const noteFormSchema: ISchema = {
                         'x-component': 'Select',
                         'x-component-props': {
                           filterable: true,
-                          placeholder: "{{ t('account.pleaseSelect') }}",
+                          placeholder: "{{ t('account.please-select') }}",
                         },
                         enum: '{{ targetOptions.value }}',
                       },
@@ -467,7 +467,7 @@ const noteFormSchema: ISchema = {
               'x-component-props': {
                 maxlength: 128,
                 showWordLimit: true,
-                placeholder: "{{ t('account.pleaseInput') }}",
+                placeholder: "{{ t('account.please-input') }}",
               },
             },
             attachments: {

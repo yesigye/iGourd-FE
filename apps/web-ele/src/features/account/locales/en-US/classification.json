@@ -1,24 +1,3 @@
 {
-  "classification": "Financial Classification",
-  "classification_name": "Classification Name",
-  "revenue_and_expenditure": "Revenue and Expenditure",
-  "revenue": "Revenue",
-  "expense": "Expense",
-  "all": "All",
-  "classification_form": {
-    "debit": "Debit Account",
-    "credit": "Credit Account"
-  },
-  "remark": "Remark",
-  "creatorName": "Creator",
-  "createTime": "Create Time",
-  "add_classification": "Add Financial Classification",
-  "edit_classification": "Edit Financial Classification",
-  "classification_detail": "Financial Classification Detail",
-  "enter_financial_classification": "Enter financial classification",
-  "please_enter_classification_name": "Please enter classification name",
-  "please_select_type": "Please select type",
-  "please_select_debit_ledger": "Please select debit ledger",
-  "please_select_credit_ledger": "Please select credit ledger",
-  "please_enter_remark": "Please enter remark"
+  "add-class": "Add Category"
 }

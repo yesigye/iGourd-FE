@@ -23,7 +23,7 @@ export function useCollectionVoucher() {
     {
       field: 'receipt_order_no',
       minWidth: 190,
-      title: t('account.receipt_order_no'),
+      title: t('account.receipt-order-no'),
       sortable: true,
     },
     {
@@ -35,14 +35,14 @@ export function useCollectionVoucher() {
     {
       field: 'receipt_time',
       minWidth: 170,
-      title: t('account.orderDate'),
+      title: t('account.order-date'),
       align: 'right',
       sortable: true,
     },
     {
       field: 'total_amount',
       minWidth: 150,
-      title: t('account.collected_amt'),
+      title: t('account.collected-amt'),
       sortable: true,
       align: 'right',
       formatter: 'formatMoney',
@@ -50,7 +50,7 @@ export function useCollectionVoucher() {
     {
       field: 'receipt_direction',
       minWidth: 140,
-      title: t('account.order_dir'),
+      title: t('account.order-dir'),
       sortable: true,
       formatter({ cellValue }) {
         return t(
@@ -61,7 +61,7 @@ export function useCollectionVoucher() {
     {
       field: 'business_type',
       minWidth: 140,
-      title: t('account.businessType'),
+      title: t('account.business-type-str'),
       sortable: true,
       formatter({ cellValue }) {
         return t(
@@ -145,7 +145,7 @@ export function useCollectionVoucher() {
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: t('account.enter_receipt_order_no'),
+            placeholder: t('account.enter-receipt-order-no'),
           },
         },
       },

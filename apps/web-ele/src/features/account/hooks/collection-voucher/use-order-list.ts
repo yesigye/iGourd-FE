@@ -22,7 +22,7 @@ export function useOrderList(defaultQueryParams?: Record<string, any>) {
     {
       field: 'order_create_time',
       minWidth: 200,
-      title: t('account.orderDate'),
+      title: t('account.order-date'),
     },
     {
       field: 'order_no',
@@ -32,7 +32,7 @@ export function useOrderList(defaultQueryParams?: Record<string, any>) {
     {
       field: 'subtotal_amount',
       minWidth: 200,
-      title: t('account.totalAmount'),
+      title: t('account.total-amount'),
     },
     {
       field: 'round_down_amount',
@@ -42,7 +42,7 @@ export function useOrderList(defaultQueryParams?: Record<string, any>) {
     {
       field: 'total_amount',
       minWidth: 200,
-      title: t('account.transaction_amount'),
+      title: t('account.transaction-amount'),
     },
     {
       field: 'customer_name',
@@ -57,7 +57,7 @@ export function useOrderList(defaultQueryParams?: Record<string, any>) {
     {
       field: 'exchange_rate',
       minWidth: 200,
-      title: t('account.exchangeRate'),
+      title: t('account.exchange-rate'),
     },
     {
       field: 'creator_name',
@@ -67,7 +67,7 @@ export function useOrderList(defaultQueryParams?: Record<string, any>) {
     {
       field: 'create_time',
       minWidth: 200,
-      title: t('account.createTime'),
+      title: t('account.create-time'),
     },
   ];
 

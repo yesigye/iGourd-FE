@@ -21,12 +21,12 @@ const schema: ISchema = {
               'x-component': 'DatePicker',
               'x-component-props': {
                 type: 'date',
-                placeholder: `{{ t('account.pickADate') }}`,
+                placeholder: `{{ t('account.pick-a-date') }}`,
               },
               'x-validator': [
                 {
                   required: true,
-                  message: `{{ t('account.pleaseEnterDate') }}`,
+                  message: `{{ t('account.please-enter-date') }}`,
                 },
               ],
             },
@@ -34,7 +34,7 @@ const schema: ISchema = {
         },
         sell_row: {
           type: 'void',
-          title: `{{ t('account.sellingAmount') }}`,
+          title: `{{ t('account.selling-amount') }}`,
           'x-decorator': 'FormItem',
           'x-decorator-props': { required: true },
           'x-component': 'Space',
@@ -47,7 +47,7 @@ const schema: ISchema = {
               'x-validator': [
                 {
                   required: true,
-                  message: "{{ t('account.pleaseEnterSellAmount')}}",
+                  message: "{{ t('account.please-enter-sell-amount')}}",
                 },
               ],
             },
@@ -57,7 +57,7 @@ const schema: ISchema = {
               enum: `{{ currencyOptions.value }}`,
               'x-component-props': {
                 filterable: true,
-                placeholder: `{{ t('account.pleaseSelect') }}`,
+                placeholder: `{{ t('account.please-select') }}`,
                 style: { width: '180px' },
               },
             },
@@ -65,7 +65,7 @@ const schema: ISchema = {
         },
         exchange_rate: {
           type: 'number',
-          title: `{{ t('account.exchangeRate') }}`,
+          title: `{{ t('account.exchange-rate') }}`,
           'x-decorator': 'FormItem',
           'x-decorator-props': { required: true },
           'x-component': 'InputNumber',
@@ -76,7 +76,7 @@ const schema: ISchema = {
           'x-validator': [
             {
               required: true,
-              message: `{{ t('account.pleaseEnterExchangeRate')}}`,
+              message: `{{ t('account.please-enter-exchange-rate')}}`,
             },
           ],
           'x-reactions': [
@@ -93,7 +93,7 @@ const schema: ISchema = {
         },
         buy_row: {
           type: 'void',
-          title: `{{ t('account.buyAmount')}}`,
+          title: `{{ t('account.buy-amount')}}`,
           'x-decorator': 'FormItem',
           'x-decorator-props': { required: true },
           'x-component': 'Space',
@@ -106,7 +106,7 @@ const schema: ISchema = {
               'x-validator': [
                 {
                   required: true,
-                  message: `{{ t('account.pleaseEnterBuyAmount')}}`,
+                  message: `{{ t('account.please-enter-buy-amount')}}`,
                 },
               ],
             },
@@ -116,7 +116,7 @@ const schema: ISchema = {
               enum: `{{ currencyOptions.value }}`,
               'x-component-props': {
                 filterable: true,
-                placeholder: `{{ t('account.pleaseSelect')}}`,
+                placeholder: `{{ t('account.please-select')}}`,
                 style: { width: '180px' },
               },
             },

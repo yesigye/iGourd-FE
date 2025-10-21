@@ -1,17 +1,1 @@
-{
-  "subsidiary_ledger": "Grand Livre Subsidiare",
-  "date": "Date",
-  "account": "Compte",
-  "summary": "Résumé",
-  "opposite_accounts": "Comptes Opposés",
-  "debit_amount": "Montant Débiteur",
-  "credit_amount": "Montant Créditeur",
-  "direction": "Direction",
-  "balance": "Solde",
-  "accountName": "Nom du Compte",
-  "enter_account_name": "Veuillez entrer le nom du compte",
-  "asset": "Actif",
-  "liability": "Passif",
-  "equity": "Capitaux Propres",
-  "profitAndLoss": "Bénéfices et Pertes"
-}
+{}

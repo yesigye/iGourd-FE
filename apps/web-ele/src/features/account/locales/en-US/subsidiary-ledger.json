@@ -1,17 +1,1 @@
-{
-  "subsidiary_ledger": "Subsidiary Ledger",
-  "date": "Date",
-  "account": "Account",
-  "summary": "Summary",
-  "opposite_accounts": "Opposite Accounts",
-  "debit_amount": "Debit Amount",
-  "credit_amount": "Credit Amount",
-  "direction": "Direction",
-  "balance": "Balance",
-  "accountName": "Account Name",
-  "enter_account_name": "Please enter account name",
-  "asset": "Asset",
-  "liability": "Liability",
-  "equity": "Equity",
-  "profitAndLoss": "Profit and Loss"
-}
+{}
