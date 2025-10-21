@@ -1,26 +1,14 @@
 {
-  "warehouseName": "Warehouse Name",
-  "warehouseCode": "Warehouse Code",
-  "contactPerson": "Contact Person",
-  "contactPhone": "Contact Phone",
-  "status": "Status",
-  "addWarehouse": "Add Warehouse",
-  "editWarehouse": "Edit Warehouse",
-  "warehouseDetail": "Warehouse Detail",
-  "statusOptions": {
-    "active": "Active",
-    "inactive": "Inactive"
-  },
   "add-warehouse": "Add Warehouse",
   "warehouse-name": "Warehouse Name",
   "country": "Country",
   "address": "Address",
   "contact-name": "Contact Name",
-  "contact-telephone": "Contact Phone",
+  "contact-telephone": "Contact Number",
   "email": "Email",
   "remarks": "Remarks",
-  "please-warehouse-name": "Please enter the warehouse name",
+  "please-warehouse-name": "Please enter warehouse name",
   "default-sale": "Default Warehouse",
-  "validate-email": "Please enter the correct email",
-  "validate-phone": "Please enter the correct phone number"
+  "validate-email": "Please enter a valid email address",
+  "validate-phone": "Please enter a valid phone number"
 }

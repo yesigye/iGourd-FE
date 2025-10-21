@@ -42,7 +42,7 @@ export function useUnitForm() {
   };
   const { Drawer, Form, drawerApi, formAPI } = useDrawerForm({
     drawerOptions: {
-      title: t('unit.addUnit'),
+      title: t('unit.add-unit'),
       appendToMain: true,
       class: 'w-1/2',
     },
@@ -54,11 +54,11 @@ export function useUnitForm() {
   drawerApi.onOpened = () => {
     if (Reflect.has(drawerApi.getData() ?? {}, 'id')) {
       drawerApi.setState({
-        title: t('unit.editUnit'),
+        title: t('unit.edit-unit'),
       });
     }else{
       drawerApi.setState({
-        title: t('unit.addUnit'),
+        title: t('unit.add-unit'),
       });
     }
   };

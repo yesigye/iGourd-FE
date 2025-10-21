@@ -1,26 +1,14 @@
 {
-  "warehouseName": "Nom de l'Entrepôt",
-  "warehouseCode": "Code de l'Entrepôt",
-  "contactPerson": "Personne de Contact",
-  "contactPhone": "Téléphone de Contact",
-  "status": "Statut",
-  "addWarehouse": "Ajouter Entrepôt",
-  "editWarehouse": "Modifier Entrepôt",
-  "warehouseDetail": "Détail de l'Entrepôt",
-  "statusOptions": {
-    "active": "Actif",
-    "inactive": "Inactif"
-  },
   "add-warehouse": "Ajouter un entrepôt",
-  "warehouse-name": "Nom de l'Entrepôt",
+  "warehouse-name": "Nom de l'entrepôt",
   "country": "Pays",
   "address": "Adresse",
-  "contact-name": "Contacts",
-  "contact-telephone": "Téléphone de Contact",
-  "email": "Email",
+  "contact-name": "Nom du contact",
+  "contact-telephone": "Coordonnées",
+  "email": "E-mail",
   "remarks": "Remarques",
-  "please-warehouse-name": "Veuillez entrer le nom de l'entrepôt",
+  "please-warehouse-name": "Veuillez saisir le nom de l'entrepôt",
   "default-sale": "Entrepôt par défaut",
-  "validate-email": "Veuillez saisir un e-mail correct",
-  "validate-phone": "Veuillez saisir un numéro de téléphone correct"
+  "validate-email": "Veuillez saisir une adresse e-mail valide",
+  "validate-phone": "Veuillez saisir un numéro de téléphone valide"
 }
