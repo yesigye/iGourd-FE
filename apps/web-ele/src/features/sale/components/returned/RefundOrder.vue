@@ -522,9 +522,9 @@ const [Drawer, drawerApi] = useIgourdDrawer({
               v-if="!isRefundSuccess"
               class="h-11"
               @click="handleRefundOrder"
-              type="primary"
+              type="danger"
             >
-              <span>{{ t('common.pay') }}</span>
+              <span>{{ t('common.refund') }}</span>
             </ElButton>
           </div>
         </div>

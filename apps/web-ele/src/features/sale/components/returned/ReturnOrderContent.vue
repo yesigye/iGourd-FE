@@ -1,8 +1,12 @@
 <script setup lang="ts">
-// import
 import { computed, onMounted, ref } from 'vue';
 
-import { ElMessage, ElTable, ElTableColumn } from '@igourd/common-ui';
+import {
+  ElInputNumber,
+  ElMessage,
+  ElTable,
+  ElTableColumn,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 import { debounce } from '@igourd/utils';
@@ -214,7 +218,7 @@ const fetchOrderList = async () => {
               (scope.row.promotion_id != '' && scope.row.promotion_id != 0)
             " -->
           <!-- 退货数量 -->
-          <el-input-number
+          <ElInputNumber
             v-model="scope.row.displayQuantity"
             :step="-1"
             @input="handleInputDebounced(scope.row)"

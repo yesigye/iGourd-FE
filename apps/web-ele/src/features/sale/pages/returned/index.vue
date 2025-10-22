@@ -655,7 +655,9 @@ onMounted(async () => {
             </p>
             <p class="mb-3 flex justify-between">
               <span>{{ t('returned.balance') }}:</span>
-              <span class="text-right">{{ curr }} {{ customerDetailModel?.balance || '0' }}</span>
+              <span class="text-right"
+                >{{ curr }} {{ customerDetailModel?.balance || '0' }}</span
+              >
             </p>
             <p class="flex justify-between">
               <span>{{ t('returned.salesman') }}:</span>
