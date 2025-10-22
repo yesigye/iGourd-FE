@@ -15,8 +15,6 @@ import { allColumns } from '@@/sale/components/scan/const/sale.config';
 import { Decimal } from 'decimal.js';
 
 import { getSystemConfigurationDetailApi } from '#/api';
-import { retainDecimal8 } from '#/utils/sale';
-
 // interface
 // props
 const props = defineProps({
@@ -103,7 +101,7 @@ const handleQuantityChangeOriginal = (item: any) => {
     ElMessage.error(t('scan.please-input-quantity'));
   } else {
     const decimalQuantity = new Decimal(item.stock_total_quantity);
-    item.stock_total_quantity = retainDecimal8(decimalQuantity, 8);
+    item.stock_total_quantity = decimalQuantity;
   }
   // 直接发送更新后的商品数据
   emit('update-quantity', item);
@@ -150,7 +148,8 @@ function increaseEventOriginal(row) {
     emit('update-quantity', row);
     return;
   }
-  row.stock_total_quantity = retainDecimal8(row.stock_total_quantity + 1, 8);
+  // 使用Decimal.js增加数量
+  row.stock_total_quantity = new Decimal(row.stock_total_quantity).add(1);
   emit('update-quantity', row);
 }
 
@@ -163,7 +162,8 @@ function decreaseEventOriginal(row) {
     handleDelete(row.id);
     return;
   }
-  row.stock_total_quantity = retainDecimal8(row.stock_total_quantity - 1, 8);
+  // 使用Decimal.js减少数量
+  row.stock_total_quantity = new Decimal(row.stock_total_quantity).sub(1);
   emit('update-quantity', row);
 }
 

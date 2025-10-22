@@ -36,3 +36,14 @@ export function getSaleEnterDetailApi(data: {
 }) {
   return requestClient.post(`${SALE_ENTER_BASE_URL}/detail`, data);
 }
+
+// 手动生成结算单
+export function manualGenerateSettlementApi(data: {
+  merchant_id?: number;
+  settlement_date: string;
+}) {
+  return requestClient.post(
+    `${SALE_ENTER_BASE_URL}/manual-generate-create`,
+    data,
+  );
+}

@@ -19,5 +19,6 @@
     "completed": "Completed",
     "cancelled": "Cancelled"
   },
-  "search-placeholder": "Please enter keywords"
+  "search-placeholder": "Please enter keywords",
+  "generate-settlement": "Generate Settlement"
 }
