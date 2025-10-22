@@ -82,5 +82,6 @@
   },
   "search-placeholder": "Veuillez Saisir Le Nom Du Client/Téléphone De Contact",
   "search-guider-placeholder": "Veuillez Saisir Le Nom Du Guide De Vente",
-  "on-credit": "À Crédit"
+  "on-credit": "À Crédit",
+  "successfully-paid": "Paiement Réussi"
 }
