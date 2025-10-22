@@ -25,6 +25,7 @@
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 turbo build",
     "build:analyze": "turbo build:analyze",
     "build:test": "turbo build:test --filter=@igourd/web-ele",
+    "build:dev": "turbo build:dev --filter=@igourd/web-ele",
     "changeset": "pnpm exec changeset",
     "check": "pnpm run check:circular && pnpm run check:dep && pnpm run check:type && pnpm check:cspell",
     "check:circular": "vsh check-circular",
