@@ -43,7 +43,7 @@ const [Modal, modalApi] = useIgourdModal({
   },
   onConfirm: async () => {},
   onOpenChange() {},
-  title: t('inventory.message-tip'),
+  title: t('inventory.message_tip'),
 });
 
 const [clearModal, clearModalApi] = useIgourdModal({
@@ -54,7 +54,7 @@ const [clearModal, clearModalApi] = useIgourdModal({
   },
   onConfirm: async () => {},
   onOpenChange() {},
-  title: t('inventory.message-tip'),
+  title: t('inventory.message_tip'),
 });
 const {
   Grid,
@@ -239,11 +239,11 @@ const  tableHeaderStyle = {
           ></ElTableColumn>
           <ElTableColumn
             property="sku_barcode"
-            :label="t('inventory.sku-barcode')"
+            :label="t('inventory.sku_barcode')"
           ></ElTableColumn>
           <ElTableColumn
             property="warehouse_name"
-            :label="t('inventory.warehouse-name')"
+            :label="t('inventory.warehouse_name')"
           ></ElTableColumn>
           <ElTableColumn property="" :label="t('common.action')">
             <template #default="scope">

@@ -1,0 +1,16 @@
+{
+  "optional": "可选择",
+  "selected": "已选择",
+  "enter-keyword-to-search": "输入关键字搜索",
+  "failed-to-load": "加载失败",
+  "filter":"筛选",
+  "enter-keyword": "输入关键字",
+  "please-select": "请选择",
+  "search-options": "搜索选项",
+  "reset": "重置",
+  "apply": "应用",
+  "items-selected": "已选择 {num} 项",
+  "add": "添加",
+  "remove": "移除",
+  "opertion":"操作"
+}
