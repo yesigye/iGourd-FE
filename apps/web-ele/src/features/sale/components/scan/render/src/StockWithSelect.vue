@@ -65,7 +65,6 @@ const getWarehouseList = async () => {
 
     const params = {
       id: productId,
-      merchant_id: props.detailInfo.merchant_id,
     };
     const data = await warehouseStockListApi(params);
     warehouseList.value = data;
