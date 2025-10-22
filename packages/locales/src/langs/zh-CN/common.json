@@ -26,5 +26,8 @@
   "switch": {
     "language": "切换语言",
     "store": "切换门店"
-  }
+  },
+  "upload-file-size-msg":"文件过大：{size}MB（上限 {max}MB）",
+  "upload-file-type":"文件类型不允许：{fileType}"
+
 }
