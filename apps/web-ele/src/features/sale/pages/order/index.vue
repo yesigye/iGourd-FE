@@ -99,7 +99,7 @@ const handleSettle = (event: {
       <template #operation="{ row }">
         <ElButton
           type="text"
-          v-if="row.status === 'PAID'"
+          v-if="row?.status.value === 'PAID'"
           @click="handleEdit(row)"
         >
           {{ t('common.print') }}
@@ -112,21 +112,21 @@ const handleSettle = (event: {
         </ElButton>
         <ElButton
           type="text"
-          v-if="row.status === 'PENDING'"
+          v-if="row?.status.value === 'PENDING'"
           @click="handleSettle(row)"
         >
           {{ t('common.pay') }}
         </ElButton>
         <ElButton
           type="text"
-          v-if="row.status !== 'PENDING'"
+          v-if="row?.status.value !== 'PENDING'"
           @click="handleRefund(row)"
         >
           {{ t('common.refund') }}
         </ElButton>
         <ElButton
           type="text"
-          v-if="row.status !== 'PENDING'"
+          v-if="row?.status.value !== 'PENDING'"
           @click="handleCancel(row)"
         >
           {{ t('common.cancel') }}
