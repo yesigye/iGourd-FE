@@ -39,6 +39,12 @@ const [Drawer, drawerApi] = useIgourdDrawer({
       initMounted();
     }
   },
+  onClosed() {
+    isModalShow.value = false;
+    emit('close-tkr');
+    emit('handleEmpty');
+    isSettledShow.value = true;
+  },
 });
 const isModalShow = ref(false);
 const scanCashSettlementRef = ref<any>(null);

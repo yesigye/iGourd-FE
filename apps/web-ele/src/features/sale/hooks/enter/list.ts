@@ -129,7 +129,7 @@ export function useSaleEnter() {
       sortable: true,
     },
     {
-      field: 'creator',
+      field: 'creator_name',
       width: 180,
       align: 'center',
 
