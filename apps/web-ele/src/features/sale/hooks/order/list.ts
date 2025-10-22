@@ -107,16 +107,10 @@ export function useSaleOrder(defaultQueryParams?: Record<string, any>) {
     },
     {
       field: 'status',
-      title: t('sale.status'),
+      title: t('order.status'),
       width: 100,
       align: 'center',
-      cellRender: {
-        name: 'ElTag',
-        props: {
-          type: '{{getStatusTagType(row.status)}}',
-          children: '{{getStatusText(row.status)}}',
-        },
-      },
+      slots: { default: 'status' },
     },
     {
       field: 'create_time',
@@ -167,8 +161,17 @@ export function useSaleOrder(defaultQueryParams?: Record<string, any>) {
   }
   const crud = useCrud<SaleOrderRow, SaleOrderDTO>({
     columns,
-    id:"sale-order-list",
+    id: 'sale-order-list',
     searchFormSchema,
+    tabs: [
+      { value: 'ALL', label: '全部' },
+      { value: 'CREDIT', label: '收入' },
+      { value: 'DEBIT', label: '支出' },
+    ],
+    tabsOption: {
+      defaultActiveValue: 'ALL',
+      formKey: 'balance_direction',
+    },
     params: defaultQueryParams ?? {},
     batchOperate: true,
     service: {

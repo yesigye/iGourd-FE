@@ -628,11 +628,7 @@ onMounted(async () => {
           </div>
           <div class="bg-primary-50 w-[286px] p-2.5 text-xs" v-if="!isShrink">
             <p class="mb-3 flex items-center justify-between">
-              <ElButton
-                type="primary"
-                size="mini"
-                @click="handleSelectCustomer"
-              >
+              <ElButton type="primary">
                 <span class="text-info">{{
                   t('returned.select-customer')
                 }}</span>
@@ -669,7 +665,7 @@ onMounted(async () => {
             v-if="!isShrink"
           >
             <p class="mb-3 flex items-center justify-between">
-              <ElButton type="primary" size="mini" @click="handleSelectGuider">
+              <ElButton type="primary">
                 <span class="text-info">{{ t('returned.select-guider') }}</span>
               </ElButton>
               <span class="text-sm font-bold">{{

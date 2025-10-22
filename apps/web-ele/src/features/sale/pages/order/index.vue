@@ -33,12 +33,7 @@ const handleRefund = (row) => {
     query: { orderNo: row.order_no },
   });
 };
-const { Drawer: PrintReceiptDrawer, drawerApi: printReceiptDrawerApi } =
-  useSaleOrderPrintReceiptDrawer();
-const { Drawer: OrderDetailsDrawer, drawerApi: orderDetailsDrawerApi } =
-  useSaleOrderDetailsDrawer();
-const { Drawer: ScanOrderSettle, drawerApi: drawerApiSettle } =
-  useScanOrderSettle();
+
 const handlePrintReceipt = (row: { order_no: string }) => {
   printReceiptDrawerApi.setData({ order_no: row.order_no }).open();
 };
@@ -82,20 +77,59 @@ const handleSettle = (event: {
     })
     .open();
 };
+// 获取tag颜色
+const getTagColor = (row: any) => {
+  if (row.refund_status.value === 'NONE') {
+    switch (row.status.value) {
+      /** 已取消*/
+      case 'CANCEL': {
+        return { color: 'bg-[#9E9E9E]', text: row.status.label };
+      }
+      /** 未还款*/
+      case 'NO_REPAID': {
+        return { color: 'bg-primary', text: row.status.label };
+      }
+      /** 已支付*/
+      case 'PAID': {
+        return { color: 'bg-success', text: row.status.label };
+      }
+      /** 部分还款*/
+      case 'PARTIAL_REPAID': {
+        return { color: 'bg-warning', text: row.status.label };
+      }
+      /** 待支付*/
+      case 'PENDING': {
+        return { color: 'bg-primary', text: row.status.label };
+      }
+      /** 已还款*/
+      case 'REPAID': {
+        return { color: 'bg-[#4CAF50]', text: row.status.label };
+      }
+    }
+  } else {
+    switch (row.refund_status.value) {
+      /** 全退*/
+      case 'ALL': {
+        return { color: 'bg-[#2196F3]', text: row.status.label };
+      }
+      /** 部分退*/
+      case 'PART': {
+        return { color: 'bg-[#FFC107]', text: row.status.label };
+      }
+    }
+  }
+};
+const { Drawer: PrintReceiptDrawer, drawerApi: printReceiptDrawerApi } =
+  useSaleOrderPrintReceiptDrawer();
+const { Drawer: OrderDetailsDrawer, drawerApi: orderDetailsDrawerApi } =
+  useSaleOrderDetailsDrawer();
+const { Drawer: ScanOrderSettle, drawerApi: drawerApiSettle } =
+  useScanOrderSettle();
 </script>
 
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-actions>
-        <ElButton
-          type="danger"
-          v-if="canBatchOperate"
-          @click="handleBatchDelete"
-        >
-          {{ t('common.delete') }}
-        </ElButton>
-      </template>
       <template #operation="{ row }">
         <ElButton
           type="text"
@@ -126,11 +160,20 @@ const handleSettle = (event: {
         </ElButton>
         <ElButton
           type="text"
-          v-if="row?.status.value !== 'PENDING'"
+          v-if="row.status !== 'PENDING'"
           @click="handleCancel(row)"
         >
           {{ t('common.cancel') }}
         </ElButton>
+      </template>
+      <template #status="{ row }">
+        <div class="flex items-center justify-center gap-1.5">
+          <div
+            class="h-3 w-3 rounded-full"
+            :class="getTagColor(row)?.color"
+          ></div>
+          <span>{{ getTagColor(row)?.text }}</span>
+        </div>
       </template>
     </Grid>
     <Drawer />
