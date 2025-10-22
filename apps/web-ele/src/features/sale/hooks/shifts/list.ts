@@ -154,7 +154,7 @@ export function useSaleShifts() {
       title: t('shifts.opening-cash'),
     },
     {
-      field: 'returned_cash',
+      field: 'cash_returned_amount',
       width: 180,
       align: 'center',
       title: t('shifts.returned-cash'),
