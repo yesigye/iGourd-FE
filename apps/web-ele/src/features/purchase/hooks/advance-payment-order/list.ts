@@ -41,7 +41,7 @@ export function useAdvancePaymentOrder() {
       sortable: true,
       formatter({ cellValue }) {
         return t(
-          `collection-voucher.receipt_direction.${cellValue.toLocaleLowerCase()}`,
+          `collection-voucher.receipt-direction.${cellValue.toLocaleLowerCase()}`,
         );
       },
     },

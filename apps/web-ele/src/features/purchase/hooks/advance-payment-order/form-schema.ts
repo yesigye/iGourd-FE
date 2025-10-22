@@ -45,11 +45,11 @@ export function useCollectionVoucherSchema() {
                 },
                 enum: [
                   {
-                    label: `{{t('collection-voucher.receipt_direction.positive_order')}}`,
+                    label: `{{t('collection-voucher.receipt-direction.positive_order')}}`,
                     value: 'POSITIVE_ORDER',
                   },
                   {
-                    label: `{{t('collection-voucher.receipt_direction.negative_order')}}`,
+                    label: `{{t('collection-voucher.receipt-direction.negative_order')}}`,
                     value: 'NEGATIVE_ORDER',
                   },
                 ],
