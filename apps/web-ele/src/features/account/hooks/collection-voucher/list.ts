@@ -29,7 +29,7 @@ export function useCollectionVoucher() {
     {
       field: 'customer_name',
       minWidth: 190,
-      title: t('printTemp.printReceipt.receipt_customer_name'),
+      title: t('print-temp.print-receipt.receipt-customer-name'),
       sortable: true,
     },
     {
