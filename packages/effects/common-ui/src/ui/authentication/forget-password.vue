@@ -86,11 +86,11 @@ defineExpose({
   <div>
     <Title>
       <slot name="title">
-        {{ title || $t('authentication.forgetPassword') }} 🤦🏻‍♂️
+        {{ title || $t('authentication.forget-password') }} 🤦🏻‍♂️
       </slot>
       <template #desc>
         <slot name="subTitle">
-          {{ subTitle || $t('authentication.forgetPasswordSubtitle') }}
+          {{ subTitle || $t('authentication.forget-passwordSubtitle') }}
         </slot>
       </template>
     </Title>
@@ -106,7 +106,7 @@ defineExpose({
         @click="handleSubmit"
       >
         <slot name="submitButtonText">
-          {{ submitButtonText || $t('authentication.sendResetLink') }}
+          {{ submitButtonText || $t('authentication.send-reset-link') }}
         </slot>
       </IgourdButton>
       <IgourdButton class="mt-4 w-full" variant="outline" @click="goToLogin()">

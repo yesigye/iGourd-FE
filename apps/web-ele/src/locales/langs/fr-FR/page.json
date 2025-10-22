@@ -1,0 +1,17 @@
+{
+  "auth": {
+    "login": "Connexion",
+    "register": "Inscription",
+    "code-login": "Connexion par code",
+    "qrcode-login": "Connexion par QR code",
+    "forget-password": "Mot de passe oublié"
+  },
+  "dashboard": {
+    "title": "Aperçu",
+    "analytics": "Analytique",
+    "workspace": "Espace de travail"
+  },
+  "form": {
+    "required": "Requis"
+  }
+}

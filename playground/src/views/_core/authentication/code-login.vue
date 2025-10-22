@@ -43,9 +43,9 @@ const formSchema = computed((): IgourdFormSchema[] => {
       label: $t('authentication.mobile'),
       rules: z
         .string()
-        .min(1, { message: $t('authentication.mobileTip') })
+        .min(1, { message: $t('authentication.mobile-tip') })
         .refine((v) => /^\d{11}$/.test(v), {
-          message: $t('authentication.mobileErrortip'),
+          message: $t('authentication.mobile-error-tip'),
         }),
     },
     {
@@ -55,8 +55,8 @@ const formSchema = computed((): IgourdFormSchema[] => {
         createText: (countdown: number) => {
           const text =
             countdown > 0
-              ? $t('authentication.sendText', [countdown])
-              : $t('authentication.sendCode');
+              ? $t('authentication.send-text', [countdown])
+              : $t('authentication.send-code');
           return text;
         },
         handleSendCode: async () => {
@@ -83,7 +83,7 @@ const formSchema = computed((): IgourdFormSchema[] => {
       fieldName: 'code',
       label: $t('authentication.code'),
       rules: z.string().length(CODE_LENGTH, {
-        message: $t('authentication.codeTip', [CODE_LENGTH]),
+        message: $t('authentication.code-tip', [CODE_LENGTH]),
       }),
     },
   ];

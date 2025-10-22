@@ -17,11 +17,11 @@ const formSchema = computed((): IgourdFormSchema[] => {
     {
       component: 'IgourdInput',
       componentProps: {
-        placeholder: $t('authentication.usernameTip'),
+        placeholder: $t('authentication.username-tip'),
       },
       fieldName: 'username',
       label: $t('authentication.username'),
-      // rules: z.string().min(1, { message: $t('authentication.usernameTip') }),
+      // rules: z.string().min(1, { message: $t('authentication.username-tip') }),
     },
     {
       component: 'IgourdInputPassword',
@@ -33,30 +33,30 @@ const formSchema = computed((): IgourdFormSchema[] => {
       label: $t('authentication.password'),
       renderComponentContent() {
         return {
-          strengthText: () => $t('authentication.passwordStrength'),
+          strengthText: () => $t('authentication.password-strength'),
         };
       },
-      // rules: z.string().min(1, { message: $t('authentication.passwordTip') }),
+      // rules: z.string().min(1, { message: $t('authentication.password-tip') }),
     },
     {
       component: 'IgourdInputPassword',
       componentProps: {
-        placeholder: $t('authentication.confirmPassword'),
+        placeholder: $t('authentication.confirm-password'),
       },
               // dependencies: {
         //   rules(values) {
         //     const { password } = values;
         //     return z
-        //       .string({ required_error: $t('authentication.passwordTip') })
-        //       .min(1, { message: $t('authentication.passwordTip') })
+        //       .string({ required_error: $t('authentication.password-tip') })
+        //       .min(1, { message: $t('authentication.password-tip') })
         //       .refine((value) => value === password, {
-        //         message: $t('authentication.confirmPasswordTip'),
+        //         message: $t('authentication.confirm-passwordTip'),
         //       });
         //   },
         //   triggerFields: ['password'],
         // },
       fieldName: 'confirmPassword',
-      label: $t('authentication.confirmPassword'),
+      label: $t('authentication.confirm-password'),
     },
     {
       component: 'IgourdCheckbox',
@@ -71,12 +71,12 @@ const formSchema = computed((): IgourdFormSchema[] => {
                 class: 'igourd-link ml-1 ',
                 href: '',
               },
-              `${$t('authentication.privacyPolicy')} & ${$t('authentication.terms')}`,
+              `${$t('authentication.privacy-policy')} & ${$t('authentication.terms')}`,
             ),
           ]),
       }),
       // rules: z.boolean().refine((value) => !!value, {
-      //   message: $t('authentication.agreeTip'),
+      //   message: $t('authentication.agree-tip'),
       // }),
     },
   ];
