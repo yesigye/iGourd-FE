@@ -2,26 +2,27 @@
 import { ref, watch } from 'vue';
 
 import {
-  ElButton,
-  ElDialog,
   ElForm,
   ElFormItem,
   ElInput,
   ElMessage,
+  useIgourdModal,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { orderSuspendApi, quickTagsAllApi } from '@@/sale/apis';
 
 const props = defineProps<Props>();
+
 const emit = defineEmits(['update:visible', 'update:Suspend']);
+
 const { t } = useI18n();
+
 const isShowDialog = ref(false);
 const params = ref({
   remark: '',
   customer_id: null,
   device_id: null,
-  merchant_id: null,
   order_holding: {
     order_holding_item_list: [
       {
@@ -133,7 +134,7 @@ const handleSave = async () => {
     const res = await orderSuspendApi(params.value);
     // 挂单成功
     ElMessage.success(t('scan.suspend-success'));
-    isShowDialog.value = false;
+    modalApi.close();
     activeTag.value = [];
 
     emit('update:Suspend', true);
@@ -142,12 +143,18 @@ const handleSave = async () => {
     ElMessage.error(error);
   }
 };
+const [Modal, modalApi] = useIgourdModal({
+  title: t('scan.remark'),
+  onConfirm: () => {
+    handleSave();
+  },
+});
 watch(
   () => props.visible,
   (newVal) => {
     if (newVal) {
-      console.log('newVal', newVal);
       isShowDialog.value = true;
+      modalApi.open();
       getQuickTagAll();
     }
   },
@@ -156,16 +163,17 @@ watch(
 
 <template>
   <div class="scan-dialog">
-    <ElDialog
+    <!-- <ElDialog
       v-model="isShowDialog"
       width="799"
       align-center
       :before-close="handleClose"
-    >
+    > -->
+    <Modal>
       <template #header>
         <h1 class="scan-dialog-title">{{ t('scan.remark') }}</h1>
       </template>
-      <div class="scan-dialog-content">
+      <div class="">
         <ElInput
           v-model="params.remark"
           type="textarea"
@@ -173,7 +181,7 @@ watch(
           show-word-limit
           placeholder="Please enter remark"
         />
-        <ElForm>
+        <ElForm class="mt-2.5">
           <ElFormItem
             v-for="item in quickTagsList"
             :key="item.id"
@@ -197,15 +205,16 @@ watch(
           </ElFormItem>
         </ElForm>
       </div>
-      <div class="scan-dialog-btn">
+      <!-- <div class="scan-dialog-btn">
         <ElButton class="btn-common bg-gray-pale" @click="handleClose">
-          {{ t('set.cancel') }}
+          {{ t('common.cancel') }}
         </ElButton>
-        <ElButton class="btn-common bg-azure text-white" @click="handleSave">
-          {{ t('set.confirm') }}
+        <ElButton class="btn-common" type="primary" @click="handleSave">
+          {{ t('common.confirm') }}
         </ElButton>
-      </div>
-    </ElDialog>
+      </div> -->
+    </Modal>
+    <!-- </ElDialog> -->
   </div>
 </template>
 
