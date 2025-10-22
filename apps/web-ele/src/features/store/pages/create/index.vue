@@ -97,7 +97,7 @@ const onCreateStore = (formData) => {
   const { id: sub_merchant_id, business_type } = formData.merchant_model;
   router.replace({
     path: route.path,
-    query: { sub_merchant_id, business_type },
+    query: { sub_merchant_id, business_type:business_type.value },
   });
   state.merchantModel = formData.merchant_model;
   state.merchantEnrollModel = formData.merchant_enroll_model;
@@ -162,7 +162,6 @@ const { data: priceEdition } = useRequest(
     try {
       const merchantModel = state.merchantModel;
       const merchantEnrollModel = state.merchantEnrollModel;
-
       if (
         (!merchantModel.id || !merchantEnrollModel.id) &&
         (!storeParams.value?.sub_merchant_id ||
@@ -175,7 +174,7 @@ const { data: priceEdition } = useRequest(
         // 升级套餐仅需下面参数
         sub_merchant_id: merchantModel.id || storeParams?.value.sub_merchant_id,
         merchant_business_type:
-          merchantModel.business_type || storeParams?.value?.business_type,
+          merchantModel.business_type.value || storeParams?.value?.business_type,
         package_business_type: storeParams?.value.package_business_type,
       });
       return res;
