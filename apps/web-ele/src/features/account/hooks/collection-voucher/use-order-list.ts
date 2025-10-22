@@ -27,7 +27,7 @@ export function useOrderList(defaultQueryParams?: Record<string, any>) {
     {
       field: 'order_no',
       minWidth: 200,
-      title: t('printTemp.order_no'),
+      title: t('print-temp.order-no'),
     },
     {
       field: 'subtotal_amount',
@@ -37,7 +37,7 @@ export function useOrderList(defaultQueryParams?: Record<string, any>) {
     {
       field: 'round_down_amount',
       minWidth: 200,
-      title: t('printTemp.wipe'),
+      title: t('print-temp.wipe'),
     },
     {
       field: 'total_amount',

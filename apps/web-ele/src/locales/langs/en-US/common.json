@@ -196,7 +196,11 @@
     "sale-warehouse-product-stock-quantity": "Stock (Main Unit)",
     "sale-warehouse-product-stock-quantity-message": "Stock",
     "stock-total-quantity-message": "Stock",
-    "transfer-amount": "Transfer Amount"
+    "transfer-amount": "Transfer Amount",
+    "inventory-count": "Inventory Count",
+    "breakage-quantity": "Breakage Quantity",
+    "transfer-quantity": "Transfer Quantity",
+    "base-quantity": "Base Quantity"
   },
 
   "drop-fil-here": "Drag files here or",

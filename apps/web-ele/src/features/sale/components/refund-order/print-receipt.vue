@@ -61,7 +61,7 @@ function renderQuantUnit() {
   return 'x';
 }
 const { receiptRoles, setOrderDetail } = useReceiptTemplate({
-  title: 'printTemp.refund',
+  title: 'print-temp.refund',
   printTemplate,
   fieldColumns: [
     { column_option_code: 'refund_total_amount', is_selected: true },
