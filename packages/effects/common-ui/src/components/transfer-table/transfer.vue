@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, nextTick, reactive, ref, watch, watchEffect } from 'vue';
-import { $t } from '@igourd/locales';
 
 import { ArrowRight, Filter } from '@igourd/icons';
+import { $t } from '@igourd/locales';
 
 import {
   ElButton,
@@ -80,10 +80,6 @@ export interface TopFilterField {
  */
 const props = withDefaults(
   defineProps<{
-    // top-bottom 上线布局   left-right 左右布局 默认
-    layout:string,
-    // 选择数据的模式 select左边勾选直接添加(默认的)   move 通过中间按钮添加
-    selectMode:string,
     columns: Column[];
     excludeSelectedFromLeft?: boolean;
     fetchLeft: (
@@ -96,6 +92,8 @@ const props = withDefaults(
     ) => Promise<
       KV[] | PageResult | { count?: number; items: KV[]; total?: number }
     >;
+    // top-bottom 上线布局   left-right 左右布局 默认
+    layout: string;
     leftActionColumn?: { label?: string; width?: number };
     leftTitle?: string;
     modelValue: KV[];
@@ -103,11 +101,13 @@ const props = withDefaults(
     rightTitle?: string;
     rowKey: string;
     searchPlaceholder?: string;
+    // 选择数据的模式 select左边勾选直接添加(默认的)   move 通过中间按钮添加
+    selectMode: string;
     topFilterFields?: TopFilterField[];
   }>(),
   {
-    layout:"left-right",
-    selectMode:'select',
+    layout: 'left-right',
+    selectMode: 'select',
     modelValue: () => [],
     leftTitle: $t('transfer.optional'),
     rightTitle: $t('transfer.selected'),
@@ -346,6 +346,7 @@ function resetTopFilters() {
 function clearAll() {
   keyword.value = '';
   resetTopFilters();
+  leftSelection.value = [];
   Object.keys(columnFilters).forEach((k) => delete columnFilters[k]);
   leftResetToFirstPageThenRefresh();
 }
@@ -386,10 +387,10 @@ function removeRow(row: KV) {
   setValue(next);
 }
 // 左边选择事件
-function leftSelectionChange(rows:KV[]){
-  leftSelection.value = rows
-  if(props.selectMode === 'select'){
-    addRows(rows)
+function leftSelectionChange(rows: KV[]) {
+  leftSelection.value = rows;
+  if (props.selectMode === 'select') {
+    addRows(rows);
   }
 }
 
@@ -427,7 +428,7 @@ defineExpose({ leftRefresh, rightRefresh });
                 <ElInput
                   v-if="f.type === 'input'"
                   v-model="topFilters[f.key]"
-                  :placeholder="f.placeholder ||  $t('transfer.enter-keyword')"
+                  :placeholder="f.placeholder || $t('transfer.enter-keyword')"
                   clearable
                 />
                 <ElSelect
@@ -469,7 +470,9 @@ defineExpose({ leftRefresh, rightRefresh });
             </template>
           </ElForm>
           <div class="flex justify-end gap-2">
-            <ElButton size="small" @click="resetTopFilters">{{ $t('transfer.reset') }}</ElButton>
+            <ElButton size="small" @click="resetTopFilters">
+              {{ $t('transfer.reset') }}
+            </ElButton>
             <ElButton
               size="small"
               type="primary"
@@ -484,11 +487,16 @@ defineExpose({ leftRefresh, rightRefresh });
       <ElButton text @click="clearAll">{{ $t('transfer.reset') }}</ElButton>
       <div class="flex-1"></div>
       <div class="font-medium text-blue-600">
-        {{ $t('transfer.items-selected',{num:valueIds.length}) }}
+        {{ $t('transfer.items-selected', { num: valueIds.length }) }}
       </div>
     </div>
 
-    <div :class="['grid','gap-3',layout ==='top-bottom'?'grid-cols-1':'grid-cols-[1fr_auto_1fr]']">
+    <div
+      class="grid gap-3"
+      :class="[
+        layout === 'top-bottom' ? 'grid-cols-1' : 'grid-cols-[1fr_auto_1fr]',
+      ]"
+    >
       <!-- LEFT: available list -->
       <div class="flex flex-col overflow-hidden rounded-xl border">
         <div
@@ -537,7 +545,9 @@ defineExpose({ leftRefresh, rightRefresh });
                       v-if="col.filter?.type === 'input'"
                       v-model="columnFilters[col.prop as string]"
                       size="small"
-                      :placeholder="col.filter?.placeholder || $t('transfer.enter-keyword')"
+                      :placeholder="
+                        col.filter?.placeholder || $t('transfer.enter-keyword')
+                      "
                       clearable
                       @input="leftResetToFirstPageThenRefresh()"
                       @clear="leftResetToFirstPageThenRefresh()"
@@ -624,8 +634,9 @@ defineExpose({ leftRefresh, rightRefresh });
       </div>
 
       <!-- MIDDLE actions -->
-      <div  class="flex flex-col justify-center gap-2">
-        <ElButton v-if="props.selectMode ==='move'"
+      <div class="flex flex-col justify-center gap-2">
+        <ElButton
+          v-if="props.selectMode === 'move'"
           :disabled="leftSelection.length === 0"
           @click="addRows(leftSelection)"
         >
@@ -660,7 +671,7 @@ defineExpose({ leftRefresh, rightRefresh });
               </template>
             </ElTableColumn>
           </template>
-          <ElTableColumn :label=" $t('transfer.opertion')" width="100">
+          <ElTableColumn :label="$t('transfer.opertion')" width="100">
             <template #default="{ row }">
               <ElButton type="danger" link @click="removeRow(row)">
                 {{ $t('transfer.remove') }}
