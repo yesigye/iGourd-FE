@@ -196,7 +196,11 @@ export function useSaleShifts() {
     query: async ({
       page_num,
       page_size,
+      keywords,
+      date_range,
     }: {
+      date_range: string[];
+      keywords: string;
       page_num: number;
       page_size: number;
     }) => {
@@ -204,7 +208,9 @@ export function useSaleShifts() {
         page_num,
         page_size,
         is_shift_settlement: true,
-        keywords: '',
+        keywords,
+        start_create_time: date_range?.[0] ? `${date_range?.[0]} 00:00:00` : '',
+        end_create_time: date_range?.[1] ? `${date_range?.[1]} 23:59:59` : '',
       });
 
       return {
@@ -221,14 +227,6 @@ export function useSaleShifts() {
       id: 'shifts',
       columns: baseColumns,
       searchFormSchema: {
-        keywords: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Input',
-          'x-component-props': {
-            placeholder: t('shifts.keywords-placeholder'),
-          },
-        },
         date_range: {
           type: 'string',
           'x-decorator': 'FormItem',
@@ -240,6 +238,14 @@ export function useSaleShifts() {
             endPlaceholder: '结束日期',
             format: 'YYYY-MM-DD',
             valueFormat: 'YYYY-MM-DD',
+          },
+        },
+        keywords: {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          'x-component-props': {
+            placeholder: t('shifts.keywords-placeholder'),
           },
         },
       },

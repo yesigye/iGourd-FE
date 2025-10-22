@@ -4,12 +4,6 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-// import {
-//   createScanSaleApi,
-//   deleteScanSaleApi,
-//   getScanSaleListApi,
-//   updateScanSaleApi,
-// } from '@@/sale/apis';
 import { ScanSaleDrawer } from '@@/sale/components';
 
 import { useCrud } from '#/hooks';
@@ -170,7 +164,7 @@ export function useScanSale() {
 
   return useCrud<any, any>({
     columns,
-    id:"sale-scan-list",
+    id: 'sale-scan-list',
     searchFormSchema,
     batchOperate: true,
     connectedComponent: ScanSaleDrawer,
