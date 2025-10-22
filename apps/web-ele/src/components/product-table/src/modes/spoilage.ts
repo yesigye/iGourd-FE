@@ -13,7 +13,7 @@ export const SpoilageMode: ModePlugin = {
     if (quantityIndex !== -1) {
       columns[quantityIndex] = {
         ...columns[quantityIndex],
-        title: '报损数量',
+        title: "{{t('common.purchase.breakage-quantity')}}",
         name: 'consumption_quantity',
       };
     }

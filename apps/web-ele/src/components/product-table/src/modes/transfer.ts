@@ -13,7 +13,7 @@ export const TransferMode: ModePlugin = {
       },
       {
         name: 'product_id',
-        title: '商品',
+        title: "{{t('common.purchase.major-name')}}",
         'x-component': 'ProductTable.ProductCell',
         'x-decorator': 'FormItem',
         'x-component-props': {
@@ -25,7 +25,7 @@ export const TransferMode: ModePlugin = {
       },
       {
         name: 'unit_select',
-        title: '单位',
+        title: "{{t('common.purchase.sub-product-stock-search-models')}}",
         'x-component': 'ProductTable.UnitCell',
         'x-decorator': 'FormItem',
         'x-component-props': {
@@ -34,7 +34,7 @@ export const TransferMode: ModePlugin = {
       },
       {
         name: 'sku_barcode',
-        title: 'SKU条形码',
+        title: "{{t('common.purchase.sku-barcode')}}",
         'x-component': 'Input',
         'x-decorator': 'FormItem',
         'x-component-props': {
@@ -45,7 +45,7 @@ export const TransferMode: ModePlugin = {
       {
         name: 'transfer_quantity',
         type: 'number',
-        title: '调拨数量',
+        title: "{{t('common.purchase.transfer-quantity')}}",
         'x-component': 'ProductTable.QuantityCell',
         'x-decorator': 'FormItem',
         'x-component-props': {
@@ -59,7 +59,7 @@ export const TransferMode: ModePlugin = {
       {
         name: 'quantity_base',
         type: 'number',
-        title: '基础数量',
+        title: "{{t('common.purchase.base-quantity')}}",
         'x-component': 'ReadonlyNumber',
         'x-component-props': {
           style: { width: 120 },
@@ -68,7 +68,7 @@ export const TransferMode: ModePlugin = {
 
       {
         name: 'remark',
-        title: '备注',
+        title: "{{t('common.purchase.remarks')}}",
         'x-component': 'Input',
         'x-component-props': {
           style: { width: 180 },

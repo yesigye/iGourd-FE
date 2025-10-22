@@ -196,7 +196,12 @@
     "sale-warehouse-product-stock-quantity": "库存(主单位)",
     "sale-warehouse-product-stock-quantity-message": "库存",
     "stock-total-quantity-message": "库存",
-    "transfer-amount": "调拨金额"
+    "transfer-amount": "调拨金额",
+    "inventory-count":"盘点数量",
+    "breakage-quantity":"报损数量",
+    "transfer-quantity":"调拨数量",
+    "base-quantity":"基础数量"
+
   },
 
   "drop-fil-here": "拖拽文件到此区域或",

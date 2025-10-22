@@ -196,7 +196,11 @@
     "sale-warehouse-product-stock-quantity": "Stock (unité principale)",
     "sale-warehouse-product-stock-quantity-message": "Stock",
     "stock-total-quantity-message": "Stock",
-    "transfer-amount": "Montant du transfert"
+    "transfer-amount": "Montant du transfert",
+    "inventory-count": "Quantité d'inventaire",
+    "breakage-quantity": "Quantité de casse",
+    "transfer-quantity": "Quantité transférée",
+    "base-quantity": "Quantité de base"
   },
 
   "drop-fil-here": "Glissez les fichiers ici ou",
