@@ -120,6 +120,7 @@ export function parseTime(
  * @returns
  */
 export const retainDecimal8 = (num, dec) => {
+  console.log('num', num, dec);
   if (!num) return 0;
   num = num.toString();
   const index = num.indexOf('.');

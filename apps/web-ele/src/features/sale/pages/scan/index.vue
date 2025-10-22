@@ -287,6 +287,7 @@ const handleGoods = (item) => {
 
 // 更新商品数量
 const handleUpdateQuantity = (updatedItem, newProduct) => {
+  console.log(updatedItem, newProduct);
   // 更新商品列表中对应商品的数量
   const index = goodsList.value.findIndex((item) => item.id === updatedItem.id);
   if (index !== -1) {
@@ -843,8 +844,7 @@ onMounted(async () => {
                     >
                       <span
                         class="scan-order-action-primary text-blue-primary"
-                        >{{ t('scan.take') }}</span
-                      >
+                        >{{ t('scan.take') }}</span>
                     </ElButton>
                   </ElBadge>
                   <!-- 清空 -->
@@ -859,9 +859,7 @@ onMounted(async () => {
                 </div>
                 <div class="scan-action-box-settle-info bg-card">
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray"
-                      >{{ t('scan.total-amount') }}:</span
-                    >
+                    <span class="settle-info-lable text-light-gray">{{ t('scan.total-amount') }}:</span>
                     <span class="settle-info-val text-gray-dark">
                       {{ currentSymbol }}
                       {{
@@ -870,31 +868,24 @@ onMounted(async () => {
                               calculateOrderList.subtotal_amount,
                             )
                           : '--'
-                      }}</span
-                    >
+                      }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray"
-                      >{{ t('scan.tax') }}:</span
-                    >
+                    <span class="settle-info-lable text-light-gray">{{ t('scan.tax') }}:</span>
                     <span class="settle-info-val text-gray-dark">
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.vat_amount >= 0
                           ? thousandSeparator(calculateOrderList.vat_amount)
                           : '--'
-                      }}</span
-                    >
+                      }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray"
-                      >{{ t('scan.discount') }}:</span
-                    >
+                    <span class="settle-info-lable text-light-gray">{{ t('scan.discount') }}:</span>
                     <span class="settle-info-val text-gray-dark">
                       <span
                         v-if="calculateOrderList.promotion_discount_amount >= 0"
-                        >-</span
-                      >
+                        >-</span>
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.promotion_discount_amount >= 0
@@ -902,23 +893,20 @@ onMounted(async () => {
                               calculateOrderList.promotion_discount_amount,
                             )
                           : '--'
-                      }}</span
-                    >
+                      }}</span>
                   </div>
                 </div>
                 <div class="scan-action-box-settle-payment">
                   <div class="flex items-center justify-between gap-5">
                     <span class="total-title text-orange-medium">
-                      {{ t('scan.actual-amount') }}:</span
-                    >
+                      {{ t('scan.actual-amount') }}:</span>
                     <span class="total-price text-red-primary">
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.total_amount >= 0
                           ? thousandSeparator(calculateOrderList.total_amount)
                           : '--'
-                      }}</span
-                    >
+                      }}</span>
                   </div>
                 </div>
               </div>
@@ -950,33 +938,25 @@ onMounted(async () => {
                 </div>
                 <div v-if="Object.keys(customerInfo).length > 0">
                   <div class="mt-3 flex items-center justify-between">
-                    <span class="text-gray-mid"
-                      >{{ t('scan.contact-telephone') }}:</span
-                    >
+                    <span class="text-gray-mid">{{ t('scan.contact-telephone') }}:</span>
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.phone_number || '-'
                     }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid"
-                      >{{ t('scan.points') }}:</span
-                    >
+                    <span class="customer-title text-gray-mid">{{ t('scan.points') }}:</span>
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.points || '-'
                     }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid"
-                      >{{ t('scan.balance') }}:</span
-                    >
+                    <span class="customer-title text-gray-mid">{{ t('scan.balance') }}:</span>
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.balance || '0'
                     }}</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid"
-                      >{{ t('scan.salesman') }}:</span
-                    >
+                    <span class="customer-title text-gray-mid">{{ t('scan.salesman') }}:</span>
                     <span class="customer-name text-gray-dark">{{
                       customerInfo.salesman_name || '0'
                     }}</span>
