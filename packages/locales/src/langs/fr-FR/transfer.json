@@ -1,0 +1,16 @@
+{
+  "optional": "Optionnel",
+  "selected": "Sélectionné",
+  "enter-keyword-to-search": "Entrez un mot-clé pour rechercher",
+  "failed-to-load": "Échec du chargement",
+  "filter": "Filtrer",
+  "enter-keyword": "Entrez un mot-clé",
+  "please-select": "Veuillez sélectionner",
+  "search-options": "Options de recherche",
+  "reset": "Réinitialiser",
+  "apply": "Appliquer",
+  "items-selected": "{num} éléments sélectionnés",
+  "add": "Ajouter",
+  "remove": "Retirer",
+  "opertion": "Opération"
+}

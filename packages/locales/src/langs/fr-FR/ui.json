@@ -1,0 +1,107 @@
+{
+  "formRules": {
+    "required": "Veuillez saisir {0}",
+    "selectRequired": "Veuillez sélectionner {0}",
+    "minLength": "{0} doit contenir au moins {1} caractères",
+    "maxLength": "{0} ne peut pas dépasser {1} caractères",
+    "length": "{0} doit contenir exactement {1} caractères",
+    "alreadyExists": "{0} `{1}` existe déjà",
+    "startWith": "{0} doit commencer par {1}",
+    "invalidURL": "Veuillez saisir une URL valide"
+  },
+  "actionTitle": {
+    "edit": "Modifier {0}",
+    "create": "Ajouter {0}",
+    "delete": "Supprimer {0}",
+    "view": "Voir {0}"
+  },
+  "actionMessage": {
+    "deleteConfirm": "Confirmer la suppression de {0} ?",
+    "deleting": "Suppression de {0} en cours...",
+    "deleteSuccess": "{0} supprimé avec succès",
+    "operationSuccess": "Opération réussie",
+    "operationFailed": "Échec de l'opération"
+  },
+  "placeholder": {
+    "input": "Veuillez saisir",
+    "select": "Veuillez sélectionner"
+  },
+  "captcha": {
+    "title": "Veuillez compléter la vérification de sécurité",
+    "sliderSuccessText": "Vérification réussie",
+    "sliderDefaultText": "Veuillez glisser le curseur",
+    "sliderRotateDefaultTip": "Cliquez sur l'image pour actualiser",
+    "sliderTranslateDefaultTip": "Cliquez sur l'image pour actualiser",
+    "sliderRotateFailTip": "Échec de la vérification",
+    "sliderRotateSuccessTip": "Vérification réussie en {0} secondes",
+    "sliderTranslateFailTip": "Échec de la vérification",
+    "sliderTranslateSuccessTip": "Vérification réussie en {0} secondes",
+    "alt": "Prend en charge la valeur de l'attribut src de la balise img",
+    "refreshAriaLabel": "Actualiser le captcha",
+    "confirmAriaLabel": "Confirmer la sélection",
+    "confirm": "Confirmer",
+    "pointAriaLabel": "Cliquer sur le point",
+    "clickInOrder": "Veuillez cliquer dans l'ordre"
+  },
+  "iconPicker": {
+    "placeholder": "Sélectionner une icône",
+    "search": "Rechercher une icône..."
+  },
+  "jsonViewer": {
+    "copy": "Copier",
+    "copied": "Copié"
+  },
+  "fallback": {
+    "pageNotFound": "Oups ! Page non trouvée",
+    "pageNotFoundDesc": "Désolé, nous n'avons pas pu trouver la page que vous cherchez.",
+    "forbidden": "Oups ! Accès refusé",
+    "forbiddenDesc": "Désolé, vous n'avez pas l'autorisation d'accéder à cette page.",
+    "internalError": "Oups ! Une erreur est survenue",
+    "internalErrorDesc": "Désolé, le serveur a rencontré une erreur.",
+    "offline": "Page hors ligne",
+    "offlineError": "Oups ! Erreur réseau",
+    "offlineErrorDesc": "Désolé, impossible de se connecter à Internet. Veuillez vérifier votre connexion et réessayer.",
+    "comingSoon": "Bientôt disponible",
+    "http": {
+      "requestTimeout": "Délai de requête dépassé, veuillez réessayer plus tard.",
+      "networkError": "Erreur réseau, veuillez vérifier votre connexion et réessayer.",
+      "badRequest": "Erreur de requête. Veuillez vérifier votre saisie et réessayer.",
+      "unauthorized": "Authentification expirée, veuillez vous reconnecter.",
+      "forbidden": "Accès interdit, vous n'avez pas l'autorisation d'accéder à cette ressource.",
+      "notFound": "Non trouvé, la ressource demandée n'existe pas.",
+      "internalServerError": "Erreur interne du serveur, veuillez réessayer plus tard."
+    }
+  },
+  "widgets": {
+    "document": "Document",
+    "qa": "Questions & Aide",
+    "setting": "Paramètres",
+    "logoutTip": "Confirmer la déconnexion ?",
+    "viewAll": "Voir tous les messages",
+    "notifications": "Notifications",
+    "markAllAsRead": "Marquer tout comme lu",
+    "clearNotifications": "Vider",
+    "checkUpdatesTitle": "Nouvelle version disponible",
+    "checkUpdatesDescription": "Cliquez pour actualiser et obtenir la dernière version",
+    "search": {
+      "title": "Rechercher",
+      "searchNavigate": "Rechercher dans le menu de navigation",
+      "select": "Sélectionner",
+      "navigate": "Naviguer",
+      "close": "Fermer",
+      "noResults": "Aucun résultat trouvé",
+      "noRecent": "Aucun historique de recherche",
+      "recent": "Historique de recherche"
+    },
+    "lockScreen": {
+      "title": "Écran verrouillé",
+      "screenButton": "Verrouiller",
+      "password": "Mot de passe",
+      "placeholder": "Veuillez saisir le mot de passe de verrouillage",
+      "unlock": "Cliquer pour déverrouiller",
+      "errorPasswordTip": "Mot de passe incorrect, veuillez réessayer",
+      "backToLogin": "Retour à la connexion",
+      "entry": "Accéder au système"
+    }
+  }
+}
