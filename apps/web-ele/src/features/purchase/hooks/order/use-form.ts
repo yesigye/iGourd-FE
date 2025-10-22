@@ -7,7 +7,7 @@ import { Space } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import ModalTable from '@igourd/plugins/modal-table';
 import { useUserStore } from '@igourd/stores';
-import { ArrowLeft, ArrowRight } from '@igourd/icons';
+import { createIconifyIcon } from '@igourd/icons';
 import {
   createPurchaseOrderApi,
   getPurchaseListApi,
@@ -553,19 +553,26 @@ export function useOrderForm() {
                                   'x-content':
                                     "{{t('purchase.order-pay.auto-create-prepaid-order')}}",
                                 },
+
                                 addonBefore: {
                                   type: 'void',
                                   'x-component': 'Tooltip',
                                   'x-component-props': {
-                                    effect:"light",
-                                    content: "{{t('purchase.order-pay.auto-create-prepaid-order-msg')}}",
+                                    effect: 'light',
+                                    content:
+                                      "{{t('purchase.order-pay.auto-create-prepaid-order-msg')}}",
                                   },
                                   properties: {
                                     content: {
                                       type: 'void',
-                                      'x-component': 'Icon',
+                                      'x-component': 'Button',
                                       'x-component-props': {
-                                        type: 'ArrowLeft',
+                                        style:{
+                                          padding:'0',
+                                          "margin-bottom":'10px',
+                                        },
+                                        type: '', text: 'plain',
+                                        icon: "{{icon('material-symbols:help-outline-rounded')}}"
                                       },
                                     },
                                   },
@@ -942,6 +949,10 @@ export function useOrderForm() {
         accountChange,
         payment_method_change,
         merchantPaymentMethodOption,
+        icon: (name: string) => {
+          const IconComponent = createIconifyIcon(name);
+          return IconComponent ? h(IconComponent) : null;
+        },
       },
       effects() {
         // 选中供应商
