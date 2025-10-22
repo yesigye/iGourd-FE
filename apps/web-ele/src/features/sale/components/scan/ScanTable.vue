@@ -220,6 +220,7 @@ defineExpose({
         :fixed="item.fixed"
       >
         <template #default="{ column, row }">
+          <!-- 数量 -->
           <template v-if="['stock_total_quantity'].includes(item.prop)">
             <div class="Inum">
               <ElButton class="Inum-input" @click="decreaseEvent(row)">
@@ -241,6 +242,7 @@ defineExpose({
               </ElButton>
             </div>
           </template>
+          <!-- 价格 -->
           <template v-else-if="ableEdit && item.prop === 'selling_price'">
             <ElInput
               v-model="row.custom_price"
@@ -251,6 +253,7 @@ defineExpose({
               @input="(val) => handlePriceChange(val, row)"
             />
           </template>
+          <!-- 其他 -->
           <template v-else-if="item.render">
             <component
               :is="

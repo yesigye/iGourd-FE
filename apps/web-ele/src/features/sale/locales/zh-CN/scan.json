@@ -82,5 +82,6 @@
   },
   "search-placeholder": "请输入客户名称/联系电话",
   "search-guider-placeholder": "请输入导购员名称",
-  "on-credit": "赊账"
+  "on-credit": "赊账",
+  "successfully-paid": "支付成功"
 }
