@@ -18,31 +18,18 @@ import { AuditDialog } from '#/components';
 
 import { approveSpoilage, rejectSpoilage } from '../../apis/spoilage';
 import { useInventorySpoilageList } from '../../hooks/spoilage/list';
-
+import { useLanguage } from '#/hooks';
 defineOptions({
   name: 'IInventorySpoilage',
 });
 const { currentLoginUserApp } = useUserStore();
 const auditDialogRef = ref();
 const { t } = useI18n();
-const operationOpt = [
-  {
-    label: t('common.pending'),
-    value: 'PENDING',
-  },
-  {
-    label: t('common.approve'),
-    value: 'APPROVED',
-  },
-  {
-    label: t('common.reject'),
-    value: 'REJECTED',
-  },
-];
-const getlabel = (value: string) => {
-  const obj = operationOpt.find((item) => item.value === value);
-  return obj?.label;
-};
+const operationOpt = ref();
+useLanguage('common.review-status-enum').then((res) => {
+  operationOpt.value = res;
+});
+
 
 const {
   Grid,
@@ -56,10 +43,10 @@ const {
 
 const currentRow = ref();
 const openModal = (row, item) => {
-  if (row.status === 'PENDING' && item.value === 'REJECTED') {
+  if (row.status.value === 'PENDING' && item.value === 'REJECTED') {
     currentRow.value = row;
     auditDialogRef.value.openModal();
-  } else if (row.status === 'PENDING' && item.value === 'APPROVED') {
+  } else if (row.status.value === 'PENDING' && item.value === 'APPROVED') {
     const param = {
       id: row.id,
       merchant_id: currentLoginUserApp.owner_id,
@@ -102,9 +89,9 @@ const handleconfirm = (data) => {
         </ElButton>
       </template>
       <template #modal="{ row }">
-        <ElDropdown v-if="row.status === 'PENDING'">
+        <ElDropdown v-if="row.status.value === 'PENDING'">
           <span class="custom-dropdown">
-            {{ getlabel(row.status) }}
+            {{ row.status.label }}
             <ElIcon class="el-icon--right">
               <ArrayDown />
             </ElIcon>
@@ -123,14 +110,14 @@ const handleconfirm = (data) => {
           </template>
         </ElDropdown>
         <span
-          v-if="row.status === 'APPROVED'"
+          v-if="row.status.value === 'APPROVED'"
           style="color: var(--el-color-success)"
-          >{{ getlabel(row.status) }}</span
+          >{{ row.status.label }}</span
         >
         <span
-          v-if="row.status === 'REJECTED'"
+          v-if="row.status.value === 'REJECTED'"
           style="color: var(--el-color-danger)"
-          >{{ getlabel(row.status) }}</span
+          >{{ row.status.label }}</span
         >
       </template>
 
