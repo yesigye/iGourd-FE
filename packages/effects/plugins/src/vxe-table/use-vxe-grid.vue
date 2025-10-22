@@ -35,6 +35,7 @@ import {
   ElText,
   FormButtonGroup,
   Submit,
+  useIgourdDrawer,
   useTableSearchForm,
 } from '@igourd/common-ui';
 import { usePriorityValues } from '@igourd/hooks';
@@ -62,6 +63,7 @@ import { VxeButton } from 'vxe-pc-ui';
 import { VxeGrid, VxeUI } from 'vxe-table';
 
 import { extendProxyOptions } from './extends';
+import PrintDrawer from './print.vue';
 
 import 'vxe-table/styles/cssvar.scss';
 import 'vxe-pc-ui/styles/cssvar.scss';
@@ -326,6 +328,18 @@ const showDefaultEmpty = computed(() => {
   // 如果有原生配置，就不显示默认的空状态
   return !hasEmptyText && !hasEmptyRender;
 });
+const printRef = ref();
+const [Drawer, drawerApi] = useIgourdDrawer({
+  title: $t('common.print'),
+  class: 'w-3/4',
+  appendToMain: true,
+  header: false,
+  confirmText: $t('common.print'),
+  onConfirm() {
+    printRef.value.print();
+  },
+  // isOpen: true,
+});
 
 async function init() {
   await nextTick();
@@ -371,10 +385,10 @@ async function init() {
 
 async function handleCommand(command: string) {
   if (command === 'print') {
-    await gridRef.value?.openPrint();
+    drawerApi.open();
   }
   if (command === 'export' && gridRef.value?.exportConfig) {
-    await gridRef.value?.openExport(gridRef.value?.exportConfig);
+    gridRef.value?.openExport(gridRef.value?.exportConfig);
     return;
   }
   await gridRef.value?.commitProxy(command);
@@ -398,24 +412,6 @@ const openMoreActions = computed(() => {
       options.value.toolbarConfig?.tools.length > 0)
   );
 });
-const printOptions = computed(() => {
-  return {
-    ...unref(options),
-    maxHeight: '45vh',
-    toolbarConfig: {
-      enabled: false,
-    },
-    pagerConfig: {
-      enabled: false,
-    },
-    proxyConfig: {
-      enabled: false,
-    },
-  };
-});
-setTimeout(() => {
-  console.log(gridRef.value?.getData());
-}, 3000);
 </script>
 
 <template>
@@ -423,6 +419,9 @@ setTimeout(() => {
     :class="cn('bg-card rounded-md', className)"
     :style="{ height: `calc(100% - ${footerHeight}px - 0.25rem)` }"
   >
+    <Drawer :show-header="false">
+      <PrintDrawer ref="printRef" v-bind="options" />
+    </Drawer>
     <VxeGrid
       ref="gridRef"
       :class="
@@ -437,14 +436,9 @@ setTimeout(() => {
       v-bind="options"
       v-on="events"
     >
-      <template #printDefault>
-        <VxeGrid
-          ref="gridRef"
-          :data="gridRef?.getData() || []"
-          class="px-3"
-          v-bind="printOptions"
-        />
-      </template>
+      <!-- <template #printDefault> -->
+
+      <!-- </template> -->
       <!-- 左侧操作区域或者title -->
       <template v-if="showToolbar" #toolbar-actions="slotProps">
         <slot v-if="showTableTitle" name="table-title">
