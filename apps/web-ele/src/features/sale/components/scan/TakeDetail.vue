@@ -26,11 +26,11 @@ import {
   orderSuspendListApi,
 } from '@@/sale/apis';
 import { codeConfig } from '@@/sale/components/scan/const/codeConfig';
+import { useSelectCustomer } from '@@/sale/hooks';
 
 import { ReceiptTemplate } from '#/components/receipt-template'; // 生成小票模板
 
 import HoldOrderTakeCard from './HoldOrderTakeCard.vue';
-import SelectCustomersDrawer from './SelectCustomersDrawer.vue';
 import SelectGuiderDrawer from './SelectGuiderDrawer.vue';
 import SelectProducts from './SelectProducts.vue';
 
@@ -53,11 +53,11 @@ const emit = defineEmits([
   'handleTakeOrderInfo',
   'calculationBadgeCount',
 ]);
+const { Drawer: SelectCustomersDrawer, drawerApi: drawerApiCustomer } =
+  useSelectCustomer();
 const [Drawer, drawerApi] = useIgourdDrawer({
   onOpenChange: (val) => {
-    if (val) {
-      // getCustomerList();
-    }
+    if (val) {}
   },
 });
 const tableRef = ref();
@@ -283,10 +283,7 @@ const confirmHandler = async (data) => {
   fetchOrderSuspendList();
 };
 const handleReplaceCustomer = () => {
-  drawerDetailsCustomers.value = {
-    title: t('scan.select-customers'),
-    visible: true,
-  };
+  drawerApiCustomer.open();
 };
 const handleEditGuider = () => {
   drawerDetailsGuider.value = {
@@ -465,7 +462,6 @@ defineExpose({
                   <div class="select-products-search-box flex p-2">
                     <div class="select-products-search flex w-full">
                       <ElInput
-                        ref="searchRef"
                         v-model="customerName"
                         :clearable="true"
                         class="h-13"
