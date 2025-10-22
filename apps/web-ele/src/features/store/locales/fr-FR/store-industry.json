@@ -1,14 +1,14 @@
 {
-  "Catering": "餐饮",
-  "Bakery": "烘焙",
-  "Retail": "零售",
-  "Apparel and Footwear": "服装与鞋类",
-  "Fresh Food": "生鲜食品",
-  "Maternity and Infant": "母婴",
-  "Beauty": "美容",
-  "Arts Training": "艺术培训",
-  "Pet": "宠物",
-  "Life Services": "生活服务",
-  "Wholesale and Trade": "批发与贸易",
-  "Other": "其他"
+  "Catering": "Restauration",
+  "Bakery": "Boulangerie",
+  "Retail": "Vente au détail",
+  "Apparel and Footwear": "Vêtements et Chaussures",
+  "Fresh Food": "Aliments Frais",
+  "Maternity and Infant": "Maternité et Bébé",
+  "Beauty": "Beauté",
+  "Arts Training": "Formation Artistique",
+  "Pet": "Animalerie",
+  "Life Services": "Services de la Vie Courante",
+  "Wholesale and Trade": "Grossiste et Commerce",
+  "Other": "Autre"
 }

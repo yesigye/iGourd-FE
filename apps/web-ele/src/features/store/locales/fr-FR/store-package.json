@@ -1,15 +1,15 @@
 {
-  "purchase-btn": "购买",
-  "month-amount-unit": "月",
-  "payable-title": "应付金额",
-  "method-title": "请选择付款方式",
-  "method-offline": "离线支付",
-  "place-button": "下单",
-  "payable-amount": "金额",
-  "payable-discount": "折扣",
-  "payable-fee": "初始服务指导费",
-  "payable-origin": "原套餐抵扣金额",
-  "total": "总计",
-  "payment-method-cash": "现金支付",
-  "payment-method-offline-bank-transfer": "线下银行转帐"
+  "purchase-btn": "Acheter",
+  "month-amount-unit": "Mois",
+  "payable-title": "Montant à Payer",
+  "method-title": "Veuillez sélectionner le mode de paiement",
+  "method-offline": "Paiement hors ligne",
+  "place-button": "Passer la commande",
+  "payable-amount": "Montant",
+  "payable-discount": "Remise",
+  "payable-fee": "Frais d'orientation initiaux",
+  "payable-origin": "Déduction de l'ancien forfait",
+  "total": "Total",
+  "payment-method-cash": "Paiement en espèces",
+  "payment-method-offline-bank-transfer": "Virement bancaire hors ligne"
 }

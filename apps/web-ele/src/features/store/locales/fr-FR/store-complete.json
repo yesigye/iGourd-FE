@@ -1,13 +1,13 @@
 {
-  "creation-title-APPROVED": "完成验证",
-  "creation-title-REJECTED": "创建失败",
-  "creation-title-PENDING": "正在验证的交易",
-  "creation-message-APPROVED": "您的帐户验证已完成。现在，您可以登录并开始使用我们的服务。",
-  "creation-message-REJECTED": "您的帐户验证未通过。请离线联系销售人员调查原因！重新创建店面。",
-  "creation-message-PENDING": "您的交易目前正在验证中，请耐心等待。我们将在一个工作日内完成验证，请注意您的电子邮件或短信。验证成功后，您可以登录并访问主页。",
-  "audit-text": "审核记录",
-  "creation-btn-text-APPROVED": "返回",
-  "creation-btn-text-REJECTED": "返回",
-  "creation-btn-text-PENDING": "返回",
-  "empty-text": "暂无数据"
+  "creation-title-APPROVED": "Vérification Terminée",
+  "creation-title-REJECTED": "Échec de la Création",
+  "creation-title-PENDING": "Transaction en Cours de Vérification",
+  "creation-message-APPROVED": "La vérification de votre compte est terminée. Vous pouvez maintenant vous connecter et commencer à utiliser nos services.",
+  "creation-message-REJECTED": "La vérification de votre compte a échoué. Veuillez contacter le service commercial hors ligne pour enquêter sur la raison ! Recréez votre boutique.",
+  "creation-message-PENDING": "Votre transaction est actuellement en cours de vérification, veuillez patienter. Nous terminerons la vérification sous un jour ouvré, veuillez surveiller vos e-mails ou SMS. Une fois la vérification réussie, vous pourrez vous connecter et accéder à la page d'accueil.",
+  "audit-text": "Historique d'Audit",
+  "creation-btn-text-APPROVED": "Retour",
+  "creation-btn-text-REJECTED": "Retour",
+  "creation-btn-text-PENDING": "Retour",
+  "empty-text": "Aucune donnée pour le moment"
 }
