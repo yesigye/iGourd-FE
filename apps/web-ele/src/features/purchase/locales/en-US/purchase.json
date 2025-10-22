@@ -332,8 +332,11 @@
     "discount-rate": "Discount Rate",
     "total": "Total",
     "payment-method": "Payment Method",
-    "amount": "Amount"
+    "amount": "Amount",
+    "deposit-rate": "Deposit Rate",
+    "deposit": "Deposit",
+    "auto-create-prepaid-order": "Automatically Create a Prepaid Order",
+    "auto-create-prepaid-order-msg": "If checked, a prepayment form will be automatically created when the purchase order is approved"
   },
   "number": "Number"
 }
-

@@ -332,7 +332,11 @@
     "discount-rate": "优惠比例",
     "total": "合计",
     "payment-method": "支付方式",
-    "amount": "金额"
+    "amount": "金额",
+    "deposit-rate":"定金比例",
+    "deposit":"定金",
+    "auto-create-prepaid-order":"自动创建一个预付单",
+    "auto-create-prepaid-order-msg":"如果勾选，那么在该采购订单审核通过时,会自动创建一个预付款单"
   },
   "number": "编号"
 }
