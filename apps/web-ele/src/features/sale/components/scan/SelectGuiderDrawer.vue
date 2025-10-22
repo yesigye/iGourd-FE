@@ -111,7 +111,6 @@ const [Drawer, drawerApi] = useIgourdDrawer({
                     class="product-pic"
                     :preview-src-list="[scope.row.profile_photo]"
                     :initial-index="0"
-                    :preview-teleported="true"
                   >
                     <!-- 当图片加载失败时，显示默认图片 -->
                     <template #error>

@@ -48,33 +48,20 @@ const {
 } = usePurchaseOrder();
 const{Drawer:Detail,drawerApi:detailDrawerApi} = usePurchaseOrderDetail()
 const { currentLoginUserApp } = useUserStore();
+import { useLanguage } from '#/hooks';
+const operationOpt = ref();
+useLanguage('common.review-status-enum').then((res) => {
+  operationOpt.value = res;
+});
 
-const operationOpt = [
-  {
-    label: t('common.pending'),
-    value: 'PENDING',
-  },
-  {
-    label: t('common.approve'),
-    value: 'APPROVED',
-  },
-  {
-    label: t('common.reject'),
-    value: 'REJECTED',
-  },
-];
-const getlabel = (value: string) => {
-  const obj = operationOpt.find((item) => item.value === value);
-  return obj?.label;
-};
 const detailDrawerRef = ref();
 
 const currentRow = ref();
 const openModal = (row: tableItem, item) => {
-  if (row.review_status === 'PENDING' && item.value === 'REJECTED') {
+  if (row.review_status.value === 'PENDING' && item.value === 'REJECTED') {
     currentRow.value = row;
     auditDialogRef.value.openModal();
-  } else if (row.review_status === 'PENDING' && item.value === 'APPROVED') {
+  } else if (row.review_status.value === 'PENDING' && item.value === 'APPROVED') {
     const param = {
       id: row.id,
       merchant_id: currentLoginUserApp.owner_id,
@@ -119,9 +106,9 @@ const handleconfirm = (data: AuditFormData) => {
         </ElButton>
       </template>
       <template #modal="{ row }">
-        <ElDropdown v-if="row.review_status === 'PENDING'">
+        <ElDropdown v-if="row.review_status.value === 'PENDING'">
           <span class="custom-dropdown">
-            {{ getlabel(row.review_status) }}
+            {{ row.review_status.label }}
             <ElIcon class="el-icon--right">
               <ArrayDown />
             </ElIcon>
@@ -140,16 +127,16 @@ const handleconfirm = (data: AuditFormData) => {
           </template>
         </ElDropdown>
         <span
-          v-if="row.review_status === 'APPROVED'"
+          v-if="row.review_status.value === 'APPROVED'"
           style="color: var(--el-color-success)"
         >
-          {{ getlabel(row.review_status) }}
+          {{ row.review_status.label }}
         </span>
         <span
-          v-if="row.review_status === 'REJECTED'"
+          v-if="row.review_status.value === 'REJECTED'"
           style="color: var(--el-color-danger)"
         >
-          {{ getlabel(row.review_status) }}
+          {{ row.review_status.label }}
         </span>
         <!--
         <ElButton type="text" @click="openModal(row)">

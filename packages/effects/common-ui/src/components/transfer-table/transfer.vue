@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, reactive, ref, watch, watchEffect } from 'vue';
+import { $t } from '@igourd/locales';
 
 import { ArrowRight, Filter } from '@igourd/icons';
 
@@ -108,10 +109,10 @@ const props = withDefaults(
     layout:"left-right",
     selectMode:'select',
     modelValue: () => [],
-    leftTitle: '可选择',
-    rightTitle: '已选择',
+    leftTitle: $t('transfer.optional'),
+    rightTitle: $t('transfer.selected'),
     pageSize: 10,
-    searchPlaceholder: '输入关键字搜索',
+    searchPlaceholder: $t('transfer.enter-keyword-to-search'),
     excludeSelectedFromLeft: true,
     topFilterFields: () => [],
   },
@@ -190,7 +191,7 @@ function usePager(
       total.value = ttl;
       await nextTick();
     } catch (error: any) {
-      ElMessage.error(error?.message || '加载失败');
+      ElMessage.error(error?.message || $t('transfer.failed-to-load'));
       data.value = [];
       total.value = 0;
     } finally {
@@ -409,7 +410,7 @@ defineExpose({ leftRefresh, rightRefresh });
       >
         <template #append>
           <ElButton :loading="leftLoading" @click="leftRefresh()">
-            {{ $t('common.search') }}
+            {{ $t('transfer.search') }}
           </ElButton>
         </template>
       </ElInput>
@@ -417,7 +418,7 @@ defineExpose({ leftRefresh, rightRefresh });
       <!-- 顶部可选的高级筛选（保留 Popover，仅针对顶部，不影响列内筛选） -->
       <ElPopover placement="bottom-start" trigger="click" width="420">
         <template #reference>
-          <ElButton text :icon="Filter">筛选</ElButton>
+          <ElButton text :icon="Filter">{{ $t('transfer.filter') }}</ElButton>
         </template>
         <div class="space-y-2">
           <ElForm label-width="96px" :model="topFilters">
@@ -426,7 +427,7 @@ defineExpose({ leftRefresh, rightRefresh });
                 <ElInput
                   v-if="f.type === 'input'"
                   v-model="topFilters[f.key]"
-                  :placeholder="f.placeholder || '输入关键字'"
+                  :placeholder="f.placeholder ||  $t('transfer.enter-keyword')"
                   clearable
                 />
                 <ElSelect
@@ -435,7 +436,7 @@ defineExpose({ leftRefresh, rightRefresh });
                   filterable
                   clearable
                   :multiple="f.multiple"
-                  :placeholder="f.placeholder || '请选择'"
+                  :placeholder="f.placeholder || $t('transfer.please-select')"
                   class="w-full"
                 >
                   <ElOption
@@ -454,7 +455,7 @@ defineExpose({ leftRefresh, rightRefresh });
                   :multiple="f.multiple"
                   :remote-method="(q: string) => loadTopRemoteOptions(f, q)"
                   :loading="topRemoteLoading[f.key as string]"
-                  :placeholder="f.placeholder || '搜索选项'"
+                  :placeholder="f.placeholder || $t('transfer.search-options')"
                   class="w-full"
                 >
                   <ElOption
@@ -468,22 +469,22 @@ defineExpose({ leftRefresh, rightRefresh });
             </template>
           </ElForm>
           <div class="flex justify-end gap-2">
-            <ElButton size="small" @click="resetTopFilters">重置</ElButton>
+            <ElButton size="small" @click="resetTopFilters">{{ $t('transfer.reset') }}</ElButton>
             <ElButton
               size="small"
               type="primary"
               @click="leftResetToFirstPageThenRefresh()"
             >
-              应用
+              {{ $t('transfer.apply') }}
             </ElButton>
           </div>
         </div>
       </ElPopover>
 
-      <ElButton text @click="clearAll">重置</ElButton>
+      <ElButton text @click="clearAll">{{ $t('transfer.reset') }}</ElButton>
       <div class="flex-1"></div>
       <div class="font-medium text-blue-600">
-        已选择 {{ valueIds.length }} 项
+        {{ $t('transfer.items-selected',{num:valueIds.length}) }}
       </div>
     </div>
 
@@ -536,7 +537,7 @@ defineExpose({ leftRefresh, rightRefresh });
                       v-if="col.filter?.type === 'input'"
                       v-model="columnFilters[col.prop as string]"
                       size="small"
-                      :placeholder="col.filter?.placeholder || '输入关键字'"
+                      :placeholder="col.filter?.placeholder || $t('transfer.enter-keyword')"
                       clearable
                       @input="leftResetToFirstPageThenRefresh()"
                       @clear="leftResetToFirstPageThenRefresh()"
@@ -602,7 +603,7 @@ defineExpose({ leftRefresh, rightRefresh });
             <template #default="{ row }">
               <slot name="left-row-action" :row="row">
                 <ElButton type="primary" link @click="addRows([row])">
-                  添加
+                  {{}}
                 </ElButton>
               </slot>
             </template>
@@ -659,10 +660,10 @@ defineExpose({ leftRefresh, rightRefresh });
               </template>
             </ElTableColumn>
           </template>
-          <ElTableColumn label="操作" width="100">
+          <ElTableColumn :label=" $t('transfer.opertion')" width="100">
             <template #default="{ row }">
               <ElButton type="danger" link @click="removeRow(row)">
-                移除
+                {{ $t('transfer.remove') }}
               </ElButton>
             </template>
           </ElTableColumn>

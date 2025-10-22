@@ -7,7 +7,7 @@ import { Space } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import ModalTable from '@igourd/plugins/modal-table';
 import { useUserStore } from '@igourd/stores';
-
+import { ArrowLeft, ArrowRight } from '@igourd/icons';
 import {
   createPurchaseOrderApi,
   getPurchaseListApi,
@@ -63,8 +63,8 @@ export function useOrderForm() {
   const { currentLoginUserApp } = useUserStore();
   const vatConfigurationEnums = [
     { label: t('order.not-applicable'), value: 'NOT_APPLICATION' },
-    { label: t('order.VAT_inclusive'), value: 'VAT_INCLUSIVE' },
-    { label: t('order.VAT_exclusive'), value: 'VAT_EXCLUSIVE' },
+    { label: t('order.vat-inclusive'), value: 'VAT_INCLUSIVE' },
+    { label: t('order.vat-exclusive'), value: 'VAT_EXCLUSIVE' },
   ];
 
   // 配置form
@@ -108,7 +108,7 @@ export function useOrderForm() {
                     properties: {
                       vendor_id: {
                         type: 'string',
-                        title: "{{t('purchase.venderName')}}",
+                        title: "{{t('purchase.vender-name')}}",
                         'x-decorator': 'FormItem',
                         'x-component': 'RemoteSelect',
                         'x-component-props': {
@@ -166,7 +166,7 @@ export function useOrderForm() {
                           label_0: {
                             type: 'void',
                             'x-component': 'div',
-                            'x-content': "{{t('purchase.contactName')+' : '}}",
+                            'x-content': "{{t('purchase.contact-name')+' : '}}",
                             'x-component-props': {
                               class: 'text-slate-300 mt-4',
                             },
@@ -182,7 +182,7 @@ export function useOrderForm() {
                           label_1: {
                             type: 'void',
                             'x-component': 'div',
-                            'x-content': "{{t('purchase.phoneNumber')+' : '}}",
+                            'x-content': "{{t('purchase.phone-number')+' : '}}",
                             'x-component-props': {
                               class: 'text-slate-300 mt-4',
                             },
@@ -252,7 +252,7 @@ export function useOrderForm() {
                         'x-validator': [
                           {
                             required: true,
-                            message: "{{t('order.please-selectVat')}}",
+                            message: "{{t('order.please-select-vat')}}",
                           },
                         ],
                         enum: vatConfigurationEnums,
@@ -522,9 +522,11 @@ export function useOrderForm() {
                                       '{{ merchantPaymentMethodOption }}',
                                   },
                                 },
-                                amount: {
+                                //定金比例
+                                amount_rate: {
                                   type: 'string',
-                                  title: "{{t('purchase.order-pay.amount')}}",
+                                  title:
+                                    "{{t('purchase.order-pay.deposit-rate')}}",
                                   'x-decorator': 'FormItem',
                                   'x-component': 'Input',
                                   'x-decorator-props': {
@@ -532,57 +534,43 @@ export function useOrderForm() {
                                     feedbackLayout: 'terse',
                                   },
                                 },
-
-                                col_actions: {
+                                //优惠金额
+                                amount: {
+                                  type: 'string',
+                                  title: "{{t('purchase.order-pay.deposit')}}",
+                                  'x-decorator': 'FormItem',
+                                  'x-component': 'Input',
+                                  'x-decorator-props': {
+                                    size: 'small',
+                                    feedbackLayout: 'terse',
+                                  },
+                                },
+                                is_auto_generate_advance_payment: {
+                                  type: 'number',
+                                  title: '',
+                                  'x-decorator': 'FormItem',
+                                  'x-component': 'Checkbox',
+                                  'x-content':
+                                    "{{t('purchase.order-pay.auto-create-prepaid-order')}}",
+                                },
+                                addonBefore: {
                                   type: 'void',
-                                  'x-component': 'ArrayItems.Item',
+                                  'x-component': 'Tooltip',
                                   'x-component-props': {
-                                    title: "{{t('common.operation')}}",
-                                    width: 100,
-                                    fixed: 'right',
-                                    style: {
-                                      'margin-bottom': '8px',
-                                    },
+                                    effect:"light",
+                                    content: "{{t('purchase.order-pay.auto-create-prepaid-order-msg')}}",
                                   },
                                   properties: {
-                                    addition: {
+                                    content: {
                                       type: 'void',
-                                      title: "{{t('common.add-btn')}}",
-                                      'x-component': 'ArrayItems.Addition',
-                                      'x-reactions': {
-                                        dependencies: [
-                                          'purchase_order_deposit_list',
-                                        ],
-                                        fulfill: {
-                                          state: {
-                                            componentProps: {
-                                              disabled:
-                                                '{{  $deps[0]?.length >= 2 }}',
-                                            },
-                                          },
-                                        },
-                                      },
-                                    },
-                                    remove: {
-                                      type: 'void',
-                                      'x-component': 'ArrayItems.Remove',
-                                      title: "{{ t('common.delete') }}",
-                                      'x-reactions': {
-                                        dependencies: [
-                                          'purchase_order_deposit_list',
-                                        ],
-                                        fulfill: {
-                                          state: {
-                                            componentProps: {
-                                              disabled:
-                                                '{{  $deps[0]?.length === 1 }}',
-                                            },
-                                          },
-                                        },
+                                      'x-component': 'Icon',
+                                      'x-component-props': {
+                                        type: 'ArrowLeft',
                                       },
                                     },
                                   },
                                 },
+
                                 account_ledger_id: {
                                   type: 'string',
                                   'x-hidden': true,
@@ -691,7 +679,7 @@ export function useOrderForm() {
                                 type: 'void',
                                 'x-component': 'div',
                                 'x-content':
-                                  "{{t('purchase.other_tax')+' : '}}",
+                                  "{{t('purchase.other-tax')+' : '}}",
                                 'x-component-props': {
                                   class: 'w-20 text-right',
                                   style: { fontSize: '14px' },
@@ -889,7 +877,8 @@ export function useOrderForm() {
 
   const summary = (list) => {
     const total = list.reduce(
-      (acc: any, item: any) => acc + (item.quantity?item.quantity:0) * item.cost_price,
+      (acc: any, item: any) =>
+        acc + (item.quantity ? item.quantity : 0) * item.cost_price,
       0,
     );
     return {
@@ -915,7 +904,8 @@ export function useOrderForm() {
             });
             detail.purchase_order_item_list =
               detail.purchase_order_item_model_list;
-            detail.purchase_order_deposit_list = detail.purchase_order_deposit_detail_models;
+            detail.purchase_order_deposit_list =
+              detail.purchase_order_deposit_detail_models;
             formAPI.setValues(detail);
           } else {
             // 增加时，保留1条数据
@@ -980,10 +970,9 @@ export function useOrderForm() {
         });
         // 商品数据变化 计算合计
         onFieldValueChange('purchase_order_item_list.*', (field, form) => {
-          const {subtotalAmount,totalAmount} =summary(field.records);
+          const { subtotalAmount, totalAmount } = summary(field.records);
           form.setValuesIn('subtotal_amount', subtotalAmount);
           form.setValuesIn('total_amount', totalAmount);
-
         });
       },
       schema,

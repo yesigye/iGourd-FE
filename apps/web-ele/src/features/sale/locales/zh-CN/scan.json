@@ -2,7 +2,7 @@
   "product-price-or-warehouse-not-same": "同一商品存在价格、仓库不同，无法添加",
   "please-enter-the-customer-name": "请输入客户名称",
   "select-product": "选择商品",
-  "basic-details": "基本细节",
+  "basic-details": "基础数据",
   "remarks": "备注",
   "search": "搜索",
   "barcode-product-code-product-name": "条码/商品编码/商品名称",
@@ -82,5 +82,6 @@
   },
   "search-placeholder": "请输入客户名称/联系电话",
   "search-guider-placeholder": "请输入导购员名称",
-  "on-credit": "赊账"
+  "on-credit": "赊账",
+  "successfully-paid": "支付成功"
 }

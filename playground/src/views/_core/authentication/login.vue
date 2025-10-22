@@ -46,25 +46,25 @@ const formSchema = computed((): IgourdFormSchema[] => {
       //       }
       //     },
       //     options: MOCK_USER_OPTIONS,
-      //     placeholder: $t('authentication.selectAccount'),
+      //     placeholder: $t('authentication.select-account'),
       //   };
       // },
       componentProps: {
         options: MOCK_USER_OPTIONS,
-        placeholder: $t('authentication.selectAccount'),
+        placeholder: $t('authentication.select-account'),
       },
       fieldName: 'selectAccount',
-      label: $t('authentication.selectAccount'),
+      label: $t('authentication.select-account'),
       rules: z
         .string()
-        .min(1, { message: $t('authentication.selectAccount') })
+        .min(1, { message: $t('authentication.select-account') })
         .optional()
         .default('igourd'),
     },
     {
       component: 'IgourdInput',
       componentProps: {
-        placeholder: $t('authentication.usernameTip'),
+        placeholder: $t('authentication.username-tip'),
       },
       dependencies: {
         trigger(values, form) {
@@ -84,7 +84,7 @@ const formSchema = computed((): IgourdFormSchema[] => {
       },
       fieldName: 'username',
       label: $t('authentication.username'),
-      rules: z.string().min(1, { message: $t('authentication.usernameTip') }),
+      rules: z.string().min(1, { message: $t('authentication.username-tip') }),
     },
     {
       component: 'IgourdInputPassword',
@@ -93,13 +93,13 @@ const formSchema = computed((): IgourdFormSchema[] => {
       },
       fieldName: 'password',
       label: $t('authentication.password'),
-      rules: z.string().min(1, { message: $t('authentication.passwordTip') }),
+      rules: z.string().min(1, { message: $t('authentication.password-tip') }),
     },
     {
       component: markRaw(SliderCaptcha),
       fieldName: 'captcha',
       rules: z.boolean().refine((value) => value, {
-        message: $t('authentication.verifyRequiredTip'),
+        message: $t('authentication.verify-required-tip'),
       }),
     },
   ];

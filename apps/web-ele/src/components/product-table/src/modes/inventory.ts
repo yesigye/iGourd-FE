@@ -75,7 +75,7 @@ export const InventoryMode: ModePlugin = {
       {
         name: 'stock_quantity',
         type: 'number',
-        title: '增加库存',
+        title: '{{t("common.purchase.stock-add-quantity")}}',
         'x-component': 'InputNumber',
         'x-decorator': 'FormItem',
         'x-component-props': {

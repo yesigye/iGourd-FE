@@ -19,5 +19,6 @@
     "completed": "Terminé",
     "cancelled": "Annulé"
   },
-  "search-placeholder": "Veuillez saisir un mot-clé"
+  "search-placeholder": "Veuillez saisir un mot-clé",
+  "generate-settlement": "Générer le règlement"
 }

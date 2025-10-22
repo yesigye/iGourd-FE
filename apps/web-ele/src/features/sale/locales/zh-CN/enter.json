@@ -19,5 +19,9 @@
     "completed": "已完成",
     "cancelled": "已取消"
   },
-  "search-placeholder": "请输入关键词"
+  "search-placeholder": "请输入关键词",
+  "generate-settlement": "生成日结",
+  "date": "日期",
+  "success-message": "日结记录生成成功",
+  "tips-message": "请选择结算日期"
 }

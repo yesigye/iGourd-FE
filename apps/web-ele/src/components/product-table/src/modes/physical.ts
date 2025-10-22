@@ -14,7 +14,7 @@ export const PhysicalMode: ModePlugin = {
     if (quantityIndex !== -1) {
       columns[quantityIndex] = {
         ...columns[quantityIndex],
-        title: '盘点数量',
+        title: '{{t("common.purchase.inventory-count")}}',
         name: 'physical_quantity',
       };
     }

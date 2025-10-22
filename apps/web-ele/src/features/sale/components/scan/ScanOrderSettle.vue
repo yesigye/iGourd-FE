@@ -39,6 +39,12 @@ const [Drawer, drawerApi] = useIgourdDrawer({
       initMounted();
     }
   },
+  onClosed() {
+    isModalShow.value = false;
+    emit('close-tkr');
+    emit('handleEmpty');
+    isSettledShow.value = true;
+  },
 });
 const isModalShow = ref(false);
 const scanCashSettlementRef = ref<any>(null);
@@ -70,7 +76,7 @@ function renderQuantUnit() {
   return 'x';
 }
 const { receiptRoles } = useReceiptTemplate({
-  title: 'printTemp.refund',
+  title: 'print-temp.refund',
   printTemplate,
   fieldColumns: [
     { column_option_code: 'refund_total_amount', is_selected: true },
@@ -147,20 +153,7 @@ watch(
 
 <template>
   <div class="coupon-send">
-    <!-- <ElDrawer
-      v-model="isModalShow"
-      :append-to-body="true"
-      :with-header="false"
-      size="65%"
-      :show-close="false"
-      custom-class="coupon-drawer-prevent-send"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-    > -->
     <Drawer>
-      <!-- <div class="close65" @click="handleClose">
-        <i class="iconfont icon-guanbi"></i>
-      </div> -->
       <div class="innerDrawer">
         <div class="innerLeft overflow-y-auto">
           <ReceiptTemplate

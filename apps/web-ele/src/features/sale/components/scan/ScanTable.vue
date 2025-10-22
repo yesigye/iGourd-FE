@@ -15,8 +15,6 @@ import { allColumns } from '@@/sale/components/scan/const/sale.config';
 import { Decimal } from 'decimal.js';
 
 import { getSystemConfigurationDetailApi } from '#/api';
-import { retainDecimal8 } from '#/utils/sale';
-
 // interface
 // props
 const props = defineProps({
@@ -103,7 +101,7 @@ const handleQuantityChangeOriginal = (item: any) => {
     ElMessage.error(t('scan.please-input-quantity'));
   } else {
     const decimalQuantity = new Decimal(item.stock_total_quantity);
-    item.stock_total_quantity = retainDecimal8(decimalQuantity, 8);
+    item.stock_total_quantity = decimalQuantity;
   }
   // 直接发送更新后的商品数据
   emit('update-quantity', item);
@@ -112,6 +110,12 @@ const handleQuantityChangeOriginal = (item: any) => {
 const handleQuantityChange = debounce(handleQuantityChangeOriginal, 500);
 
 const handlePriceChangeOriginal = (val, row) => {
+  // 记录上一次的值 如果修改后的值等于小于0 则赋值为上一次的值
+  const lastPrice = row.custom_price;
+  if (val <= 0) {
+    row.custom_price = lastPrice;
+    return;
+  }
   row.custom_price = val;
   row.is_modify_price = true;
   // 转为数字进行比较
@@ -150,7 +154,8 @@ function increaseEventOriginal(row) {
     emit('update-quantity', row);
     return;
   }
-  row.stock_total_quantity = retainDecimal8(row.stock_total_quantity + 1, 8);
+  // 使用Decimal.js增加数量
+  row.stock_total_quantity = new Decimal(row.stock_total_quantity).add(1);
   emit('update-quantity', row);
 }
 
@@ -163,7 +168,8 @@ function decreaseEventOriginal(row) {
     handleDelete(row.id);
     return;
   }
-  row.stock_total_quantity = retainDecimal8(row.stock_total_quantity - 1, 8);
+  // 使用Decimal.js减少数量
+  row.stock_total_quantity = new Decimal(row.stock_total_quantity).sub(1);
   emit('update-quantity', row);
 }
 
@@ -220,6 +226,7 @@ defineExpose({
         :fixed="item.fixed"
       >
         <template #default="{ column, row }">
+          <!-- 数量 -->
           <template v-if="['stock_total_quantity'].includes(item.prop)">
             <div class="Inum">
               <ElButton class="Inum-input" @click="decreaseEvent(row)">
@@ -241,6 +248,7 @@ defineExpose({
               </ElButton>
             </div>
           </template>
+          <!-- 价格 -->
           <template v-else-if="ableEdit && item.prop === 'selling_price'">
             <ElInput
               v-model="row.custom_price"
@@ -251,6 +259,7 @@ defineExpose({
               @input="(val) => handlePriceChange(val, row)"
             />
           </template>
+          <!-- 其他 -->
           <template v-else-if="item.render">
             <component
               :is="

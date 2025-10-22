@@ -143,7 +143,7 @@ setupIgourdVxeTable({
     vxeUI.renderer.add('ReviewStatus', {
       renderTableDefault(_, params) {
         const { column, row } = params;
-        const cellValue = row[column.field];
+        const cellValue = row[column.field].value;
         if (!cellValue) {
           return h('span', '--');
         }
@@ -169,7 +169,7 @@ setupIgourdVxeTable({
     vxeUI.renderer.add('OpenStatus', {
       renderTableDefault({ props }, params) {
         const { column, row } = params;
-        const cellValue = row[column.field] as string;
+        const cellValue = row[column.field].value as string;
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return h(StatusTemplate, {
@@ -239,7 +239,7 @@ setupIgourdVxeTable({
     vxeUI.renderer.add('Switch', {
       renderTableDefault({ props }, params) {
         const { row, column } = params;
-        const cellValue = row[column.field];
+        const cellValue = row[column.field].value;
         return h(ElSwitch, {
           modelValue: cellValue,
           ...props,

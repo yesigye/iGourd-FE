@@ -114,7 +114,7 @@ function getOnSaleSkus(item: any) {
 
   // 收集所有在售的商品（主商品和子商品）
   function collectOnSaleProducts(product) {
-    if (product.status === 'ON_SALE' && !addedIds.has(product.id)) {
+    if (product?.status?.value === 'ON_SALE' && !addedIds.has(product.id)) {
       onSaleSkus.push(product);
       addedIds.add(product.id);
     }
@@ -124,7 +124,10 @@ function getOnSaleSkus(item: any) {
       product.sub_product_stock_search_models.length > 0
     ) {
       product.sub_product_stock_search_models.forEach((subProduct) => {
-        if (subProduct.status === 'ON_SALE' && !addedIds.has(subProduct.id)) {
+        if (
+          subProduct?.status?.value === 'ON_SALE' &&
+          !addedIds.has(subProduct.id)
+        ) {
           onSaleSkus.push(subProduct);
           addedIds.add(subProduct.id);
         }
@@ -168,7 +171,8 @@ function getOnSaleSkus(item: any) {
         const originalSubs = originalRelationships.get(product.id);
         product.sub_product_stock_search_models = originalSubs.filter(
           (sub) =>
-            sub.status === 'ON_SALE' && onSaleSkus.some((s) => s.id === sub.id),
+            sub?.status?.value === 'ON_SALE' &&
+            onSaleSkus.some((s) => s.id === sub.id),
         );
       } else {
         // 没有原始关系，则包含所有在售SKU（包括自己）
@@ -198,7 +202,7 @@ function handleSelect(item: any) {
   let selectedProduct = null;
 
   // 检查主商品是否可用（在售）
-  if (item.status === 'ON_SALE') {
+  if (item?.status?.value === 'ON_SALE') {
     selectedProduct = item;
   } else {
     // 主商品不可用，选择第一个可用的变体

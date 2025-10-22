@@ -93,12 +93,12 @@ function handleGo(path: string) {
     <slot name="title">
       <Title>
         <slot name="title">
-          {{ title || `${$t('authentication.welcomeBack')} 👋🏻` }}
+          {{ title || `${$t('authentication.welcome-back')} 👋🏻` }}
         </slot>
         <template #desc>
           <span class="text-muted-foreground">
             <slot name="subTitle">
-              {{ subTitle || $t('authentication.loginSubtitle') }}
+              {{ subTitle || $t('authentication.login-subtitle') }}
             </slot>
           </span>
         </template>
@@ -117,7 +117,7 @@ function handleGo(path: string) {
           v-model:checked="rememberMe"
           name="rememberMe"
         >
-          {{ $t('authentication.rememberMe') }}
+          {{ $t('authentication.remember-me') }}
         </IgourdCheckbox>
       </div>
 
@@ -126,7 +126,7 @@ function handleGo(path: string) {
         class="igourd-link text-sm font-normal"
         @click="handleGo(forgetPasswordPath)"
       >
-        {{ $t('authentication.forgetPassword') }}
+        {{ $t('authentication.forget-password') }}
       </span>
     </div>
     <IgourdButton
@@ -151,7 +151,7 @@ function handleGo(path: string) {
         variant="outline"
         @click="handleGo(codeLoginPath)"
       >
-        {{ $t('authentication.mobileLogin') }}
+        {{ $t('authentication.mobile-login') }}
       </IgourdButton>
       <IgourdButton
         v-if="showQrcodeLogin"
@@ -159,7 +159,7 @@ function handleGo(path: string) {
         variant="outline"
         @click="handleGo(qrCodeLoginPath)"
       >
-        {{ $t('authentication.qrcodeLogin') }}
+        {{ $t('authentication.qrcode-login') }}
       </IgourdButton>
     </div>
 
@@ -170,12 +170,12 @@ function handleGo(path: string) {
 
     <slot name="to-register">
       <div v-if="showRegister" class="mt-3 text-center text-sm">
-        {{ $t('authentication.accountTip') }}
+        {{ $t('authentication.account-tip') }}
         <span
           class="igourd-link text-sm font-normal"
           @click="handleGo(registerPath)"
         >
-          {{ $t('authentication.createAccount') }}
+          {{ $t('authentication.create-account') }}
         </span>
       </div>
     </slot>

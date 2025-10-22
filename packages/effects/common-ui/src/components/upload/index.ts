@@ -2,7 +2,7 @@ import type { Field } from '@formily/core';
 
 // UploadFiles.ts — Formily x-component（Element Plus 上传适配，纯 h 渲染）
 import { computed, defineComponent, h, ref, watch } from 'vue';
-
+import { $t } from '@igourd/locales';
 import {
   Download as IconDownload,
   View as IconView,
@@ -177,15 +177,15 @@ export default connect(
           props.allowTypes.length > 0 &&
           !props.allowTypes.includes(rawFile.type)
         ) {
-          ElMessage.warning(`文件类型不允许：${rawFile.type || 'unknown'}`);
+          const msg = $t('common.upload-file-type',{size:rawFile.type || 'unknown'});
+          ElMessage.warning(msg);
           return false;
         }
         if (props.maxSizeMB && rawFile.size > 0) {
           const sizeMB = rawFile.size / 1024 / 1024;
           if (sizeMB > props.maxSizeMB) {
-            ElMessage.warning(
-              `文件过大：${sizeMB.toFixed(2)}MB（上限 ${props.maxSizeMB}MB）`,
-            );
+            const msg = $t('common.upload-file-size-msg',{size:sizeMB.toFixed(2),max:props.maxSizeMB})
+            ElMessage.warning(msg);
             return false;
           }
         }

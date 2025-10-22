@@ -1,0 +1,14 @@
+{
+  "title": "Démonstration",
+  "elementPlus": "Element Plus",
+  "form": "Démonstration de Formulaire",
+  "formily": "Formulaire Configurable",
+  "igourd": {
+    "title": "Projet",
+    "about": "À propos",
+    "document": "Documentation",
+    "antdv": "Version Ant Design Vue",
+    "naive-ui": "Version Naive UI",
+    "element-plus": "Version Element Plus"
+  }
+}

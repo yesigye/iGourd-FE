@@ -1,8 +1,11 @@
 {
+  "add-customized": "Ajouter une personnalisation",
   "name": "Nom",
   "type": "Type",
-  "options-type": "Type d'option",
-  "compulsory": "Est-elle obligatoire",
+  "options-type": "Type d'options",
+  "compulsory": "Obligatoire",
   "creator": "Créateur",
-  "creation-time": "Date de création"
+  "creation-time": "Date de création",
+  "input-box": "Boîte de saisie",
+  "select-box": "Boîte de sélection"
 }

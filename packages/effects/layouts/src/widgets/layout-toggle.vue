@@ -25,7 +25,7 @@ defineOptions({
 const menus = computed((): IgourdDropdownMenuItem[] => [
   {
     icon: PanelLeft,
-    label: $t('authentication.layout.alignLeft'),
+    label: $t('authentication.layout.align-left'),
     value: 'panel-left',
   },
   {
@@ -35,7 +35,7 @@ const menus = computed((): IgourdDropdownMenuItem[] => [
   },
   {
     icon: PanelRight,
-    label: $t('authentication.layout.alignRight'),
+    label: $t('authentication.layout.align-right'),
     value: 'panel-right',
   },
 ]);

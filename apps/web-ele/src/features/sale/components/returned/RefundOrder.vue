@@ -79,7 +79,7 @@ const state = reactive({
 const { currentSymbol, printTemplate } = toRefs(state);
 
 const { receiptRoles, setOrderDetail } = useReceiptTemplate({
-  title: 'printTemp.refund',
+  title: 'print-temp.refund',
   printTemplate,
   fieldColumns: [
     { column_option_code: 'refund_total_amount', is_selected: true },
@@ -522,9 +522,9 @@ const [Drawer, drawerApi] = useIgourdDrawer({
               v-if="!isRefundSuccess"
               class="h-11"
               @click="handleRefundOrder"
-              type="primary"
+              type="danger"
             >
-              <span>{{ t('common.pay') }}</span>
+              <span>{{ t('common.refund') }}</span>
             </ElButton>
           </div>
         </div>

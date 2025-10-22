@@ -1,0 +1,16 @@
+{
+  "optional": "Optional",
+  "selected": "Selected",
+  "enter-keyword-to-search": "Enter keyword to search",
+  "failed-to-load": "Failed to load",
+  "filter": "Filter",
+  "enter-keyword": "Enter keyword",
+  "please-select": "Please select",
+  "search-options": "Search options",
+  "reset": "Reset",
+  "apply": "Apply",
+  "items-selected": "{num} items selected",
+  "add": "Add",
+  "remove": "Remove",
+  "opertion": "Operation"
+}

@@ -90,11 +90,11 @@ defineExpose({
   <div>
     <Title>
       <slot name="title">
-        {{ title || $t('authentication.createAnAccount') }} 🚀
+        {{ title || $t('authentication.create-an-account') }} 🚀
       </slot>
       <template #desc>
         <slot name="subTitle">
-          {{ subTitle || $t('authentication.signUpSubtitle') }}
+          {{ subTitle || $t('authentication.sign-upSubtitle') }}
         </slot>
       </template>
     </Title>
@@ -110,13 +110,13 @@ defineExpose({
       @click="handleSubmit"
     >
       <slot name="submitButtonText">
-        {{ submitButtonText || $t('authentication.signUp') }}
+        {{ submitButtonText || $t('authentication.sign-up') }}
       </slot>
     </IgourdButton>
     <div class="mt-4 text-center text-sm">
-      {{ $t('authentication.alreadyHaveAccount') }}
+      {{ $t('authentication.already-have-account') }}
       <span class="igourd-link text-sm font-normal" @click="goToLogin()">
-        {{ $t('authentication.goToLogin') }}
+        {{ $t('authentication.go-to-login') }}
       </span>
     </div>
   </div>

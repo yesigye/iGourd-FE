@@ -154,6 +154,7 @@ const montageTimezone = (timeItem: any) => {
 
 const submitForm = async () => {
   try {
+
     loading.value = true;
     const valid = await formRef.value?.validate();
     if (!valid) return;
@@ -208,7 +209,7 @@ const businessType = [
 // 添加一个方法，根据 ID 返回翻译后的值
 const getTranslatedValue = (id) => {
   const item = businessType.find((type) => type.id === id);
-  return item ? t(`storeIndustry.${item.value}`) : '';
+  return item ? t(`store-industry.${item.value}`) : '';
 };
 
 const getTimezoneList = async () => {
@@ -277,8 +278,8 @@ onMounted(() => {
             <ElOption
               v-for="item in state.businessTypeList"
               :key="item"
-              :label="$t(`common.businessType_${item}`)"
-              :value="item"
+              :label="item.label"
+              :value="item.value"
             />
           </ElSelect>
         </ElFormItem>

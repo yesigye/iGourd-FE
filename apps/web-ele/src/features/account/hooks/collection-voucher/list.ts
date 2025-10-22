@@ -29,7 +29,7 @@ export function useCollectionVoucher() {
     {
       field: 'customer_name',
       minWidth: 190,
-      title: t('printTemp.printReceipt.receipt_customer_name'),
+      title: t('print-temp.print-receipt.receipt-customer-name'),
       sortable: true,
     },
     {
@@ -53,9 +53,7 @@ export function useCollectionVoucher() {
       title: t('account.order-dir'),
       sortable: true,
       formatter({ cellValue }) {
-        return t(
-          `collection-voucher.receipt_direction.${cellValue.toLocaleLowerCase()}`,
-        );
+        return cellValue.label;
       },
     },
     {
@@ -64,9 +62,7 @@ export function useCollectionVoucher() {
       title: t('account.business-type-str'),
       sortable: true,
       formatter({ cellValue }) {
-        return t(
-          `collection-voucher.business_type.${cellValue.toLocaleLowerCase()}`,
-        );
+       return cellValue.label;
       },
     },
     {
@@ -75,9 +71,7 @@ export function useCollectionVoucher() {
       title: t('account.account-type'),
       sortable: true,
       formatter({ cellValue }) {
-        return t(
-          `collection-voucher.ledger_type_enum.${cellValue.toLocaleLowerCase()}`,
-        );
+        return cellValue.label;
       },
     },
     {
@@ -106,7 +100,7 @@ export function useCollectionVoucher() {
       sortable: true,
       fixed: 'right',
       formatter({ cellValue }) {
-        return t(`common.review-status.${cellValue}`);
+        return t(`common.review-status.${cellValue.value}`);
       },
     },
     {

@@ -24,14 +24,14 @@ export function usePurchaseList() {
     },
     {
       field: 'profile_photo',
-      title: t('purchase.profilePhoto'),
+      title: t('purchase.profile-photo'),
       minWidth: 150,
       sortable: true,
       align: 'left',
     },
     {
       field: 'name',
-      title: t('purchase.vendorName'),
+      title: t('purchase.vendor-name'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -45,7 +45,7 @@ export function usePurchaseList() {
     },
     {
       field: 'contact_telephone',
-      title: t('purchase.contactTelephone'),
+      title: t('purchase.contact-telephone'),
       minWidth: 150,
       sortable: true,
       align: 'left',
@@ -64,7 +64,7 @@ export function usePurchaseList() {
     },
     {
       field: 'create_time',
-      title: t('purchase.createTime'),
+      title: t('purchase.create-time'),
       minWidth: 160,
       align: 'right',
     },

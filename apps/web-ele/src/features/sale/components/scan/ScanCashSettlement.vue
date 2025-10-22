@@ -27,6 +27,7 @@ import {
   ElInput,
   ElInputNumber,
   ElMessage,
+  IgourdIcon,
 } from '@igourd/common-ui';
 import { ArrowDown, Tickets } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
@@ -68,7 +69,8 @@ const emit = defineEmits([
 ]);
 
 const { detail, showDialog } = toRefs(props);
-
+// 是否支付成功
+const isPaySuccess = ref(false);
 const printObj = {
   ids: 'receiptPrintId3',
   popTitle: '页面打印',
@@ -120,9 +122,9 @@ const getPaymentMethods = async () => {
       return {
         ...item,
         field: {
-          data: item.payment_method_mark!,
-          params: item.payment_method_mark!,
-          type: item.payment_method_type!,
+          data: item.payment_method_mark,
+          params: item.payment_method_mark,
+          type: item.payment_method_type.value,
           isActive: false,
         } as MerchantPaymentMethodConfigModelAddPayField,
       };
@@ -131,23 +133,25 @@ const getPaymentMethods = async () => {
     // data 按照payment_method_type分组
     const group = newData.reduce(
       (acc, cur) => {
-        if (!cur.payment_method_type) return acc;
-        if (!acc[cur.payment_method_type]) {
-          acc[cur.payment_method_type] = [];
+        if (!cur.payment_method_type?.value) return acc;
+        if (!acc[cur.payment_method_type?.value]) {
+          acc[cur.payment_method_type?.value] = [];
         }
-        acc[cur.payment_method_type].push(cur);
+        acc[cur.payment_method_type?.value].push(cur);
         return acc;
       },
       {} as Record<string, MerchantPaymentMethodConfigModelAddPayField[]>,
     );
+    console.log(group, 'group');
 
     for (const key in group) {
+      console.log(key, group[key]);
       if (group[key].length > 0) {
         if (group[key][0].field) {
           group[key][0].field.isActive = true;
         }
         formData.value[key] = {
-          activeItemType: group[key][0].payment_method_type,
+          activeItemType: group[key][0].payment_method_type?.value,
           activeItemMark: group[key][0].payment_method_mark,
           activeItemName: group[key][0].payment_method_name,
           activeItemAmount: undefined,
@@ -229,10 +233,9 @@ watch(
           customerBalance.toString();
       }
     }
-
     // 如果是现金，当前现金金额大于应付金额，清空其他金额的值
     if (
-      Decimal(formData.value[PaymentMethodEnum.CASH].activeItemAmount || 0).gte(
+      Decimal(formData.value[PaymentMethodEnum.CASH].activeItemAmount || 0).gt(
         maxBalance,
       )
     ) {
@@ -260,7 +263,10 @@ watch(
         );
       }
     }
-    if (notCashPaymentAmount.lt(maxBalance)) {
+    if (
+      notCashPaymentAmount.lt(maxBalance) &&
+      activeInputKey.value !== PaymentMethodEnum.CASH
+    ) {
       return;
     }
 
@@ -366,11 +372,11 @@ async function handleChangePayMet(
     }
   });
   if (item.id) {
-    formData.value[item.payment_method_type].activeItemType =
+    formData.value[item.payment_method_type?.value].activeItemType =
       item.payment_method_type;
-    formData.value[item.payment_method_type].activeItemMark =
+    formData.value[item.payment_method_type?.value].activeItemMark =
       item.payment_method_mark;
-    formData.value[item.payment_method_type].activeItemName =
+    formData.value[item.payment_method_type?.value].activeItemName =
       item.payment_method_name;
   }
 }
@@ -424,7 +430,7 @@ function getPayMetParent(list: MerchantPaymentMethodConfigModelAddPayField[]) {
   let parent: PaymentMethodEnum | undefined;
   list.forEach((item) => {
     if (item.field.isActive) {
-      parent = item.payment_method_type! as PaymentMethodEnum;
+      parent = item.payment_method_type?.value! as PaymentMethodEnum;
     }
   });
   return parent;
@@ -683,8 +689,10 @@ const handleSettlement = async () => {
     }
 
     await offlinePayApi(params);
-
     ElMessage.success(t('scan.pay.success'));
+    isPaySuccess.value = true;
+    // 支付成功后，重置数据
+    resetSettle();
     settlementData.value = params as never;
     emit('settlement-success', params);
     isPrintEnabled.value = true;
@@ -713,7 +721,7 @@ async function handleSettleAccount() {
           business_type: activeItem.business_type,
           external_transaction_no: activeItem.external_transaction_no,
           payment_method_mark: activeItem.payment_method_mark,
-          payment_method_type: activeItem.payment_method_type,
+          payment_method_type: activeItem.payment_method_type?.value,
           payment_method_name: activeItem.payment_method_name,
           receipt_order_id: activeItem.receipt_order_id,
           remark: activeItem.remark,
@@ -755,9 +763,7 @@ async function handleSettleAccount() {
     const result = await getOrderDetailApi({
       order_no: orderData.value.order_no,
     });
-    // ElMessage.success(result.message);
-    // settlementData.value = params as never
-    // emit('settlement-success', params)
+    isPaySuccess.value = true;
     isPrintEnabled.value = true;
     isSettlementCompleted.value = true;
     emit('handleEmpty');
@@ -782,133 +788,153 @@ defineExpose({
 });
 </script>
 <template>
-  <div class="scan-cash-settlement">
-    <!-- 总金额 -->
-    <div
-      class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
-    >
-      <span class="scan-cash-settlement-header-title">
-        {{ t('scan.accounts-receivable') }}:
-      </span>
+  <section
+    class="scan-cash-settlement m-2.5 mt-0 flex h-full flex-col justify-between gap-2.5"
+  >
+    <div class="bg-card h-full flex-grow" v-if="!isPaySuccess">
+      <!-- 总金额 -->
+      <div
+        class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
+      >
+        <span class="scan-cash-settlement-header-title">
+          {{ t('scan.accounts-receivable') }}:
+        </span>
 
-      <span class="">{{ totalAmount }} {{ currentSymbol }}</span>
-    </div>
-    <!-- 实付金额 -->
-    <div
-      class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
-    >
-      <span class="scan-cash-settlement-header-title">{{ t('scan.amount-tendered') }}:</span>
-
-      <span class="scan-cash-settlement-header-amount">
-        {{ tenderedAmount.toFixed(2) }} {{ currentSymbol }}
-      </span>
-    </div>
-    <!-- 抹零 -->
-    <div
-      class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
-    >
-      <span class="scan-cash-settlement-header-title">{{ t('scan.amount-change') }}:</span>
-      <div class="flex-1">
-        <ElInputNumber
-          ref="wipedAmountInput"
-          v-model="wipedAmount"
-          :controls="false"
-          clearable
-          class="w-full"
-          :precision="2"
-          :step="0.01"
-          :disabled="tenderedAmount >= totalAmount"
-          :max="totalAmount"
-          controls-position="right"
-          @focus="handleWipeFocus"
+        <span class="">{{ totalAmount }} {{ currentSymbol }}</span>
+      </div>
+      <!-- 实付金额 -->
+      <div
+        class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
+      >
+        <span class="scan-cash-settlement-header-title"
+          >{{ t('scan.amount-tendered') }}:</span
         >
-          <template #suffix>
-            <span>{{ currentSymbol }}</span>
-          </template>
-        </ElInputNumber>
+
+        <span class="scan-cash-settlement-header-amount">
+          {{ tenderedAmount.toFixed(2) }} {{ currentSymbol }}
+        </span>
+      </div>
+      <!-- 抹零 -->
+      <div
+        class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
+      >
+        <span class="scan-cash-settlement-header-title"
+          >{{ t('scan.amount-change') }}:</span
+        >
+        <div class="flex-1">
+          <ElInputNumber
+            ref="wipedAmountInput"
+            v-model="wipedAmount"
+            :controls="false"
+            clearable
+            class="w-full"
+            :precision="2"
+            :step="0.01"
+            :disabled="tenderedAmount >= totalAmount"
+            :max="totalAmount"
+            controls-position="right"
+            @focus="handleWipeFocus"
+          >
+            <template #suffix>
+              <span>{{ currentSymbol }}</span>
+            </template>
+          </ElInputNumber>
+        </div>
+      </div>
+      <!-- 支付方式 -->
+      <div class="mb-1 bg-white pb-2.5 pl-5 pr-5 pt-2.5">
+        <ElCheckbox
+          v-model="paymentWay"
+          :true-value="PaymentWay.CREDIT"
+          :false-value="PaymentWay.NORMAL"
+          :disabled="
+            !calculateOrderList.customer_id ||
+            calculateOrderList.customer_id === '0'
+          "
+        >
+          {{ t('scan.on-credit') }}
+        </ElCheckbox>
+        <ul>
+          <li
+            v-for="item in paymentOptions"
+            :key="item"
+            class="bg-primary-light-8 borde mb-2.5 flex items-center rounded-md text-sm"
+          >
+            <!-- 图标 -->
+            <ElDropdown :disabled="item.length <= 1" class="h-full w-1/2">
+              <div class="text-azure w-full pl-3 pr-3">
+                <div class="flex min-w-[60%] items-center gap-2.5">
+                  <ElIcon>
+                    <Tickets />
+                  </ElIcon>
+                  <p class="flex-1">{{ getPayMetName(item) }}</p>
+                  <ElIcon v-if="item.length > 1">
+                    <ArrowDown />
+                  </ElIcon>
+                </div>
+              </div>
+              <template #dropdown>
+                <ElDropdownMenu class="bg-white">
+                  <ElDropdownItem
+                    v-for="payItem in item"
+                    :key="payItem.id"
+                    @click="handleChangePayMet(item, payItem.id)"
+                  >
+                    <div
+                      class="hover:bg-primary-blue flex h-9 min-w-[112px] items-center pl-2 pr-2"
+                    >
+                      {{ payItem.payment_method_name || '' }}
+                    </div>
+                  </ElDropdownItem>
+                </ElDropdownMenu>
+              </template>
+            </ElDropdown>
+            <!-- 支付方式 对应的 输入框 -->
+            <ElInput
+              :ref="
+                (ref) =>
+                  (paymentInput[item[0].payment_method_type?.value!] = ref)
+              "
+              v-model="
+                formData[item[0]?.payment_method_type?.value].activeItemAmount
+              "
+              :disabled="
+                (payMethodDisable.isDisable &&
+                  !payMethodDisable.DoNotDisableItem.includes(
+                    getPayMetParent(item),
+                  )) ||
+                (getPayMetParent(item) === PaymentMethodEnum.BALANCE &&
+                  payMethodDisable.balanceDisable)
+              "
+              clearable
+              class="w-1/2"
+              placeholder="0"
+              @focus="
+                () => (activeInputKey = item[0].payment_method_type?.value)
+              "
+            />
+          </li>
+        </ul>
+      </div>
+      <!-- 找零 -->
+      <div
+        class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
+      >
+        <span class="text-status-partial">{{ t('scan.change') }}:</span>
+        <span class="text-status-terminated"
+          >{{ changeAmount }} {{ currentSymbol }}</span
+        >
       </div>
     </div>
-    <!-- 支付方式 -->
-    <div class="mb-1 bg-white pb-2.5 pl-5 pr-5 pt-2.5">
-      <ElCheckbox
-        v-model="paymentWay"
-        :true-value="PaymentWay.CREDIT"
-        :false-value="PaymentWay.NORMAL"
-        :disabled="
-          !calculateOrderList.customer_id ||
-          calculateOrderList.customer_id === '0'
-        "
-      >
-        {{ t('scan.on-credit') }}
-      </ElCheckbox>
-      <ul>
-        <li
-          v-for="item in paymentOptions"
-          :key="item"
-          class="bg-primary-light-8 borde mb-2.5 flex items-center rounded-md text-sm"
-        >
-          <!-- 图标 -->
-          <ElDropdown :disabled="item.length <= 1" class="h-full w-1/2">
-            <div class="text-azure w-full pl-3 pr-3">
-              <div class="flex min-w-[60%] items-center gap-2.5">
-                <ElIcon>
-                  <Tickets />
-                </ElIcon>
-                <p class="flex-1">{{ getPayMetName(item) }}</p>
-                <ElIcon v-if="item.length > 1">
-                  <ArrowDown />
-                </ElIcon>
-              </div>
-            </div>
-            <template #dropdown>
-              <ElDropdownMenu class="bg-white">
-                <ElDropdownItem
-                  v-for="payItem in item"
-                  :key="payItem.id"
-                  @click="handleChangePayMet(item, payItem.id)"
-                >
-                  <div
-                    class="hover:bg-primary-blue flex h-9 min-w-[112px] items-center pl-2 pr-2"
-                  >
-                    {{ payItem.payment_method_name || '' }}
-                  </div>
-                </ElDropdownItem>
-              </ElDropdownMenu>
-            </template>
-          </ElDropdown>
-          <!-- 支付方式 对应的 输入框 -->
-          <ElInput
-            :ref="(ref) => (paymentInput[item[0].payment_method_type!] = ref)"
-            v-model="
-              formData[item[0].payment_method_type as keyof typeof formData]
-                .activeItemAmount
-            "
-            :disabled="
-              (payMethodDisable.isDisable &&
-                !payMethodDisable.DoNotDisableItem.includes(
-                  getPayMetParent(item),
-                )) ||
-              (getPayMetParent(item) === PaymentMethodEnum.BALANCE &&
-                payMethodDisable.balanceDisable)
-            "
-            clearable
-            class="w-1/2"
-            placeholder="0"
-            @focus="() => (activeInputKey = item[0].payment_method_type)"
-          />
-        </li>
-      </ul>
+    <div class="h-full flex-grow" v-else>
+      <div class="bg-card flex h-full flex-col items-center justify-center">
+        <IgourdIcon class="text-success text-[56px]" icon="ooui:success" />
+        <p class="mt-2.5 text-base">{{ t('scan.successfully-paid') }}</p>
+      </div>
     </div>
-    <!-- 找零 -->
+    <!-- 操作区 -->
     <div
-      class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
-    >
-      <span class="text-status-partial">{{ t('scan.change') }}:</span>
-      <span class="text-status-terminated">{{ changeAmount }} {{ currentSymbol }}</span>
-    </div>
-
-    <div
-      class="scan-cash-settlement-button absolute bottom-0 flex w-full justify-end bg-white pb-2.5 pr-5 pt-2.5"
+      class="scan-cash-settlement-button flex w-full flex-shrink-0 justify-end bg-white pb-2.5 pr-5 pt-2.5"
     >
       <ElButton @click="handlePrint" type="default">
         {{ t('scan.print') }}
@@ -924,7 +950,7 @@ defineExpose({
       <ElButton
         v-else
         type="danger"
-        :disabled="isSettlementDisabled"
+        :disabled="isSettlementDisabled || isPaySuccess"
         :class="{ 'is-disabled': isSettlementDisabled }"
         @click="handleSettlement"
       >
@@ -933,17 +959,13 @@ defineExpose({
         </span>
       </ElButton>
     </div>
-  </div>
+  </section>
 </template>
 
 <style lang="scss" scoped>
 @use 'sass:map';
 
 .scan-cash-settlement {
-  position: relative;
-  height: 96%;
-  margin: 20px 16px 10px;
-
   &-button {
     &-print,
     &-open {
