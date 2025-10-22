@@ -110,6 +110,12 @@ const handleQuantityChangeOriginal = (item: any) => {
 const handleQuantityChange = debounce(handleQuantityChangeOriginal, 500);
 
 const handlePriceChangeOriginal = (val, row) => {
+  // 记录上一次的值 如果修改后的值等于小于0 则赋值为上一次的值
+  const lastPrice = row.custom_price;
+  if (val <= 0) {
+    row.custom_price = lastPrice;
+    return;
+  }
   row.custom_price = val;
   row.is_modify_price = true;
   // 转为数字进行比较
