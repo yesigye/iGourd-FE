@@ -277,8 +277,8 @@ onMounted(() => {
             <ElOption
               v-for="item in state.businessTypeList"
               :key="item"
-              :label="$t(`common.businessType_${item}`)"
-              :value="item"
+              :label="item.label"
+              :value="item.value"
             />
           </ElSelect>
         </ElFormItem>
