@@ -18,7 +18,7 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
     <Grid>
       <template #table-actions>
         <ElButton type="primary" @click="handleEdit()">
-          {{ t('purchase.addPurchase') }}
+          {{ t('purchase.add-purchase') }}
         </ElButton>
         <ElButton
           type="danger"

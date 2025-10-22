@@ -68,13 +68,13 @@ export function usePurchaseReceipt() {
       field: 'create_time',
       width: 200,
       align: 'left',
-      title: t('purchase.creationTime'),
+      title: t('purchase.creation-time'),
     },
     {
       field: 'review_status',
       width: 150,
       align: 'center',
-      title: t('purchase.reviewStatus'),
+      title: t('purchase.review-status'),
       cellRender: {
         name: 'ReviewStatus',
       },

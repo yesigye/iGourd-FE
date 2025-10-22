@@ -1,13 +1,13 @@
 {
-  "billNo": "采购单号",
-  "supplierName": "供应商名称",
-  "supplierCode": "供应商编码",
-  "totalAmount": "总金额",
+  "bill-no": "采购单号",
+  "supplier-name": "供应商名称",
+  "supplier-code": "供应商编码",
+  "total-amount": "总金额",
   "status": "状态",
-  "addBill": "添加采购单",
-  "editBill": "编辑采购单",
-  "billDetail": "采购单详情",
-  "statusOptions": {
+  "add-bill": "添加采购单",
+  "edit-bill": "编辑采购单",
+  "bill-detail": "采购单详情",
+  "status-options": {
     "draft": "草稿",
     "pending": "待审核",
     "approved": "已审核",

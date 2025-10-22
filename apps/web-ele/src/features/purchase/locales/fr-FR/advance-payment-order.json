@@ -1,0 +1,17 @@
+{
+  "order-no": "Numéro de commande",
+  "vendor-name": "Nom du client",
+  "order-date": "Date de commande",
+  "collected-amt": "Montant perçu",
+  "order-dir": "Sens de la commande",
+  "business-type": "Type d'activité",
+  "account-type": "Type de compte",
+  "data-source": "Source des données",
+  "service-fee": "Frais de service",
+  "remarks": "Remarques",
+  "payment-information": "Informations de paiement",
+  "payment-method": "Méthode de paiement",
+  "payment-account": "Compte de paiement",
+  "payment-amount": "Montant du paiement",
+  "review": "Vérifier"
+}

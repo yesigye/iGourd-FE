@@ -58,14 +58,14 @@ export function useReturnForm() {
   const { currentLoginUserApp } = useUserStore();
   const vatConfigurationEnums = [
     { label: t('order.not-applicable'), value: 'NOT_APPLICATION' },
-    { label: t('order.VAT_inclusive'), value: 'VAT_INCLUSIVE' },
-    { label: t('order.VAT_exclusive'), value: 'VAT_EXCLUSIVE' },
+    { label: t('order.vat-inclusive'), value: 'VAT_INCLUSIVE' },
+    { label: t('order.vat-exclusive'), value: 'VAT_EXCLUSIVE' },
   ];
   const returnReasonList = [
-    { label: t('purchase.productDamage'), value: 'Product Damage' },
-    { label: t('purchase.qualityIssue'), value: 'Quality Issue' },
+    { label: t('purchase.product-damage'), value: 'Product Damage' },
+    { label: t('purchase.quality-issue'), value: 'Quality Issue' },
     {
-      label: t('purchase.incorrectProductSent'),
+      label: t('purchase.incorrect-product-sent'),
       value: 'Incorrect Product Sent',
     },
     { label: t('purchase.others'), value: 'Others' },
@@ -174,7 +174,7 @@ export function useReturnForm() {
                     properties: {
                       vendor_id: {
                         type: 'string',
-                        title: "{{t('purchase.venderName')}}",
+                        title: "{{t('purchase.vender-name')}}",
                         'x-decorator': 'FormItem',
                         'x-component': 'RemoteSelect',
                         'x-component-props': {
@@ -289,7 +289,7 @@ export function useReturnForm() {
                       },
                       returned_reason: {
                         type: 'string',
-                        title: "{{t('purchase.returnedReason')}}",
+                        title: "{{t('purchase.returned-reason')}}",
                         'x-decorator': 'FormItem',
                         'x-component': 'Select',
                         'x-decorator-props': {
@@ -299,7 +299,7 @@ export function useReturnForm() {
                         'x-validator': [
                           {
                             required: true,
-                            message: "{{t('order.please-selectVat')}}",
+                            message: "{{t('order.please-select-vat')}}",
                           },
                         ],
                         enum: returnReasonList,
@@ -317,7 +317,7 @@ export function useReturnForm() {
                         'x-validator': [
                           {
                             required: true,
-                            message: "{{t('order.please-selectVat')}}",
+                            message: "{{t('order.please-select-vat')}}",
                           },
                         ],
                         enum: vatConfigurationEnums,
@@ -661,7 +661,7 @@ export function useReturnForm() {
                                 type: 'void',
                                 'x-component': 'div',
                                 'x-content':
-                                  "{{t('purchase.other_tax')+' : '}}",
+                                  "{{t('purchase.other-tax')+' : '}}",
                                 'x-component-props': {
                                   class: 'w-20 text-right',
                                   style: { fontSize: '14px' },

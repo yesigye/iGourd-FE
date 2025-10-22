@@ -63,8 +63,8 @@ export function useOrderForm() {
   const { currentLoginUserApp } = useUserStore();
   const vatConfigurationEnums = [
     { label: t('order.not-applicable'), value: 'NOT_APPLICATION' },
-    { label: t('order.VAT_inclusive'), value: 'VAT_INCLUSIVE' },
-    { label: t('order.VAT_exclusive'), value: 'VAT_EXCLUSIVE' },
+    { label: t('order.vat-inclusive'), value: 'VAT_INCLUSIVE' },
+    { label: t('order.vat-exclusive'), value: 'VAT_EXCLUSIVE' },
   ];
 
   // 配置form
@@ -108,7 +108,7 @@ export function useOrderForm() {
                     properties: {
                       vendor_id: {
                         type: 'string',
-                        title: "{{t('purchase.venderName')}}",
+                        title: "{{t('purchase.vender-name')}}",
                         'x-decorator': 'FormItem',
                         'x-component': 'RemoteSelect',
                         'x-component-props': {
@@ -166,7 +166,7 @@ export function useOrderForm() {
                           label_0: {
                             type: 'void',
                             'x-component': 'div',
-                            'x-content': "{{t('purchase.contactName')+' : '}}",
+                            'x-content': "{{t('purchase.contact-name')+' : '}}",
                             'x-component-props': {
                               class: 'text-slate-300 mt-4',
                             },
@@ -182,7 +182,7 @@ export function useOrderForm() {
                           label_1: {
                             type: 'void',
                             'x-component': 'div',
-                            'x-content': "{{t('purchase.phoneNumber')+' : '}}",
+                            'x-content': "{{t('purchase.phone-number')+' : '}}",
                             'x-component-props': {
                               class: 'text-slate-300 mt-4',
                             },
@@ -252,7 +252,7 @@ export function useOrderForm() {
                         'x-validator': [
                           {
                             required: true,
-                            message: "{{t('order.please-selectVat')}}",
+                            message: "{{t('order.please-select-vat')}}",
                           },
                         ],
                         enum: vatConfigurationEnums,
@@ -691,7 +691,7 @@ export function useOrderForm() {
                                 type: 'void',
                                 'x-component': 'div',
                                 'x-content':
-                                  "{{t('purchase.other_tax')+' : '}}",
+                                  "{{t('purchase.other-tax')+' : '}}",
                                 'x-component-props': {
                                   class: 'w-20 text-right',
                                   style: { fontSize: '14px' },

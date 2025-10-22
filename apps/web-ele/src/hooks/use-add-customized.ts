@@ -189,7 +189,7 @@ export function useAddCustomizedForm() {
   };
   return useDrawerForm({
     drawerOptions: {
-      title: t('add-customized.add-customized'),
+      title: t('customized.add-customized'),
       appendToMain: true,
       class: 'w-full',
     },
@@ -197,8 +197,8 @@ export function useAddCustomizedForm() {
       schema,
       scope: {
         featureTypes: [
-          { label: t('add-customized.input-box'), value: 'INPUT' },
-          { label: t('add-customized.select-box'), value: 'SELECT' },
+          { label: t('customized.input-box'), value: 'INPUT' },
+          { label: t('customized.select-box'), value: 'SELECT' },
         ],
 
         // 选择类型（用户创建 / 固定值）
