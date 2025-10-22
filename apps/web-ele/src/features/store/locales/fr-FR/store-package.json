@@ -1,0 +1,15 @@
+{
+  "purchase-btn": "Acheter",
+  "month-amount-unit": "Mois",
+  "payable-title": "Montant à Payer",
+  "method-title": "Veuillez sélectionner le mode de paiement",
+  "method-offline": "Paiement hors ligne",
+  "place-button": "Passer la commande",
+  "payable-amount": "Montant",
+  "payable-discount": "Remise",
+  "payable-fee": "Frais d'orientation initiaux",
+  "payable-origin": "Déduction de l'ancien forfait",
+  "total": "Total",
+  "payment-method-cash": "Paiement en espèces",
+  "payment-method-offline-bank-transfer": "Virement bancaire hors ligne"
+}

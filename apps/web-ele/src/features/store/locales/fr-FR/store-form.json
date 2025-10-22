@@ -1,0 +1,19 @@
+{
+  "business-type": { "label": "Type d'Activité", "placeholder": "Sélectionner le type d'activité" },
+  "full-name": { "label": "Nom du Magasin", "placeholder": "Saisir le nom du magasin" },
+  "short-name": { "label": "Nom Abrégé du Magasin", "placeholder": "Saisir le nom abrégé du magasin" },
+  "industry-code": { "label": "Secteur du Magasin", "placeholder": "Sélectionner le secteur du magasin" },
+  "time-zone-id": { "label": "Fuseau Horaire", "placeholder": "Sélectionner le fuseau horaire" },
+  "country-id": { "label": "Pays", "placeholder": "Sélectionner le pays" },
+  "actual-address": { "label": "Adresse", "placeholder": "Saisir l'adresse" },
+  "basic-currency-code": { "label": "Devise de Base", "placeholder": "Sélectionner la devise de base" },
+  "major-country-language": {
+    "label": "Paramètres de Langue",
+    "placeholder": "Sélectionner la langue principale"
+  },
+  "minor-country-language": {
+    "label": "Paramètres de Langue",
+    "placeholder": "Sélectionner la langue secondaire"
+  },
+  "merchant-existed": "Le nom du magasin existe déjà"
+}

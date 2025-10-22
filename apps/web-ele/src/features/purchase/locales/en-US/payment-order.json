@@ -1,0 +1,17 @@
+{
+  "order-no": "Order Number",
+  "vendor-name": "Customer Name",
+  "order-date": "Order Date",
+  "collected-amt": "Amount Collected",
+  "order-dir": "Order Direction",
+  "business-type": "Business Type",
+  "account-type": "Account Type",
+  "data-source": "Data Source",
+  "service-fee": "Service Fee",
+  "remarks": "Remarks",
+  "payment-information": "Payment Information",
+  "payment-method": "Payment Method",
+  "payment-account": "Payment Account",
+  "payment-amount": "Payment Amount",
+  "review": "Review"
+}

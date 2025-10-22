@@ -9,44 +9,44 @@ import { formatNumber } from '#/utils';
 import * as storePaymentApi from '../../apis/payment';
 
 const PAYMENT_METHOD = [
-  { name: 'storePaymentList.payment_method_NO_PAYMENT', value: 'NO_PAYMENT' },
-  { name: 'storePaymentList.payment_method_CASH', value: 'CASH' },
+  { name: 'store-payment-list.payment-method-no-payment', value: 'NO_PAYMENT' },
+  { name: 'store-payment-list.payment-method-cash', value: 'CASH' },
   {
-    name: 'storePaymentList.payment_method_OFFLINE_WECHAT',
+    name: 'store-payment-list.payment-method-offline-wechat',
     value: 'OFFLINE_WECHAT',
   },
   {
-    name: 'storePaymentList.payment_method_OFFLINE_ALIPAY',
+    name: 'store-payment-list.payment-method-offline-alipay',
     value: 'OFFLINE_ALIPAY',
   },
   {
-    name: 'storePaymentList.payment_method_ONLINE_WECHAT',
+    name: 'store-payment-list.payment-method-online-wechat',
     value: 'ONLINE_WECHAT',
   },
   {
-    name: 'storePaymentList.payment_method_ONLINE_ALIPAY',
+    name: 'store-payment-list.payment-method-online-alipay',
     value: 'ONLINE_ALIPAY',
   },
   {
-    name: 'storePaymentList.payment_method_ONLINE_BANKING',
+    name: 'store-payment-list.payment-method-online-banking',
     value: 'ONLINE_BANKING',
   },
   {
-    name: 'storePaymentList.payment_method_OFFLINE_BANK_TRANSFER',
+    name: 'store-payment-list.payment-method-offline-bank-transfer',
     value: 'OFFLINE_BANK_TRANSFER',
   },
 ];
 const TYPE_CONFIG = [
-  { name: 'storePaymentList.type_INNER_TRADE', value: 'INNER_TRADE' },
+  { name: 'store-payment-list.type-inner-trade', value: 'INNER_TRADE' },
   {
-    name: 'storePaymentList.type_MERCHANT_PACKAGE_BUY',
+    name: 'store-payment-list.type-merchant-package-buy',
     value: 'MERCHANT_PACKAGE_BUY',
   },
   {
-    name: 'storePaymentList.type_MERCHANT_GOODS_BUY',
+    name: 'store-payment-list.type-merchant-goods-buy',
     value: 'MERCHANT_GOODS_BUY',
   },
-  { name: 'storePaymentList.type_OTHER', value: 'OTHER' },
+  { name: 'store-payment-list.type-other', value: 'OTHER' },
 ];
 export function useStorePayment() {
   const { t } = useI18n();
@@ -60,13 +60,13 @@ export function useStorePayment() {
       field: 'merchant_order_no',
       minWidth: 206,
       fixed: 'left',
-      title: t('storePaymentList.merchant_order_no'),
+      title: t('store-payment-list.merchant-order-no'),
     },
     {
       field: 'storename',
       width: 150,
       minWidth: 235,
-      title: t('storePaymentList.storename'),
+      title: t('store-payment-list.storename'),
       formatter({ row }) {
         return row.merchant_model.full_name;
       },
@@ -75,7 +75,7 @@ export function useStorePayment() {
       field: 'package_name',
       width: 120,
       minWidth: 235,
-      title: t('storePaymentList.package_name'),
+      title: t('store-payment-list.package-name'),
       formatter({ row }) {
         return row.merchant_package_model?.package_name;
       },
@@ -83,12 +83,12 @@ export function useStorePayment() {
     {
       field: 'total_day',
       minWidth: 150,
-      title: t('storePaymentList.total_day'),
+      title: t('store-payment-list.total-day'),
     },
     {
       field: 'discount_amount',
       minWidth: 150,
-      title: t('storePaymentList.discount_amount'),
+      title: t('store-payment-list.discount-amount'),
       formatter({ cellValue }) {
         return `${currencySymbol} ${formatNumber(cellValue)}`;
       },
@@ -96,7 +96,7 @@ export function useStorePayment() {
     {
       field: 'total_amount',
       minWidth: 150,
-      title: t('storePaymentList.total_amount'),
+      title: t('store-payment-list.total-amount'),
       formatter({ cellValue }) {
         return `${currencySymbol} ${formatNumber(cellValue)}`;
       },
@@ -104,7 +104,7 @@ export function useStorePayment() {
     {
       field: 'type',
       minWidth: 240,
-      title: t('storePaymentList.type'),
+      title: t('store-payment-list.type'),
       formatter({ cellValue }) {
         const key = TYPE_CONFIG.find((i) => i.value === cellValue)?.name;
         if (key) {
@@ -116,7 +116,7 @@ export function useStorePayment() {
     {
       field: 'payment_method',
       minWidth: 220,
-      title: t('storePaymentList.payment_method'),
+      title: t('store-payment-list.payment-method'),
       formatter({ cellValue }) {
         const key = PAYMENT_METHOD.find((i) => i.value === cellValue)?.name;
         if (key) {
@@ -128,13 +128,13 @@ export function useStorePayment() {
     {
       field: 'status',
       minWidth: 220,
-      title: t('storePaymentList.status'),
+      title: t('store-payment-list.status'),
       slots: {
         default: 'status',
       },
     },
     {
-      title: t('storePaymentList.create_time'),
+      title: t('store-payment-list.create-time'),
       field: 'create_time',
       minWidth: 200,
     },

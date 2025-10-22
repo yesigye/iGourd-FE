@@ -73,6 +73,7 @@ interface Props extends VxeGridProps {
 
 const props = withDefaults(defineProps<Props>(), {});
 
+const emit = defineEmits(['update:tabsActiveKey']);
 // const FORM_SLOT_PREFIX = 'form-';
 
 const TOOLBAR_ACTIONS = 'toolbar-actions';
@@ -103,7 +104,6 @@ const {
 const showTableTabs = computed(() => {
   return !!unref(tabs);
 });
-const emit = defineEmits(['update:tabsActiveKey']);
 const tabActiveKey = ref();
 const tabsValue = computed({
   get() {
@@ -147,7 +147,7 @@ const { Form, formAPI: formApi } = useTableSearchForm({
   useI18n,
   schema: formOptions.value?.schema || {},
   submitOnEnter: true,
-  ...(formOptions.value || {}),
+  ...formOptions.value,
 });
 
 async function handleTabsChange(name: any) {
@@ -373,7 +373,7 @@ async function init() {
 
 async function handleCommand(command: string) {
   if (command === 'print') {
-    await gridRef.value?.print(options.value.printConfig);
+    await gridRef.value?.openPrint();
   }
   if (command === 'export' && gridRef.value?.exportConfig) {
     await gridRef.value?.openExport(gridRef.value?.exportConfig);
@@ -421,6 +421,9 @@ const openMoreActions = computed(() => {
       v-bind="options"
       v-on="events"
     >
+      <template #printDefault>
+        <div>ddd</div>
+      </template>
       <!-- 左侧操作区域或者title -->
       <template v-if="showToolbar" #toolbar-actions="slotProps">
         <slot v-if="showTableTitle" name="table-title">

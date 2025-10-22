@@ -1,0 +1,76 @@
+{
+  "form": {
+    "name": "Price Strategy Name",
+    "change-type": "Change Type",
+    "change-mode": "Change Mode",
+    "change-value": "Change Value",
+    "rounding-off": "Rounding Method",
+    "rounding-amount": "Rounding Value",
+    "relation-type": "Applicable Scope",
+    "product-groups": "Product Groups",
+    "product-labels": "Product Labels",
+    "products": "Products",
+    "effective-time": "Effective Time",
+    "expiration-time": "Expiration Time",
+    "remark": "Remarks",
+    "status": "Enable Status",
+    "add": "Add"
+  },
+  "placeholder": {
+    "name": "Enter price strategy name",
+    "change-type": "Select price strategy type",
+    "change-mode": "Please select change mode",
+    "change-value": "Please enter change value",
+    "rounding-off": "Please select rounding method",
+    "rounding-amount": "Please enter rounding amount",
+    "product-group": "Search product groups remotely",
+    "product-label": "Search product labels remotely",
+    "product": "Search products remotely",
+    "effective-time": "Please select effective time",
+    "expiration-time": "Please select expiration time",
+    "remark": "Please enter remarks"
+  },
+  "enum": {
+    "change-type": { "decrease": "Decrease", "increase": "Increase" },
+    "change-mode": { "amount": "Amount", "percentage": "Percentage" },
+    "rounding": {
+      "high": "Round Up",
+      "middle": "Round Half",
+      "low": "Round Down"
+    },
+    "relation": {
+      "all": "All Products",
+      "group": "Product Group",
+      "label": "Product Label",
+      "product": "Product"
+    }
+  },
+  "table": {
+    "columns": {
+      "group": "Product Group",
+      "label": "Product Label",
+      "product": "Product",
+      "ops": "Operations"
+    }
+  },
+  "validate": {
+    "name": { "required": "Please enter name" },
+    "change-type": { "required": "Please select change type" },
+    "change-mode": { "required": "Please select change mode" },
+    "change-value": { "required": "Please enter change value" },
+    "effective-time": { "required": "Please enter effective time" },
+    "expiration-time": {
+      "required": "Please enter expiration time",
+      "gte-effective": "Expiration time must be greater than or equal to effective time"
+    }
+  },
+  "toast": {
+    "create-ok": "Price strategy created successfully",
+    "update-ok": "Price strategy updated successfully",
+    "create-fail": "Failed to add price strategy",
+    "duplicate-group": "This product group has been selected, please choose another product group",
+    "duplicate-label": "This product label has been selected, please choose another product label",
+    "duplicate-product": "This product has been selected, please choose another product"
+  }
+}
+

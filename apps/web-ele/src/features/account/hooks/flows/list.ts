@@ -51,6 +51,7 @@ export function useFlows() {
   const baseColumns: VxeGridPropTypes.Column<AccountFlowsInfo>[] = [
     {
       type: 'checkbox',
+      field: 'checkbox',
       minWidth: 80,
       fixed: 'left',
     },
@@ -95,6 +96,7 @@ export function useFlows() {
     },
     {
       minWidth: 200,
+      field: 'target_account_name_col',
       title: '支付信息',
       children: [
         {
@@ -113,9 +115,9 @@ export function useFlows() {
       field: 'source_type',
       minWidth: 150,
       title: t('account.source'),
-      formatter({ cellValue }: { cellValue: keyof typeof sourceTypeMap }) {
-        return t(sourceTypeMap[cellValue].label);
-      },
+      // formatter({ cellValue }: { cellValue: keyof typeof sourceTypeMap }) {
+      //   return t(sourceTypeMap[cellValue].label);
+      // },
     },
     {
       field: 'trading_no',
@@ -169,6 +171,7 @@ export function useFlows() {
         print: true,
         export: true,
       },
+      printConfig: {},
       searchFormSchema: {
         keywords: {
           type: 'string',

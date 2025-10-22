@@ -1,17 +1,17 @@
 {
-  "purchaseNo": "Purchase No.",
-  "supplierName": "Supplier Name",
-  "productName": "Product Name",
-  "productCode": "Product Code",
+  "purchase-no": "Purchase Order Number",
+  "supplier-name": "Supplier Name",
+  "product-name": "Product Name",
+  "product-code": "Product Code",
   "quantity": "Quantity",
-  "unitPrice": "Unit Price",
-  "totalAmount": "Total Amount",
-  "purchaseDate": "Purchase Date",
+  "unit-price": "Unit Price",
+  "total-amount": "Total Amount",
+  "purchase-date": "Purchase Date",
   "status": "Status",
-  "addPurchase": "Add Purchase",
-  "editPurchase": "Edit Purchase",
-  "purchaseDetail": "Purchase Detail",
-  "statusOptions": {
+  "add-purchase": "Add Purchase",
+  "edit-purchase": "Edit Purchase",
+  "purchase-detail": "Purchase Details",
+  "status-options": {
     "pending": "Pending",
     "completed": "Completed",
     "cancelled": "Cancelled"
@@ -28,15 +28,17 @@
   "email": "Email",
   "zip-code": "Zip Code",
   "address": "Address",
+  "customized-information": "Customized Information",
   "financial-information": "Financial Information",
   "bank-name": "Bank Name",
   "currency": "Currency",
   "bank-account-name": "Bank Account Name",
   "opening-balance": "Opening Balance",
   "bank-account-number": "Bank Account Number",
-  "tin-number": "Taxpayer Identification Number",
+  "tin-number": "Tax Identification Number",
   "bank-swift-code": "Bank SWIFT Code",
-  "tax-number": "Tax Number",
+  "tax-number": "VAT Number",
   "bank-address": "Bank Address",
   "remarks": "Remarks"
 }
+

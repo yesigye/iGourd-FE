@@ -1,0 +1,12 @@
+{
+  "pay-amount": "Montant à Payer",
+  "accpet-bank": "Banque du Bénéficiaire",
+  "accpet-bank-sub": "Veuillez virer le montant exact, sinon l'achat échouera",
+  "accpet-accmout": "Compte",
+  "copy-account": "Copier le Compte",
+  "swift-code": "Code SWIFT",
+  "recipient": "Nom de l'Entreprise Bénéficiaire",
+  "paid-already": "Déjà Payé",
+  "copy-success": "Copie Réussie",
+  "frame-message": "Vous avez choisi le paiement hors ligne. Si le paiement est effectué, veuillez cliquer sur « Déjà Payé »"
+}

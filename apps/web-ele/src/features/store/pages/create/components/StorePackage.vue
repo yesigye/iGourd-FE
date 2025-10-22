@@ -66,19 +66,19 @@ const payableList = computed(() => {
   const syb = storeParams?.value?.currencySymbol;
   return [
     {
-      name: t('storePackage.payableAmount'),
+      name: t('store-package.payable-amount'),
       value: `${syb}${item.origin_total_amount || 0}`,
     },
     {
-      name: t('storePackage.payableDiscount'),
+      name: t('store-package.payable-discount'),
       value: `-${syb}${item.discount_amount || 0}`,
     },
     {
-      name: t('storePackage.payableFee'),
+      name: t('store-package.payable-fee'),
       value: `${syb}${first_install_cost_amount || 0}`,
     },
     {
-      name: t('storePackage.payableOrigin'),
+      name: t('store-package.payable-origin'),
       value: `${syb}${total_surplus_amount || 0}`,
     },
   ];
@@ -161,7 +161,7 @@ const sendBasicsMerchantPackagePlaceOrder = async (params) => {
               <span class="SPack-discount-li__title">{{ item.name }}</span>
               <span class="SPack-discount-li__price">
                 {{ item.month_amount }} {{ storeParams?.currencySymbol }}/{{
-                  $t('storePackage.monthAmountUnit')
+                  $t('store-package.month-amount-unit')
                 }}
               </span>
               <span
@@ -176,7 +176,7 @@ const sendBasicsMerchantPackagePlaceOrder = async (params) => {
         </div>
         <div class="SPack-payable SPack-card">
           <div class="SPack-payable-title">
-            {{ $t('storePackage.payableTitle') }}:
+            {{ $t('store-package.payable-title') }}:
           </div>
           <div class="SPack-payable-detail">
             <div
@@ -189,7 +189,7 @@ const sendBasicsMerchantPackagePlaceOrder = async (params) => {
             </div>
             <div class="SPack-payable-li SPack-payable__sum">
               <span class="SPack-payable-li__label"
-                >{{ $t('storePackage.total') }}:</span
+                >{{ $t('store-package.total') }}:</span
               >
               <span class="SPack-payable-li__value">{{ totalSumCount }}</span>
             </div>
@@ -198,7 +198,7 @@ const sendBasicsMerchantPackagePlaceOrder = async (params) => {
 
         <div class="SPack-method SPack-card">
           <div class="SPack-method-title">
-            {{ $t('storePackage.methodTitle') }}:
+            {{ $t('store-package.method-title') }}:
           </div>
           <ElRadioGroup v-model="supportActive" class="SPack-discount-ul">
             <ElRadio
@@ -227,7 +227,7 @@ const sendBasicsMerchantPackagePlaceOrder = async (params) => {
             type="primary"
             @click="handleSubmitOrder"
           >
-            {{ $t('storePackage.placeButton') }}
+            {{ $t('store-package.place-button') }}
           </ElButton>
         </div>
       </ElCol>

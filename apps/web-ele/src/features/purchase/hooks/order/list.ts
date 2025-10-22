@@ -96,7 +96,7 @@ export function usePurchaseOrder() {
       minWidth: 180,
       align: 'center',
       fixed: 'right',
-      title: t('purchase.reviewStatus'),
+      title: t('purchase.review-status'),
       cellRender: {
         name: 'ReviewStatus',
       },

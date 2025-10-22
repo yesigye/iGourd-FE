@@ -13,18 +13,18 @@ const { Grid } = useStorePayment();
 
 const ENROLL_STATUS_CONFIG = [
   {
-    name: 'storePaymentList.enroll_status_PENDING',
+    name: 'store-payment-list.enroll-status-pending',
     value: 'PENDING',
     iconColor: '#FFA000',
     textColor: '#CD8415',
   },
   {
-    name: 'storePaymentList.enroll_status_APPROVED',
+    name: 'store-payment-list.enroll-status-approved',
     value: 'APPROVED',
     iconColor: '#13BA67',
   },
   {
-    name: 'storePaymentList.enroll_status_REJECTED',
+    name: 'store-payment-list.enroll-status-rejected',
     value: 'REJECTED',
     iconColor: '#FFBBBB',
     textColor: '#FF0000',

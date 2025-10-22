@@ -49,7 +49,7 @@ export function useCustomized() {
       align: 'left',
       formatter: ({ cellValue }) => {
         if (cellValue) return t('purchase.fixed');
-        return t('purchase.userCreated');
+        return t('purchase.user-created');
       },
     },
     {

@@ -1,0 +1,18 @@
+{
+  "title": "Gestion des Magasins",
+  "store-name": "Nom du Magasin",
+  "store-code": "Code du Magasin",
+  "description": "Description",
+  "logo": "Logo",
+  "address": "Adresse",
+  "contact-person": "Personne à Contacter",
+  "contact-phone": "Téléphone de Contact",
+  "contact-email": "E-mail de Contact",
+  "status": "Statut",
+  "total-orders": "Nombre Total de Commandes",
+  "total-customers": "Nombre Total de Clients",
+  "total-products": "Nombre Total de Produits",
+  "total-revenue": "Revenu Total",
+  "monthly-orders": "Commandes Mensuelles",
+  "monthly-revenue": "Revenu Mensuel"
+}

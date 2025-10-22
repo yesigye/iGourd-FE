@@ -10,12 +10,12 @@ import {
 } from '@igourd/plugins/vxe-table';
 import { moneyFormat } from '@igourd/utils';
 
-import StatusTemplate from '#/components/status/index.vue';
-import { formatNumber } from '#/utils';
 import {
   asyncTableColumn,
   findTableColumn,
 } from '#/api/core/dynamic-table-column';
+import StatusTemplate from '#/components/status/index.vue';
+import { formatNumber } from '#/utils';
 
 // import { useIgourdForm } from './form';
 
@@ -32,6 +32,7 @@ setupIgourdVxeTable({
         headerCellConfig: {
           height: 35,
         },
+
         cellConfig: {
           height: 35,
         },
@@ -61,6 +62,12 @@ setupIgourdVxeTable({
         rowDragConfig: {
           showDragTip: true,
           animation: true,
+        },
+        printConfig: {
+          slots: {
+            footer: 'printFooter',
+            default: 'printDefault',
+          },
         },
         proxyConfig: {
           form: false,

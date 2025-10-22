@@ -49,7 +49,7 @@ export function usePaymentOrder() {
       align: 'center',
       formatter: ({ cellValue }) => {
         if (cellValue) return t('purchase.fixed');
-        return t('purchase.userCreated');
+        return t('purchase.user-created');
       },
     },
     {

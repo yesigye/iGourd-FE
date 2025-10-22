@@ -37,7 +37,7 @@ export const productLabelSelect: ISchema = {
         type: 'void',
         'x-component': 'ArrayTable.Column',
         'x-component-props': {
-          title: "{{t('discount.form.productLabels')}}",
+          title: "{{t('discount.form.product-labels')}}",
         },
 
         properties: {

@@ -20,19 +20,19 @@ export function usePaymentOrderForm() {
         properties: {
           name: {
             type: 'string',
-            title: "{{t('purchase.featureName')}}",
+            title: "{{t('purchase.feature-name')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-component-props': {
               maxLength: 32,
-              placeholder: "{{t('purchase.pleaseEnterFeatureName')}}",
+              placeholder: "{{t('purchase.please-enter-feature-name')}}",
               clearable: true,
             },
             'x-validator': [
               {
                 required: true,
-                message: "{{t('purchase.pleaseEnterFeatureName')}}",
+                message: "{{t('purchase.please-enter-feature-name')}}",
               },
               { max: 64, message: "{{t('common.maxChars', { n: 64 })}}" },
             ],
@@ -40,7 +40,7 @@ export function usePaymentOrderForm() {
 
           type: {
             type: 'string',
-            title: "{{t('purchase.featureType')}}",
+            title: "{{t('purchase.feature-type')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Radio.Group',
@@ -48,14 +48,14 @@ export function usePaymentOrderForm() {
             'x-validator': [
               {
                 required: true,
-                message: "{{t('purchase.pleaseSelectFeatureType')}}",
+                message: "{{t('purchase.please-select-feature-type')}}",
               },
             ],
           },
 
           is_fixed_option: {
             type: 'boolean',
-            title: "{{t('purchase.selectionType')}}",
+            title: "{{t('purchase.selection-type')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Radio.Group',
@@ -71,7 +71,7 @@ export function usePaymentOrderForm() {
 
           selectionOptions: {
             type: 'array',
-            title: "{{t('purchase.selectionOptions')}}",
+            title: "{{t('purchase.selection-options')}}",
             'x-decorator': 'FormItem',
             'x-visible': "{{$values.type === 'SELECT'}}",
             'x-component': 'ArrayTable',
@@ -102,7 +102,7 @@ export function usePaymentOrderForm() {
                   type: 'void',
                   'x-component': 'ArrayTable.Column',
                   'x-component-props': {
-                    title: "{{t('purchase.optionName')}}",
+                    title: "{{t('purchase.option-name')}}",
                   },
                   properties: {
                     name: {
@@ -110,7 +110,7 @@ export function usePaymentOrderForm() {
                       'x-decorator': 'FormItem',
                       'x-component': 'Input',
                       'x-component-props': {
-                        placeholder: "{{t('purchase.pleaseEnterOptionName')}}",
+                        placeholder: "{{t('purchase.please-enter-option-name')}}",
                         clearable: true,
                       },
                     },
@@ -150,7 +150,7 @@ export function usePaymentOrderForm() {
 
           is_compulsory: {
             type: 'boolean',
-            title: "{{t('purchase.compulsorySelection')}}",
+            title: "{{t('purchase.compulsory-selection')}}",
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Radio.Group',
@@ -158,7 +158,7 @@ export function usePaymentOrderForm() {
             'x-validator': [
               {
                 required: true,
-                message: "{{t('purchase.pleaseSelectIsCompulsory')}}",
+                message: "{{t('purchase.please-select-is-compulsory')}}",
               },
             ],
           },
@@ -188,7 +188,7 @@ export function usePaymentOrderForm() {
   };
   return useDrawerForm({
     drawerOptions: {
-      title: t('customized.addCustomized'),
+      title: t('customized.add-customized'),
       appendToMain: true,
       class: 'w-full',
     },
@@ -196,15 +196,15 @@ export function usePaymentOrderForm() {
       schema,
       scope: {
         featureTypes: [
-          { label: t('purchase.inputBox'), value: 'INPUT' },
-          { label: t('purchase.selectBox'), value: 'SELECT' },
+          { label: t('purchase.input-box'), value: 'INPUT' },
+          { label: t('purchase.select-box'), value: 'SELECT' },
         ],
 
         // 选择类型（用户创建 / 固定值）
         // 注意：你原文件里 true=用户创建, false=固定值；保留相同语义
         selectTypes: [
-          { label: t('purchase.userCreated'), value: true },
-          { label: t('purchase.fixedValue'), value: false },
+          { label: t('purchase.user-created'), value: true },
+          { label: t('purchase.fixed-value'), value: false },
         ],
 
         // 是否必填

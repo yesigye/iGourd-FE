@@ -22,7 +22,7 @@ export function usePrice() {
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('marketing.productName')}}",
+        placeholder: "{{t('marketing.product-name')}}",
         clearable: true,
       },
     },
@@ -44,51 +44,51 @@ export function usePrice() {
       },
       {
         field: 'name',
-        title: t('marketing.priceLevelName'),
+        title: t('marketing.price-level-name'),
         minWidth: 150,
         sortable: true,
         align: 'left',
       },
       {
         field: 'change_type',
-        title: t('marketing.priceLevelType'),
+        title: t('marketing.price-level-type'),
         minWidth: 150,
         sortable: true,
         align: 'left',
         formatter: ({ cellValue }) => {
           if (cellValue === 'DECREASE') {
-            return t('priceLevel.enum.changeType.decrease');
+            return t('price-level.enum.change-type.decrease');
           }
-          return t('priceLevel.enum.changeType.increase');
+          return t('price-level.enum.change-type.increase');
         },
       },
       {
         field: 'change_value',
-        title: t('marketing.priceLevelPrice'),
+        title: t('marketing.price-level-price'),
         width: 100,
         align: 'center',
       },
       {
         field: 'change_mode',
-        title: t('marketing.changeMode'),
+        title: t('marketing.change-mode'),
         width: 120,
         align: 'right',
         formatter: ({ cellValue }) => {
           if (cellValue === 'AMOUNT') {
-            return t('priceLevel.enum.changeMode.amount');
+            return t('price-level.enum.change-mode.amount');
           }
-          return t('priceLevel.enum.changeMode.percentage');
+          return t('price-level.enum.change-mode.percentage');
         },
       },
       {
         field: 'effective_time',
-        title: t('marketing.effectiveDate'),
+        title: t('marketing.effective-date'),
         width: 120,
         align: 'right',
       },
       {
         field: 'expiration_time',
-        title: t('marketing.expirationTime'),
+        title: t('marketing.expiration-time'),
         width: 120,
         align: 'right',
       },
@@ -101,14 +101,14 @@ export function usePrice() {
       },
       {
         field: 'create_time',
-        title: t('marketing.createTime'),
+        title: t('marketing.create-time'),
         width: 160,
         sortable: true,
         align: 'center',
       },
       {
         field: 'status',
-        title: t('marketing.switchStatus'),
+        title: t('marketing.switch-status'),
         width: 100,
         cellRender: {
           name: 'Switch',

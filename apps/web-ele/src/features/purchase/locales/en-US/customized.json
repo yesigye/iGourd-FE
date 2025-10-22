@@ -1,8 +1,11 @@
 {
+  "add-customized": "Add Customization",
   "name": "Name",
   "type": "Type",
-  "options-type": "Options type",
-  "compulsory": "Compulsory",
+  "options-type": "Options Type",
+  "compulsory": "Mandatory",
   "creator": "Creator",
-  "creation-time": "Creation time"
+  "creation-time": "Creation Time",
+  "input-box": "Input Box",
+  "select-box": "Select Box"
 }

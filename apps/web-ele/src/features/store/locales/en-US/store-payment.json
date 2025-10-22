@@ -1,0 +1,13 @@
+
+{
+  "pay-amount": "Amount Payable",
+  "accpet-bank": "Bank Account",
+  "accpet-bank-sub": "Please transfer the exact amount, otherwise the purchase will fail",
+  "accpet-accmout": "Account",
+  "copy-account": "Copy Account",
+  "swift-code": "Bank Code",
+  "recipient": "Recipient Company Name",
+  "paid-already": "Already Paid",
+  "copy-success": "Copied Successfully",
+  "frame-message": "You have selected offline payment. If payment has been completed, please click 'Already Paid'"
+}

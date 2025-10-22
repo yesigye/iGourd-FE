@@ -1,0 +1,20 @@
+{
+  "creator": "Creator",
+  "promotiontype": "Type",
+  "scopeofapplication": "Applicable Scope",
+  "promotionalname": "Name",
+  "effective-time": "Effective Date",
+  "sumofconsumption": "Spending Amount",
+  "fulldeduction": "Discount Amount",
+  "product-name": "Product",
+  "product-code": "Product Code",
+  "price-level-name": "Name",
+  "price-level-type": "Change Type",
+  "price-level-price": "Change Value",
+  "effective-date": "Effective Date",
+  "create-time": "Creation Time",
+  "switch-status": "Toggle",
+  "change-mode": "Change Mode",
+  "expiration-time": "Expiration Time",
+  "discount-ptg": "Discount Percentage"
+}

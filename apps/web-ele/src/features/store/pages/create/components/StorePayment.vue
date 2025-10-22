@@ -59,21 +59,21 @@ const payableList = computed(() => {
   const amount = props.merchantOrderPayment.amount;
   return [
     {
-      name: `${t('storePayment.payAmount')} (${syb})`,
+      name: `${t('store-payment.pay-amount')} (${syb})`,
       value: `${syb}${amount}`,
     },
     {
-      name: t('storePayment.accpetBank'),
+      name: t('store-payment.accpet-bank'),
       value: bankInfo.bank_name,
-      describe: t('storePayment.accpetBankSub'),
+      describe: t('store-payment.accpet-bank-sub'),
     },
     {
-      name: t('storePayment.accpetAccmout'),
+      name: t('store-payment.accpet-accmout'),
       value: bankInfo.bank_account_number,
-      copyText: t('storePayment.copyAccount'),
+      copyText: t('store-payment.copy-account'),
     },
-    { name: t('storePayment.swiftCode'), value: bankInfo.bank_swift_code },
-    { name: t('storePayment.recipient'), value: bankInfo.bank_account_name },
+    { name: t('store-payment.swift-code'), value: bankInfo.bank_swift_code },
+    { name: t('store-payment.recipient'), value: bankInfo.bank_account_name },
   ];
 });
 
@@ -85,7 +85,7 @@ const copyData = (text: string) => {
   setClipboardData({
     data: text,
     success() {
-      ElMessage.success(t('storePayment.copySuccess'));
+      ElMessage.success(t('store-payment.copy-success'));
     },
   });
 };
@@ -201,14 +201,14 @@ onMounted(() => {
           <dl class="Pay-frame">
             <dt class="Pay-frame-icon"></dt>
             <dd class="Pay-frame-message">
-              {{ $t('storePayment.frameMessage') }}
+              {{ $t('store-payment.frame-message') }}
             </dd>
           </dl>
         </div>
       </template>
       <div class="Pay-footer">
         <ElButton type="primary" class="Pay-footer-btn" @click="handleSubmit">
-          {{ $t('storePayment.paidAlready') }}
+          {{ $t('store-payment.paid-already') }}
         </ElButton>
       </div>
     </template>
