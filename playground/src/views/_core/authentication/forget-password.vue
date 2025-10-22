@@ -21,8 +21,8 @@ const formSchema = computed((): IgourdFormSchema[] => {
       label: $t('authentication.email'),
       rules: z
         .string()
-        .min(1, { message: $t('authentication.emailTip') })
-        .email($t('authentication.emailValidErrorTip')),
+        .min(1, { message: $t('authentication.email-tip') })
+        .email($t('authentication.email-valid-error-tip')),
     },
   ];
 });

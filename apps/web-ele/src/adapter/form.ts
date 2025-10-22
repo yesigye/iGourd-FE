@@ -19,13 +19,13 @@ import { $t } from '@igourd/locales';
 //     defineRules: {
 //       required: (value, _params, ctx) => {
 //         if (value === undefined || value === null || value.length === 0) {
-//           return $t('ui.formRules.required', [ctx.label]);
+//           return $t('ui.form-rules.required', [ctx.label]);
 //         }
 //         return true;
 //       },
 //       selectRequired: (value, _params, ctx) => {
 //         if (value === undefined || value === null) {
-//           return $t('ui.formRules.selectRequired', [ctx.label]);
+//           return $t('ui.form-rules.select-required', [ctx.label]);
 //         }
 //         return true;
 //       },

@@ -89,12 +89,12 @@ defineExpose({
   <div>
     <Title>
       <slot name="title">
-        {{ title || $t('authentication.welcomeBack') }} 📲
+        {{ title || $t('authentication.welcome-back') }} 📲
       </slot>
       <template #desc>
         <span class="text-muted-foreground">
           <slot name="subTitle">
-            {{ subTitle || $t('authentication.codeSubtitle') }}
+            {{ subTitle || $t('authentication.code-subtitle') }}
           </slot>
         </span>
       </template>

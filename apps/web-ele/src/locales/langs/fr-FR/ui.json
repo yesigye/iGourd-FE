@@ -1,0 +1,107 @@
+{
+  "form-rules": {
+    "required": "Veuillez saisir {0}",
+    "select-required": "Veuillez sélectionner {0}",
+    "min-length": "{0} doit contenir au moins {1} caractères",
+    "max-length": "{0} peut contenir au maximum {1} caractères",
+    "length": "{0} doit contenir exactement {1} caractères",
+    "already-exists": "{0} `{1}` existe déjà",
+    "start-with": "{0} doit commencer par `{1}`",
+    "invalid-url": "Veuillez saisir une URL valide"
+  },
+  "action-title": {
+    "edit": "Modifier {0}",
+    "create": "Créer {0}",
+    "delete": "Supprimer {0}",
+    "view": "Voir {0}"
+  },
+  "action-message": {
+    "delete-confirm": "Êtes-vous sûr de vouloir supprimer {0} ?",
+    "deleting": "Suppression de {0} en cours...",
+    "delete-success": "{0} supprimé avec succès",
+    "operation-success": "Opération réussie",
+    "operation-failed": "Échec de l'opération"
+  },
+  "placeholder": {
+    "input": "Veuillez saisir",
+    "select": "Veuillez sélectionner"
+  },
+  "captcha": {
+    "title": "Veuillez compléter la vérification de sécurité",
+    "slider-success-text": "Vérification réussie",
+    "slider-default-text": "Veuillez glisser le curseur",
+    "slider-rotate-default-tip": "Cliquer sur l'image pour actualiser",
+    "slider-translate-default-tip": "Cliquer sur l'image pour actualiser",
+    "slider-rotate-fail-tip": "Échec de la vérification",
+    "slider-rotate-success-tip": "Vérification réussie, temps écoulé {0} secondes",
+    "slider-translate-fail-tip": "Échec de la vérification",
+    "slider-translate-success-tip": "Vérification réussie, temps écoulé {0} secondes",
+    "alt": "Prend en charge la valeur de l'attribut src de la balise img",
+    "refresh-aria-label": "Actualiser le captcha",
+    "confirm-aria-label": "Confirmer la sélection",
+    "confirm": "Confirmer",
+    "point-aria-label": "Point de clic",
+    "click-in-order": "Veuillez cliquer dans l'ordre"
+  },
+  "icon-picker": {
+    "placeholder": "Sélectionner une icône",
+    "search": "Rechercher une icône..."
+  },
+  "json-viewer": {
+    "copy": "Copier",
+    "copied": "Copié"
+  },
+  "fallback": {
+    "page-not-found": "Oups ! Page non trouvée",
+    "page-not-found-desc": "Désolé, nous n'avons pas pu trouver la page que vous cherchiez.",
+    "forbidden": "Oups ! Accès refusé",
+    "forbidden-desc": "Désolé, vous n'avez pas l'autorisation d'accéder à cette page.",
+    "internal-error": "Oups ! Quelque chose s'est mal passé",
+    "internal-error-desc": "Désolé, le serveur a rencontré une erreur.",
+    "offline": "Page hors ligne",
+    "offline-error": "Oups ! Erreur réseau",
+    "offline-error-desc": "Désolé, impossible de se connecter à Internet. Veuillez vérifier votre connexion.",
+    "coming-soon": "Bientôt disponible",
+    "http": {
+      "request-timeout": "La requête a expiré. Veuillez réessayer plus tard.",
+      "network-error": "Une erreur réseau est survenue. Veuillez vérifier votre connexion Internet et réessayer.",
+      "bad-request": "Requête incorrecte. Veuillez vérifier votre saisie et réessayer.",
+      "unauthorized": "Authentification expirée. Veuillez vous reconnecter pour continuer.",
+      "forbidden": "Accès interdit. Vous n'avez pas l'autorisation d'accéder à cette ressource.",
+      "not-found": "Non trouvé. La ressource demandée n'existe pas.",
+      "internal-server-error": "Erreur interne du serveur. Veuillez réessayer plus tard."
+    }
+  },
+  "widgets": {
+    "document": "Documentation",
+    "qa": "FAQ & Aide",
+    "setting": "Paramètres",
+    "logout-tip": "Voulez-vous vous déconnecter ?",
+    "view-all": "Voir tous les messages",
+    "notifications": "Notifications",
+    "mark-all-as-read": "Marquer tout comme lu",
+    "clear-notifications": "Vider",
+    "check-updates-title": "Nouvelle version disponible",
+    "check-updates-description": "Cliquer pour actualiser et obtenir la dernière version",
+    "search": {
+      "title": "Recherche",
+      "search-navigate": "Recherche dans le menu de navigation",
+      "select": "Sélectionner",
+      "navigate": "Navigation",
+      "close": "Fermer",
+      "no-results": "Aucun résultat de recherche trouvé",
+      "no-recent": "Aucun historique de recherche",
+      "recent": "Historique de recherche"
+    },
+    "lock-screen": {
+      "title": "Écran verrouillé",
+      "screen-button": "Verrouiller",
+      "password": "Mot de passe",
+      "placeholder": "Veuillez saisir le mot de passe de verrouillage",
+      "unlock": "Cliquer pour déverrouiller",
+      "error-password-tip": "Mot de passe incorrect, veuillez ressaisir",
+      "back-to-login": "Retour à la connexion",
+      "entry": "Accéder au système"
+    }
+  }
+}

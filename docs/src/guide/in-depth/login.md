@@ -21,8 +21,8 @@ outline: deep
   :toolbarList="['color', 'language', 'layout', 'theme']"
   :app-name="appName"
   :logo="logo"
-  :page-description="$t('authentication.pageDesc')"
-  :page-title="$t('authentication.pageTitle')"
+  :page-description="$t('authentication.page-desc')"
+  :page-title="$t('authentication.page-title')"
 >
 </AuthPageLayout>
 ```
