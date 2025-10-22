@@ -689,9 +689,10 @@ const handleSettlement = async () => {
     }
 
     await offlinePayApi(params);
-
     ElMessage.success(t('scan.pay.success'));
     isPaySuccess.value = true;
+    // 支付成功后，重置数据
+    resetSettle();
     settlementData.value = params as never;
     emit('settlement-success', params);
     isPrintEnabled.value = true;
