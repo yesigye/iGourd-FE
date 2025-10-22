@@ -41,7 +41,9 @@ import {
   TimePicker,
   Transfer,
   TransferTable,
-  ElTag
+  ElTag,
+  ElTooltip,
+  ElIcon
 } from '@igourd/common-ui';
 
 import { FormilySearchSelect } from "#/components/SearchSelect"
@@ -55,6 +57,7 @@ import ModalTable from '@igourd/plugins/modal-table';
 import { ProductTable } from '#/components';
 
 import Upload from './upload';
+import Icon from '../../../../../packages/@core/ui-kit/shadcn-ui/src/components/icon/icon.vue';
 
 async function initComponentAdapter() {
   const components: Partial<Record<string, Component | FunctionalComponent>> = {
@@ -99,7 +102,9 @@ async function initComponentAdapter() {
     ApiComponent,
     Button: ElButton,
     FormilySearchSelect,
-    Tag:ElTag
+    Tag:ElTag,
+    Tooltip:ElTooltip,
+    Icon:ElIcon
   };
 
   // 将组件注册到全局共享状态中
