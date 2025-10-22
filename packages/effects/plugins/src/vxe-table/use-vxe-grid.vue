@@ -280,7 +280,6 @@ const options = computed(() => {
   if (mergedOptions.formConfig) {
     mergedOptions.formConfig.enabled = false;
   }
-  console.log('mergedOptions', mergedOptions);
   return mergedOptions;
 });
 
@@ -336,7 +335,6 @@ async function init() {
     toRaw(gridOptions.value),
     toRaw(globalGridConfig),
   );
-  console.log(defaultGridOptions);
   // 内部主动加载数据，防止form的默认值影响
   const autoLoad = defaultGridOptions.proxyConfig?.autoLoad;
   const enableProxyConfig = options.value.proxyConfig?.enabled;
@@ -400,6 +398,24 @@ const openMoreActions = computed(() => {
       options.value.toolbarConfig?.tools.length > 0)
   );
 });
+const printOptions = computed(() => {
+  return {
+    ...unref(options),
+    maxHeight: '45vh',
+    toolbarConfig: {
+      enabled: false,
+    },
+    pagerConfig: {
+      enabled: false,
+    },
+    proxyConfig: {
+      enabled: false,
+    },
+  };
+});
+setTimeout(() => {
+  console.log(gridRef.value?.getData());
+}, 3000);
 </script>
 
 <template>
@@ -422,7 +438,12 @@ const openMoreActions = computed(() => {
       v-on="events"
     >
       <template #printDefault>
-        <div>ddd</div>
+        <VxeGrid
+          ref="gridRef"
+          :data="gridRef?.getData() || []"
+          class="px-3"
+          v-bind="printOptions"
+        />
       </template>
       <!-- 左侧操作区域或者title -->
       <template v-if="showToolbar" #toolbar-actions="slotProps">
