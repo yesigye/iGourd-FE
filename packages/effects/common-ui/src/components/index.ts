@@ -7,6 +7,7 @@ export * from './array-table';
 export * from './array-tabs';
 export * from './captcha';
 export * from './card';
+export { Card as ElCard } from './card';
 export * from './cascader';
 export * from './checkbox';
 export * from './col-page';
@@ -42,13 +43,14 @@ export * from './reset';
 export * from './resize';
 export { default as ScanCodeEntry } from './scan-code-entry';
 export * from './select';
+export { default as SelectDropdown } from './select-dropdown/index.vue';
 export * from './space';
 export * from './submit';
 export * from './switch';
-export * from './time-picker';
-export * from './transfer';
 
-export { Card as ElCard } from './card';
+export * from './time-picker';
+
+export * from './transfer';
 
 export { TransferTable } from './transfer-table';
 

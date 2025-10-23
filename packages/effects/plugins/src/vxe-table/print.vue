@@ -1,11 +1,17 @@
 <script setup lang="ts">
+import { SelectDropdown } from '@igourd/common-ui';
 import type { VxeGridProps } from 'vxe-table';
 
-import { computed, unref } from 'vue';
+import { computed, ref, unref } from 'vue';
+import { $t } from '@igourd/locales';
+// import { dayjs } from '@igourd/utils';
 
-import { dayjs } from '@igourd/utils';
+import { VxeUI } from 'vxe-table';
 
 import { useIgourdVxeGrid } from './use-vxe-grid';
+
+import 'vxe-pc-ui/styles/all.scss';
+import { dayjs } from '@igourd/utils';
 
 const props = defineProps<VxeGridProps>();
 
@@ -30,6 +36,7 @@ const options = computed(() => {
         !['action', 'actions', 'operations', 'opreate'].includes(item.field)
       );
     }),
+    height: document.body.clientHeight - 150,
     showHeader: true,
     id: `${props.id}-print-config`,
   } as VxeGridProps;
@@ -37,39 +44,103 @@ const options = computed(() => {
 const [Grid, api] = useIgourdVxeGrid({
   gridOptions: unref(options),
 });
+
 defineExpose({
   print() {
-    (
-      document.querySelector('div[data-drawer-print]') as HTMLDivElement
-    ).click();
+    api.grid
+      .getPrintHtml({
+        columns: api.grid.getColumns().filter((i) => {
+          return !['actions', 'action', 'operate', 'operates'].includes(i.field);
+        }),
+      })
+      .then(({ html }) => {
+        VxeUI.print({
+          headerHtml: `
+        <div>
+          <p style="align:center">财务流水</p>
+          <p>${dayjs(Date.now()).format('YYYY-MM-DD')}</p>
+        </div>
+        `,
+          pageBreaks: [
+            {
+              bodyHtml: html,
+            },
+          ],
+        });
+      });
+  },
+  setData(value) {
+    api.grid.loadData(value);
   },
 });
+
+enum PrintDrawerType {
+  receipt = 'receipt',
+  'A4' = 'A4',
+}
+
+const onFontSizeChange = (val: number, type: 'title' | 'base') => {
+  const printElement = document.getElementById(`${options.value.id}`);
+  if (printElement) {
+    if (type === 'title') {
+      printElement.style.setProperty('--title-font-size', `${val}px`);
+    } else if (type === 'base') {
+      printElement.style.setProperty('--base-font-size', `${val}px`);
+    }
+  }
+};
+const printTypeOptions = (t: (s: string) => string) => [
+  {
+    label: t(`common.print.${PrintDrawerType.receipt}`),
+    value: PrintDrawerType.receipt,
+  },
+  {
+    label: t(`common.print.${PrintDrawerType['A4']}`),
+    value: PrintDrawerType['A4'],
+  },
+];
+const printType = ref(PrintDrawerType['A4']);
+const onTemplateChange = ({ value }) => {
+  printType.value = value;
+};
 </script>
 
 <template>
   <div class="pt-root" aria-hidden="true">
     <div class="pt-page" :id="options.id?.toString() ?? 'helo'">
-      <!-- 可自定义的页眉（打印每页都会重复） -->
-      <header class="pt-header">
-        <slot name="header">
-          <div class="pt-header__block">
-            <h1 class="pt-title">{{ options.printConfig?.params?.title }}</h1>
-            <div class="pt-meta">
-              <span>日期: {{ dayjs(Date.now()).format('YYYY-MM-DD') }}</span>
-              <span class="pt-sub">{{
-                options.printConfig?.params?.subTitle
-              }}</span>
-            </div>
-          </div>
-        </slot>
-      </header>
-      <div>
-        我是打印区
-        <Grid v-bind="options" />
-        <div data-drawer-print class="hidden" v-print="{ ids: options.id }">
-          打印
+      <header class="mb-1 bg-white p-3">
+        <div class="print-config flex justify-around">
+          <SelectDropdown
+            :options="printTypeOptions($t)"
+            @change="onTemplateChange"
+          >
+            {{ $t(`common.print.pager`) }}
+            {{ $t(`common.print.${printType}`) }}
+          </SelectDropdown>
+          <FontSizeSelect
+            :font-size="16"
+            @change="(val) => onFontSizeChange(val, 'title')"
+            >{{ $t('common.print.title-font-size') }}</FontSizeSelect
+          >
+          <FontSizeSelect
+            :font-size="14"
+            @change="(val) => onFontSizeChange(val, 'base')"
+            >{{ $t('common.print.base-font-size') }}</FontSizeSelect
+          >
         </div>
+      </header>
+      <div :class="printType">
+        <Grid v-bind="options" />
       </div>
     </div>
   </div>
 </template>
+<style scoped lang="scss">
+.receipt {
+  width: 80mm;
+}
+
+.A4 {
+  width: 100%;
+}
+</style>

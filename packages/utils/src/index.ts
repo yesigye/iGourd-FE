@@ -20,3 +20,7 @@ const calcOptions: any = { _fmt: '=8 ~5', _error: 0, _mode: 'space-all' };
 export const getCalc = (expression: string, format = calcOptions): number => {
   return +calc(expression, { ...calcOptions, ...format });
 };
+
+export const fontSizeList = Array.from({ length: 9 })
+  .fill(0)
+  .map((_, index) => index + 12);
