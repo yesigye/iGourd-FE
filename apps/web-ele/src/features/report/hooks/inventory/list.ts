@@ -242,7 +242,7 @@ export function useInventoryReport(warehouseOptions: any) {
           params.start_date ||
           `${dayjs().subtract(1, 'months').format('YYYY-MM-DD')} 00:00:00`;
         params.tabKey = 'months';
-        params.time_range = 'MONTH';
+        params.time_range = 'DAY';
         params.warehouse_ids = params.warehouse_ids?.length
           ? [params.warehouse_ids]
           : [];

@@ -11,6 +11,7 @@ import {
 } from '@@/report/apis';
 import { EachartItem } from '@@/report/components';
 import dayjs from 'dayjs';
+import Decimal from 'decimal.js';
 
 const { t } = useI18n();
 const useStore = useUserStore();
@@ -137,11 +138,36 @@ const handleTimeRange = async (event: {
         resultKey: 'customer_order_count',
         resultAllKey: 'customer_order_count',
       };
+      chartData.value.saleOrder.statistics = {
+        all:
+          res.report_merchant_model_list?.report_merchant_model_list?.map(
+            (item: any) =>
+              new Decimal(item.order_count || 0).toDecimalPlaces(2).toNumber(),
+          ) || [],
+        vip:
+          res.report_merchant_model_list?.report_merchant_model_list?.map(
+            (item: any) =>
+              new Decimal(item.vip_order_count || 0)
+                .toDecimalPlaces(2)
+                .toNumber(),
+          ) || [],
+      };
       break;
     }
     case 'topUpAmount': {
       parms = {
         resultKey: 'vip_recharge_amount',
+      };
+      // 使用Decimal计算
+      chartData.value.topUpAmount.statistics = {
+        all: 0,
+        vip:
+          res.report_merchant_model_list?.report_merchant_model_list?.map(
+            (item: any) =>
+              new Decimal(item.vip_recharge_amount || 0)
+                .toDecimalPlaces(2)
+                .toNumber(),
+          ) || [],
       };
       break;
     }
@@ -150,12 +176,42 @@ const handleTimeRange = async (event: {
         resultKey: 'customer_order_amount',
         resultAllKey: 'customer_order_amount',
       };
+      // 使用Decimal计算
+      chartData.value.totalTransactionVolume.statistics = {
+        all:
+          res.report_merchant_model_list?.report_merchant_model_list?.map(
+            (item: any) =>
+              new Decimal(item.order_amount || 0).toDecimalPlaces(2).toNumber(),
+          ) || [],
+        vip:
+          res.report_merchant_model_list?.report_merchant_model_list?.map(
+            (item: any) =>
+              new Decimal(item.vip_order_amount || 0)
+                .toDecimalPlaces(2)
+                .toNumber(),
+          ) || [],
+      };
       break;
     }
     case 'vipQty': {
       parms = {
         resultKey: 'vip_count',
         resultAllKey: 'vip_count',
+      };
+      // 使用Decimal计算
+      chartData.value.sta.statistics = {
+        all:
+          res.report_merchant_model_list?.report_merchant_model_list?.map(
+            (item: any) =>
+              new Decimal(item.vip_count || 0).toDecimalPlaces(2).toNumber(),
+          ) || [],
+        vip:
+          res.report_merchant_model_list?.report_merchant_model_list?.map(
+            (item: any) =>
+              new Decimal(item.vip_new_count || 0)
+                .toDecimalPlaces(2)
+                .toNumber(),
+          ) || [],
       };
       break;
     }
@@ -269,11 +325,11 @@ onMounted(() => {
         />
       </div>
     </div>
-    {{ dateRange }}
     <EachartItem
       :title="`${t('customer.gmv')} (${currency_symbol})`"
       :time-range="chartData.totalTransactionVolume.timeRange"
       :data="chartData.totalTransactionVolume.data"
+      :statistics="chartData.totalTransactionVolume.statistics"
       type="totalTransactionVolume"
       @time-range-change="handleTimeRange"
     />
@@ -281,6 +337,7 @@ onMounted(() => {
       :title="`${t('customer.sales-order')} `"
       :time-range="chartData.saleOrder.timeRange"
       :data="chartData.saleOrder.data"
+      :statistics="chartData.saleOrder.statistics"
       type="saleOrder"
       @time-range-change="handleTimeRange"
     />
@@ -289,6 +346,7 @@ onMounted(() => {
       :title="`${t('customer.recharge-amount')}`"
       :time-range="chartData.topUpAmount.timeRange"
       :data="chartData.topUpAmount.data"
+      :statistics="chartData.topUpAmount.statistics"
       type="topUpAmount"
       :is-all="false"
       @time-range-change="handleTimeRange"
@@ -297,6 +355,7 @@ onMounted(() => {
       :title="`${t('customer.vip-qty')}`"
       :time-range="chartData.vipQty.timeRange"
       :data="chartData.vipQty.data"
+      :statistics="chartData.vipQty.statistics"
       type="vipQty"
       @time-range-change="handleTimeRange"
     />

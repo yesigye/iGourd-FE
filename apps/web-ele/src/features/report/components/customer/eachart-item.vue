@@ -28,6 +28,13 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  statistics: {
+    type: Object,
+    default: () => ({
+      all: [] as number[],
+      vip: [] as number[],
+    }),
+  },
 });
 const emits = defineEmits(['timeRangeChange']);
 const { t } = useI18n();
@@ -210,7 +217,7 @@ watch(
         >
           <div class="flex w-full gap-7 text-lg font-bold">
             <span class="text-success">{{ t('common.vip') }}</span>
-            <span>{{ 222 }}</span>
+            <span>{{ props.statistics.vip }}</span>
           </div>
           <div
             class="w-full border border-dashed border-gray-500"
@@ -218,7 +225,7 @@ watch(
           ></div>
           <div class="flex w-full gap-7 text-lg font-bold" v-if="props.isAll">
             <span class="text-primary">{{ t('common.all') }}</span>
-            <span>{{ 222 }}</span>
+            <span>{{ props.statistics.all }}</span>
           </div>
         </div>
       </div>
