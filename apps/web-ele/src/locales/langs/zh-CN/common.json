@@ -197,11 +197,10 @@
     "sale-warehouse-product-stock-quantity-message": "库存",
     "stock-total-quantity-message": "库存",
     "transfer-amount": "调拨金额",
-    "inventory-count":"盘点数量",
-    "breakage-quantity":"报损数量",
-    "transfer-quantity":"调拨数量",
-    "base-quantity":"基础数量"
-
+    "inventory-count": "盘点数量",
+    "breakage-quantity": "报损数量",
+    "transfer-quantity": "调拨数量",
+    "base-quantity": "基础数量"
   },
 
   "drop-fil-here": "拖拽文件到此区域或",
@@ -348,5 +347,8 @@
   "yesterday": "昨天",
   "today": "今天",
   "last-week": "近一周",
-  "last-month": "近一月"
+  "last-month": "近一月",
+  "to": "至",
+  "start-date": "开始日期",
+  "end-date": "结束日期"
 }

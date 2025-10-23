@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import { ElButton, ElTooltip, Page } from '@igourd/common-ui';
+import { ElButton, ElTooltip, IgourdIcon, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { getProductSalesStatsApi } from '@@/report/apis/sales';
@@ -32,9 +32,11 @@ const getStaticsData = async () => {
       </template>
     </Grid>
     <Drawer />
-    <template #title>
-      <div class="flex items-center justify-between">
-        <div class="flex flex-wrap gap-2.5 text-xs">
+    <template #footer>
+      <div
+        class="flex w-full items-center justify-between border-t border-solid border-[#DCDFE6] pt-2.5"
+      >
+        <div class="flex flex-wrap gap-2.5">
           <p class="flex flex-wrap gap-2.5">
             <span>{{ t('sales.sales-qty') }}:</span>
             <span class="text-warning">{{
@@ -53,10 +55,13 @@ const getStaticsData = async () => {
             <ElTooltip
               class="box-item"
               effect="dark"
-              content="This figure is calculated based on the actual cost price of the products sold in the order"
+              :content="t('sales.sales-gross-margin-amount')"
               placement="top-start"
             >
-              <i class="iconfont icon-icon_Question_mark">11</i>
+              <IgourdIcon
+                icon="bitcoin-icons:question-circle-outline"
+                class="text-base"
+              />
             </ElTooltip>
           </p>
           <p class="flex flex-wrap gap-2.5">
@@ -65,10 +70,13 @@ const getStaticsData = async () => {
             <ElTooltip
               class="box-item"
               effect="dark"
-              content="This figure is calculated based on the actual selling price of the products sold in the order"
+              :content="t('sales.sales-gross-margin-rate-amount')"
               placement="top-start"
             >
-              <i class="iconfont icon-icon_Question_mark">11</i>
+              <IgourdIcon
+                icon="bitcoin-icons:question-circle-outline"
+                class="text-base"
+              />
             </ElTooltip>
           </p>
           <p class="flex flex-wrap gap-2.5">
@@ -78,7 +86,9 @@ const getStaticsData = async () => {
             }}</span>
           </p>
         </div>
-        <ElButton type="primary" @click="getStaticsData">总计</ElButton>
+        <ElButton type="primary" @click="getStaticsData">
+          {{ t('sales.total') }}
+        </ElButton>
       </div>
     </template>
   </Page>

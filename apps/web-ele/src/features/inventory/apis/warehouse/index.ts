@@ -37,7 +37,10 @@ export function updateWarehouseApi(data: any) {
 
 // 删除仓库
 export function deleteWarehouseApi(warehouse_id_list: (number | string)[]) {
-  return requestClient.post('/v1/merchant/basics/inventory/warehouse/remove', warehouse_id_list);
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/warehouse/remove',
+    warehouse_id_list,
+  );
 }
 
 // 更新仓库状态

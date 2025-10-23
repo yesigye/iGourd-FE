@@ -8,6 +8,8 @@ export const UploadOutlined = createIconifyIcon('ep:upload-filled');
 export const Check = createIconifyIcon('ep:check');
 export const Close = createIconifyIcon('ep:close');
 export const ArrayDown = createIconifyIcon('ep:arrow-down');
+export const ArrayUp = createIconifyIcon('ep:arrow-up');
+
 export const ArrowRight = createIconifyIcon('ep:arrow-right');
 export const ArrowLeft = createIconifyIcon('ep:arrow-left');
 

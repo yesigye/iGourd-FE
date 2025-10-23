@@ -4,12 +4,27 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
 
-import { getInventoryReportApi } from '@@/report/apis';
+import { getInventoryReportApi, getWarehouseListApi } from '@@/report/apis';
 import dayjs from 'dayjs';
 
 import { useCrud } from '#/hooks';
 
-export function useInventoryReport() {
+function remoteMethod(keywords: string) {
+  return getWarehouseListApi({
+    page_num: 1,
+    page_size: 15,
+    keywords,
+  }).then((res) => {
+    return res.map((item: any) => {
+      return {
+        ...item,
+        label: item.name,
+        value: item.id,
+      };
+    });
+  });
+}
+export function useInventoryReport(warehouseOptions: any) {
   const { t } = useI18n();
   const columns: VxeGridPropTypes.Column<InventoryReportRow>[] = [
     {
@@ -177,9 +192,8 @@ export function useInventoryReport() {
       align: 'center',
     },
   ];
-
   const searchFormSchema = {
-    product_name: {
+    keywords: {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
@@ -197,34 +211,19 @@ export function useInventoryReport() {
         clearable: true,
       },
     },
-    warehouse_name: {
-      type: 'string',
+    warehouse_ids: {
+      type: 'array',
       'x-decorator': 'FormItem',
-      'x-component': 'Input',
+      'x-component': 'RemoteSelect',
       'x-component-props': {
-        placeholder: "{{t('inventory.warehouse')}}",
-        clearable: true,
-      },
-    },
-    stock_status: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Select',
-      'x-component-props': {
-        placeholder: "{{t('inventory.stock-status')}}",
-        clearable: true,
-        options: [
-          { label: t('inventory.normal'), value: 'normal' },
-          { label: t('inventory.low'), value: 'low' },
-          { label: t('inventory.out'), value: 'out' },
-        ],
+        remoteMethod,
       },
     },
   };
 
   return useCrud<InventoryReportRow, any>({
     columns,
-    id:"report-inventory-list",
+    id: 'report-inventory-list',
     searchFormSchema,
     batchOperate: false,
     service: {
@@ -243,7 +242,10 @@ export function useInventoryReport() {
           params.start_date ||
           `${dayjs().subtract(1, 'months').format('YYYY-MM-DD')} 00:00:00`;
         params.tabKey = 'months';
-        params.time_range = 'MONTH';
+        params.time_range = 'DAY';
+        params.warehouse_ids = params.warehouse_ids?.length
+          ? [params.warehouse_ids]
+          : [];
         const response = await getInventoryReportApi(params);
         return {
           list: response?.list || [],

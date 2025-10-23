@@ -11,5 +11,8 @@
   "sales-amount": "Sales Amount",
   "sales-gross-margin": "Sales Gross Margin",
   "sales-gross-margin-rate": "Sales Gross Margin Rate",
-  "cost-amount": "Cost Amount"
+  "cost-amount": "Cost Amount",
+  "total": "Total",
+  "sales-gross-margin-amount": "This Figure Is Calculated Based On The Actual Const Price Of The Products Sold In The Order",
+  "sales-gross-margin-rate-amount": "This Figure Is Calculated Based On The Actual Selling Price Of The Products Sold In The Order"
 }

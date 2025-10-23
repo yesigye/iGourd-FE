@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import { ElButton, Page } from '@igourd/common-ui';
+import { ElButton, ElText, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import { getFinancialStatsApi } from '@@/report/apis';
@@ -24,16 +24,24 @@ const getStaticsData = async () => {
 <template>
   <Page auto-content-height>
     <Grid>
-    <template #table-actions>
+      <template #table-actions>
         <ElButton type="primary">
           {{ t('report.exportReport') }}
         </ElButton>
       </template>
+      <template #revenue_amount="{ row }">
+        <ElText type="success">{{ row.revenue_amount || '--' }}</ElText>
+      </template>
+      <template #expendityre_amount="{ row }">
+        <ElText type="danger">{{ row.expendityre_amount || '--' }}</ElText>
+      </template>
     </Grid>
     <Drawer />
-    <template #title>
-      <div class="flex items-center justify-between">
-        <div class="flex flex-wrap gap-2.5 text-xs">
+    <template #footer>
+      <div
+        class="flex w-full items-center justify-between border-t border-solid border-[#DCDFE6] pt-2.5"
+      >
+        <div class="flex flex-wrap gap-2.5">
           <p class="flex flex-wrap gap-2.5">
             <span>{{ t('financial.revenue') }}:</span>
             <span class="text-success">+{{ staticsData.revenue_amount || 0 }}</span>

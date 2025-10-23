@@ -5,9 +5,9 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import { getFinancialReportApi } from '@@/report/apis';
+import dayjs from 'dayjs';
 
 import { useCrud } from '#/hooks';
-import dayjs from 'dayjs';
 
 export function useFinancialReport() {
   const { t } = useI18n();
@@ -22,27 +22,16 @@ export function useFinancialReport() {
       field: 'revenue_amount',
       title: t('financial.revenue'),
       align: 'center',
-      cellRender: {
-        name: 'ElText',
-        props: {
-          formatter: '{{row.income ? `¥${row.income.toFixed(2)}` : "-"}}',
-          type: 'primary',
-        },
-      },
+      slots: { default: 'revenue_amount' },
     },
     {
       field: 'expendityre_amount',
       title: t('financial.expenditure'),
       align: 'center',
-      cellRender: {
-        name: 'ElText',
-        props: {
-          formatter: '{{row.expendityre_amount ? `¥${row.expendityre_amount.toFixed(2)}` : "-"}}',
-        },
-      },
+      slots: { default: 'expendityre_amount' },
     },
     {
-      field: 'creator',
+      field: 'financial_category_name',
       title: t('common.creator'),
       align: 'center',
       cellRender: {
@@ -55,7 +44,6 @@ export function useFinancialReport() {
     {
       field: 'time_period',
       title: t('financial.time-period'),
-
       align: 'center',
     },
   ];
@@ -67,9 +55,9 @@ export function useFinancialReport() {
       'x-component': 'DatePicker',
       'x-component-props': {
         type: 'daterange',
-        rangeSeparator: '至',
-        startPlaceholder: '开始日期',
-        endPlaceholder: '结束日期',
+        rangeSeparator: t('common.range-separator'),
+        startPlaceholder: t('common.start-date'),
+        endPlaceholder: t('common.end-date'),
         format: 'YYYY-MM-DD',
         valueFormat: 'YYYY-MM-DD',
       },
@@ -78,32 +66,33 @@ export function useFinancialReport() {
 
   return useCrud<FinancialReportRow, any>({
     columns,
-    id:"report-financial-list",
+    id: 'report-financial-list',
     searchFormSchema,
     batchOperate: false,
+    pagerConfig: {
+      enabled: false,
+    },
     service: {
       query: async (params: {
+        date_range?: string[];
+        end_date?: string;
         page_num: number;
         page_size: number;
         start_date?: string;
-        end_date?: string;
         tabKey: string;
         time_range: string;
       }) => {
         // 开始时间默认是当前时间-一个月
         params.end_date =
-          params.end_date || dayjs().format('YYYY-MM-DD') + ' 23:59:59';
+          params.date_range?.[1]?.concat(' 23:59:59') ||
+          `${dayjs().format('YYYY-MM-DD')} 23:59:59`;
         params.start_date =
-          params.start_date ||
-          dayjs().subtract(1, 'months').format('YYYY-MM-DD') + ' 00:00:00';
-        params.tabKey = 'months';
-        params.time_range = 'MONTH';
-        let response = await getFinancialReportApi(params);
-        console.log('getFinancialReportApi', response);
-        return {
-          list: response || [],
-          total: response?.data?.total || 0,
-        };
+          params.date_range?.[0]?.concat(' 00:00:00') ||
+          `${dayjs().subtract(1, 'months').format('YYYY-MM-DD')} 00:00:00`;
+        params.tabKey = 'day';
+        params.time_range = 'DAY';
+        const response = await getFinancialReportApi(params);
+        return response;
       },
     },
   });

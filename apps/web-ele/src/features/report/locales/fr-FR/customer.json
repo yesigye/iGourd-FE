@@ -1,9 +1,11 @@
 {
-  "customerName": "Nom du Client",
-  "customerCode": "Code du Client",
-  "totalOrders": "Total des Commandes",
-  "totalAmount": "Montant Total",
-  "avgOrderAmount": "Montant Moyen des Commandes",
-  "lastOrderDate": "Date de la Dernière Commande",
-  "exportReport": "Exporter Rapport"
+  "total-member-balance": "Solde total des membres",
+  "total-membership": "Nombre total de membres",
+  "total-number-of-customers": "Nombre total de clients",
+  "customers": "Clients",
+  "gmv": "GMV",
+  "sales-order": "Nombre de commandes",
+  "recharge-amount": "Montant de recharge",
+  "vip-qty": "Nombre de VIP",
+  "pcs": "pcs"
 }
