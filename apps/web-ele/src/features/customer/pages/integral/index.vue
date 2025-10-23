@@ -88,7 +88,7 @@ const formSchema: ISchema = {
                   title: '',
                   required: true,
                   'x-decorator': 'FormItem',
-                  'x-component': 'Input',
+                  'x-component': 'InputNumber',
                   'x-component-props': {
                     placeholder:
                       "{{t('integral.initialearnedintegral-placeholder')}}",
