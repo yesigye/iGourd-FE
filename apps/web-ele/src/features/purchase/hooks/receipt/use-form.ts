@@ -205,12 +205,7 @@ export function useReceiptForm() {
                             'x-decorator-props': {
                               label: '',
                             },
-                            'x-validator': [
-                              {
-                                required: true,
-                                message: "{{t('order.input-deposit')}}",
-                              },
-                            ],
+                            'x-validator': [],
                             'x-component-props': {
                               style: 'width: 140px;',
                               colon: false,
@@ -705,7 +700,7 @@ export function useReceiptForm() {
       formData.other_tax_amount = 0;
       formData.merchant_id = currentLoginUserApp.owner_id;
       if (!formData.id) {
-       
+
       }
       // 合计金额
       const total = formData.goods_receipt_note_item_list.reduce(
@@ -808,10 +803,10 @@ export function useReceiptForm() {
           category_type: 'GOODS_RECEIPT_NOTE',
         });
       return result.order_no
-          
+
     }
-   
-        
+
+
 
   const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
     drawerOptions: {
