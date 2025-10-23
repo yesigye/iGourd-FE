@@ -4,5 +4,14 @@
   "everyyearonjanuary1resetpointstozero": "Reset points to zero at 00:00 on January 1st every year",
   "gain-money": "Get 1 cash",
   "gain-points": "Get 1 point",
-  "product": "Product"
+  "product": "Product",
+  "product-choose": "Product Selection",
+  "major-name": "Product Name",
+  "product-code": "Product Code",
+  "sku-barcode": "SKU Barcode",
+  "product-unit-name": "Unit",
+  "selling-price": "Selling Price",
+  "vendor": "Supplier",
+  "brand": "Brand",
+  "filters-placeholder": "Enter PO Number/Supplier/Product Name"
 }

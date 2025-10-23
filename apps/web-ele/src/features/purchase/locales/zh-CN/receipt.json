@@ -39,5 +39,7 @@
   "warehouse": "仓库",
   "purchase-order-no": "采购订单号",
   "pay-status": "支付状态",
-  "vendor-name": "供应商名称"
+  "vendor-name": "供应商名称",
+  "choose-purchase-order": "选择采购单"
+  
 }

@@ -4,5 +4,14 @@
   "everyyearonjanuary1resetpointstozero": "Remise à zéro des points à 00h00 le 1er janvier de chaque année",
   "gain-money": "Obtenir 1 argent",
   "gain-points": "Obtenir 1 point",
-  "product": "Produit"
+  "product": "Produit",
+  "product-choose": "Sélection de produit",
+  "major-name": "Nom du produit",
+  "product-code": "Code produit",
+  "sku-barcode": "Code SKU",
+  "product-unit-name": "Unité",
+  "selling-price": "Prix de vente",
+  "vendor": "Fournisseur",
+  "brand": "Marque",
+  "filters-placeholder": "Saisir le numéro de bon de commande/fournisseur/nom du produit"
 }

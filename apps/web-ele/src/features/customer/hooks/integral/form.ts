@@ -82,7 +82,7 @@ export function useSelectProductForm(func) {
         properties: {
           product_list: {
             type: 'array',
-            title: '商品选择',
+            title: "{{t('integral.product-choose')}}",
             'x-decorator': 'FormItem',
             'x-component': 'TransferTable',
             'x-component-props': {
@@ -90,24 +90,24 @@ export function useSelectProductForm(func) {
               rowKey: 'id',
               columns: [
                 {
-                  label: '商品名称',
+                  label: "{{t('integral.major-name')}}",
                   prop: 'major_name',
                   filter: { type: 'input' },
                 },
                 {
-                  label: '商品代码',
+                  label: "{{t('integral.product-code')}}",
                   prop: 'product_code',
                 },
                 {
-                  label: 'sku编码',
+                  label: "{{t('integral.sku-barcode')}}",
                   prop: 'sku_barcode',
                 },
                 {
-                  label: '单位',
+                  label: "{{t('integral.product-unit-name')}}",
                   prop: 'product_unit_name',
                 },
                 {
-                  label: '售卖价格',
+                  label: "{{t('integral.selling-price')}}",
                   prop: 'selling_price',
                 },
               ],
@@ -118,18 +118,18 @@ export function useSelectProductForm(func) {
               topFilterFields: [
                 {
                   key: 'vendor',
-                  label: '供应商',
+                  label: "{{t('integral.vendor')}}",
                   type: 'remote-select',
                   remoteMethod: '{{ actions.searchVendors }}',
                 },
                 {
                   key: 'brand',
-                  label: '品牌',
+                  label: "{{t('integral.brand')}}",
                   type: 'select',
                   options: [{ label: 'Nike', value: 'nike' }],
                 },
               ],
-              searchPlaceholder: '输入采购单号/供应商/商品名',
+              searchPlaceholder: "{{t('integral.filters-placeholder')}}",
               excludeSelectedFromLeft: true,
             },
           },

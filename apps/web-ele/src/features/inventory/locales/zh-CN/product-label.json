@@ -2,5 +2,14 @@
   "product-label": "商品标签",
   "product-label-name": "商品标签名称",
   "add-product-label": "添加商品标签",
-  "please-enter-label-name": "请输入商品标签名称"
+  "please-enter-label-name": "请输入商品标签名称",
+  "product-choose": "商品选择",
+  "major-name": "商品名称",
+  "product-code": "商品代码",
+  "sku-barcode": "sku编码",
+  "product-unit-name": "单位",
+  "selling-price": "售卖价格",
+  "vendor": "供应商",
+  "brand": "品牌",
+  "filters-placeholder": "输入采购单号/供应商/商品名"
 }

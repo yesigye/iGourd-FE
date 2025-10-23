@@ -1,7 +1,7 @@
 {
   "receiptNo": "Numéro de Réception",
   "supplierName": "Nom du Fournisseur",
-  "status": "Statut",
+  "status-str": "Statut",
   "totalAmount": "Montant Total",
   "receiptDate": "Date de Réception",
   "creatorName": "Créateur",
@@ -40,5 +40,6 @@
   "warehouse": "Depôt",
   "purchase-order-no": "Numéro de Commande d'Achat",
   "pay-status": "Statut de Paiement",
-  "vendor-name": "Nom du Fournisseur"
+  "vendor-name": "Nom du Fournisseur",
+  "select-purchase-order": "Bon de commande"
 }

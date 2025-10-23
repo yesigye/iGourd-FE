@@ -75,7 +75,6 @@ export function useReturnForm() {
     return formAPI.validate('customer_id');
   };
   const onSelectOrder = async(records: any) => {
-    debugger
     if (!records) {
       return;
     }

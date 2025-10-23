@@ -39,5 +39,6 @@
   "warehouse": "Warehouse",
   "purchase-order-no": "Purchase Order Number",
   "pay-status": "Payment Status",
-  "vendor-name": "Vendor Name"
+  "vendor-name": "Vendor Name",
+  "select-purchase-order": "Select Purchase Order"
 }

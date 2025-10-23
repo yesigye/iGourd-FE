@@ -108,19 +108,19 @@ export function useProductLabelForm(func) {
           },
           product_list: {
             type: 'array',
-            title: '商品选择',
+            title: "{{t('product-label.product-choose')}}",
             'x-decorator': 'FormItem',
             'x-component': 'TransferTable',
             'x-component-props': {
               rowKey: 'id',
               columns: [
                 {
-                  label: 'Product',
+                  label: "{{t('product-label.major-name')}}",
                   prop: 'major_name',
                   filter: { type: 'input' },
                 },
                 {
-                  label: 'Product Code',
+                  label: "{{t('product-label.product-code')}}",
                   prop: 'product_code',
                   width: 140,
                   filter: {
@@ -139,18 +139,18 @@ export function useProductLabelForm(func) {
               topFilterFields: [
                 {
                   key: 'vendor',
-                  label: '供应商',
+                  label: "{{t('product-label.vendor')}}",
                   type: 'remote-select',
                   remoteMethod: '{{ actions.searchVendors }}',
                 },
                 {
                   key: 'brand',
-                  label: '品牌',
+                  label: "{{t('product-label.brand')}}",
                   type: 'select',
                   options: [{ label: 'Nike', value: 'nike' }],
                 },
               ],
-              searchPlaceholder: '输入采购单号/供应商/商品名',
+              searchPlaceholder: "{{t('product-label.filters-placeholder')}}",
               excludeSelectedFromLeft: true,
             },
           },

@@ -2,5 +2,14 @@
   "product-label": "Product Label",
   "product-label-name": "Product Label Name",
   "add-product-label": "Add Product Label",
-  "please-enter-label-name": "Please enter label name"
+  "please-enter-label-name": "Please enter label name",  
+  "product-choose": "Product Selection",
+  "major-name": "Product Name",
+  "product-code": "Product Code",
+  "sku-barcode": "SKU Barcode",
+  "product-unit-name": "Unit",
+  "selling-price": "Selling Price",
+  "vendor": "Supplier",
+  "brand": "Brand",
+  "filters-placeholder": "Enter PO Number/Supplier/Product Name"
 }

@@ -209,7 +209,7 @@ export function useOrderForm() {
                       },
                     },
                     properties: {
-                      no: {
+                      purchase_order_no: {
                         type: 'string',
                         title: "{{t('purchase.number')}}",
                         'x-decorator': 'FormItem',
@@ -217,7 +217,9 @@ export function useOrderForm() {
                         'x-decorator-props': {
                           feedbackLayout: 'terse',
                         },
-                        'x-component-props': {},
+                        'x-component-props': {
+                          disabled:true,
+                        },
                       },
                       purchase_date: {
                         type: 'string',
@@ -793,10 +795,7 @@ export function useOrderForm() {
       formData.other_tax_amount = 0;
       formData.merchant_id = currentLoginUserApp.owner_id;
       if (!formData.id) {
-        const result = await orderNoGenerate({
-          category_type: 'PURCHASE_ORDER',
-        });
-        formData.purchase_order_no = result.order_no;
+        
       }
       // 合计金额
       const total = formData.purchase_order_item_list.reduce(
@@ -810,6 +809,9 @@ export function useOrderForm() {
         item.vat_amount = 0;
         item.subtotal_amount = item.quantity * item.cost_price;
         item.total_amount = item.quantity * item.cost_price;
+        if(item.is_auto_generate_advance_payment){
+          formData.is_auto_generate_advance_payment = true;
+        }
       });
       formData.purchase_order_deposit_list.forEach((item) => {
         item.merchant_id = currentLoginUserApp.owner_id;
@@ -893,6 +895,13 @@ export function useOrderForm() {
       totalAmount: total.toFixed(2),
     };
   };
+  const generateNo=async()=>{
+    const result = await orderNoGenerate({
+          category_type: 'PURCHASE_ORDER',
+        });
+    return result.order_no
+        
+  }
 
   const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
     drawerOptions: {
@@ -916,7 +925,8 @@ export function useOrderForm() {
             formAPI.setValues(detail);
           } else {
             // 增加时，保留1条数据
-            formAPI.setValues({ purchase_order_item_list: [{}] });
+            const purchase_order_no=await generateNo();
+            formAPI.setValues({purchase_order_no,purchase_order_item_list: [{}] });
           }
         } else {
           // 关闭抽屉时，重置表单

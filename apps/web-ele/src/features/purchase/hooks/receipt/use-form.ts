@@ -107,7 +107,9 @@ export function useReceiptForm() {
                         'x-decorator-props': {
                           feedbackLayout: 'terse',
                         },
-                        'x-component-props': {},
+                        'x-component-props': {
+                          disabled: true,
+                        },
                       },
                       vendor_id: {
                         type: 'string',
@@ -262,7 +264,7 @@ export function useReceiptForm() {
                     return h(Space, null, [
                       h('div', null, t('order.product-details')),
                       h(ModalTable, {
-                        text: '选择采购单',
+                        text: t('receipt.choose-purchase-order'),
                         title: t('order.product-selection-list'),
                       }),
                     ]);
@@ -703,10 +705,7 @@ export function useReceiptForm() {
       formData.other_tax_amount = 0;
       formData.merchant_id = currentLoginUserApp.owner_id;
       if (!formData.id) {
-        const result = await orderNoGenerate({
-          category_type: 'GOODS_RECEIPT_NOTE',
-        });
-        formData.goods_receipt_note_no = result.order_no;
+       
       }
       // 合计金额
       const total = formData.goods_receipt_note_item_list.reduce(
@@ -804,6 +803,15 @@ export function useReceiptForm() {
       totalAmount: total.toFixed(2),
     };
   };
+  const generateNo=async()=>{
+     const result = await orderNoGenerate({
+          category_type: 'GOODS_RECEIPT_NOTE',
+        });
+      return result.order_no
+          
+    }
+   
+        
 
   const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
     drawerOptions: {
@@ -826,7 +834,8 @@ export function useReceiptForm() {
             formAPI.setValues(detail);
           } else {
             // 增加时，保留1条数据
-            formAPI.setValues({ goods_receipt_note_item_list: [{}] });
+            const goods_receipt_note_no=await generateNo();
+            formAPI.setValues({goods_receipt_note_no,goods_receipt_note_item_list: [{}] });
           }
         } else {
           // 关闭抽屉时，重置表单
