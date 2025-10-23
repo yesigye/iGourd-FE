@@ -5,7 +5,7 @@ import type { IGourdFormProps } from './types';
 
 import { computed, defineComponent, h, renderSlot, watch } from 'vue';
 
-import { registerValidateLocale } from '@formily/core';
+import { registerValidateLocale,registerValidateRules } from '@formily/core';
 import { observable } from '@formily/reactive';
 import { createSchemaField, FormProvider } from '@formily/vue';
 
@@ -16,6 +16,12 @@ registerValidateLocale({
   'zh-CN': { required: '{{ field.title }}是必填的' },
   'en-US': { required: '{{ field.title }} field is Required' },
 }); // 初始化表单校验国际化
+
+registerValidateRules({
+  custom(value) {
+    return value > 100 ? 'error' : ''
+  },
+})
 
 export function useIgourdForm<T extends object>(options: IGourdFormProps<T>) {
   const { formAPI } = useForm(options as IFormProps<object>);

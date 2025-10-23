@@ -39,7 +39,7 @@ export function merchantPaymentMethodOption(data: any) {
       list: res?.map((i) => {
         return {
           ...i,
-          value: i.type,
+          value: i.type.value,
           label: i.name,
         };
       }),
