@@ -28,7 +28,14 @@ const mergeValidationProperties = (target: any, source: any) => {
   });
   return target;
 };
+
+const isEmpty = (obj: any) => {
+  return !obj || Object.keys(obj).length === 0;
+};
 const checkProperties = (source: any) => {
+  if (isEmpty(source)) {
+    return;
+  }
   let flag = false;
   Object.keys(source).forEach((key) => {
     if (validationKeys.includes(key)) {
@@ -53,6 +60,7 @@ export const InputNumber = connect(
         message: $t('ui.formRules.min-max-range', [0, 100]),
       };
       const schemaRef = useFieldSchema();
+      debugger
       const validator = schemaRef.value['x-validator'] || [];
       if (validator.length == 0) {
         validator.push(defaultInputNumbervalidator);
@@ -67,7 +75,7 @@ export const InputNumber = connect(
         });
       }
       // schemaRef.value['x-validator'] = validator;
-      schemaRef.value.setProperties('x-validator',validator);
+      schemaRef.value.setProperties({'x-validator':validator});
       console.log(schemaRef.value['x-validator'] )
       let controlsPosition = 'right';
       if (props.controlsPosition) {

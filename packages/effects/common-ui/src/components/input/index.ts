@@ -5,9 +5,7 @@ import { ElInput } from 'element-plus';
 
 export type InputProps = typeof ElInput;
 
-const validationKeys = [
-  'max'
-];
+const validationKeys = ['max'];
 
 const mergeValidationProperties = (target: any, source: any) => {
   Object.keys(source).forEach((key) => {
@@ -17,7 +15,13 @@ const mergeValidationProperties = (target: any, source: any) => {
   });
   return target;
 };
+const isEmpty = (obj: any) => {
+  return !obj || Object.keys(obj).length === 0;
+};
 const checkProperties = (source: any) => {
+  if (isEmpty(source)) {
+    return;
+  }
   let flag = false;
   Object.keys(source).forEach((key) => {
     if (validationKeys.includes(key)) {
@@ -26,11 +30,11 @@ const checkProperties = (source: any) => {
   });
   return flag;
 };
-  // 默认TextArea 校验    'x-component': 'Input.TextArea'
-  const defaultTextAreaValidator = {
-    maxLength: 512,
-    message: '不能超过{max}个字符',
-  };
+// 默认TextArea 校验    'x-component': 'Input.TextArea'
+const defaultTextAreaValidator = {
+  maxLength: 512,
+  message: '不能超过{max}个字符',
+};
 
 const TransformElInput = transformComponent<InputProps>(ElInput, {
   change: 'update:modelValue',
@@ -64,8 +68,8 @@ const InnerInput = connect(
         });
       }
       // schemaRef.value['x-validator'] = validator;
-      schemaRef.value.setProperties({'x-validator':validator});
-       console.log(schemaRef.value['x-validator'] )
+      schemaRef.value.setProperties({ 'x-validator': validator });
+      console.log(schemaRef.value['x-validator']);
       return props;
     },
   ),

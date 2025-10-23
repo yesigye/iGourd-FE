@@ -8,6 +8,8 @@ import { useI18n } from '@igourd/locales';
 import ModalTable from '@igourd/plugins/modal-table';
 import { useUserStore } from '@igourd/stores';
 import { createIconifyIcon } from '@igourd/icons';
+import { floorDecimal, retainDecimal8 } from '#/utils/eleValidate';
+
 import {
   createPurchaseOrderApi,
   getPurchaseListApi,
@@ -218,7 +220,7 @@ export function useOrderForm() {
                           feedbackLayout: 'terse',
                         },
                         'x-component-props': {
-                          disabled:true,
+                          disabled: true,
                         },
                       },
                       purchase_date: {
@@ -317,12 +319,7 @@ export function useOrderForm() {
                             'x-decorator-props': {
                               label: '',
                             },
-                            'x-validator': [
-                              {
-                                required: true,
-                                message: "{{t('order.input-deposit')}}",
-                              },
-                            ],
+                            'x-validator': [],
                             'x-component-props': {
                               style: 'width: 140px;',
                               colon: false,
@@ -438,7 +435,8 @@ export function useOrderForm() {
                         'x-component': 'Space',
                         title: "{{t('purchase.order-pay.select-account')}}",
                         properties: {
-                          amount_0: {
+                          // 支付优惠
+                          discount_amount: {
                             type: 'string',
                             title: "{{t('purchase.order-pay.discount')}}",
                             'x-decorator': 'FormItem',
@@ -446,23 +444,29 @@ export function useOrderForm() {
                               size: 'small',
                               feedbackLayout: 'terse',
                             },
-                            'x-component': 'Input',
+                            'x-component': 'InputNumber',
+                            'x-component-props': {
+                              '@blur': `{{(value,op)=> discountAmountChange(value,op,$self,$index) }}`,
+                            },
                           },
                           discount_percentage: {
                             type: 'string',
                             title: "{{t('purchase.order-pay.discount-rate')}}",
                             'x-decorator': 'FormItem',
-                            'x-component': 'Input',
+                            'x-component': 'InputNumber',
                             'x-decorator-props': {
                               size: 'small',
                               feedbackLayout: 'terse',
                             },
+                            'x-component-props': {
+                              '@blur': `{{(value,op)=> discountPercentageChange(value,op,$self,$index) }}`,
+                            },
                           },
-                          deposit_amount: {
+                          total_amount: {
                             type: 'string',
                             title: "{{t('purchase.order-pay.total')}}",
                             'x-decorator': 'FormItem',
-                            'x-component': 'Input',
+                            'x-component': 'InputNumber',
                             'x-decorator-props': {
                               size: 'small',
                               feedbackLayout: 'terse',
@@ -488,6 +492,7 @@ export function useOrderForm() {
                                 },
                               },
                               properties: {
+                                // 支付账号
                                 account_id: {
                                   type: 'string',
                                   title:
@@ -506,6 +511,7 @@ export function useOrderForm() {
                                     '@change': `{{(value,op)=> accountChange(value,op,$self,$index) }}`,
                                   },
                                 },
+                                // 支付方式
                                 payment_method_type: {
                                   type: 'string',
                                   title:
@@ -526,25 +532,31 @@ export function useOrderForm() {
                                 },
                                 //定金比例
                                 amount_rate: {
-                                  type: 'string',
+                                  type: 'number',
                                   title:
                                     "{{t('purchase.order-pay.deposit-rate')}}",
                                   'x-decorator': 'FormItem',
-                                  'x-component': 'Input',
+                                  'x-component': 'InputNumber',
                                   'x-decorator-props': {
                                     size: 'small',
                                     feedbackLayout: 'terse',
                                   },
+                                  'x-component-props': {
+                                    '@blur': `{{(value,op)=> amountRateChange(value,op,$self,$index) }}`,
+                                  },
                                 },
-                                //优惠金额
+                                //定金
                                 amount: {
-                                  type: 'string',
+                                  type: 'number',
                                   title: "{{t('purchase.order-pay.deposit')}}",
                                   'x-decorator': 'FormItem',
-                                  'x-component': 'Input',
+                                  'x-component': 'InputNumber',
                                   'x-decorator-props': {
                                     size: 'small',
                                     feedbackLayout: 'terse',
+                                  },
+                                  'x-component-props': {
+                                    '@blur': `{{(value,op)=> amountChange(value,op,$self,$index) }}`,
                                   },
                                 },
                                 is_auto_generate_advance_payment: {
@@ -569,12 +581,13 @@ export function useOrderForm() {
                                       type: 'void',
                                       'x-component': 'Button',
                                       'x-component-props': {
-                                        style:{
-                                          padding:'0',
-                                          "margin-bottom":'10px',
+                                        style: {
+                                          padding: '0',
+                                          'margin-bottom': '10px',
                                         },
-                                        type: '', text: 'plain',
-                                        icon: "{{icon('material-symbols:help-outline-rounded')}}"
+                                        type: '',
+                                        text: 'plain',
+                                        icon: "{{icon('material-symbols:help-outline-rounded')}}",
                                       },
                                     },
                                   },
@@ -714,6 +727,33 @@ export function useOrderForm() {
                               c: {
                                 type: 'void',
                                 'x-component': 'div',
+                                'x-content':
+                                  "{{t('purchase.order-pay.discount')+' : '}}",
+                                'x-component-props': {
+                                  class: 'w-20 text-right',
+                                  style: { fontSize: '14px' },
+                                },
+                              },
+                              discount_amount: {
+                                type: 'string',
+                                'x-component': 'div',
+                                'x-content': "{{$self.value?$self.value:'0'}}",
+                                'x-component-props': {
+                                  style: {},
+                                },
+                              },
+                            },
+                          },
+                          label_5: {
+                            type: 'void',
+                            'x-component': 'div',
+                            'x-component-props': {
+                              class: 'flex',
+                            },
+                            properties: {
+                              c: {
+                                type: 'void',
+                                'x-component': 'div',
                                 'x-content': "{{t('purchase.total')+' : '}}",
                                 'x-component-props': {
                                   class: 'w-20 text-right',
@@ -794,9 +834,8 @@ export function useOrderForm() {
       // 其他税额
       formData.other_tax_amount = 0;
       formData.merchant_id = currentLoginUserApp.owner_id;
-      if (!formData.id) {
-        
-      }
+      formData.deposit_amount = 0;
+
       // 合计金额
       const total = formData.purchase_order_item_list.reduce(
         (acc: any, item: any) => acc + item.quantity * item.cost_price,
@@ -809,12 +848,17 @@ export function useOrderForm() {
         item.vat_amount = 0;
         item.subtotal_amount = item.quantity * item.cost_price;
         item.total_amount = item.quantity * item.cost_price;
-        if(item.is_auto_generate_advance_payment){
+        if (item.is_auto_generate_advance_payment) {
           formData.is_auto_generate_advance_payment = true;
         }
       });
+
       formData.purchase_order_deposit_list.forEach((item) => {
         item.merchant_id = currentLoginUserApp.owner_id;
+        //设置外层定金
+        if (item.amount) {
+          formData.deposit_amount = item.amount;
+        }
       });
 
       // 	汇率(选择币种和系统币种的换算比例)
@@ -824,9 +868,17 @@ export function useOrderForm() {
       formData.subtotal_amount = total.toFixed(2);
       // total_amount  最终总金额
       formData.total_amount = total.toFixed(2);
+      const params = JSON.parse(JSON.stringify(formData));
+      // 没有支付账号 把参数参数
+      if (
+        params.purchase_order_deposit_list.length > 0 &&
+        !params.purchase_order_deposit_list[0].account_id
+      ) {
+        delete params.purchase_order_deposit_list;
+      }
       response = formData.id
-        ? updatePurchaseOrderApi(formData)
-        : await createPurchaseOrderApi(formData);
+        ? updatePurchaseOrderApi(params)
+        : await createPurchaseOrderApi(params);
       gridApi.reload();
       return response;
     } catch (error) {
@@ -874,6 +926,7 @@ export function useOrderForm() {
     if (!op) {
       return;
     }
+
     formAPI.setValuesIn(
       `purchase_order_deposit_list.${index}.payment_method_id`,
       op.id,
@@ -895,13 +948,62 @@ export function useOrderForm() {
       totalAmount: total.toFixed(2),
     };
   };
-  const generateNo=async()=>{
+  const generateNo = async () => {
     const result = await orderNoGenerate({
-          category_type: 'PURCHASE_ORDER',
-        });
-    return result.order_no
-        
-  }
+      category_type: 'PURCHASE_ORDER',
+    });
+    return result.order_no;
+  };
+  // 设置支付账号 支付方式 是否必填
+  const setRequired = (form: any, required: boolean) => {
+    form.setFieldState('purchase_order_deposit_list.*.account_id', (f) => {
+      f.required = required;
+    });
+    form.setFieldState(
+      'purchase_order_deposit_list.*.payment_method_type',
+      (f) => {
+        f.required = required;
+      },
+    );
+  };
+  // 根据订金金额计算优惠比例
+  const amountChange = (_, op, record, index) => {
+    const total_amount = formAPI.values.total_amount || 0;
+    let rate = parseFloat(record.value) / parseFloat(total_amount);
+    if (
+      rate !== Infinity &&
+      parseFloat(record.value) < parseFloat(total_amount)
+    ) {
+      rate = floorDecimal(rate * 100, 2);
+      formAPI.setValuesIn('purchase_order_deposit_list.0.amount_rate', rate);
+
+    }
+  };
+  // 根据订金比例计算优惠金额
+  const amountRateChange = (_, op, record, index) => {
+    const total_amount = formAPI.values.total_amount || 0;
+    const abs = parseFloat(total_amount) * parseFloat(record.value / 100);
+    formAPI.setValuesIn('purchase_order_deposit_list.0.amount', abs);
+  };
+
+  // 根据优惠金额计算优惠比例
+  const discountAmountChange = (_, op, record, index) => {
+    const total_amount = formAPI.values.total_amount || 0;
+    let rate = parseFloat(record.value) / parseFloat(total_amount);
+    if (
+      rate !== Infinity &&
+      parseFloat(record.value) < parseFloat(total_amount)
+    ) {
+      rate = floorDecimal(rate * 100, 2);
+      formAPI.setValuesIn('discount_percentage', rate);
+    }
+  };
+  // 根据优惠比例计算优惠金额
+  const discountPercentageChange = (_, op, record, index) => {
+    const total_amount = formAPI.values.total_amount || 0;
+    const abs = parseFloat(total_amount) * parseFloat(record.value / 100);
+    formAPI.setValuesIn('discount_amount', abs);
+  };
 
   const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
     drawerOptions: {
@@ -925,8 +1027,11 @@ export function useOrderForm() {
             formAPI.setValues(detail);
           } else {
             // 增加时，保留1条数据
-            const purchase_order_no=await generateNo();
-            formAPI.setValues({purchase_order_no,purchase_order_item_list: [{}] });
+            const purchase_order_no = await generateNo();
+            formAPI.setValues({
+              purchase_order_no,
+              purchase_order_item_list: [{}],
+            });
           }
         } else {
           // 关闭抽屉时，重置表单
@@ -959,6 +1064,10 @@ export function useOrderForm() {
         accountChange,
         payment_method_change,
         merchantPaymentMethodOption,
+        discountAmountChange,
+        discountPercentageChange,
+        amountRateChange,
+        amountChange,
         icon: (name: string) => {
           const IconComponent = createIconifyIcon(name);
           return IconComponent ? h(IconComponent) : null;
@@ -995,6 +1104,18 @@ export function useOrderForm() {
           form.setValuesIn('subtotal_amount', subtotalAmount);
           form.setValuesIn('total_amount', totalAmount);
         });
+        // 录入定金 设置支付账号 支付方式
+        onFieldValueChange(
+          'purchase_order_deposit_list.*.amount',
+          (field, form) => {
+            if (field.value > 0) {
+              setRequired(form, true);
+
+            } else {
+              setRequired(form, false);
+            }
+          },
+        );
       },
       schema,
     },

@@ -35,9 +35,13 @@ export const PurchaseMode: ModePlugin = {
         'x-component-props': {
           width: 260,
         },
-        'x-decorator-props': {
-          required: true,
-        },
+        'x-validator': [
+          {
+            required: true,
+            message: "{{t('common.validate.required')}}",
+          },
+        ],
+        'x-decorator-props': {},
         'x-content': {
           header: ScanCodeEntry,
         },
@@ -56,6 +60,12 @@ export const PurchaseMode: ModePlugin = {
         title: '{{t("common.purchase.quantity")}}',
         'x-component': 'InputNumber',
         'x-decorator': 'FormItem',
+        'x-validator': [
+          {
+            required: true,
+            message: "{{t('common.validate.required')}}",
+          },
+        ],
         'x-component-props': {
           width: 160,
         },
