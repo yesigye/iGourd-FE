@@ -1,15 +1,16 @@
-import { composeExport, transformComponent } from '../__builtins__';
 import { connect, mapProps, mapReadPretty, useFieldSchema } from '@formily/vue';
-import { PreviewText } from '../preview-text';
 import { ElInput } from 'element-plus';
+
+import { composeExport, transformComponent } from '../__builtins__';
+import { PreviewText } from '../preview-text';
 
 export type InputProps = typeof ElInput;
 
-const validationKeys = ['max'];
+const validationKeys = new Set(['max']);
 
 const mergeValidationProperties = (target: any, source: any) => {
   Object.keys(source).forEach((key) => {
-    if (validationKeys.includes(key)) {
+    if (validationKeys.has(key)) {
       target[key] = source[key];
     }
   });
@@ -24,7 +25,7 @@ const checkProperties = (source: any) => {
   }
   let flag = false;
   Object.keys(source).forEach((key) => {
-    if (validationKeys.includes(key)) {
+    if (validationKeys.has(key)) {
       flag = true;
     }
   });
@@ -49,13 +50,13 @@ const InnerInput = connect(
     },
     (props) => {
       const defaultInputValidator = {
-        max: 2,
-        message: '不能超过{max}个字符',
+        maxLength: 2,
+        message: '不能超过{{maxLength}}个字符',
       };
 
       const schemaRef = useFieldSchema();
       const validator = schemaRef.value['x-validator'] || [];
-      if (validator.length == 0) {
+      if (validator.length === 0) {
         validator.push(defaultInputValidator);
       } else {
         validator.forEach((rule: any, index: number) => {
@@ -69,7 +70,6 @@ const InnerInput = connect(
       }
       // schemaRef.value['x-validator'] = validator;
       schemaRef.value.setProperties({ 'x-validator': validator });
-      console.log(schemaRef.value['x-validator']);
       return props;
     },
   ),
