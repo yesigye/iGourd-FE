@@ -3,6 +3,8 @@ import type { ProductListItem } from '@@/inventory/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
+import { ref } from 'vue';
+
 import { useI18n } from '@igourd/locales';
 
 import {
@@ -36,6 +38,8 @@ export function useInventoryProductList() {
       title: t('inventory.product-name-major'),
       minWidth: 200,
       fixed: 'left',
+      align: 'left',
+      slots: { default: 'major_name' },
     },
     {
       field: 'product_code',
@@ -138,7 +142,12 @@ export function useInventoryProductList() {
     // 删除产品
     remove: deleteProduct,
   };
-
+  const gridHeight = ref('100%');
+  // 改变高度
+  const handleChangeGridHeight = (height: string) => {
+    gridHeight.value = height;
+    gridApi?.setGridOptions({ height });
+  };
   // 使用 CRUD Hook
   const {
     Grid,
@@ -154,6 +163,7 @@ export function useInventoryProductList() {
     columns,
     gridOptions: {
       showOverflow: false,
+      height: gridHeight.value,
     },
     searchFormSchema,
     batchOperate: true,
@@ -167,5 +177,6 @@ export function useInventoryProductList() {
     handleEdit,
     handleBatchDelete,
     canBatchOperate,
+    handleChangeGridHeight,
   };
 }
