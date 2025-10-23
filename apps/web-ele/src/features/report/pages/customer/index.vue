@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 
-import { Card, ElScrollbar, Page } from '@igourd/common-ui';
+import { Card, ElDatePicker, ElScrollbar, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
@@ -10,30 +10,52 @@ import {
   getCustomerStatisticsApi,
 } from '@@/report/apis';
 import { EachartItem } from '@@/report/components';
+import dayjs from 'dayjs';
 
 const { t } = useI18n();
 const useStore = useUserStore();
 const { currency_symbol } = useStore?.merchantInfo;
+// 默认今天往前一个月 使用dayjs 格式化yyyy-MM-dd
+const dateRange = ref([
+  dayjs().subtract(1, 'month').format('YYYY-MM-DD 00:00:00'),
+  dayjs().format('YYYY-MM-DD 23:59:59'),
+]);
 const chartData = ref({
   totalTransactionVolume: {
     data: [],
     timeRange: [],
     info: {},
+    statistics: {
+      all: 0,
+      vip: 0,
+    },
   },
   saleOrder: {
     data: [],
     timeRange: [],
     info: {},
+    statistics: {
+      all: 0,
+      vip: 0,
+    },
   },
   topUpAmount: {
     data: [],
     timeRange: [],
     info: {},
+    statistics: {
+      all: 0,
+      vip: 0,
+    },
   },
   vipQty: {
     data: [],
     timeRange: [],
     info: {},
+    statistics: {
+      all: 0,
+      vip: 0,
+    },
   },
 });
 
@@ -74,8 +96,8 @@ const handleDataDistribution = (
  */
 const getCustomerStatistics = async () => {
   const res = await getCustomerStatisticsApi({
-    end_date: '2025-10-17 13:39:57',
-    start_date: '2025-09-17 00:00:00',
+    end_date: dateRange.value[1],
+    start_date: dateRange.value[0],
     time_range: 'WEEK',
   });
   handleDataDistribution(res, {
@@ -104,8 +126,8 @@ const handleTimeRange = async (event: {
   type: keyof typeof chartData.value;
 }) => {
   const res = await getCustomerStatisticsApi({
-    end_date: '2025-10-17 13:39:57',
-    start_date: '2025-09-17 00:00:00',
+    end_date: dateRange.value[1],
+    start_date: dateRange.value[0],
     time_range: event.timeRange,
   });
   let parms = {};
@@ -158,6 +180,13 @@ const getCustomerReport = async () => {
     console.error(error);
   }
 };
+const handleDateChange = (val: string[]) => {
+  if (val.length === 2) {
+    val[0] = `${val[0]} 00:00:00`;
+    val[1] = `${val[1]} 23:59:59`;
+  }
+  getCustomerStatistics();
+};
 onMounted(() => {
   getCustomerStatistics();
   getCustomerReport();
@@ -175,7 +204,9 @@ onMounted(() => {
             <div>
               <p class="text-2xl">{{ customerValue?.vip_balance_amount }}</p>
               <p>
-                {{ t('customer.total-member-balance') }} ({{ currency_symbol }})
+                {{ t('customer.total-member-balance') }} ({{
+                  t('customer.pcs')
+                }})
               </p>
             </div>
           </div>
@@ -185,7 +216,7 @@ onMounted(() => {
             <div>
               <p class="text-2xl">{{ customerValue?.vip_count }}</p>
               <p>
-                {{ t('customer.total-membership') }} ({{ currency_symbol }})
+                {{ t('customer.total-membership') }} ({{ t('customer.pcs') }})
               </p>
             </div>
           </div>
@@ -196,7 +227,7 @@ onMounted(() => {
               <p class="text-2xl">{{ customerValue?.customer_count }}</p>
               <p>
                 {{ t('customer.total-number-of-customers') }} ({{
-                  currency_symbol
+                  t('customer.pcs')
                 }})
               </p>
             </div>
@@ -213,8 +244,8 @@ onMounted(() => {
                 <div class="flex flex-col gap-1">
                   <p class="text-primary text-2xl">VIP {{ item }}</p>
                   <p>
-                    {{ customerValue?.vip_count_by_level?.[level] || 0 }} ({{
-                      currency_symbol
+                    {{ customerValue?.vip_count_by_level?.[item] || 0 }} ({{
+                      t('customer.pcs')
                     }})
                   </p>
                 </div>
@@ -224,6 +255,21 @@ onMounted(() => {
         </section>
       </section>
     </Card>
+    <div class="bg-card flex items-center justify-end p-2">
+      <div>
+        <ElDatePicker
+          v-model="dateRange"
+          type="daterange"
+          :range-separator="t('common.to')"
+          :start-placeholder="t('common.start-date')"
+          :end-placeholder="t('common.end-date')"
+          format="YYYY-MM-DD"
+          value-format="YYYY-MM-DD"
+          @change="handleDateChange"
+        />
+      </div>
+    </div>
+    {{ dateRange }}
     <EachartItem
       :title="`${t('customer.gmv')} (${currency_symbol})`"
       :time-range="chartData.totalTransactionVolume.timeRange"

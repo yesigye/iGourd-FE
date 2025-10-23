@@ -12,5 +12,8 @@
   "cost-amount": "成本金额",
 
   "sales-gross-margin": "销售毛利",
-  "sales-gross-margin-rate": "销售毛利率"
+  "sales-gross-margin-rate": "销售毛利率",
+  "total": "总计",
+  "sales-gross-margin-amount": "该数据基于订单中实际销售商品的成本价计算",
+  "sales-gross-margin-rate-amount": "该数据基于订单中实际销售商品的销售价计算"
 }

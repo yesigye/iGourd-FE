@@ -1,9 +1,11 @@
 {
-  "customerName": "Customer Name",
-  "customerCode": "Customer Code",
-  "totalOrders": "Total Orders",
-  "totalAmount": "Total Amount",
-  "avgOrderAmount": "Average Order Amount",
-  "lastOrderDate": "Last Order Date",
-  "exportReport": "Export Report"
+  "total-member-balance": "Total Member Balance",
+  "total-membership": "Total Membership",
+  "total-number-of-customers": "Total Number of Customers",
+  "customers": "Customers",
+  "gmv": "GMV",
+  "sales-order": "Sales Order",
+  "recharge-amount": "Recharge Amount",
+  "vip-qty": "VIP Qty",
+  "pcs": "pcs"
 }

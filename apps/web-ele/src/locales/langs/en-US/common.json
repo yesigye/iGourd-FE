@@ -347,5 +347,8 @@
   "yesterday": "Yesterday",
   "today": "Today",
   "last-week": "Last Week",
-  "last-month": "Last Month"
+  "last-month": "Last Month",
+  "to": "to",
+  "start-date": "Start Date",
+  "end-date": "End Date"
 }

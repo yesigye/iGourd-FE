@@ -20,3 +20,10 @@ export function getInventoryStatsApi(data: any) {
     data,
   );
 }
+// 获取仓库列表
+export function getWarehouseListApi(data: any) {
+  return requestClient.post(
+    '/v1/merchant/basics/inventory/warehouse/list',
+    data,
+  );
+}

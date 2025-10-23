@@ -46,37 +46,121 @@ const seriesData = computed(() => {
   return props.isAll
     ? [
         {
+          name: t('common.all'),
           data: props.data[0],
           type: 'line',
+          markPoint: {
+            data: [
+              { type: 'max', name: 'Max' },
+              { type: 'min', name: 'Min' },
+            ],
+          },
+          markLine: {
+            data: [{ type: 'average', name: 'Avg' }],
+          },
         },
         {
+          name: t('common.vip'),
           data: props.data[1],
           type: 'line',
+          itemStyle: {
+            color: '#fc5c65',
+          },
+          markPoint: {
+            data: [{ name: '周最低', value: -2, xAxis: 1, yAxis: -1.5 }],
+          },
+          markLine: {
+            data: [
+              { type: 'average', name: 'Avg' },
+              [
+                {
+                  symbol: 'none',
+                  x: '100%',
+                  yAxis: 'max',
+                },
+                {
+                  symbol: 'circle',
+                  label: {
+                    position: 'start',
+                    formatter: 'Max',
+                  },
+                  type: 'max',
+                  name: '最高点',
+                },
+              ],
+            ],
+          },
         },
       ]
     : [
         {
+          name: t('common.vip'),
           data: props.data[0],
           type: 'line',
+          itemStyle: {
+            color: '#fc5c65',
+          },
+          markPoint: {
+            data: [{ name: '周最低', value: -2, xAxis: 1, yAxis: -1.5 }],
+          },
+          markLine: {
+            data: [
+              { type: 'average', name: 'Avg' },
+              [
+                {
+                  symbol: 'none',
+                  x: '100%',
+                  yAxis: 'max',
+                },
+                {
+                  symbol: 'circle',
+                  label: {
+                    position: 'start',
+                    formatter: 'Max',
+                  },
+                  type: 'max',
+                  name: '最高点',
+                },
+              ],
+            ],
+          },
         },
       ];
 });
 const handleEchartInit = () => {
   renderEcharts({
     grid: {
-      top: '10px',
+      top: '40px',
       bottom: '10px',
-      left: '10px',
-      right: '10px',
+      left: '40px',
+      right: '40px',
       containLabel: true,
+    },
+    toolbox: {
+      show: true,
+      feature: {
+        dataZoom: {
+          yAxisIndex: 'none',
+        },
+        dataView: { readOnly: false },
+        magicType: { type: ['line', 'bar'] },
+        restore: {},
+        saveAsImage: {},
+      },
     },
     xAxis: {
       type: 'category',
+      boundaryGap: false,
+
       data: props.timeRange as string[],
     },
     yAxis: {
       type: 'value',
+      axisLabel: {
+        formatter: '{value}',
+      },
     },
+    legend: {},
     series: seriesData.value,
   });
 };
@@ -99,19 +183,19 @@ watch(
               :type="timeRange === 'DAY' ? 'primary' : 'default'"
               @click="handleTimeRange('DAY')"
             >
-              Daily
+              {{ t('home.daily') }}
             </ElButton>
             <ElButton
               :type="timeRange === 'WEEK' ? 'primary' : 'default'"
               @click="handleTimeRange('WEEK')"
             >
-              Weekly
+              {{ t('home.weekly') }}
             </ElButton>
             <ElButton
               :type="timeRange === 'MONTH' ? 'primary' : 'default'"
               @click="handleTimeRange('MONTH')"
             >
-              Monthly
+              {{ t('home.monthly') }}
             </ElButton>
           </ElButtonGroup>
         </div>
@@ -125,19 +209,21 @@ watch(
           class="flex w-full flex-col items-center justify-center gap-7 text-2xl"
         >
           <div class="flex w-full gap-7 text-lg font-bold">
-            <span class="text-success">VIP</span> <span>222</span>
+            <span class="text-success">{{ t('common.vip') }}</span>
+            <span>{{ 222 }}</span>
           </div>
           <div
             class="w-full border border-dashed border-gray-500"
             v-if="props.isAll"
           ></div>
           <div class="flex w-full gap-7 text-lg font-bold" v-if="props.isAll">
-            <span class="text-primary">ALL</span> <span>2222</span>
+            <span class="text-primary">{{ t('common.all') }}</span>
+            <span>{{ 222 }}</span>
           </div>
         </div>
       </div>
-      <div class="w-full">
-        <EchartsUI height="196px" width="100%" ref="chartRef" />
+      <div class="w-full px-6">
+        <EchartsUI height="196px" ref="chartRef" />
       </div>
     </section>
   </Card>

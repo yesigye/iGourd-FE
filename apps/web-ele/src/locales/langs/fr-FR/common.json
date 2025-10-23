@@ -347,5 +347,8 @@
   "yesterday": "Hier",
   "today": "Aujourd'hui",
   "last-week": "La semaine dernière",
-  "last-month": "Le mois dernier"
+  "last-month": "Le mois dernier",
+  "to": "à",
+  "start-date": "Date de début",
+  "end-date": "Date de fin"
 }

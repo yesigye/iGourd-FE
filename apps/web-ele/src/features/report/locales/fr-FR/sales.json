@@ -11,5 +11,8 @@
   "sales-amount": "Montant des ventes",
   "sales-gross-margin": "Marge brute des ventes",
   "sales-gross-margin-rate": "Taux de marge brute des ventes",
-  "cost-amount": "Montant des coûts"
+  "cost-amount": "Montant des coûts",
+  "total": "Total",
+  "sales-gross-margin-amount": "Ce Figure Est Calculé En Fonction Du Prix De Revient Actuel Des Produits Vendus Dans L'Commande",
+  "sales-gross-margin-rate-amount": "Ce Figure Est Calculé En Fonction Du Prix De Vente Actuel Des Produits Vendus Dans L'Commande"
 }

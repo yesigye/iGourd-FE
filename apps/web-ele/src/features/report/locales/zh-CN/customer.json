@@ -6,5 +6,6 @@
   "gmv": "GMV",
   "sales-order": "订单数",
   "recharge-amount": "充值金额",
-  "vip-qty": "VIP数量"
+  "vip-qty": "VIP数量",
+  "pcs": "个"
 }

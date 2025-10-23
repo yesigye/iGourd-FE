@@ -14,13 +14,6 @@ import { useCrud } from '#/hooks';
 export function useSalesReport() {
   const { t } = useI18n();
   const options = ref([]);
-  setTimeout(() => {
-    options.value = [
-      { label: '111', value: '111' },
-      { label: '222', value: '222' },
-    ];
-    console.log(options.value);
-  }, 5000);
   const columns: VxeGridPropTypes.Column<SalesReportRow>[] = [
     {
       field: 'product_major_name',
@@ -112,9 +105,9 @@ export function useSalesReport() {
       'x-component': 'DatePicker',
       'x-component-props': {
         type: 'daterange',
-        rangeSeparator: '至',
-        startPlaceholder: '开始日期',
-        endPlaceholder: '结束日期',
+        rangeSeparator: t('common.range-separator'),
+        startPlaceholder: t('common.start-date'),
+        endPlaceholder: t('common.end-date'),
         format: 'YYYY-MM-DD',
         valueFormat: 'YYYY-MM-DD',
       },
@@ -123,7 +116,7 @@ export function useSalesReport() {
 
   return useCrud<SalesReportRow, any>({
     columns,
-    id:"report-sales-list",
+    id: 'report-sales-list',
     searchFormSchema,
     scope: {
       initialValues: {
@@ -150,8 +143,8 @@ export function useSalesReport() {
         params.start_date = params.date_range?.[0]
           ? `${params.date_range?.[0]} 00:00:00`
           : `${dayjs().subtract(1, 'months').format('YYYY-MM-DD')} 00:00:00`;
-        params.tabKey = 'months';
-        params.time_range = 'MONTH';
+        params.tabKey = 'DAY';
+        params.time_range = 'DAY';
         return await getSalesReportApi(params);
       },
     },

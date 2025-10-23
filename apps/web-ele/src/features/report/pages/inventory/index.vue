@@ -10,9 +10,10 @@ import { useInventoryReport } from '@@/report/hooks';
 defineOptions({
   name: 'IInventoryReport',
 });
+const warehouseOptions = ref([]);
 
 const { t } = useI18n();
-const { Grid, Drawer, queryData } = useInventoryReport();
+const { Grid, Drawer, queryData } = useInventoryReport(warehouseOptions.value);
 const staticsData = ref<ProductSalesStatsResponse>({});
 const getStaticsData = async () => {
   const res = await getInventoryStatsApi({
@@ -26,9 +27,11 @@ const getStaticsData = async () => {
   <Page auto-content-height>
     <Grid />
     <Drawer />
-    <template #title>
-      <div class="flex items-center justify-between">
-        <div class="flex flex-wrap gap-2.5 text-xs">
+    <template #footer>
+      <div
+        class="flex w-full items-center justify-between border-t border-solid border-[#DCDFE6] pt-2.5"
+      >
+        <div class="flex flex-wrap gap-2.5">
           <p class="flex flex-wrap gap-2.5">
             <span>{{ t('inventory.qty-increased') }}:</span>
             <span class="text-warning">{{
@@ -54,7 +57,9 @@ const getStaticsData = async () => {
             }}</span>
           </p>
           <p class="flex flex-wrap gap-2.5">
-            <span>{{ t('inventory.total-value-of-products-by-selling') }}:</span>
+            <span
+              >{{ t('inventory.total-value-of-products-by-selling') }}:</span
+            >
             <span class="text-warning">{{
               staticsData.stock_selling_amount || 0
             }}</span>
