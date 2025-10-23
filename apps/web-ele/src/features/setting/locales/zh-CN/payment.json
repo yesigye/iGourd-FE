@@ -1,12 +1,12 @@
 {
-  "payment-method-tips": "最多添加7种支付方式",
+  "payment-method-tips": "提示:如果选项中没有您需要的支付方式,请联系我们:78654523",
   "purchase": "购买",
   "recharge": "充值",
   "retail_sales": "零售销售",
-  "pour":"用于",
-  "add-payment-method":"添加支付方式",
-  "payment-set":"支付设置",
-  "please-select-payment-method":"请选择支付方式",
-  "payment-scenario-add": "添加支付场景"
-
+  "pour": "用于",
+  "add-payment-method": "添加支付方式",
+  "payment-set": "支付设置",
+  "please-select-payment-method": "请选择支付方式",
+  "payment-scenario-add": "添加支付场景",
+  "confirm-del-payment-method-tips": "确认删除该支付方式吗？"
 }

@@ -2,13 +2,15 @@
 import { computed, onMounted, ref, watch } from 'vue';
 
 import {
+  confirm,
   ElButton,
   ElCheckbox,
+  ElCheckboxGroup,
   ElDialog,
-  ElIcon,
   ElMessage,
   ElOption,
   ElSelect,
+  IgourdIcon,
   Page,
   vuedraggable,
 } from '@igourd/common-ui';
@@ -48,9 +50,19 @@ const payMethodMarkListOption = computed(() => {
   const markList = new Set(
     payMethodList.value.map((item) => item.payment_method_mark),
   );
-  const option = payMethodMarkList.value.filter(
+  // 过滤出还未添加过的支付方式 undefined不能添加进去
+  const optionlist = payMethodMarkList.value.filter(
     (item) => !markList.has(item.mark),
   );
+  console.log(optionlist, 'optionlist');
+
+  const option = [];
+  optionlist.forEach((item) => {
+    if (item) {
+      option.push(item);
+    }
+  });
+
   return option;
 });
 
@@ -84,8 +96,8 @@ const sceneDesc = (scene) => {
     if (item.is_enabled) {
       desc +=
         index >= scene.length - 1
-          ? item.payment_scene_type
-          : `${item.payment_scene_type}&`;
+          ? item.payment_scene_type?.label
+          : `${item.payment_scene_type?.label}&`;
     }
   });
   return desc;
@@ -95,6 +107,7 @@ const getPayMenthodMarkList = async () => {
   payMethodMarkList.value = result;
 };
 const handAddPaymentDialogVisible = () => {
+  console.log(payMethodMarkListOption.value, 'payMethodMarkListOption.value');
   if (payMethodMarkListOption.value.length === 0) {
     return false;
   } else {
@@ -116,11 +129,15 @@ const delPayMenthod = async (event) => {
     ElMessage.error(t('payment.cash_payment_method_tips'));
     return;
   }
-
-  const result = await merchantPaymentMethodDel({
-    payment_method_mark: event.payment_method_mark,
+  confirm({
+    title: t('common.system-message'),
+    content: t('payment.confirm-del-payment-method-tips'),
+  }).then(async () => {
+    const result = await merchantPaymentMethodDel({
+      payment_method_mark: event.payment_method_mark,
+    });
+    getPayMenthodList();
   });
-  getPayMenthodList();
 };
 const sceneList = ref([
   {
@@ -147,13 +164,13 @@ const selectPaymet = async (item) => {
   ).scenes;
   sceneList.value = availableScene.map((itemMap) => {
     return {
-      label: itemMap,
-      value: itemMap,
+      label: itemMap.label,
+      value: itemMap.value,
     };
   });
   item.scenes.forEach((item) => {
     if (item.is_enabled) {
-      payScene.value.push(item.payment_scene_type);
+      payScene.value.push(item.payment_scene_type?.value);
     }
   });
   addSceneDialogVisible.value = true;
@@ -279,8 +296,15 @@ onMounted(async () => {
               </div>
             </div>
             <div
-              v-else
-              class="payment-item payment-item-no-drag border-primary bg-card h-40 border-t-[2px] border-solid"
+              v-else-if="
+                !element.isDraggable && payMethodMarkListOption.length > 0
+              "
+              class="payment-item payment-item-no-drag bg-card h-40 border-t-[2px] border-solid"
+              :class="
+                payMethodMarkListOption.length === 0
+                  ? 'border-gray-400'
+                  : 'border-primary'
+              "
               @click="handAddPaymentDialogVisible"
             >
               <div
@@ -292,7 +316,15 @@ onMounted(async () => {
                 "
               >
                 <div class="flex items-center justify-center gap-2.5">
-                  <ElIcon class="text-primary"><CirclePlus /></ElIcon>
+                  <IgourdIcon
+                    class="text-2xl"
+                    :class="
+                      payMethodMarkListOption.length === 0
+                        ? 'text-textColor-disabled'
+                        : 'text-primary'
+                    "
+                    icon="material-symbols-light:add-circle-outline"
+                  />
                   <p
                     :class="
                       payMethodMarkListOption.length === 0
@@ -339,7 +371,7 @@ onMounted(async () => {
               </el-form-item>
             </div>
           </div>
-          <p class="text-warning mt-2 text-center">
+          <p class="text-warning mt-4 text-center">
             {{ t('payment.payment-method-tips') }}
           </p>
         </div>
@@ -365,20 +397,19 @@ onMounted(async () => {
         <div>
           <el-form>
             <div class="">
-              <el-checkbox-group v-model="payScene">
+              <ElCheckboxGroup v-model="payScene">
                 <div class="flex items-center justify-center gap-5">
                   <div>
                     <div v-for="item in sceneList" :key="item.value">
                       <ElCheckbox
                         :value="item.value"
+                        :label="item?.label"
                         :disabled="isShowDel(selectedPayMethod).is_default"
-                      >
-                        {{ t(`payment.${item.label.toLocaleLowerCase()}`) }}
-                      </ElCheckbox>
+                      />
                     </div>
                   </div>
                 </div>
-              </el-checkbox-group>
+              </ElCheckboxGroup>
             </div>
           </el-form>
         </div>

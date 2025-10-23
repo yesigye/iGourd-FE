@@ -1,12 +1,12 @@
 {
-  "payment-method-tips": "Vous pouvez ajouter jusqu'à 7 méthodes de paiement",
+  "payment-method-tips": "Si la méthode de paiement que vous souhaitez utiliser n'est pas disponible dans la liste, veuillez nous contacter : 78654523",
   "purchase": "Achat",
   "recharge": "Recharge",
   "retail_sales": "Ventes au détail",
   "pour": "Pour",
   "add-payment-method": "Ajouter une méthode de paiement",
   "payment-set": "Paramètres de paiement",
-  "please-select-payment-method":"Veuillez sélectionner une méthode de paiement",
-  "payment-scenario-add": "Ajouter un scénario de paiement"
-
+  "please-select-payment-method": "Veuillez sélectionner une méthode de paiement",
+  "payment-scenario-add": "Ajouter un scénario de paiement",
+  "confirm-del-payment-method-tips": "Confirmez-vous la suppression de cette méthode de paiement ?"
 }
