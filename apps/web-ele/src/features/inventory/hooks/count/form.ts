@@ -127,6 +127,7 @@ export function useCountForm() {
       params.total_variance_cost = totalVarianceCost;
       params.total_variance_quantity = totalVarianceQuantity;
       params.total_variance_selling_price = totalVarianceSellingPrice;
+      params.warehouse_location_id = 1;
       // 调用 API
       response = await (params.id
         ? updateCount({
