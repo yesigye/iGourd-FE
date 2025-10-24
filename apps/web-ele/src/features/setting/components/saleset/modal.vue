@@ -5,9 +5,9 @@ import {
   confirm,
   ElButton,
   ElCol,
-  ElIcon,
   ElMessage,
   ElRow,
+  IgourdIcon,
   useIgourdModal,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
@@ -54,7 +54,7 @@ const handleEditQuickTag = (item) => {
 const deleteQuickTag = async (item: { id: string }) => {
   confirm({
     title: t('common.confirm'),
-    content: t('settings.quick_tag_del_tips'),
+    content: t('saleset.quick-tag-del-tips'),
   }).then(async () => {
     const result = await removeQuickTagsApi({
       id: item.id,
@@ -165,12 +165,11 @@ const [Modal, modalApi] = useIgourdModal({
           >
             <div class="add-quick-tag-item">
               <span>{{ t('saleset.quick-tags') }}</span>
-              <ElIcon
-                class="add-quick-tags-icon text-azure-bright"
+
+              <IgourdIcon
+                icon="material-symbols:add-2-rounded"
                 @click="handleAddQuickTag"
-              >
-                <Plus />
-              </ElIcon>
+              />
             </div>
             <div class="mt-2">
               <div
@@ -179,7 +178,7 @@ const [Modal, modalApi] = useIgourdModal({
                 class="quick-tag-item"
                 :class="
                   quickTagsId == item.id
-                    ? 'quick-tag-item-active bg-sky-mist text-azure'
+                    ? 'quick-tag-item-active bg-primary-100 text-azure'
                     : ''
                 "
                 @click="getQuickTagsValueList(item.id)"
