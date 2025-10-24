@@ -1,5 +1,7 @@
 import type { ISchema } from '@igourd/common-ui';
+
 import { accountLedgerPageQueryPageVO } from '../../apis';
+
 export default (account_set_id: string) =>
   ({
     type: 'object',
@@ -26,7 +28,7 @@ export default (account_set_id: string) =>
                 title: "{{t('account.revenue-expenditure')}}",
                 enum: [
                   {
-                    label: '{{t("account.REVENUE")}}',
+                    label: '{{t("account.revenue")}}',
                     value: 'REVENUE',
                   },
                   {

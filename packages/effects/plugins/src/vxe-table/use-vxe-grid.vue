@@ -171,7 +171,25 @@ async function handleSubmit() {
 }
 async function handleReset() {
   const prevValues = formApi.values;
-  await formApi.reset();
+
+  // 如果有自定义的初始值重置逻辑，优先使用
+  if (
+    formOptions.value?.onReset &&
+    typeof formOptions.value.onReset === 'function'
+  ) {
+    await formOptions.value.onReset(formApi);
+  } else if (
+    formOptions.value?.resetToInitialValues &&
+    formOptions.value?.initialValues
+  ) {
+    // 重置到指定的初始值
+    formApi.setInitialValues(formOptions.value.initialValues);
+    await formApi.reset();
+  } else {
+    // 默认重置行为
+    await formApi.reset();
+  }
+
   const formValues = formApi.values;
   tabsValue.value = unref(tabsOption)?.defaultActiveValue;
 

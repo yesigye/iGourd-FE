@@ -1,7 +1,13 @@
+import type { ElTree } from '@igourd/common-ui';
+
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
+import { reactive, ref, shallowRef, watch } from 'vue';
+
+import { observable } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
+import { formateMonth, isBetween, isEmpty } from '@igourd/utils';
 
 import {
   getAccountingPeriodsApi,
@@ -11,10 +17,8 @@ import {
 import { SubsidiaryLedgerDrawer } from '@@/account/components';
 
 import { useCrud } from '#/hooks';
-import { reactive, ref, shallowRef, watch } from 'vue';
 import { useRemoteTableTabs } from '#/hooks/use-remote-tabs';
-import { observable, type ElTree } from '@igourd/common-ui';
-import { formateMonth, isBetween, isEmpty } from '@igourd/utils';
+
 import { directionCodeLabel } from '../leaf-ledgers';
 
 export function useSubsidiaryLedger() {
@@ -34,7 +38,7 @@ export function useSubsidiaryLedger() {
   const enabledDate = shallowRef([]);
 
   function handleNodeClick() {
-    //@ts-ignore
+    // @ts-ignore
     params.account_ledger_ids = treeRef.value?.getCheckedKeys(false);
     if (isEmpty(params.account_ledger_ids)) {
       return;
@@ -59,7 +63,6 @@ export function useSubsidiaryLedger() {
     getChartOfAccountsTreeApi({
       category,
     }).then((res) => {
-      console.log(res)
       treeList.value = res;
     });
   }
@@ -108,7 +111,6 @@ export function useSubsidiaryLedger() {
       flush: 'post',
     },
   );
-
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<any>[] = [
     {
@@ -187,6 +189,32 @@ export function useSubsidiaryLedger() {
       start_accounting_period,
       end_accounting_period,
     },
+    onReset: async (formApi) => {
+      getAccountingPeriodsApi({ account_set_id }).then((res) => {
+        enabledDate.value = res?.map((i: any) => {
+          return {
+            ...i,
+            range: [i.start_date, i.end_date],
+          };
+        });
+        if (res?.length <= 0) {
+          return;
+        }
+        const [{ start_date, end_date }] = res;
+        start_accounting_period.value = formateMonth(start_date);
+        end_accounting_period.value = formateMonth(end_date);
+      });
+
+      // 设置初始值
+      formApi.setInitialValues({
+        start_accounting_period: start_accounting_period.value,
+        end_accounting_period: end_accounting_period.value,
+        keywords: '', // 清空关键词
+      });
+
+      // 执行重置
+      formApi.reset();
+    },
     searchFormSchema: {
       '[start_accounting_period,end_accounting_period]': {
         type: 'string',
@@ -199,7 +227,7 @@ export function useSubsidiaryLedger() {
           valueFormat: 'YYYY-MM',
           'disabled-date': (value: any) => {
             return !enabledDate.value.find((i) => {
-              //@ts-ignore
+              // @ts-ignore
               return isBetween(value, i.range, 'day');
             });
           },

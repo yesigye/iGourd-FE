@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 import {
-  ColPage,
-  ElButton,
-  ElTree,
   Card,
-  ElScrollbar,
+  ColPage,
   ElAutoResizer,
+  ElButton,
+  ElScrollbar,
+  ElTree,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
@@ -35,8 +33,8 @@ const {
 
 <template>
   <ColPage
-    headerClass="px-0 py-1 bg-muted border-0"
-    contentClass="pt-0"
+    header-class="px-0 py-1 bg-muted border-0"
+    content-class="pt-0"
     auto-content-height
     :left-width="20"
   >
@@ -83,11 +81,11 @@ const {
       </Card>
     </template>
     <Grid
-      gridClass="px-0 telport-grid"
+      grid-class="px-0 telport-grid"
       :tabs="tabs"
       :tabs-option="tabsOption"
-      v-model:tabsActiveKey="tabsActiveKey"
-      tabsAppenTo="#subsidiary-ledger-tabs"
+      v-model:tabs-active-key="tabsActiveKey"
+      tabs-appen-to="#subsidiary-ledger-tabs"
     >
       <template #operation="{ row }">
         <ElButton type="text" @click="handleEdit(row)">

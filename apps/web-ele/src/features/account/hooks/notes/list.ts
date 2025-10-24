@@ -10,8 +10,8 @@ import { moneyFormat } from '@igourd/utils';
 
 import {
   createOrUpdateAccountingNote,
-  getFinanceNoteListApi,
   getAccountingNoteDetail,
+  getFinanceNoteListApi,
   removeAccountingNoteApi,
 } from '@@/account/apis';
 import { NotesDrawerForm } from '@@/account/components';
@@ -21,11 +21,6 @@ import { useCrud } from '#/hooks';
 export function useAccountNotes() {
   const { t } = useI18n();
   const columns: VxeGridPropTypes.Column<AccountingNotePageModel>[] = [
-    {
-      type: 'checkbox',
-      minWidth: 50,
-      fixed: 'left',
-    },
     {
       field: 'accounting_note_no',
       title: t('account.notes-no'),
@@ -123,6 +118,7 @@ export function useAccountNotes() {
       fixed: 'right',
       title: t('account.review'),
       minWidth: 165,
+      slots: { default: 'reviewer' },
     },
     {
       field: 'operation',
