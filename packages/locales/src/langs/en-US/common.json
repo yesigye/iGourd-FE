@@ -26,6 +26,9 @@
     "store": "Switch Store"
   },
   "upload-file-size-msg": "File too large: {size}MB (maximum {max}MB)",
-  "upload-file-type": "File type not allowed: {fileType}"
+  "upload-file-type": "File type not allowed: {fileType}",
+  "banned-words-label":"banned words:{word}",
+  "banned-words-1":"台独",
+  "banned-words-2":"法轮功"
 }
 

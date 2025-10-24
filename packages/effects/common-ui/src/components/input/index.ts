@@ -3,9 +3,8 @@ import { ElInput } from 'element-plus';
 
 import { composeExport, transformComponent } from '../__builtins__';
 import { PreviewText } from '../preview-text';
-
+import { $t } from '@igourd/locales';
 export type InputProps = typeof ElInput;
-
 const validationKeys = new Set(['maxLength']);
 
 const mergeValidationProperties = (target: any, source: any) => {
@@ -31,13 +30,13 @@ const checkProperties = (source: any) => {
   });
   return flag;
 };
+
 const defaultInputValidator = {
   maxLength: 128,
 };
 // 默认TextArea 校验    'x-component': 'Input.TextArea'
 const defaultTextAreaValidator = {
   maxLength: 256,
-  //message: '不能超过{max}个字符',
 };
 
 const TransformElInput = transformComponent<InputProps>(ElInput, {
@@ -52,6 +51,29 @@ const InnerInput = connect(
       readOnly: 'readonly',
     },
     (props) => {
+      const bannedWords = [
+        $t('common.banned-words-1'),
+        $t('common.banned-words-2'),
+      ];
+
+      const handleBlur = (val: string) => {
+        const includesBannedWors: string[] = [];
+        console.log(bannedWords);
+        bannedWords.forEach((keyword) => {
+          if (val.indexOf(keyword) >= 0) {
+            includesBannedWors.push(keyword);
+          }
+        });
+
+        if (includesBannedWors.length > 0) {
+          return $t('common.banned-words-label', {word:includesBannedWors.join('、')});
+        }
+      };
+      const customValidator = {
+        bannedWords: true,
+        triggerType: 'onBlur',
+        validator: handleBlur,
+      };
       const schemaRef = useFieldSchema();
       const validator = schemaRef.value['x-validator'] || [];
       if (validator.length === 0) {
@@ -69,8 +91,18 @@ const InnerInput = connect(
           }
         });
 
-        if (!isExist && validator.findIndex((v) => v.maxLength) === -1) {
+        if (
+          !isExist &&
+          validator.findIndex((v: any) => v['maxLength']) === -1
+        ) {
           validator.push(defaultInputValidator);
+        }
+        // 添加违禁词验证
+        if (
+          !isExist &&
+          validator.findIndex((v: any) => v['bannedWords']) === -1
+        ) {
+          validator.push(customValidator);
         }
       }
       console.log('validator', validator);
@@ -103,6 +135,13 @@ const TextArea = connect(
 
       if (!isExist && validator.findIndex((v) => v.maxLength) === -1) {
         validator.push(defaultTextAreaValidator);
+      }
+      // 添加违禁词验证
+      if (
+        !isExist &&
+        validator.findIndex((v: any) => v['bannedWords']) === -1
+      ) {
+        validator.push(customValidator);
       }
     }
     schemaRef.value.setProperties({ 'x-validator': validator });

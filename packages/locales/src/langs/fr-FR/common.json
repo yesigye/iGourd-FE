@@ -28,5 +28,8 @@
     "store": "Changer de magasin"
   },
   "upload-file-size-msg": "Fichier trop volumineux : {size} Mo (limite : {max} Mo)",
-  "upload-file-type": "Type de fichier non autorisé : {fileType}"
+  "upload-file-type": "Type de fichier non autorisé : {fileType}",
+  "banned-words-label":"Mots interdits:{word}",
+  "banned-words-1":"台独",
+  "banned-words-2":"法轮功"
 }
