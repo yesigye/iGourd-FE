@@ -4,7 +4,7 @@ export const transferType = (item: {
   is_locked: boolean;
   settlement_status: AccountingPeriodSettlementStatusEnum;
 }) => {
-  if (item.is_locked || item.settlement_status == 'CLOSED') {
+  if (item.is_locked || item.settlement_status.value === 'CLOSED') {
     return {
       bgColor: 'bg-[#9E9E9E]',
       borderColor: 'border-[#9E9E9E]',
@@ -12,7 +12,7 @@ export const transferType = (item: {
       cursor: 'cursor-not-allowed',
       isDisable: true,
     };
-  } else if (item.settlement_status == 'OPEN') {
+  } else if (item.settlement_status.value === 'OPEN') {
     return {
       bgColor: 'bg-success',
       borderColor: 'border-success',
@@ -21,8 +21,8 @@ export const transferType = (item: {
       isDisable: false,
     };
   } else if (
-    item.settlement_status === 'PROFIT_LOSS_TRANSFERRED' ||
-    item.settlement_status == 'ROLL_BACKED'
+    item.settlement_status.value === 'PROFIT_LOSS_TRANSFERRED' ||
+    item.settlement_status.value === 'ROLL_BACKED'
   ) {
     return {
       bgColor: 'bg-primary',

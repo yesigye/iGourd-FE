@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 
 import {
   ElButton,
+  ElDatePicker,
   ElDialog,
   ElFormItem,
   ElIcon,
@@ -696,7 +697,7 @@ onMounted(() => {
         :label="t('final-transfer.select-checkout-year-month')"
         label-position="left"
       >
-        <el-date-picker
+        <ElDatePicker
           v-model="period"
           type="month"
           value-format="M"
