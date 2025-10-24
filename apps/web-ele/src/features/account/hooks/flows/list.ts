@@ -50,52 +50,41 @@ export function useFlows() {
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<AccountFlowsInfo>[] = [
     {
-      type: 'checkbox',
-      field: 'checkbox',
-      minWidth: 80,
-      fixed: 'left',
-    },
-    {
       field: 'flow_no',
       minWidth: 165,
-      align: 'left',
+      align: 'center',
       fixed: 'left',
       title: t('account.serial-number'),
     },
     {
       field: 'finance_category_name',
       minWidth: 200,
-      align: 'right',
+      align: 'center',
       title: t('account.finance-category-name'),
     },
     {
       field: 'revenue_amount',
       minWidth: 150,
-      align: 'right',
+      align: 'center',
       title: t('account.revenue-amount'),
       formatter: 'formatMoney',
     },
     {
       field: 'expenditure_amount',
       minWidth: 150,
-      align: 'right',
+      align: 'center',
       title: t('account.expenditure-amount'),
       formatter: 'formatMoney',
     },
     {
       field: 'business_original_amount',
       minWidth: 150,
-      align: 'right',
-      title: t('account.business-original-amount'),
+      align: 'center',
+      title: t('account.customer'),
       formatter: 'formatMoney',
     },
     {
-      field: 'trader_name',
-      minWidth: 150,
-      title: t('account.trader-name'),
-    },
-    {
-      minWidth: 200,
+      minWidth: 600,
       field: 'target_account_name_col',
       title: '支付信息',
       children: [
@@ -109,15 +98,20 @@ export function useFlows() {
           minWidth: 200,
           title: t('account.payment-method'),
         },
+        {
+          field: 'payment_method_amount',
+          minWidth: 200,
+          title: t('account.payment-amount'),
+        },
       ],
     },
     {
       field: 'source_type',
       minWidth: 150,
       title: t('account.source'),
-      // formatter({ cellValue }: { cellValue: keyof typeof sourceTypeMap }) {
-      //   return t(sourceTypeMap[cellValue].label);
-      // },
+      formatter({ cellValue }: { cellValue: keyof typeof sourceTypeMap }) {
+        return cellValue?.label ?? '--';
+      },
     },
     {
       field: 'trading_no',
@@ -126,13 +120,8 @@ export function useFlows() {
     },
     {
       field: 'remark',
-      minWidth: 150,
+      minWidth: 250,
       title: t('account.remark'),
-    },
-    {
-      field: 'trading_time',
-      minWidth: 150,
-      title: t('account.trading-time'),
     },
     {
       field: 'creator_name',

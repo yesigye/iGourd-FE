@@ -1,4 +1,4 @@
-import type { AccountLedgerBalanceTreeModel } from '@@/account/types';
+import type { ChartOfAccountType } from '@@/account/components';
 
 import type { VxeGridPropTypes } from '@igourd/plugins/vxe-table';
 
@@ -13,16 +13,11 @@ import {
   modifyAccountApi,
   modifyAccountLedgerApi,
   modifyLedgerBalanceApi,
-  removeAccountApi,
   removeAccountLedgerApi,
 } from '@@/account/apis';
-import {
-  ChartOfAccountsDrawer,
-  type ChartOfAccountType,
-} from '@@/account/components';
+import { ChartOfAccountsDrawer } from '@@/account/components';
 
 import { useCrud, useLanguage } from '#/hooks';
-import { accountLedgerBalanceDirectionOptions } from '../leaf-ledgers';
 
 function accountSaveOrUpdate(dto: any) {
   if (Reflect.has(dto, 'id')) {
@@ -68,11 +63,7 @@ export function useChartOfAccounts() {
       width: 200,
       title: t('account.balance-direction'),
       formatter({ cellValue }) {
-        return t(
-          accountLedgerBalanceDirectionOptions().find((i) => {
-            return i.value === cellValue;
-          })?.label ?? 'common.unkonwn',
-        );
+        return cellValue?.label;
       },
     },
     {
@@ -163,9 +154,9 @@ export function useChartOfAccounts() {
       editClosed({ row }) {
         modifyLedgerBalanceApi({
           ...row,
-          //@ts-ignore
+          // @ts-ignore
           account_ledger_id: row.curr_account_balance_model
-            ? //@ts-ignore
+            ? // @ts-ignore
               row.account_ledger_id
             : row.id,
         }).then(() => {

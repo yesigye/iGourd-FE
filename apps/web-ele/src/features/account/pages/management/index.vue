@@ -9,8 +9,15 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete, type } =
-  useAccountManagement();
+const {
+  Grid,
+  Drawer,
+  handleEdit,
+  canBatchOperate,
+  handleBatchDelete,
+  type,
+  handleView,
+} = useAccountManagement();
 </script>
 
 <template>
@@ -23,19 +30,12 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete, type } =
         <ElButton type="primary" @click="handleEdit(undefined, 'CARD')">
           {{ t('account.add-bank-card') }}
         </ElButton>
-        <ElButton
-          type="danger"
-          v-if="canBatchOperate"
-          @click="handleBatchDelete"
-        >
-          {{ t('common.delete-btn') }}
-        </ElButton>
       </template>
       <template #operation="{ row }">
         <ElButton type="text" @click="handleEdit(row, row.account_type)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleEdit(row)">
+        <ElButton type="text" @click="handleView(row)">
           {{ t('common.detail') }}
         </ElButton>
       </template>
