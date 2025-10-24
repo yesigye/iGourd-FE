@@ -30,25 +30,23 @@ export function useAdvancePaymentOrder() {
     {
       field: 'payment_time',
       minWidth: 170,
-      title: t('account.orderDate'),
+      title: t('account.order-date'),
       align: 'right',
       sortable: true,
     },
     {
       field: 'payment_direction',
       minWidth: 140,
-      title: t('account.order_dir'),
+      title: t('account.order-dir'),
       sortable: true,
       formatter({ cellValue }) {
-        return t(
-          `collection-voucher.receipt-direction.${cellValue.toLocaleLowerCase()}`,
-        );
+       return cellValue.label
       },
     },
     {
       field: 'total_amount',
       minWidth: 150,
-      title: t('account.collected_amt'),
+      title: t('account.collected-amt'),
       sortable: true,
       align: 'right',
       formatter: 'formatMoney',
@@ -70,9 +68,10 @@ export function useAdvancePaymentOrder() {
       title: t('account.businessType'),
       sortable: true,
       formatter({ cellValue }) {
-        return t(
-          `collection-voucher.business_type.${cellValue.toLocaleLowerCase()}`,
-        );
+        return cellValue.label
+        // return t(
+        //   `collection-voucher.business_type.${cellValue.toLocaleLowerCase()}`,
+        // );
       },
     },
 
@@ -96,7 +95,8 @@ export function useAdvancePaymentOrder() {
       sortable: true,
       fixed: 'right',
       formatter({ cellValue }) {
-        return t(`common.review-status.${cellValue}`);
+        return cellValue.label
+        // return t(`common.review-status.${cellValue}`);
       },
     },
     {

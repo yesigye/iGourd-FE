@@ -62,6 +62,20 @@ export function useReceiptForm() {
     { label: t('order.vat-inclusive'), value: 'VAT_INCLUSIVE' },
     { label: t('order.vat-exclusive'), value: 'VAT_EXCLUSIVE' },
   ];
+  // 选择预付订单
+  const onSelectPrepaidOrder = async(records: any) => {
+    debugger
+    if (!records) {
+      return;
+    }
+
+    const row = records[0]
+
+    formAPI.setValues({
+      order_info: row,
+      purchase_returned_item_list: [records]
+    });
+  };
   // 配置form
   const schema: ISchema = {
     type: 'object',
@@ -917,6 +931,7 @@ export function useReceiptForm() {
           const IconComponent = createIconifyIcon(name);
           return IconComponent ? h(IconComponent) : null;
         },
+        onSelectPrepaidOrder
       },
       schema: schema,
       effects() {

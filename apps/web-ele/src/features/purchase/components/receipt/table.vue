@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ModalTable } from '#/components/modal-table';
 import { useForm, useIgourdModal } from '@igourd/common-ui';
-import { useOrderList } from '@@/account/hooks';
+import { usePreOrderList } from '@@/purchase/hooks';
 import { useI18n } from '@igourd/locales';
 import { unref } from 'vue';
 import { sum } from '@igourd/utils';
@@ -13,7 +13,7 @@ const defaultQueryParams = {
   status_list: ['NO_REPAID', 'PARTIAL_REPAID'],
 };
 const { Grid: SaleGrid, gridApi: saleGridApi } =
-  useOrderList(defaultQueryParams);
+  usePreOrderList(defaultQueryParams);
 
 // const { Grid: AccountNotesGrid } = useNotesList(defaultQueryParams);
 const { t } = useI18n();
@@ -31,6 +31,7 @@ const [Modal, modalApi] = useIgourdModal({
   destroyOnClose: true,
 
   onConfirm() {
+    debugger
     const records = saleGridApi.grid.getCheckboxRecords();
     const formAPI = unref(form);
     if (!records) {

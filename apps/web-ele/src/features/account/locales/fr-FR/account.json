@@ -498,5 +498,6 @@
   "total-amount": "Montant total",
   "transaction-amount": "Montant de la transaction",
   "order-amount": "Montant de la commande",
-  "order": "Commande"
+  "order": "Commande",
+  "source-order-title":"Commande source"
 }

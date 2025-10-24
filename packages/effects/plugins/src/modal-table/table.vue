@@ -55,6 +55,7 @@ const [Modal, modalApi] = useIgourdModal({
   class: props.class,
   destroyOnClose: true,
   onConfirm() {
+    debugger
     if (gridApi.grid.getRadioRecord(true)) {
       emits('confirm', [gridApi.grid.getRadioRecord(true)]);
     }

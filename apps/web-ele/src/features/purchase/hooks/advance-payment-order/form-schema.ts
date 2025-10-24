@@ -45,11 +45,11 @@ export function useCollectionVoucherSchema() {
                 },
                 enum: [
                   {
-                    label: `{{t('collection-voucher.receipt-direction.positive_order')}}`,
+                    label: `{{t('collection-voucher.receipt-direction.positive-order')}}`,
                     value: 'POSITIVE_ORDER',
                   },
                   {
-                    label: `{{t('collection-voucher.receipt-direction.negative_order')}}`,
+                    label: `{{t('collection-voucher.receipt-direction.negative-order')}}`,
                     value: 'NEGATIVE_ORDER',
                   },
                 ],
@@ -106,7 +106,7 @@ export function useCollectionVoucherSchema() {
                     type: 'string',
                     'x-component': 'Input',
                     'x-decorator': 'FormItem',
-                    title: "{{t('account.traderName')}}",
+                    title: "{{t('account.trader-name')}}",
                     'x-validator': [
                       null,
                       {
@@ -146,7 +146,7 @@ export function useCollectionVoucherSchema() {
                     type: 'string',
                     'x-component': 'Input',
                     'x-decorator': 'FormItem',
-                    title: "{{t('account.receivable_balance')}}",
+                    title: "{{t('account.receivable-balance')}}",
                     'x-component-props': {
                       placeholder: "{{t('common.enter')}}",
                       disabled: true,
@@ -157,7 +157,7 @@ export function useCollectionVoucherSchema() {
                     type: 'string',
                     'x-component': 'Input',
                     'x-decorator': 'FormItem',
-                    title: "{{t('account.last_debt')}}",
+                    title: "{{t('account.last-debt')}}",
                     'x-component-props': {
                       placeholder: "{{t('common.enter')}}",
                       disabled: true,
@@ -366,7 +366,7 @@ export function useCollectionVoucherSchema() {
                     type: 'number',
                   },
                   'discount-rate': {
-                    title: `{{t('account.total-discount_rate')}}`,
+                    title: `{{t('account.total-discount-rate')}}`,
                     'x-decorator': 'FormItem',
                     'x-component': 'InputNumber',
                     type: 'number',

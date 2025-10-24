@@ -49,7 +49,7 @@ const [Modal, modalApi] = useIgourdModal({
 </script>
 
 <template>
-  <Modal :onBeforeOpen="onBeforeOpen" title="源订单">
+  <Modal :onBeforeOpen="onBeforeOpen" :title="t('account.source-order-title')">
     <template #reference>
       <SquareMousePointer></SquareMousePointer>
       {{ t('account.source-order-information') }}
