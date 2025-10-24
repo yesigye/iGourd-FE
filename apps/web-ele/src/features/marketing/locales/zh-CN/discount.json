@@ -1,7 +1,7 @@
 {
   "form": {
     "edit": "编辑促销",
-    "create": "新增促销",
+    "create": "添加促销",
     "basic-info": "基础信息",
     "type": "促销类型",
     "channel": "适用范围",
@@ -24,7 +24,7 @@
     "exclude-dates": "暂停日",
     "remark": "备注"
   },
-   "more-time-setting": "更多时间和日期设置 >>",
+  "more-time-setting": "更多时间和日期设置 >>",
   "placeholder": {
     "name": "请输入促销名称",
     "minimum-amount": "请输入消费门槛",
