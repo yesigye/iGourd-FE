@@ -46,5 +46,9 @@
   "accounts-have-been-closed": "Profits And Losses Have Been Transferred, Accounts Have Been Closed",
   "no-need-carry-forward-this-period": "No Need To Carry Forward This Period",
   "data-loading-please-wait": "Data Loading Please Wait...",
-  "uncompleted": "Uncompleted"
+  "uncompleted": "Uncompleted",
+  "lot": "Lot",
+  "imbalance-at-beginning": "Imbalance At Beginning",
+  "initial-inspection": "Initial Inspection",
+  "step-1-pre-check": "Step 1: Initial Inspection"
 }

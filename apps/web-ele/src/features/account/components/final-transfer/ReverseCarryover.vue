@@ -32,8 +32,8 @@ const { t } = useI18n();
 const userStore = useUserStore();
 const period = ref('');
 const tooltipText =
-  ref(`<div class="tooltip-text">${t('final-transfer.tooltip_dark_blue_text')}
-${t('final-transfer.tooltip_light_blue_text')}</div>`);
+  ref(`<div class="tooltip-text">${t('final-transfer.tooltip-dark-blue-text')}
+${t('final-transfer.tooltip-light-blue-text')}</div>`);
 // 反结转日历
 const transferList = ref({});
 // 原始数据
@@ -144,7 +144,7 @@ const finishProgress = async () => {
  */
 const handSubmitPeriodPicker = async () => {
   if (!period.value) {
-    ElMessage.error(t('final-transfer.please_select_accounting_period'));
+    ElMessage.error(t('final-transfer.please-select-accounting-period'));
     return;
   }
   const selectYear = transferList.value[selectedPeriod.value.year];
@@ -172,7 +172,7 @@ const handSubmitPeriodPicker = async () => {
     if (res.is_period_roll_backed_success) {
       await finishProgress();
       handClosePeriodPicker();
-      ElMessage.success(t('final-transfer.reverse_carryover_success'));
+      ElMessage.success(t('final-transfer.reverse-carryover-success'));
       handClosePeriodPicker();
       getListAccountingPeriods();
     }
@@ -230,7 +230,7 @@ watch(
           @click="handfinalTransferClick(listItem)"
         >
           <div
-            class="bg-leaf-green flex h-6 items-center justify-center rounded-t-sm"
+            class="bg-success flex h-6 items-center justify-center rounded-t-sm"
             :class="[transferTypeReverse(listItem).bgColor]"
           >
             <ElIcon v-if="transferTypeReverse(listItem).isDisable">

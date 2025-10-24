@@ -1,5 +1,7 @@
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
+import { nextTick, provide, ref } from 'vue';
+
 import { useI18n } from '@igourd/locales';
 
 import {
@@ -12,7 +14,6 @@ import {
 import { AccountDrawerForm } from '@@/account/components';
 
 import { useCrud } from '#/hooks';
-import { ref, nextTick, provide } from 'vue';
 
 export function useAccountManagement() {
   const { t } = useI18n();
@@ -100,9 +101,10 @@ export function useAccountManagement() {
     handleEdit: innerHandleEdit,
     canBatchOperate,
     handleBatchDelete,
+    handleView,
   } = useCrud<any, any>({
     columns,
-    id:"management-list",
+    id: 'management-list',
     searchFormSchema,
     batchOperate: true,
     connectedComponent: AccountDrawerForm,
@@ -115,12 +117,20 @@ export function useAccountManagement() {
     },
   });
 
-  function handleEdit(dto?: any, mode?: 'CASH' | 'CARD') {
+  function handleEdit(dto?: any, mode?: 'CARD' | 'CASH') {
     type.value = mode ?? 'CASH';
     nextTick(() => {
       innerHandleEdit(dto);
     });
   }
 
-  return { Grid, Drawer, type, handleEdit, canBatchOperate, handleBatchDelete };
+  return {
+    Grid,
+    Drawer,
+    type,
+    handleEdit,
+    canBatchOperate,
+    handleBatchDelete,
+    handleView,
+  };
 }

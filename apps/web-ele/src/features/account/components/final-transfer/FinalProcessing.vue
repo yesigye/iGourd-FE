@@ -96,8 +96,8 @@ const getListAccountingPeriods = async () => {
   // 按照年份分组
 };
 const tooltipText =
-  ref(`<div class="tooltip-text">${t('final-transfer.tooltip_dark_blue_text')}
-${t('final-transfer.tooltip_light_blue_text')}</div>`);
+  ref(`<div class="tooltip-text">${t('final-transfer.tooltip-dark-blue-text')}
+${t('final-transfer.tooltip-light-blue-text')}</div>`);
 
 // 结转步骤
 const step = ref(1);
@@ -192,7 +192,6 @@ const handCurrentAccountingPeriod = async () => {
  * 悄悄摸摸执行结转损益
  */
 const handiSlentProfitLossTransfer = async () => {
-  console.log(accountingPeriod.value.id, '这是会计期间id');
   const res = await executeProfitLossCarryForward({
     account_set_id: userStore.merchantInfo.account_set_id,
     accounting_period_id: accountingPeriod.value.id,
@@ -411,7 +410,6 @@ const handClickQuestion = () => {
   accountNoteTipsVisible.value = true;
 };
 const handleCurrentChange = (num, size) => {
-  console.log(num, size);
   params.value.page_num = num;
   params.value.page_size = size;
   getAccountNoteList();
@@ -516,15 +514,15 @@ onMounted(() => {
         v-if="!trialBalanceCheckRes.is_overall_balanced"
         class="mt-5 text-lg"
       >
-        · {{ t('final-transfer.imbalance_at_beginning') }}
+        · {{ t('final-transfer.imbalance-at-beginning') }}
         <span class="text-primary-01 cursor-pointer" @click="handProcess">{{
-          t('final-transfer.click_process')
+          t('final-transfer.click-process')
         }}</span>
       </div>
       <div v-else class="mt-5 text-lg">
-        · {{ t('final-transfer.imbalance_at_beginning') }}
+        · {{ t('final-transfer.imbalance-at-beginning') }}
         <span class="text-primary-01 cursor-pointer" @click="handProcess">{{
-          t('final-transfer.click_process')
+          t('final-transfer.click-process')
         }}</span>
       </div>
     </div>
@@ -539,7 +537,7 @@ onMounted(() => {
   </section>
   <section v-if="step === 3" class="overflow-auto text-center">
     <p class="mt-5 text-2xl font-bold">
-      {{ t('final-transfer.step_2_transfer_gains_losses') }}
+      {{ t('final-transfer.step-2-transfer-gains-losses') }}
     </p>
     <div class="m-auto mt-5 w-1/2">
       <Grid />
@@ -566,7 +564,7 @@ onMounted(() => {
         type="primary"
         @click="handExecuteProfitLossCarryForward"
       >
-        {{ t('final-transfer.lot') }}{{ t('final-transfer.carry_forward') }}
+        {{ t('final-transfer.lot') }}{{ t('final-transfer.carry-forward') }}
       </ElButton>
     </div>
   </section>
@@ -695,7 +693,7 @@ onMounted(() => {
     <div class="flex justify-center">
       <ElFormItem
         required
-        :label="t('final-transfer.select_checkout_year_month')"
+        :label="t('final-transfer.select-checkout-year-month')"
         label-position="left"
       >
         <el-date-picker
@@ -709,11 +707,11 @@ onMounted(() => {
       </ElFormItem>
     </div>
     <div class="text-status-partial">
-      {{ t('final-transfer.batch_checkout_tip') }}
+      {{ t('final-transfer.batch-checkout-tip') }}
     </div>
     <div class="mt-5 flex justify-end gap-2.5">
       <ElButton type="primary" @click="handCloseBatchClosingDialog">
-        {{ t('final-transfer.cancel') }}
+        {{ t('common.cancel') }}
       </ElButton>
       <ElButton type="primary" @click="onBatchClosingInitiated">
         {{ t('final-transfer.confirm') }}

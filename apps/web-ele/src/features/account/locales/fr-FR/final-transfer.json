@@ -46,5 +46,9 @@
   "accounts-have-been-closed": "Les profits et pertes ont été transférés, les comptes ont été fermés",
   "no-need-carry-forward-this-period": "Aucun besoin de reporter les gains/pertes pour la période actuelle",
   "data-loading-please-wait": "Données en cours de chargement, veuillez patienter...",
-  "uncompleted": "Non Terminé"
+  "uncompleted": "Non Terminé",
+  "lot": "lot",
+  "imbalance-at-beginning": "inégalité d'ouverture",
+  "initial-inspection": "inspection d'ouverture",
+  "step-1-pre-check": "Étape 1: vérification d'ouverture"
 }

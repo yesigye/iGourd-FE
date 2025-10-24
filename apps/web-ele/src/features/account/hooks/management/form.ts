@@ -1,18 +1,15 @@
-import {
-  observable,
-  onFieldInputValueChange,
-  useIgourdForm,
-} from '@igourd/common-ui';
+import { computed, inject, ref, unref } from 'vue';
+
+import { onFieldInputValueChange } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+import { useUserStore } from '@igourd/stores';
 
 import { useDrawerForm } from '#/hooks/use-drawer-form';
 
+import { getMaxCodeLeafAccounts } from '../../apis';
+import { getBalanceDirection, useLeafLedgers } from '../leaf-ledgers';
 import bankSchema from './bank-schema';
 import cashSchema from './cash-schema';
-import { useUserStore } from '@igourd/stores';
-import { getMaxCodeLeafAccounts } from '../../apis';
-import { computed, inject, ref, unref } from 'vue';
-import { getBalanceDirection, useLeafLedgers } from '../leaf-ledgers';
 
 export function useManagementForm() {
   const { t } = useI18n();

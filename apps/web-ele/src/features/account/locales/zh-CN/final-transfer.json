@@ -46,5 +46,9 @@
   "accounts-have-been-closed": "利润和损失已结转，账户已关闭",
   "no-need-carry-forward-this-period": "当前期间无需结转损益",
   "data-loading-please-wait": "数据正在加载，请稍候...",
-  "uncompleted": "未完成"
+  "uncompleted": "未完成",
+  "lot": "批次",
+  "imbalance-at-beginning": "期初不平",
+  "initial-inspection": "期初检查",
+  "step-1-pre-check": "步骤1：期初检查"
 }
