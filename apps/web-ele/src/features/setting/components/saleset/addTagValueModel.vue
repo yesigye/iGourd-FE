@@ -1,24 +1,20 @@
-<template>
-  <Modal :title="title">
-    <p class="mb-2">标签值</p>
-    <ElInput v-model="orderHoldingTagName" placeholder="请输入标签值" />
-  </Modal>
-</template>
 <script lang="ts" setup>
 import { ref } from 'vue';
+
+import { ElInput, useIgourdModal } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { useIgourdModal, ElInput } from '@igourd/common-ui';
 import {
   createQuickTagsValueApi,
   editQuickTagsValueApi,
 } from '@@/setting/apis/saleset';
+
+const emit = defineEmits(['confirm']);
 const { t } = useI18n();
 const orderHoldingTagName = ref('');
 const QuickTagsId = ref('');
 const QuickTagsValueId = ref('');
 const title = ref('');
-const emit = defineEmits(['confirm']);
 const [Modal, modalApi] = useIgourdModal({
   onCancel() {
     modalApi.close();
@@ -29,7 +25,7 @@ const [Modal, modalApi] = useIgourdModal({
   },
   onOpenChange(isOpen) {
     if (isOpen) {
-      let parms = modalApi.getData();
+      const parms = modalApi.getData();
       if (parms.tagValueId) {
         // 编辑
         QuickTagsId.value = parms.tagId;
@@ -66,3 +62,9 @@ const addQuickTags = async () => {
   emit('confirm');
 };
 </script>
+<template>
+  <Modal :title="title">
+    <p class="mb-2">标签值</p>
+    <ElInput v-model="orderHoldingTagName" placeholder="请输入标签值" />
+  </Modal>
+</template>

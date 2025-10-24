@@ -26,5 +26,6 @@
   "quick-tags": "Étiquettes rapides",
   "content": "Contenu",
   "add-quick-tag": "Ajouter une étiquette rapide",
-  "edit-quick-tag": "Modifier une étiquette rapide"
+  "edit-quick-tag": "Modifier une étiquette rapide",
+  "quick-tag-del-tips": "This tag also contains a lot of content. If you want to delete all the content in this group, are you sure you want to delete them?"
 }

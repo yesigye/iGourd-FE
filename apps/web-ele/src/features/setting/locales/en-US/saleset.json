@@ -26,6 +26,6 @@
   "quick-tags": "Quick Tags",
   "content": "Content",
   "add-quick-tag": "Add Quick Tag",
-  "edit-quick-tag": "Edit Quick Tag"
-
+  "edit-quick-tag": "Edit Quick Tag",
+  "quick-tag-del-tips": "This tag also contains a lot of content. If you want to delete all the content in this group, are you sure you want to delete them?"
 }
