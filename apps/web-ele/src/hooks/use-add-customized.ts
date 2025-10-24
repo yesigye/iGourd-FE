@@ -21,7 +21,7 @@ export function useAddCustomizedForm() {
           name: {
             type: 'string',
             title: "{{t('add-customized.feature-name')}}",
-            required: true,
+            // required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-component-props': {
@@ -34,7 +34,7 @@ export function useAddCustomizedForm() {
                 required: true,
                 message: "{{t('add-customized.enter-feature-name')}}",
               },
-              { max: 64, message: "{{t('common.maxChars', { n: 64 })}}" },
+              { maxLength: 64 },
             ],
           },
 
