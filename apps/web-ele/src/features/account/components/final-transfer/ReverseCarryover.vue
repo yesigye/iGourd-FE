@@ -79,7 +79,9 @@ const getListAccountingPeriods = async () => {
     { cancelDuplicate: false },
   );
   // 过滤掉已关闭的会计期间
-  const closedData = res.filter((item) => item.settlement_status == 'CLOSED');
+  const closedData = res.filter(
+    (item) => item.settlement_status.value == 'CLOSED',
+  );
   originalData.value = groupByYear(res);
   // 按照年份分组
   transferList.value = groupByYear(closedData);

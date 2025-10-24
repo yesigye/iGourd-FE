@@ -1,25 +1,25 @@
+import { ref } from 'vue';
+
 import {
   observable,
   onFieldChange,
   onFieldInputValueChange,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { omit } from '@igourd/utils';
-import { paymentMethodListUsingPOST } from '@@/setting/apis';
-import { orderNoGenerate } from '#/api/common';
+import { useUserStore } from '@igourd/stores';
+import { isBetween, omit } from '@igourd/utils';
 
 import {
-  getFinanceCategoryOptions,
   getAccountingPeriodsApi,
+  getFinanceCategoryOptions,
   getLedgersSelect,
 } from '@@/account/apis';
+import { paymentMethodListUsingPOST } from '@@/setting/apis';
 
+import { orderNoGenerate } from '#/api/common';
 import { useDrawerForm } from '#/hooks';
 
 import schema from './form-schema';
-import { useUserStore } from '@igourd/stores';
-import { ref } from 'vue';
-import { isBetween } from '@igourd/utils';
 
 interface ISelectItem {
   label: string;
@@ -184,12 +184,12 @@ export function useNotesForm() {
             if (!op) return;
             formAPI.setValuesIn(
               'external_account_data.0.target_node_type',
-              //@ts-ignore
+              // @ts-ignore
               op.node_type,
             );
             formAPI.setValuesIn(
               'external_account_data.0.target_account_id',
-              //@ts-ignore
+              // @ts-ignore
               op.account_id,
             );
           },
@@ -205,12 +205,12 @@ export function useNotesForm() {
           if (!op) return;
           formAPI.setValuesIn(
             `item_create_volist.${index}.payment_method_mark`,
-            //@ts-ignore
+            // @ts-ignore
             op.payment_method_mark,
           );
           formAPI.setValuesIn(
             `item_create_volist.${index}.payment_method_type`,
-            //@ts-ignore
+            // @ts-ignore
             op.payment_method_type,
           );
         });
@@ -223,12 +223,12 @@ export function useNotesForm() {
           if (!op) return;
           formAPI.setValuesIn(
             `item_create_volist.${index}.node_type`,
-            //@ts-ignore
+            // @ts-ignore
             op.node_type,
           );
           formAPI.setValuesIn(
             `item_create_volist.${index}.account_ledger_id`,
-            //@ts-ignore
+            // @ts-ignore
             op.account_ledger_id,
           );
         });
