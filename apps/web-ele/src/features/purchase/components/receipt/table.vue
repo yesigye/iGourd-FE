@@ -31,19 +31,21 @@ const [Modal, modalApi] = useIgourdModal({
   destroyOnClose: true,
 
   onConfirm() {
-    debugger
-    const records = saleGridApi.grid.getCheckboxRecords();
+    debugger;
+    let records = saleGridApi.grid.getCheckboxRecords();
     const formAPI = unref(form);
     if (!records) {
       return;
     }
-    const last_debt = sum(records.map((item: any) => item.repaid_amount));
-    const total_amount = sum(records.map((item: any) => item.total_amount));
+    records = records.map((item) => {
+      return {
+        ...item,
+        label: item.advance_payment_order_no,
+        value: item.id,
+      };
+    });
     formAPI.setValues({
-      business_order: records,
-      advance_payment_order_item_list: [{}],
-      total_amount,
-      last_debt: last_debt,
+      advance_payment_offset_opts: JSON.stringify(records),
     });
     modalApi.close();
   },

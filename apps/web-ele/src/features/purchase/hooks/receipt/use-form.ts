@@ -1,7 +1,7 @@
 import { useI18n } from '@igourd/locales';
 import type { ISchema } from '@igourd/common-ui';
 import { h, inject, ref } from 'vue';
-import { Space, onFieldValueChange } from '@igourd/common-ui';
+import { Space, onFieldValueChange, observable } from '@igourd/common-ui';
 import ModalTable from '@igourd/plugins/modal-table';
 import { useUserStore } from '@igourd/stores';
 import { wareHouseProductSearch } from '#/features/inventory';
@@ -10,6 +10,7 @@ import { orderNoGenerate } from '#/api/common';
 import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
 import { createIconifyIcon } from '@igourd/icons';
 import { ReceiptTableModal } from '@@/purchase/components';
+import { floorDecimal, retainDecimal8 } from '#/utils/eleValidate';
 
 import {
   getPurchaseListApi,
@@ -37,6 +38,8 @@ function remoteMethod(keywords: string) {
 }
 // 货币数据
 const currencyList = ref([]);
+// 选择预付单数据
+const dataSource = observable<{ value: ListItem[] }>({ value: [] });
 // 获取货币列表
 const getCurrencyList = async () => {
   const result = await basicsCurrencyList({});
@@ -63,17 +66,17 @@ export function useReceiptForm() {
     { label: t('order.vat-exclusive'), value: 'VAT_EXCLUSIVE' },
   ];
   // 选择预付订单
-  const onSelectPrepaidOrder = async(records: any) => {
-    debugger
+  const onSelectPrepaidOrder = async (records: any) => {
+    debugger;
     if (!records) {
       return;
     }
 
-    const row = records[0]
+    const row = records[0];
 
     formAPI.setValues({
       order_info: row,
-      purchase_returned_item_list: [records]
+      purchase_returned_item_list: [records],
     });
   };
   // 配置form
@@ -352,7 +355,8 @@ export function useReceiptForm() {
                         'x-component': 'Space',
                         title: "{{t('purchase.order-pay.select-account')}}",
                         properties: {
-                          amount_0: {
+                          // 支付优惠
+                          discount_amount: {
                             type: 'string',
                             title: "{{t('purchase.order-pay.discount')}}",
                             'x-decorator': 'FormItem',
@@ -360,19 +364,25 @@ export function useReceiptForm() {
                               size: 'small',
                               feedbackLayout: 'terse',
                             },
-                            'x-component': 'Input',
+                            'x-component': 'InputNumber',
+                            'x-component-props': {
+                              '@blur': `{{(value,op)=> discountAmountChange(value,op,$self,$index) }}`,
+                            },
                           },
                           discount_percentage: {
                             type: 'string',
                             title: "{{t('purchase.order-pay.discount-rate')}}",
                             'x-decorator': 'FormItem',
-                            'x-component': 'Input',
+                            'x-component': 'InputNumber',
                             'x-decorator-props': {
                               size: 'small',
                               feedbackLayout: 'terse',
                             },
+                            'x-component-props': {
+                              '@blur': `{{(value,op)=> discountPercentageChange(value,op,$self,$index) }}`,
+                            },
                           },
-                          deposit_amount: {
+                          total_amount: {
                             type: 'string',
                             title: "{{t('purchase.order-pay.total')}}",
                             'x-decorator': 'FormItem',
@@ -390,15 +400,26 @@ export function useReceiptForm() {
                               class: '!items-end',
                             },
                             properties: {
-                              deposit_amount1: {
+                              advance_payment_offset_opts: {
                                 type: 'string',
-                                title: '预收单',
+                                'x-hidden': true,
+                              },
+                              advance_payment_offset_list: {
+                                type: 'string',
+                                title: '预付单',
                                 'x-decorator': 'FormItem',
                                 'x-component': 'Select',
                                 'x-decorator-props': {
                                   style: { width: '120px' },
                                   size: 'small',
                                   feedbackLayout: 'terse',
+                                },
+                                'x-reactions': {
+                                  fulfill: {
+                                    state: {
+                                      dataSource: '{{ dataSource.value }}',
+                                    },
+                                  },
                                 },
                               },
                               content: {
@@ -867,6 +888,24 @@ export function useReceiptForm() {
     });
     return result.order_no;
   };
+  // 根据优惠金额计算优惠比例
+  const discountAmountChange = (_, op, record, index) => {
+    const total_amount = formAPI.values.total_amount || 0;
+    let rate = parseFloat(record.value) / parseFloat(total_amount);
+    if (
+      rate !== Infinity &&
+      parseFloat(record.value) < parseFloat(total_amount)
+    ) {
+      rate = floorDecimal(rate * 100, 2);
+      formAPI.setValuesIn('discount_percentage', rate);
+    }
+  };
+  // 根据优惠比例计算优惠金额
+  const discountPercentageChange = (_, op, record, index) => {
+    const total_amount = formAPI.values.total_amount || 0;
+    const abs = parseFloat(total_amount) * parseFloat(record.value / 100);
+    formAPI.setValuesIn('discount_amount', abs);
+  };
 
   const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
     drawerOptions: {
@@ -931,7 +970,10 @@ export function useReceiptForm() {
           const IconComponent = createIconifyIcon(name);
           return IconComponent ? h(IconComponent) : null;
         },
-        onSelectPrepaidOrder
+        onSelectPrepaidOrder,
+        dataSource,
+        discountAmountChange,
+        discountPercentageChange,
       },
       schema: schema,
       effects() {
@@ -947,6 +989,15 @@ export function useReceiptForm() {
           const { subtotalAmount, totalAmount } = summary(field.records);
           form.setValuesIn('subtotal_amount', subtotalAmount);
           form.setValuesIn('total_amount', totalAmount);
+        });
+        onFieldValueChange('advance_payment_offset_opts', (field, form) => {
+          dataSource.value = JSON.parse(field.value);
+          const ids = dataSource.value.map((item) => item.id);
+          debugger;
+
+          form.setValues({
+            advance_payment_offset_list: ids,
+          });
         });
       },
     },
