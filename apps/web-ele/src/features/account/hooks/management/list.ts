@@ -107,6 +107,19 @@ export function useAccountManagement() {
     id: 'management-list',
     searchFormSchema,
     batchOperate: true,
+    toolbarConfig: {
+      print: true,
+      export: true,
+    },
+    tabs: [
+      { value: '', label: t('management.all') },
+      { value: 'CARD', label: t('management.card') },
+      { value: 'CASH', label: t('management.cash') },
+    ],
+    tabsOption: {
+      defaultActiveValue: '',
+      formKey: 'account_type',
+    },
     connectedComponent: AccountDrawerForm,
     service: {
       query: getAccountManagementListApi,

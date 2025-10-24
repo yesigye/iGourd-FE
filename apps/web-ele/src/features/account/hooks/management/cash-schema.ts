@@ -80,11 +80,13 @@ export default {
               type: 'void',
               'x-decorator': 'FormItem',
               title: "{{t('account.opening-balance')}}",
+
               properties: {
                 initial_balance: {
                   type: 'void',
                   'x-component': 'Space',
                   'x-decorator': '',
+
                   properties: {
                     currency_code: {
                       type: 'string',
@@ -94,7 +96,9 @@ export default {
                         placeholder: "{{t('common.select')}}",
                         filterable: true,
                         disabled: true,
+                        feedbackLayout: 'terse',
                       },
+
                       'x-reactions': {
                         fulfill: {
                           state: {
@@ -111,6 +115,7 @@ export default {
                       'x-component-props': {
                         placeholder: "{{t('common.enter')}}",
                         type: 'number',
+                        feedbackLayout: 'terse',
                       },
                       'x-validator': [
                         null,
@@ -127,6 +132,7 @@ export default {
                       'x-disabled': true,
                       'x-component-props': {
                         placeholder: '',
+                        feedbackLayout: 'terse',
                       },
                       'x-validator': [null],
                     },
@@ -147,6 +153,7 @@ export default {
                 current_balance_row: {
                   type: 'void',
                   'x-component': 'Space',
+
                   properties: {
                     currency_code: {
                       type: 'string',

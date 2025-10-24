@@ -30,13 +30,6 @@ const {
         <ElButton type="primary" @click="handleEdit(undefined, 'CARD')">
           {{ t('account.add-bank-card') }}
         </ElButton>
-        <ElButton
-          type="danger"
-          v-if="canBatchOperate"
-          @click="handleBatchDelete"
-        >
-          {{ t('common.delete-btn') }}
-        </ElButton>
       </template>
       <template #operation="{ row }">
         <ElButton type="text" @click="handleEdit(row, row.account_type)">
