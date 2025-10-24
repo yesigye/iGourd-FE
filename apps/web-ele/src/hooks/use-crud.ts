@@ -232,6 +232,12 @@ function useCrud<T extends { id?: number | string }, P extends object>(
       schema: options.searchFormSchema,
       scope: options.scope,
       initialValues: options.initialValues,
+      onReset:
+        options.onReset ||
+        (async (formApi) => {
+          // 默认重置逻辑：直接调用 formApi.reset()
+          formApi.reset();
+        }),
     },
     ...vxeTableProps,
     gridOptions: {
