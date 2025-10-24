@@ -6,7 +6,7 @@ import { PreviewText } from '../preview-text';
 
 export type InputProps = typeof ElInput;
 
-const validationKeys = new Set(['max']);
+const validationKeys = new Set(['maxLength']);
 
 const mergeValidationProperties = (target: any, source: any) => {
   Object.keys(source).forEach((key) => {
@@ -31,10 +31,13 @@ const checkProperties = (source: any) => {
   });
   return flag;
 };
+const defaultInputValidator = {
+  maxLength: 128,
+};
 // 默认TextArea 校验    'x-component': 'Input.TextArea'
 const defaultTextAreaValidator = {
-  maxLength: 512,
-  message: '不能超过{max}个字符',
+  maxLength: 256,
+  //message: '不能超过{max}个字符',
 };
 
 const TransformElInput = transformComponent<InputProps>(ElInput, {
@@ -49,26 +52,28 @@ const InnerInput = connect(
       readOnly: 'readonly',
     },
     (props) => {
-      const defaultInputValidator = {
-        maxLength: 2,
-        message: '不能超过{{maxLength}}个字符',
-      };
-
       const schemaRef = useFieldSchema();
       const validator = schemaRef.value['x-validator'] || [];
       if (validator.length === 0) {
         validator.push(defaultInputValidator);
       } else {
+        let isExist = true;
         validator.forEach((rule: any, index: number) => {
           if (checkProperties(rule)) {
             validator[index] = mergeValidationProperties(
               defaultInputValidator,
               rule,
             );
+          } else {
+            isExist = false;
           }
         });
+
+        if (!isExist && validator.findIndex((v) => v.maxLength) === -1) {
+          validator.push(defaultInputValidator);
+        }
       }
-      // schemaRef.value['x-validator'] = validator;
+      console.log('validator', validator);
       schemaRef.value.setProperties({ 'x-validator': validator });
       return props;
     },
@@ -79,6 +84,29 @@ const InnerInput = connect(
 const TextArea = connect(
   InnerInput,
   mapProps((props) => {
+    const schemaRef = useFieldSchema();
+    const validator = schemaRef.value['x-validator'] || [];
+    if (validator.length === 0) {
+      validator.push(defaultInputValidator);
+    } else {
+      let isExist = true;
+      validator.forEach((rule: any, index: number) => {
+        if (checkProperties(rule)) {
+          validator[index] = mergeValidationProperties(
+            defaultTextAreaValidator,
+            rule,
+          );
+        } else {
+          isExist = false;
+        }
+      });
+
+      if (!isExist && validator.findIndex((v) => v.maxLength) === -1) {
+        validator.push(defaultTextAreaValidator);
+      }
+    }
+    schemaRef.value.setProperties({ 'x-validator': validator });
+
     return {
       ...props,
       type: 'textarea',

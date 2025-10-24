@@ -11,18 +11,18 @@ const TransformElInputNumber = transformComponent<InputNumberProps>(
     change: 'update:modelValue',
   },
 );
-const validationKeys = [
+const validationKeys = new Set([
   'max',
   'maximum',
   'exclusiveMaximum',
   'exclusiveMinimum',
   'minimum',
   'min',
-];
+]);
 
 const mergeValidationProperties = (target: any, source: any) => {
   Object.keys(source).forEach((key) => {
-    if (validationKeys.includes(key)) {
+    if (validationKeys.has(key)) {
       target[key] = source[key];
     }
   });
@@ -38,7 +38,7 @@ const checkProperties = (source: any) => {
   }
   let flag = false;
   Object.keys(source).forEach((key) => {
-    if (validationKeys.includes(key)) {
+    if (validationKeys.has(key)) {
       flag = true;
     }
   });
@@ -55,28 +55,32 @@ export const InputNumber = connect(
     (props) => {
       // 默认 inputNumber
       const defaultInputNumbervalidator = {
-        maximum: 100,
-        minimum: 0,
-        message: $t('ui.formRules.min-max-range', [0, 100]),
+        maximum: 6,
+        //minimum: 0,
+        //message: $t('ui.formRules.min-max-range', [0, 100]),
       };
       const schemaRef = useFieldSchema();
-      debugger
       const validator = schemaRef.value['x-validator'] || [];
       if (validator.length == 0) {
         validator.push(defaultInputNumbervalidator);
       } else {
+        let isExist = true;
         validator.forEach((rule: any, index: number) => {
           if (checkProperties(rule)) {
             validator[index] = mergeValidationProperties(
               defaultInputNumbervalidator,
               rule,
             );
+          } else {
+            isExist = false;
           }
         });
+        if (!isExist && validator.findIndex((v) => v.maximum) === -1) {
+          validator.push(defaultInputNumbervalidator);
+        }
       }
-      // schemaRef.value['x-validator'] = validator;
-      schemaRef.value.setProperties({'x-validator':validator});
-      console.log(schemaRef.value['x-validator'] )
+      console.log('validator input number', validator);
+      schemaRef.value.setProperties({ 'x-validator': validator });
       let controlsPosition = 'right';
       if (props.controlsPosition) {
         controlsPosition = props.controlsPosition;
