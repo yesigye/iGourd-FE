@@ -216,7 +216,7 @@ const sendBasicsMerchantPackagePlaceOrder = async (params) => {
                 v-if="item.payment_method"
                 class="SPack-discount-li__remark"
               >
-                {{ $t(`storePackage.payment_method_${item.payment_method}`) }}
+                {{ item.payment_method.label }}
               </span>
             </ElRadio>
           </ElRadioGroup>
