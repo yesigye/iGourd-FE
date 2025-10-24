@@ -29,6 +29,9 @@ import {
 // 组件部分
 // import { IgourdElTable } from 'igourd-ui';
 import { useFinalTransfer } from '@@/account/hooks';
+import { Lock } from '@element-plus/icons-vue';
+
+import currentIcon from '#/assets/account/current.png';
 
 import FinalButton from './FinalButton.vue';
 import { accountNoteColumns } from './utils/columns';
@@ -473,7 +476,7 @@ onMounted(() => {
         <div
           v-for="listItem in transferList[key]"
           :key="listItem?.monty_no"
-          class="mb-5 mr-[70px] w-[88px] overflow-hidden rounded-sm"
+          class="relative mb-5 mr-[70px] w-[88px] overflow-hidden rounded-sm"
           :class="[transferType(listItem).cursor]"
           @click="handfinalTransferClick(listItem)"
         >
@@ -494,8 +497,8 @@ onMounted(() => {
           >
             <img
               v-if="listItem.is_current"
-              src="#/assets/account/current.png"
-              class="w-13 h-13 absolute bottom-0 right-0"
+              :src="currentIcon"
+              class="absolute bottom-0 right-0 h-[52px] w-[52px]"
               alt=""
             />
             {{ listItem?.monty_no }}
@@ -618,8 +621,10 @@ onMounted(() => {
                   class="flex cursor-pointer select-none items-center gap-1 text-[#F56C6C]"
                 >
                   {{ t('final-transfer.uncompleted') }}
-                  <span v-if="item.project == 'ACCOUNTING_NOTE'"><ElIcon @click="handClickQuestion">
-                      <QuestionFilled /> </ElIcon></span>
+                  <span v-if="item.project == 'ACCOUNTING_NOTE'"
+                    ><ElIcon @click="handClickQuestion">
+                      <QuestionFilled /> </ElIcon
+                  ></span>
                 </span>
               </li>
             </div>
