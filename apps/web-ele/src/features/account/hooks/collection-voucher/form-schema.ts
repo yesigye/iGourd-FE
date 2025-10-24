@@ -269,7 +269,7 @@ export function useCollectionVoucherSchema() {
                       type: 'void',
                       'x-component': 'ArrayTable.Column',
                       'x-component-props': {
-                        title: '{{ t("printTemp.order_no") }}',
+                        title: '{{ t("print-temp.order-no") }}',
                         minWidth: 150,
                       },
                       properties: {
