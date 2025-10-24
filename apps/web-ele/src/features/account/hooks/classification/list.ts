@@ -1,7 +1,8 @@
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
+import { ref } from 'vue';
+
 import { useI18n } from '@igourd/locales';
-import { ClassificationDrawer } from '@@/account/components';
 
 import {
   createFinanceCategoryApi,
@@ -10,6 +11,7 @@ import {
   getFinanceCategoryListApi,
   updateFinanceCategoryApi,
 } from '@@/account/apis';
+import { ClassificationDrawer } from '@@/account/components';
 
 import { useCrud } from '#/hooks';
 
@@ -27,8 +29,18 @@ export function useClassification() {
       field: 'type',
       minWidth: 120,
       title: t('account.revenue-and-expenditure'),
+      filters: [
+        {
+          label: t('account.revenue'),
+          value: 'REVENUE',
+        },
+        {
+          label: t('account.expenditure'),
+          value: 'EXPENDITURE',
+        },
+      ],
       formatter({ cellValue }) {
-        return t(`account.${cellValue}`);
+        return cellValue.label;
       },
     },
     {
@@ -76,7 +88,10 @@ export function useClassification() {
     // 删除分类
     remove: deleteFinanceCategoryApi,
   };
-
+  const defaultTime = ref<[Date, Date]>([
+    new Date(2000, 1, 1, 0, 0, 0),
+    new Date(2000, 2, 1, 23, 59, 59),
+  ]);
   // 使用 CRUD Hook
   const {
     Grid,
@@ -108,6 +123,21 @@ export function useClassification() {
     },
     columns: baseColumns,
     searchFormSchema: {
+      '[start_create_time,end_create_time]': {
+        type: 'string',
+        'x-decorator': 'FormItem',
+        'x-component': 'DatePicker',
+        'x-component-props': {
+          type: 'daterange',
+          placeholder: t('common.keywords'),
+          format: 'YYYY-MM-DD',
+          valueFormat: 'YYYY-MM-DD HH:mm:ss',
+          rangeSeparator: t('common.range-separator'),
+          startPlaceholder: t('common.start-date'),
+          endPlaceholder: t('common.end-date'),
+          defaultTime: defaultTime.value,
+        },
+      },
       keywords: {
         type: 'string',
         'x-decorator': 'FormItem',

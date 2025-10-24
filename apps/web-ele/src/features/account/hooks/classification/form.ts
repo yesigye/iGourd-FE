@@ -1,9 +1,9 @@
 import { useI18n } from '@igourd/locales';
+import { useUserStore } from '@igourd/stores';
 
 import { useDrawerForm } from '#/hooks/use-drawer-form';
 
 import schema from './form-schema';
-import { useUserStore } from '@igourd/stores';
 
 export function useClassificationForm() {
   const { t } = useI18n();
