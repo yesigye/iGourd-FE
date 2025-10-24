@@ -1,9 +1,11 @@
+import { $t } from '@igourd/locales';
+
 import { connect, mapProps, mapReadPretty, useFieldSchema } from '@formily/vue';
 import { ElInput } from 'element-plus';
 
 import { composeExport, transformComponent } from '../__builtins__';
 import { PreviewText } from '../preview-text';
-import { $t } from '@igourd/locales';
+
 export type InputProps = typeof ElInput;
 const validationKeys = new Set(['maxLength']);
 
@@ -60,13 +62,15 @@ const InnerInput = connect(
         const includesBannedWors: string[] = [];
         console.log(bannedWords);
         bannedWords.forEach((keyword) => {
-          if (val.indexOf(keyword) >= 0) {
+          if (val.includes(keyword)) {
             includesBannedWors.push(keyword);
           }
         });
 
         if (includesBannedWors.length > 0) {
-          return $t('common.banned-words-label', {word:includesBannedWors.join('、')});
+          return $t('common.banned-words-label', {
+            word: includesBannedWors.join('、'),
+          });
         }
       };
       const customValidator = {
@@ -75,7 +79,9 @@ const InnerInput = connect(
         validator: handleBlur,
       };
       const schemaRef = useFieldSchema();
-      const validator = schemaRef.value['x-validator'] || [];
+      let validator = schemaRef.value['x-validator'] || [];
+      // 过滤掉空的
+      validator = validator.filter((item: any) => !isEmpty(item));
       if (validator.length === 0) {
         validator.push(defaultInputValidator);
       } else {
@@ -91,19 +97,13 @@ const InnerInput = connect(
           }
         });
 
-        if (
-          !isExist &&
-          validator.findIndex((v: any) => v['maxLength']) === -1
-        ) {
+        if (!isExist && !validator.some((v: any) => v.maxLength)) {
           validator.push(defaultInputValidator);
         }
-        // 添加违禁词验证
-        if (
-          !isExist &&
-          validator.findIndex((v: any) => v['bannedWords']) === -1
-        ) {
-          validator.push(customValidator);
-        }
+      }
+      // 添加违禁词验证
+      if (!validator.some((v: any) => v.bannedWords)) {
+        validator.push(customValidator);
       }
       console.log('validator', validator);
       schemaRef.value.setProperties({ 'x-validator': validator });
@@ -116,8 +116,33 @@ const InnerInput = connect(
 const TextArea = connect(
   InnerInput,
   mapProps((props) => {
+    const bannedWords = [
+      $t('common.banned-words-1'),
+      $t('common.banned-words-2'),
+    ];
+    const handleBlur = (val: string) => {
+      const includesBannedWors: string[] = [];
+      bannedWords.forEach((keyword) => {
+        if (val.includes(keyword)) {
+          includesBannedWors.push(keyword);
+        }
+      });
+
+      if (includesBannedWors.length > 0) {
+        return $t('common.banned-words-label', {
+          word: includesBannedWors.join('、'),
+        });
+      }
+    };
+    const customValidator = {
+      bannedWords: true,
+      triggerType: 'onBlur',
+      validator: handleBlur,
+    };
     const schemaRef = useFieldSchema();
-    const validator = schemaRef.value['x-validator'] || [];
+    let validator = schemaRef.value['x-validator'] || [];
+    // 过滤掉空的
+    validator = validator.filter((item: any) => !isEmpty(item));
     if (validator.length === 0) {
       validator.push(defaultInputValidator);
     } else {
@@ -133,16 +158,13 @@ const TextArea = connect(
         }
       });
 
-      if (!isExist && validator.findIndex((v) => v.maxLength) === -1) {
+      if (!isExist && !validator.some((v) => v.maxLength)) {
         validator.push(defaultTextAreaValidator);
       }
-      // 添加违禁词验证
-      if (
-        !isExist &&
-        validator.findIndex((v: any) => v['bannedWords']) === -1
-      ) {
-        validator.push(customValidator);
-      }
+    }
+    // 添加违禁词验证
+    if (!validator.some((v: any) => v.bannedWords)) {
+      validator.push(customValidator);
     }
     schemaRef.value.setProperties({ 'x-validator': validator });
 

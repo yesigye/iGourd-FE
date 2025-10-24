@@ -18,7 +18,7 @@ async function open() {
   <div>
     {{ props.title }}
     <div class="igourd-trigger text-sm" @click="open()">
-      <SquareMousePointer class="mr-1" />
+      <!--<SquareMousePointer class="mr-1" />-->
       <slot name="reference"> </slot>
     </div>
     <Modal>

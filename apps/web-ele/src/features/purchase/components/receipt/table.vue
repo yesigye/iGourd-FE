@@ -5,7 +5,8 @@ import { useOrderList } from '@@/account/hooks';
 import { useI18n } from '@igourd/locales';
 import { unref } from 'vue';
 import { sum } from '@igourd/utils';
-import { SquareMousePointer } from '@igourd/icons';
+import { Plus } from '@igourd/icons';
+
 const defaultQueryParams = {
   customer_id: '',
   payment_type: 'CREDIT',
@@ -19,8 +20,8 @@ const { t } = useI18n();
 const form = useForm();
 
 async function onBeforeOpen() {
-  await unref(form).validate('customer_id');
-  defaultQueryParams.customer_id = unref(form).getValuesIn('customer_id');
+  //await unref(form).validate('customer_id');
+  // defaultQueryParams.customer_id = unref(form).getValuesIn('customer_id');
 }
 
 const [Modal, modalApi] = useIgourdModal({
@@ -49,21 +50,12 @@ const [Modal, modalApi] = useIgourdModal({
 </script>
 
 <template>
-  <Modal :onBeforeOpen="onBeforeOpen" title="源订单">
+  <Modal :onBeforeOpen="onBeforeOpen" title="">
     <template #reference>
-      <SquareMousePointer></SquareMousePointer>
-      {{ t('account.source-order-information') }}
+      <Plus></Plus>
     </template>
     <div class="h-[54vh]">
       <SaleGrid />
     </div>
-    <!-- <ElTabs>
-      <ElTabPane label="订单" class="h-[54vh]" key="Sales_Order"> -->
-
-    <!-- </ElTabPane>
-      <ElTabPane label="记账笔记" class="h-[54vh]">
-        <AccountNotesGrid key="AccountNotes" />
-      </ElTabPane>
-    </ElTabs> -->
   </Modal>
 </template>
