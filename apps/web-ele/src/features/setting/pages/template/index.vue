@@ -134,7 +134,7 @@ const handleDeleteTemplate = async (item: PrintTemplate) => {
     content: t('template.confirm-delete'),
   }).then(async () => {
     await deletePrintTemplate({
-      print_template_merchant_id_list: [item.id],
+      ids: [item.id],
     });
     getTemplateList();
   });
@@ -151,6 +151,7 @@ const handleSetDefaultTemplate = async (item: PrintTemplate) => {
 const [Drawer, drawerApi] = useIgourdDrawer({
   connectedComponent: TemplateDrawer,
   appendToMain: true,
+  class: 'w-full',
 });
 // 打开添加模板抽屉
 const handleOpenAddTemplateDrawer = () => {
@@ -231,10 +232,13 @@ const handleSaved = () => {
         <section class="bg-card px-5 py-2">
           <Card :header="t('template.default-template')" class="border-0">
             <div
-              class="w-[198px]"
+              class="relative w-[198px] overflow-hidden"
               v-for="item in templateList.default"
               :key="item.id"
             >
+              <div class="default-icon absolute text-center text-sm">
+                <p>{{ t('template.default') }}</p>
+              </div>
               <div
                 class="flex h-[100px] items-center justify-center bg-[#D9ECFF] text-center"
               >
@@ -323,3 +327,16 @@ const handleSaved = () => {
     <Drawer @saved="handleSaved" />
   </Page>
 </template>
+<style>
+.default-icon {
+  position: absolute;
+  top: 16px;
+  right: -25px;
+  box-sizing: border-box;
+  width: 100px;
+  font-size: 13px;
+  color: #fff;
+  background-color: #ef0909;
+  transform: rotate(45deg);
+}
+</style>

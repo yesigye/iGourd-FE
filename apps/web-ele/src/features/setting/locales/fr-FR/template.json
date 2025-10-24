@@ -15,5 +15,6 @@
   "commodity-price-tag-tip": "Sélectionnez des marchandises pour imprimer des étiquettes de prix pour les marchandises, des étiquettes pour les étagères d'affichage et des étiquettes pour peser les articles à la caisse",
   "confirm-delete": "Confirmez-vous la suppression de ce modèle ?",
   "default-template": "Modèle Par Défaut",
-  "other-template": "Autre Modèle"
+  "other-template": "Autre Modèle",
+  "default": "par défaut"
 }

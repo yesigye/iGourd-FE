@@ -347,6 +347,7 @@ const handleSelectRow = (row) => {
         <template #major_name="{ row }">
           <div class="flex items-center justify-between gap-2.5">
             <ElLink
+              href="#"
               :type="selectedRows.id === row.id ? 'primary' : ''"
               @click="handleSelectRow(row)"
             >

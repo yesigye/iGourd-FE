@@ -38,7 +38,7 @@ export default defineConfig(async () => {
               return path.replace(/^\/api/, '');
             },
             // mock代理目标地址
-            target: 'https://dev-api.seller100.com',
+            target: 'https://test-api.seller100.com',
             ws: true,
           },
           // '/api/passport': {
