@@ -29,6 +29,12 @@ export const ReceiptMode: ModePlugin = {
         'x-component-props': {
           width: 260,
         },
+        'x-validator': [
+          {
+            required: true,
+            message: "{{t('common.validate.required')}}",
+          },
+        ],
         'x-decorator-props': {
           required: true,
         },
@@ -54,6 +60,12 @@ export const ReceiptMode: ModePlugin = {
           width: 160,
           min: 0,
         },
+        'x-validator': [
+          {
+            required: true,
+            message: "{{t('common.validate.required')}}",
+          },
+        ],
         'x-reactions': {
           fulfill: {
             state: {

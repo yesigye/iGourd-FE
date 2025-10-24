@@ -135,7 +135,6 @@
     "no-special-chars": "不能包含特殊字符 (!~#^`<>+=\\|?/)",
     "phone-country-code": "请输入有效的{country}手机号码"
   },
-  "print": "打印",
   "detail": "详情",
   "more": "更多",
   "download": "下载",
@@ -350,5 +349,12 @@
   "last-month": "近一月",
   "to": "至",
   "start-date": "开始日期",
-  "end-date": "结束日期"
+  "end-date": "结束日期",
+  "print": {
+    "title-font-size": "标题大小",
+    "base-font-size": "内容大小",
+    "receipt": "小票",
+    "A4": "A4",
+    "pager": "打印模板"
+  }
 }

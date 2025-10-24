@@ -333,8 +333,12 @@ const [Drawer, drawerApi] = useIgourdDrawer({
   title: $t('common.print'),
   class: 'w-3/4',
   appendToMain: true,
+  contentClass: 'bg-muted',
   header: false,
   confirmText: $t('common.print'),
+  onOpened: () => {
+    printRef.value.setData(gridRef.value?.getData());
+  },
   onConfirm() {
     printRef.value.print();
   },
