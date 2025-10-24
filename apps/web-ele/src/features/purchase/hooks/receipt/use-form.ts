@@ -8,6 +8,8 @@ import { wareHouseProductSearch } from '#/features/inventory';
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
 import { orderNoGenerate } from '#/api/common';
 import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
+import { createIconifyIcon } from '@igourd/icons';
+import { ReceiptTableModal } from '@@/purchase/components';
 
 import {
   getPurchaseListApi,
@@ -366,6 +368,53 @@ export function useReceiptForm() {
                               feedbackLayout: 'terse',
                             },
                           },
+                          space_0: {
+                            type: 'void',
+                            'x-component': 'Space',
+                            title: "{{t('purchase.order-pay.select-account')}}",
+                            'x-component-props': {
+                              class: '!items-end',
+                            },
+                            properties: {
+                              deposit_amount1: {
+                                type: 'string',
+                                title: '预收单',
+                                'x-decorator': 'FormItem',
+                                'x-component': 'Select',
+                                'x-decorator-props': {
+                                  style: { width: '120px' },
+                                  size: 'small',
+                                  feedbackLayout: 'terse',
+                                },
+                              },
+                              content: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-content': () => {
+                                  return h(ReceiptTableModal);
+                                },
+                                'x-component-props': {
+                                  style: {
+                                    padding: '0',
+                                    'margin-bottom': '10px',
+                                  },
+                                  type: '',
+                                  text: 'plain',
+                                  icon: "{{icon('ep:plus')}}",
+                                },
+                              },
+                            },
+                          },
+                          deposit_amount4: {
+                            type: 'string',
+                            title: ' ',
+                            'x-decorator': 'FormItem',
+                            'x-component': 'Input',
+                            'x-decorator-props': {
+                              size: 'small',
+                              feedbackLayout: 'terse',
+                            },
+                          },
                         },
                       },
                       purchase_payment_plan_list: {
@@ -700,7 +749,6 @@ export function useReceiptForm() {
       formData.other_tax_amount = 0;
       formData.merchant_id = currentLoginUserApp.owner_id;
       if (!formData.id) {
-
       }
       // 合计金额
       const total = formData.goods_receipt_note_item_list.reduce(
@@ -790,7 +838,8 @@ export function useReceiptForm() {
   const summary = (list) => {
     const total = list.reduce(
       (acc: any, item: any) =>
-        acc + (item.received_quantity ? item.received_quantity : 0) * item.cost_price,
+        acc +
+        (item.received_quantity ? item.received_quantity : 0) * item.cost_price,
       0,
     );
     return {
@@ -798,15 +847,12 @@ export function useReceiptForm() {
       totalAmount: total.toFixed(2),
     };
   };
-  const generateNo=async()=>{
-     const result = await orderNoGenerate({
-          category_type: 'GOODS_RECEIPT_NOTE',
-        });
-      return result.order_no
-
-    }
-
-
+  const generateNo = async () => {
+    const result = await orderNoGenerate({
+      category_type: 'GOODS_RECEIPT_NOTE',
+    });
+    return result.order_no;
+  };
 
   const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
     drawerOptions: {
@@ -825,12 +871,16 @@ export function useReceiptForm() {
             });
             detail.goods_receipt_note_item_list =
               detail.goods_receipt_note_item_model_list;
-            detail.purchase_payment_plan_list = detail.purchase_payment_plan_detail_model_list
+            detail.purchase_payment_plan_list =
+              detail.purchase_payment_plan_detail_model_list;
             formAPI.setValues(detail);
           } else {
             // 增加时，保留1条数据
-            const goods_receipt_note_no=await generateNo();
-            formAPI.setValues({goods_receipt_note_no,goods_receipt_note_item_list: [{}] });
+            const goods_receipt_note_no = await generateNo();
+            formAPI.setValues({
+              goods_receipt_note_no,
+              goods_receipt_note_item_list: [{}],
+            });
           }
         } else {
           // 关闭抽屉时，重置表单
@@ -863,6 +913,10 @@ export function useReceiptForm() {
         accountChange,
         payment_method_change,
         merchantPaymentMethodOption,
+        icon: (name: string) => {
+          const IconComponent = createIconifyIcon(name);
+          return IconComponent ? h(IconComponent) : null;
+        },
       },
       schema: schema,
       effects() {

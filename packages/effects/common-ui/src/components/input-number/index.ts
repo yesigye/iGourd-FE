@@ -60,7 +60,9 @@ export const InputNumber = connect(
         //message: $t('ui.formRules.min-max-range', [0, 100]),
       };
       const schemaRef = useFieldSchema();
-      const validator = schemaRef.value['x-validator'] || [];
+      let validator = schemaRef.value['x-validator'] || [];
+      // 过滤掉空的
+      validator = validator.filter((item: any) => !isEmpty(item));
       if (validator.length == 0) {
         validator.push(defaultInputNumbervalidator);
       } else {
@@ -79,7 +81,7 @@ export const InputNumber = connect(
           validator.push(defaultInputNumbervalidator);
         }
       }
-      console.log('validator input number', validator);
+      // console.log('validator input number', validator);
       schemaRef.value.setProperties({ 'x-validator': validator });
       let controlsPosition = 'right';
       if (props.controlsPosition) {

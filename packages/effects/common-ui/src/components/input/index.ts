@@ -66,7 +66,9 @@ const InnerInput = connect(
         });
 
         if (includesBannedWors.length > 0) {
-          return $t('common.banned-words-label', {word:includesBannedWors.join('、')});
+          return $t('common.banned-words-label', {
+            word: includesBannedWors.join('、'),
+          });
         }
       };
       const customValidator = {
@@ -75,7 +77,10 @@ const InnerInput = connect(
         validator: handleBlur,
       };
       const schemaRef = useFieldSchema();
-      const validator = schemaRef.value['x-validator'] || [];
+      let validator = schemaRef.value['x-validator'] || [];
+      // 过滤掉空的
+      validator = validator.filter((item:any) => !isEmpty(item));
+
       if (validator.length === 0) {
         validator.push(defaultInputValidator);
       } else {
@@ -105,7 +110,7 @@ const InnerInput = connect(
           validator.push(customValidator);
         }
       }
-      console.log('validator', validator);
+      //console.log('validator', validator);
       schemaRef.value.setProperties({ 'x-validator': validator });
       return props;
     },
@@ -117,7 +122,9 @@ const TextArea = connect(
   InnerInput,
   mapProps((props) => {
     const schemaRef = useFieldSchema();
-    const validator = schemaRef.value['x-validator'] || [];
+    let validator = schemaRef.value['x-validator'] || [];
+    // 过滤掉空的
+    validator = validator.filter((item:any) => !isEmpty(item));
     if (validator.length === 0) {
       validator.push(defaultInputValidator);
     } else {
