@@ -33,5 +33,6 @@
   "other-template": "其他模板",
   "add-template": "添加模板",
   "edit-template": "编辑模板",
-  "other": "其他"
+  "other": "其他",
+  "default": "默认"
 }

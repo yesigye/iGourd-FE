@@ -10,6 +10,7 @@ import {
   ElOption,
   ElSelect,
   Page,
+  Upload,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
@@ -328,18 +329,29 @@ onMounted(() => {
         </div>
         <!-- ----------门店logo设置------------ -->
         <div
-          class="flex h-12 w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2"
+          class="flex h-auto w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2"
         >
           <div class="w-[230px] font-bold">{{ t('storeset.store-logo') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
-            <div class="flex w-[173px] items-center gap-2">
-              {{ storeInfo.profile_photo }}
+
+            <div class="w-[683px] text-[#999999]">
+              <Upload
+                v-model:file-list="storeInfo.profile_photo"
+                list-type="picture-card"
+              />
             </div>
-            <div class="w-[500px] text-[#999999]"></div>
           </div>
 
-          <div class="flex min-w-[120px] justify-end"></div>
+          <div class="flex min-w-[120px] justify-end">
+            <ElButton
+              type="primary"
+              :plain="!isEdit('short_name')"
+              @click="handleEditClick('short_name')"
+            >
+              {{ !isEdit('short_name') ? t('common.edit') : t('common.save') }}
+            </ElButton>
+          </div>
         </div>
         <!-- ----------门店联系方式设置------------ -->
         <div

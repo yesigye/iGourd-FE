@@ -79,7 +79,7 @@ const { t } = useI18n();
 const [Drawer, drawerApi] = useIgourdDrawer({
   title: t('template.add-template'),
   appendToMain: true,
-  class: 'w-2/3',
+  class: 'w-3/4',
   async onOpenChange(isOpen) {
     if (isOpen) {
       const event = drawerApi.getData();
@@ -449,7 +449,6 @@ const getTemplateInit = async (apiData: any[]) => {
  * @param {Array} apiData - API返回的字段数据
  */
 const handleExistingTemplateData = async (apiData: any[]) => {
-  console.log(apiData, 'apiData');
   await processTemplateData(apiData, false);
 };
 const specList = ref<any[]>([]);

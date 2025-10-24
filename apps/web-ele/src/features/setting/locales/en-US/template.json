@@ -15,5 +15,6 @@
   "commodity-price-tag-tip": "Select Goods To Print Price Tags For Goods, Labels For Display Shelves And Labels For Weighing Items At Checkout",
   "confirm-delete": "Confirm Delete This Template?",
   "default-template": "Default Template",
-  "other-template": "Other Template"
+  "other-template": "Other Template",
+  "default": "Default"
 }
