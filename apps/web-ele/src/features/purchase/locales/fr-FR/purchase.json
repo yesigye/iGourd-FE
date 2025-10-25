@@ -351,5 +351,7 @@
     "auto-create-prepaid-order": "Créer automatiquement un bon de prépaiement",
     "auto-create-prepaid-order-msg": "Si cette option est cochée, un bon de prépaiement sera automatiquement créé lors de la validation de ce bon de commande"
   },
-  "number": "Numéro"
+  "number": "Numéro",
+  "unit-rate": "taux unitaire",
+  "quantity": "quantité"
 }

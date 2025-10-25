@@ -40,5 +40,11 @@
   "purchase-order-no": "Purchase Order Number",
   "pay-status": "Payment Status",
   "vendor-name": "Vendor Name",
-  "select-purchase-order": "Select Purchase Order"
+  "select-purchase-order": "Select Purchase Order",
+  "order-date": "Order Date",
+  "transaction-amount": "Transaction Amount",
+  "remaining-amount": "Remaining Amount",
+  "used-amount": "Used Amount",
+  "settle-amount": "Settlement Amount",
+  "pre-order": "Advance order"
 }
