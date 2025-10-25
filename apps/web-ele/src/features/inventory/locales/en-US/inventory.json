@@ -262,5 +262,6 @@
   "message-tip": "Information Tip",
   "please-enter-keywords": "Please enter receipt number, product name, product code",
   "unit-conversion": "Main Unit",
-  "sku-list": "SKU List"
+  "sku-list": "SKU List",
+  "monthly-sales": "Monthly Sales"
 }

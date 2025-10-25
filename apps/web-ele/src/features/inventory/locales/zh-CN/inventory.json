@@ -262,5 +262,6 @@
   "message-tip": "信息提示",
   "please-enter-keywords": "请输入单据编号、商品名称、商品编码",
   "unit-conversion": "主单位",
-  "sku-list": "SKU列表"
+  "sku-list": "SKU列表",
+  "monthly-sales": "月销售量"
 }

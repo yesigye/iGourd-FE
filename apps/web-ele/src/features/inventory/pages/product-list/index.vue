@@ -108,13 +108,8 @@ const productGridOptions: VxeGridProps<ProductDetail> = {
 const [SkuListGrid, skuListGridApi] = useIgourdVxeGrid({
   gridOptions: productGridOptions,
 });
-const {
-  Grid,
-  gridApi,
-  handleBatchDelete,
-  canBatchOperate,
-  handleChangeGridHeight,
-} = useInventoryProductList();
+const { Grid, gridApi, handleBatchDelete, canBatchOperate } =
+  useInventoryProductList();
 const { Drawer, drawerApi } = useAddProduct();
 const { Drawer: DetailsDrawer, drawerApi: detailsDrawerApi } =
   useProductDetails();
@@ -289,7 +284,7 @@ const handleSelectRow = (row) => {
 </script>
 
 <template>
-  <section>
+  <section class="bg-card">
     <section>
       <Page :class="pageClass">
         <Grid>
@@ -431,7 +426,12 @@ const handleSelectRow = (row) => {
       class="bg-card mt-2.5 py-2"
       v-if="pageClass === 'h-[calc(100vh-40vh)]'"
     >
-      <p class="h-5 pl-3 text-base font-bold">{{ t('inventory.sku-list') }}</p>
+      <div
+        class="flex h-5 items-center gap-1 rounded-full pl-3 text-base font-bold"
+      >
+        <div class="bg-primary h-2.5 w-1"></div>
+        {{ t('inventory.sku-list') }}
+      </div>
       <Page class="h-[calc(100vh-60vh-100px)]">
         <SkuListGrid />
       </Page>

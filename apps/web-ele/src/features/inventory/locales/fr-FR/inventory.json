@@ -262,5 +262,6 @@
   "message-tip": "Information",
   "please-enter-keywords": "Veuillez saisir numéro reçu, nom produit, code produit",
   "unit-conversion": "Unité Principale",
-  "sku-list": "Liste SKU"
+  "sku-list": "Liste SKU",
+  "monthly-sales": "Ventes Mensuelles"
 }
