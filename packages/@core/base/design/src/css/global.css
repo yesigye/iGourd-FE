@@ -163,7 +163,19 @@
     /* 过渡更顺滑一点 */
     @apply transition-[color,background,border,box-shadow,transform] duration-150 ease-out;
   }
-
+  .el-input.ig-bottom-line {
+    @apply border-0 border-b;
+  }
+  .el-input.ig-bottom-line .el-input__wrapper {
+    @apply border-0 border-b;
+    @apply shadow-none;
+  }
+  .el-select.ig-bottom-line {
+    @apply border-0 border-b;
+  }
+  .el-select.ig-bottom-line .el-select__wrapper {
+    @apply shadow-none;
+  }
   /* ========== LINE 风格（ElTabs type="line" 类似） ========== */
   .el-radio-group.tw-tabs-line {
     @apply items-end gap-0;

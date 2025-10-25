@@ -269,11 +269,11 @@
     display: block;
 
     .#{$form-item-prefix}-label * {
-      line-height: 40px;
+      line-height: 28px;
     }
 
     .#{$form-item-prefix}-label-content {
-      min-height: 40px;
+      min-height: 28px;
     }
   }
 }

@@ -35,7 +35,6 @@ import {
   ElText,
   FormButtonGroup,
   Submit,
-  useIgourdDrawer,
   useTableSearchForm,
 } from '@igourd/common-ui';
 import { usePriorityValues } from '@igourd/hooks';
@@ -63,7 +62,6 @@ import { VxeButton } from 'vxe-pc-ui';
 import { VxeGrid, VxeUI } from 'vxe-table';
 
 import { extendProxyOptions } from './extends';
-import PrintDrawer from './print.vue';
 
 import 'vxe-table/styles/cssvar.scss';
 import 'vxe-pc-ui/styles/cssvar.scss';
@@ -347,21 +345,21 @@ const showDefaultEmpty = computed(() => {
   return !hasEmptyText && !hasEmptyRender;
 });
 const printRef = ref();
-const [Drawer, drawerApi] = useIgourdDrawer({
-  title: $t('common.print'),
-  class: 'w-3/4',
-  appendToMain: true,
-  contentClass: 'bg-muted',
-  header: false,
-  confirmText: $t('common.print'),
-  onOpened: () => {
-    printRef.value.setData(gridRef.value?.getData());
-  },
-  onConfirm() {
-    printRef.value.print();
-  },
-  // isOpen: true,
-});
+// const [Drawer, drawerApi] = useIgourdDrawer({
+//   title: $t('common.print'),
+//   class: 'w-3/4',
+//   appendToMain: true,
+//   contentClass: 'bg-muted',
+//   header: false,
+//   confirmText: $t('common.print'),
+//   onOpened: () => {
+//     printRef.value.setData(gridRef.value?.getData());
+//   },
+//   onConfirm() {
+//     printRef.value.print();
+//   },
+//   // isOpen: true,
+// });
 
 async function init() {
   await nextTick();
@@ -441,9 +439,9 @@ const openMoreActions = computed(() => {
     :class="cn('bg-card rounded-md', className)"
     :style="{ height: `calc(100% - ${footerHeight}px - 0.25rem)` }"
   >
-    <Drawer :show-header="false">
+    <!-- <Drawer :show-header="false">
       <PrintDrawer ref="printRef" v-bind="options" />
-    </Drawer>
+    </Drawer> -->
     <VxeGrid
       ref="gridRef"
       :class="

@@ -1,19 +1,22 @@
-import { useDrawerForm } from '#/hooks';
+import type { IChatOfAccountProps } from '../../components';
+
+import { computed, ref, unref } from 'vue';
+
 import { onFieldInputValueChange, onFieldValueChange } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+import { useUserStore } from '@igourd/stores';
+
+import { useDrawerForm } from '#/hooks';
+
+import { useNewParentIdOptions } from '../account-ledger-balance';
 import {
   accountLedgerBalanceDirectionOptions,
   getBalanceDirection,
   useAccountLedgerCategoryOptions,
   useLeafLedgers,
 } from '../leaf-ledgers';
-import { useUserStore } from '@igourd/stores';
 import accountFormSchema from './account-schema';
 import subjectSchema from './subject-schema';
-import { computed, ref, unref } from 'vue';
-import type { IChatOfAccountProps } from '../../components';
-import { useNewParentIdOptions } from '../account-ledger-balance';
-import { getMaxCodeLeafAccounts } from '../../apis';
 
 export function useChartOfAccountsForm(props: IChatOfAccountProps) {
   const { t } = useI18n();
@@ -60,7 +63,7 @@ export function useChartOfAccountsForm(props: IChatOfAccountProps) {
         leafLedgers,
         categoryOptions,
         currencySymbol,
-        blanceDirectionOptions
+        blanceDirectionOptions,
       },
       effects(form) {
         onFieldInputValueChange('code', () => {

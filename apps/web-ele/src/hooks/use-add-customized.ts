@@ -25,7 +25,6 @@ export function useAddCustomizedForm() {
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-component-props': {
-              maxLength: 32,
               placeholder: "{{t('add-customized.enter-feature-name')}}",
               clearable: true,
             },
