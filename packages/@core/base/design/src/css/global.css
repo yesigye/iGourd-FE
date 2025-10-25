@@ -34,7 +34,9 @@
     @apply size-full;
     /* scrollbar-gutter: stable; */
   }
-
+  h2 {
+    @apply text-xl;
+  }
   body {
     min-height: 100vh;
     @apply text-sm;

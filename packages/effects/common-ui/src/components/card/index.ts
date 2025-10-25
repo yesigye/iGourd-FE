@@ -1,9 +1,10 @@
+import { h } from 'vue';
+
 import { connect, mapProps } from '@formily/vue';
 import { ElCard } from 'element-plus';
 
 import { stylePrefix } from '../__builtins__';
-import { h } from 'vue';
-//@ts-ignore
+// @ts-ignore
 const InnerElCard = (props, { slots, emit, attrs }) => {
   const innerProps = {
     ...props,
