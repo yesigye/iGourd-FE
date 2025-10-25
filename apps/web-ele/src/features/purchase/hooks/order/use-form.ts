@@ -17,12 +17,12 @@ import {
   getPurchaseReceiptPageListApi,
   updatePurchaseOrderApi,
 } from '@@/purchase/apis';
-import { paymentMethodListUsingPOST } from '#/features/setting';
 
 import { basicsCurrencyList } from '#/api';
 import { orderNoGenerate } from '#/api/common';
 import { getAccountManagementOptionList } from '#/features/account';
 import { wareHouseProductSearch } from '#/features/inventory';
+import { paymentMethodListUsingPOST } from '#/features/setting';
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
 import { floorDecimal } from '#/utils/eleValidate';
 // 供应商数据
@@ -58,23 +58,23 @@ const getCurrencyList = async () => {
   });
 };
 // 支付方式
-const getPaymentMethodListOption = async (data:any)=>{
-  const params ={
+const getPaymentMethodListOption = async (data: any) => {
+  const params = {
     ...data,
-    payment_scene_type:"PURCHASE"
-  }
+    payment_scene_type: 'PURCHASE',
+  };
   return paymentMethodListUsingPOST(params).then((res) => {
-      return {
-        list: res?.map((i) => {
-          return {
-            ...i,
-            value: i.payment_method_type.value,
-            label: i.payment_method_type.label,
-          };
-        }),
-      };
-    });
-}
+    return {
+      list: res?.map((i) => {
+        return {
+          ...i,
+          value: i.payment_method_type.value,
+          label: i.payment_method_type.label,
+        };
+      }),
+    };
+  });
+};
 export function useOrderForm() {
   const { t } = useI18n();
   const { gridApi } = inject<{
@@ -459,10 +459,6 @@ export function useOrderForm() {
                             type: 'string',
                             title: "{{t('purchase.order-pay.discount')}}",
                             'x-decorator': 'FormItem',
-                            'x-decorator-props': {
-                              size: 'small',
-                              feedbackLayout: 'terse',
-                            },
                             'x-component': 'InputNumber',
                             'x-component-props': {
                               '@blur': `{{(value,op)=> discountAmountChange(value,op,$self,$index) }}`,
@@ -537,11 +533,8 @@ export function useOrderForm() {
                                     "{{t('purchase.order-pay.payment-method')}}",
                                   'x-decorator': 'FormItem',
                                   'x-component': 'FormilySearchSelect',
-                                  'x-decorator-props': {
-                                    size: 'small',
-                                    feedbackLayout: 'terse',
-                                  },
                                   'x-component-props': {
+                                    class: 'ig-bottom-line',
                                     multiple: false,
                                     onChange:
                                       '{{ (value,op)=> payment_method_change(value,op,$self,$index) }}',
