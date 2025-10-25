@@ -40,6 +40,12 @@
   "purchase-order-no": "采购订单号",
   "pay-status": "支付状态",
   "vendor-name": "供应商名称",
-  "choose-purchase-order": "选择采购单"
-  
+  "choose-purchase-order": "选择采购单",
+  "order-date": "订单日期",
+  "transaction-amount": "交易金额",
+  "remaining-amount":"剩余金额",
+  "used-amount":"可用金额",
+  "settle-amount":"抵扣金额",
+  "pre-order":"预付订单"
+
 }

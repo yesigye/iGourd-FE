@@ -338,5 +338,7 @@
     "auto-create-prepaid-order":"自动创建一个预付单",
     "auto-create-prepaid-order-msg":"如果勾选，那么在该采购订单审核通过时,会自动创建一个预付款单"
   },
-  "number": "编号"
+  "number": "编号",
+  "unit-rate": "单位比例",
+  "quantity": "数量"
 }

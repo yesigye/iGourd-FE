@@ -41,5 +41,11 @@
   "purchase-order-no": "Numéro de Commande d'Achat",
   "pay-status": "Statut de Paiement",
   "vendor-name": "Nom du Fournisseur",
-  "select-purchase-order": "Bon de commande"
+  "select-purchase-order": "Bon de commande",
+  "order-date": "Date de commande",
+  "transaction-amount": "Montant de la transaction",
+  "remaining-amount": "Solde restant",
+  "used-amount": "Montant utilisé",
+  "settle-amount": "Montant déduit",
+  "pre-order": "Précommande"
 }

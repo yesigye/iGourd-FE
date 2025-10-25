@@ -1,29 +1,30 @@
 import type { ISchema } from '@igourd/common-ui';
+
 import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
-import { onFieldValueChange } from '@igourd/common-ui';
+
 import { h, inject, ref } from 'vue';
 
-import { Space } from '@igourd/common-ui';
+import { onFieldValueChange, Space } from '@igourd/common-ui';
+import { createIconifyIcon } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 import ModalTable from '@igourd/plugins/modal-table';
 import { useUserStore } from '@igourd/stores';
-import { createIconifyIcon } from '@igourd/icons';
-import { floorDecimal, retainDecimal8 } from '#/utils/eleValidate';
 
 import {
   createPurchaseOrderApi,
   getPurchaseListApi,
   getPurchaseOrderDetailApi,
-  updatePurchaseOrderApi,
   getPurchaseReceiptPageListApi,
+  updatePurchaseOrderApi,
 } from '@@/purchase/apis';
-import { getAccountManagementOptionList } from '#/features/account';
-import { merchantPaymentMethodOption } from '#/features/setting';
+import { paymentMethodListUsingPOST } from '#/features/setting';
 
 import { basicsCurrencyList } from '#/api';
 import { orderNoGenerate } from '#/api/common';
+import { getAccountManagementOptionList } from '#/features/account';
 import { wareHouseProductSearch } from '#/features/inventory';
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
+import { floorDecimal } from '#/utils/eleValidate';
 // 供应商数据
 const purchaseList = ref([]);
 // 货币数据
@@ -56,11 +57,29 @@ const getCurrencyList = async () => {
     };
   });
 };
+// 支付方式
+const getPaymentMethodListOption = async (data:any)=>{
+  const params ={
+    ...data,
+    payment_scene_type:"PURCHASE"
+  }
+  return paymentMethodListUsingPOST(params).then((res) => {
+      return {
+        list: res?.map((i) => {
+          return {
+            ...i,
+            value: i.payment_method_type.value,
+            label: i.payment_method_type.label,
+          };
+        }),
+      };
+    });
+}
 export function useOrderForm() {
   const { t } = useI18n();
   const { gridApi } = inject<{
     gridApi: ExtendedVxeGridApi;
-  }>(Symbol.for('PageGrid'));
+  }>(Symbol.for('PageGrid'), { gridApi: null });
   const warehouse = useWarehouseSelect();
   const { currentLoginUserApp } = useUserStore();
   const vatConfigurationEnums = [
@@ -527,10 +546,10 @@ export function useOrderForm() {
                                     onChange:
                                       '{{ (value,op)=> payment_method_change(value,op,$self,$index) }}',
                                     onSearch:
-                                      '{{ merchantPaymentMethodOption }}',
+                                      '{{ getPaymentMethodListOption }}',
                                   },
                                 },
-                                //定金比例
+                                // 定金比例
                                 amount_rate: {
                                   type: 'number',
                                   title:
@@ -545,7 +564,7 @@ export function useOrderForm() {
                                     '@blur': `{{(value,op)=> amountRateChange(value,op,$self,$index) }}`,
                                   },
                                 },
-                                //定金
+                                // 定金
                                 amount: {
                                   type: 'number',
                                   title: "{{t('purchase.order-pay.deposit')}}",
@@ -855,7 +874,7 @@ export function useOrderForm() {
 
       formData.purchase_order_deposit_list.forEach((item) => {
         item.merchant_id = currentLoginUserApp.owner_id;
-        //设置外层定金
+        // 设置外层定金
         if (item.amount) {
           formData.deposit_amount = item.amount;
         }
@@ -969,30 +988,32 @@ export function useOrderForm() {
   // 根据订金金额计算优惠比例
   const amountChange = (_, op, record, index) => {
     const total_amount = formAPI.values.total_amount || 0;
-    let rate = parseFloat(record.value) / parseFloat(total_amount);
+    let rate =
+      Number.parseFloat(record.value) / Number.parseFloat(total_amount);
     if (
       rate !== Infinity &&
-      parseFloat(record.value) < parseFloat(total_amount)
+      Number.parseFloat(record.value) < Number.parseFloat(total_amount)
     ) {
       rate = floorDecimal(rate * 100, 2);
       formAPI.setValuesIn('purchase_order_deposit_list.0.amount_rate', rate);
-
     }
   };
   // 根据订金比例计算优惠金额
   const amountRateChange = (_, op, record, index) => {
     const total_amount = formAPI.values.total_amount || 0;
-    const abs = parseFloat(total_amount) * parseFloat(record.value / 100);
+    const abs =
+      Number.parseFloat(total_amount) * Number.parseFloat(record.value / 100);
     formAPI.setValuesIn('purchase_order_deposit_list.0.amount', abs);
   };
 
   // 根据优惠金额计算优惠比例
   const discountAmountChange = (_, op, record, index) => {
     const total_amount = formAPI.values.total_amount || 0;
-    let rate = parseFloat(record.value) / parseFloat(total_amount);
+    let rate =
+      Number.parseFloat(record.value) / Number.parseFloat(total_amount);
     if (
       rate !== Infinity &&
-      parseFloat(record.value) < parseFloat(total_amount)
+      Number.parseFloat(record.value) < Number.parseFloat(total_amount)
     ) {
       rate = floorDecimal(rate * 100, 2);
       formAPI.setValuesIn('discount_percentage', rate);
@@ -1001,7 +1022,8 @@ export function useOrderForm() {
   // 根据优惠比例计算优惠金额
   const discountPercentageChange = (_, op, record, index) => {
     const total_amount = formAPI.values.total_amount || 0;
-    const abs = parseFloat(total_amount) * parseFloat(record.value / 100);
+    const abs =
+      Number.parseFloat(total_amount) * Number.parseFloat(record.value / 100);
     formAPI.setValuesIn('discount_amount', abs);
   };
 
@@ -1063,7 +1085,7 @@ export function useOrderForm() {
         getAccountManagementOptionList,
         accountChange,
         payment_method_change,
-        merchantPaymentMethodOption,
+        getPaymentMethodListOption,
         discountAmountChange,
         discountPercentageChange,
         amountRateChange,
@@ -1091,7 +1113,7 @@ export function useOrderForm() {
             f.visible = true;
           });
         });
-        //选中 货币
+        // 选中 货币
         onFieldValueChange('currency_code', (field, form) => {
           const currObj = currencyList.value.find(
             (item) => (item.id = field.value),
@@ -1110,7 +1132,6 @@ export function useOrderForm() {
           (field, form) => {
             if (field.value > 0) {
               setRequired(form, true);
-
             } else {
               setRequired(form, false);
             }

@@ -29,19 +29,20 @@ interface RowType {
 }
 
 const gridOptions: VxeGridProps<RowType> = {
+  id:"purchase-detail-grid",
   columns: [
-    { title: '商品名称', field: 'major_name' },
-    { title: '商品编码', field: 'product_code' },
-    { title: '单位', field: 'major_unit_name' },
+    { title: t('purchase.major-name'), field: 'major_name' },
+    { title: t('purchase.code'), field: 'product_code' },
+    { title: t('purchase.unit-name'), field: 'major_unit_name' },
     {
-      title: '单位比率',
+      title: t('purchase.unit-rate'),
       field: 'price',
-      slots: {
-        default: 'unit',
-      },
+      // slots: {
+      //   default: 'unit',
+      // },
     },
-    { title: '成本价格', field: 'cost_price' },
-    { title: '数量', field: 'stock_total_quantity_message' },
+    { title: t('purchase.cost_price'), field: 'cost_price' },
+    { title: t('purchase.quantity'), field: 'stock_total_quantity_message' },
   ],
   editConfig: {
     mode: 'cell',
@@ -103,54 +104,54 @@ defineExpose({ open, close });
   <Drawer class="w-full">
     <ElCard class="mt-1">
       <div class="text-sm">
-        订单号：<span class="text-red-500">{{
+        {{t('purchase.purchaseorderno')}}<span class="text-red-500">{{
           detailData.purchase_order_no
-        }}</span>创建者：<span class="text-red-500">{{ detailData.creator_name }}</span>
+        }}</span>{{t('purchase.creator')}}：<span class="text-red-500">{{ detailData.creator_name }}</span>
       </div>
     </ElCard>
     <ElCard class="mt-1">
       <template #header>
-        <div class="title">基础信息</div>
+        <div class="title">{{t('common.basic-info')}}</div>
       </template>
       <ElDescriptions title="" :column="3" border>
-        <ElDescriptionsItem label="商户名称">
+        <ElDescriptionsItem :label="t('purchase.merchantname')">
           {{ detailData.merchant_name }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="采购单号">
+        <ElDescriptionsItem :label="t('purchase.purchaseorderno')">
           {{ detailData.purchase_order_no }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="仓库">
+        <ElDescriptionsItem :label="t('purchase.warehouse-name')">
           {{ detailData.warehouse_name }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="供应商">
+        <ElDescriptionsItem :label="t('purchase.vendor')">
           {{ detailData.vendor_name }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="日期">
+        <ElDescriptionsItem :label="t('purchase.date')">
           {{ detailData.purchase_date }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="增值税">
+        <ElDescriptionsItem :label="t('purchase.vat')">
           {{ detailData.vat_amount }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="其他税">
+        <ElDescriptionsItem :label="t('purchase.other-tax')">
           {{ detailData.other_tax_amount }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="货币">
+        <ElDescriptionsItem :label="t('purchase.currency')">
           {{ detailData.currency_code }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="备注">
+        <ElDescriptionsItem :label="t('purchase.remark')">
           {{ detailData.remark }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="总金额">
+        <ElDescriptionsItem :label="t('purchase.total-amount')">
           {{ detailData.subtotal_amount }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="定金">
+        <ElDescriptionsItem :label="t('purchase.remark')">
           {{ detailData.deposit_amount }}
         </ElDescriptionsItem>
       </ElDescriptions>
     </ElCard>
     <ElCard class="mt-1">
       <template #header>
-        <div class="title">产品详情</div>
+        <div class="title">{{t('purchase.products-details')}}</div>
       </template>
       <Grid>
         <template #unit="{ row }">
@@ -160,7 +161,7 @@ defineExpose({ open, close });
     </ElCard>
     <ElCard class="mt-1">
       <template #header>
-        <div class="title">附件</div>
+        <div class="title">{{t('purchase.attachment')}}</div>
       </template>
     </ElCard>
     <template #footer>

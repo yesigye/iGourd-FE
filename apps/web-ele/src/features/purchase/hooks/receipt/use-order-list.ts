@@ -24,13 +24,13 @@ export function usePreOrderList(defaultQueryParams?: Record<string, any>) {
      {
       field: 'amout',
       minWidth: 200,
-      title: "编辑",
+      title: t("receipt.settle-amount"),
       editRender: { name: 'input' },
     },
     {
       field: 'payment_time',
       minWidth: 200,
-      title: t('account.order-date'),
+      title: t('receipt.order-date'),
     },
     {
       field: 'advance_payment_order_no',
@@ -40,17 +40,17 @@ export function usePreOrderList(defaultQueryParams?: Record<string, any>) {
     {
       field: 'total_amount',
       minWidth: 200,
-      title: t('account.transaction-amount'),
+      title: t('receipt.transaction-amount'),
     },
     {
       field: 'remaining_amount',
       minWidth: 200,
-      title: "剩余金额",
+      title: t('receipt.remaining-amount'),
     },
     {
       field: 'used_amount',
       minWidth: 200,
-      title: "可用金额",
+      title: t('receipt.used-amount'),
     },
     {
       field: 'creator_name',

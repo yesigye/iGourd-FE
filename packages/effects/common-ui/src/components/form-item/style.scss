@@ -11,9 +11,11 @@
   position: relative;
   line-height: 32px; // 直接使用值，避免变量引用问题
   font-size: var(--el-font-size-base); // 使用 CSS 变量
-
+  column-gap: 4px;
+  --el-font-weight-primary: 400;
   &-label * {
     line-height: 32px;
+    font-weight: 500;
   }
 
   &-label-content {
@@ -93,9 +95,7 @@
 .#{$form-item-prefix}-feedback-layout-terse {
   margin-bottom: 8px;
 
-  &.#{$form-item-prefix}-feedback-has-text:not(
-      .#{$form-item-prefix}-inset
-    ) {
+  &.#{$form-item-prefix}-feedback-has-text:not(.#{$form-item-prefix}-inset) {
     margin-bottom: 0;
   }
 }
@@ -103,9 +103,7 @@
 .#{$form-item-prefix}-feedback-layout-loose {
   margin-bottom: 22px;
 
-  &.#{$form-item-prefix}-feedback-has-text:not(
-      .#{$form-item-prefix}-inset
-    ) {
+  &.#{$form-item-prefix}-feedback-has-text:not(.#{$form-item-prefix}-inset) {
     margin-bottom: 0;
   }
 }
@@ -113,9 +111,7 @@
 .#{$form-item-prefix}-feedback-layout-none {
   margin-bottom: 0;
 
-  &.#{$form-item-prefix}-feedback-has-text:not(
-      .#{$form-item-prefix}-inset
-    ) {
+  &.#{$form-item-prefix}-feedback-has-text:not(.#{$form-item-prefix}-inset) {
     margin-bottom: 0;
   }
 }
@@ -159,7 +155,7 @@
 }
 
 .#{$form-item-prefix}-size-small {
-          font-size: var(--el-font-size-extra-small);
+  font-size: var(--el-font-size-extra-small);
 
   .#{$form-item-prefix}-label * {
     line-height: 24px;
@@ -317,7 +313,7 @@
 }
 
 .#{$form-item-prefix}-asterisk {
-  color: var(--el-color-danger);
+  color: hsla(0, 87%, 69%, 1);
   margin-right: 4px;
   display: inline-block;
   font-family: SimSun, sans-serif;
@@ -365,8 +361,7 @@
     border: none !important;
     box-shadow: none !important;
   }
-  .#{$namespace}-input-number.is-controls-right
-    .#{$namespace}-input__inner {
+  .#{$namespace}-input-number.is-controls-right .#{$namespace}-input__inner {
     padding-right: 40px;
   }
   .#{$namespace}-input-number.is-controls-right

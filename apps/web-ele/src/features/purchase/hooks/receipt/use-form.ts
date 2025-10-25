@@ -20,7 +20,7 @@ import {
 } from '@@/purchase/apis';
 import { basicsCurrencyList } from '#/api';
 import { getAccountManagementOptionList } from '#/features/account';
-import { merchantPaymentMethodOption } from '#/features/setting';
+import { paymentMethodListUsingPOST } from '#/features/setting';
 function remoteMethod(keywords: string) {
   return getPurchaseListApi({
     page_num: 1,
@@ -52,6 +52,24 @@ const getCurrencyList = async () => {
     };
   });
 };
+// 支付方式
+const getPaymentMethodListOption = async (data:any)=>{
+  const params ={
+    ...data,
+    payment_scene_type:"PURCHASE"
+  }
+  return paymentMethodListUsingPOST(params).then((res) => {
+      return {
+        list: res?.map((i) => {
+          return {
+            ...i,
+            value: i.payment_method_type.value,
+            label: i.payment_method_type.label,
+          };
+        }),
+      };
+    });
+}
 
 export function useReceiptForm() {
   const { t } = useI18n();
@@ -406,13 +424,22 @@ export function useReceiptForm() {
                               },
                               advance_payment_offset_list: {
                                 type: 'string',
-                                title: '预付单',
+                                title: "{{t('receipt.pre-order')}}",
                                 'x-decorator': 'FormItem',
                                 'x-component': 'Select',
                                 'x-decorator-props': {
                                   style: { width: '120px' },
                                   size: 'small',
                                   feedbackLayout: 'terse',
+                                },
+                                'x-component-props': {
+                                  style: {
+                                    'min-width': '100px',
+                                  },
+                                  multiple: true,
+                                  disabled: true,
+                                  'collapse-tags': true,
+                                  'max-collapse-tags': 3,
                                 },
                                 'x-reactions': {
                                   fulfill: {
@@ -503,7 +530,7 @@ export function useReceiptForm() {
                                     onChange:
                                       '{{ (value,op)=> payment_method_change(value,op,$self,$index) }}',
                                     onSearch:
-                                      '{{ merchantPaymentMethodOption }}',
+                                      '{{ getPaymentMethodListOption }}',
                                   },
                                 },
                                 amount: {
@@ -810,6 +837,8 @@ export function useReceiptForm() {
       formData.subtotal_amount = total.toFixed(2);
       // total_amount  最终总金额
       formData.total_amount = total.toFixed(2);
+      //  删除不用提交
+      delete formData.advance_payment_offset_opts;
       response = formData.id
         ? updatePurchaseReceiptApi(formData)
         : await createPurchaseReceiptApi(formData);
@@ -965,7 +994,7 @@ export function useReceiptForm() {
         getAccountManagementOptionList,
         accountChange,
         payment_method_change,
-        merchantPaymentMethodOption,
+        getPaymentMethodListOption,
         icon: (name: string) => {
           const IconComponent = createIconifyIcon(name);
           return IconComponent ? h(IconComponent) : null;
@@ -991,13 +1020,13 @@ export function useReceiptForm() {
           form.setValuesIn('total_amount', totalAmount);
         });
         onFieldValueChange('advance_payment_offset_opts', (field, form) => {
-          dataSource.value = JSON.parse(field.value);
-          const ids = dataSource.value.map((item) => item.id);
-          debugger;
-
-          form.setValues({
-            advance_payment_offset_list: ids,
-          });
+          if (field.value) {
+            dataSource.value = JSON.parse(field.value);
+            const ids = dataSource.value.map((item) => item.id);
+            form.setValues({
+              advance_payment_offset_list: ids,
+            });
+          }
         });
       },
     },
