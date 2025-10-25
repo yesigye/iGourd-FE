@@ -21,25 +21,21 @@ export function usePreOrderList(defaultQueryParams?: Record<string, any>) {
       type: 'checkbox',
       fixed: 'left',
     },
+     {
+      field: 'amout',
+      minWidth: 200,
+      title: "编辑",
+      editRender: { name: 'input' },
+    },
     {
-      field: 'order_create_time',
+      field: 'payment_time',
       minWidth: 200,
       title: t('account.order-date'),
     },
     {
-      field: 'order_no',
+      field: 'advance_payment_order_no',
       minWidth: 200,
       title: t('print-temp.order-no'),
-    },
-    {
-      field: 'subtotal_amount',
-      minWidth: 200,
-      title: t('account.total-amount'),
-    },
-    {
-      field: 'round_down_amount',
-      minWidth: 200,
-      title: t('print-temp.wipe'),
     },
     {
       field: 'total_amount',
@@ -47,19 +43,14 @@ export function usePreOrderList(defaultQueryParams?: Record<string, any>) {
       title: t('account.transaction-amount'),
     },
     {
-      field: 'customer_name',
+      field: 'remaining_amount',
       minWidth: 200,
-      title: t('account.customer'),
+      title: "剩余金额",
     },
     {
-      field: 'currency_code',
+      field: 'used_amount',
       minWidth: 200,
-      title: t('account.currency'),
-    },
-    {
-      field: 'exchange_rate',
-      minWidth: 200,
-      title: t('account.exchange-rate'),
+      title: "可用金额",
     },
     {
       field: 'creator_name',
@@ -104,7 +95,6 @@ export function usePreOrderList(defaultQueryParams?: Record<string, any>) {
     start_create_time?: string;
     end_create_time?: string;
   }
-  debugger
   const crud = useCrud<SaleOrderRow, SaleOrderDTO>({
     columns,
     searchFormSchema,
@@ -123,6 +113,13 @@ export function usePreOrderList(defaultQueryParams?: Record<string, any>) {
           params.end_create_time = `${data.date_range[1]} 23:59:59`;
         }
         return await getAdvancePaymentOrderPageListApi(params);
+      },
+    },
+    editConfig: {
+      trigger: 'click',
+      mode: 'cell',
+      beforeEditMethod({ row }) {
+        return true;
       },
     },
   });
