@@ -1,23 +1,25 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref } from 'vue';
+import { nextTick, onMounted, ref, watch } from 'vue';
 
 import {
+  Card,
   ColPage,
   confirm,
   ElButton,
   ElRadio,
   ElRadioGroup,
   useIgourdDrawer,
-  ElInfiniteScroll,
 } from '@igourd/common-ui';
+import { CirclePlus, Delete, Edit } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 
 import {
-  getCustomerLabelPageListApi,
   deleteCustomerLabelApi,
+  getCustomerLabelPageListApi,
 } from '@@/customer/apis';
 import drawer from '@@/customer/components/label/drawer.vue';
 import { useCustomerLabel } from '@@/customer/hooks/label';
+
 defineOptions({
   name: 'ICustomerLabel',
 });
@@ -26,9 +28,11 @@ const [Drawer, drawerApi] = useIgourdDrawer({
   appendToMain: true,
 });
 const { t } = useI18n();
-const { Grid, handleEdit, canBatchOperate, handleBatchDelete } =
-  useCustomerLabel();
 const selectedLabelId = ref<string>('');
+
+const { Grid, gridApi, handleEdit, canBatchOperate, handleBatchDelete } =
+  useCustomerLabel(selectedLabelId);
+// 根据选择的标签ID获取客户列表
 
 const customerLabelInfo = ref({
   list: [],
@@ -38,7 +42,7 @@ const customerLabelInfo = ref({
   isFirstLoad: false,
   isLoading: true,
 });
-// 获取商品标签列表
+// 获取客户标签列表
 const handleGetProductLabelList = async () => {
   customerLabelInfo.value.isLoading = true;
   const res = await getCustomerLabelPageListApi({
@@ -57,6 +61,15 @@ const handleGetProductLabelList = async () => {
     });
   }
 };
+// 监听选择的标签ID变化
+watch(
+  () => selectedLabelId.value,
+  (value) => {
+    if (value) {
+      gridApi.reload();
+    }
+  },
+);
 // 商品详情相关
 const productShow = ref(false);
 const goodParms = ref({
@@ -77,7 +90,7 @@ const handleClose = () => {
   productShow.value = false;
 };
 const handleAddLabel = (item) => {
-  drawerApi.setData(null).open();
+  drawerApi.open();
 };
 const handleEditLabel = (item) => {
   drawerApi.setData(item).open();
@@ -106,7 +119,6 @@ const handleRemove = async (item) => {
 const handleLoadMore = async () => {
   // 因为动态高度避免首次获取列表的时候触发加载
   if (customerLabelInfo.value.isFirstLoad) {
-    console.log('加载更多');
     if (customerLabelInfo.value.isLoading) {
       return;
     }
@@ -119,24 +131,20 @@ const refreshTree = () => {
 };
 
 onMounted(async () => {
-    await handleGetProductLabelList();
-
+  await handleGetProductLabelList();
 });
 </script>
 
 <template>
-  <ColPage auto-content-height>
+  <ColPage auto-content-height header-class="px-3 py-1 bg-muted border-0">
     <template #left="{ isCollapsed, expand }">
-      <section class="bg-card mb-5 h-full rounded p-2.5">
-        <p class="flex justify-between text-sm font-medium">
-          {{ t('label.curtomer-label') }}
-          <ElButton type="primary" @click="handleAddLabel">
-            {{ t('common.add') }}
-          </ElButton>
-        </p>
+      <Card
+        :header="t('label.curtomer-label')"
+        class="bg-card p-small mr-2 h-full rounded"
+      >
         <!-- 分类树 -->
         <div
-          class="classification-tree mt-5 overflow-auto"
+          class="classification-tree overflow-auto"
           v-infinite-scroll="handleLoadMore"
           :infinite-scroll-immediate="false"
         >
@@ -151,25 +159,30 @@ onMounted(async () => {
               >
                 <div class="inline-flex w-full items-center">
                   <div class="flex-1">{{ item.name }}</div>
-                  <div class="show-opertion text-right">
-                    <i
-                      class="iconfont icon-icon_Edit mr-4"
-                      @click="handleEditLabel(item)"
-                    ></i>
-                    <i
-                      class="iconfont icon-icon_del"
-                      @click="handleRemove(item)"
-                    ></i>
+                  <div
+                    class="show-opertion flex items-center gap-1.5 text-right"
+                  >
+                    <CirclePlus @click="handleAddLabel(item)" />
+                    <Edit @click="handleEditLabel(item)" />
+                    <Delete @click="handleRemove(item)" />
                   </div>
                 </div>
               </ElRadio>
             </div>
           </ElRadioGroup>
         </div>
-      </section>
+      </Card>
+    </template>
+    <template #description>
+      <div>
+        <div id="label"></div>
+      </div>
     </template>
     <Grid>
-    <template #table-actions>
+      <template #table-actions>
+        <ElButton type="primary" @click="handleAddLabel">
+          {{ t('common.add') }}
+        </ElButton>
         <ElButton
           v-if="canBatchOperate"
           v-auth="'inventory_product_label_delete'"
@@ -180,17 +193,11 @@ onMounted(async () => {
         </ElButton>
       </template>
       <template #operation="{ row }">
-        <ElButton
-          type="text"
-          @click="handleEdit(row)"
-        >
-        {{ t('common.edit') }}
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.edit') }}
         </ElButton>
-         <ElButton
-          type="text"
-          @click="handleEdit(row)"
-        >
-         {{ t('common.detail') }}
+        <ElButton type="text" @click="handleEdit(row)">
+          {{ t('common.detail') }}
         </ElButton>
       </template>
     </Grid>
@@ -234,5 +241,36 @@ onMounted(async () => {
 
 .classification-tree {
   height: calc(100% - 52px);
+}
+</style>
+<style lang="scss">
+.p-small {
+  --el-card-padding: 12px;
+
+  .el-card__body {
+    height: 100%;
+
+    .el-tree--highlight-current.hidden-checkbox
+      .el-tree-node.is-current
+      > .el-tree-node__content {
+      background-color: var(--el-color-primary-light-7);
+    }
+
+    .hidden-checkbox {
+      .el-checkbox {
+        display: none;
+      }
+
+      .is-checked {
+        background-color: var(--el-color-primary-light-7);
+      }
+    }
+  }
+}
+
+.telport-grid {
+  .vxe-grid--toolbar-wrapper {
+    display: none;
+  }
 }
 </style>

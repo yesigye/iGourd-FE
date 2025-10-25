@@ -1,5 +1,8 @@
 {
   "curtomer-label": "客户标签",
   "customer-qty": "客户数量",
-  "name": "客户名称"
+  "name": "客户名称",
+  "customer": "客户",
+  "contact-name": "联系人名称",
+  "contact-telephone": "联系人电话"
 }
