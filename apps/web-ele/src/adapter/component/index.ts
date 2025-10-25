@@ -13,7 +13,10 @@ import {
   DatePicker,
   Editable,
   ElButton,
+  ElIcon,
   ElNotification,
+  ElTag,
+  ElTooltip,
   Form,
   FormButtonGroup,
   FormCollapse,
@@ -41,12 +44,7 @@ import {
   TimePicker,
   Transfer,
   TransferTable,
-  ElTag,
-  ElTooltip,
-  ElIcon
 } from '@igourd/common-ui';
-
-import { FormilySearchSelect } from "#/components/SearchSelect"
 /**
  * 通用组件共同的使用的基础组件，原先放在 adapter/form 内部，限制了使用范围，这里提取出来，方便其他地方使用
  * 可用于 igourd-form、igourd-modal、igourd-drawer 等组件使用,
@@ -55,9 +53,9 @@ import '@igourd/common-ui/style';
 import ModalTable from '@igourd/plugins/modal-table';
 
 import { ProductTable } from '#/components';
+import { FormilySearchSelect } from '#/components/SearchSelect';
 
 import Upload from './upload';
-import Icon from '../../../../../packages/@core/ui-kit/shadcn-ui/src/components/icon/icon.vue';
 
 async function initComponentAdapter() {
   const components: Partial<Record<string, Component | FunctionalComponent>> = {
@@ -102,9 +100,9 @@ async function initComponentAdapter() {
     ApiComponent,
     Button: ElButton,
     FormilySearchSelect,
-    Tag:ElTag,
-    Tooltip:ElTooltip,
-    Icon:ElIcon
+    Tag: ElTag,
+    Tooltip: ElTooltip,
+    Icon: ElIcon,
   };
 
   // 将组件注册到全局共享状态中
