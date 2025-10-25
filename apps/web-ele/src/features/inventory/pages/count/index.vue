@@ -3,26 +3,26 @@ import { ref } from 'vue';
 
 import {
   ElButton,
-  Page,
   ElDropdown,
   ElDropdownItem,
   ElDropdownMenu,
   ElIcon,
+  Page,
 } from '@igourd/common-ui';
 import { ArrayDown } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
 import { AuditDialog } from '#/components';
+import { useLanguage } from '#/hooks';
 
 import { updateCountStatus } from '../../apis/count';
 import { useInventoryCountList } from '../../hooks/count/list';
-import { useLanguage } from '#/hooks';
-const { t } = useI18n();
+
 defineOptions({
   name: 'IInventoryCount',
 });
-
+const { t } = useI18n();
 const { currentLoginUserApp } = useUserStore();
 
 const operationOpt = ref();
@@ -47,7 +47,10 @@ const openModal = (row, item) => {
   if (row.review_status.value === 'PENDING' && item.value === 'REJECTED') {
     currentRow.value = row;
     auditDialogRef.value.openModal();
-  } else if (row.review_status.value === 'PENDING' && item.value === 'APPROVED') {
+  } else if (
+    row.review_status.value === 'PENDING' &&
+    item.value === 'APPROVED'
+  ) {
     const param = {
       id: row.id,
       merchant_id: currentLoginUserApp.owner_id,
