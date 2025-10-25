@@ -73,18 +73,18 @@ export function useInventoryTransferList() {
       slots: { default: 'status' },
     },
     {
-      field: 'review_status',
+      field: 'status',
       title: t('inventory.status'),
       minWidth: 135,
       fixed: 'right',
-      slots: { default: 'reviewStatus' },
+      slots: { default: 'status' },
     },
     {
-      field: 'destination_review_status',
+      field: 'review_status',
       title: t('inventory.review'),
       minWidth: 120,
       fixed: 'right',
-      slots: { default: 'destinationReviewStatus' },
+      slots: { default: 'review_status' },
     },
     {
       field: 'creator_name',
