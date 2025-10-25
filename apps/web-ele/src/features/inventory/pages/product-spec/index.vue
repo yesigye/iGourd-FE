@@ -7,21 +7,25 @@ import {
   ColPage,
   confirm,
   ElButton,
+  ElIcon,
   ElRadio,
   ElRadioGroup,
   useIgourdDrawer,
-  ElIcon,
 } from '@igourd/common-ui';
-import { Edit, Delete } from '@igourd/icons';
+import { Delete, Edit } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
-import StatusTemplate from '#/components/status/index.vue';
 
 import { useInventoryProductSpec } from '@@/inventory/hooks';
+
+import StatusTemplate from '#/components/status/index.vue';
 
 import { deleteProductSpec, getProductSpecList } from '../../apis/product-spec';
 import drawer from '../../components/product-spec/drawer.vue';
 import drawerValue from '../../components/product-spec/drawerValue.vue';
 
+defineOptions({
+  name: 'IInventoryProductSpec',
+});
 const STATUS_CONFIG = [
   {
     name: 'common.close',
@@ -33,11 +37,7 @@ const STATUS_CONFIG = [
     value: 'OPEN',
     iconColor: '#4caf51',
   },
-
 ];
-defineOptions({
-  name: 'IInventoryProductSpec',
-});
 const { t } = useI18n();
 const [Drawer, drawerApi] = useIgourdDrawer({
   connectedComponent: drawer,
@@ -48,7 +48,13 @@ const [DrawerValue, drawerValueApi] = useIgourdDrawer({
   connectedComponent: drawerValue,
   appendToMain: true,
 });
-const { Grid, handleQueryTable, handleDelete,canBatchOperate,handleBatchDelete } = useInventoryProductSpec();
+const {
+  Grid,
+  handleQueryTable,
+  handleDelete,
+  canBatchOperate,
+  handleBatchDelete,
+} = useInventoryProductSpec();
 const productSpecList = ref<ProductLabelItem[]>([]);
 const selectedLabelId = ref<string>('');
 // 获取商品规格列表
@@ -106,10 +112,10 @@ const handleEditSpecValue = (row) => {
   row.mode = 'edit';
   drawerValueApi.setData(row).open();
 };
-const handleView = (row) =>{
+const handleView = (row) => {
   row.mode = 'detail';
   drawerValueApi.setData(row).open();
-}
+};
 
 const handleChangeSpec = (value: String) => {
   handleQueryTable(value);
@@ -120,10 +126,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <ColPage headerClass="px-0 py-1 bg-muted border-0"
-    contentClass="pt-0"
+  <ColPage
+    header-class="px-0 py-1 bg-muted border-0"
+    content-class="pt-0"
     auto-content-height
-    :left-width="20">
+    :left-width="20"
+  >
     <template #description>
       <div>
         <div id="product-spec-search" class="bg-card px-1"></div>
@@ -158,14 +166,16 @@ onMounted(() => {
                     <ElIcon
                       class="text-primary ml-1"
                       @click="handleEditLabel(item)"
-                      ><Edit
-                    /></ElIcon>
+                    >
+                      <Edit />
+                    </ElIcon>
                     <ElIcon
                       class="ml-1"
                       style="color: var(--el-color-danger)"
                       @click="handleRemove(item)"
-                      ><Delete
-                    /></ElIcon>
+                    >
+                      <Delete />
+                    </ElIcon>
                   </div>
                 </div>
               </ElRadio>
@@ -176,9 +186,9 @@ onMounted(() => {
     </template>
     <Grid>
       <template #table-actions>
-        <ElButton type="primary" @click="handleAddSpecValue">
+        <!-- <ElButton type="primary" @click="handleAddSpecValue">
           {{ t('common.add') }}
-        </ElButton>
+        </ElButton> -->
         <!--
         <ElButton
           v-if="canBatchOperate"
@@ -189,10 +199,7 @@ onMounted(() => {
         </ElButton>-->
       </template>
       <template #status="{ row }">
-        <StatusTemplate
-          :value="row.status"
-          :status-list="STATUS_CONFIG"
-        />
+        <StatusTemplate :value="row.status" :status-list="STATUS_CONFIG" />
       </template>
       <template #operation="{ row }">
         <ElButton type="text" @click="handleEditSpecValue(row)">
@@ -204,7 +211,6 @@ onMounted(() => {
         <ElButton type="text" @click="handleDelete(row)">
           {{ t('common.delete') }}
         </ElButton>
-
       </template>
     </Grid>
     <Drawer @refresh-tree="refreshTree" />

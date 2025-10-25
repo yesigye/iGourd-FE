@@ -290,149 +290,151 @@ const handleSelectRow = (row) => {
 
 <template>
   <section>
-    <Page :class="pageClass">
-      <Grid>
-        <template #table-actions>
-          <ElButton type="primary" @click="handleImportProduct('add')">
-            {{ t('common.import') }}
-          </ElButton>
-          <ElButton type="primary" @click="handleAddProduct('add', {})">
-            {{ t('common.add') }}
-          </ElButton>
-          <ElButton
-            type="danger"
-            v-if="canBatchOperate"
-            @click="handleBatchDelete"
-          >
-            {{ t('common.delete') }}
-          </ElButton>
-        </template>
-        <template #status="{ row }">
-          <StatusTemplate :value="row.status" :status-list="STATUS_CONFIG" />
-        </template>
-        <template #label="{ row }">
-          <div class="flex flex-wrap items-center">
-            <div class="flex flex-wrap items-center gap-2">
-              <ElTag
-                type="primary"
-                v-for="item in row.product_label_list"
-                :key="item.id"
+    <section>
+      <Page :class="pageClass">
+        <Grid>
+          <template #table-actions>
+            <ElButton type="primary" @click="handleImportProduct('add')">
+              {{ t('common.import') }}
+            </ElButton>
+            <ElButton type="primary" @click="handleAddProduct('add', {})">
+              {{ t('common.add') }}
+            </ElButton>
+            <ElButton
+              type="danger"
+              v-if="canBatchOperate"
+              @click="handleBatchDelete"
+            >
+              {{ t('common.delete') }}
+            </ElButton>
+          </template>
+          <template #status="{ row }">
+            <StatusTemplate :value="row.status" :status-list="STATUS_CONFIG" />
+          </template>
+          <template #label="{ row }">
+            <div class="flex flex-wrap items-center">
+              <div class="flex flex-wrap items-center gap-2">
+                <ElTag
+                  type="primary"
+                  v-for="item in row.product_label_list"
+                  :key="item.id"
+                >
+                  {{ item.name }}
+                </ElTag>
+              </div>
+              <ElButton
+                v-if="row.product_label_list?.length"
+                @click="handleAddLabel(row)"
+                class="ml-2"
               >
-                {{ item.name }}
+                + New Tag
+              </ElButton>
+            </div>
+          </template>
+          <template #operation="{ row }">
+            <ElButton type="text" @click="handleAddProduct('edit', row)">
+              {{ t('common.edit') }}
+            </ElButton>
+            <ElButton type="text" @click="handleDetailsProduct(row)">
+              {{ t('common.detail') }}
+            </ElButton>
+            <ElButton type="text" @click="handleAddProduct('copy', row)">
+              {{ t('common.copy') }}
+            </ElButton>
+            <ElButton type="text" @click="handleBatchDelete()">
+              {{ t('common.delete') }}
+            </ElButton>
+          </template>
+          <template #major_name="{ row }">
+            <div class="flex items-center justify-between gap-2.5">
+              <ElLink
+                href="#"
+                :type="selectedRows.id === row.id ? 'primary' : ''"
+                @click="handleSelectRow(row)"
+              >
+                {{ row.major_name }}
+                <IgourdIcon icon="si:more-square-horiz-duotone" />
+              </ElLink>
+            </div>
+          </template>
+        </Grid>
+
+        <Modal>
+          <div class="label-common">
+            <!-- 已选标签显示区域 -->
+            <div class="flex flex-wrap gap-2">
+              <ElTag
+                v-for="label in selectedLabels"
+                :key="label?.id"
+                class="selected-label"
+                closable
+                @close="removeLabel(label)"
+              >
+                {{ label?.name }}
               </ElTag>
             </div>
-            <ElButton
-              v-if="row.product_label_list?.length"
-              @click="handleAddLabel(row)"
-              class="ml-2"
-            >
-              + New Tag
-            </ElButton>
-          </div>
-        </template>
-        <template #operation="{ row }">
-          <ElButton type="text" @click="handleAddProduct('edit', row)">
-            {{ t('common.edit') }}
-          </ElButton>
-          <ElButton type="text" @click="handleDetailsProduct(row)">
-            {{ t('common.detail') }}
-          </ElButton>
-          <ElButton type="text" @click="handleAddProduct('copy', row)">
-            {{ t('common.copy') }}
-          </ElButton>
-          <ElButton type="text" @click="handleBatchDelete()">
-            {{ t('common.delete') }}
-          </ElButton>
-        </template>
-        <template #major_name="{ row }">
-          <div class="flex items-center justify-between gap-2.5">
-            <ElLink
-              href="#"
-              :type="selectedRows.id === row.id ? 'primary' : ''"
-              @click="handleSelectRow(row)"
-            >
-              {{ row.major_name }}
-              <IgourdIcon icon="si:more-square-horiz-duotone" />
-            </ElLink>
-          </div>
-        </template>
-      </Grid>
 
-      <Modal>
-        <div class="label-common">
-          <!-- 已选标签显示区域 -->
-          <div class="flex flex-wrap gap-2">
-            <ElTag
-              v-for="label in selectedLabels"
-              :key="label?.id"
-              class="selected-label"
-              closable
-              @close="removeLabel(label)"
-            >
-              {{ label?.name }}
-            </ElTag>
-          </div>
-
-          <!-- 搜索框 -->
-          <div class="mt-2 flex gap-2.5">
-            <ElInput
-              v-model="searchKeyword"
-              placeholder="Search"
-              class="search-input"
-            />
-            <ElButton type="primary"> search </ElButton>
-          </div>
-        </div>
-
-        <!-- 搜索结果列表 -->
-        <div class="label-common">
-          <div class="mb-4 mt-4 h-[188px] overflow-auto">
-            <div
-              v-for="label in searchResults"
-              :key="label.id"
-              class="mb-1 flex items-center justify-between pb-2 pl-3 pr-3 pt-2"
-              :class="
-                isSelected(label)
-                  ? 'rounded-sm bg-[#ecf5ff] text-[#409eff]'
-                  : ''
-              "
-              @click="selectLabel(label)"
-            >
-              {{ label?.name }}
-              <i class="iconfont icon-SURE" v-if="isSelected(label)"></i>
-            </div>
-            <div v-if="searchResults?.length === 0" class="no-value">
-              No Value
+            <!-- 搜索框 -->
+            <div class="mt-2 flex gap-2.5">
+              <ElInput
+                v-model="searchKeyword"
+                placeholder="Search"
+                class="search-input"
+              />
+              <ElButton type="primary"> search </ElButton>
             </div>
           </div>
-        </div>
-      </Modal>
-      <Drawer :mode="mode" @saved="gridApi.reload()" />
-      <DetailsDrawer />
-      <ImportDrawer />
-    </Page>
-    <div class="flex items-center justify-center">
-      <div
-        class="flex h-[14px] w-[40px] cursor-pointer items-center justify-center bg-[#D9ECFF]"
-        @click="handleSetTableHeight"
-      >
-        <ArrayUp
-          v-if="pageClass === 'h-[calc(100vh-60px)]'"
-          class="text-primary"
-        />
 
-        <ArrayDown v-else class="text-primary" />
+          <!-- 搜索结果列表 -->
+          <div class="label-common">
+            <div class="mb-4 mt-4 h-[188px] overflow-auto">
+              <div
+                v-for="label in searchResults"
+                :key="label.id"
+                class="mb-1 flex items-center justify-between pb-2 pl-3 pr-3 pt-2"
+                :class="
+                  isSelected(label)
+                    ? 'rounded-sm bg-[#ecf5ff] text-[#409eff]'
+                    : ''
+                "
+                @click="selectLabel(label)"
+              >
+                {{ label?.name }}
+                <i class="iconfont icon-SURE" v-if="isSelected(label)"></i>
+              </div>
+              <div v-if="searchResults?.length === 0" class="no-value">
+                No Value
+              </div>
+            </div>
+          </div>
+        </Modal>
+        <Drawer :mode="mode" @saved="gridApi.reload()" />
+        <DetailsDrawer />
+        <ImportDrawer />
+      </Page>
+      <div class="flex items-center justify-center">
+        <div
+          class="flex h-[14px] w-[40px] cursor-pointer items-center justify-center bg-[#D9ECFF]"
+          @click="handleSetTableHeight"
+        >
+          <ArrayUp
+            v-if="pageClass === 'h-[calc(100vh-60px)]'"
+            class="text-primary"
+          />
+
+          <ArrayDown v-else class="text-primary" />
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section
-    class="bg-card mt-2.5 py-2"
-    v-if="pageClass === 'h-[calc(100vh-40vh)]'"
-  >
-    <p class="h-5 pl-3 text-base font-bold">sku list</p>
-    <Page class="h-[calc(100vh-60vh-100px)]">
-      <SkuListGrid />
-    </Page>
+    <section
+      class="bg-card mt-2.5 py-2"
+      v-if="pageClass === 'h-[calc(100vh-40vh)]'"
+    >
+      <p class="h-5 pl-3 text-base font-bold">sku list</p>
+      <Page class="h-[calc(100vh-60vh-100px)]">
+        <SkuListGrid />
+      </Page>
+    </section>
   </section>
 </template>
