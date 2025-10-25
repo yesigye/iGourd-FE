@@ -431,7 +431,7 @@ const handleSelectRow = (row) => {
       class="bg-card mt-2.5 py-2"
       v-if="pageClass === 'h-[calc(100vh-40vh)]'"
     >
-      <p class="h-5 pl-3 text-base font-bold">sku list</p>
+      <p class="h-5 pl-3 text-base font-bold">{{ t('inventory.sku-list') }}</p>
       <Page class="h-[calc(100vh-60vh-100px)]">
         <SkuListGrid />
       </Page>

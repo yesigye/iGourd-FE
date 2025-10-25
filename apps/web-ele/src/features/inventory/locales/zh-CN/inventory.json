@@ -261,5 +261,6 @@
   "save-major-unit-delete-error": "保存后不可逆,请谨慎执行此操作",
   "message-tip": "信息提示",
   "please-enter-keywords": "请输入单据编号、商品名称、商品编码",
-  "unit-conversion": "主单位"
+  "unit-conversion": "主单位",
+  "sku-list": "SKU列表"
 }

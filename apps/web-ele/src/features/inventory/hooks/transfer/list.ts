@@ -34,7 +34,7 @@ export function useInventoryTransferList() {
       minWidth: 200,
       fixed: 'left',
       formatter({ cellValue }: { cellValue: transferTypeKey }) {
-        return t(`inventory.${transferTypeList[cellValue]}`);
+        return cellValue?.label;
       },
     },
     {

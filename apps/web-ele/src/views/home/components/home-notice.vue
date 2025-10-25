@@ -113,7 +113,7 @@ const stockNum = computed(() => {
               <span> {{ t('home.warning-alert-expiring-soon') }} </span>
               <div><ArrayDown /></div>
             </div>
-            <template #dropdown>
+            <!-- <template #dropdown>
               <ElDropdownMenu>
                 <ElDropdownItem>
                   {{ t('home.warning-alert-expiring-soon') }}
@@ -122,7 +122,7 @@ const stockNum = computed(() => {
                   {{ t('home.warning-alert-expired') }}
                 </ElDropdownItem>
               </ElDropdownMenu>
-            </template>
+            </template> -->
           </ElDropdown>
           <div class="mt-2 font-bold">
             {{
@@ -132,8 +132,7 @@ const stockNum = computed(() => {
             }}
           </div>
           <div
-            class="mt-3 flex cursor-pointer items-center gap-1 text-[#F56C6C]"
-            @click="handleGoHandle('/inventory/stock-warning-table')"
+            class="mt-3 flex cursor-not-allowed items-center gap-1 text-[#F56C6C]"
           >
             {{ t('home.go-handle') }} <ArrowRight class="mt-1" />
           </div>
@@ -152,11 +151,7 @@ const stockNum = computed(() => {
             <span> {{ t('home.unpaid-sales-order') }} </span>
           </div>
           <div class="mt-2 font-bold">
-            {{
-              thousandSeparator(
-                props?.data?.warning_product_quantity?.above_max_count ?? 0,
-              )
-            }}
+            {{ thousandSeparator(props?.data?.order_pending_quantity ?? 0) }}
           </div>
           <div
             class="mt-3 flex cursor-pointer items-center gap-1 text-[#E6A23C]"
@@ -181,7 +176,7 @@ const stockNum = computed(() => {
           <div class="mt-2 font-bold">
             {{
               thousandSeparator(
-                props?.data?.warning_product_quantity?.above_max_count ?? 0,
+                props?.data?.goods_receipt_note_pending_quantity ?? 0,
               )
             }}
           </div>
