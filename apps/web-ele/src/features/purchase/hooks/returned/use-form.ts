@@ -9,7 +9,7 @@ import { useDrawerForm, useWarehouseSelect } from '#/hooks';
 import { orderNoGenerate } from '#/api/common';
 import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
 import { getAccountManagementOptionList } from '#/features/account';
-import { merchantPaymentMethodOption } from '#/features/setting';
+import { paymentMethodListUsingPOST } from '#/features/setting';
 import { onFieldValueChange } from '@igourd/common-ui';
 import {
   getPurchaseListApi,
@@ -49,6 +49,24 @@ const getCurrencyList = async () => {
     };
   });
 };
+// 支付方式
+const getPaymentMethodListOption = async (data:any)=>{
+  const params ={
+    ...data,
+    payment_scene_type:"PURCHASE"
+  }
+  return paymentMethodListUsingPOST(params).then((res) => {
+      return {
+        list: res?.map((i) => {
+          return {
+            ...i,
+            value: i.payment_method_type.value,
+            label: i.payment_method_type.label,
+          };
+        }),
+      };
+    });
+}
 export function useReturnForm() {
   const { t } = useI18n();
   const { gridApi } = inject<{
@@ -541,7 +559,7 @@ export function useReturnForm() {
                                     onChange:
                                       '{{ (value,op)=> payment_method_change(value,op,$self,$index) }}',
                                     onSearch:
-                                      '{{ merchantPaymentMethodOption }}',
+                                      '{{ getPaymentMethodListOption }}',
                                   },
                                 },
                                 amount: {
@@ -868,7 +886,7 @@ export function useReturnForm() {
         getAccountManagementOptionList,
         accountChange,
         payment_method_change,
-        merchantPaymentMethodOption,
+        getPaymentMethodListOption,
       },
       schema: schema,
       effects() {

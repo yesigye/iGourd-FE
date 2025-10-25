@@ -20,7 +20,7 @@ import {
 } from '@@/purchase/apis';
 import { basicsCurrencyList } from '#/api';
 import { getAccountManagementOptionList } from '#/features/account';
-import { merchantPaymentMethodOption } from '#/features/setting';
+import { paymentMethodListUsingPOST } from '#/features/setting';
 function remoteMethod(keywords: string) {
   return getPurchaseListApi({
     page_num: 1,
@@ -52,6 +52,24 @@ const getCurrencyList = async () => {
     };
   });
 };
+// 支付方式
+const getPaymentMethodListOption = async (data:any)=>{
+  const params ={
+    ...data,
+    payment_scene_type:"PURCHASE"
+  }
+  return paymentMethodListUsingPOST(params).then((res) => {
+      return {
+        list: res?.map((i) => {
+          return {
+            ...i,
+            value: i.payment_method_type.value,
+            label: i.payment_method_type.label,
+          };
+        }),
+      };
+    });
+}
 
 export function useReceiptForm() {
   const { t } = useI18n();
@@ -512,7 +530,7 @@ export function useReceiptForm() {
                                     onChange:
                                       '{{ (value,op)=> payment_method_change(value,op,$self,$index) }}',
                                     onSearch:
-                                      '{{ merchantPaymentMethodOption }}',
+                                      '{{ getPaymentMethodListOption }}',
                                   },
                                 },
                                 amount: {
@@ -976,7 +994,7 @@ export function useReceiptForm() {
         getAccountManagementOptionList,
         accountChange,
         payment_method_change,
-        merchantPaymentMethodOption,
+        getPaymentMethodListOption,
         icon: (name: string) => {
           const IconComponent = createIconifyIcon(name);
           return IconComponent ? h(IconComponent) : null;
