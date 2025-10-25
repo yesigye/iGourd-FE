@@ -17,12 +17,12 @@ import {
   getPurchaseReceiptPageListApi,
   updatePurchaseOrderApi,
 } from '@@/purchase/apis';
+import { paymentMethodListUsingPOST } from '#/features/setting';
 
 import { basicsCurrencyList } from '#/api';
 import { orderNoGenerate } from '#/api/common';
 import { getAccountManagementOptionList } from '#/features/account';
 import { wareHouseProductSearch } from '#/features/inventory';
-import { merchantPaymentMethodOption } from '#/features/setting';
 import { useDrawerForm, useWarehouseSelect } from '#/hooks';
 import { floorDecimal } from '#/utils/eleValidate';
 // 供应商数据
@@ -57,6 +57,24 @@ const getCurrencyList = async () => {
     };
   });
 };
+// 支付方式
+const getPaymentMethodListOption = async (data:any)=>{
+  const params ={
+    ...data,
+    payment_scene_type:"PURCHASE"
+  }
+  return paymentMethodListUsingPOST(params).then((res) => {
+      return {
+        list: res?.map((i) => {
+          return {
+            ...i,
+            value: i.payment_method_type.value,
+            label: i.payment_method_type.label,
+          };
+        }),
+      };
+    });
+}
 export function useOrderForm() {
   const { t } = useI18n();
   const { gridApi } = inject<{
@@ -528,7 +546,7 @@ export function useOrderForm() {
                                     onChange:
                                       '{{ (value,op)=> payment_method_change(value,op,$self,$index) }}',
                                     onSearch:
-                                      '{{ merchantPaymentMethodOption }}',
+                                      '{{ getPaymentMethodListOption }}',
                                   },
                                 },
                                 // 定金比例
@@ -1067,7 +1085,7 @@ export function useOrderForm() {
         getAccountManagementOptionList,
         accountChange,
         payment_method_change,
-        merchantPaymentMethodOption,
+        getPaymentMethodListOption,
         discountAmountChange,
         discountPercentageChange,
         amountRateChange,
