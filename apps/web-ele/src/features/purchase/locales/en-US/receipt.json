@@ -46,5 +46,11 @@
   "remaining-amount": "Remaining Amount",
   "used-amount": "Used Amount",
   "settle-amount": "Settlement Amount",
-  "pre-order": "Advance order"
+  "pre-order": "Advance order",
+
+  "receipt-order-detail": "Receipt Order Details",
+"order-status": "Order Status",
+"order-paid": "Paid Amount",
+"order-balance": "Balance Due",
+"deposit": "Deposit"
 }

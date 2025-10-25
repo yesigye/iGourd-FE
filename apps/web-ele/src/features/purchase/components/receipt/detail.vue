@@ -12,6 +12,7 @@ import {
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
+import { formatDate } from '#/utils';
 
 import { settlePurchaseOrderApi } from '@@/purchase/apis';
 
@@ -31,18 +32,19 @@ interface RowType {
 const gridOptions: VxeGridProps<RowType> = {
   id:"purchase-detail-grid",
   columns: [
-    { title: t('purchase.major-name'), field: 'major_name' },
+
     { title: t('purchase.code'), field: 'product_code' },
-    { title: t('purchase.unit-name'), field: 'major_unit_name' },
+    { title: t('purchase.major-name'), field: 'major_name' },
+    { title: t('purchase.sku-barcode'), field: 'sku_barcode' },
+
+    { title: t('purchase.purchase-quantity'), field: 'purchase_quantity' },
+    { title: t('purchase.received-quantity'), field: 'received_quantity' },
+    { title: t('common.product-unit-name'), field: 'product_unit_name' },
     {
-      title: t('purchase.unit-rate'),
-      field: 'price',
-      // slots: {
-      //   default: 'unit',
-      // },
+      title: t('common.basic-unit-radio'),
+      field: 'basic_unit_radio',
     },
-    { title: t('purchase.cost-price'), field: 'cost_price' },
-    { title: t('purchase.quantity'), field: 'stock_total_quantity_message' },
+    { title: t('purchase.unit-name'), field: 'major_unit_name' },
   ],
   editConfig: {
     mode: 'cell',
@@ -104,9 +106,10 @@ defineExpose({ open, close });
   <Drawer class="w-full">
     <ElCard class="mt-1">
       <div class="text-sm">
-        {{t('purchase.purchaseorderno')}}<span class="text-red-500">{{
-          detailData.purchase_order_no
-        }}</span>{{t('purchase.creator')}}：<span class="text-red-500">{{ detailData.creator_name }}</span>
+        {{t('purchase.purchaseorderno')}}:<span class="text-red-500">{{
+          detailData.id
+        }}</span>
+        <span class="inline-block ml-1">{{t('purchase.creator')}}：</span><span class="text-red-500">{{ detailData.creator_name }}</span>
       </div>
     </ElCard>
     <ElCard class="mt-1">
@@ -114,35 +117,58 @@ defineExpose({ open, close });
         <div class="title">{{t('common.basic-info')}}</div>
       </template>
       <ElDescriptions title="" :column="3" border>
-        <ElDescriptionsItem :label="t('purchase.merchantname')">
-          {{ detailData.merchant_name }}
+         <ElDescriptionsItem :label="t('purchase.date')">
+          {{ formatDate(detailData.receipt_date) }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('purchase.purchaseorderno')">
-          {{ detailData.purchase_order_no }}
+        <ElDescriptionsItem :label="t('purchase.vat')">
+          {{ detailData?.vat_configuration?.label }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('purchase.warehouse-name')">
-          {{ detailData.warehouse_name }}
+        <ElDescriptionsItem :label="t('receipt.deposit')">
+
         </ElDescriptionsItem>
+        <ElDescriptionsItem :label="t('receipt.order-status')">
+          {{ detailData.status }}
+        </ElDescriptionsItem>
+         <ElDescriptionsItem :label="t('purchase.vat')">
+          {{ detailData.vat_amount }}
+        </ElDescriptionsItem>
+        <ElDescriptionsItem :label="t('purchase.order-pay.select-account')">
+          {{ detailData.purchase_payment_plan_list?detailData.purchase_payment_plan_list[0].account_name:''}}
+        </ElDescriptionsItem>
+
         <ElDescriptionsItem :label="t('purchase.vendor')">
           {{ detailData.vendor_name }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('purchase.date')">
-          {{ detailData.purchase_date }}
-        </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('purchase.vat')">
-          {{ detailData.vat_amount }}
-        </ElDescriptionsItem>
+
         <ElDescriptionsItem :label="t('purchase.other-tax')">
           {{ detailData.other_tax_amount }}
+        </ElDescriptionsItem>
+
+        <ElDescriptionsItem :label="t('purchase.order-pay.payment-method')">
+          {{ detailData.purchase_payment_plan_list?detailData.purchase_payment_plan_list[0].payment_method_name:''}}
+        </ElDescriptionsItem>
+
+
+        <ElDescriptionsItem :label="t('purchase.warehouse-name')">
+          {{ detailData.warehouse_name }}
+        </ElDescriptionsItem>
+
+         <ElDescriptionsItem :label="t('purchase.order-pay.discount')">
+          {{ detailData.discount_amount }}
+        </ElDescriptionsItem>
+
+         <ElDescriptionsItem :label="t('receipt.order-paid')">
+
         </ElDescriptionsItem>
         <ElDescriptionsItem :label="t('purchase.currency')">
           {{ detailData.currency_code }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('purchase.remark')">
-          {{ detailData.remark }}
-        </ElDescriptionsItem>
+
         <ElDescriptionsItem :label="t('purchase.total-amount')">
           {{ detailData.subtotal_amount }}
+        </ElDescriptionsItem>
+         <ElDescriptionsItem :label="t('receipt.order-balance')">
+
         </ElDescriptionsItem>
         <ElDescriptionsItem :label="t('purchase.remark')">
           {{ detailData.deposit_amount }}

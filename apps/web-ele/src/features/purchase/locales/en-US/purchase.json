@@ -340,6 +340,7 @@
   },
   "number": "Number",
   "unit-rate": "unit rate",
-  "quantity": "quantity"
-
+  "quantity": "quantity",
+  "received-quantity": "Received Quantity",
+  "purchase-quantity": "Purchased Quantity"
 }

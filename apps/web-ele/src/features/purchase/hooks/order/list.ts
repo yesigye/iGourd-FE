@@ -52,7 +52,7 @@ export function usePurchaseOrder() {
 
       title: t('common.now-status'),
       formatter({ cellValue }) {
-        return t(`purchase.${cellValue}`);
+        return cellValue.label;
       },
     },
     {

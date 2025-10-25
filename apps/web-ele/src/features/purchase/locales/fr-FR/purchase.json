@@ -353,5 +353,7 @@
   },
   "number": "Numéro",
   "unit-rate": "taux unitaire",
-  "quantity": "quantité"
+  "quantity": "quantité",
+  "received-quantity": "Quantité reçue",
+"purchase-quantity": "Quantité commandée"
 }

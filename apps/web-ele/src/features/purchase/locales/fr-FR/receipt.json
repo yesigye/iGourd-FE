@@ -47,5 +47,10 @@
   "remaining-amount": "Solde restant",
   "used-amount": "Montant utilisé",
   "settle-amount": "Montant déduit",
-  "pre-order": "Précommande"
+  "pre-order": "Précommande",
+  "receipt-order-detail": "Détails du bon de réception",
+  "order-status": "Statut de la commande",
+  "order-paid": "Montant payé",
+  "order-balance": "Solide à payer",
+  "deposit": "Acompte"
 }

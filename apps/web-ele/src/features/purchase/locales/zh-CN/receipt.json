@@ -46,6 +46,11 @@
   "remaining-amount":"剩余金额",
   "used-amount":"可用金额",
   "settle-amount":"抵扣金额",
-  "pre-order":"预付订单"
+  "pre-order":"预付订单",
+  "receipt-order-detail":"收货单详情",
+  "order-status":"订单状态",
+  "order-paid":"已付金额",
+  "order-balance":"待付金额",
+  "deposit":"定金"
 
 }

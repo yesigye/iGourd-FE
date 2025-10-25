@@ -12,7 +12,7 @@ import { ArrayDown } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
-import { usePurchaseReceipt,usePurchaseOrderDetail } from '@@/purchase/hooks';
+import { usePurchaseReceipt,useReceiptOrderDetail } from '@@/purchase/hooks';
 
 import {
   getPurchaseReceiptDetailApi,
@@ -22,7 +22,7 @@ defineOptions({
   name: 'IPurchaseReceipt',
 });
 import { AuditDialog } from '#/components';
-const{Drawer:Detail,drawerApi:detailDrawerApi} = usePurchaseOrderDetail()
+const{Drawer:Detail,drawerApi:detailDrawerApi} = useReceiptOrderDetail()
 const { currentLoginUserApp } = useUserStore();
 import { useLanguage } from '#/hooks';
 const {

@@ -1,16 +1,15 @@
 import { useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { PurchaseOrderDetailDrawer } from '@@/purchase/components';
+import { ReceiptOrderDetailDrawer } from '@@/purchase/components';
 
-export function usePurchaseOrderDetail() {
+export function useReceiptOrderDetail() {
   const { t } = useI18n();
-  debugger
   const [Drawer, drawerApi] = useIgourdDrawer({
-    connectedComponent: PurchaseOrderDetailDrawer,
+    connectedComponent: ReceiptOrderDetailDrawer,
     appendToMain: true,
     class: 'w-2/3',
-    title: t('order.purchase-order-detail'),
+    title: t('receipt.receipt-order-detail'),
     footer: false,
   });
   return {

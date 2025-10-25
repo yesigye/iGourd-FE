@@ -42,3 +42,8 @@ export const quickSwitchTime = (
     }
   }
 };
+// 格式化日期  DD/MM/YYYY
+export const formatDate =(date:string)=>{
+   return date?dayjs(date).format('DD/MM/YYYY'):""
+}
+

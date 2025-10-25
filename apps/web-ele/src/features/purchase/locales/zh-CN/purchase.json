@@ -327,7 +327,7 @@
   "are-you-sure-delete-vendor": "确定删除该供应商吗？",
   "are-you-sure-delete-vendor-tip": "若删除,该供应商对应的财务账户将会被禁用,无法再产生交易!",
   "order-pay": {
-    "select-account": "选择账号",
+    "select-account": "支付账号",
     "discount": "优惠",
     "discount-rate": "优惠比例",
     "total": "合计",
@@ -340,5 +340,8 @@
   },
   "number": "编号",
   "unit-rate": "单位比例",
-  "quantity": "数量"
+  "quantity": "数量",
+  "sku-barcode":"sku编码",
+  "received-quantity": "到货数量",
+  "purchase-quantity": "采购数量"
 }
