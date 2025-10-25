@@ -26,7 +26,17 @@ export async function getUserInfoApi(data: {
   owner_id: string;
   owner_type: string;
 }) {
-  return requestClient.post<UserInfo>(`/v1/passport/owner/selection`, data);
+  const res = await requestClient.post<UserInfo>(`/v1/passport/owner/selection`, data);
+  if(res.type.value){
+    res.type = res.type.value;
+  }
+  if(res.current_login_user_app.owner_type.value){
+    res.current_login_user_app.owner_type = res.current_login_user_app.owner_type.value;
+  }
+  if(res.user_model.type.value){
+    res.user_model.type = res.user_model.type.value;
+  }
+  return res
 }
 
 export async function basicsMerchantList(data: any) {
