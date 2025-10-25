@@ -8,7 +8,7 @@ import {
   setupIgourdVxeTable,
   useIgourdVxeGrid,
 } from '@igourd/plugins/vxe-table';
-import { moneyFormat } from '@igourd/utils';
+import { isEmpty, moneyFormat } from '@igourd/utils';
 
 import {
   asyncTableColumn,
@@ -119,6 +119,9 @@ setupIgourdVxeTable({
       renderTableDefault(_renderOpts, params) {
         const { column, row } = params;
         const src = row[column.field];
+        if (isEmpty(src)) {
+          return '';
+        }
         return h(ElImage, { src, previewSrcList: [src] });
       },
     });
