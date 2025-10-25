@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
+import { useCustomerlabelForm } from '@@/customer/hooks/label';
+
 const { t } = useI18n();
-const [Drawer, drawerApi] = useIgourdDrawer({
-  title: t('product-label.add-product-label'),
-  width: '50%',
+const { Drawer, drawerApi, Form } = useCustomerlabelForm({
+  title: t('label.add-label'),
+  class: 'w-3/4',
 });
 </script>
 
 <template>
   <Drawer>
-    <div>ddd</div>
+    <Form />
   </Drawer>
 </template>

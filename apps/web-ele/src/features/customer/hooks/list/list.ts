@@ -1,7 +1,6 @@
 import type {
   CustomerInfo,
   CustomerInfoPageQueryParams,
-  CustomerDrawerTransferData,
 } from '@@/customer/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
@@ -9,10 +8,10 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
-  getCustomerPageListApi,
-  deleteCustomerDataApi,
   createCustomerDataApi,
-  updateCustomerDataApi
+  deleteCustomerDataApi,
+  getCustomerPageListApi,
+  updateCustomerDataApi,
 } from '@@/customer/apis';
 import { CustomerDrawerForm } from '@@/customer/components';
 
@@ -188,7 +187,7 @@ export function useCustomerList() {
 
   return useCrud<CustomerInfo, CustomerInfoPageQueryParams>({
     columns,
-    id:"customer-list",
+    id: 'customer-list',
     searchFormSchema,
     batchOperate: true,
     connectedComponent: CustomerDrawerForm,
