@@ -1,16 +1,12 @@
 import type { ISchema } from '@igourd/common-ui';
+
 import { ref } from 'vue';
+
 import { useIgourdDrawer, useIgourdForm } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
-import {
-  createLabelBind,
-  inventoryProductProfilePageList,
-  updateProductLabel,
-  getProductList,
-  getProductlabelProductPage,
-} from '@@/inventory/apis';
+import { getProductlabelProductPage, getProductList } from '@@/inventory/apis';
 
 // 定义表单数据类型
 interface ProductLabelFormData {
@@ -26,7 +22,7 @@ export function useSelectProductForm(func) {
   // 表单提交处理
   const handleSubmit = async (formData: ProductLabelFormData) => {
     try {
-      func('confirm',formData);
+      func('confirm', formData);
       return null;
     } catch (error) {
       console.error('Purchase customized form submission error:', error);
@@ -35,19 +31,19 @@ export function useSelectProductForm(func) {
   };
 
   const [Drawer, drawerApi] = useIgourdDrawer({
-    title: "选择商品",
+    title: '选择商品',
     appendToMain: true,
     class: 'w-2/3',
     async onOpenChange(isOpen) {
       if (isOpen) {
         formAPI.reset();
         let data = drawerApi.getData();
-        if(!Array.isArray(data)){
-          data = []
+        if (!Array.isArray(data)) {
+          data = [];
         }
         detailData.value = data;
         formAPI.setValues({
-          product_list:data
+          product_list: data,
         });
       } else {
         formAPI.values = {};
@@ -86,7 +82,7 @@ export function useSelectProductForm(func) {
             'x-decorator': 'FormItem',
             'x-component': 'TransferTable',
             'x-component-props': {
-              layout:"top-bottom",
+              layout: 'top-bottom',
               rowKey: 'id',
               columns: [
                 {
@@ -112,7 +108,7 @@ export function useSelectProductForm(func) {
                 },
               ],
               fetchLeft: '{{ actions.fetchProducts }}',
-              //fetchRight: '{{ actions.fetchSelectedProducts }}',
+              // fetchRight: '{{ actions.fetchSelectedProducts }}',
               fetchByIds: '{{ actions.fetchProductsByIds }}',
               getAllIdsUnderFilter: '{{ actions.getAllIdsUnderFilter }}',
               topFilterFields: [
