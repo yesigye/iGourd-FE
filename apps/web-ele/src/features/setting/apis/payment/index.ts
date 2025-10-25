@@ -1,5 +1,4 @@
 import { requestClient } from '#/api/request';
-import { id } from 'element-plus/es/locales.mjs';
 
 // 修改店铺设置
 export function paymentMethodListUsingPOST(data) {
