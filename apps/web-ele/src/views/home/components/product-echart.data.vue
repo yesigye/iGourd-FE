@@ -2,6 +2,7 @@
 import type { EchartsUIType } from '@igourd/plugins/echarts';
 
 import { computed, onMounted, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { Card, ElButton, ElButtonGroup, ElCol, ElRow } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
@@ -36,6 +37,7 @@ const props = defineProps({
     default: '',
   },
 });
+const router = useRouter();
 const { t } = useI18n();
 const shortcutList = [
   {
@@ -45,41 +47,46 @@ const shortcutList = [
     page: '/purchase/order',
   },
   {
-    name: t('home.merchant-list'),
+    name: t('home.goods-receipt-notes'),
     icon: merchantListIcon,
     bgColor: 'bg-[#E1F3D8]',
-    page: '/merchant/list',
+    page: '/purchase/receipt',
   },
   {
-    name: t('home.role-management'),
+    name: t('home.purchase-refund'),
     icon: roleManagementIcon,
     bgColor: 'bg-[#E3E2FF]',
-    page: '/employee/role',
+    page: '/purchase/returned',
   },
   {
-    name: t('home.upgrade-task'),
+    name: t('home.stock-transfer'),
     icon: upgradeTaskIcon,
     bgColor: 'bg-[#FDE2E2]',
+    page: '/inventory/transfer',
   },
   {
-    name: t('home.menus'),
+    name: t('home.stock-consumption'),
     icon: menusIcon,
     bgColor: 'bg-[#D9ECFF]',
+    page: '/inventory/spoilage',
   },
   {
-    name: t('home.employee-management'),
+    name: t('home.physical-stock-take'),
     icon: employeeManagementIcon,
     bgColor: 'bg-[#FAECD8]',
+    page: '/inventory/count',
   },
   {
-    name: t('home.version-monitoring'),
+    name: t('home.product-list'),
     icon: versionMonitoringIcon,
     bgColor: 'bg-[#FFEBDC]',
+    page: '/inventory/product/list',
   },
   {
-    name: t('home.version'),
+    name: t('home.stock-list'),
     icon: versionIcon,
     bgColor: 'bg-[#FFD1E7BA]',
+    page: '/inventory/list',
   },
 ];
 const chartLineRef = ref<EchartsUIType>();
@@ -240,6 +247,9 @@ const handleEchartBarInit = (event: any) => {
       },
     ],
   });
+};
+const handleClickShortcut = (item: any) => {
+  router.push(item.page);
 };
 const detailsOfFunds = computed(() => {
   const funds = barEchartData.value.reduce((acc, cur) => {
@@ -479,9 +489,10 @@ onMounted(() => {
         <Card :header="t('home.shortcut')" class="card-px-0 mb-0 border-0">
           <div class="flex flex-wrap gap-8">
             <div
-              class="flex w-[77px] flex-col items-center justify-center"
+              class="flex w-[77px] cursor-pointer flex-col items-center justify-center"
               v-for="item in shortcutList"
               :key="item.name"
+              @click="handleClickShortcut(item)"
             >
               <div
                 :class="item.bgColor"

@@ -261,5 +261,7 @@
   "save-major-unit-delete-error": "Opération irréversible après sauvegarde, veuillez exécuter prudemment",
   "message-tip": "Information",
   "please-enter-keywords": "Veuillez saisir numéro reçu, nom produit, code produit",
-  "unit-conversion": "Unité Principale"
+  "unit-conversion": "Unité Principale",
+  "sku-list": "Liste SKU",
+  "monthly-sales": "Ventes Mensuelles"
 }

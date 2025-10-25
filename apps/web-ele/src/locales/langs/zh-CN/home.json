@@ -41,5 +41,12 @@
   "stock-alert-safety-stock": "库存警报(安全库存)",
   "stock-alert-max-stock": "库存警报(最大库存)",
   "warning-alert-expiring-soon": "警告提醒(即将过期)",
-  "warning-alert-expired": "警告提醒(已过期)"
+  "warning-alert-expired": "警告提醒(已过期)",
+  "goods-receipt-notes": "收货单",
+  "purchase-refund": "采购退款",
+  "stock-transfer": "库存调拨",
+  "stock-consumption": "库存报损",
+  "physical-stock-take": "库存盘点",
+  "product-list": "商品列表",
+  "stock-list": "库存列表"
 }
