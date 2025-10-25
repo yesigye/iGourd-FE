@@ -338,5 +338,8 @@
     "auto-create-prepaid-order": "Automatically Create a Prepaid Order",
     "auto-create-prepaid-order-msg": "If checked, a prepayment form will be automatically created when the purchase order is approved"
   },
-  "number": "Number"
+  "number": "Number",
+  "unit-rate": "unit rate",
+  "quantity": "quantity"
+
 }
