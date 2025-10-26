@@ -18,11 +18,11 @@ interface UserInfo extends BasicUserInfo {
 
   jwt_token: Record<string, any>;
 
-  useModel: Record<string, any>;
+  user_model: Record<string, any>;
 
-  current_login_user_app: string;
+  current_login_user_app: Record<string, any>;
   login_account?: string;
-  type?: string;
+  type: Record<string, string>;
   menu_trees: any;
   function_trees: any;
 }

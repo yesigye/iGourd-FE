@@ -26,22 +26,29 @@ export async function getUserInfoApi(data: {
   owner_id: string;
   owner_type: string;
 }) {
-  debugger;
   const res = await requestClient.post<UserInfo>(
     `/v1/passport/owner/selection`,
     data,
   );
-  if (res.type.value) {
-    res.type = res.type.value;
-  }
-  if (res.current_login_user_app.owner_type.value) {
-    res.current_login_user_app.owner_type =
-      res.current_login_user_app.owner_type.value;
-  }
-  if (res.user_model.type.value) {
-    res.user_model.type = res.user_model.type.value;
-  }
-  return res;
+  return {
+    ...res,
+    type: res.type.value,
+    current_login_user_app: {
+      ...res.current_login_user_app,
+      owner_type: res.current_login_user_app.owner_type.value,
+    },
+    user_model: {
+      ...res.user_model,
+      type: res.user_model.type.value,
+      user_apps: res.user_model.user_apps?.map((app) => {
+        return {
+          ...app,
+          owner_type: app.owner_type.value,
+        };
+      }),
+    },
+  };
+  // return res;
 }
 
 export async function basicsMerchantList(data: any) {

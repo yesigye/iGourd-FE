@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 import {
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
   IgourdIcon,
   IgourdSpinner,
-  ElDropdown,
-  ElDropdownMenu,
-  ElDropdownItem,
 } from '@igourd/common-ui';
 import { SUPPORT_LANGUAGES } from '@igourd/constants';
 import { ChevronDown } from '@igourd/icons';
@@ -19,7 +20,7 @@ import { now } from '@igourd/utils';
 import { useSession } from '#/hooks/use-session';
 import { updateLocale } from '#/locales';
 import { useAppStore, useAuthStore } from '#/store';
-import { useRouter } from 'vue-router';
+
 const router = useRouter();
 
 const {
@@ -141,15 +142,15 @@ function handleCommand(command: string) {
           icon="material-symbols:kid-star"
         />
         <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item
+          <ElDropdownMenu>
+            <ElDropdownItem
               :command="path"
               v-for="{ text, id, path } in collectMenus"
               :key="id"
             >
               {{ text }}
-            </el-dropdown-item>
-          </el-dropdown-menu>
+            </ElDropdownItem>
+          </ElDropdownMenu>
         </template>
       </ElDropdown>
       <UserDropdown
