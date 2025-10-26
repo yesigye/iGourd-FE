@@ -17,10 +17,10 @@ import {
   getPurchaseOrderDetailApi,
   reviewPurchaseOrderApi,
 } from '@@/purchase/apis';
-import { usePurchaseOrder,usePurchaseOrderDetail } from '@@/purchase/hooks';
+import { usePurchaseOrder, usePurchaseOrderDetail } from '@@/purchase/hooks';
 
 import { AuditDialog } from '#/components';
-
+import { useLanguage } from '#/hooks';
 
 defineOptions({
   name: 'IPurchaseOrder',
@@ -46,9 +46,8 @@ const {
   handleBatchDelete,
   canBatchOperate,
 } = usePurchaseOrder();
-const{Drawer:Detail,drawerApi:detailDrawerApi} = usePurchaseOrderDetail()
+const { Drawer: Detail, drawerApi: detailDrawerApi } = usePurchaseOrderDetail();
 const { currentLoginUserApp } = useUserStore();
-import { useLanguage } from '#/hooks';
 const operationOpt = ref();
 useLanguage('common.review-status-enum').then((res) => {
   operationOpt.value = res;
@@ -61,7 +60,10 @@ const openModal = (row: tableItem, item) => {
   if (row.review_status.value === 'PENDING' && item.value === 'REJECTED') {
     currentRow.value = row;
     auditDialogRef.value.openModal();
-  } else if (row.review_status.value === 'PENDING' && item.value === 'APPROVED') {
+  } else if (
+    row.review_status.value === 'PENDING' &&
+    item.value === 'APPROVED'
+  ) {
     const param = {
       id: row.id,
       merchant_id: currentLoginUserApp.owner_id,
@@ -76,8 +78,13 @@ const handleDetail = async (row: tableItem, mode: string) => {
   const detail = await getPurchaseOrderDetailApi({
     purchase_order_id: row.id,
   });
-  detailDrawerApi.setData({...detail,productList:detail.purchase_order_item_model_list}, mode).open()
-  //detailDrawerRef.value.open({...detail,productList:detail.purchase_order_item_model_list}, mode);
+  detailDrawerApi
+    .setData(
+      { ...detail, productList: detail.purchase_order_item_model_list },
+      mode,
+    )
+    .open();
+  // detailDrawerRef.value.open({...detail,productList:detail.purchase_order_item_model_list}, mode);
 };
 const handleconfirm = (data: AuditFormData) => {
   data.id = currentRow.value.id;
@@ -181,7 +188,7 @@ const handleconfirm = (data: AuditFormData) => {
     </Grid>
     <Drawer />
     <AuditDialog ref="auditDialogRef" @confirm="handleconfirm" />
-    <Detail  />
+    <Detail />
   </Page>
 </template>
 <style scoped>
