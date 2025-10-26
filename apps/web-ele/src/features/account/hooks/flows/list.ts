@@ -146,7 +146,7 @@ export function useFlows() {
     useCrud({
       service,
       columns: baseColumns,
-      id: 'flows',
+      id: 'finance_flow_plus_export',
       tabs: [
         { value: 'ALL', label: '全部' },
         { value: 'CREDIT', label: '收入' },

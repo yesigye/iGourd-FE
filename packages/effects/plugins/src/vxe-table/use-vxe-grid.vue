@@ -402,13 +402,19 @@ async function init() {
     return formApi.values;
   });
 }
-
+const { params } = inject(Symbol.for('PageGrid'), {
+  params: () => {
+    return {};
+  },
+});
 async function handleCommand(command: string) {
-  if (command === 'print') {
-    drawerApi.open();
-  }
+  // if (command === 'print') {
+  //   drawerApi.open();
+  // }
   if (command === 'export' && gridRef.value?.exportConfig) {
-    gridRef.value?.openExport(gridRef.value?.exportConfig);
+    gridRef.value?.exportData({
+      params: Object.assign(params() || {}, formApi.values),
+    });
     return;
   }
   await gridRef.value?.commitProxy(command);

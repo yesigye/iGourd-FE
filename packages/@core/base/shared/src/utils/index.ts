@@ -15,6 +15,7 @@ export * from './unique';
 export * from './update-css-variables';
 export * from './util';
 export * from './window';
+export { default as camelCase } from 'lodash-es/camelCase';
 export { default as cloneDeep } from 'lodash-es/cloneDeep';
 export { default as compact } from 'lodash-es/compact';
 export { default as get } from 'lodash-es/get';
@@ -56,12 +57,12 @@ export { default as map } from 'lodash-es/map';
 export { default as mergeWith } from 'lodash-es/mergeWith';
 export { default as omit } from 'lodash-es/omit';
 export { default as orderBy } from 'lodash-es/orderBy';
+export { default as padStart } from 'lodash-es/padStart';
 export { default as pick } from 'lodash-es/pick';
 export { default as random } from 'lodash-es/random';
 export { default as set } from 'lodash-es/set';
+export { default as snakeCase } from 'lodash-es/snakeCase';
 export { default as sortBy } from 'lodash-es/sortBy';
 export { default as unionWith } from 'lodash-es/unionWith';
-export { default as upperFirst } from 'lodash-es/upperFirst';
 export { default as uniqBy } from 'lodash-es/uniqBy';
-export { default as padStart } from "lodash-es/padStart"
-export { default as snakeCase } from "lodash-es/snakeCase"
+export { default as upperFirst } from 'lodash-es/upperFirst';
