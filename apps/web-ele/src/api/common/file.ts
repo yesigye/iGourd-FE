@@ -54,8 +54,5 @@ export const tableExport = (data: any) => {
       );
       blobDownload(data, fileName);
       return true;
-    })
-    .catch((error) => {
-      console.log(error);
     });
 };

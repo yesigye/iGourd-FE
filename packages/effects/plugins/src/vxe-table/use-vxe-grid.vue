@@ -411,10 +411,16 @@ async function handleCommand(command: string) {
   // if (command === 'print') {
   //   drawerApi.open();
   // }
-  if (command === 'export' && gridRef.value?.exportConfig) {
-    gridRef.value?.exportData({
-      params: Object.assign(params() || {}, formApi.values),
-    });
+  if (command === 'export') {
+    // @ts-ignore
+    props.api.setLoading(true);
+    await gridRef.value
+      ?.commitProxy(command, {
+        params: Object.assign(params() || {}, formApi.values),
+      })
+      .finally(() => {
+        props.api.setLoading(false);
+      });
     return;
   }
   await gridRef.value?.commitProxy(command);
