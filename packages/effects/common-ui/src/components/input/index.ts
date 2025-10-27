@@ -169,6 +169,7 @@ const TextArea = connect(
     schemaRef.value.setProperties({ 'x-validator': validator });
 
     return {
+      resize: 'none',
       ...props,
       type: 'textarea',
     };
