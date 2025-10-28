@@ -15,7 +15,7 @@ const {
   handleEdit,
   handleView,
   canBatchOperate,
-  handleDelete
+  handleDelete,
   handleBatchDelete,
 } = useCustomizedFeature('PRODUCT');
 </script>

@@ -215,7 +215,7 @@ export function useAddCustomizedForm() {
                   name:item
                 })
             })
-            values.options = selectionOptions
+            values.selectionOptions = selectionOptions
           }
 
           formAPI.setValues(values)
