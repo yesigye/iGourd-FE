@@ -4,6 +4,8 @@ import { h } from 'vue';
 
 import { action, ElButton } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+import { useUserStore } from '@igourd/stores';
+
 
 import { basicsCountryAreaList } from '#/api/common';
 import { useDrawerForm } from '#/hooks/use-drawer-form';
@@ -13,10 +15,49 @@ const UploadButton = () => {
 };
 export function useListForm() {
   const { t } = useI18n();
+  const userName = useUserStore().userInfo?.user_model.name;
+  const userLabel = `${t('common.creator')}:`;
 
   const schema: ISchema = {
     type: 'object',
     properties: {
+      card0: {
+        type: 'void',
+        'x-component': 'Card',
+        'x-component-props': {
+          labelCol: 6,
+          wrapperCol: 14,
+          header: "",
+          "bodyClass":"py-0 px-1 my-1 border-0"
+        },
+        properties: {
+          label: {
+            type: 'void',
+            'x-component': 'Space',
+            'x-component-props': {
+
+            },
+            properties: {
+              c: {
+                type: 'void',
+                'x-component': 'div',
+                'x-content': '{{userLabel}}',
+                'x-component-props': {
+                  style: { fontSize: '14px' },
+                },
+              },
+              d: {
+                type: 'void',
+                'x-component': 'div',
+                'x-content': '{{userName}}',
+                'x-component-props': {
+                  class: 'text-red-500',
+                },
+              },
+            },
+          },
+        }
+      },
       card1: {
         type: 'void',
         'x-component': 'Card',
@@ -450,13 +491,16 @@ export function useListForm() {
   };
   return useDrawerForm({
     drawerOptions: {
-      title: t('list.addPurchaseVendor'),
+      title: t('purchase.add-vendor'),
       appendToMain: true,
       class: 'w-full',
+      contentClass: 'bg-muted',
     },
     formOptions: {
       schema,
       scope: {
+        userLabel,
+        userName,
         useAsyncDataSource,
         loadData,
         featureTypes: [
