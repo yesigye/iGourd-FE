@@ -83,7 +83,7 @@ export function useCustomizedFeature(type: string) {
   };
 
   // 使用 CRUD Hook
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
+  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete,handleDelete } =
     useCrud({
       service,
       id: 'feature',
@@ -108,5 +108,6 @@ export function useCustomizedFeature(type: string) {
     handleEdit,
     handleBatchDelete,
     canBatchOperate,
+    handleDelete
   };
 }

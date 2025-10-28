@@ -283,7 +283,7 @@ const getForceMount = computed(() => {
       <div
         ref="wrapperRef"
         :class="
-          cn('relative flex-1 overflow-y-auto p-1', contentClass, {
+          cn('relative flex-1 overflow-y-auto py-1 ', contentClass, {
             'pointer-events-none': showLoading || submitting,
           })
         "

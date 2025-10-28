@@ -15,6 +15,7 @@ const {
   handleEdit,
   handleView,
   canBatchOperate,
+  handleDelete
   handleBatchDelete,
 } = useCustomizedFeature('PRODUCT');
 </script>
@@ -47,7 +48,7 @@ const {
         >
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleBatchDelete">
+        <ElButton type="text" @click="handleDelete([row.id])">
           {{ t('common.delete') }}
         </ElButton>
       </template>

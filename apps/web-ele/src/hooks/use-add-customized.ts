@@ -116,34 +116,41 @@ export function useAddCustomizedForm() {
                     },
                   },
                 },
-                colOps: {
+                col_actions: {
                   type: 'void',
                   'x-component': 'ArrayTable.Column',
                   'x-component-props': {
-                    title: "{{t('common.operations')}}",
-                    width: 180,
+                    title: "{{t('common.operation')}}",
+                    width: 100,
                     fixed: 'right',
+                    style: {
+                      'margin-bottom': '8px',
+                    },
                   },
                   properties: {
-                    ops: {
+                    addition: {
                       type: 'void',
-                      'x-component': 'FormItem',
-                      properties: {
-                        remove: {
-                          type: 'void',
-                          'x-component': 'ArrayTable.Remove',
+                      title: "{{t('common.add-btn')}}",
+                      'x-component': 'ArrayTable.Addition',
+
+                    },
+                    remove: {
+                      type: 'void',
+                      'x-component': 'ArrayTable.Remove',
+                      title: "{{ t('common.delete') }}",
+                      'x-reactions': {
+                        dependencies: ['selectionOptions'],
+                        fulfill: {
+                          state: {
+                            componentProps: {
+                              disabled: '{{  $deps[0]?.length === 1 }}',
+                            },
+                          },
                         },
                       },
                     },
                   },
                 },
-              },
-            },
-            properties: {
-              add: {
-                type: 'void',
-                'x-component': 'ArrayTable.Addition',
-                title: "{{t('common.add-option')}}",
               },
             },
           },
@@ -186,13 +193,42 @@ export function useAddCustomizedForm() {
       },
     },
   };
-  return useDrawerForm({
+  const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
     drawerOptions: {
       title: t('add-customized.add-customized'),
       appendToMain: true,
-      class: 'w-full',
+      class: 'w-2/3',
+      contentClass:"bg-muted",
+       async onOpenChange(isOpen) {
+         if (isOpen) {
+          formAPI.reset();
+          const data = drawerApi.getData();
+          const values ={
+            ...data,
+            type:data.type.value
+          }
+          const selectionOptions = [];
+          if(data.type.value === 'SELECT' && data.options){
+            const  options = JSON.parse(data.options)
+            options.forEach(item =>{
+                selectionOptions.push({
+                  name:item
+                })
+            })
+            values.options = selectionOptions
+          }
+
+          formAPI.setValues(values)
+
+
+        }
+
+       }
     },
     formOptions: {
+      initialValues: {
+        selectionOptions: [{}],
+      },
       schema,
       scope: {
         featureTypes: [
@@ -215,4 +251,5 @@ export function useAddCustomizedForm() {
       },
     },
   });
+  return  { Drawer, drawerApi, Form, formAPI }
 }
