@@ -18,6 +18,10 @@ export function useAddCustomizedForm() {
           wrapperCol: 14,
         },
         properties: {
+          id: {
+            type: 'string',
+            'x-hidden': true,
+          },
           name: {
             type: 'string',
             title: "{{t('add-customized.feature-name')}}",
@@ -48,6 +52,18 @@ export function useAddCustomizedForm() {
               {
                 required: true,
                 message: "{{t('add-customized.select-feature-type')}}",
+              },
+            ],
+            'x-reactions': [
+              {
+                dependencies: ['id'],
+                fulfill: {
+                  state: {
+                    componentProps: {
+                      disabled: '{{ $deps[0]}}',
+                    },
+                  },
+                },
               },
             ],
           },
@@ -132,7 +148,6 @@ export function useAddCustomizedForm() {
                       type: 'void',
                       title: "{{t('common.add-btn')}}",
                       'x-component': 'ArrayTable.Addition',
-
                     },
                     remove: {
                       type: 'void',
@@ -198,32 +213,30 @@ export function useAddCustomizedForm() {
       title: t('add-customized.add-customized'),
       appendToMain: true,
       class: 'w-2/3',
-      contentClass:"bg-muted",
-       async onOpenChange(isOpen) {
-         if (isOpen) {
+      contentClass: 'bg-muted',
+      async onOpenChange(isOpen) {
+        if (isOpen) {
           formAPI.reset();
           const data = drawerApi.getData();
-          const values ={
+          const values = {
             ...data,
-            type:data.type.value
-          }
+            type: data.type.value,
+          };
+          //处理选项
           const selectionOptions = [];
-          if(data.type.value === 'SELECT' && data.options){
-            const  options = JSON.parse(data.options)
-            options.forEach(item =>{
-                selectionOptions.push({
-                  name:item
-                })
-            })
-            values.selectionOptions = selectionOptions
+          if (data.type.value === 'SELECT' && data.options) {
+            const options = JSON.parse(data.options);
+            options.forEach((item) => {
+              selectionOptions.push({
+                name: item,
+              });
+            });
+            values.selectionOptions = selectionOptions;
           }
 
-          formAPI.setValues(values)
-
-
+          formAPI.setValues(values);
         }
-
-       }
+      },
     },
     formOptions: {
       initialValues: {
@@ -251,5 +264,5 @@ export function useAddCustomizedForm() {
       },
     },
   });
-  return  { Drawer, drawerApi, Form, formAPI }
+  return { Drawer, drawerApi, Form, formAPI };
 }
