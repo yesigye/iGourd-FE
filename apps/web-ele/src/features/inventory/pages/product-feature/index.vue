@@ -48,8 +48,8 @@ const {
         >
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleDelete([row.id])">
-          {{ t('common.delete') }}
+        <ElButton type="text" @click="handleView(row)">
+          {{ t('common.detail') }}
         </ElButton>
       </template>
       <template #type="{ row }">

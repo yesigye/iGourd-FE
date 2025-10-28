@@ -1,4 +1,5 @@
 import type { ISchema } from '@igourd/common-ui';
+import {computed} from 'vue';
 
 import { useI18n } from '@igourd/locales';
 
@@ -6,7 +7,14 @@ import { useDrawerForm } from '#/hooks/use-drawer-form';
 
 export function useAddCustomizedForm() {
   const { t } = useI18n();
-
+  const title = computed(()=>{
+     const data = drawerApi.getData();
+     if(data?.mode === 'detail'){
+       return t('add-customized.view-customized');
+     }else {
+      return  data.id?t('add-customized.edit-customized'):t('add-customized.add-customized')
+     }
+  });
   const schema: ISchema = {
     type: 'object',
     properties: {
@@ -210,7 +218,7 @@ export function useAddCustomizedForm() {
   };
   const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
     drawerOptions: {
-      title: t('add-customized.add-customized'),
+      title: title,
       appendToMain: true,
       class: 'w-2/3',
       contentClass: 'bg-muted',
@@ -222,6 +230,7 @@ export function useAddCustomizedForm() {
             ...data,
             type: data.type.value,
           };
+
           //处理选项
           const selectionOptions = [];
           if (data.type.value === 'SELECT' && data.options) {
@@ -233,8 +242,9 @@ export function useAddCustomizedForm() {
             });
             values.selectionOptions = selectionOptions;
           }
-
           formAPI.setValues(values);
+          formAPI.setFormState({ readPretty: data?.mode === 'detail' });
+
         }
       },
     },

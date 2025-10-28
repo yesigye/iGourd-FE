@@ -9,7 +9,7 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete,handleDelete } =
+const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete,handleView } =
   useCustomizedFeature('VENDOR');
 </script>
 
@@ -32,8 +32,8 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete,handleDelet
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleDelete([row.id])">
-          {{ t('common.delete') }}
+        <ElButton type="text" @click="handleView(row)">
+          {{ t('common.detail') }}
         </ElButton>
       </template>
       <template #type="{ row }">

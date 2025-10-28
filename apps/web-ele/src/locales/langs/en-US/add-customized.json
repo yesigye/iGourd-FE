@@ -25,5 +25,7 @@
   "no": "No",
   "is-fixed-option": "Is Fixed Value",
   "is-compulsory": "Is Required",
-  "search-placeholder": "Enter custom name"
+  "search-placeholder": "Enter custom name",
+  "edit-customized": "Edit Customization",
+  "view-customized": "View Customization"
 }

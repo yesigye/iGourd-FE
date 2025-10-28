@@ -25,5 +25,7 @@
   "no": "否",
   "is-fixed-option": "是否为固定值",
   "is-compulsory": "是否必填",
-  "search-placeholder": "输入定制名称"
+  "search-placeholder": "输入定制名称",
+  "edit-customized": "编辑定制",
+  "view-customized": "查看定制"
 }
