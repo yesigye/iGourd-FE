@@ -45,7 +45,7 @@ export function useAddCustomizedForm() {
                 required: true,
                 message: "{{t('add-customized.enter-feature-name')}}",
               },
-              { maxLength: 64 },
+              { maxLength: 128 },
             ],
           },
 
@@ -99,9 +99,12 @@ export function useAddCustomizedForm() {
             'x-visible': "{{$values.type === 'SELECT'}}",
             'x-component': 'ArrayTable',
             'x-component-props': {
-              border: true,
+              border: false,
               stripe: true,
               size: 'small',
+              pagination: { pageSize: 5 },
+              headerCellClassName:"abc",
+              className:"array-table-customized",
             },
             items: {
               type: 'object',
@@ -161,6 +164,9 @@ export function useAddCustomizedForm() {
                       type: 'void',
                       'x-component': 'ArrayTable.Remove',
                       title: "{{ t('common.delete') }}",
+                      'x-component-props': {
+                        class:"text-red-500",
+                      },
                       'x-reactions': {
                         dependencies: ['selectionOptions'],
                         fulfill: {

@@ -6,7 +6,6 @@ import { action, ElButton } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
-
 import { basicsCountryAreaList } from '#/api/common';
 import { useDrawerForm } from '#/hooks/use-drawer-form';
 
@@ -27,16 +26,14 @@ export function useListForm() {
         'x-component-props': {
           labelCol: 6,
           wrapperCol: 14,
-          header: "",
-          "bodyClass":"py-0 px-1 my-1 border-0"
+          header: '',
+          bodyClass: 'py-0 px-1 my-1 border-0',
         },
         properties: {
           label: {
             type: 'void',
             'x-component': 'Space',
-            'x-component-props': {
-
-            },
+            'x-component-props': {},
             properties: {
               c: {
                 type: 'void',
@@ -56,7 +53,7 @@ export function useListForm() {
               },
             },
           },
-        }
+        },
       },
       card1: {
         type: 'void',
@@ -78,6 +75,10 @@ export function useListForm() {
               layout1: {
                 type: 'void',
                 'x-component': 'FormLayout',
+                'x-component-props': {
+                  labelCol: 6,
+                  wrapperCol: 14,
+                },
                 properties: {
                   name: {
                     type: 'string',
@@ -157,6 +158,10 @@ export function useListForm() {
               layout1: {
                 type: 'void',
                 'x-component': 'FormLayout',
+                'x-component-props': {
+                  labelCol: 6,
+                  wrapperCol: 14,
+                },
                 properties: {
                   contact_name: {
                     type: 'string',
@@ -279,6 +284,10 @@ export function useListForm() {
               layout1: {
                 type: 'void',
                 'x-component': 'FormLayout',
+                'x-component-props': {
+                  labelCol: 6,
+                  wrapperCol: 14,
+                },
                 properties: {
                   name: {
                     type: 'string',
@@ -304,6 +313,10 @@ export function useListForm() {
               layout2: {
                 type: 'void',
                 'x-component': 'FormLayout',
+                'x-component-props': {
+                  labelCol: 6,
+                  wrapperCol: 14,
+                },
                 properties: {
                   effective_time: {
                     type: 'string',
@@ -356,6 +369,10 @@ export function useListForm() {
               layout1: {
                 type: 'void',
                 'x-component': 'FormLayout',
+                'x-component-props': {
+                  labelCol: 6,
+                  wrapperCol: 14,
+                },
                 properties: {
                   bank_name: {
                     type: 'string',
@@ -398,6 +415,10 @@ export function useListForm() {
               layout2: {
                 type: 'void',
                 'x-component': 'FormLayout',
+                'x-component-props': {
+                  labelCol: 6,
+                  wrapperCol: 14,
+                },
                 properties: {
                   currency_code: {
                     type: 'string',
@@ -440,6 +461,10 @@ export function useListForm() {
               layout3: {
                 type: 'void',
                 'x-component': 'FormLayout',
+                'x-component-props': {
+                  labelCol: 6,
+                  wrapperCol: 14,
+                },
                 properties: {
                   bank_address: {
                     type: 'string',
@@ -447,6 +472,11 @@ export function useListForm() {
                     'x-decorator': 'FormItem',
                     'x-component': 'Input.TextArea',
                     'x-component-props': {
+                      style:{
+                        height:"60px"
+                      },
+                      rows:"1",
+                      size:"small",
                       placeholder: t('purchase.name'),
                     },
                   },
@@ -456,6 +486,11 @@ export function useListForm() {
                     'x-decorator': 'FormItem',
                     'x-component': 'Input.TextArea',
                     'x-component-props': {
+                      size:"small",
+                      style:{
+                        height:"60px"
+                      },
+                      rows:"1",
                       placeholder: t('purchase.remarks'),
                     },
                   },

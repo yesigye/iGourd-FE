@@ -35,7 +35,9 @@ export function useCustomizedFeature(type: string) {
       minWidth: 150,
       align: 'center',
       title: t('add-customized.type'),
-      slots: { default: 'type' },
+      formatter: ({ cellValue })=>{
+        return cellValue.label;
+      },
     },
 
     {

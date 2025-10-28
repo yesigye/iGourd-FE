@@ -867,6 +867,7 @@ export function useOrderForm() {
         }
       });
 
+
       formData.purchase_order_deposit_list.forEach((item) => {
         item.merchant_id = currentLoginUserApp.owner_id;
         // 设置外层定金
@@ -940,14 +941,13 @@ export function useOrderForm() {
     if (!op) {
       return;
     }
-
     formAPI.setValuesIn(
       `purchase_order_deposit_list.${index}.payment_method_id`,
-      op.id,
+      op.payment_method_id,
     );
     formAPI.setValuesIn(
       `purchase_order_deposit_list.${index}.payment_method_mark`,
-      op.mark,
+      op.payment_method_mark,
     );
   };
 
@@ -1061,6 +1061,7 @@ export function useOrderForm() {
       async onConfirm() {
         await formAPI.validate();
         drawerApi.lock();
+        debugger
         await handleSubmit(formAPI.values)
           .then(() => {
             drawerApi.close();

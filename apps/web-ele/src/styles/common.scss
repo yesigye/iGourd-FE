@@ -151,3 +151,9 @@
 .review-rejected {
   color: var(--el-color-danger);
 }
+.array-table-customized{
+  @apply bg-slate-200 !important;
+}
+.abc{
+  background: red;
+}
