@@ -97,9 +97,14 @@ export function useFlows() {
           field: 'payment_method_name',
           minWidth: 200,
           title: t('account.payment-method'),
+          // formatter({ row }) {
+          //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //   // @ts-ignore
+          //   return row.payment_method_name;
+          // },
         },
         {
-          field: 'payment_method_amount',
+          field: 'amount',
           minWidth: 200,
           title: t('account.payment-amount'),
         },
@@ -146,7 +151,7 @@ export function useFlows() {
     useCrud({
       service,
       columns: baseColumns,
-      id: 'flows',
+      id: 'finance_flow_plus_export',
       tabs: [
         { value: 'ALL', label: '全部' },
         { value: 'CREDIT', label: '收入' },

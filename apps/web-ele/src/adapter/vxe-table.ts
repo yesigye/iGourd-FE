@@ -10,6 +10,7 @@ import {
 } from '@igourd/plugins/vxe-table';
 import { isEmpty, moneyFormat } from '@igourd/utils';
 
+import { tableExport } from '#/api/common/file';
 import {
   asyncTableColumn,
   findTableColumn,
@@ -82,6 +83,10 @@ setupIgourdVxeTable({
         toolbarConfig: {
           custom: true,
           refresh: true,
+        },
+        exportConfig: {
+          remote: true,
+          exportMethod: tableExport,
         },
         customConfig: {
           storage: true,

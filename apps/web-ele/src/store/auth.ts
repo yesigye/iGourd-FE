@@ -10,10 +10,9 @@ import { ElNotification } from '@igourd/common-ui';
 import { APP_CONFIG } from '@igourd/constants';
 import { preferences } from '@igourd/preferences';
 import { resetAllStores, useAccessStore, useUserStore } from '@igourd/stores';
+import { mapTree, traverseTreeValues } from '@igourd/utils';
 
 import { defineStore } from 'pinia';
-
-import { isEmpty, mapTree, traverseTreeValues } from '@igourd/utils';
 
 import {
   getAccessCodesApi,
@@ -110,6 +109,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function fetchUserInfo() {
     let userInfo: null | UserInfo = null;
     const currentInfo = userStore.currentLoginUserApp;
+    // @ts-ignore
     userInfo = await getUserInfoApi({
       owner_id: currentInfo.owner_id,
       owner_type: currentInfo.owner_type,
@@ -129,6 +129,7 @@ export const useAuthStore = defineStore('auth', () => {
     userStore.setTokenId(userInfo.jwt_token.token_id);
     userStore.setUserInfo(userInfo);
     userStore.setLoginAccount(userInfo.login_account || '');
+    // @ts-ignore
     userStore.setLoginType(userInfo.type || '');
     accessStore.setAccessToken(userInfo.jwt_token.token_id);
     return userInfo;
@@ -146,7 +147,7 @@ export const useAuthStore = defineStore('auth', () => {
             ...node.function,
             menu: {
               ...node.function.menu,
-              collect_status: collect.find((col: any) => {
+              collect_status: collect.some((col: any) => {
                 return col.menu_id === node.function.menu_id;
               })
                 ? 'COLLECTED'
@@ -163,12 +164,17 @@ export const useAuthStore = defineStore('auth', () => {
     const actions = traverseTreeValues(
       function_trees,
       (node) => {
+        // @ts-ignore
         return node.function.actions;
       },
       {
         childProps: 'sub_function_trees',
       },
+      // @ts-ignore
+      // eslint-disable-next-line unicorn/no-array-reduce
     ).reduce((total, current) => {
+      // @ts-ignore
+      // eslint-disable-next-line unicorn/prefer-spread
       return total.concat(current);
     }, []);
     accessStore.setAccessCodes(actions);

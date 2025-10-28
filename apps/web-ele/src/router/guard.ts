@@ -6,12 +6,12 @@ import { preferences } from '@igourd/preferences';
 import { useAccessStore, useUserStore } from '@igourd/stores';
 import { startProgress, stopProgress } from '@igourd/utils';
 
+import { toggleCollect } from '#/api';
 import { useSession } from '#/hooks/use-session';
 import { loadFeatureLocal, loadRemoteLocale, updateLocale } from '#/locales';
 import { accessRoutes, coreRouteNames } from '#/router/routes';
 
 import { generateAccess } from './access';
-import { toggleCollect } from '#/api';
 
 /**
  * 通用守卫配置
@@ -60,7 +60,7 @@ function setupAuthGuard(router: Router) {
       }
       // return true;
     }
-    //@ts-ignore
+    // @ts-ignore
     accessStore.toggleCollectFn = (data: any) => {
       const { currentLoginUserApp } = userStore;
       toggleCollect(

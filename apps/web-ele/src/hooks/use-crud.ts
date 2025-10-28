@@ -216,12 +216,16 @@ function useCrud<T extends { id?: number | string }, P extends object>(
           list: [],
         };
       }
-      Object.assign(queryData, options.params, form, {
+      if (!options.params) {
+        options.params = {};
+      }
+      Object.assign(options.params, queryData, form, {
         page_num: page.currentPage,
         page_size: page.pageSize,
       });
       // 调用服务的查询方法，传入分页参数、表单数据和额外参数
-      return await options.service.query(queryData);
+      // @ts-ignore
+      return await options.service.query(options.params);
     };
   }
   // 初始化表格组件和API
@@ -374,7 +378,11 @@ function useCrud<T extends { id?: number | string }, P extends object>(
   };
 
   // 提供表格API和服务给子组件使用
-  provide(Symbol.for('PageGrid'), { gridApi, service: options.service });
+  provide(Symbol.for('PageGrid'), {
+    gridApi,
+    service: options.service,
+    params: () => options.params,
+  });
 
   // 返回组件、API和处理函数
   return {
