@@ -520,7 +520,7 @@ export function useOrderForm() {
                                   },
                                   'x-component-props': {
                                     multiple: false,
-
+                                    class: 'ig-bottom-line',
                                     onSearch:
                                       ' {{ getAccountManagementOptionList }}',
                                     '@change': `{{(value,op)=> accountChange(value,op,$self,$index) }}`,
@@ -554,6 +554,7 @@ export function useOrderForm() {
                                     feedbackLayout: 'terse',
                                   },
                                   'x-component-props': {
+                                    class: 'ig-bottom-line',
                                     '@blur': `{{(value,op)=> amountRateChange(value,op,$self,$index) }}`,
                                   },
                                 },
@@ -568,6 +569,7 @@ export function useOrderForm() {
                                     feedbackLayout: 'terse',
                                   },
                                   'x-component-props': {
+                                    class: 'ig-bottom-line',
                                     '@blur': `{{(value,op)=> amountChange(value,op,$self,$index) }}`,
                                   },
                                 },

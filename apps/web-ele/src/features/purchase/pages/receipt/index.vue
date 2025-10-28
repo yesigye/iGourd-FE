@@ -122,14 +122,12 @@ const handleconfirm = (data: AuditFormData) => {
           </template>
         </ElDropdown>
         <span
-          v-if="row.review_status.value === 'APPROVED'"
-          style="color: var(--el-color-success)"
+          v-if="row.review_status.value === 'APPROVED'" class="review-approved"
         >
           {{ row.review_status.label }}
         </span>
-        <span
+        <span class="review-reject"
           v-if="row.review_status.value === 'REJECTED'"
-          style="color: var(--el-color-danger)"
         >
           {{ row.review_status.label }}
         </span>
