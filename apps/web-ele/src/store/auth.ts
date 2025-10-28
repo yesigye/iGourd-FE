@@ -177,7 +177,8 @@ export const useAuthStore = defineStore('auth', () => {
       // eslint-disable-next-line unicorn/prefer-spread
       return total.concat(current);
     }, []);
-    accessStore.setAccessCodes(actions);
+    // @ts-ignore
+    accessStore.setAccessCodes(actions.map((item) => item.action_key));
     accessStore.collect = collect;
   }
 
