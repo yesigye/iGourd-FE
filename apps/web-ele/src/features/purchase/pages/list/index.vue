@@ -9,7 +9,7 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
+const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete,handleView } =
   usePurchaseList();
 </script>
 
@@ -32,7 +32,7 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleEdit(row)">
+        <ElButton type="text" @click="handleView(row)">
           {{ t('common.detail') }}
         </ElButton>
       </template>

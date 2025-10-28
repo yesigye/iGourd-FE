@@ -21,7 +21,7 @@ import {
 import { basicsCurrencyList } from '#/api';
 import { getAccountManagementOptionList } from '#/features/account';
 import { paymentMethodListUsingPOST } from '#/features/setting';
-function remoteMethod(keywords: string) {
+function remoteMethod(keywords: string) {  debugger
   return getPurchaseListApi({
     page_num: 1,
     page_size: 15,
@@ -85,7 +85,6 @@ export function useReceiptForm() {
   ];
   // 选择预付订单
   const onSelectPrepaidOrder = async (records: any) => {
-    debugger;
     if (!records) {
       return;
     }

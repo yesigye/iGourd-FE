@@ -5,6 +5,7 @@ export * from './functions';
 export * from './global';
 export * from './language';
 export * from './time';
+export * from './generateSchema';
 
 interface EventShim {
   new (...args: any[]): {

@@ -1061,7 +1061,6 @@ export function useOrderForm() {
       async onConfirm() {
         await formAPI.validate();
         drawerApi.lock();
-        debugger
         await handleSubmit(formAPI.values)
           .then(() => {
             drawerApi.close();
