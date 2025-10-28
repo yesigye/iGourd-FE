@@ -39,5 +39,7 @@
   "bank-swift-code": "银行SWIFT码",
   "tax-number": "增值税号码",
   "bank-address": "银行地址",
-  "remarks": "备注"
+  "remarks": "备注",
+  "validate-email": "请输入正确邮箱",
+  "validate-phone": "请输入正确手机号"
 }

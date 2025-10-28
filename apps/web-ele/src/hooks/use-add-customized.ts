@@ -43,7 +43,7 @@ export function useAddCustomizedForm() {
             'x-validator': [
               {
                 required: true,
-                message: "{{t('add-customized.enter-feature-name')}}",
+                message: t('add-customized.enter-feature-name'),
               },
               { maxLength: 128 },
             ],

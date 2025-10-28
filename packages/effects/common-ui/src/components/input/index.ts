@@ -1,6 +1,6 @@
 import { $t } from '@igourd/locales';
 
-import { connect, mapProps, mapReadPretty, useFieldSchema } from '@formily/vue';
+import { connect, mapProps, mapReadPretty,useField, useFieldSchema } from '@formily/vue';
 import { ElInput } from 'element-plus';
 
 import { composeExport, transformComponent } from '../__builtins__';
@@ -78,6 +78,8 @@ const InnerInput = connect(
         triggerType: 'onBlur',
         validator: handleBlur,
       };
+      const field = useField();
+
       const schemaRef = useFieldSchema();
       let validator = schemaRef.value['x-validator'] || [];
       // 过滤掉空的
@@ -105,8 +107,9 @@ const InnerInput = connect(
       if (!validator.some((v: any) => v.bannedWords)) {
         validator.push(customValidator);
       }
-      console.log('validator', validator);
-      schemaRef.value.setProperties({ 'x-validator': validator });
+      // console.log('validator', validator);
+      field.value.setValidator(validator)
+      //schemaRef.value.setProperties({ 'x-validator': validator });
       return props;
     },
   ),
@@ -139,6 +142,7 @@ const TextArea = connect(
       triggerType: 'onBlur',
       validator: handleBlur,
     };
+     const field = useField();
     const schemaRef = useFieldSchema();
     let validator = schemaRef.value['x-validator'] || [];
     // 过滤掉空的
@@ -166,7 +170,7 @@ const TextArea = connect(
     if (!validator.some((v: any) => v.bannedWords)) {
       validator.push(customValidator);
     }
-    schemaRef.value.setProperties({ 'x-validator': validator });
+    field.value.setValidator( validator );
 
     return {
       resize: 'none',
