@@ -165,6 +165,9 @@ export function useInventoryProductList() {
       showOverflow: false,
       height: gridHeight.value,
     },
+    toolbarConfig: {
+      export: true,
+    },
     searchFormSchema,
     batchOperate: true,
     connectedComponent: ProductListDrawer,
