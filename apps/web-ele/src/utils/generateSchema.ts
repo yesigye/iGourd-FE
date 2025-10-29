@@ -6,11 +6,21 @@ const generateInput = (item: Item) => {
   const fieldJson = {
     type: 'string',
     title: item.name,
-    required: item.is_compulsory,
     'x-decorator': 'FormItem',
     'x-component': 'Input',
-    'x-component-props': {},
+    'x-component-props': {
+      placeholder: item.name,
+    },
   };
+  if (item.is_compulsory) {
+    fieldJson['x-validator'] = [
+      {
+        required: true,
+      },
+    ];
+  }
+
+  return fieldJson;
 };
 // select
 const generateSelect = (item: Item) => {
@@ -24,25 +34,51 @@ const generateSelect = (item: Item) => {
       });
     });
   }
-  return {
+  const fieldJson = {
     type: 'string',
     title: item.name,
-    required: item.is_compulsory,
     'x-decorator': 'FormItem',
     'x-component': 'Select',
-    'x-component-props': {},
+    'x-component-props': {
+      style: {
+        'min-width': '100px',
+      },
+    },
     enum: selectionOptions,
   };
+  if (item.is_compulsory) {
+    fieldJson['x-validator'] = [
+      {
+        required: true,
+      },
+    ];
+  }
+  return fieldJson;
+};
+const createLayout = (key, properties) => {
+
+  const obj = {
+    type: 'void',
+    'x-component': 'FormLayout',
+    'x-component-props': {
+      labelCol: 6,
+      wrapperCol: 14,
+    },
+    properties:{}
+  };
+  obj.properties[key] = properties
+  return obj;
 };
 
 export const generateSchema = (list) => {
   const obj = {};
   list.forEach((element) => {
-    const type = element.type.value;
+    const type = element.type;
+    const keyString = element.key + '__layout';
     if (type === 'INPUT') {
-      obj[element.key] = generateInput(element);
+      obj[keyString] = createLayout(element.key, generateInput(element));
     } else if (type === 'SELECT') {
-      obj[element.key] = generateSelect(element);
+      obj[keyString] = createLayout(element.key, generateSelect(element));
     }
   });
   return obj;

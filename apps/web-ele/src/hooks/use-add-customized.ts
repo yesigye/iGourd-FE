@@ -238,8 +238,7 @@ export function useAddCustomizedForm() {
           formAPI.reset();
           const data = drawerApi.getData();
           const values = {
-            ...data,
-            type: data.type.value,
+            ...data
           };
 
           //处理选项
