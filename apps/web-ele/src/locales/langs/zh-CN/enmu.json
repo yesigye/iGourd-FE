@@ -1,4 +1,13 @@
 {
   "ON_SALE": "上架",
-  "OFF_SALE": "下架"
+  "OFF_SALE": "下架",
+  "feature-types": { "input": "输入框", "select": "选择框" },
+  "select-types": {
+    "user-created": "用户创建",
+    "fixed-value": "固定值"
+  },
+  "compulsory-types": {
+    "yes": "是",
+    "no": "否"
+  }
 }

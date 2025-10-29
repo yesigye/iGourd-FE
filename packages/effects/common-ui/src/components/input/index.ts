@@ -60,9 +60,9 @@ const InnerInput = connect(
 
       const handleBlur = (val: string) => {
         const includesBannedWors: string[] = [];
-        console.log(bannedWords);
+        //console.log(bannedWords);
         bannedWords.forEach((keyword) => {
-          if (val.includes(keyword)) {
+          if (val && val.includes(keyword)) {
             includesBannedWors.push(keyword);
           }
         });
@@ -126,7 +126,7 @@ const TextArea = connect(
     const handleBlur = (val: string) => {
       const includesBannedWors: string[] = [];
       bannedWords.forEach((keyword) => {
-        if (val.includes(keyword)) {
+        if (val && val.includes(keyword)) {
           includesBannedWors.push(keyword);
         }
       });
