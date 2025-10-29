@@ -1,1 +1,11 @@
-{}
+{
+  "feature-types": { "input": "Input Field", "select": "Dropdown" },
+  "select-types": {
+    "user-created": "User-Created",
+    "fixed-value": "Fixed Value"
+  },
+  "compulsory-types": {
+    "yes": "Yes",
+    "no": "No"
+  }
+}

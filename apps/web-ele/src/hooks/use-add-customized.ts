@@ -4,9 +4,13 @@ import {computed} from 'vue';
 import { useI18n } from '@igourd/locales';
 
 import { useDrawerForm } from '#/hooks/use-drawer-form';
+import { useEnum } from '#/hooks';
+
+
 
 export function useAddCustomizedForm() {
   const { t } = useI18n();
+  const {featureTypes,selectTypes,compulsoryTypes} = useEnum();
   const title = computed(()=>{
      const data = drawerApi.getData();
      if(data?.mode === 'detail'){
@@ -15,6 +19,7 @@ export function useAddCustomizedForm() {
       return  data.id?t('add-customized.edit-customized'):t('add-customized.add-customized')
      }
   });
+
   const schema: ISchema = {
     type: 'object',
     properties: {
@@ -260,23 +265,9 @@ export function useAddCustomizedForm() {
       },
       schema,
       scope: {
-        featureTypes: [
-          { label: t('add-customized.input-box'), value: 'INPUT' },
-          { label: t('add-customized.select-box'), value: 'SELECT' },
-        ],
-
-        // 选择类型（用户创建 / 固定值）
-        // 注意：你原文件里 true=用户创建, false=固定值；保留相同语义
-        selectTypes: [
-          { label: t('add-customized.user-created'), value: true },
-          { label: t('add-customized.fixed-value'), value: false },
-        ],
-
-        // 是否必填
-        compulsoryTypes: [
-          { label: t('add-customized.yes'), value: true },
-          { label: t('add-customized.no'), value: false },
-        ],
+        featureTypes,
+        selectTypes,
+        compulsoryTypes
       },
     },
   });

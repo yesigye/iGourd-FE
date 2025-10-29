@@ -1,1 +1,11 @@
-{}
+{
+  "feature-types": { "input": "Champ de saisie", "select": "Liste déroulante" },
+  "select-types": {
+    "user-created": "Créé par l'utilisateur",
+    "fixed-value": "Valeur fixe"
+  },
+  "compulsory-types": {
+    "yes": "Oui",
+    "no": "Non"
+  }
+}
