@@ -14,7 +14,6 @@ const [Drawer, drawerApi] = useIgourdDrawer({
   async onOpenChange(isOpen, a, b) {
     if (isOpen) {
       const data = drawerApi.getData();
-      debugger;
       if (data.options) {
         const options = JSON.parse(data.options);
         options.forEach((item) => {
@@ -44,7 +43,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
         </ElDescriptionsItem>
         <ElDescriptionsItem
           :label="t('add-customized.selection-options')"
-          class-name="my-content"
+          class-name="descriptions-item-content"
         >
           <ElDescriptions title="" :column="1" border>
             <ElDescriptionsItem

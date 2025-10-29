@@ -12,7 +12,8 @@ const { t } = useI18n();
 
 const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete,handleView } =
   useCustomizedFeature('VENDOR');
-const { Drawer: Detail, drawerApi: detailDrawerApi } = useCustomizedDetail("查看供应商自定义属性");
+
+const { Drawer: Detail, drawerApi: detailDrawerApi } = useCustomizedDetail(t("customized.view-supplier-attributes"));
 const handleViewC=(row)=>{
   detailDrawerApi.setData(row).open();
 }

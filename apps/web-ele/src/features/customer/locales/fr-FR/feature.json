@@ -31,5 +31,6 @@
   "selection-type": "Type de sélection",
   "selection-options": "Options de sélection",
   "option-name": "Nom de l'option",
-  "add-customized": "Ajouter personnalisé"
+  "add-customized": "Ajouter personnalisé",
+  "view-customized-attributes": "Voir les attributs personnalisés du client"
 }

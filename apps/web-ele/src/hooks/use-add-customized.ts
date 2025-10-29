@@ -108,8 +108,7 @@ export function useAddCustomizedForm() {
               stripe: true,
               size: 'small',
               pagination: { pageSize: 5 },
-              headerCellClassName:"abc",
-              className:"array-table-customized",
+              headerCellClassName:"array-table-customized",
             },
             items: {
               type: 'object',

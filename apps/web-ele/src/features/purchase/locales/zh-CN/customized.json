@@ -7,5 +7,6 @@
   "creator": "创建人",
   "creation-time": "创建时间",
     "input-box": "输入框",
-  "select-box": "选择框"
+  "select-box": "选择框",
+  "view-supplier-attributes":"查看供应商自定义属性"
 }

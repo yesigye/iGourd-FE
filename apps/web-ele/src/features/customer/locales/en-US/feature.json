@@ -31,5 +31,7 @@
   "selection-type": "Selection Type",
   "selection-options": "Selection Options",
   "option-name": "Option Name",
-  "add-customized": "Add Customized"
+  "add-customized": "Add Customized",
+  "view-customized-attributes":"View Customer Custom Attributes"
 }
+
