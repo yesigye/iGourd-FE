@@ -23,7 +23,7 @@ const generateSpecColumns = (specs) => {
     field: `spec_${spec.productSpecName}`,
     title: spec.productSpecName,
     minWidth: 170,
-    align: 'left',
+    align: 'center',
     value: spec.productSpecValue,
     productSpecValueId: spec.productSpecValueId,
   }));
@@ -147,9 +147,9 @@ const productColumns = computed(() => {
   return [
     {
       field: 'status',
-      title: 'Status',
+      title: t('product-list.status'),
       minWidth: 170,
-      align: 'left',
+      align: 'center',
       slots: {
         default: 'status',
       },
@@ -158,46 +158,46 @@ const productColumns = computed(() => {
     // 动态规格表格列
     {
       field: 'sku_barcode',
-      title: 'SKU Barcode',
+      title: t('product-list.sku-barcode'),
       minWidth: 170,
-      align: 'left',
+      align: 'center',
     },
     {
       field: 'spec_code',
-      title: 'Spec Code',
+      title: t('product-list.spec-code'),
       minWidth: 170,
-      align: 'left',
+      align: 'center',
     },
     {
       field: 'stock',
-      title: 'Initial stock(By major)',
+      title: t('product-list.initial-stock'),
       minWidth: 170,
-      align: 'left',
+      align: 'center',
     },
 
     {
       field: 'unit',
-      title: 'unit',
+      title: t('common.unit'),
       minWidth: 170,
-      align: 'left',
+      align: 'center',
     },
     {
       field: 'selling_price',
-      title: 'Selling Price',
+      title: t('product-list.selling-price'),
       minWidth: 170,
-      align: 'left',
+      align: 'center',
     },
     {
       field: 'cost_price',
-      title: 'Cost Price',
+      title: t('product-list.cost-price'),
       minWidth: 170,
-      align: 'left',
+      align: 'center',
     },
     {
       field: 'Remarks',
-      title: 'remarks',
+      title: t('common.remarks'),
       minWidth: 170,
-      align: 'left',
+      align: 'center',
     },
   ];
 });
@@ -359,7 +359,6 @@ const getProductDetails = async (productId: string) => {
   }
   mergeCells.value = getSpecMergeCells(productList.value, dynamicColumns.value);
   ProductDetailsGridApi.reload();
-  console.log(mergeCells.value, 'mergeCells.value');
 
   // 强制重新渲染表格以更新列配置
   nextTick(() => {
@@ -414,7 +413,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
             {{ productDetail?.tax_vat?.tax_amount || '--' }}
           </ElDescriptionsItem>
           <ElDescriptionsItem :label="t('product-list.status')" min-width="186">
-            {{ productDetail?.status || '--' }}
+            {{ t(`enmu.${productDetail?.status}`) || '--' }}
           </ElDescriptionsItem>
 
           <ElDescriptionsItem
@@ -512,7 +511,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
             }}</span>
           </template>
           <template #status="{ row, column, params }">
-            <span>{{ row?.status?.label ?? '--' }}</span>
+            <span>{{ t(`enmu.${row?.status}`) ?? '--' }}</span>
           </template>
         </ProductDetailsGrid>
       </Card>

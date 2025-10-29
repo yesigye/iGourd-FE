@@ -52,5 +52,8 @@
   "warehouse": "Sub-warehouse",
   "min-stock": "Minimum Stock",
   "safety-stock": "Safety Stock",
-  "max-stock": "Maximum Stock"
+  "max-stock": "Maximum Stock",
+  "spec-code": "Specification Code",
+  "initial-stock": "Initial Stock (Primary)",
+  "cost-price": "Cost Price"
 }

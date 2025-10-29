@@ -5,6 +5,16 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { Card, ElButton, ElButtonGroup, ElCol, ElRow } from '@igourd/common-ui';
+import {
+  GoodsOutline,
+  Lists,
+  ManagementStockoutOutline,
+  ReceiptCheck,
+  ReceiptRefund,
+  ShoppingBagHandBag2ShoppingBagPurseGoodsItemProducts,
+  TransferVan,
+  WebWindowEnergyConsumption,
+} from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 import { EchartsUI, useEcharts } from '@igourd/plugins/echarts';
 
@@ -12,15 +22,6 @@ import {
   getAccountingStatisticsApi,
   getStatisticsApi,
 } from '#/api/common/system';
-import employeeManagementIcon from '#/assets/home/employee-management.svg';
-import menusIcon from '#/assets/home/menus.svg';
-import merchantListIcon from '#/assets/home/merchant-list.svg';
-// 图标
-import purchaseOrderIcon from '#/assets/home/purchase-order.svg';
-import roleManagementIcon from '#/assets/home/role-management.svg';
-import upgradeTaskIcon from '#/assets/home/upgrade-task.svg';
-import versionMonitoringIcon from '#/assets/home/version-monitoring.svg';
-import versionIcon from '#/assets/home/version.svg';
 import { thousandSeparator } from '#/utils/sale';
 
 const props = defineProps({
@@ -42,51 +43,59 @@ const { t } = useI18n();
 const shortcutList = [
   {
     name: t('home.purchase-order'),
-    icon: purchaseOrderIcon,
+    icon: ReceiptCheck,
     bgColor: 'bg-[#D9ECFF]',
     page: '/purchase/order',
+    color: 'text-primary',
   },
   {
     name: t('home.goods-receipt-notes'),
-    icon: merchantListIcon,
+    icon: GoodsOutline,
     bgColor: 'bg-[#E1F3D8]',
     page: '/purchase/receipt',
+    color: 'text-success',
   },
   {
     name: t('home.purchase-refund'),
-    icon: roleManagementIcon,
-    bgColor: 'bg-[#E3E2FF]',
+    icon: ReceiptRefund,
+    bgColor: 'bg-[#FDE2E2]',
     page: '/purchase/returned',
+    color: 'text-[#F56C6C]',
   },
   {
     name: t('home.stock-transfer'),
-    icon: upgradeTaskIcon,
+    icon: TransferVan,
     bgColor: 'bg-[#FDE2E2]',
     page: '/inventory/transfer',
+    color: 'text-[#FF8FC5]',
   },
   {
     name: t('home.stock-consumption'),
-    icon: menusIcon,
+    icon: WebWindowEnergyConsumption,
     bgColor: 'bg-[#D9ECFF]',
     page: '/inventory/spoilage',
+    color: 'text-primary',
   },
   {
     name: t('home.physical-stock-take'),
-    icon: employeeManagementIcon,
+    icon: ManagementStockoutOutline,
     bgColor: 'bg-[#FAECD8]',
     page: '/inventory/count',
+    color: 'text-[#E6A23C]',
   },
   {
     name: t('home.product-list'),
-    icon: versionMonitoringIcon,
-    bgColor: 'bg-[#FFEBDC]',
+    icon: ShoppingBagHandBag2ShoppingBagPurseGoodsItemProducts,
+    bgColor: 'bg-[#E3E2FF]',
     page: '/inventory/product/list',
+    color: 'text-[#797DF9]',
   },
   {
     name: t('home.stock-list'),
-    icon: versionIcon,
+    icon: Lists,
     bgColor: 'bg-[#FFD1E7BA]',
     page: '/inventory/list',
+    color: 'text-[#FF8FC5]',
   },
 ];
 const chartLineRef = ref<EchartsUIType>();
@@ -498,7 +507,11 @@ onMounted(() => {
                 :class="item.bgColor"
                 class="flex h-[58px] w-[58px] items-center justify-center"
               >
-                <img :src="item.icon" class="w-[26px]" alt="" />
+                <component
+                  :is="item.icon"
+                  class="text-[24px]"
+                  :class="item.color"
+                />
               </div>
               <p class="mt-2 h-[36px] text-center text-sm">{{ item.name }}</p>
             </div>
