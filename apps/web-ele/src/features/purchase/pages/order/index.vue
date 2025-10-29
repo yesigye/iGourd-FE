@@ -21,7 +21,7 @@ import { usePurchaseOrder, usePurchaseOrderDetail } from '@@/purchase/hooks';
 
 import { AuditDialog } from '#/components';
 import { useLanguage } from '#/hooks';
-
+import { getEnumLabel } from '#/utils/global';
 defineOptions({
   name: 'IPurchaseOrder',
 });
@@ -57,11 +57,11 @@ const detailDrawerRef = ref();
 
 const currentRow = ref();
 const openModal = (row: tableItem, item) => {
-  if (row.review_status.value === 'PENDING' && item.value === 'REJECTED') {
+  if (row.review_status === 'PENDING' && item.value === 'REJECTED') {
     currentRow.value = row;
     auditDialogRef.value.openModal();
   } else if (
-    row.review_status.value === 'PENDING' &&
+    row.review_status === 'PENDING' &&
     item.value === 'APPROVED'
   ) {
     const param = {
@@ -113,9 +113,9 @@ const handleconfirm = (data: AuditFormData) => {
         </ElButton>
       </template>
       <template #modal="{ row }">
-        <ElDropdown v-if="row.review_status.value === 'PENDING'">
+        <ElDropdown v-if="row.review_status === 'PENDING'">
           <span class="custom-dropdown">
-            {{ row.review_status.label }}
+            {{ getEnumLabel(operationOpt,row.review_status)}}
             <ElIcon class="el-icon--right">
               <ArrayDown />
             </ElIcon>
@@ -134,16 +134,15 @@ const handleconfirm = (data: AuditFormData) => {
           </template>
         </ElDropdown>
         <span
-          v-if="row.review_status.value === 'APPROVED'"
-          style="color: var(--el-color-success)"
+          v-if="row.review_status === 'APPROVED'" class="review-approved"
         >
-          {{ row.review_status.label }}
+          {{ getEnumLabel(operationOpt,row.review_status)}}
         </span>
         <span
-          v-if="row.review_status.value === 'REJECTED'"
-          style="color: var(--el-color-danger)"
+          v-if="row.review_status === 'REJECTED'"
+          class="review-rejected"
         >
-          {{ row.review_status.label }}
+          {{ getEnumLabel(operationOpt,row.review_status)}}
         </span>
         <!--
         <ElButton type="text" @click="openModal(row)">

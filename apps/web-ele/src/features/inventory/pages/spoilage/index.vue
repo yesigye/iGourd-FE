@@ -19,6 +19,8 @@ import { AuditDialog } from '#/components';
 import { approveSpoilage, rejectSpoilage } from '../../apis/spoilage';
 import { useInventorySpoilageList } from '../../hooks/spoilage/list';
 import { useLanguage } from '#/hooks';
+import { getEnumLabel } from '#/utils/global';
+
 defineOptions({
   name: 'IInventorySpoilage',
 });
@@ -43,10 +45,10 @@ const {
 
 const currentRow = ref();
 const openModal = (row, item) => {
-  if (row.status.value === 'PENDING' && item.value === 'REJECTED') {
+  if (row.status === 'PENDING' && item.value === 'REJECTED') {
     currentRow.value = row;
     auditDialogRef.value.openModal();
-  } else if (row.status.value === 'PENDING' && item.value === 'APPROVED') {
+  } else if (row.status === 'PENDING' && item.value === 'APPROVED') {
     const param = {
       id: row.id,
       merchant_id: currentLoginUserApp.owner_id,
@@ -89,9 +91,9 @@ const handleconfirm = (data) => {
         </ElButton>
       </template>
       <template #modal="{ row }">
-        <ElDropdown v-if="row.status.value === 'PENDING'">
+        <ElDropdown v-if="row.status === 'PENDING'">
           <span class="custom-dropdown">
-            {{ row.status.label }}
+            {{ getEnumLabel(operationOpt,row.status)}}
             <ElIcon class="el-icon--right">
               <ArrayDown />
             </ElIcon>
@@ -110,14 +112,14 @@ const handleconfirm = (data) => {
           </template>
         </ElDropdown>
         <span
-          v-if="row.status.value === 'APPROVED'"
+          v-if="row.status === 'APPROVED'"
           style="color: var(--el-color-success)"
-          >{{ row.status.label }}</span
+          >{{ getEnumLabel(operationOpt,row.status)}}</span
         >
         <span
-          v-if="row.status.value === 'REJECTED'"
+          v-if="row.status === 'REJECTED'"
           style="color: var(--el-color-danger)"
-          >{{ row.status.label }}</span
+          >{{ getEnumLabel(operationOpt,row.status)}}</span
         >
       </template>
 
@@ -135,3 +137,8 @@ const handleconfirm = (data) => {
     <AuditDialog ref="auditDialogRef" @confirm="handleconfirm" />
   </Page>
 </template>
+<style scoped>
+.custom-dropdown:focus-visible {
+  outline: unset;
+}
+</style>

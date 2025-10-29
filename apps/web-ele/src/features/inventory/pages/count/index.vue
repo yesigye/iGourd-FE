@@ -15,6 +15,7 @@ import { useUserStore } from '@igourd/stores';
 
 import { AuditDialog } from '#/components';
 import { useLanguage } from '#/hooks';
+import { getEnumLabel } from '#/utils/global';
 
 import { updateCountStatus } from '../../apis/count';
 import { useInventoryCountList } from '../../hooks/count/list';
@@ -44,11 +45,11 @@ const {
 } = useInventoryCountList();
 const currentRow = ref();
 const openModal = (row, item) => {
-  if (row.review_status.value === 'PENDING' && item.value === 'REJECTED') {
+  if (row.review_status === 'PENDING' && item.value === 'REJECTED') {
     currentRow.value = row;
     auditDialogRef.value.openModal();
   } else if (
-    row.review_status.value === 'PENDING' &&
+    row.review_status === 'PENDING' &&
     item.value === 'APPROVED'
   ) {
     const param = {
@@ -92,9 +93,9 @@ const handleconfirm = (data) => {
       </template>
 
       <template #modal="{ row }">
-        <ElDropdown v-if="row.review_status.value === 'PENDING'">
+        <ElDropdown v-if="row.review_status === 'PENDING'">
           <span class="custom-dropdown">
-            {{ row.review_status.label }}
+            {{ getEnumLabel(operationOpt,row.review_status)}}
             <ElIcon class="el-icon--right">
               <ArrayDown />
             </ElIcon>
@@ -113,14 +114,14 @@ const handleconfirm = (data) => {
           </template>
         </ElDropdown>
         <span
-          v-if="row.review_status.value === 'APPROVED'"
+          v-if="row.review_status === 'APPROVED'"
           style="color: var(--el-color-success)"
-          >{{ row.review_status.label }}</span
+          >{{ getEnumLabel(operationOpt,row.review_status)}}</span
         >
         <span
-          v-if="row.review_status.value === 'REJECTED'"
+          v-if="row.review_status === 'REJECTED'"
           style="color: var(--el-color-danger)"
-          >{{ row.review_status.label }}</span
+          >{{ getEnumLabel(operationOpt,row.review_status)}}</span
         >
       </template>
 
