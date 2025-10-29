@@ -12,6 +12,7 @@ import { useDrawerForm } from '#/hooks/use-drawer-form';
 const UploadButton = () => {
   return h(ElButton, {}, { default: () => '上传图片' });
 };
+const detailData = {};
 export function useCustomerlabelForm() {
   const { t } = useI18n();
 
@@ -51,7 +52,7 @@ export function useCustomerlabelForm() {
         properties: {
           customer_id_list: {
             type: 'array',
-            title: t('list.customer-label'),
+            title: t('list.customer'),
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'TransferTable',
@@ -77,7 +78,7 @@ export function useCustomerlabelForm() {
                 },
               ],
               fetchLeft: '{{ actions.fetchProducts }}',
-              fetchRight: '{{ actions.fetchSelectedProducts }}',
+              // fetchRight: '{{ actions.fetchSelectedProducts }}',
               fetchByIds: '{{ actions.fetchProductsByIds }}',
               getAllIdsUnderFilter: '{{ actions.getAllIdsUnderFilter }}',
               topFilterFields: [
@@ -94,7 +95,8 @@ export function useCustomerlabelForm() {
                   options: [{ label: 'Nike', value: 'nike' }],
                 },
               ],
-              searchPlaceholder: "{{t('product-label.filters-placeholder')}}",
+              searchPlaceholder:
+                "{{t('list.enter-purchase-order-no-vendor-name-')}}",
               excludeSelectedFromLeft: true,
             },
           },
@@ -140,8 +142,8 @@ export function useCustomerlabelForm() {
         actions: {
           fetchProducts: getCustomerListApi,
           fetchSelectedProducts: (params) => {
-            params.product_label_id = detailData.value.id;
-            return getProductlabelProductPage(params);
+            // params.product_label_id = detailData.value.id;
+            return [{}];
           },
           fetchProductsByIds: () => [],
           getAllIdsUnderFilter: () => [],
