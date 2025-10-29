@@ -9,5 +9,10 @@
   "compulsory-types": {
     "yes": "是",
     "no": "否"
+  },
+  "balance-change-types": {
+    "CANCEL": "取消",
+    "FAIL": "失败",
+    "SUCCESS": "成功"
   }
 }

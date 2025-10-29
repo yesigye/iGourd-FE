@@ -53,6 +53,7 @@ export function useCustomerList() {
       sortable: true,
       align: 'left',
       formatter: 'formatMoney',
+      slots: { default: 'balance' },
     },
     {
       field: 'points',
@@ -64,12 +65,10 @@ export function useCustomerList() {
     {
       field: 'debt_amount',
       title: t('customer.debt'),
-      minWidth: 100,
+      minWidth: 200,
       sortable: true,
       align: 'left',
-      formatter: ({ cellValue }) => {
-        return cellValue ? t('common.yes') : t('common.no');
-      },
+      slots: { default: 'debt_amount' },
     },
     {
       field: 'vip_code',

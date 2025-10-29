@@ -1,18 +1,17 @@
 import { useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { SaleOrderDetailsDrawer } from '@@/sale/components';
+import { BalanceChangeDrawer } from '@@/customer/components';
 
-export function useSaleOrderDetailsDrawer() {
+export function useBalanceChange() {
   const { t } = useI18n();
   const [Drawer, drawerApi] = useIgourdDrawer({
-    connectedComponent: SaleOrderDetailsDrawer,
+    connectedComponent: BalanceChangeDrawer,
     appendToMain: true,
-    class: 'w-2/3',
-    title: '订单详情',
-    zIndex: 10_000,
+    class: 'w-1/4',
+    title: t('list.balance-change'),
+    closable: false,
     showConfirmButton: false,
-    showCancelButton: false,
   });
   return {
     Drawer,
