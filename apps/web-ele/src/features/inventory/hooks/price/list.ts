@@ -2,11 +2,16 @@ import type {
   PriceChangeLogItem,
   PriceChangeLogParams,
 } from '../../types/price';
+
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
+
 import { useI18n } from '@igourd/locales';
-import { getPriceChangeLogList } from '../../apis/price';
-import { useCrud } from '#/hooks';
+
 import Decimal from 'decimal.js';
+
+import { useCrud } from '#/hooks';
+
+import { getPriceChangeLogList } from '../../apis/price';
 
 export function useInventoryPriceList() {
   const { t } = useI18n();
@@ -110,7 +115,7 @@ export function useInventoryPriceList() {
 
   return useCrud<PriceChangeLogItem, PriceChangeLogParams>({
     columns,
-    id:"inventory-price-log-list",
+    id: 'inventory-price-log-list',
     searchFormSchema,
     batchOperate: false,
     service: {

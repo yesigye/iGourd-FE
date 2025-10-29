@@ -116,7 +116,6 @@ export function usePrice() {
             activeValue: 'OPEN',
             inactiveValue: 'CLOSE',
             onChange(value: string, { row }: { row: PriceRow }) {
-              debugger
               updatePriceStatusApi({
                 id: row.id,
                 status: value,
@@ -135,7 +134,7 @@ export function usePrice() {
         slots: { default: 'operation' },
       },
     ],
-    id:"marketing-price-list",
+    id: 'marketing-price-list',
     searchFormSchema,
     batchOperate: true,
     connectedComponent: PriceDrawer,

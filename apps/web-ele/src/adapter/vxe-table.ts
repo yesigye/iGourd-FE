@@ -8,7 +8,7 @@ import {
   setupIgourdVxeTable,
   useIgourdVxeGrid,
 } from '@igourd/plugins/vxe-table';
-import { isEmpty, moneyFormat } from '@igourd/utils';
+import { isEmpty, moneyFormat, omit } from '@igourd/utils';
 
 import { tableExport } from '#/api/common/file';
 import {
@@ -247,11 +247,11 @@ setupIgourdVxeTable({
     vxeUI.renderer.add('Switch', {
       renderTableDefault({ props }, params) {
         const { row, column } = params;
-        const cellValue = row[column.field].value;
+        const cellValue = row[column.field];
         return h(ElSwitch, {
+          ...omit(props, ['onChange']),
           modelValue: cellValue,
-          ...props,
-          onChange(value) {
+          'onUpdate:modelValue': function (value) {
             props?.onChange?.(value, { row, column });
           },
         });
