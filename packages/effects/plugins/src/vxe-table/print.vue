@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { SelectDropdown } from '@igourd/common-ui';
+import {
+  SelectDropdown,
+  useIgourdDrawer,
+  FontSizeSelect,
+} from '@igourd/common-ui';
 import type { VxeGridProps } from 'vxe-table';
 
-import { computed, ref, unref } from 'vue';
+import { computed, ref, unref, nextTick } from 'vue';
 import { $t } from '@igourd/locales';
 // import { dayjs } from '@igourd/utils';
 
@@ -44,13 +48,19 @@ const options = computed(() => {
 const [Grid, api] = useIgourdVxeGrid({
   gridOptions: unref(options),
 });
-
+const [Drawer, drawerApi] = useIgourdDrawer({
+  confirmText: $t('common.print'),
+  class: 'w-1/2',
+  header: false,
+});
 defineExpose({
   print() {
     api.grid
       .getPrintHtml({
         columns: api.grid.getColumns().filter((i) => {
-          return !['actions', 'action', 'operate', 'operates'].includes(i.field);
+          return !['actions', 'action', 'operate', 'operates'].includes(
+            i.field,
+          );
         }),
       })
       .then(({ html }) => {
@@ -69,8 +79,13 @@ defineExpose({
         });
       });
   },
-  setData(value) {
-    api.grid.loadData(value);
+  open(value) {
+    drawerApi.open();
+    drawerApi.onOpened = () => {
+      nextTick(() => {
+        api.grid.loadData(value);
+      });
+    };
   },
 });
 
@@ -91,11 +106,11 @@ const onFontSizeChange = (val: number, type: 'title' | 'base') => {
 };
 const printTypeOptions = (t: (s: string) => string) => [
   {
-    label: t(`common.print.${PrintDrawerType.receipt}`),
+    label: t(`common.print-config.${PrintDrawerType.receipt}`),
     value: PrintDrawerType.receipt,
   },
   {
-    label: t(`common.print.${PrintDrawerType['A4']}`),
+    label: t(`common.print-config.${PrintDrawerType['A4']}`),
     value: PrintDrawerType['A4'],
   },
 ];
@@ -106,34 +121,38 @@ const onTemplateChange = ({ value }) => {
 </script>
 
 <template>
-  <div class="pt-root" aria-hidden="true">
-    <div class="pt-page" :id="options.id?.toString() ?? 'helo'">
-      <header class="mb-1 bg-white p-3">
-        <div class="print-config flex justify-around">
-          <SelectDropdown
-            :options="printTypeOptions($t)"
-            @change="onTemplateChange"
-          >
-            {{ $t(`common.print.pager`) }}
-            {{ $t(`common.print.${printType}`) }}
-          </SelectDropdown>
-          <FontSizeSelect
-            :font-size="16"
-            @change="(val) => onFontSizeChange(val, 'title')"
-            >{{ $t('common.print.title-font-size') }}</FontSizeSelect
-          >
-          <FontSizeSelect
-            :font-size="14"
-            @change="(val) => onFontSizeChange(val, 'base')"
-            >{{ $t('common.print.base-font-size') }}</FontSizeSelect
-          >
+  <Drawer>
+    <div class="pt-root" aria-hidden="true">
+      <div class="pt-page" :id="options.id?.toString() ?? 'helo'">
+        <header class="mb-1 bg-white p-3">
+          <div class="print-config flex justify-around text-sm">
+            <SelectDropdown
+              :options="printTypeOptions($t)"
+              @change="onTemplateChange"
+            >
+              {{ $t(`common.print-config.pager`) }}
+              {{ $t(`common.print-config.${printType}`) }}
+            </SelectDropdown>
+            <FontSizeSelect
+              :font-size="16"
+              @change="(val) => onFontSizeChange(val, 'title')"
+              >{{ $t('common.print-config.title-font-size') }}</FontSizeSelect
+            >
+            <FontSizeSelect
+              :font-size="14"
+              @change="(val) => onFontSizeChange(val, 'base')"
+              >{{ $t('common.print-config.base-font-size') }}</FontSizeSelect
+            >
+          </div>
+        </header>
+        <div class=" flex items-center justify-center">
+          <div :class="printType">
+            <Grid v-bind="options" />
+          </div>
         </div>
-      </header>
-      <div :class="printType">
-        <Grid v-bind="options" />
       </div>
     </div>
-  </div>
+  </Drawer>
 </template>
 <style scoped lang="scss">
 .receipt {

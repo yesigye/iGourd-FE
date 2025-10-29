@@ -16,6 +16,7 @@ export * from './date-picker';
 export * from './editable';
 export * from './el-form-item';
 export * from './ellipsis-text';
+export { default as FontSizeSelect } from './fontsize-select/index.vue';
 export * from './form';
 export * from './form-button-group';
 export * from './form-collapse';

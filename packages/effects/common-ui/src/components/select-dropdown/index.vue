@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { defineEmits } from 'vue';
 
-import { ElDropdown, ElDropdownItem, ElDropdownMenu } from 'element-plus';
+import { ArrowDown } from '@element-plus/icons-vue';
+import {
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElIcon,
+} from 'element-plus';
 
 const props = defineProps({
   options: {
@@ -13,12 +19,12 @@ const props = defineProps({
 const emit = defineEmits(['change']);
 </script>
 <template>
-  <ElDropdown>
+  <ElDropdown size="small">
     <span class="el-dropdown-link">
       <slot></slot>
-      <el-icon class="el-icon--right">
-        <arrow-down />
-      </el-icon>
+      <ElIcon class="el-icon--right">
+        <ArrowDown />
+      </ElIcon>
     </span>
     <template #dropdown>
       <ElDropdownMenu>
