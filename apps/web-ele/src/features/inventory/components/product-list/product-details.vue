@@ -413,7 +413,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
             {{ productDetail?.tax_vat?.tax_amount || '--' }}
           </ElDescriptionsItem>
           <ElDescriptionsItem :label="t('product-list.status')" min-width="186">
-            {{ t(`enmu.${productDetail?.status}`) || '--' }}
+            {{ t(`enum.${productDetail?.status}`) || '--' }}
           </ElDescriptionsItem>
 
           <ElDescriptionsItem
@@ -511,7 +511,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
             }}</span>
           </template>
           <template #status="{ row, column, params }">
-            <span>{{ t(`enmu.${row?.status}`) ?? '--' }}</span>
+            <span>{{ t(`enum.${row?.status}`) ?? '--' }}</span>
           </template>
         </ProductDetailsGrid>
       </Card>

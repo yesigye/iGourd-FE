@@ -3,18 +3,21 @@ import type { CustomerFeaturePageModel } from '@@/customer/types';
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
-
+import { useEnum } from '#/hooks';
 import {
   createOrUpdateCustomizedField,
   deleteDynamicColumn,
   getPurchaseCustomizedListApi,
 } from '@@/purchase/apis';
 
+import { getEnumLabel } from '#/utils/global';
+
 import addCustomized from '#/components/add-customized/add-customized.vue';
 import { useCrud, withEntityParam } from '#/hooks';
 
 export function useCustomizedFeature(type: string) {
   const { t } = useI18n();
+  const {featureTypes,selectTypes,compulsoryTypes} = useEnum();
 
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<CustomerFeaturePageModel>[] = [
@@ -36,7 +39,7 @@ export function useCustomizedFeature(type: string) {
       align: 'center',
       title: t('add-customized.type'),
       formatter: ({ cellValue })=>{
-        return cellValue.label;
+        return getEnumLabel(featureTypes,cellValue);
       },
     },
 
