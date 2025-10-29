@@ -25,6 +25,8 @@ import { AuditDialog } from '#/components';
 const{Drawer:Detail,drawerApi:detailDrawerApi} = useReceiptOrderDetail()
 const { currentLoginUserApp } = useUserStore();
 import { useLanguage } from '#/hooks';
+import { getEnumLabel } from '#/utils/global';
+
 const {
   Grid,
   gridApi,
@@ -55,10 +57,10 @@ const auditDialogRef = ref();
 const detailDrawerRef = ref();
 const currentRow = ref();
 const openModal = (row: tableItem, item) => {
-  if (row.review_status.value === 'PENDING' && item.value === 'REJECTED') {
+  if (row.review_status === 'PENDING' && item.value === 'REJECTED') {
     currentRow.value = row;
     auditDialogRef.value.openModal();
-  } else if (row.review_status.value === 'PENDING' && item.value === 'APPROVED') {
+  } else if (row.review_status === 'PENDING' && item.value === 'APPROVED') {
     const param = {
       id: row.id,
       merchant_id: currentLoginUserApp.owner_id,
@@ -101,9 +103,9 @@ const handleconfirm = (data: AuditFormData) => {
         </ElButton>
       </template>
       <template #modal="{ row }">
-        <ElDropdown v-if="row.review_status.value === 'PENDING'">
+        <ElDropdown v-if="row.review_status === 'PENDING'">
           <span class="custom-dropdown">
-            {{ row.review_status.label }}
+            {{ getEnumLabel(operationOpt,row.review_status)}}
             <ElIcon class="el-icon--right">
               <ArrayDown />
             </ElIcon>
@@ -122,14 +124,14 @@ const handleconfirm = (data: AuditFormData) => {
           </template>
         </ElDropdown>
         <span
-          v-if="row.review_status.value === 'APPROVED'" class="review-approved"
+          v-if="row.review_status === 'APPROVED'" class="review-approved"
         >
-          {{ row.review_status.label }}
+           {{ getEnumLabel(operationOpt,row.review_status)}}
         </span>
-        <span class="review-reject"
-          v-if="row.review_status.value === 'REJECTED'"
+        <span class="review-rejected"
+          v-if="row.review_status === 'REJECTED'"
         >
-          {{ row.review_status.label }}
+          {{ getEnumLabel(operationOpt,row.review_status)}}
         </span>
       </template>
 
