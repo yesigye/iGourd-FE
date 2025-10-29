@@ -2,7 +2,7 @@
 import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { useCustomizedFeature } from '#/hooks';
+import { useCustomizedFeature,useCustomizedDetail} from '#/hooks';
 
 defineOptions({
   name: 'ICustomerFeature',
@@ -12,6 +12,10 @@ const { t } = useI18n();
 
 const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate,handleView} =
   useCustomizedFeature('CUSTOMER');
+const { Drawer: Detail, drawerApi: detailDrawerApi } = useCustomizedDetail(t("feature.view-customized-attributes"));
+const handleViewC=(row)=>{
+  detailDrawerApi.setData(row).open();
+}
 </script>
 
 <template>
@@ -30,7 +34,7 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate,handleView}
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleView(row)">
+        <ElButton type="text" @click="handleViewC(row)">
           {{ t('common.detail') }}
         </ElButton>
       </template>
@@ -54,5 +58,6 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate,handleView}
     </Grid>
 
     <Drawer />
+    <Detail/>
   </Page>
 </template>

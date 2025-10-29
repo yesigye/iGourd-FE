@@ -14,14 +14,13 @@ const [Drawer, drawerApi] = useIgourdDrawer({
   async onOpenChange(isOpen, a, b) {
     if (isOpen) {
       const data = drawerApi.getData();
-      if (data.type?.value === 'SELECT' && data.options) {
+      if (data.options) {
         const options = JSON.parse(data.options);
         options.forEach((item) => {
-          selectionOptions.push({
+          selectionOptions.value.push({
             name: item,
           });
         });
-        selectionOptions.value = selectionOptions;
       }
       detailData.value = data;
     }
@@ -42,13 +41,16 @@ const [Drawer, drawerApi] = useIgourdDrawer({
         <ElDescriptionsItem :label="t('add-customized.selection-type')">
           {{ detailData?.is_fixed_option?.value }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('add-customized.selection-options')" align="center" class-name="my-content" className="222">
+        <ElDescriptionsItem
+          :label="t('add-customized.selection-options')"
+          class-name="descriptions-item-content"
+        >
           <ElDescriptions title="" :column="1" border>
-            <ElDescriptionsItem :label="t('add-customized.feature-name')">
-              {{ detailData.name }}
-            </ElDescriptionsItem>
-             <ElDescriptionsItem :label="t('add-customized.feature-name')">
-              {{ detailData.name }}
+            <ElDescriptionsItem
+              :label="t('add-customized.feature-name')"
+              v-for="opt in selectionOptions"
+            >
+              {{ opt.name }}
             </ElDescriptionsItem>
           </ElDescriptions>
         </ElDescriptionsItem>

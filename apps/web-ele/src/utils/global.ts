@@ -43,3 +43,11 @@ export const blobDownload = (blob: Blob, fileName: string) => {
     link.remove();
   }, 100);
 };
+export  interface EnumItem {
+  value: string;
+  label: string;
+}
+export const getEnumLabel = (list: EnumItem[], key: string) => {
+  const obj = list.find((item: EnumItem) => item.value === key);
+  return obj?.label;
+};
