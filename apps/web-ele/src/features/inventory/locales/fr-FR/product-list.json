@@ -52,5 +52,8 @@
   "warehouse": "Sous-entrepôt",
   "min-stock": "Stock minimum",
   "safety-stock": "Stock de sécurité",
-  "max-stock": "Stock maximum"
+  "max-stock": "Stock maximum",
+  "spec-code": "Code de spécification",
+  "initial-stock": "Stock initial (principal)",
+  "cost-price": "Prix de revient"
 }

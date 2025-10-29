@@ -1,4 +1,6 @@
 {
+  "ON_SALE": "En vente",
+  "OFF_SALE": "Désactivé",
   "feature-types": { "input": "Champ de saisie", "select": "Liste déroulante" },
   "select-types": {
     "user-created": "Créé par l'utilisateur",

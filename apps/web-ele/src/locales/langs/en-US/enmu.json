@@ -1,4 +1,6 @@
 {
+  "ON_SALE": "On sale",
+  "OFF_SALE": "Off sale",
   "feature-types": { "input": "Input Field", "select": "Dropdown" },
   "select-types": {
     "user-created": "User-Created",

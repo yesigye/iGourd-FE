@@ -52,5 +52,8 @@
   "warehouse": "子仓库",
   "min-stock": "最小库存",
   "safety-stock": "安全库存",
-  "max-stock": "最大库存"
+  "max-stock": "最大库存",
+  "spec-code": "规格编码",
+  "initial-stock": "期初库存（主）",
+  "cost-price": "成本价"
 }
