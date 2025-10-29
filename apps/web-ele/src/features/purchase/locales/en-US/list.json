@@ -39,6 +39,7 @@
   "bank-swift-code": "Bank SWIFT Code",
   "tax-number": "VAT Number",
   "bank-address": "Bank Address",
-  "remarks": "Remarks"
+  "remarks": "Remarks",
+  "validate-email": "Please enter a valid email address",
+  "validate-phone": "Please enter a valid phone number"
 }
-

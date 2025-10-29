@@ -1,4 +1,4 @@
-import { connect, mapProps, mapReadPretty, useFieldSchema } from '@formily/vue';
+import { connect, mapProps, mapReadPretty, useField,useFieldSchema } from '@formily/vue';
 import { ElInputNumber } from 'element-plus';
 
 import { transformComponent } from '../__builtins__';
@@ -61,6 +61,7 @@ export const InputNumber = connect(
         // minimum: 0,
         // message: $t('ui.formRules.min-max-range', [0, 100]),
       };
+      const field = useField();
       const schemaRef = useFieldSchema();
       let validator = schemaRef.value['x-validator'] || [];
       // 过滤掉空的
@@ -84,7 +85,7 @@ export const InputNumber = connect(
         }
       }
       // console.log('validator input number', validator);
-      schemaRef.value.setProperties({ 'x-validator': validator });
+      field.value.setValidator( validator );
       let controlsPosition = 'right';
 
       if (props.controlsPosition) {

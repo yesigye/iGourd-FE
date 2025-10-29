@@ -1,4 +1,5 @@
 import type { ISchema } from '@igourd/common-ui';
+import {computed} from 'vue';
 
 import { useI18n } from '@igourd/locales';
 
@@ -6,7 +7,14 @@ import { useDrawerForm } from '#/hooks/use-drawer-form';
 
 export function useAddCustomizedForm() {
   const { t } = useI18n();
-
+  const title = computed(()=>{
+     const data = drawerApi.getData();
+     if(data?.mode === 'detail'){
+       return t('add-customized.view-customized');
+     }else {
+      return  data.id?t('add-customized.edit-customized'):t('add-customized.add-customized')
+     }
+  });
   const schema: ISchema = {
     type: 'object',
     properties: {
@@ -18,6 +26,10 @@ export function useAddCustomizedForm() {
           wrapperCol: 14,
         },
         properties: {
+          id: {
+            type: 'string',
+            'x-hidden': true,
+          },
           name: {
             type: 'string',
             title: "{{t('add-customized.feature-name')}}",
@@ -31,9 +43,9 @@ export function useAddCustomizedForm() {
             'x-validator': [
               {
                 required: true,
-                message: "{{t('add-customized.enter-feature-name')}}",
+                message: t('add-customized.enter-feature-name'),
               },
-              { maxLength: 64 },
+              { maxLength: 128 },
             ],
           },
 
@@ -48,6 +60,18 @@ export function useAddCustomizedForm() {
               {
                 required: true,
                 message: "{{t('add-customized.select-feature-type')}}",
+              },
+            ],
+            'x-reactions': [
+              {
+                dependencies: ['id'],
+                fulfill: {
+                  state: {
+                    componentProps: {
+                      disabled: '{{ $deps[0]}}',
+                    },
+                  },
+                },
               },
             ],
           },
@@ -75,9 +99,12 @@ export function useAddCustomizedForm() {
             'x-visible': "{{$values.type === 'SELECT'}}",
             'x-component': 'ArrayTable',
             'x-component-props': {
-              border: true,
+              border: false,
               stripe: true,
               size: 'small',
+              pagination: { pageSize: 5 },
+              headerCellClassName:"abc",
+              className:"array-table-customized",
             },
             items: {
               type: 'object',
@@ -116,34 +143,43 @@ export function useAddCustomizedForm() {
                     },
                   },
                 },
-                colOps: {
+                col_actions: {
                   type: 'void',
                   'x-component': 'ArrayTable.Column',
                   'x-component-props': {
-                    title: "{{t('common.operations')}}",
-                    width: 180,
+                    title: "{{t('common.operation')}}",
+                    width: 100,
                     fixed: 'right',
+                    style: {
+                      'margin-bottom': '8px',
+                    },
                   },
                   properties: {
-                    ops: {
+                    addition: {
                       type: 'void',
-                      'x-component': 'FormItem',
-                      properties: {
-                        remove: {
-                          type: 'void',
-                          'x-component': 'ArrayTable.Remove',
+                      title: "{{t('common.add-btn')}}",
+                      'x-component': 'ArrayTable.Addition',
+                    },
+                    remove: {
+                      type: 'void',
+                      'x-component': 'ArrayTable.Remove',
+                      title: "{{ t('common.delete') }}",
+                      'x-component-props': {
+                        class:"text-red-500",
+                      },
+                      'x-reactions': {
+                        dependencies: ['selectionOptions'],
+                        fulfill: {
+                          state: {
+                            componentProps: {
+                              disabled: '{{  $deps[0]?.length === 1 }}',
+                            },
+                          },
                         },
                       },
                     },
                   },
                 },
-              },
-            },
-            properties: {
-              add: {
-                type: 'void',
-                'x-component': 'ArrayTable.Addition',
-                title: "{{t('common.add-option')}}",
               },
             },
           },
@@ -186,13 +222,42 @@ export function useAddCustomizedForm() {
       },
     },
   };
-  return useDrawerForm({
+  const { Drawer, drawerApi, Form, formAPI } = useDrawerForm({
     drawerOptions: {
-      title: t('add-customized.add-customized'),
+      title: title,
       appendToMain: true,
-      class: 'w-full',
+      class: 'w-2/3',
+      contentClass: 'bg-muted',
+      async onOpenChange(isOpen) {
+        if (isOpen) {
+          formAPI.reset();
+          const data = drawerApi.getData();
+          const values = {
+            ...data,
+            type: data.type.value,
+          };
+
+          //处理选项
+          const selectionOptions = [];
+          if (data.type.value === 'SELECT' && data.options) {
+            const options = JSON.parse(data.options);
+            options.forEach((item) => {
+              selectionOptions.push({
+                name: item,
+              });
+            });
+            values.selectionOptions = selectionOptions;
+          }
+          formAPI.setValues(values);
+          formAPI.setFormState({ readPretty: data?.mode === 'detail' });
+
+        }
+      },
     },
     formOptions: {
+      initialValues: {
+        selectionOptions: [{}],
+      },
       schema,
       scope: {
         featureTypes: [
@@ -215,4 +280,5 @@ export function useAddCustomizedForm() {
       },
     },
   });
+  return { Drawer, drawerApi, Form, formAPI };
 }

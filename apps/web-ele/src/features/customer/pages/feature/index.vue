@@ -10,7 +10,7 @@ defineOptions({
 
 const { t } = useI18n();
 
-const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
+const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate,handleView} =
   useCustomizedFeature('CUSTOMER');
 </script>
 
@@ -30,8 +30,8 @@ const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate } =
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.edit') }}
         </ElButton>
-        <ElButton type="text" @click="handleBatchDelete()">
-          {{ t('common.delete') }}
+        <ElButton type="text" @click="handleView(row)">
+          {{ t('common.detail') }}
         </ElButton>
       </template>
       <template #type="{ row }">

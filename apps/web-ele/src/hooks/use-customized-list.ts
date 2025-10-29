@@ -35,7 +35,9 @@ export function useCustomizedFeature(type: string) {
       minWidth: 150,
       align: 'center',
       title: t('add-customized.type'),
-      slots: { default: 'type' },
+      formatter: ({ cellValue })=>{
+        return cellValue.label;
+      },
     },
 
     {
@@ -83,7 +85,7 @@ export function useCustomizedFeature(type: string) {
   };
 
   // 使用 CRUD Hook
-  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
+  const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete,handleDelete,handleView} =
     useCrud({
       service,
       id: 'feature',
@@ -108,5 +110,7 @@ export function useCustomizedFeature(type: string) {
     handleEdit,
     handleBatchDelete,
     canBatchOperate,
+    handleDelete,
+    handleView
   };
 }

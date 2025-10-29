@@ -5,7 +5,6 @@ import { PurchaseOrderDetailDrawer } from '@@/purchase/components';
 
 export function usePurchaseOrderDetail() {
   const { t } = useI18n();
-  debugger
   const [Drawer, drawerApi] = useIgourdDrawer({
     connectedComponent: PurchaseOrderDetailDrawer,
     appendToMain: true,

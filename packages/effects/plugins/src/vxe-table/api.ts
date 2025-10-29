@@ -56,6 +56,14 @@ export class VxeGridApi<T extends Record<string, any> = any> {
     bindMethods(this);
   }
 
+  async export(params: Record<string, any>) {
+    try {
+      await this.grid.commitProxy('export', toRaw(params));
+    } catch (error) {
+      console.error('Error occurred while querying:', error);
+    }
+  }
+
   mount(instance: null | VxeGridInstance, formApi: any) {
     if (!this.isMounted && instance) {
       this.grid = instance;
@@ -64,7 +72,6 @@ export class VxeGridApi<T extends Record<string, any> = any> {
       this.isMounted = true;
     }
   }
-
   async query(params: Record<string, any> = {}) {
     try {
       await this.grid.commitProxy('query', toRaw(params));

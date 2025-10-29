@@ -413,14 +413,18 @@ async function handleCommand(command: string) {
   // }
   if (command === 'export') {
     // @ts-ignore
-    props.api.setLoading(true);
-    await gridRef.value
-      ?.commitProxy(command, {
-        params: Object.assign(params() || {}, formApi.values),
-      })
-      .finally(() => {
-        props.api.setLoading(false);
-      });
+    gridOptions.value.loading = true;
+    const exportParams = Object.assign(params() || {}, formApi.values);
+    if (
+      // @ts-ignore
+      exportParams[unref(tabsOption)!.formKey] ===
+      unref(tabsOption)?.defaultActiveValue
+    ) {
+      // @ts-ignore
+      delete exportParams[unref(tabsOption)!.formKey];
+    }
+    await gridRef.value?.exportData({ params: exportParams });
+
     return;
   }
   await gridRef.value?.commitProxy(command);

@@ -217,6 +217,7 @@ export const SearchSelect = defineComponent<SearchSelectProps>({
     watch(
       propRef,
       (newVal) => {
+
         const defaultOptions = newVal.defaultOptions || [];
         const value = newVal.value;
 
@@ -247,6 +248,7 @@ export const SearchSelect = defineComponent<SearchSelectProps>({
         }}
         // loading={loading.value}
         onUpdate:modelValue={(v) => {
+          selectValue.value = v
           context.emit('change', selectValue.value, selectRawValue.value);
         }}
         remoteMethod={(kwd) => {

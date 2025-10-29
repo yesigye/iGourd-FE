@@ -520,7 +520,7 @@ export function useOrderForm() {
                                   },
                                   'x-component-props': {
                                     multiple: false,
-
+                                    class: 'ig-bottom-line',
                                     onSearch:
                                       ' {{ getAccountManagementOptionList }}',
                                     '@change': `{{(value,op)=> accountChange(value,op,$self,$index) }}`,
@@ -554,6 +554,7 @@ export function useOrderForm() {
                                     feedbackLayout: 'terse',
                                   },
                                   'x-component-props': {
+                                    class: 'ig-bottom-line',
                                     '@blur': `{{(value,op)=> amountRateChange(value,op,$self,$index) }}`,
                                   },
                                 },
@@ -568,6 +569,7 @@ export function useOrderForm() {
                                     feedbackLayout: 'terse',
                                   },
                                   'x-component-props': {
+                                    class: 'ig-bottom-line',
                                     '@blur': `{{(value,op)=> amountChange(value,op,$self,$index) }}`,
                                   },
                                 },
@@ -865,6 +867,7 @@ export function useOrderForm() {
         }
       });
 
+
       formData.purchase_order_deposit_list.forEach((item) => {
         item.merchant_id = currentLoginUserApp.owner_id;
         // 设置外层定金
@@ -938,14 +941,13 @@ export function useOrderForm() {
     if (!op) {
       return;
     }
-
     formAPI.setValuesIn(
       `purchase_order_deposit_list.${index}.payment_method_id`,
-      op.id,
+      op.payment_method_id,
     );
     formAPI.setValuesIn(
       `purchase_order_deposit_list.${index}.payment_method_mark`,
-      op.mark,
+      op.payment_method_mark,
     );
   };
 

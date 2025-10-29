@@ -140,3 +140,20 @@
 .remove-link-padding.remove-link-padding .el-button {
   padding: 0;
 }
+/** 审核文字颜色 */
+.review-pending {
+  color: var(el-color-primary);
+}
+
+.review-approved {
+  color: var(--el-color-success);
+}
+.review-rejected {
+  color: var(--el-color-danger);
+}
+.array-table-customized{
+  @apply bg-slate-200 !important;
+}
+.abc{
+  background: red;
+}

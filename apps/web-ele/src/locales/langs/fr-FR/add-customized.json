@@ -25,5 +25,7 @@
   "no": "Non",
   "is-fixed-option": "Est une valeur fixe",
   "is-compulsory": "Est obligatoire",
-  "search-placeholder": "Saisir le nom personnalisé"
+  "search-placeholder": "Saisir le nom personnalisé",
+  "edit-customized": "Édition personnalisée",
+  "view-customized": "Visualisation personnalisée"
 }

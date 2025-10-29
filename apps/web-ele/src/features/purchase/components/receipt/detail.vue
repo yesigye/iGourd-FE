@@ -30,9 +30,8 @@ interface RowType {
 }
 
 const gridOptions: VxeGridProps<RowType> = {
-  id:"purchase-detail-grid",
+  id: 'purchase-detail-grid',
   columns: [
-
     { title: t('purchase.code'), field: 'product_code' },
     { title: t('purchase.major-name'), field: 'major_name' },
     { title: t('purchase.sku-barcode'), field: 'sku_barcode' },
@@ -41,7 +40,7 @@ const gridOptions: VxeGridProps<RowType> = {
     { title: t('purchase.received-quantity'), field: 'received_quantity' },
     { title: t('common.product-unit-name'), field: 'product_unit_name' },
     {
-      title: t('common.basic-unit-radio'),
+      title: t('common.purchase.basic-unit-radio'),
       field: 'basic_unit_radio',
     },
     { title: t('purchase.unit-name'), field: 'major_unit_name' },
@@ -74,7 +73,7 @@ const { currentLoginUserApp } = useUserStore();
 const [Grid] = useIgourdVxeGrid({ gridOptions });
 
 const [Drawer, drawerApi] = useIgourdDrawer({
-  async onOpenChange(isOpen,a,b) {
+  async onOpenChange(isOpen, a, b) {
     if (isOpen) {
       const data = drawerApi.getData();
       detailData.value = data;
@@ -106,34 +105,49 @@ defineExpose({ open, close });
   <Drawer class="w-full">
     <ElCard class="mt-1">
       <div class="text-sm">
-        {{t('purchase.purchaseorderno')}}:<span class="text-red-500">{{
+        {{ t('purchase.purchaseorderno') }}:<span class="text-red-500">{{
           detailData.id
         }}</span>
-        <span class="inline-block ml-1">{{t('purchase.creator')}}：</span><span class="text-red-500">{{ detailData.creator_name }}</span>
+        <span class="ml-1 inline-block">{{ t('purchase.creator') }}：</span
+        ><span class="text-red-500">{{ detailData.creator_name }}</span>
       </div>
     </ElCard>
     <ElCard class="mt-1">
       <template #header>
-        <div class="title">{{t('common.basic-info')}}</div>
+        <div class="title">{{ t('common.basic-info') }}</div>
       </template>
       <ElDescriptions title="" :column="3" border>
-         <ElDescriptionsItem :label="t('purchase.date')">
+        <ElDescriptionsItem :label="t('purchase.date')">
           {{ formatDate(detailData.receipt_date) }}
         </ElDescriptionsItem>
         <ElDescriptionsItem :label="t('purchase.vat')">
           {{ detailData?.vat_configuration?.label }}
         </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('receipt.deposit')">
-
-        </ElDescriptionsItem>
+        <ElDescriptionsItem :label="t('receipt.deposit')"> </ElDescriptionsItem>
         <ElDescriptionsItem :label="t('receipt.order-status')">
-          {{ detailData.status }}
+          <span class="review-pending" v-if="detailData.status === 'PENDING'">{{
+            detailData.status
+          }}</span>
+          <span
+            class="review-approved"
+            v-if="detailData.status === 'APPROVED'"
+            >{{ detailData.status }}</span
+          >
+          <span
+            class="review-rejected"
+            v-if="detailData.status === 'REJECTED'"
+            >{{ detailData.status }}</span
+          >
         </ElDescriptionsItem>
-         <ElDescriptionsItem :label="t('purchase.vat')">
+        <ElDescriptionsItem :label="t('purchase.vat')">
           {{ detailData.vat_amount }}
         </ElDescriptionsItem>
         <ElDescriptionsItem :label="t('purchase.order-pay.select-account')">
-          {{ detailData.purchase_payment_plan_list?detailData.purchase_payment_plan_list[0].account_name:''}}
+          {{
+            detailData.purchase_payment_plan_list
+              ? detailData.purchase_payment_plan_list[0].account_name
+              : ''
+          }}
         </ElDescriptionsItem>
 
         <ElDescriptionsItem :label="t('purchase.vendor')">
@@ -145,20 +159,22 @@ defineExpose({ open, close });
         </ElDescriptionsItem>
 
         <ElDescriptionsItem :label="t('purchase.order-pay.payment-method')">
-          {{ detailData.purchase_payment_plan_list?detailData.purchase_payment_plan_list[0].payment_method_name:''}}
+          {{
+            detailData.purchase_payment_plan_list
+              ? detailData.purchase_payment_plan_list[0].payment_method_name
+              : ''
+          }}
         </ElDescriptionsItem>
-
 
         <ElDescriptionsItem :label="t('purchase.warehouse-name')">
           {{ detailData.warehouse_name }}
         </ElDescriptionsItem>
 
-         <ElDescriptionsItem :label="t('purchase.order-pay.discount')">
+        <ElDescriptionsItem :label="t('purchase.order-pay.discount')">
           {{ detailData.discount_amount }}
         </ElDescriptionsItem>
 
-         <ElDescriptionsItem :label="t('receipt.order-paid')">
-
+        <ElDescriptionsItem :label="t('receipt.order-paid')">
         </ElDescriptionsItem>
         <ElDescriptionsItem :label="t('purchase.currency')">
           {{ detailData.currency_code }}
@@ -167,8 +183,8 @@ defineExpose({ open, close });
         <ElDescriptionsItem :label="t('purchase.total-amount')">
           {{ detailData.subtotal_amount }}
         </ElDescriptionsItem>
-         <ElDescriptionsItem :label="t('receipt.order-balance')">
-
+        <ElDescriptionsItem :label="t('receipt.order-balance')">
+          <span style="color: #2196f3"></span>
         </ElDescriptionsItem>
         <ElDescriptionsItem :label="t('purchase.remark')">
           {{ detailData.deposit_amount }}
@@ -177,7 +193,7 @@ defineExpose({ open, close });
     </ElCard>
     <ElCard class="mt-1">
       <template #header>
-        <div class="title">{{t('purchase.products-details')}}</div>
+        <div class="title">{{ t('purchase.products-details') }}</div>
       </template>
       <Grid>
         <template #unit="{ row }">
@@ -187,7 +203,7 @@ defineExpose({ open, close });
     </ElCard>
     <ElCard class="mt-1">
       <template #header>
-        <div class="title">{{t('purchase.attachment')}}</div>
+        <div class="title">{{ t('purchase.attachment') }}</div>
       </template>
     </ElCard>
     <template #footer>
