@@ -28,5 +28,9 @@
     "ACCOUNTING_NOTE_MODIFY": "记账笔记修改",
     "MANUALLY_CREATE": "手动录入",
     "GOODS_RECEIPT_ORDER_PAYMENT": "商品收据订单付款"
+  },
+  "account-classification-types": {
+    "REVENUE": "收入",
+    "EXPENDITURE": "支出"
   }
 }

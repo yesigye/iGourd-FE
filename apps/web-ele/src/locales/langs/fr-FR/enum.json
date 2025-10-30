@@ -17,7 +17,7 @@
   },
   "accout-flows-source-types": {
     "CUSTOMER_RECHARGE_WITHOUT_VIP": "Recharge sans VIP",
-    "CUSTOMER_RECHARGE_WITH_VIP": "客户会员充值",
+    "CUSTOMER_RECHARGE_WITH_VIP": "Recharge avec VIP",
     "PURCHASE_ORDER_PAYMENT": "Purchase Order Payment",
     "PURCHASE_BILL_GOODS_PAYMENT": "Purchase Bill Goods Payment",
     "PURCHASE_ORDER_RETURNED": "Purchase Order Returned",
