@@ -59,5 +59,12 @@
     "CREDIT": "贷方",
     "ASSETS": "资产",
     "LIABILITIES_AND_EQUITY": "负债及所有者权益"
+  },
+  "account-final-transfer": {
+    "TRIAL_BALANCE": "试算平衡",
+    "CARRY_OVER_PROFIT": "结转损益",
+    "ACCOUNTING_NOTE": "记账笔记",
+    "RECEIPT_ORDER": "收款单",
+    "PAYMENT_ORDER": "付款单"
   }
 }

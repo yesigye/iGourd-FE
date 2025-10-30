@@ -14,7 +14,7 @@ export function useFinalTransfer(periodId: string) {
 
   const columns: VxeGridPropTypes.Column<PurchaseCustomizedInfo>[] = [
     {
-      field: 'code',
+      field: 'name',
       title: t('account.account'),
       minWidth: 170,
       sortable: true,
@@ -40,6 +40,9 @@ export function useFinalTransfer(periodId: string) {
     columns,
     height: '',
     keepSource: true,
+    pagerConfig: {
+      enabled: false,
+    },
     proxyConfig: {
       ajax: {
         query: async () => {

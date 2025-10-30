@@ -609,7 +609,7 @@ onMounted(() => {
                 key="item-0"
                 class="check-item mb-5 flex items-center gap-2"
               >
-                {{ t(`account.${String(item.project).toLocaleLowerCase()}`) }}
+                {{ t(`enum.account-final-transfer.${item.project}`) }}
                 <span
                   v-if="item.is_passed"
                   class="text-success cursor-pointer select-none"
@@ -646,14 +646,14 @@ onMounted(() => {
                 key="item-3"
                 class="check-item mb-5"
               >
-                {{ t(`account.${String(item.project).toLocaleLowerCase()}`) }}
+                {{ t(`enum.account-final-transfer.${item.project}`) }}
                 <span
                   v-if="item.is_passed"
-                  class="text-leaf-green cursor-pointer select-none"
+                  class="text-success cursor-pointer select-none"
                 >
                   {{ t('final-transfer.completed') }}
                 </span>
-                <span v-else class="text-error cursor-pointer select-none">
+                <span v-else class="cursor-pointer select-none text-[#F56C6C]">
                   {{ t('final-transfer.uncompleted') }}
                 </span>
               </li>
