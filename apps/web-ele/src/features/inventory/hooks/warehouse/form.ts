@@ -45,7 +45,7 @@ export function useWarehouseForm() {
             'x-validator': [
               {
                 required: true,
-                message: "{{t('warehouse.please-warehouse-name')}}",
+                message: t('warehouse.please-warehouse-name'),
               },
             ],
           },
@@ -96,7 +96,7 @@ export function useWarehouseForm() {
             'x-validator': [
               {
                 format:"phone",
-                message:"{{t('warehouse.validate-phone')}}",
+                message:t('warehouse.validate-phone'),
               }
             ]
           },
@@ -113,7 +113,7 @@ export function useWarehouseForm() {
             'x-validator': [
               {
                 format:"email",
-                message:"{{t('warehouse.validate-email')}}",
+                message:t('warehouse.validate-email'),
               },
             ],
           },
@@ -137,6 +137,7 @@ export function useWarehouseForm() {
       title: t('warehouse.add-warehouse'),
       appendToMain: true,
       class: 'w-1/2',
+      contentClass: 'bg-muted',
       async onOpenChange(isOpen) {
         if (isOpen) {
           formAPI.reset();

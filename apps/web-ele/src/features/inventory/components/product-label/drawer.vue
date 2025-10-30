@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElCard } from '@igourd/common-ui';
 import { defineEmits } from 'vue';
 
 import { useProductLabelForm } from '../../hooks/product-label/form';
@@ -10,7 +11,9 @@ const { Drawer, Form } = useProductLabelForm(emit);
 
 <template>
   <Drawer>
-    <Form />
+    <ElCard class="border-0" style="height: 99%">
+      <Form />
+    </ElCard>
   </Drawer>
 </template>
 <style lang="scss">

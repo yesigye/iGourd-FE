@@ -59,6 +59,7 @@ export function useProductGroupForm(func) {
     title: t('product-group.add-product-group'),
     appendToMain: true,
     class: 'w-1/2',
+    contentClass: 'bg-muted',
     async onOpenChange(isOpen) {
       if (isOpen) {
         formAPI.reset();

@@ -4,6 +4,7 @@ import type { ProductLabelItem } from '@@/inventory/types';
 import { onMounted, ref } from 'vue';
 
 import {
+  Card,
   ColPage,
   confirm,
   ElButton,
@@ -12,11 +13,14 @@ import {
   useIgourdDrawer,
   ElIcon,
 } from '@igourd/common-ui';
-import { Edit, Delete,Document } from '@igourd/icons';
+import { Edit, Delete, Document } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 
 import { getProductLabelList, removeProductLabel } from '@@/inventory/apis';
-import { useInventoryProductLabelList, useProductLabelDetail} from '@@/inventory/hooks';
+import {
+  useInventoryProductLabelList,
+  useProductLabelDetail,
+} from '@@/inventory/hooks';
 
 import drawer from '../../components/product-label/drawer.vue';
 import StatusTemplate from '#/components/status/index.vue';
@@ -28,7 +32,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
   connectedComponent: drawer,
   appendToMain: true,
 });
-const{Drawer:Detail,drawerApi:detailDrawerApi} = useProductLabelDetail()
+const { Drawer: Detail, drawerApi: detailDrawerApi } = useProductLabelDetail();
 const { t } = useI18n();
 const {
   Grid,
@@ -71,9 +75,9 @@ const handleAddLabel = () => {
 const handleEditLabel = (item) => {
   drawerApi.setData(item).open();
 };
-const handleViewLabel = (item) =>{
+const handleViewLabel = (item) => {
   detailDrawerApi.setData(item).open();
-}
+};
 const handleRemove = async (item) => {
   confirm({
     title: t('common.prompt'),
@@ -108,7 +112,6 @@ const STATUS_CONFIG = [
     value: 'ON_SALE',
     iconColor: '#4caf51',
   },
-
 ];
 
 onMounted(() => {
@@ -117,23 +120,22 @@ onMounted(() => {
 </script>
 
 <template>
-  <ColPage headerClass="px-0 py-1 bg-muted border-0"
+  <ColPage
+    headerClass="px-0 py-1 bg-muted border-0"
     contentClass="pt-0"
     auto-content-height
-    :left-width="20">
+    :left-width="20"
+  >
     <template #description>
       <div>
         <div id="product-label-search" class="bg-card px-1"></div>
       </div>
     </template>
     <template #left>
-      <section class="bg-card mr-2 h-full rounded p-2.5">
-        <p class="flex justify-between text-sm font-medium">
-          {{ t('product-label.product-label') }}
-          <ElButton type="primary" @click="handleAddLabel">
-            {{ t('common.add') }}
-          </ElButton>
-        </p>
+      <Card
+        :header="t('product-label.product-label')"
+        class="bg-card p-small mr-2 h-full rounded"
+      >
         <!-- 分类树 -->
         <div>
           <ElRadioGroup
@@ -152,43 +154,36 @@ onMounted(() => {
                 <div class="inline-flex w-full items-center">
                   <div class="flex-1">{{ item.name }}</div>
                   <div class="show-opertion text-right">
-                  <ElIcon
-                    class="text-primary ml-1"
-                    @click="handleEditLabel(item)"
-                    ><Edit
-                  /></ElIcon>
-                  <ElIcon
-                    class="text-primary ml-1"
-                    @click="handleViewLabel(item)"
-                    ><Document
-                  /></ElIcon>
+                    <ElIcon
+                      class="text-primary ml-1"
+                      @click="handleEditLabel(item)"
+                      ><Edit
+                    /></ElIcon>
+                    <ElIcon
+                      class="text-primary ml-1"
+                      @click="handleViewLabel(item)"
+                      ><Document
+                    /></ElIcon>
 
-                  <ElIcon
-                    class="ml-1"
-                    style="color: var(--el-color-danger)"
-                    @click="handleRemove(item)"
-                    ><Delete/></ElIcon>
-
+                    <ElIcon
+                      class="ml-1"
+                      style="color: var(--el-color-danger)"
+                      @click="handleRemove(item)"
+                      ><Delete
+                    /></ElIcon>
                   </div>
                 </div>
               </ElRadio>
             </div>
           </ElRadioGroup>
         </div>
-      </section>
+      </Card>
     </template>
     <Grid>
       <template #table-actions>
-        <!--
-        <ElButton
-          v-auth="'inventory_product_label_add'"
-          type="primary"
-          @click="handleEdit()"
-        >
-          <i class="iconfont icon-tianjia-dianpu mr-1"></i>
-          {{ t('employee.addButton') }}
+        <ElButton type="primary" @click="handleAddLabel">
+          {{ t('common.add') }}
         </ElButton>
-        -->
         <ElButton
           v-if="canBatchOperate"
           v-auth="'inventory_product_label_delete'"
@@ -199,10 +194,7 @@ onMounted(() => {
         </ElButton>
       </template>
       <template #status="{ row }">
-        <StatusTemplate
-          :value="row.status"
-          :status-list="STATUS_CONFIG"
-        />
+        <StatusTemplate :value="row.status" :status-list="STATUS_CONFIG" />
       </template>
       <template #productDetail="{ row }">
         <el-tooltip

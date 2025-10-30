@@ -4,6 +4,7 @@ import type { TreeNode } from 'element-plus';
 import { onMounted, ref } from 'vue';
 
 import {
+  Card,
   ColPage,
   confirm,
   ElButton,
@@ -139,15 +140,12 @@ onMounted(async () => {
       </div>
     </template>
     <template #left="{ isCollapsed, expand }">
-      <section class="bg-card h-full rounded p-2.5">
-        <p class="flex justify-between text-sm font-medium">
-          {{ t('product-group.product-category') }}
-          <ElButton type="primary" @click="handleAddGroup">
-            {{ t('common.add') }}
-          </ElButton>
-        </p>
-        <!-- 分类树 -->
-        <div class="mt-5">
+       <Card
+       :header="t('product-group.product-category')"
+        class="bg-card p-small mr-2 h-full rounded"
+      >
+      <!-- 分类树 -->
+        <div class="">
           <ElTree
             ref="treeRef"
             node-key="id"
@@ -184,9 +182,14 @@ onMounted(async () => {
             </template>
           </ElTree>
         </div>
-      </section>
+      </Card>
     </template>
     <Grid>
+      <template #table-actions>
+        <ElButton type="primary" @click="handleAddGroup">
+            {{ t('common.add') }}
+        </ElButton>
+      </template>
       <template #operation="{ row }">
         <ElButton type="text" @click="handleEdit(row)">
           {{ t('common.detail') }}
