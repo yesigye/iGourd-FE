@@ -2,6 +2,8 @@ import type { InventoryReportRow } from '@@/report/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
+import { ref } from 'vue';
+
 import { useI18n } from '@igourd/locales';
 
 import { getInventoryReportApi, getWarehouseListApi } from '@@/report/apis';
@@ -26,6 +28,7 @@ function remoteMethod(keywords: string) {
 }
 export function useInventoryReport(warehouseOptions: any) {
   const { t } = useI18n();
+  const query = ref({});
   const columns: VxeGridPropTypes.Column<InventoryReportRow>[] = [
     {
       field: 'warehouse_name',
@@ -193,65 +196,89 @@ export function useInventoryReport(warehouseOptions: any) {
     },
   ];
   const searchFormSchema = {
+    time_range: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      default: 'DAY',
+      'x-component-props': {
+        placeholder: t('inventory.search-by-day-or-month'),
+        class: 'w-[144px]',
+        options: [
+          { label: t('inventory.search-by-day'), value: 'DAY' },
+          { label: t('inventory.search-by-month'), value: 'MONTH' },
+        ],
+        style: {
+          width: '144px',
+        },
+      },
+    },
+    date_range: {
+      type: 'array',
+      default: [
+        new Date().toISOString().split('T')[0], // 今天开始 YYYY-MM-DD
+        new Date().toISOString().split('T')[0], // 今天结束 YYYY-MM-DD
+      ],
+      'x-decorator': 'FormItem',
+      'x-component': 'DatePicker',
+      'x-component-props': {
+        type: 'daterange',
+        rangeSeparator: t('common.range-separator'),
+        startPlaceholder: t('common.start-date'),
+        endPlaceholder: t('common.end-date'),
+        format: 'YYYY-MM-DD',
+        valueFormat: 'YYYY-MM-DD',
+      },
+    },
     keywords: {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: "{{t('inventory.product-name')}}",
-        clearable: true,
-      },
-    },
-    product_code: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('inventory.product-code')}}",
-        clearable: true,
-      },
-    },
-    warehouse_ids: {
-      type: 'array',
-      'x-decorator': 'FormItem',
-      'x-component': 'RemoteSelect',
-      'x-component-props': {
-        remoteMethod,
+        placeholder: t('sales.placeholder-keywords'),
+        class: 'w-[244px]',
+        style: {
+          width: '240px',
+        },
       },
     },
   };
 
-  return useCrud<InventoryReportRow, any>({
-    columns,
-    id: 'report-inventory-list',
-    searchFormSchema,
-    batchOperate: false,
-    service: {
-      query: async (params: {
-        end_date?: string;
-        page_num: number;
-        page_size: number;
-        start_date?: string;
-        tabKey: string;
-        time_range: string;
-      }) => {
-        // 开始时间默认是当前时间-一个月
-        params.end_date =
-          params.end_date || `${dayjs().format('YYYY-MM-DD')} 23:59:59`;
-        params.start_date =
-          params.start_date ||
-          `${dayjs().subtract(1, 'months').format('YYYY-MM-DD')} 00:00:00`;
-        params.tabKey = 'months';
-        params.time_range = 'DAY';
-        params.warehouse_ids = params.warehouse_ids?.length
-          ? [params.warehouse_ids]
-          : [];
-        const response = await getInventoryReportApi(params);
-        return {
-          list: response?.list || [],
-          total: response?.data?.total || 0,
-        };
+  return {
+    ...useCrud<InventoryReportRow, any>({
+      columns,
+      id: 'report-inventory-list',
+      searchFormSchema,
+      batchOperate: false,
+      service: {
+        query: async (params: {
+          end_date?: string;
+          page_num: number;
+          page_size: number;
+          start_date?: string;
+          tabKey: string;
+          time_range: string;
+        }) => {
+          // 开始时间默认是当前时间-一个月
+          params.end_date =
+            params.end_date || `${dayjs().format('YYYY-MM-DD')} 23:59:59`;
+          params.start_date =
+            params.start_date ||
+            `${dayjs().subtract(1, 'months').format('YYYY-MM-DD')} 00:00:00`;
+          params.tabKey = 'months';
+          params.time_range = params.time_range || 'DAY';
+          params.warehouse_ids = params.warehouse_ids?.length
+            ? [params.warehouse_ids]
+            : [];
+          query.value = params;
+          const response = await getInventoryReportApi(params);
+          return {
+            list: response?.list || [],
+            total: response?.data?.total || 0,
+          };
+        },
       },
-    },
-  });
+    }),
+    query,
+  };
 }

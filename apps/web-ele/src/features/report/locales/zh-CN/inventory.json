@@ -22,5 +22,8 @@
   "stock-status": "库存状态",
   "normal": "正常",
   "low": "低库存",
-  "out": "缺货"
+  "out": "缺货",
+  "search-by-day-or-month": "按天搜索/按月搜索",
+  "search-by-day": "按天",
+  "search-by-month": "按月"
 }

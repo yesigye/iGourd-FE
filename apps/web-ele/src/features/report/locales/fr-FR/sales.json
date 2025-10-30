@@ -14,5 +14,6 @@
   "cost-amount": "Montant des coûts",
   "total": "Total",
   "sales-gross-margin-amount": "Ce Figure Est Calculé En Fonction Du Prix De Revient Actuel Des Produits Vendus Dans L'Commande",
-  "sales-gross-margin-rate-amount": "Ce Figure Est Calculé En Fonction Du Prix De Vente Actuel Des Produits Vendus Dans L'Commande"
+  "sales-gross-margin-rate-amount": "Ce Figure Est Calculé En Fonction Du Prix De Vente Actuel Des Produits Vendus Dans L'Commande",
+  "placeholder-keywords": "Entrez le numéro de commande, le nom du fournisseur, etc."
 }

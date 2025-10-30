@@ -11,11 +11,11 @@ defineOptions({
   name: 'IFinancialReport',
 });
 const { t } = useI18n();
-const { Grid, Drawer, queryData } = useFinancialReport();
+const { Grid, Drawer, queryData, query } = useFinancialReport();
 const staticsData = ref({});
 const getStaticsData = async () => {
   const res = await getFinancialStatsApi({
-    ...queryData,
+    ...query.value,
   });
   staticsData.value = res || {};
 };

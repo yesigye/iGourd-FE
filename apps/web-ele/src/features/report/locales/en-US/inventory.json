@@ -22,5 +22,6 @@
   "stock-status": "Stock Status",
   "normal": "Normal",
   "low": "Low Stock",
-  "out": "Out of Stock"
+  "out": "Out of Stock",
+  "search-by-day-or-month": "Search by Day or Month"
 }

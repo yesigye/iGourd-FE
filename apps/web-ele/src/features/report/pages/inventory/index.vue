@@ -13,11 +13,13 @@ defineOptions({
 const warehouseOptions = ref([]);
 
 const { t } = useI18n();
-const { Grid, Drawer, queryData } = useInventoryReport(warehouseOptions.value);
+const { Grid, Drawer, queryData, query } = useInventoryReport(
+  warehouseOptions.value,
+);
 const staticsData = ref<ProductSalesStatsResponse>({});
 const getStaticsData = async () => {
   const res = await getInventoryStatsApi({
-    ...queryData,
+    ...query.value,
   });
   staticsData.value = res || {};
 };
@@ -57,9 +59,7 @@ const getStaticsData = async () => {
             }}</span>
           </p>
           <p class="flex flex-wrap gap-2.5">
-            <span
-              >{{ t('inventory.total-value-of-products-by-selling') }}:</span
-            >
+            <span>{{ t('inventory.total-value-of-products-by-selling') }}:</span>
             <span class="text-warning">{{
               staticsData.stock_selling_amount || 0
             }}</span>
