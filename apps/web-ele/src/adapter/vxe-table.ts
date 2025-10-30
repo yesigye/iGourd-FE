@@ -94,6 +94,12 @@ setupIgourdVxeTable({
             if (column.type === 'checkbox') {
               return false;
             }
+            if (column.type === 'radio') {
+              return false;
+            }
+            if (column.type === 'expand') {
+              return false;
+            }
             if (column.type === 'seq') {
               return false;
             }

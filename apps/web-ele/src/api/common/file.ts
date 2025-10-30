@@ -24,11 +24,16 @@ export const getExportTableHeaders = (
 
 export const tableExport = (data: any) => {
   const table_multi_headers = getExportTableHeaders(
-    data.$grid.getTableColumn().collectColumn.filter(
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      (item) => !['action', 'actions', 'operation'].includes(item.field),
-    ),
+    data.$grid
+      .getTableColumn()
+      .collectColumn.filter(
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        (item) => !['action', 'actions', 'operation'].includes(item.field),
+      )
+      .filter((file) => {
+        return !['checkbox', 'expand', 'radio', 'seq'].includes(file.type);
+      }),
   );
 
   return requestClient
