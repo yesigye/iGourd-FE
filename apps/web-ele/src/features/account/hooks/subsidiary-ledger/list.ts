@@ -246,7 +246,7 @@ export function useSubsidiaryLedger() {
         'x-decorator': 'FormItem',
         'x-component': 'Input',
         'x-component-props': {
-          placeholder: t('common.keywords'),
+          placeholder: t('subsidiary-ledger.account-ledger-placeholder'),
         },
       },
     },

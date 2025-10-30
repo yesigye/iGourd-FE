@@ -105,6 +105,9 @@ const formSchema: ISchema = {
                       },
                     },
                   },
+                  'x-decorator-props': {
+                    feedbackLayout: 'terse',
+                  },
                   'x-validator': [null],
                 },
                 initial_balance: {
@@ -122,6 +125,9 @@ const formSchema: ISchema = {
                       message: '{{t("common.validate.required")}}',
                     },
                   ],
+                  'x-decorator-props': {
+                    feedbackLayout: 'terse',
+                  },
                 },
                 balance_direction_sort: {
                   type: 'string',
@@ -131,11 +137,17 @@ const formSchema: ISchema = {
                   'x-component-props': {
                     placeholder: '',
                   },
+                  'x-decorator-props': {
+                    feedbackLayout: 'terse',
+                  },
                   'x-validator': [null],
                 },
               },
               'x-validator': [null],
             },
+          },
+          'x-decorator-props': {
+            feedbackLayout: 'none',
           },
           'x-component-props': {
             placeholder: "{{t('common.enter')}}",
@@ -163,6 +175,9 @@ const formSchema: ISchema = {
                     filterable: true,
                     disabled: true,
                   },
+                  'x-decorator-props': {
+                    feedbackLayout: 'terse',
+                  },
                   'x-reactions': {
                     fulfill: {
                       state: {
@@ -180,6 +195,9 @@ const formSchema: ISchema = {
                     type: 'number',
                     disabled: true,
                   },
+                  'x-decorator-props': {
+                    feedbackLayout: 'terse',
+                  },
                 },
                 balance_direction_sort: {
                   type: 'string',
@@ -189,12 +207,18 @@ const formSchema: ISchema = {
                   'x-component-props': {
                     placeholder: '',
                   },
+                  'x-decorator-props': {
+                    feedbackLayout: 'terse',
+                  },
                 },
               },
             },
           },
           'x-component-props': {
             placeholder: "{{t('common.enter')}}",
+          },
+          'x-decorator-props': {
+            feedbackLayout: 'none',
           },
         },
       },
