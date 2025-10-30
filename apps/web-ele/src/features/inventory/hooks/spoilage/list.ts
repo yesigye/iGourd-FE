@@ -4,39 +4,18 @@ import type { SpoilageItem } from '@@/inventory/types';
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { useI18n } from '@igourd/locales';
-
+import { useEnum } from '#/hooks';
 import { getSpoilageList, removeSpoilage } from '@@/inventory/apis';
 import { SpoilageDrawer } from '@@/inventory/components';
 
 import { useCrud } from '#/hooks';
 import { retainDecimal8 } from '#/utils/eleValidate';
 import { formatNumber } from '#/utils/functions';
-
+import { getEnumLabel } from '#/utils/global';
 export function useInventorySpoilageList() {
   const { t } = useI18n();
-  // 枚举报损原因
-  const consumptionReason = [
-    {
-      value: 'EXPIRED_GOODS',
-      label: t('spoilage.consumption-reason-enum.expired-products'),
-    },
-    {
-      value: 'DAMAGED_GOODS',
-      label: t('spoilage.consumption-reason-enum.damaged-products'),
-    },
-    {
-      value: 'PERSONAL_USES',
-      label: t('spoilage.consumption-reason-enum.personal-use'),
-    },
-    {
-      value: 'RAW_MATERIALS',
-      label: t('spoilage.consumption-reason-enum.raw_materials'),
-    },
-    {
-      value: 'OTHERS',
-      label: t('spoilage.consumption-reason-enum.others'),
-    },
-  ];
+  const { consumptionReason } = useEnum();
+
 
   const columns: VxeGridPropTypes.Column<SpoilageItem>[] = [
     {
@@ -74,7 +53,7 @@ export function useInventorySpoilageList() {
       field: 'consumption_reason',
       title: t('inventory.consumption-reason'),
       minWidth: 150,
-      formatter: ({ cellValue }) => t(`inventory.${cellValue}`),
+      formatter: ({ cellValue }) => getEnumLabel(consumptionReason,cellValue),
     },
     {
       field: 'status',

@@ -15,9 +15,52 @@ export function useEnum() {
     { label: t('enum.compulsory-types.no'), value: false },
   ];
 
+  const transferTypeList = [
+    {
+      label: t('enum.transfer-type-list.same-store-transfer'),
+      value: 'TRANSFER_SAME_STORE',
+    },
+    {
+      label: t('enum.transfer-type-list.different-store-transfer'),
+      value: 'TRANSFER_DIFFERENT_STORE',
+    },
+    {
+      label: t('enum.transfer-type-list.transfer-out'),
+      value: 'TRANSFER_IN_ONLY',
+    },
+    {
+      label: t('enum.transfer-type-list.transfer-in'),
+      value: 'TRANSFER_OUT_ONLY',
+    },
+  ];
+  const consumptionReason = [
+    {
+      value: 'EXPIRED_GOODS',
+      label: t('spoilage.consumption-reason-enum.expired-products'),
+    },
+    {
+      value: 'DAMAGED_GOODS',
+      label: t('spoilage.consumption-reason-enum.damaged-products'),
+    },
+    {
+      value: 'PERSONAL_USES',
+      label: t('spoilage.consumption-reason-enum.personal-use'),
+    },
+    {
+      value: 'RAW_MATERIALS',
+      label: t('spoilage.consumption-reason-enum.raw_materials'),
+    },
+    {
+      value: 'OTHERS',
+      label: t('spoilage.consumption-reason-enum.others'),
+    },
+  ];
+
   return {
     featureTypes,
     selectTypes,
     compulsoryTypes,
+    transferTypeList,
+    consumptionReason,
   };
 }

@@ -32,5 +32,11 @@
   "account-classification-types": {
     "REVENUE": "收入",
     "EXPENDITURE": "支出"
+  },
+  "transfer-type-list": {
+    "same-store-transfer": "同门店调拨",
+    "different-store-transfer": "不同门店调拨",
+    "transfer-out": "仓库入库",
+    "transfer-in": "仓库出库"
   }
 }
