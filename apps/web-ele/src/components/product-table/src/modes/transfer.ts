@@ -68,7 +68,7 @@ export const TransferMode: ModePlugin = {
 
       {
         name: 'remark',
-        title: "{{t('common.purchase.remarks')}}",
+        title: "{{t('common.remarks')}}",
         'x-component': 'Input',
         'x-component-props': {
           style: { width: 180 },

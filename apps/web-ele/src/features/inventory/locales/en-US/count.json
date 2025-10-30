@@ -5,5 +5,6 @@
   "physical-stock-take-date": "Stocktake Date",
   "diff-num": "Quantity Difference",
   "diff-cost": "Cost Difference",
-  "diff-sale": "Sale Price Difference"
+  "diff-sale": "Sale Price Difference",
+  "physical-stock-take-no":"订单号"
 }

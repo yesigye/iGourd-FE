@@ -5,5 +5,6 @@
   "physical-stock-take-date": "Date de l'Inventaire",
   "diff-num": "Différence de Quantité",
   "diff-cost": "Différence de Coût",
-  "diff-sale": "Différence de Prix de Vente"
+  "diff-sale": "Différence de Prix de Vente",
+  "physical-stock-take-no": "Numéro de commande"
 }
