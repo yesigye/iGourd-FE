@@ -1,3 +1,4 @@
+import { ref } from 'vue';
 import type { TaxPageModel } from '@@/account/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
@@ -6,14 +7,40 @@ import { useI18n } from '@igourd/locales';
 
 import { deleteTaxApi, getTaxPageListApi } from '@@/account/apis';
 import { TaxDrawer } from '@@/account/components';
-
+import { useLanguage } from '#/hooks';
 import { useCrud } from '#/hooks';
+import { getEnumLabel } from '#/utils/global';
 
 export function useTax() {
   const { t } = useI18n();
-
+  const taxType = ref([]);
+  const taxationType = ref([]);
+  const calculationType = ref([]);
+  const loadTaxType = async (field: { props: { name: string } }) => {
+    const enumData = await useLanguage('basics.accounting.tax-type-enum');
+    taxType.value = enumData
+  };
+  const loadTaxationType = async (field: { props: { name: string } }) => {
+    const enumData = await useLanguage(
+      'basics.accounting.taxation-office-tax-type-enum',
+    );
+    taxationType.value = enumData;
+  };
+  const loadCalculationType = async (field: { props: { name: string } }) => {
+    const enumData = await useLanguage(
+      'basics.accounting.tax-calculation-type-enum',
+    );
+    calculationType.value = enumData;
+  };
+loadTaxType();
+loadCalculationType();
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<TaxPageModel>[] = [
+    {
+      type: 'checkbox',
+      width: 80,
+      fixed: 'left',
+    },
     {
       field: 'name',
       minWidth: 200,
@@ -29,7 +56,7 @@ export function useTax() {
       title: t('account.tax-type'),
       sortable: true,
       formatter({ cellValue }) {
-        return t(`account.${cellValue}`);
+        return getEnumLabel(taxType.value,cellValue);
       },
     },
     {
@@ -39,7 +66,7 @@ export function useTax() {
       title: t('account.calculation-type'),
       sortable: true,
       formatter({ cellValue }) {
-        return t(`account.${cellValue}`);
+       return getEnumLabel(calculationType.value,cellValue);
       },
     },
     {

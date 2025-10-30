@@ -40,6 +40,7 @@ export function useTaxForm(func) {
     title: t('tax.add-tax'),
     appendToMain: true,
     class: 'w-1/2',
+    contentClass: 'bg-muted',
     async onOpenChange(isOpen, val) {
       if (isOpen) {
         formAPI.reset();
@@ -69,6 +70,10 @@ export function useTaxForm(func) {
       grid: {
         type: 'void',
         'x-component': 'FormLayout',
+        'x-component-props': {
+          labelCol: 6,
+          wrapperCol: 14,
+        },
         properties: {
           name: {
             type: 'string',
