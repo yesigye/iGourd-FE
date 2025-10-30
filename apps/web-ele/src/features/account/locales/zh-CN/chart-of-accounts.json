@@ -15,5 +15,6 @@
     "quantity-accounting": "数量核算",
     "auxiliary-accounting": "辅助核算",
     "foreign-currency-accounting": "外币核算"
-  }
+  },
+  "trial-balancing": "试算平衡"
 }

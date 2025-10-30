@@ -62,8 +62,8 @@ export function useChartOfAccounts() {
       field: 'balance_direction',
       width: 200,
       title: t('account.balance-direction'),
-      formatter({ cellValue }) {
-        return cellValue?.label;
+      slots: {
+        default: 'balance_direction',
       },
     },
     {
@@ -165,7 +165,7 @@ export function useChartOfAccounts() {
       },
     },
     service,
-    id: 'chart-of-accounts',
+    id: 'account_ledger_balance_export',
     stripe: false,
     columns,
     pagerConfig: {
@@ -176,6 +176,9 @@ export function useChartOfAccounts() {
     tabsOption: {
       defaultActiveValue: 'COST',
       formKey: 'category',
+    },
+    toolbarConfig: {
+      export: true,
     },
     treeConfig: {
       rowField: 'id',

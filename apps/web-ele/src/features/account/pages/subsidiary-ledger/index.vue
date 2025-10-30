@@ -58,11 +58,8 @@ const {
                 ref="treeRef"
                 node-key="id"
                 highlight-current
-                show-checkbox
-                check-on-click-node
                 :expand-on-click-node="false"
                 :data="treeList"
-                class="hidden-checkbox"
                 @node-click="handleNodeClick"
               >
                 <template #default="{ node }">
@@ -80,19 +77,23 @@ const {
         </ElAutoResizer>
       </Card>
     </template>
-    <Grid
-      grid-class="px-0 telport-grid"
-      :tabs="tabs"
-      :tabs-option="tabsOption"
-      v-model:tabs-active-key="tabsActiveKey"
-      tabs-appen-to="#subsidiary-ledger-tabs"
-    >
-      <template #operation="{ row }">
-        <ElButton type="text" @click="handleEdit(row)">
-          {{ t('common.edit') }}
-        </ElButton>
-      </template>
-    </Grid>
+    <section class="flex h-full flex-col">
+      <div class="h-full">
+        <Grid
+          grid-class="px-0 telport-grid"
+          :tabs="tabs"
+          :tabs-option="tabsOption"
+          v-model:tabs-active-key="tabsActiveKey"
+          tabs-appen-to="#subsidiary-ledger-tabs"
+        >
+          <template #operation="{ row }">
+            <ElButton type="text" @click="handleEdit(row)">
+              {{ t('common.edit') }}
+            </ElButton>
+          </template>
+        </Grid>
+      </div>
+    </section>
   </ColPage>
 </template>
 <style lang="scss">
