@@ -32,7 +32,7 @@ export function useUnitForm() {
             'x-validator': [
               {
                 required: true,
-                message: "{{t('unit.please-enter-name')}}",
+                message: t('unit.please-enter-name'),
               },
             ],
           },
@@ -45,6 +45,7 @@ export function useUnitForm() {
       title: t('unit.add-unit'),
       appendToMain: true,
       class: 'w-1/2',
+      contentClass: 'bg-muted',
     },
     formOptions: {
       schema,
