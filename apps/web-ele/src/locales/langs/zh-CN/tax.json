@@ -1,0 +1,13 @@
+{
+  "tax-name": "税务名称",
+  "tax-type": "税务类型",
+  "calculation-type": "计算类型",
+  "percentage": "百分比",
+  "add-tax": "添加税务",
+  "taxation-office-tax-type": "增值税税率类型",
+  "tax-amount": "税额",
+  "creator-name": "创建人",
+  "create-time": "创建时间"
+}
+
+

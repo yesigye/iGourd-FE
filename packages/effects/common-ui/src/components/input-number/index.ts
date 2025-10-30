@@ -57,9 +57,7 @@ export const InputNumber = connect(
     (props) => {
       // 默认 inputNumber
       const defaultInputNumbervalidator = {
-        maximum: 6,
-        // minimum: 0,
-        // message: $t('ui.formRules.min-max-range', [0, 100]),
+        maximum: 99999999,
       };
       const field = useField();
       const schemaRef = useFieldSchema();
