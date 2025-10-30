@@ -44,5 +44,14 @@
     "HAS_FLOW_RECORD": "该账户存在流水记录,禁止删除！",
     "SYSTEM_INIT": "系统初始化帐户,禁止删除！",
     "UNKNOWN_ERROR": "未知错误"
+  },
+  "account-trial-balancing": {
+    "OPENING_BALANCE": "期初余额",
+    "CUMULATIVE_OCCURRENCE": "累计发生额",
+    "OPENING_BALANCE_SHEET": "期初资产负债表",
+    "DEBIT": "借方",
+    "CREDIT": "贷方",
+    "ASSETS": "资产",
+    "LIABILITIES_AND_EQUITY": "负债及所有者权益"
   }
 }

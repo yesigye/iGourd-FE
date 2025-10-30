@@ -39,5 +39,14 @@
     "HAS_FLOW_RECORD": "This account has flow records, cannot be deleted!",
     "SYSTEM_INIT": "System initialized account, cannot be deleted!",
     "UNKNOWN_ERROR": "Unknown error"
+  },
+  "account-trial-balancing": {
+    "OPENING_BALANCE": "Opening Balance",
+    "CUMULATIVE_OCCURRENCE": "Cumulative Occurrence",
+    "OPENING_BALANCE_SHEET": "Opening Balance Sheet",
+    "DEBIT": "Debit",
+    "CREDIT": "Credit",
+    "ASSETS": "Assets",
+    "LIABILITIES_AND_EQUITY": "Liabilities and Equity"
   }
 }
