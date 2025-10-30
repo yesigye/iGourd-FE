@@ -29,6 +29,12 @@
     "MANUALLY_CREATE": "Manually Create",
     "GOODS_RECEIPT_ORDER_PAYMENT": "Goods Receipt Order Payment"
   },
+  "transfer-type-list": {
+    "same-store-transfer": "Same Store Transfer",
+    "different-store-transfer": "Different Store Transfer",
+    "transfer-out": "Warehouse Outbound",
+    "transfer-in": "Warehouse Inbound"
+  },
   "account-classification-types": {
     "REVENUE": "Income",
     "EXPENDITURE": "Expenditure"

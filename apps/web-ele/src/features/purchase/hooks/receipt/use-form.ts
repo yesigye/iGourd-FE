@@ -890,11 +890,11 @@ export function useReceiptForm() {
     }
     formAPI.setValuesIn(
       `purchase_payment_plan_list.${index}.payment_method_id`,
-      op.id,
+      op.payment_method_id,
     );
     formAPI.setValuesIn(
       `purchase_payment_plan_list.${index}.payment_method_mark`,
-      op.mark,
+      op.payment_method_mark,
     );
   };
 

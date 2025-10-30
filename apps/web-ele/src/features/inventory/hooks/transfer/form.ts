@@ -4,7 +4,7 @@ import { inject } from 'vue';
 import { onFieldValueChange } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
-
+import { useEnum } from '#/hooks';
 import {
   createTransfer,
   getTransferDetail,
@@ -31,26 +31,8 @@ export function useTransferForm() {
   const { gridApi } = inject<{
     gridApi: ExtendedVxeGridApi;
   }>(Symbol.for('PageGrid'));
+  const { transferTypeList } = useEnum();
 
-  // 调拨类型
-  const transferTypeList = [
-    {
-      label: t('inventory.same-store-transfer'),
-      value: 'TRANSFER_SAME_STORE',
-    },
-    {
-      label: t('inventory.different-store-transfer'),
-      value: 'TRANSFER_DIFFERENT_STORE',
-    },
-    {
-      label: t('inventory.transfer-out'),
-      value: 'TRANSFER_IN_ONLY',
-    },
-    {
-      label: t('inventory.transfer-in'),
-      value: 'TRANSFER_OUT_ONLY',
-    },
-  ];
   const { currentLoginUserApp } = useUserStore();
   const merchantList = useMerchantSelect({ id: currentLoginUserApp.owner_id });
   const destinationWarehouse = useWarehouseSelect();

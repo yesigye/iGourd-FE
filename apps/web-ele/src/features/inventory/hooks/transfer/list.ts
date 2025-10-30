@@ -10,7 +10,8 @@ import { TransferDrawer } from '@@/inventory/components';
 
 import { useCrud } from '#/hooks';
 import { formatNumber } from '#/utils/functions';
-
+import { useEnum } from '#/hooks';
+import { getEnumLabel } from '#/utils/global';
 const transferTypeList = {
   TRANSFER_SAME_STORE: 'same-store-transfer',
   TRANSFER_DIFFERENT_STORE: 'different-store-transfer',
@@ -21,6 +22,7 @@ type transferTypeKey = keyof typeof transferTypeList;
 
 export function useInventoryTransferList() {
   const { t } = useI18n();
+  const { transferTypeList } = useEnum();
 
   const columns: VxeGridPropTypes.Column<TransferItem>[] = [
     {
@@ -34,7 +36,7 @@ export function useInventoryTransferList() {
       minWidth: 200,
       fixed: 'left',
       formatter({ cellValue }: { cellValue: transferTypeKey }) {
-        return cellValue?.label;
+        return getEnumLabel(transferTypeList, cellValue);
       },
     },
     {

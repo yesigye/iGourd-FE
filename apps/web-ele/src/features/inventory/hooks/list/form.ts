@@ -23,7 +23,7 @@ export function useListForm() {
   const warehouse = useWarehouseSelect();
   const userName = useUserStore().userInfo?.user_model.name;
   const userLabel = `${t('count.creator')}:`;
- const { currentLoginUserApp } = useUserStore();
+  const { currentLoginUserApp } = useUserStore();
   const schema: ISchema = {
     type: 'object',
     properties: {
@@ -32,7 +32,6 @@ export function useListForm() {
         'x-component': 'FormLayout',
         'x-component-props': {
           labelCol: 6,
-          wrapperCol: 14,
           layout: 'vertical',
         },
         properties: {
@@ -40,146 +39,207 @@ export function useListForm() {
             type: 'string',
             'x-hidden': true,
           },
-          label: {
+          card0: {
             type: 'void',
-            'x-component': 'Space',
+            'x-component': 'Card',
             'x-component-props': {
-              style: { marginBottom: '10px' },
+              labelCol: 6,
+              wrapperCol: 14,
+              header: '',
+              bodyClass: 'py-0 px-1 my-1 border-0',
             },
             properties: {
-              c: {
+              label: {
                 type: 'void',
-                'x-component': 'div',
-                'x-content': '{{userLabel}}',
-                'x-component-props': {
-                  style: { fontSize: '14px' },
-                },
-              },
-              d: {
-                type: 'void',
-                'x-component': 'div',
-                'x-content': '{{userName}}',
-                'x-component-props': {
-                  style: { color: 'red' },
-                },
-              },
-            },
-          },
-          warehouse_id: {
-            type: 'string',
-            title: "{{t('spoilage.warehouse-name')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Select',
-            'x-component-props': {
-              maxLength: 256,
-              placeholder: "{{t('common.select')}}",
-              clearable: true,
-            },
-            'x-reactions': {
-              fulfill: {
-                state: {
-                  dataSource: '{{ warehouse.value }}',
-                },
-              },
-            },
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('spoilage.warehouse-name-validate')}}",
-              },
-            ],
-          },
-          last_add_stock_reason: {
-            type: 'string',
-            title: "{{t('list.add-inventory-reason')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Select',
-            enum: inventoryReasonList,
-            'x-component-props': {
-              maxLength: 32,
-              placeholder: "{{t('common.select')}}",
-              clearable: true,
-            },
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('spoilage.consumption-reason-validate')}}",
-              },
-            ],
-          },
-          product: {
-            type: 'array',
-            'x-component': 'ProductTable',
-            'x-component-props': {
-              mode: 'inventory',
-              capabilities: [
-                'barcode',
-                'unit',
-                'vat',
-                'discount',
-                'stock',
-                'image',
-                'remark',
-              ],
-              vatMode: 'VAT_EXCLUSIVE',
-              // 业务标记（用于单位禁用逻辑兼容旧条件）
-              isReceiptMode: false,
-              purchaseOrderSelected: false,
-              // 可选：展示/校验库存
-              searchProducts: (keywords: string) => {
-                return wareHouseProductSearch({
-                  keywords,
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  warehouse_id: '',
-                  // business_type: 'purchase',
-                  page_num: 1,
-                  page_size: 20,
-                }).then(({ list }) => {
-                  return list.map((item: any) => {
-                    return {
-                      ...item,
-                      value: item.id,
-                      label: [item.major_name, item.product_spec_kvmessage]
-                        .filter(Boolean)
-                        .join('-'),
-                    };
-                  });
-                });
-              },
-            },
-            'x-reactions': {
-              dependencies: ['id'],
-              fulfill: {
-                state: {
-                  componentProps: {
-                    canOperate: '{{!$deps[0]}}',
+                'x-component': 'Space',
+                'x-component-props': {},
+                properties: {
+                  c: {
+                    type: 'void',
+                    'x-component': 'div',
+                    'x-content': '{{userLabel}}',
+                    'x-component-props': {
+                      style: { fontSize: '14px' },
+                    },
+                  },
+                  d: {
+                    type: 'void',
+                    'x-component': 'div',
+                    'x-content': '{{userName}}',
+                    'x-component-props': {
+                      class: 'text-red-500',
+                    },
                   },
                 },
               },
             },
           },
-          remark: {
-            type: 'string',
-            title: "{{t('common.remarks')}}",
-            'x-decorator': 'FormItem',
-            'x-component': 'Input.TextArea',
+          card1: {
+            type: 'void',
+            'x-component': 'Card',
             'x-component-props': {
-              maxlength: 256,
-              rows: 5,
-              'show-word-limit': true,
+              header: '',
+              bodyClass: 'py-0 px-1 my-1 border-0',
             },
-          },
-          attachment_url: {
-            type: 'string',
-            title: "{{t('common.attachment')}}",
-            'x-decorator': 'FormItem',
-            'x-component': 'Upload',
-            'x-component-props': {
-              action: 'https://formily-vue.free.beeceptor.com/file',
-              drag: true,
+            properties: {
+              grid: {
+                type: 'void',
+                'x-component': 'FormGrid',
+                'x-component-props': {
+                  minColumns: [3],
+                },
+                properties: {
+                  warehouse_id: {
+                    type: 'string',
+                    title: "{{t('spoilage.warehouse-name')}}",
+                    required: true,
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Select',
+                    'x-component-props': {
+                      maxLength: 256,
+                      placeholder: "{{t('common.select')}}",
+                      clearable: true,
+                    },
+                    'x-reactions': {
+                      fulfill: {
+                        state: {
+                          dataSource: '{{ warehouse.value }}',
+                        },
+                      },
+                    },
+                    'x-validator': [
+                      {
+                        required: true,
+                        message: "{{t('spoilage.warehouse-name-validate')}}",
+                      },
+                    ],
+                  },
+                  last_add_stock_reason: {
+                    type: 'string',
+                    title: "{{t('list.add-inventory-reason')}}",
+                    required: true,
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Select',
+                    enum: inventoryReasonList,
+                    'x-component-props': {
+                      maxLength: 32,
+                      placeholder: "{{t('common.select')}}",
+                      clearable: true,
+                    },
+                    'x-validator': [
+                      {
+                        required: true,
+                        message:
+                          "{{t('spoilage.consumption-reason-validate')}}",
+                      },
+                    ],
+                  },
+                },
+              },
+              // 商品card
+              product_card: {
+                type: 'void',
+                'x-component': 'Card',
+                'x-component-props': {
+                  header: t('common.product'),
+                },
+                properties: {
+                  product: {
+                    type: 'array',
+                    'x-component': 'ProductTable',
+                    'x-component-props': {
+                      mode: 'inventory',
+                      capabilities: [
+                        'barcode',
+                        'unit',
+                        'vat',
+                        'discount',
+                        'stock',
+                        'image',
+                        'remark',
+                      ],
+                      vatMode: 'VAT_EXCLUSIVE',
+                      // 业务标记（用于单位禁用逻辑兼容旧条件）
+                      isReceiptMode: false,
+                      purchaseOrderSelected: false,
+                      // 可选：展示/校验库存
+                      searchProducts: (keywords: string) => {
+                        return wareHouseProductSearch({
+                          keywords,
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          // @ts-ignore
+                          warehouse_id: '',
+                          // business_type: 'purchase',
+                          page_num: 1,
+                          page_size: 20,
+                        }).then(({ list }) => {
+                          return list.map((item: any) => {
+                            return {
+                              ...item,
+                              value: item.id,
+                              label: [
+                                item.major_name,
+                                item.product_spec_kvmessage,
+                              ]
+                                .filter(Boolean)
+                                .join('-'),
+                            };
+                          });
+                        });
+                      },
+                    },
+                    'x-reactions': {
+                      dependencies: ['id'],
+                      fulfill: {
+                        state: {
+                          componentProps: {
+                            canOperate: '{{!$deps[0]}}',
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              remark_card: {
+                type: 'void',
+                'x-component': 'Card',
+                'x-component-props': {
+                  header: t('common.remarks'),
+                },
+                properties: {
+                  remark: {
+                    type: 'string',
+                    title: "{{t('common.remarks')}}",
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Input.TextArea',
+                    'x-component-props': {
+                      maxlength: 256,
+                      rows: 5,
+                      'show-word-limit': true,
+                    },
+                  },
+                },
+              },
+              attachment_card: {
+                type: 'void',
+                'x-component': 'Card',
+                'x-component-props': {
+                  header: t('common.attachment'),
+                },
+                properties: {
+                  attachment_url: {
+                    type: 'string',
+                    title: "{{t('common.attachment')}}",
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Upload',
+                    'x-component-props': {
+                      action: 'https://formily-vue.free.beeceptor.com/file',
+                      drag: true,
+                    },
+                  },
+                },
+              },
             },
           },
         },
@@ -192,6 +252,7 @@ export function useListForm() {
       title: t('list.add-stock'),
       appendToMain: true,
       class: 'w-2/3',
+      contentClass: 'bg-muted',
       async onOpenChange(isOpen) {
         if (isOpen) {
           formAPI.reset();
@@ -224,10 +285,10 @@ export function useListForm() {
         await formAPI.validate();
         drawerApi.lock();
 
-        const params ={
+        const params = {
           ...formAPI.values,
-          merchant_id:currentLoginUserApp.owner_id,
-        }
+          merchant_id: currentLoginUserApp.owner_id,
+        };
         createOrUpdateStock(params)
           .then(() => {
             drawerApi.close();
