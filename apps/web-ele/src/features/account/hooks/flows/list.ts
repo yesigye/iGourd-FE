@@ -2,6 +2,8 @@ import type { AccountFlowsInfo } from '../../types/account';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
+import { ref } from 'vue';
+
 import { useI18n } from '@igourd/locales';
 
 import { getFinanceFlowPageListApi } from '@@/account/apis';
@@ -114,9 +116,7 @@ export function useFlows() {
       field: 'source_type',
       minWidth: 150,
       title: t('account.source'),
-      formatter({ cellValue }: { cellValue: keyof typeof sourceTypeMap }) {
-        return cellValue?.label ?? '--';
-      },
+      slots: { default: 'source_type' },
     },
     {
       field: 'trading_no',
@@ -145,7 +145,10 @@ export function useFlows() {
     // 获取列表数据
     query: getFinanceFlowPageListApi,
   };
-
+  const defaultTime = ref<[Date, Date]>([
+    new Date(2000, 1, 1, 0, 0, 0),
+    new Date(2000, 2, 1, 23, 59, 59),
+  ]);
   // 使用 CRUD Hook
   const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
     useCrud({
@@ -153,9 +156,9 @@ export function useFlows() {
       columns: baseColumns,
       id: 'finance_flow_plus_export',
       tabs: [
-        { value: 'ALL', label: '全部' },
-        { value: 'CREDIT', label: '收入' },
-        { value: 'DEBIT', label: '支出' },
+        { value: 'ALL', label: t('common.all') },
+        { value: 'CREDIT', label: t('account.revenue') },
+        { value: 'DEBIT', label: t('account.expenditure') },
       ],
       tabsOption: {
         defaultActiveValue: 'ALL',
@@ -167,6 +170,21 @@ export function useFlows() {
       },
       printConfig: {},
       searchFormSchema: {
+        '[start_create_time,end_create_time]': {
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'DatePicker',
+          'x-component-props': {
+            type: 'daterange',
+            placeholder: t('common.keywords'),
+            format: 'YYYY-MM-DD',
+            valueFormat: 'YYYY-MM-DD HH:mm:ss',
+            rangeSeparator: t('common.range-separator'),
+            startPlaceholder: t('common.start-date'),
+            endPlaceholder: t('common.end-date'),
+            defaultTime: defaultTime.value,
+          },
+        },
         keywords: {
           type: 'string',
           'x-decorator': 'FormItem',

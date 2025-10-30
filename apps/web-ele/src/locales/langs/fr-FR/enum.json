@@ -9,5 +9,24 @@
   "compulsory-types": {
     "yes": "Oui",
     "no": "Non"
+  },
+  "balance-change-types": {
+    "CANCEL": "Annulation",
+    "FAIL": "Echec",
+    "SUCCESS": "Succès"
+  },
+  "accout-flows-source-types": {
+    "CUSTOMER_RECHARGE_WITHOUT_VIP": "Recharge sans VIP",
+    "CUSTOMER_RECHARGE_WITH_VIP": "客户会员充值",
+    "PURCHASE_ORDER_PAYMENT": "Purchase Order Payment",
+    "PURCHASE_BILL_GOODS_PAYMENT": "Purchase Bill Goods Payment",
+    "PURCHASE_ORDER_RETURNED": "Purchase Order Returned",
+    "SALES_ORDER_PAYMENT": "Sales Order Payment",
+    "SALES_OFFLINE_ORDER_SYNC": "Sales Offline Order Sync",
+    "SALES_ORDER_REFUND": "Sales Order Refund",
+    "ACCOUNTING_NOTE_CREATE": "Accounting Note Create",
+    "ACCOUNTING_NOTE_MODIFY": "Accounting Note Modify",
+    "MANUALLY_CREATE": "Manually Create",
+    "GOODS_RECEIPT_ORDER_PAYMENT": "Goods Receipt Order Payment"
   }
 }

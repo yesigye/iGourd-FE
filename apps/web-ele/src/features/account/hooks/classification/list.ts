@@ -105,15 +105,15 @@ export function useClassification() {
     id: 'class-ification',
     tabs: [
       {
-        label: '全部',
+        label: t('common.all'),
         value: 'ALL',
       },
       {
-        label: '收入',
+        label: t('account.revenue'),
         value: 'REVENUE',
       },
       {
-        label: '支出',
+        label: t('account.expenditure'),
         value: 'EXPENDITURE',
       },
     ],

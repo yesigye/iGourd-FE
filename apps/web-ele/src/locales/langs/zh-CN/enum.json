@@ -14,5 +14,19 @@
     "CANCEL": "取消",
     "FAIL": "失败",
     "SUCCESS": "成功"
+  },
+  "accout-flows-source-types": {
+    "CUSTOMER_RECHARGE_WITHOUT_VIP": "客户非会员充值",
+    "CUSTOMER_RECHARGE_WITH_VIP": "客户会员充值",
+    "PURCHASE_ORDER_PAYMENT": "采购订单付款",
+    "PURCHASE_BILL_GOODS_PAYMENT": "采购账单收货付款",
+    "PURCHASE_ORDER_RETURNED": "采购订单退款",
+    "SALES_ORDER_PAYMENT": "销售订单离线支付",
+    "SALES_OFFLINE_ORDER_SYNC": "离线订单同步",
+    "SALES_ORDER_REFUND": "销售订单退款",
+    "ACCOUNTING_NOTE_CREATE": "记账笔记创建",
+    "ACCOUNTING_NOTE_MODIFY": "记账笔记修改",
+    "MANUALLY_CREATE": "手动录入",
+    "GOODS_RECEIPT_ORDER_PAYMENT": "商品收据订单付款"
   }
 }
