@@ -62,7 +62,6 @@ import { VxeButton } from 'vxe-pc-ui';
 import { VxeGrid, VxeUI } from 'vxe-table';
 
 import { extendProxyOptions } from './extends';
-import PrintDrawer from './print.vue';
 
 import 'vxe-table/styles/cssvar.scss';
 import 'vxe-pc-ui/styles/cssvar.scss';
@@ -456,7 +455,7 @@ const openMoreActions = computed(() => {
     :class="cn('bg-card rounded-md', className)"
     :style="{ height: `calc(100% - ${footerHeight}px - 0.25rem)` }"
   >
-    <PrintDrawer ref="printRef" v-bind="options" />
+    <!-- <PrintDrawer ref="printRef" v-bind="options" /> -->
     <VxeGrid
       ref="gridRef"
       :class="

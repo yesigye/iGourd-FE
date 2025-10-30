@@ -44,6 +44,7 @@
     "@igourd/types": "workspace:^",
     "@igourd/utils": "workspace:^",
     "@vueuse/core": "catalog:",
+    "jsbarcode": "^3.12.1",
     "vue": "catalog:",
     "vue-router": "catalog:",
     "watermark-js-plus": "catalog:"

@@ -29,6 +29,7 @@ export default defineLibraryConfig(async () => {
             '@vueuse/core',
             '@igourd/locales',
             '@igourd/types',
+            '@igourd/plugins',
             'dayjs',
           ],
         },
