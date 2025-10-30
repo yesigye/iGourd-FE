@@ -98,7 +98,9 @@ export default {
                         disabled: true,
                         feedbackLayout: 'terse',
                       },
-
+                      'x-decorator-props': {
+                        feedbackLayout: 'terse',
+                      },
                       'x-reactions': {
                         fulfill: {
                           state: {
@@ -115,6 +117,9 @@ export default {
                       'x-component-props': {
                         placeholder: "{{t('common.enter')}}",
                         type: 'number',
+                        feedbackLayout: 'terse',
+                      },
+                      'x-decorator-props': {
                         feedbackLayout: 'terse',
                       },
                       'x-validator': [
@@ -134,6 +139,9 @@ export default {
                         placeholder: '',
                         feedbackLayout: 'terse',
                       },
+                      'x-decorator-props': {
+                        feedbackLayout: 'terse',
+                      },
                       'x-validator': [null],
                     },
                   },
@@ -142,6 +150,9 @@ export default {
               },
               'x-component-props': {
                 placeholder: "{{t('common.enter')}}",
+              },
+              'x-decorator-props': {
+                feedbackLayout: 'none',
               },
               'x-validator': [null],
             },
@@ -164,6 +175,9 @@ export default {
                         filterable: true,
                         disabled: true,
                       },
+                      'x-decorator-props': {
+                        feedbackLayout: 'terse',
+                      },
                       'x-reactions': {
                         fulfill: {
                           state: {
@@ -182,6 +196,9 @@ export default {
                         type: 'number',
                         disabled: true,
                       },
+                      'x-decorator-props': {
+                        feedbackLayout: 'terse',
+                      },
                       'x-validator': [null],
                     },
                     balance_direction_sort: {
@@ -192,6 +209,9 @@ export default {
                       'x-component-props': {
                         placeholder: '',
                       },
+                      'x-decorator-props': {
+                        feedbackLayout: 'terse',
+                      },
                       'x-validator': [null],
                     },
                   },
@@ -200,6 +220,9 @@ export default {
               },
               'x-component-props': {
                 placeholder: "{{t('common.enter')}}",
+              },
+              'x-decorator-props': {
+                feedbackLayout: 'terse',
               },
               'x-validator': [null],
             },

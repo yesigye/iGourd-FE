@@ -1,7 +1,8 @@
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
-import { nextTick, provide, ref } from 'vue';
+import { h, nextTick, provide, ref } from 'vue';
 
+import { confirm, ElMessage } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
 import {
@@ -12,6 +13,7 @@ import {
   updateAccountApi,
 } from '@@/account/apis';
 import { AccountDrawerForm } from '@@/account/components';
+import ConfirmDeleteContent from '@@/account/components/management/ConfirmDeleteContent.vue';
 
 import { useCrud } from '#/hooks';
 
@@ -126,7 +128,30 @@ export function useAccountManagement() {
       update: updateAccountApi,
       create: createAccountApi,
       detail: (dto) => getAccountDetailApi(dto.id),
-      drop: removeAccountApi,
+      drop: async (dto) => {
+        const result = await removeAccountApi(dto);
+
+        if (result.remove_error_models.length <= 0) {
+          ElMessage.success(t('common.delete-success'));
+          return true;
+        } else {
+          const message = t(
+            `enum.account-management-fail-reason.${
+              result.remove_error_models[0].fail_reason
+            }`,
+          );
+
+          confirm({
+            title: t('common.prompt'),
+            content: h(ConfirmDeleteContent, {
+              errorList: result.remove_error_models,
+              message,
+              locale: t,
+            }),
+          });
+          return false;
+        }
+      },
     },
   });
 

@@ -105,6 +105,9 @@ export default {
                         filterable: true,
                         disabled: true,
                       },
+                      'x-decorator-props': {
+                        feedbackLayout: 'terse',
+                      },
                       'x-reactions': {
                         fulfill: {
                           state: {
@@ -122,6 +125,9 @@ export default {
                         placeholder: "{{t('common.enter')}}",
                         type: 'number',
                       },
+                      'x-decorator-props': {
+                        feedbackLayout: 'terse',
+                      },
                       'x-validator': [
                         null,
                         {
@@ -138,11 +144,17 @@ export default {
                       'x-component-props': {
                         placeholder: '',
                       },
+                      'x-decorator-props': {
+                        feedbackLayout: 'terse',
+                      },
                       'x-validator': [null],
                     },
                   },
                   'x-validator': [null],
                 },
+              },
+              'x-decorator-props': {
+                feedbackLayout: 'none',
               },
               'x-component-props': {
                 placeholder: "{{t('common.enter')}}",
@@ -170,6 +182,9 @@ export default {
                         filterable: true,
                         disabled: true,
                       },
+                      'x-decorator-props': {
+                        feedbackLayout: 'terse',
+                      },
                       'x-reactions': {
                         fulfill: {
                           state: {
@@ -188,6 +203,9 @@ export default {
                         type: 'number',
                         disabled: true,
                       },
+                      'x-decorator-props': {
+                        feedbackLayout: 'terse',
+                      },
                       'x-validator': [null],
                     },
                     balance_direction_sort: {
@@ -197,6 +215,9 @@ export default {
                       'x-disabled': true,
                       'x-component-props': {
                         placeholder: '',
+                      },
+                      'x-decorator-props': {
+                        feedbackLayout: 'terse',
                       },
                       'x-validator': [null],
                     },
@@ -208,6 +229,9 @@ export default {
                 placeholder: "{{t('common.enter')}}",
               },
               'x-validator': [null],
+              'x-decorator-props': {
+                feedbackLayout: 'none',
+              },
             },
           },
         },

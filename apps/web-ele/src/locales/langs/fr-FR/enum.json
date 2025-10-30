@@ -28,5 +28,16 @@
     "ACCOUNTING_NOTE_MODIFY": "Accounting Note Modify",
     "MANUALLY_CREATE": "Manually Create",
     "GOODS_RECEIPT_ORDER_PAYMENT": "Goods Receipt Order Payment"
+  },
+  "account-classification-types": {
+    "REVENUE": "Income",
+    "EXPENDITURE": "Expenditure"
+  },
+  "account-management-fail-reason": {
+    "BALANCE_NOT_ZERO": "This account has balance, cannot be deleted!",
+    "BOUND_TO_CUSTOMER_VENDOR": "Bound to customer or vendor",
+    "HAS_FLOW_RECORD": "This account has flow records, cannot be deleted!",
+    "SYSTEM_INIT": "System initialized account, cannot be deleted!",
+    "UNKNOWN_ERROR": "Unknown error"
   }
 }
