@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useEnum } from '#/hooks';
 import { defineExpose, ref } from 'vue';
 import {
   useIgourdDrawer,
@@ -7,6 +8,9 @@ import {
   ElDescriptionsItem,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+const {featureTypes,selectTypes,compulsoryTypes} = useEnum();
+import { getEnumLabel } from '#/utils/global';
+import Index from '../audit-dialog/index.vue';
 const { t } = useI18n();
 const detailData = ref(null);
 const selectionOptions = ref([]);
@@ -36,26 +40,27 @@ const [Drawer, drawerApi] = useIgourdDrawer({
           {{ detailData.name }}
         </ElDescriptionsItem>
         <ElDescriptionsItem :label="t('add-customized.feature-type')">
-          {{ detailData?.type?.value }}
+          {{ getEnumLabel(featureTypes,detailData?.type)}}
         </ElDescriptionsItem>
         <ElDescriptionsItem :label="t('add-customized.selection-type')">
-          {{ detailData?.is_fixed_option?.value }}
+          {{ getEnumLabel(selectTypes,detailData?.is_fixed_option)}}
         </ElDescriptionsItem>
         <ElDescriptionsItem
+          v-if="detailData?.type ==='SELECT'"
           :label="t('add-customized.selection-options')"
           class-name="descriptions-item-content"
         >
           <ElDescriptions title="" :column="1" border>
             <ElDescriptionsItem
-              :label="t('add-customized.feature-name')"
-              v-for="opt in selectionOptions"
+              :label="t('add-customized.selection-options')+' '+(index+1)"
+              v-for="(opt,index) in selectionOptions"
             >
               {{ opt.name }}
             </ElDescriptionsItem>
           </ElDescriptions>
         </ElDescriptionsItem>
         <ElDescriptionsItem :label="t('add-customized.compulsory-selection')">
-          {{ detailData?.is_compulsory?.value }}
+          {{ getEnumLabel(compulsoryTypes,detailData?.is_compulsory)}}
         </ElDescriptionsItem>
       </ElDescriptions>
     </ElCard>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
@@ -10,11 +11,20 @@ defineOptions({
 
 const { t } = useI18n();
 
+const title = ref();
 const { Grid, Drawer, handleEdit, handleBatchDelete, canBatchOperate,handleView} =
   useCustomizedFeature('CUSTOMER');
 const { Drawer: Detail, drawerApi: detailDrawerApi } = useCustomizedDetail(t("feature.view-customized-attributes"));
 const handleViewC=(row)=>{
   detailDrawerApi.setData(row).open();
+}
+const handleAdd=(row)=>{
+  title.value = t("feature.add-customized-attributes");
+  handleEdit();
+}
+const handleEditC=(row)=>{
+  title.value = t("feature.edit-customized-attributes");
+  handleEdit(row);
 }
 </script>
 
@@ -22,7 +32,7 @@ const handleViewC=(row)=>{
   <Page auto-content-height>
     <Grid>
       <template #table-actions>
-        <ElButton type="primary" @click="handleEdit()">
+        <ElButton type="primary" @click="handleAdd()">
           {{ t('common.create') }}
         </ElButton>
         <ElButton type="danger" v-if="canBatchOperate">
@@ -31,7 +41,7 @@ const handleViewC=(row)=>{
       </template>
 
       <template #operations="{ row }">
-        <ElButton type="text" @click="handleEdit(row)">
+        <ElButton type="text" @click="handleEditC(row)">
           {{ t('common.edit') }}
         </ElButton>
         <ElButton type="text" @click="handleViewC(row)">
@@ -57,7 +67,7 @@ const handleViewC=(row)=>{
       </template>
     </Grid>
 
-    <Drawer />
+    <Drawer :title="title"/>
     <Detail/>
   </Page>
 </template>

@@ -62,6 +62,7 @@ import { VxeButton } from 'vxe-pc-ui';
 import { VxeGrid, VxeUI } from 'vxe-table';
 
 import { extendProxyOptions } from './extends';
+import PrintDrawer from './print.vue';
 
 import 'vxe-table/styles/cssvar.scss';
 import 'vxe-pc-ui/styles/cssvar.scss';
@@ -408,9 +409,9 @@ const { params } = inject(Symbol.for('PageGrid'), {
   },
 });
 async function handleCommand(command: string) {
-  // if (command === 'print') {
-  //   drawerApi.open();
-  // }
+  if (command === 'print') {
+    printRef.value.open(gridRef.value?.getData());
+  }
   if (command === 'export') {
     // @ts-ignore
     gridOptions.value.loading = true;
@@ -455,9 +456,7 @@ const openMoreActions = computed(() => {
     :class="cn('bg-card rounded-md', className)"
     :style="{ height: `calc(100% - ${footerHeight}px - 0.25rem)` }"
   >
-    <!-- <Drawer :show-header="false">
-      <PrintDrawer ref="printRef" v-bind="options" />
-    </Drawer> -->
+    <PrintDrawer ref="printRef" v-bind="options" />
     <VxeGrid
       ref="gridRef"
       :class="

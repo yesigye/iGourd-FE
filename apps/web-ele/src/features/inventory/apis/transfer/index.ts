@@ -87,7 +87,7 @@ export function reviewTransferStatus(params: {
   review_status?: string;
   stock_transfer_review_item?: any[];
 }) {
-  return request.post('/inventory/transfer/review-status', params);
+  return request.post('/v1/merchant/basics/inventory/stock-transfer/review', params);
 }
 
 /**

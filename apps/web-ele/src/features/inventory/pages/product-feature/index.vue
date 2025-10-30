@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
@@ -21,9 +22,19 @@ const {
 const { Drawer: Detail, drawerApi: detailDrawerApi } = useCustomizedDetail(
   t('product-feature.view-customized-attributes'),
 );
+
+const title = ref();
 const handleViewC = (row) => {
   detailDrawerApi.setData(row).open();
 };
+const handleAdd=(row)=>{
+  title.value = t("product-feature.add-customized-attributes");
+  handleEdit();
+}
+const handleEditC=(row)=>{
+  title.value = t("product-feature.edit-customized-attributes");
+  handleEdit(row);
+}
 </script>
 
 <template>
@@ -33,7 +44,7 @@ const handleViewC = (row) => {
         <ElButton
           v-auth="'inventory_product_feature_add'"
           type="primary"
-          @click="handleEdit()"
+          @click="handleAdd()"
         >
           <i class="iconfont icon-tianjia-dianpu mr-1"></i>
           {{ t('inventory.add-feature') }}
@@ -50,7 +61,7 @@ const handleViewC = (row) => {
         <ElButton
           v-auth="'inventory_product_feature_edit'"
           type="text"
-          @click="handleEdit(row)"
+          @click="handleEditC(row)"
         >
           {{ t('common.edit') }}
         </ElButton>
@@ -76,7 +87,7 @@ const handleViewC = (row) => {
         }}
       </template>
     </Grid>
-    <Drawer />
+    <Drawer :title="title" />
     <Detail />
   </Page>
 </template>

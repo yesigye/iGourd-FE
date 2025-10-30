@@ -350,7 +350,7 @@
   "to": "至",
   "start-date": "开始日期",
   "end-date": "结束日期",
-  "print": "print",
+  "print": "打印",
   "print-config": {
     "title-font-size": "标题大小",
     "base-font-size": "内容大小",
@@ -358,5 +358,5 @@
     "A4": "A4",
     "pager": "打印模板"
   },
-  "upload-img":"上传图片"
+  "upload-img": "上传图片"
 }

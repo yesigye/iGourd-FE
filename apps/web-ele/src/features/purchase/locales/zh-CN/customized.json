@@ -1,5 +1,6 @@
 {
-  "add-customized": "添加定制",
+  "add-customized": "添加供应商自定义属性",
+  "edit-customized": "编辑供应商自定义属性",
   "name": "名称",
   "type": "类型",
   "options-type": "选项类型",

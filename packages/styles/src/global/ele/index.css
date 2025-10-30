@@ -2,6 +2,7 @@
   --el-card-border-radius: var(--radius) !important;
 }
 .el-dropdown {
+  font-size: 12px;
   position: static;
   vertical-align: middle;
 }
