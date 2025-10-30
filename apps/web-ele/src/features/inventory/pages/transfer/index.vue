@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useUserStore } from '@igourd/stores';
 import {
   ElButton,
@@ -8,14 +8,18 @@ import {
   ElDropdownMenu,
   ElIcon,
   Page,
+  ElSelect,
+  ElOption,
 } from '@igourd/common-ui';
 import { ArrayDown } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 import { AuditDialog } from '#/components';
 import { reviewTransferStatus } from '@@/inventory/apis';
 import { useLanguage } from '#/hooks';
+import { useEnum } from '#/hooks';
 
 import { useInventoryTransferList } from '../../hooks/transfer/list';
+  const { transferStatus } = useEnum();
 
 defineOptions({
   name: 'IInventoryTransfer',
@@ -70,6 +74,13 @@ const handleconfirm = (data) => {
     gridApi.reload();
   });
 };
+const getStatusOptions = computed(() => (row) => {
+  const baseOptions = [{ value: 'CREATED', label: 'Created', key: 'created' }];
+  return transferStatus;
+});
+const handleStatusChange = async (row, value) => {
+  debugger
+}
 </script>
 
 <template>
@@ -97,7 +108,15 @@ const handleconfirm = (data) => {
         </ElButton>
       </template>
       <template #status="{ row }">
-        {{ row.status?.label || '--' }}
+        <ElSelect v-model="row.status"  @change="value => handleStatusChange(row, value)">
+          <ElOption
+            v-for="item in getStatusOptions(row)"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+            ></ElOption
+          >
+        </ElSelect>
       </template>
       <template #review_status="{ row }">
         <ElDropdown v-if="row.review_status === 'PENDING'">

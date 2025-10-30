@@ -4,5 +4,8 @@
   "calculation-type": "Calculation Type",
   "percentage": "Percentage",
   "add-tax": "Add Tax",
-  "taxation-office-tax-type": "VAT Rate Type"
+  "taxation-office-tax-type": "VAT Rate Type",
+  "tax-amount": "Tax Amount",
+  "creator-name": "Creator",
+  "create-time": "Creation Time"
 }

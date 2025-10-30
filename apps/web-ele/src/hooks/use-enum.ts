@@ -36,25 +36,48 @@ export function useEnum() {
   const consumptionReason = [
     {
       value: 'EXPIRED_GOODS',
-      label: t('spoilage.consumption-reason-enum.expired-products'),
+      label: t('enum.consumption-reason-enum.expired-products'),
     },
     {
       value: 'DAMAGED_GOODS',
-      label: t('spoilage.consumption-reason-enum.damaged-products'),
+      label: t('enum.consumption-reason-enum.damaged-products'),
     },
     {
       value: 'PERSONAL_USES',
-      label: t('spoilage.consumption-reason-enum.personal-use'),
+      label: t('enum.consumption-reason-enum.personal-use'),
     },
     {
       value: 'RAW_MATERIALS',
-      label: t('spoilage.consumption-reason-enum.raw_materials'),
+      label: t('enum.consumption-reason-enum.raw_materials'),
     },
     {
       value: 'OTHERS',
-      label: t('spoilage.consumption-reason-enum.others'),
+      label: t('enum.consumption-reason-enum.others'),
     },
   ];
+  // 调拨状态
+  const transferStatus =[
+    {
+      value: 'CREATED',
+      label: t('enum.transfer-status.created'),
+    },
+    {
+      value: 'INBOUND',
+     label: t('enum.transfer-status.transfer-in'),
+    },
+    {
+      value: 'REFUSED_INBOUND',
+      label: t('enum.transfer-status.reject-in'),
+    },
+    {
+      value: 'OUTBOUND',
+      label: t('enum.transfer-status.transfer-out'),
+    },
+    {
+      value: 'REFUSED_OUTBOUND',
+      label: t('enum.transfer-status.reject-out'),
+    },
+  ]
 
   return {
     featureTypes,
@@ -62,5 +85,6 @@ export function useEnum() {
     compulsoryTypes,
     transferTypeList,
     consumptionReason,
+    transferStatus
   };
 }
