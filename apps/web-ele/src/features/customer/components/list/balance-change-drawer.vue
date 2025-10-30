@@ -74,7 +74,7 @@ const handleCurrentChange = (val: number) => {
       <div class="flex shrink-0 items-center gap-2.5">
         <ElInput
           v-model="keyword"
-          placeholder="Enter(order no./vendor name/.."
+          :placeholder="t('list.enter-order-no-vendor-name-')"
         />
         <ElButton type="primary">{{ t('common.search') }}</ElButton>
       </div>

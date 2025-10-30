@@ -95,8 +95,7 @@ export function useCustomerlabelForm() {
                   options: [{ label: 'Nike', value: 'nike' }],
                 },
               ],
-              searchPlaceholder:
-                "{{t('list.enter-purchase-order-no-vendor-name-')}}",
+              searchPlaceholder: "{{t('list.enter-order-no-vendor-name-')}}",
               excludeSelectedFromLeft: true,
             },
           },

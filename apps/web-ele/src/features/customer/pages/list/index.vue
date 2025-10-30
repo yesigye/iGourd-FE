@@ -215,7 +215,7 @@ const handleSearch = () => {
             <ElInput
               v-model="searchOrderNo"
               class="w-[288px]"
-              :placeholder="t('list.enter-purchase-order-no-vendor-name-')"
+              :placeholder="t('list.enter-order-no-vendor-name-')"
             />
             <ElButton type="primary" @click="handleSearch">
               {{ t('common.search') }}
