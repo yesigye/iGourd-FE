@@ -5,8 +5,6 @@ import { onFieldValueChange } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
-
-
 import { createCount, getCountDetail, updateCount } from '@@/inventory/apis';
 import { dayjs } from 'element-plus';
 
@@ -78,8 +76,15 @@ export function useCountForm() {
   const userName = useUserStore().userInfo?.user_model.name;
   const userLabel = `${t('count.creator')}:`;
   const { gridApi } = inject<{
-      gridApi: ExtendedVxeGridApi;
+    gridApi: ExtendedVxeGridApi;
   }>(Symbol.for('PageGrid'));
+
+  const generateNo = async () => {
+    const result = await orderNoGenerate({
+      category_type: 'PHYSICAL_STOCK_TAKE',
+    });
+    return result.order_no;
+  };
 
   // 表单提交处理
   const handleSubmit = async (formData: PurchaseCodeRulesFormData) => {
@@ -90,13 +95,7 @@ export function useCountForm() {
       formData.total_variance_cost = '';
       // 其他税额
       formData.other_tax_amount = 100;
-      // 盘点单No 新增时 生成订单号
-      if (!formData.id) {
-        const result = await orderNoGenerate({
-          category_type: 'PHYSICAL_STOCK_TAKE',
-        });
-        formData.physical_stock_take_no = result.order_no;
-      }
+
       // 汇率(选择币种和系统币种的换算比例)
       formData.exchange_rate = 0.14;
       // 结算货币编码
@@ -116,7 +115,6 @@ export function useCountForm() {
         item.variance_quantity = countVarianceQuantity(item);
         // 盘点商品原有数量
         item.origin_quantity = item.stock_total_quantity;
-
       });
 
       const {
@@ -136,7 +134,7 @@ export function useCountForm() {
         : createCount({
             ...params,
           }));
-          gridApi.reload()
+      gridApi.reload();
       return response;
     } catch (error) {
       console.error('盘点单 customized form submission error:', error);
@@ -147,21 +145,20 @@ export function useCountForm() {
   const schema: ISchema = {
     type: 'object',
     properties: {
-      form: {
+      card0: {
         type: 'void',
-        'x-component': 'FormLayout',
+        'x-component': 'Card',
         'x-component-props': {
           labelCol: 6,
           wrapperCol: 14,
-          layout: 'vertical',
+          header: '',
+          bodyClass: 'py-0 px-1 my-1 border-0',
         },
         properties: {
           label: {
             type: 'void',
             'x-component': 'Space',
-            'x-component-props': {
-              style: { marginBottom: '10px' },
-            },
+            'x-component-props': {},
             properties: {
               c: {
                 type: 'void',
@@ -176,211 +173,287 @@ export function useCountForm() {
                 'x-component': 'div',
                 'x-content': '{{userName}}',
                 'x-component-props': {
-                  class: 'text-red-500',
+                  class: 'text-red-600',
                 },
               },
             },
           },
-
-          warehouse_id: {
-            type: 'string',
-            title: "{{t('count.warehouse-name')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'Select',
-            'x-component-props': {
-              maxLength: 256,
-              placeholder: "{{t('common.select')}}",
-              clearable: true,
-            },
-            'x-reactions': {
-              fulfill: {
-                state: {
-                  dataSource: '{{ warehouse.value }}',
-                },
-              },
-            },
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('product-group.please-select-level')}}",
-              },
-            ],
-          },
-          physical_stock_take_date: {
-            type: 'string',
-            title: "{{t('count.physical-stock-take-date')}}",
-            required: true,
-            'x-decorator': 'FormItem',
-            'x-component': 'DatePicker',
-            'x-component-props': {
-              maxLength: 32,
-              placeholder: "{{t('common.select')}}",
-              clearable: true,
-            },
-            'x-validator': [
-              {
-                required: true,
-                message: "{{t('product-group.please-select-level')}}",
-              },
-            ],
-          },
-          physical_stock_take_item_list: {
-            type: 'array',
-            'x-component': 'ProductTable',
-            'x-component-props': {
-              mode: 'physical',
-              // capabilities: [
-              //   'barcode',
-              //   'unit',
-              //   'vat',
-              //   'discount',
-              //   'stock',
-              //   'image',
-              //   'remark',
-              // ],
-              vatMode: 'VAT_EXCLUSIVE',
-              // 业务标记（用于单位禁用逻辑兼容旧条件）
-              isReceiptMode: false,
-              purchaseOrderSelected: false,
-              // 可选：展示/校验库存
-              searchProducts: (keywords: string) => {
-                return wareHouseProductSearch({
-                  keywords,
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  warehouse_id: '',
-                  // business_type: 'purchase',
-                  page_num: 1,
-                  page_size: 20,
-                }).then(({ list }) => {
-                  return list.map((item: any) => {
-                    return {
-                      ...item,
-                      value: item.id,
-                      label: [item.major_name, item.product_spec_kvmessage]
-                        .filter(Boolean)
-                        .join('-'),
-                    };
-                  });
-                });
-              },
-            },
-          },
-          row_1: {
+        },
+      },
+      card1: {
+        type: 'void',
+        'x-component': 'Card',
+        'x-component-props': {
+          labelCol: 6,
+          wrapperCol: 14,
+          header: '',
+          bodyClass: 'py-0 px-1 my-1 border-0',
+        },
+        properties: {
+          form: {
             type: 'void',
-            'x-component': 'div',
+            'x-component': 'FormLayout',
             'x-component-props': {
-              class: 'w-full flex mt-10 mb-10',
-              style: {},
+              labelCol: 6,
+              layout: 'vertical',
             },
             properties: {
-              row_col_0: {
+              grid: {
                 type: 'void',
-                'x-component': 'div',
+                'x-component': 'FormGrid',
                 'x-component-props': {
-                  class: 'w-2/3',
-                  style: {},
+                  minColumns: [3],
                 },
                 properties: {
-                  remark: {
+                  physical_stock_take_no: {
                     type: 'string',
-                    title: "{{t('common.remarks')}}",
+                    title: "{{t('count.physical-stock-take-no')}}",
+                    required: true,
                     'x-decorator': 'FormItem',
-                    'x-component': 'Input.TextArea',
+                    'x-component': 'Input',
                     'x-component-props': {
-                      maxlength: 256,
-                      rows: 5,
-                      'show-word-limit': true,
+                      placeholder: "{{t('count.physical-stock-take-no')}}",
+                      clearable: true,
+                      disabled: true,
                     },
+                    'x-decorator-props': {
+                      feedbackLayout: 'terse',
+                    },
+                  },
+                  warehouse_id: {
+                    type: 'string',
+                    title: "{{t('count.warehouse-name')}}",
+                    required: true,
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Select',
+                    'x-component-props': {
+                      maxLength: 256,
+                      placeholder: "{{t('common.select')}}",
+                      clearable: true,
+                    },
+                    'x-reactions': {
+                      fulfill: {
+                        state: {
+                          dataSource: '{{ warehouse.value }}',
+                        },
+                      },
+                    },
+                    'x-validator': [
+                      {
+                        required: true,
+                        message: "{{t('product-group.please-select-level')}}",
+                      },
+                    ],
+                  },
+                  physical_stock_take_date: {
+                    type: 'string',
+                    title: "{{t('count.physical-stock-take-date')}}",
+                    required: true,
+                    'x-decorator': 'FormItem',
+                    'x-component': 'DatePicker',
+                    'x-component-props': {
+                      maxLength: 32,
+                      placeholder: "{{t('common.select')}}",
+                      clearable: true,
+                    },
+                    'x-validator': [
+                      {
+                        required: true,
+                        message: "{{t('product-group.please-select-level')}}",
+                      },
+                    ],
                   },
                 },
               },
-              row_col_1: {
+
+              // 商品card
+              product_card: {
                 type: 'void',
-                'x-component': 'div',
+                'x-component': 'Card',
                 'x-component-props': {
-                  class: 'w-1/3 flex items-center justify-center mt-6 mb-6',
-                  style: {
-                    background: '#edf5ff',
-                  },
+                  header: t('common.product'),
                 },
                 properties: {
-                  center: {
+                  physical_stock_take_item_list: {
+                    type: 'array',
+                    'x-component': 'ProductTable',
+                    'x-component-props': {
+                      mode: 'physical',
+                      // capabilities: [
+                      //   'barcode',
+                      //   'unit',
+                      //   'vat',
+                      //   'discount',
+                      //   'stock',
+                      //   'image',
+                      //   'remark',
+                      // ],
+                      vatMode: 'VAT_EXCLUSIVE',
+                      // 业务标记（用于单位禁用逻辑兼容旧条件）
+                      isReceiptMode: false,
+                      purchaseOrderSelected: false,
+                      // 可选：展示/校验库存
+                      searchProducts: (keywords: string) => {
+                        return wareHouseProductSearch({
+                          keywords,
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          // @ts-ignore
+                          warehouse_id: '',
+                          // business_type: 'purchase',
+                          page_num: 1,
+                          page_size: 20,
+                        }).then(({ list }) => {
+                          return list.map((item: any) => {
+                            return {
+                              ...item,
+                              value: item.id,
+                              label: [
+                                item.major_name,
+                                item.product_spec_kvmessage,
+                              ]
+                                .filter(Boolean)
+                                .join('-'),
+                            };
+                          });
+                        });
+                      },
+                    },
+                  },
+                },
+              },
+              remark_card: {
+                type: 'void',
+                'x-component': 'Card',
+                'x-component-props': {
+                  header: t('common.remarks'),
+                },
+                properties: {
+                  row_1: {
                     type: 'void',
-                    'x-component': 'div',
+                    'x-component': 'FormGrid',
+                    'x-component-props': {
+                      // class: 'w-full flex',
+                      style: {},
+                      minColumns: [3],
+                    },
                     properties: {
-                      label_1: {
+                      form1: {
                         type: 'void',
-                        'x-component': 'div',
-                        'x-component-props': {
-                          class: 'flex',
+                        'x-decorator': 'FormGrid.GridColumn',
+                        'x-component': 'FormLayout',
+                        'x-decorator-props': {
+                          gridSpan: 2,
                         },
                         properties: {
-                          c: {
-                            type: 'void',
-                            'x-component': 'div',
-                            'x-content': "{{t('count.diff-num')+' : '}}",
-                            'x-component-props': {
-                              style: { fontSize: '14px' },
-                            },
-                          },
-                          diffNum: {
+                          remark: {
                             type: 'string',
-                            'x-component': 'div',
-                            'x-content': "{{$self.value?$self.value:'0'}}",
+                            title: '',
+                            'x-decorator': 'FormItem',
+                            'x-component': 'Input.TextArea',
                             'x-component-props': {
-                              style: {},
+                              maxlength: 256,
+                              rows: 5,
+                              'show-word-limit': true,
                             },
                           },
                         },
                       },
-                      label_2: {
+                      row_col_1: {
                         type: 'void',
                         'x-component': 'div',
                         'x-component-props': {
-                          class: 'flex',
+                          class: 'flex items-center justify-center rounded-lg',
+                          style: {
+                            background: '#edf5ff',
+                            'margin-bottom': '8px',
+                          },
                         },
                         properties: {
-                          c: {
+                          center: {
                             type: 'void',
                             'x-component': 'div',
-                            'x-content': "{{t('count.diff-cost')+' : '}}",
-                            'x-component-props': {
-                              style: { fontSize: '14px' },
-                            },
-                          },
-                          diffCost: {
-                            type: 'string',
-                            'x-component': 'div',
-                            'x-content': "{{$self.value?$self.value:'0'}}",
-                            'x-component-props': {
-                              style: {},
-                            },
-                          },
-                        },
-                      },
-                      label_3: {
-                        type: 'void',
-                        'x-component': 'div',
-                        'x-component-props': {
-                          class: 'flex',
-                        },
-                        properties: {
-                          c: {
-                            type: 'void',
-                            'x-component': 'div',
-                            'x-content': "{{t('count.diff-sale')+' : '}}",
-                            'x-component-props': {
-                              style: { fontSize: '14px' },
-                            },
-                          },
-                          diffSale: {
-                            type: 'string',
-                            'x-component': 'div',
-                            'x-content': "{{$self.value?$self.value:'0'}}",
-                            'x-component-props': {
-                              style: {},
+                            properties: {
+                              label_1: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-component-props': {
+                                  class: 'flex',
+                                },
+                                properties: {
+                                  c: {
+                                    type: 'void',
+                                    'x-component': 'div',
+                                    'x-content':
+                                      "{{t('count.diff-num')+' : '}}",
+                                    'x-component-props': {
+                                      style: { fontSize: '14px' },
+                                    },
+                                  },
+                                  diffNum: {
+                                    type: 'string',
+                                    'x-component': 'div',
+                                    'x-content':
+                                      "{{$self.value?$self.value:'0'}}",
+                                    'x-component-props': {
+                                      style: {},
+                                    },
+                                  },
+                                },
+                              },
+                              label_2: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-component-props': {
+                                  class: 'flex',
+                                },
+                                properties: {
+                                  c: {
+                                    type: 'void',
+                                    'x-component': 'div',
+                                    'x-content':
+                                      "{{t('count.diff-cost')+' : '}}",
+                                    'x-component-props': {
+                                      style: { fontSize: '14px' },
+                                    },
+                                  },
+                                  diffCost: {
+                                    type: 'string',
+                                    'x-component': 'div',
+                                    'x-content':
+                                      "{{$self.value?$self.value:'0'}}",
+                                    'x-component-props': {
+                                      style: {},
+                                    },
+                                  },
+                                },
+                              },
+                              label_3: {
+                                type: 'void',
+                                'x-component': 'div',
+                                'x-component-props': {
+                                  class: 'flex',
+                                },
+                                properties: {
+                                  c: {
+                                    type: 'void',
+                                    'x-component': 'div',
+                                    'x-content':
+                                      "{{t('count.diff-sale')+' : '}}",
+                                    'x-component-props': {
+                                      style: { fontSize: '14px' },
+                                    },
+                                  },
+                                  diffSale: {
+                                    type: 'string',
+                                    'x-component': 'div',
+                                    'x-content':
+                                      "{{$self.value?$self.value:'0'}}",
+                                    'x-component-props': {
+                                      style: {},
+                                    },
+                                  },
+                                },
+                              },
                             },
                           },
                         },
@@ -389,16 +462,25 @@ export function useCountForm() {
                   },
                 },
               },
-            },
-          },
-          attachment_url: {
-            type: 'string',
-            title: "{{t('common.attachment')}}",
-            'x-decorator': 'FormItem',
-            'x-component': 'Upload',
-            'x-component-props': {
-              action: 'https://formily-vue.free.beeceptor.com/file',
-              drag: true,
+              attachment_card: {
+                type: 'void',
+                'x-component': 'Card',
+                'x-component-props': {
+                  header: t('common.attachment'),
+                },
+                properties: {
+                  attachment_url: {
+                    type: 'string',
+                    title: "",
+                    'x-decorator': 'FormItem',
+                    'x-component': 'Upload',
+                    'x-component-props': {
+                      action: 'https://formily-vue.free.beeceptor.com/file',
+                      drag: true,
+                    },
+                  },
+                },
+              },
             },
           },
         },
@@ -410,6 +492,7 @@ export function useCountForm() {
       title: t('count.add-inventory-count-save'),
       appendToMain: true,
       class: 'md:w-2/3',
+      contentClass: 'bg-muted',
       async onOpenChange(isOpen) {
         if (isOpen) {
           formAPI.reset();
@@ -424,8 +507,12 @@ export function useCountForm() {
             detail.returned_quantity = detail.physical_total_quantity;
             formAPI.setValues(detail);
           } else {
-            // 增加时，保留1条数据
-            formAPI.setValues({ physical_stock_take_item_list: [{}] });
+            // 盘点单No 新增时 生成订单号
+            const orderNo = await generateNo();
+            formAPI.setValues({
+              physical_stock_take_no: orderNo,
+              physical_stock_take_item_list: [{}],
+            }); //增加时，保留1条数据
           }
         } else {
           // 关闭抽屉时，重置表单
