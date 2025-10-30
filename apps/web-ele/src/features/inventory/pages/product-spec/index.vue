@@ -4,6 +4,7 @@ import type { ProductLabelItem } from '../../types';
 import { onMounted, ref } from 'vue';
 
 import {
+  Card,
   ColPage,
   confirm,
   ElButton,
@@ -138,13 +139,19 @@ onMounted(() => {
       </div>
     </template>
     <template #left="{}">
-      <section class="bg-card mb-5 h-full rounded p-2.5">
-        <p class="flex justify-between text-sm font-medium">
-          {{ t('product-spec.product-spec') }}
-          <ElButton type="primary" @click="handleAddLabel">
-            {{ t('common.add') }}
+      <Card
+        class="bg-card p-small mr-2 h-full rounded"
+        headerClass="formily-element-plus-card-header plus-card-header-pos"
+      >
+        <template #header>
+          <span class="text-sm font-medium">{{ t('product-spec.product-spec') }}</span>
+          <div class="absolute right-1 top-1">
+            <ElButton type="primary" @click="handleAddLabel">
+              {{ t('common.add') }}
           </ElButton>
-        </p>
+          </div>
+
+        </template>
         <!-- 分类树 -->
         <div>
           <ElRadioGroup
@@ -182,21 +189,21 @@ onMounted(() => {
             </div>
           </ElRadioGroup>
         </div>
-      </section>
+      </Card>
     </template>
     <Grid>
       <template #table-actions>
-        <!-- <ElButton type="primary" @click="handleAddSpecValue">
+        <ElButton type="primary" @click="handleAddSpecValue">
           {{ t('common.add') }}
-        </ElButton> -->
-        <!--
+        </ElButton>
+
         <ElButton
           v-if="canBatchOperate"
           type="danger"
           @click="handleBatchDelete"
         >
           {{ t('common.delete') }}
-        </ElButton>-->
+        </ElButton>
       </template>
       <template #status="{ row }">
         <StatusTemplate :value="row.status" :status-list="STATUS_CONFIG" />

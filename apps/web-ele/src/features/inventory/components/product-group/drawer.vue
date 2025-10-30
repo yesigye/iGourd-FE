@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElCard } from '@igourd/common-ui';
 import { defineEmits } from 'vue';
 
 import { useProductGroupForm } from '../../hooks/product-group/form';
@@ -9,7 +10,9 @@ const { Drawer, Form } = useProductGroupForm(emit);
 
 <template>
   <Drawer>
-    <Form />
+    <ElCard class="border-0" style="height: 99%">
+      <Form />
+    </ElCard>
   </Drawer>
 </template>
 <style lang="scss">

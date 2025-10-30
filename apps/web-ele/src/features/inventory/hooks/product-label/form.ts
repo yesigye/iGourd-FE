@@ -57,7 +57,8 @@ export function useProductLabelForm(func) {
   const [Drawer, drawerApi] = useIgourdDrawer({
     title: t('product-label.add-product-label'),
     appendToMain: true,
-    class: 'w-full',
+    class: 'w-1/2',
+    contentClass: 'bg-muted',
     async onOpenChange(isOpen) {
       if (isOpen) {
         formAPI.reset();

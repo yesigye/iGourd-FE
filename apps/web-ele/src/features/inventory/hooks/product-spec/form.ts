@@ -37,6 +37,7 @@ export function useProductSpecForm(func) {
     title: t('product-spec.add-spec'),
     appendToMain: true,
     class: 'w-1/2',
+    contentClass: 'bg-muted',
     async onOpenChange(isOpen, val) {
       if (isOpen) {
         formAPI.reset();
