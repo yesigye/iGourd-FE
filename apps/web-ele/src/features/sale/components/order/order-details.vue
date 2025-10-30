@@ -6,6 +6,7 @@ import type { VxeGridProps, VxeGridPropTypes } from '#/adapter/vxe-table';
 import { ref } from 'vue';
 
 import {
+  Card,
   ElButton,
   ElDescriptions,
   ElDescriptionsItem,
@@ -16,7 +17,6 @@ import { useI18n } from '@igourd/locales';
 import { orderDetailApi } from '@@/sale/apis';
 
 import { useIgourdVxeGrid } from '#/adapter/vxe-table';
-import { PageTitle } from '#/components';
 import { initializeCurrencySymbol } from '#/utils/sale';
 
 defineOptions({
@@ -176,42 +176,45 @@ const [Drawer, drawerApi] = useIgourdDrawer({
 </script>
 <template>
   <Drawer>
-    <PageTitle :title="t('order.basic-information')" />
-    <section class="px-3">
-      <ElDescriptions :column="3" :size="size" border>
-        <ElDescriptionsItem :label="t('refund-order.customer')">
-          {{ orderDetail?.customer_detail_model?.name || '--' }}
-        </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('refund-order.creation-time')">
-          {{ orderDetail?.create_time || '--' }}
-        </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('refund-order.refund-time')">
-          {{ orderDetail?.refund_time || '--' }}
-        </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('refund-order.this-refund')">
-          {{ orderDetail?.total_amount || '--' }}
-        </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('refund-order.actual-refund-amt')">
-          {{ orderDetail?.total_paid_amount || '--' }}
-        </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('refund-order.still-balance')">
-          {{ orderDetail?.current_remaining_amount || '--' }}
-        </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('refund-order.refund-qty')">
-          {{ orderDetail?.total_quantity || '--' }}
-        </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('refund-order.cashier')">
-          {{ orderDetail?.guider_name || '--' }}
-        </ElDescriptionsItem>
-        <ElDescriptionsItem :label="t('refund-order.status')">
-          {{ orderDetail?.status || '--' }}
-        </ElDescriptionsItem>
-      </ElDescriptions>
-    </section>
-    <PageTitle :title="t('refund-order.product-details')" />
-    <section><RefundOrderDetailProductGrid /></section>
-    <PageTitle :title="t('order.repayment-history')" />
-    <section><RefundOrderDetailPayHistoryGrid /></section>
+    <Card :header="t('order.basic-information')" class="border-0">
+      <section class="px-3">
+        <ElDescriptions :column="3" :size="size" border>
+          <ElDescriptionsItem :label="t('refund-order.customer')">
+            {{ orderDetail?.customer_detail_model?.name || '--' }}
+          </ElDescriptionsItem>
+          <ElDescriptionsItem :label="t('refund-order.creation-time')">
+            {{ orderDetail?.create_time || '--' }}
+          </ElDescriptionsItem>
+          <ElDescriptionsItem :label="t('refund-order.refund-time')">
+            {{ orderDetail?.refund_time || '--' }}
+          </ElDescriptionsItem>
+          <ElDescriptionsItem :label="t('refund-order.this-refund')">
+            {{ orderDetail?.total_amount || '--' }}
+          </ElDescriptionsItem>
+          <ElDescriptionsItem :label="t('refund-order.actual-refund-amt')">
+            {{ orderDetail?.total_paid_amount || '--' }}
+          </ElDescriptionsItem>
+          <ElDescriptionsItem :label="t('refund-order.still-balance')">
+            {{ orderDetail?.current_remaining_amount || '--' }}
+          </ElDescriptionsItem>
+          <ElDescriptionsItem :label="t('refund-order.refund-qty')">
+            {{ orderDetail?.total_quantity || '--' }}
+          </ElDescriptionsItem>
+          <ElDescriptionsItem :label="t('refund-order.cashier')">
+            {{ orderDetail?.guider_name || '--' }}
+          </ElDescriptionsItem>
+          <ElDescriptionsItem :label="t('refund-order.status')">
+            {{ orderDetail?.status || '--' }}
+          </ElDescriptionsItem>
+        </ElDescriptions>
+      </section>
+    </Card>
+    <Card :header="t('refund-order.product-details')" class="border-0">
+      <section><RefundOrderDetailProductGrid /></section>
+    </Card>
+    <Card :header="t('order.repayment-history')" class="border-0">
+      <section><RefundOrderDetailPayHistoryGrid /></section>
+    </Card>
     <template #footer>
       <ElButton type="primary" size="default" @click="drawerApi.close()">
         {{ t('common.close') }}

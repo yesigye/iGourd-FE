@@ -224,8 +224,14 @@ export function useSaleShifts() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
-      id: 'shifts',
+      id: 'shift_change_export',
       columns: baseColumns,
+      toolbarConfig: {
+        export: true,
+      },
+      tabsOption: {
+        formKey: 'shift_change_export',
+      },
       searchFormSchema: {
         date_range: {
           type: 'string',

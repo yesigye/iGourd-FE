@@ -22,5 +22,6 @@
   "stock-status": "Statut de stock",
   "normal": "Normal",
   "low": "Stock faible",
-  "out": "Hors stock"
+  "out": "Hors stock",
+  "search-by-day-or-month": "Rechercher par jour ou par mois"
 }

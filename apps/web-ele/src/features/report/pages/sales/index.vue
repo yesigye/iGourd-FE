@@ -12,11 +12,12 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { Grid, gridApi, Drawer, handleEdit, queryData } = useSalesReport();
+const { Grid, gridApi, Drawer, handleEdit, queryData, query } =
+  useSalesReport();
 const staticsData = ref<ProductSalesStatsResponse>({});
 const getStaticsData = async () => {
   const res = await getProductSalesStatsApi({
-    ...queryData,
+    ...query.value,
   });
   staticsData.value = res || {};
 };

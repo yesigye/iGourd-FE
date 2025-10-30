@@ -124,7 +124,7 @@ const getPaymentMethods = async () => {
         field: {
           data: item.payment_method_mark,
           params: item.payment_method_mark,
-          type: item.payment_method_type.value,
+          type: item.payment_method_type,
           isActive: false,
         } as MerchantPaymentMethodConfigModelAddPayField,
       };
@@ -133,11 +133,11 @@ const getPaymentMethods = async () => {
     // data 按照payment_method_type分组
     const group = newData.reduce(
       (acc, cur) => {
-        if (!cur.payment_method_type?.value) return acc;
-        if (!acc[cur.payment_method_type?.value]) {
-          acc[cur.payment_method_type?.value] = [];
+        if (!cur.payment_method_type) return acc;
+        if (!acc[cur.payment_method_type]) {
+          acc[cur.payment_method_type] = [];
         }
-        acc[cur.payment_method_type?.value].push(cur);
+        acc[cur.payment_method_type].push(cur);
         return acc;
       },
       {} as Record<string, MerchantPaymentMethodConfigModelAddPayField[]>,
@@ -151,7 +151,7 @@ const getPaymentMethods = async () => {
           group[key][0].field.isActive = true;
         }
         formData.value[key] = {
-          activeItemType: group[key][0].payment_method_type?.value,
+          activeItemType: group[key][0].payment_method_type,
           activeItemMark: group[key][0].payment_method_mark,
           activeItemName: group[key][0].payment_method_name,
           activeItemAmount: undefined,
@@ -806,9 +806,7 @@ defineExpose({
       <div
         class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
       >
-        <span class="scan-cash-settlement-header-title"
-          >{{ t('scan.amount-tendered') }}:</span
-        >
+        <span class="scan-cash-settlement-header-title">{{ t('scan.amount-tendered') }}:</span>
 
         <span class="scan-cash-settlement-header-amount">
           {{ tenderedAmount.toFixed(2) }} {{ currentSymbol }}
@@ -818,9 +816,7 @@ defineExpose({
       <div
         class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
       >
-        <span class="scan-cash-settlement-header-title"
-          >{{ t('scan.amount-change') }}:</span
-        >
+        <span class="scan-cash-settlement-header-title">{{ t('scan.amount-change') }}:</span>
         <div class="flex-1">
           <ElInputNumber
             ref="wipedAmountInput"
@@ -891,13 +887,8 @@ defineExpose({
             </ElDropdown>
             <!-- 支付方式 对应的 输入框 -->
             <ElInput
-              :ref="
-                (ref) =>
-                  (paymentInput[item[0].payment_method_type?.value!] = ref)
-              "
-              v-model="
-                formData[item[0]?.payment_method_type?.value].activeItemAmount
-              "
+              :ref="(ref) => (paymentInput[item[0].payment_method_type!] = ref)"
+              v-model="formData[item[0]?.payment_method_type].activeItemAmount"
               :disabled="
                 (payMethodDisable.isDisable &&
                   !payMethodDisable.DoNotDisableItem.includes(
@@ -921,9 +912,7 @@ defineExpose({
         class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
       >
         <span class="text-status-partial">{{ t('scan.change') }}:</span>
-        <span class="text-status-terminated"
-          >{{ changeAmount }} {{ currentSymbol }}</span
-        >
+        <span class="text-status-terminated">{{ changeAmount }} {{ currentSymbol }}</span>
       </div>
     </div>
     <div class="h-full flex-grow" v-else>

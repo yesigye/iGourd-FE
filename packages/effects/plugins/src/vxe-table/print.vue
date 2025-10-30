@@ -34,12 +34,20 @@ const options = computed(() => {
     toolbarConfig: {
       enabled: false,
     },
-    columns: props.columns?.filter((item) => {
-      return (
-        !['checkbox', 'radio'].includes(item.type!) &&
-        !['action', 'actions', 'operations', 'opreate'].includes(item.field)
-      );
-    }),
+    columns: props.columns
+      ?.filter((item) => {
+        return (
+          !['checkbox', 'radio'].includes(item.type!) &&
+          !['action', 'actions', 'operations', 'opreate'].includes(item.field)
+        );
+      })
+      .map((item) => {
+        return {
+          ...item,
+          width: 'auto',
+          minWidth: undefined,
+        };
+      }),
     height: document.body.clientHeight - 150,
     showHeader: true,
     id: `${props.id}-print-config`,
@@ -145,7 +153,7 @@ const onTemplateChange = ({ value }) => {
             >
           </div>
         </header>
-        <div class=" flex items-center justify-center">
+        <div class="flex items-center justify-center">
           <div :class="printType">
             <Grid v-bind="options" />
           </div>

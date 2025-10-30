@@ -178,8 +178,14 @@ export function useSaleEnter() {
   const { Grid, canBatchOperate, Drawer, handleEdit, handleBatchDelete } =
     useCrud({
       service,
-      id: 'enter',
+      id: 'daily_settlement_export',
       columns: baseColumns,
+      toolbarConfig: {
+        export: true,
+      },
+      tabsOption: {
+        formKey: 'daily_settlement_export',
+      },
       searchFormSchema: {
         keywords: {
           type: 'string',

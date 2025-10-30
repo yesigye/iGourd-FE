@@ -14,6 +14,10 @@ import { useCrud } from '#/hooks';
 export function useSalesReport() {
   const { t } = useI18n();
   const options = ref([]);
+  const query = ref<QueryForm>({
+    page_num: 1,
+    page_size: 10,
+  });
   const columns: VxeGridPropTypes.Column<SalesReportRow>[] = [
     {
       field: 'product_major_name',
@@ -100,7 +104,11 @@ export function useSalesReport() {
 
   const searchFormSchema = {
     date_range: {
-      type: 'string',
+      type: 'array',
+      default: [
+        new Date().toISOString().split('T')[0], // 今天开始 YYYY-MM-DD
+        new Date().toISOString().split('T')[0], // 今天结束 YYYY-MM-DD
+      ],
       'x-decorator': 'FormItem',
       'x-component': 'DatePicker',
       'x-component-props': {
@@ -112,41 +120,64 @@ export function useSalesReport() {
         valueFormat: 'YYYY-MM-DD',
       },
     },
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
+      'x-component-props': {
+        placeholder: t('sales.placeholder-keywords'),
+        class: 'w-[244px]',
+        style: {
+          width: '240px',
+        },
+      },
+    },
   };
 
-  return useCrud<SalesReportRow, any>({
-    columns,
-    id: 'report-sales-list',
-    searchFormSchema,
-    scope: {
-      initialValues: {
-        date_range: [
-          `${dayjs().subtract(1, 'months').format('YYYY-MM-DD')} `,
-          `${dayjs().format('YYYY-MM-DD')} `,
-        ],
+  return {
+    ...useCrud<SalesReportRow, any>({
+      columns,
+      id: 'product_month_report_export',
+      searchFormSchema,
+      scope: {
+        initialValues: {
+          date_range: [
+            `${dayjs().subtract(1, 'months').format('YYYY-MM-DD')} `,
+            `${dayjs().format('YYYY-MM-DD')} `,
+          ],
+        },
       },
-    },
-    batchOperate: false,
-    service: {
-      query: async (params: {
-        end_date?: string;
-        page_num: number;
-        page_size: number;
-        start_date?: string;
-        tabKey: string;
-        time_range: string;
-      }) => {
-        // 开始时间默认是当前时间-一个月
-        params.end_date = params.date_range?.[1]
-          ? `${params.date_range?.[1]} 23:59:59`
-          : `${dayjs().format('YYYY-MM-DD')} 23:59:59`;
-        params.start_date = params.date_range?.[0]
-          ? `${params.date_range?.[0]} 00:00:00`
-          : `${dayjs().subtract(1, 'months').format('YYYY-MM-DD')} 00:00:00`;
-        params.tabKey = 'DAY';
-        params.time_range = 'DAY';
-        return await getSalesReportApi(params);
+      tabsOption: {
+        defaultActiveValue: 'ALL',
+        formKey: 'product_month_report_export',
       },
-    },
-  });
+      toolbarConfig: {
+        export: true,
+      },
+      batchOperate: false,
+      service: {
+        query: async (params: {
+          end_date?: string;
+          page_num: number;
+          page_size: number;
+          start_date?: string;
+          tabKey: string;
+          time_range: string;
+        }) => {
+          // 开始时间默认是当前时间-一个月
+          params.end_date = params.date_range?.[1]
+            ? `${params.date_range?.[1]} 23:59:59`
+            : `${dayjs().format('YYYY-MM-DD')} 23:59:59`;
+          params.start_date = params.date_range?.[0]
+            ? `${params.date_range?.[0]} 00:00:00`
+            : `${dayjs().subtract(1, 'months').format('YYYY-MM-DD')} 00:00:00`;
+          params.tabKey = 'DAY';
+          params.time_range = 'DAY';
+          query.value = params;
+          return await getSalesReportApi(params);
+        },
+      },
+    }),
+    query,
+  };
 }
