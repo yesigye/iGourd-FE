@@ -47,3 +47,4 @@ export const ShoppingBagHandBag2ShoppingBagPurseGoodsItemProducts =
     'streamline:shopping-bag-hand-bag-2-shopping-bag-purse-goods-item-products',
   );
 export const Lists = createIconifyIcon('material-symbols-light:lists');
+export const WarningFilled = createIconifyIcon('ep:warning-filled');

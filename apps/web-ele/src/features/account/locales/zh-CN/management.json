@@ -1,5 +1,7 @@
 {
   "all": "全部",
   "card": "银行卡",
-  "cash": "现金"
+  "cash": "现金",
+  "account-number": "账户号码",
+  "account-name": "账户名称"
 }

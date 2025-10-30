@@ -34,5 +34,16 @@
     "different-store-transfer": "Different Store Transfer",
     "transfer-out": "Warehouse Outbound",
     "transfer-in": "Warehouse Inbound"
+  },
+  "account-classification-types": {
+    "REVENUE": "Income",
+    "EXPENDITURE": "Expenditure"
+  },
+  "account-management-fail-reason": {
+    "BALANCE_NOT_ZERO": "This account has balance, cannot be deleted!",
+    "BOUND_TO_CUSTOMER_VENDOR": "Bound to customer or vendor",
+    "HAS_FLOW_RECORD": "This account has flow records, cannot be deleted!",
+    "SYSTEM_INIT": "System initialized account, cannot be deleted!",
+    "UNKNOWN_ERROR": "Unknown error"
   }
 }

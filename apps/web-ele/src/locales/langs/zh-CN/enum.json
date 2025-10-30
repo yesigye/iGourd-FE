@@ -38,5 +38,17 @@
     "different-store-transfer": "不同门店调拨",
     "transfer-out": "仓库入库",
     "transfer-in": "仓库出库"
+  },
+  "account-note-review-status": {
+    "PENDING": "待审核",
+    "APPROVED": "通过",
+    "REJECTED": "拒绝"
+  },
+  "account-management-fail-reason": {
+    "BALANCE_NOT_ZERO": "该账户有资金,禁止删除！",
+    "BOUND_TO_CUSTOMER_VENDOR": "被用户或供应商绑定",
+    "HAS_FLOW_RECORD": "该账户存在流水记录,禁止删除！",
+    "SYSTEM_INIT": "系统初始化帐户,禁止删除！",
+    "UNKNOWN_ERROR": "未知错误"
   }
 }
