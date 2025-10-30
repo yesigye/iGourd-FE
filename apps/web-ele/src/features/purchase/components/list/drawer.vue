@@ -255,7 +255,7 @@ const createSchema = (dynamicJson) => {
                           },
                           {
                             format: 'phone',
-                            message: "{{t('list.validate-phone')}}",
+                            message: t('list.validate-phone'),
                           },
                         ],
                       },
@@ -276,7 +276,7 @@ const createSchema = (dynamicJson) => {
                       },
                       {
                         format: 'email',
-                        message: "{{t('list.validate-email')}}",
+                        message: t('list.validate-email'),
                       },
                     ],
                   },
