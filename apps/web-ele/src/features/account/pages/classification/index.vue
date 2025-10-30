@@ -11,7 +11,14 @@ defineOptions({
 const { t } = useI18n();
 //
 
-const { Grid, Drawer, handleEdit, canBatchOperate } = useClassification();
+const {
+  Grid,
+  Drawer,
+  handleEdit,
+  canBatchOperate,
+  handleBatchDelete,
+  handleDelete,
+} = useClassification();
 </script>
 
 <template>
@@ -21,7 +28,11 @@ const { Grid, Drawer, handleEdit, canBatchOperate } = useClassification();
         <ElButton type="primary" @click="handleEdit()">
           {{ t('common.add') }}
         </ElButton>
-        <ElButton type="danger" v-if="canBatchOperate">
+        <ElButton
+          type="danger"
+          @click="handleBatchDelete()"
+          v-if="canBatchOperate"
+        >
           {{ t('common.delete') }}
         </ElButton>
       </template>
@@ -34,6 +45,9 @@ const { Grid, Drawer, handleEdit, canBatchOperate } = useClassification();
         >
           {{ t('common.edit') }}
         </ElButton>
+      </template>
+      <template #type="{ row }">
+        {{ t(`enum.account-classification-types.${row.type}`) }}
       </template>
     </Grid>
 

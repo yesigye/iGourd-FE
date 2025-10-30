@@ -21,6 +21,11 @@ export function useClassification() {
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<any>[] = [
     {
+      type: 'checkbox',
+      width: 80,
+      fixed: 'left',
+    },
+    {
       field: 'name',
       minWidth: 180,
       title: t('account.classification'),
@@ -29,19 +34,7 @@ export function useClassification() {
       field: 'type',
       minWidth: 120,
       title: t('account.revenue-and-expenditure'),
-      filters: [
-        {
-          label: t('account.revenue'),
-          value: 'REVENUE',
-        },
-        {
-          label: t('account.expenditure'),
-          value: 'EXPENDITURE',
-        },
-      ],
-      formatter({ cellValue }) {
-        return cellValue.label;
-      },
+      slots: { default: 'type' },
     },
     {
       field: 'ledger_names',
@@ -86,7 +79,7 @@ export function useClassification() {
     update: updateFinanceCategoryApi,
     detail: getFinanceCategoryDetailApi,
     // 删除分类
-    remove: deleteFinanceCategoryApi,
+    drop: deleteFinanceCategoryApi,
   };
   const defaultTime = ref<[Date, Date]>([
     new Date(2000, 1, 1, 0, 0, 0),
@@ -100,6 +93,7 @@ export function useClassification() {
     Drawer,
     handleEdit,
     handleBatchDelete,
+    handleDelete,
   } = useCrud({
     service,
     id: 'class-ification',
@@ -160,6 +154,7 @@ export function useClassification() {
     // 方法
     handleEdit,
     handleBatchDelete,
+    handleDelete,
     canBatchOperate,
   };
 }
