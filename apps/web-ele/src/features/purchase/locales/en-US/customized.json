@@ -1,5 +1,6 @@
 {
   "add-customized": "Add Customization",
+  "edit-customized": "Edit Customization",
   "name": "Name",
   "type": "Type",
   "options-type": "Options Type",
@@ -7,5 +8,6 @@
   "creator": "Creator",
   "creation-time": "Creation Time",
   "input-box": "Input Box",
-  "select-box": "Select Box"
+  "select-box": "Select Box",
+  "view-supplier-attributes":"View Supplier Custom Attributes"
 }

@@ -1,5 +1,6 @@
 {
   "add-customized": "Ajouter une personnalisation",
+  "edit-customized": "Modifier un attribut personnalisé fournisseur",
   "name": "Nom",
   "type": "Type",
   "options-type": "Type d'options",
@@ -7,5 +8,6 @@
   "creator": "Créateur",
   "creation-time": "Date de création",
   "input-box": "Boîte de saisie",
-  "select-box": "Boîte de sélection"
+  "select-box": "Boîte de sélection",
+  "view-supplier-attributes": "Consulter les attributs personnalisés du fournisseur"
 }

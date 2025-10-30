@@ -31,6 +31,7 @@
   "selection-type": "选择类型",
   "selection-options": "选择选项",
   "option-name": "选项名称",
-  "add-customized": "添加定制",
+  "add-customized-attributes": "添加客户自定义属性",
+  "edit-customized-attributes": "编辑客户自定义属性",
   "view-customized-attributes":"查看客户自定义属性"
 }
