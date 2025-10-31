@@ -1,8 +1,8 @@
 import { disabledTimeListsProps } from 'element-plus/es/components/time-picker/src/props/shared.mjs';
 import type { ModePlugin } from '../types';
 
-export const TransferMode: ModePlugin = {
-  id: 'transfer',
+export const TransferOutMode: ModePlugin = {
+  id: 'transfer-out',
   columns(_ctx) {
     return [
       {
@@ -42,20 +42,7 @@ export const TransferMode: ModePlugin = {
           disabled:true
         },
       },
-      {
-        name: 'transfer_in_quantity',
-        type: 'number',
-        title: "{{t('common.purchase.transfer-in-quantity')}}",
-        'x-component': 'ProductTable.QuantityCell',
-        'x-decorator': 'FormItem',
-        'x-component-props': {
-          style: { width: 140 },
-          precision: 8,
-        },
-        'x-decorator-props': {
-          // required: true,
-        },
-      },
+
       {
         name: 'transfer_out_quantity',
         type: 'number',
@@ -67,7 +54,7 @@ export const TransferMode: ModePlugin = {
           precision: 8,
         },
         'x-decorator-props': {
-          // required: true,
+          required: true,
         },
       },
 
@@ -75,7 +62,7 @@ export const TransferMode: ModePlugin = {
         name: 'transfer_quantity',
         type: 'number',
         title: "{{t('common.purchase.transfer-quantity')}}",
-        'x-component': 'ProductTable.QuantityCell',
+        'x-component': 'ReadonlyNumber',
         'x-decorator': 'FormItem',
         'x-component-props': {
           style: { width: 140 },

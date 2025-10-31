@@ -200,7 +200,9 @@
     "inventory-count": "Inventory Count",
     "breakage-quantity": "Breakage Quantity",
     "transfer-quantity": "Transfer Quantity",
-    "base-quantity": "Base Quantity"
+    "base-quantity": "Base Quantity",
+    "transfer-out-quantity": "Transfer Out Qty",
+    "transfer-in-quantity": "Transfer In Qty"
   },
 
   "drop-fil-here": "Drag files here or",

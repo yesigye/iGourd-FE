@@ -46,7 +46,7 @@ export function useListForm() {
               labelCol: 6,
               wrapperCol: 14,
               header: '',
-              bodyClass: 'py-0 px-1 my-1 border-0',
+              bodyClass: 'py-0 px-1 my-2 border-0',
             },
             properties: {
               label: {

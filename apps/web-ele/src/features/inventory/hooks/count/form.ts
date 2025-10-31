@@ -150,7 +150,7 @@ export function useCountForm() {
         'x-component': 'Card',
         'x-component-props': {
           header: '',
-          bodyClass: 'py-0 px-1 my-1 border-0',
+          bodyClass: 'py-0 px-1 my-2 border-0',
         },
         properties: {
           label: {

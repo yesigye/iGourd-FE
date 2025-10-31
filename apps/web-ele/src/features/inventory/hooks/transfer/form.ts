@@ -1,6 +1,6 @@
 import type { ISchema } from '@igourd/common-ui';
 import type { ExtendedVxeGridApi } from '#/adapter/vxe-table';
-import { inject } from 'vue';
+import { computed, inject } from 'vue';
 import { onFieldValueChange } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
@@ -10,6 +10,9 @@ import {
   getTransferDetail,
   modifyTransfer,
   wareHouseProductSearch,
+  stockTransferOutboundModify,
+  stockTransferStorageModify,
+  updateTransferStatus
 } from '@@/inventory/apis';
 
 import { orderNoGenerate } from '#/api/common';
@@ -54,6 +57,7 @@ export function useTransferForm() {
       f.hidden = false;
     });
   };
+
   const schema: ISchema = {
     type: 'object',
     properties: {
@@ -72,7 +76,7 @@ export function useTransferForm() {
               labelCol: 6,
               wrapperCol: 14,
               header: '',
-              bodyClass: 'py-0 px-1 my-1 border-0',
+              bodyClass: 'py-0 px-1 my-2 border-0',
             },
             properties: {
               label: {
@@ -484,11 +488,51 @@ export function useTransferForm() {
     });
     return result.order_no;
   };
+  // 修改数据状态
+  const handleUpdateTransferStatus =(formData,destination_status,handler_type)=>{
+    const params ={
+      id:formData.id,
+      destination_status,
+      handler_type
+    }
+    updateTransferStatus(params);
+
+  }
+
+  const handleStockModify = (formData) => {
+    const data = drawerApi.getData();
+
+    if (data.value === 'INBOUND') {
+      const params = {
+        id: data.id,
+        transfer_in_quantity: 0,
+      };
+      if(formData.stock_transfer_item_list && formData.stock_transfer_item_list.length>0){
+          params.transfer_in_quantity = formData.stock_transfer_item_list[0].transfer_in_quantity
+      }
+      stockTransferStorageModify([params]).then(()=>{
+        handleUpdateTransferStatus(formData,"INBOUND","DESTINATION_STATUS");
+      });
+    } else if (data.value === 'OUTBOUND') {
+      const params = {
+        id: data.id,
+        transfer_out_quantity: 0,
+      };
+      if(formData.stock_transfer_item_list && formData.stock_transfer_item_list.length>0){
+          params.transfer_out_quantity = formData.stock_transfer_item_list[0].transfer_out_quantity
+      }
+      stockTransferOutboundModify([params]);
+    }
+  };
   // 表单提交处理
   const handleSubmit = async (formData: PurchaseCodeRulesFormData) => {
     try {
       let response = null;
-
+      const drawerParams = drawerApi.getData();
+      if (drawerParams.value) {
+        handleStockModify(formData);
+        return;
+      }
       // 	VAT配置
       formData.vat_configuration = 'NOT_APPLICATION';
       // 汇率(选择币种和系统币种的换算比例)
@@ -547,9 +591,26 @@ export function useTransferForm() {
       throw error;
     }
   };
+  const title = computed(() => {
+    const data = drawerApi.getData();
+    if (data.id) {
+      // 出库审核
+      if (data.value === 'INBOUND') {
+        return t('transfer.title-in-bound');
+      } else if (data.value === 'OUTBOUND') {
+        // 入库审核
+        return t('transfer.title-out-bound');
+      } else {
+        return t('transfer.edit-transfer');
+      }
+    } else {
+      return t('transfer.add-transfer');
+    }
+  });
+
   const { Form, formAPI, Drawer, drawerApi } = useDrawerForm({
     drawerOptions: {
-      title: t('transfer.add-transfer'),
+      title: title,
       appendToMain: true,
       class: 'w-2/3',
       contentClass: 'bg-muted',
@@ -571,6 +632,13 @@ export function useTransferForm() {
               stock_transfer_no: orderNo,
               stock_transfer_item_list: [{}],
             });
+            // formAPI.setFieldState('stock_transfer_item_list.*.transfer_out_quantity', (f) => {
+
+            //   f.visible = false;
+            // });
+            //  formAPI.setFieldState('stock_transfer_item_list.*.transfer_in_quantity', (f) => {
+            //   f.visible = false;
+            // });
           }
         } else {
           // 关闭抽屉时，重置表单

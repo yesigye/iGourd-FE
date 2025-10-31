@@ -19,7 +19,7 @@ import { useLanguage } from '#/hooks';
 import { useEnum } from '#/hooks';
 
 import { useInventoryTransferList } from '../../hooks/transfer/list';
-  const { transferStatus } = useEnum();
+const { transferStatus } = useEnum();
 
 defineOptions({
   name: 'IInventoryTransfer',
@@ -35,6 +35,7 @@ const { currentLoginUserApp } = useUserStore();
 const {
   Grid,
   Drawer,
+  drawerApi,
   handleEdit,
   handleCreate,
   handleBatchDelete,
@@ -74,13 +75,126 @@ const handleconfirm = (data) => {
     gridApi.reload();
   });
 };
+// 过滤出可执行的操作
+const filterOpt = (keys) => {
+  const list = transferStatus.filter((item) => keys.indexOf(item.value) >= 0);
+  return list;
+};
+const getLabel = (row) => {
+  let currentStatus = '';
+
+  //调拨类型
+  switch (row.transfer_type) {
+    case 'TRANSFER_OUT_ONLY':
+      currentStatus = row.status;
+      break;
+    case 'TRANSFER_IN_ONLY':
+      currentStatus = row.destination_status;
+      break;
+    case 'TRANSFER_SAME_STORE':
+      currentStatus = row.status;
+      break;
+    case 'TRANSFER_DIFFERENT_STORE':
+      currentStatus = row.status;
+      break;
+  }
+  return getEnumLabel(transferStatus, currentStatus);
+};
+
 const getStatusOptions = computed(() => (row) => {
   const baseOptions = [{ value: 'CREATED', label: 'Created', key: 'created' }];
+
+  //调拨类型
+  switch (row.transfer_type) {
+    case 'TRANSFER_OUT_ONLY':
+      return filterOpt(['OUTBOUND']);
+    case 'TRANSFER_IN_ONLY':
+      // 入库 看 destination_status 状态
+      if (row.destination_status == 'CREATED') {
+        return filterOpt(['CREATED', 'INBOUND']);
+      } else {
+        return filterOpt(['INBOUND']);
+      }
+      break;
+
+    case 'TRANSFER_SAME_STORE':
+      if (row.status == 'CREATED') {
+        return filterOpt(['OUTBOUND']);
+      }else if(row.status == 'OUTBOUND'){
+        return filterOpt(['INBOUND']);
+      }
+      break;
+    case 'TRANSFER_DIFFERENT_STORE':
+      if (row.source_merchant_id === currentLoginUserApp.owner_id) {
+        // 源门店（出库）选项
+        if (row.status != 'CREATED') {
+          return [
+            { value: 'OUTBOUND', label: 'Transfer Out', key: 'transfer_out' },
+            {
+              value: 'REFUSED_OUTBOUND',
+              label: 'Reject Out',
+              key: 'reject_out',
+            },
+          ];
+        }
+        return [
+          ...baseOptions,
+          { value: 'OUTBOUND', label: 'Transfer Out', key: 'transfer_out' },
+          // { value: 'REFUSED_OUTBOUND', label: 'Reject Out', key: 'reject_out' }
+        ];
+      } else if (
+        row.destination_merchant_id === currentLoginUserApp.owner_id &&
+        row.status === 'OUTBOUND' &&
+        row.review_status === 'APPROVED'
+      ) {
+        // 目标门店（入库）选项
+        if (row.status != 'CREATED') {
+          return [
+            { value: 'INBOUND', label: 'Transfer In', key: 'transfer_in' },
+            // { value: 'REFUSED_INBOUND', label: 'Reject In', key: 'reject_in' }
+            { value: 'OUTBOUND', label: 'Transfer Out', key: 'transfer_out' },
+          ];
+        }
+        return [
+          ...baseOptions,
+          { value: 'INBOUND', label: 'Transfer In', key: 'transfer_in' },
+          // { value: 'REFUSED_INBOUND', label: 'Reject In', key: 'reject_in' }
+        ];
+      } else {
+        if (row.status != 'CREATED') {
+          return [
+            { value: 'INBOUND', label: 'Transfer In', key: 'transfer_in' },
+            { value: 'OUTBOUND', label: 'Transfer Out', key: 'transfer_out' },
+            // { value: 'REFUSED_INBOUND', label: 'Reject In', key: 'reject_in' }
+            {
+              value: 'REFUSED_OUTBOUND',
+              label: 'Reject Out',
+              key: 'reject_out',
+            },
+          ];
+        }
+        return [
+          ...baseOptions,
+          { value: 'INBOUND', label: 'Transfer In', key: 'transfer_in' },
+          // { value: 'REFUSED_INBOUND', label: 'Reject In', key: 'reject_in' },
+          { value: 'OUTBOUND', label: 'Transfer Out', key: 'transfer_out' },
+          // { value: 'REFUSED_OUTBOUND', label: 'Reject Out', key: 'reject_out' }
+        ];
+      }
+
+    default:
+      return baseOptions;
+  }
+
   return transferStatus;
 });
 const handleStatusChange = async (row, value) => {
-  debugger
-}
+  const params = {
+      ...row,
+      ...value
+  }
+  drawerApi.setData(params).open();
+};
 </script>
 
 <template>
@@ -108,7 +222,7 @@ const handleStatusChange = async (row, value) => {
         </ElButton>
       </template>
       <template #status="{ row }">
-        <ElSelect v-model="row.status"  @change="value => handleStatusChange(row, value)">
+        <!-- <ElSelect v-model="row.status"  @change="value => handleStatusChange(row, value)">
           <ElOption
             v-for="item in getStatusOptions(row)"
             :key="item.value"
@@ -116,7 +230,30 @@ const handleStatusChange = async (row, value) => {
             :value="item.value"
             ></ElOption
           >
-        </ElSelect>
+        </ElSelect> -->
+
+        <ElDropdown>
+          <span class="custom-dropdown">
+            {{ getLabel(row) }}
+            <ElIcon class="el-icon--right">
+              <ArrayDown />
+            </ElIcon>
+          </span>
+          <template #dropdown>
+            <ElDropdownMenu>
+              <template
+                v-for="item in getStatusOptions(row)"
+                :key="item?.value"
+              >
+                <ElDropdownItem
+                  @click="() => handleStatusChange(row, item)"
+                >
+                  <div>{{ item.label }}</div>
+                </ElDropdownItem>
+              </template>
+            </ElDropdownMenu>
+          </template>
+        </ElDropdown>
       </template>
       <template #review_status="{ row }">
         <ElDropdown v-if="row.review_status === 'PENDING'">
