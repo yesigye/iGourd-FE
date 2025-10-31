@@ -24,11 +24,6 @@ const getStaticsData = async () => {
 <template>
   <Page auto-content-height>
     <Grid>
-      <template #table-actions>
-        <ElButton type="primary">
-          {{ t('report.exportReport') }}
-        </ElButton>
-      </template>
       <template #revenue_amount="{ row }">
         <ElText type="success">{{ row.revenue_amount || '--' }}</ElText>
       </template>

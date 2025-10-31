@@ -161,7 +161,7 @@ export function useSaleOrder(defaultQueryParams?: Record<string, any>) {
   }
   const crud = useCrud<SaleOrderRow, SaleOrderDTO>({
     columns,
-    id: 'sale-order-list',
+    id: 'sale_order_export',
     searchFormSchema,
     tabs: [
       { value: 'ALL', label: '全部' },
@@ -170,7 +170,11 @@ export function useSaleOrder(defaultQueryParams?: Record<string, any>) {
     ],
     tabsOption: {
       defaultActiveValue: 'ALL',
-      formKey: 'balance_direction',
+      formKey: 'sale_order_export',
+    },
+
+    toolbarConfig: {
+      export: true,
     },
     params: defaultQueryParams ?? {},
     batchOperate: true,

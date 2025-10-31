@@ -51,11 +51,12 @@ export default (account_set_id: string) =>
                   null,
                   {
                     required: true,
-                    message: '{{t("account.name_required")}}',
+                    message: '{{t("account.name-required")}}',
                   },
                 ],
                 'x-component-props': {
                   placeholder: "{{t('common.enter')}}",
+                  maxlength: 128,
                 },
               },
             },
@@ -118,30 +119,30 @@ export default (account_set_id: string) =>
             },
             'x-validator': [null],
           },
-          other_information: {
-            type: 'void',
-            'x-component': 'Card',
-            'x-decorator': '',
-            'x-component-props': {
-              header: `{{t('account.other-information')}}`,
-            },
-            properties: {
-              remark: {
-                type: 'string',
-                'x-component': 'Input',
-                'x-decorator': 'FormItem',
-                title: "{{t('account.remarks')}}",
-                'x-component-props': {
-                  placeholder: "{{t('common.enter')}}",
-                  maxlength: 256,
-                  type: 'textarea',
-                  showWordLimit: true,
-                },
-                'x-validator': [null],
-              },
-            },
-            'x-validator': [null],
-          },
+          // other_information: {
+          //   type: 'void',
+          //   'x-component': 'Card',
+          //   'x-decorator': '',
+          //   'x-component-props': {
+          //     header: `{{t('account.other-information')}}`,
+          //   },
+          //   properties: {
+          //     remark: {
+          //       type: 'string',
+          //       'x-component': 'Input',
+          //       'x-decorator': 'FormItem',
+          //       title: "{{t('account.remarks')}}",
+          //       'x-component-props': {
+          //         placeholder: "{{t('common.enter')}}",
+          //         maxlength: 256,
+          //         type: 'textarea',
+          //         showWordLimit: true,
+          //       },
+          //       'x-validator': [null],
+          //     },
+          //   },
+          //   'x-validator': [null],
+          // },
         },
       },
     },
