@@ -4,8 +4,14 @@ import { h } from 'vue';
 
 import { action, ElButton } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
-import { getCustomerLabelPageListApi } from '@@/customer/apis';
-import { basicsCountryAreaList } from '#/api/common';
+
+import {
+  getCustomerLabelPageListApi,
+  getCustomerPageListApi,
+} from '@@/customer/apis';
+import { getPriceListApi } from '@@/marketing/apis';
+import { getCountryListApi } from '@@/setting/apis';
+
 import { useDrawerForm } from '#/hooks/use-drawer-form';
 
 const UploadButton = () => {
@@ -372,6 +378,59 @@ export function useCustomerListForm() {
       resolve(option);
     });
   };
+  const loadPriceList = async (field: { props: { name: string } }) => {
+    const result = await getPriceListApi({
+      page_num: 1,
+      page_size: 100,
+    });
+    const option = result.list.map(
+      (item: { label: string; value: string }) => ({
+        label: item.name,
+        value: item.id,
+      }),
+    );
+    return new Promise((resolve) => {
+      resolve(option);
+    });
+  };
+  // 获取销售员
+  const loadSalesmanList = async (field: { props: { name: string } }) => {
+    const result = await getCustomerPageListApi({
+      page_num: 1,
+      page_size: 100,
+    });
+    const option = result.list.map(
+      (item: { label: string; value: string }) => ({
+        label: item.name,
+        value: item.id,
+      }),
+    );
+    return new Promise((resolve) => {
+      resolve(option);
+    });
+  };
+  // 获取国家
+  const loadCountryList = async (field: { props: { name: string } }) => {
+    const result = await getCountryListApi({});
+    const option = result.map((item: { label: string; value: string }) => ({
+      label: item.name,
+      value: item.id,
+    }));
+    return new Promise((resolve) => {
+      resolve(option);
+    });
+  };
+  // 获取手机区号
+  const loadPhoneCodeList = async (field: { props: { name: string } }) => {
+    const result = await getCountryListApi({});
+    const option = result.map((item: { label: string; value: string }) => ({
+      label: `${item.name} +${item.area_code}`,
+      value: `+${item.area_code}`,
+    }));
+    return new Promise((resolve) => {
+      resolve(option);
+    });
+  };
   return useDrawerForm({
     drawerOptions: {
       title: t('list.add-customer'),
@@ -379,10 +438,14 @@ export function useCustomerListForm() {
       class: 'w-full',
     },
     formOptions: {
-      schema,
+      schema: null,
       scope: {
         useAsyncDataSource,
         loadData,
+        loadPriceList,
+        loadSalesmanList,
+        loadCountryList,
+        loadPhoneCodeList,
         featureTypes: [
           { label: t('purchase.inputBox'), value: 'INPUT' },
           { label: t('purchase.selectBox'), value: 'SELECT' },
