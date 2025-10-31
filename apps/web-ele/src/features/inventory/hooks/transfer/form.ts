@@ -12,7 +12,7 @@ import {
   wareHouseProductSearch,
   stockTransferOutboundModify,
   stockTransferStorageModify,
-  updateTransferStatus
+  updateTransferStatus,
 } from '@@/inventory/apis';
 
 import { orderNoGenerate } from '#/api/common';
@@ -489,39 +489,45 @@ export function useTransferForm() {
     return result.order_no;
   };
   // 修改数据状态
-  const handleUpdateTransferStatus =(formData,destination_status,handler_type)=>{
-    const params ={
-      id:formData.id,
-      destination_status,
-      handler_type
-    }
+  const handleUpdateTransferStatus = (params) => {
     updateTransferStatus(params);
-
-  }
+  };
 
   const handleStockModify = (formData) => {
     const data = drawerApi.getData();
 
     if (data.value === 'INBOUND') {
-      const params = {
-        id: data.id,
-        transfer_in_quantity: 0,
-      };
-      if(formData.stock_transfer_item_list && formData.stock_transfer_item_list.length>0){
-          params.transfer_in_quantity = formData.stock_transfer_item_list[0].transfer_in_quantity
-      }
-      stockTransferStorageModify([params]).then(()=>{
-        handleUpdateTransferStatus(formData,"INBOUND","DESTINATION_STATUS");
+      const paramsList:any = [];
+      formData.stock_transfer_item_list.forEach((item) => {
+        paramsList.push({
+          id: item.id,
+          transfer_in_quantity: item.transfer_in_quantity,
+        });
+      });
+      stockTransferStorageModify(paramsList).then(() => {
+        const statusParams = {
+          id: formData.id,
+          destination_status: 'INBOUND',
+          handler_type: 'DESTINATION_STATUS',
+        };
+        handleUpdateTransferStatus(statusParams);
       });
     } else if (data.value === 'OUTBOUND') {
-      const params = {
-        id: data.id,
-        transfer_out_quantity: 0,
-      };
-      if(formData.stock_transfer_item_list && formData.stock_transfer_item_list.length>0){
-          params.transfer_out_quantity = formData.stock_transfer_item_list[0].transfer_out_quantity
-      }
-      stockTransferOutboundModify([params]);
+      const paramsList:any = [];
+      formData.stock_transfer_item_list.forEach((item) => {
+        paramsList.push({
+          id: item.id,
+          transfer_out_quantity: item.transfer_out_quantity,
+        });
+      });
+      stockTransferOutboundModify(paramsList).then(() => {
+        const statusParams = {
+          id: formData.id,
+          status: 'OUTBOUND',
+          handler_type: 'SOURCE_STATUS',
+        };
+        handleUpdateTransferStatus(statusParams);
+      });
     }
   };
   // 表单提交处理

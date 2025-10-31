@@ -126,6 +126,7 @@ export function useInventoryTransferList() {
   // 使用 CRUD Hook
   const {
     Grid,
+    gridApi,
     handleCreate,
     canBatchOperate,
     Drawer,
@@ -145,6 +146,7 @@ export function useInventoryTransferList() {
 
   return {
     Grid,
+    gridApi,
     Drawer,
     drawerApi,
     handleEdit,
