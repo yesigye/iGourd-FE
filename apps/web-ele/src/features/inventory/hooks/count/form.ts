@@ -149,8 +149,6 @@ export function useCountForm() {
         type: 'void',
         'x-component': 'Card',
         'x-component-props': {
-          labelCol: 6,
-          wrapperCol: 14,
           header: '',
           bodyClass: 'py-0 px-1 my-1 border-0',
         },
@@ -184,8 +182,6 @@ export function useCountForm() {
         type: 'void',
         'x-component': 'Card',
         'x-component-props': {
-          labelCol: 6,
-          wrapperCol: 14,
           header: '',
           bodyClass: 'py-0 px-1 my-1 border-0',
         },
@@ -194,7 +190,6 @@ export function useCountForm() {
             type: 'void',
             'x-component': 'FormLayout',
             'x-component-props': {
-              labelCol: 6,
               layout: 'vertical',
             },
             properties: {

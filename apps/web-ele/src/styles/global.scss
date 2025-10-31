@@ -876,3 +876,8 @@ input:-internal-autofill-selected {
 .plus-card-header-pos{
   position: relative;
 }
+// 解决  input  比select 高2px
+.el-input--small .el-input__wrapper {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
