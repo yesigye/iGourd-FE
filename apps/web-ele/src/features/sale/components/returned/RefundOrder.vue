@@ -5,10 +5,10 @@ import {
   ElButton,
   ElDescriptions,
   ElDescriptionsItem,
-  ElIcon,
   ElInput,
   ElMessage,
   ElMessageBox,
+  IgourdIcon,
   useIgourdDrawer,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
@@ -501,9 +501,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
           class="full refunded-data-success flex w-full items-center justify-center bg-white"
         >
           <div class="text-center">
-            <ElIcon size="64px">
-              <SuccessFilled />
-            </ElIcon>
+            <IgourdIcon class="text-success text-[56px]" icon="ooui:success" />
 
             <p class="mt-2.5 text-center text-sm">
               {{ t('returned.refund-success') }}
