@@ -6,6 +6,7 @@ export * from './use-language';
 export * from './use-pagination';
 export * from './use-receipt-template';
 export * from './use-refresh';
+export * from './use-render-print';
 export * from './use-tabs';
 export * from './use-watermark';
 export * from '@igourd-core/composables';

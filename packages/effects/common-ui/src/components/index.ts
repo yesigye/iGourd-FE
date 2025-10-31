@@ -35,6 +35,7 @@ export * from './page';
 export * from './password';
 export * from './period-picker';
 export * from './preview-text';
+export * from './print-drawer';
 export * from './print-item';
 export * from './radio';
 export { default as ReceiptTemplate } from './receipt-template/index.vue';
@@ -47,14 +48,16 @@ export * from './select';
 export { default as SelectDropdown } from './select-dropdown/index.vue';
 export * from './space';
 export * from './submit';
+
 export * from './switch';
+
+export * from './table/index';
 
 export * from './time-picker';
 
 export * from './transfer';
 
 export { TransferTable } from './transfer-table';
-
 export { default as Upload } from './upload';
 
 // 给文档用
@@ -74,6 +77,7 @@ export {
   IgourdSpinner,
   IgourdTree,
 } from '@igourd-core/shadcn-ui';
+
 export type { FlattenedItem } from '@igourd-core/shadcn-ui';
 
 export { globalShareState } from '@igourd-core/shared/global-state';
@@ -140,6 +144,5 @@ export {
   ElUpload,
   formContextKey,
 } from 'element-plus';
-
 export type { UploadFile, UploadProps, UploadUserFile } from 'element-plus';
 export { default as vuedraggable } from 'vuedraggable';

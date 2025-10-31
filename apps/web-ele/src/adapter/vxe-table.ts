@@ -2,7 +2,13 @@ import type { VxeTableGridOptions } from '@igourd/plugins/vxe-table';
 
 import { h } from 'vue';
 
-import { ElButton, ElImage, ElSpace, ElSwitch } from '@igourd/common-ui';
+import {
+  ElButton,
+  ElImage,
+  ElSpace,
+  ElSwitch,
+  setupTable,
+} from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 import {
   setupIgourdVxeTable,
@@ -353,6 +359,8 @@ setupIgourdVxeTable({
   },
   // useIgourdForm,
 });
+
+setupTable(useIgourdVxeGrid);
 
 export { useIgourdVxeGrid };
 
