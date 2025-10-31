@@ -9,7 +9,13 @@ import {
   watch,
 } from 'vue';
 
-import { ElButton, ElMessage, ElMessageBox, Page } from '@igourd/common-ui';
+import {
+  ElBadge,
+  ElButton,
+  ElMessage,
+  ElMessageBox,
+  Page,
+} from '@igourd/common-ui';
 import { ArrowLeft, ArrowRight, Person, UserFollow2Line } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
@@ -1009,7 +1015,7 @@ const handCloseAndUnfold = () => {
                     <span class="settle-info-lable text-light-gray"
                       >{{ t('scan.discount') }}:</span
                     >
-                    <span class="settle-info-val text-gray-dark">
+                    <p class="settle-info-val text-gray-dark">
                       <span
                         v-if="calculateOrderList.promotion_discount_amount >= 0"
                         >-</span
@@ -1021,8 +1027,8 @@ const handCloseAndUnfold = () => {
                               calculateOrderList.promotion_discount_amount,
                             )
                           : '--'
-                      }}</span
-                    >
+                      }}
+                    </p>
                   </div>
                 </div>
                 <div class="scan-action-box-settle-payment">
