@@ -2,7 +2,7 @@
 import { ElButton, Page } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { useClassification } from '@@/account/hooks';
+import { useClassification, useClassificationDetails } from '@@/account/hooks';
 
 defineOptions({
   name: 'IClassification',
@@ -19,6 +19,12 @@ const {
   handleBatchDelete,
   handleDelete,
 } = useClassification();
+const { Drawer: DetailsDrawer, drawerApi: detailsDrawerApi } =
+  useClassificationDetails();
+
+const handleDetail = (row: any) => {
+  detailsDrawerApi.setData({ info: row }).open();
+};
 </script>
 
 <template>
@@ -45,6 +51,9 @@ const {
         >
           {{ t('common.edit') }}
         </ElButton>
+        <ElButton type="text" @click="handleDetail(row)">
+          {{ t('common.detail') }}
+        </ElButton>
       </template>
       <template #type="{ row }">
         {{ t(`enum.account-classification-types.${row.type}`) }}
@@ -52,5 +61,6 @@ const {
     </Grid>
 
     <Drawer />
+    <DetailsDrawer />
   </Page>
 </template>

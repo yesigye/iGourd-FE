@@ -12,6 +12,8 @@ import {
   useScanOrderSettle,
 } from '@@/sale/hooks';
 
+import scanCodeRetailIcon from '#/assets/sale/scan-code.svg';
+
 defineOptions({
   name: 'ISaleOrder',
 });
@@ -119,6 +121,11 @@ const getTagColor = (row: any) => {
     }
   }
 };
+const handleScanCodeRetail = () => {
+  router.push({
+    path: '/sale/scan/code',
+  });
+};
 const { Drawer: PrintReceiptDrawer, drawerApi: printReceiptDrawerApi } =
   useSaleOrderPrintReceiptDrawer();
 const { Drawer: OrderDetailsDrawer, drawerApi: orderDetailsDrawerApi } =
@@ -130,6 +137,14 @@ const { Drawer: ScanOrderSettle, drawerApi: drawerApiSettle } =
 <template>
   <Page auto-content-height>
     <Grid>
+      <template #table-actions>
+        <ElButton type="primary" @click="handleScanCodeRetail">
+          <div class="flex items-center justify-center gap-1.5">
+            <img :src="scanCodeRetailIcon" class="h-3 w-3" alt="" />
+            {{ t('order.scan-code-retail') }}
+          </div>
+        </ElButton>
+      </template>
       <template #operation="{ row }">
         <ElButton
           type="text"

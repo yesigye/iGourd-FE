@@ -23,13 +23,12 @@ import {
   ElDropdown,
   ElDropdownItem,
   ElDropdownMenu,
-  ElIcon,
   ElInput,
   ElInputNumber,
   ElMessage,
   IgourdIcon,
 } from '@igourd/common-ui';
-import { ArrowDown, Tickets } from '@igourd/icons';
+import { ArrayDown } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 
 import {
@@ -791,128 +790,156 @@ defineExpose({
   <section
     class="scan-cash-settlement m-2.5 mt-0 flex h-full flex-col justify-between gap-2.5"
   >
-    <div class="bg-card h-full flex-grow" v-if="!isPaySuccess">
+    <div class="h-full flex-grow" v-if="!isPaySuccess">
       <!-- 总金额 -->
-      <div
-        class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
-      >
-        <span class="scan-cash-settlement-header-title">
-          {{ t('scan.accounts-receivable') }}:
-        </span>
-
-        <span class="">{{ totalAmount }} {{ currentSymbol }}</span>
-      </div>
-      <!-- 实付金额 -->
-      <div
-        class="mb-1 flex items-center justify-between bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
-      >
-        <span class="scan-cash-settlement-header-title">{{ t('scan.amount-tendered') }}:</span>
-
-        <span class="scan-cash-settlement-header-amount">
-          {{ tenderedAmount.toFixed(2) }} {{ currentSymbol }}
-        </span>
-      </div>
-      <!-- 抹零 -->
-      <div
-        class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
-      >
-        <span class="scan-cash-settlement-header-title">{{ t('scan.amount-change') }}:</span>
-        <div class="flex-1">
-          <ElInputNumber
-            ref="wipedAmountInput"
-            v-model="wipedAmount"
-            :controls="false"
-            clearable
-            class="w-full"
-            :precision="2"
-            :step="0.01"
-            :disabled="tenderedAmount >= totalAmount"
-            :max="totalAmount"
-            controls-position="right"
-            @focus="handleWipeFocus"
-          >
-            <template #suffix>
-              <span>{{ currentSymbol }}</span>
-            </template>
-          </ElInputNumber>
-        </div>
-      </div>
-      <!-- 支付方式 -->
-      <div class="mb-1 bg-white pb-2.5 pl-5 pr-5 pt-2.5">
-        <ElCheckbox
-          v-model="paymentWay"
-          :true-value="PaymentWay.CREDIT"
-          :false-value="PaymentWay.NORMAL"
-          :disabled="
-            !calculateOrderList.customer_id ||
-            calculateOrderList.customer_id === '0'
-          "
+      <section class="bg-card mb-1 px-5 py-2.5">
+        <div
+          class="mb-1 flex items-center gap-5 bg-white pb-2.5 pt-2.5 text-base font-semibold"
         >
-          {{ t('scan.on-credit') }}
-        </ElCheckbox>
-        <ul>
-          <li
-            v-for="item in paymentOptions"
-            :key="item"
-            class="bg-primary-light-8 borde mb-2.5 flex items-center rounded-md text-sm"
-          >
-            <!-- 图标 -->
-            <ElDropdown :disabled="item.length <= 1" class="h-full w-1/2">
-              <div class="text-azure w-full pl-3 pr-3">
-                <div class="flex min-w-[60%] items-center gap-2.5">
-                  <ElIcon>
-                    <Tickets />
-                  </ElIcon>
-                  <p class="flex-1">{{ getPayMetName(item) }}</p>
-                  <ElIcon v-if="item.length > 1">
-                    <ArrowDown />
-                  </ElIcon>
-                </div>
-              </div>
-              <template #dropdown>
-                <ElDropdownMenu class="bg-white">
-                  <ElDropdownItem
-                    v-for="payItem in item"
-                    :key="payItem.id"
-                    @click="handleChangePayMet(item, payItem.id)"
-                  >
-                    <div
-                      class="hover:bg-primary-blue flex h-9 min-w-[112px] items-center pl-2 pr-2"
-                    >
-                      {{ payItem.payment_method_name || '' }}
-                    </div>
-                  </ElDropdownItem>
-                </ElDropdownMenu>
-              </template>
-            </ElDropdown>
-            <!-- 支付方式 对应的 输入框 -->
-            <ElInput
-              :ref="(ref) => (paymentInput[item[0].payment_method_type!] = ref)"
-              v-model="formData[item[0]?.payment_method_type].activeItemAmount"
-              :disabled="
-                (payMethodDisable.isDisable &&
-                  !payMethodDisable.DoNotDisableItem.includes(
-                    getPayMetParent(item),
-                  )) ||
-                (getPayMetParent(item) === PaymentMethodEnum.BALANCE &&
-                  payMethodDisable.balanceDisable)
-              "
+          <p class="flex-1 text-left">{{ t('scan.accounts-receivable') }}:</p>
+          <p
+            class="h-full flex-shrink-0 border border-solid border-[#DCDFE6]"
+            style="height: -webkit-fill-available"
+          ></p>
+          <p class="flex-1 text-left">{{ totalAmount }} {{ currentSymbol }}</p>
+        </div>
+      </section>
+      <!-- 实付金额 -->
+      <section class="bg-card mb-1 px-5 py-2.5">
+        <div
+          class="mb-1 flex items-center gap-5 bg-white pb-2.5 pt-2.5 text-base font-semibold"
+        >
+          <p class="flex-1 text-left">{{ t('scan.amount-tendered') }}:</p>
+          <p
+            class="h-full flex-shrink-0 border border-solid border-[#DCDFE6]"
+            style="height: -webkit-fill-available"
+          ></p>
+          <p class="scan-cash-settlement-header-amount flex-1 text-left">
+            {{ tenderedAmount.toFixed(2) }} {{ currentSymbol }}
+          </p>
+        </div>
+      </section>
+      <!-- 抹零 -->
+      <section class="bg-card mb-1 px-5 py-2.5">
+        <div
+          class="border-primary flex items-center justify-between gap-2.5 border-b border-solid pb-[7.5px] pt-[7.5px] text-base font-semibold"
+        >
+          <p class="flex-1 text-left">{{ t('scan.amount-change') }}:</p>
+          <p
+            class="h-full flex-shrink-0 border border-solid border-[#DCDFE6]"
+            style="height: -webkit-fill-available"
+          ></p>
+          <div class="flex-1">
+            <ElInputNumber
+              :border="false"
+              ref="wipedAmountInput"
+              v-model="wipedAmount"
+              :controls="false"
               clearable
-              class="w-1/2"
-              placeholder="0"
-              @focus="
-                () => (activeInputKey = item[0].payment_method_type?.value)
+              class="w-full"
+              :precision="2"
+              :step="0.01"
+              :disabled="tenderedAmount >= totalAmount"
+              :max="totalAmount"
+              controls-position="right"
+              @focus="handleWipeFocus"
+            >
+              <template #suffix>
+                <span>{{ currentSymbol }}</span>
+              </template>
+            </ElInputNumber>
+          </div>
+        </div>
+      </section>
+      <!-- 支付方式 -->
+      <section class="bg-card mb-1 px-5 py-2.5">
+        <div class="mb-1">
+          <div class="py-2.5">
+            <ElCheckbox
+              v-model="paymentWay"
+              :true-value="PaymentWay.CREDIT"
+              :false-value="PaymentWay.NORMAL"
+              :disabled="
+                !calculateOrderList.customer_id ||
+                calculateOrderList.customer_id === '0'
               "
-            />
-          </li>
-        </ul>
-      </div>
+            >
+              {{ t('scan.on-credit') }}
+            </ElCheckbox>
+          </div>
+          <ul>
+            <li
+              v-for="item in paymentOptions"
+              :key="item"
+              class="border-primary mb-2.5 flex items-center gap-5 rounded-md border-b border-solid py-[7.5px] text-base font-semibold"
+            >
+              <!-- 图标 -->
+              <ElDropdown :disabled="item.length <= 1" class="h-full w-1/2">
+                <div class="text-azure w-full">
+                  <div class="flex min-w-[60%] items-center gap-2.5">
+                    <p class="flex-1">{{ getPayMetName(item) }}</p>
+                    <ArrayDown />
+                  </div>
+                </div>
+                <template #dropdown>
+                  <ElDropdownMenu class="bg-white">
+                    <ElDropdownItem
+                      v-for="payItem in item"
+                      :key="payItem.id"
+                      @click="handleChangePayMet(item, payItem.id)"
+                    >
+                      <div
+                        class="hover:bg-primary-blue flex h-9 min-w-[112px] items-center pl-2 pr-2"
+                      >
+                        {{ payItem.payment_method_name || '' }}
+                      </div>
+                    </ElDropdownItem>
+                  </ElDropdownMenu>
+                </template>
+              </ElDropdown>
+              <p
+                class="h-full flex-shrink-0 border border-solid border-[#DCDFE6]"
+                style="height: -webkit-fill-available"
+              ></p>
+              <!-- 支付方式 对应的 输入框 -->
+              <ElInput
+                :ref="
+                  (ref) => (paymentInput[item[0].payment_method_type!] = ref)
+                "
+                v-model="
+                  formData[item[0]?.payment_method_type].activeItemAmount
+                "
+                :disabled="
+                  (payMethodDisable.isDisable &&
+                    !payMethodDisable.DoNotDisableItem.includes(
+                      getPayMetParent(item),
+                    )) ||
+                  (getPayMetParent(item) === PaymentMethodEnum.BALANCE &&
+                    payMethodDisable.balanceDisable)
+                "
+                clearable
+                class="w-1/2"
+                placeholder="0"
+                @focus="
+                  () => (activeInputKey = item[0].payment_method_type?.value)
+                "
+              />
+            </li>
+          </ul>
+        </div>
+      </section>
       <!-- 找零 -->
       <div
-        class="mb-1 flex items-center justify-between gap-2.5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-2xl font-semibold"
+        class="mb-1 flex items-center justify-between gap-2.5 gap-5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-base font-semibold"
       >
-        <span class="text-status-partial">{{ t('scan.change') }}:</span>
-        <span class="text-status-terminated">{{ changeAmount }} {{ currentSymbol }}</span>
+        <p class="flex-1 text-[#FF9800]">{{ t('scan.change') }}:</p>
+        <p
+          class="h-full flex-shrink-0 border border-solid border-[#DCDFE6]"
+          style="height: -webkit-fill-available"
+        ></p>
+        <p class="flex-1 text-[#D32F2F]">
+          {{ changeAmount }} {{ currentSymbol }}
+        </p>
       </div>
     </div>
     <div class="h-full flex-grow" v-else>

@@ -247,7 +247,7 @@ export function useInventoryReport(warehouseOptions: any) {
   return {
     ...useCrud<InventoryReportRow, any>({
       columns,
-      id: 'report-inventory-list',
+      id: 'stock_month_report_export',
       searchFormSchema,
       batchOperate: false,
       service: {
@@ -277,6 +277,13 @@ export function useInventoryReport(warehouseOptions: any) {
             total: response?.data?.total || 0,
           };
         },
+      },
+      tabsOption: {
+        defaultActiveValue: 'ALL',
+        formKey: 'stock_month_report_export',
+      },
+      toolbarConfig: {
+        export: true,
       },
     }),
     query,

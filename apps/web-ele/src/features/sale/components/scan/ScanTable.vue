@@ -4,17 +4,20 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import {
   ElButton,
   ElInput,
+  ElInputNumber,
   ElMessage,
   ElTable,
   ElTableColumn,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+import { useUserStore } from '@igourd/stores';
 import { debounce, get } from '@igourd/utils';
 
 import { allColumns } from '@@/sale/components/scan/const/sale.config';
 import { Decimal } from 'decimal.js';
 
 import { getSystemConfigurationDetailApi } from '#/api';
+
 // interface
 // props
 const props = defineProps({
@@ -30,22 +33,9 @@ const emit = defineEmits([
   'DeleteGoods',
   'update-unit',
 ]);
-const value = ref();
-const options = ref([
-  { id: 1, label: 'Option A', desc: 'Option A - 230506' },
-  { id: 2, label: 'Option B', desc: 'Option B - 230506' },
-  { id: 3, label: 'Option C', desc: 'Option C - 230506' },
-  { id: 4, label: 'Option A', desc: 'Option A - 230507' },
-]);
-const goodsData = computed(() => props.mergeGoodsList);
-// const columnsTable = computed(() => {
-//   return allColumns.map(col => {
-//     const { prop, ...item } = col;
-//     const fieldValue = isFunction(prop) ? prop(item) : prop;
-//     const suffix = isFunction(item?.labelSuffix) ? item?.labelSuffix : () => '';
-//     return { ...item, field: fieldValue, label: `${t(item.key)} ${suffix(item)}` };
-//   });
-// });
+const useStore = useUserStore();
+const { merchantInfo } = useStore;
+const currencySymbol = merchantInfo?.currency_symbol || '';
 const { t } = useI18n();
 const tableRef = ref(null);
 const rowSelection = ref([]);
@@ -102,6 +92,10 @@ const handleQuantityChangeOriginal = (item: any) => {
   } else {
     const decimalQuantity = new Decimal(item.stock_total_quantity);
     item.stock_total_quantity = decimalQuantity;
+  }
+  if (item.stock_total_quantity <= 0) {
+    item.stock_total_quantity = 0;
+    handleDelete(item.id);
   }
   // 直接发送更新后的商品数据
   emit('update-quantity', item);
@@ -229,13 +223,13 @@ defineExpose({
           <!-- 数量 -->
           <template v-if="['stock_total_quantity'].includes(item.prop)">
             <div class="Inum">
-              <ElButton class="Inum-input" @click="decreaseEvent(row)">
+              <!-- <ElButton class="Inum-input" @click="decreaseEvent(row)">
                 -
-              </ElButton>
-              <ElInput
+              </ElButton> -->
+              <ElInputNumber
                 v-model="row[item.prop]"
                 v-input-number="8"
-                @input="handleInputDebounced(row)"
+                @change="handleInputDebounced(row)"
                 @keyup.enter="
                   (e) => {
                     e.preventDefault();
@@ -243,9 +237,9 @@ defineExpose({
                   }
                 "
               />
-              <ElButton class="Inum-input" @click="increaseEvent(row)">
+              <!-- <ElButton class="Inum-input" @click="increaseEvent(row)">
                 +
-              </ElButton>
+              </ElButton> -->
             </div>
           </template>
           <!-- 价格 -->
@@ -257,7 +251,9 @@ defineExpose({
               :controls="false"
               :precision="2"
               @input="(val) => handlePriceChange(val, row)"
-            />
+            >
+              <template #prefix>{{ currencySymbol }}</template>
+            </ElInput>
           </template>
           <!-- 其他 -->
           <template v-else-if="item.render">
@@ -286,11 +282,11 @@ defineExpose({
         <template #default="scope">
           <ElButton
             link
-            type="primary"
+            type="danger"
             size="small"
             @click="handleDelete(scope.row.id)"
           >
-            <i class="iconfont icon-shanchu2 shanchu"></i>
+            {{ t('common.delete') }}
           </ElButton>
         </template>
       </ElTableColumn>

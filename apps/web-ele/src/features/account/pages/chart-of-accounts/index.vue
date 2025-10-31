@@ -41,6 +41,10 @@ const handleTrialBalancing = async () => {
         <ElButton type="primary" @click="handleEdit(undefined, 'subLedger')">
           {{ t('chart-of-accounts.add-account-ledger') }}
         </ElButton>
+        <ElButton type="success" @click="handleTrialBalancing()">
+          <img :src="trialIcon" class="mr-1 w-3" alt="" />
+          {{ t('chart-of-accounts.trial-balancing') }}
+        </ElButton>
       </template>
 
       <template #actions="{ row }">
@@ -59,12 +63,7 @@ const handleTrialBalancing = async () => {
           {{ t('common.delete') }}
         </ElButton>
       </template>
-      <template #toolbar-actions>
-        <ElButton type="success" @click="handleTrialBalancing()">
-          <img :src="trialIcon" class="mr-1 w-3" alt="" />
-          {{ t('chart-of-accounts.trial-balancing') }}
-        </ElButton>
-      </template>
+
       <template #balance_direction="{ row }">
         {{ t(`enum.account-trial-balancing.${row.balance_direction}`) }}
       </template>

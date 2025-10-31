@@ -11,5 +11,11 @@
   "tendered": "Tendered",
   "give-change": "Give Change",
   "status": "Status",
-  "actuaily-paid": "Actuaily Paid"
+  "actuaily-paid": "Actuaily Paid",
+  "basic-information": "Basic Information",
+  "repayment-history": "Repayment History",
+  "ordinary-order": "Ordinary Order",
+  "credit-sales": "Credit Sales",
+  "placeholder-order": "Enter(sales no. / product / product code.. )",
+  "scan-code-retail": "Scan Code Retail"
 }

@@ -83,5 +83,8 @@
   "search-placeholder": "Please Enter Customer Name/Contact Phone",
   "search-guider-placeholder": "Please Enter Sales Guide Name",
   "on-credit": "On Credit",
-  "successfully-paid": "Successful transaction"
+  "successfully-paid": "Successful transaction",
+  "click-select-customer": "Click Select Customer",
+  "click-select-guider": "Click Select Guide",
+  "account": "Account"
 }

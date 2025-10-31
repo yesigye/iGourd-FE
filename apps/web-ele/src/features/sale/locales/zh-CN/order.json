@@ -13,5 +13,9 @@
   "status": "状态",
   "actuaily-paid": "实际实付金额",
   "basic-information": "基本信息",
-  "repayment-history": "付款历史"
+  "repayment-history": "付款历史",
+  "ordinary-order": "正常订单",
+  "credit-sales": "赊销订单",
+  "placeholder-order": "输入订单号/商品名称/商品编码..",
+  "scan-code-retail": "扫码销售"
 }
