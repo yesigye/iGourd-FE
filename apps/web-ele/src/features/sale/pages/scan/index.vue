@@ -9,15 +9,8 @@ import {
   watch,
 } from 'vue';
 
-import {
-  ElBadge,
-  ElButton,
-  ElCol,
-  ElMessage,
-  ElMessageBox,
-  ElRow,
-  Page,
-} from '@igourd/common-ui';
+import { ElButton, ElMessage, ElMessageBox, Page } from '@igourd/common-ui';
+import { ArrowLeft, ArrowRight, Person, UserFollow2Line } from '@igourd/icons';
 import { useI18n } from '@igourd/locales';
 import { useUserStore } from '@igourd/stores';
 
@@ -778,88 +771,216 @@ onMounted(async () => {
     await calculateOrderPrice();
   }
 });
+const isFold = ref(true);
+// 合起展开功能
+const handCloseAndUnfold = () => {
+  isFold.value = !isFold.value;
+};
 </script>
 
 <template>
   <Page :auto-content-height="true">
     <section class="h-full w-full">
-      <div class="scancode-container h-full w-full">
-        <ElRow :gutter="5" class="h-full w-full">
-          <ElCol :span="18" class="flex h-full flex-col justify-between gap-1">
-            <section class="flex h-full flex-col justify-between gap-1">
-              <div class="bg-card flex-shrink-0 p-2.5">
-                <!-- 扫描搜索 -->
-                <ScanSearch
-                  ref="scanSearchRef"
-                  :row-selection="rowSelection"
-                  :is-suspend-success="isSuspendSuccess"
-                  @refresh="handleRefresh"
-                  @update-goods-list="updateGoodsList"
-                  @handle-goods="handleGoods"
-                  @handle-pick-order="handlePickOrder"
-                  @product-added="handleProductAdded"
-                  @handle-hang-order:show="handleHangOrder"
-                  @handle-select-customer="handleSelectCustomer"
-                  @refresh-calculation-badge-count="
-                    refreshCalculationBadgeCount
-                  "
-                />
-              </div>
-              <div class="bg-card" style="flex-grow: 1">
-                <div>
-                  <!-- 扫描内容 -->
-                  <ScanTable
-                    ref="scanContentRef"
-                    :merge-goods-list="displayedMergeGoodsList"
-                    style="height: 100%; overflow-y: auto"
-                    @update-quantity="handleUpdateQuantity"
-                    @update-unit="handleUpdateUnit"
-                    @handle-select-row="handleSelectRow"
-                    @delete-goods="handleDeleteGoods"
+      <div class="scancode-container flex h-full w-full flex-col gap-1">
+        <!-- 内容区域 -->
+        <section class="flex-1 overflow-hidden">
+          <div class="flex h-full w-full gap-1">
+            <div
+              class="flex h-full flex-col justify-between gap-1 overflow-hidden"
+              :style="{
+                width: `calc(100% - ${isFold ? '303px' : '14px'} - 4px)`,
+              }"
+            >
+              <section class="flex h-full flex-col justify-between gap-1">
+                <div class="bg-card flex-shrink-0 p-2.5">
+                  <!-- 扫描搜索 -->
+                  <ScanSearch
+                    ref="scanSearchRef"
+                    :row-selection="rowSelection"
+                    :is-suspend-success="isSuspendSuccess"
+                    @refresh="handleRefresh"
+                    @update-goods-list="updateGoodsList"
+                    @handle-goods="handleGoods"
+                    @handle-pick-order="handlePickOrder"
+                    @product-added="handleProductAdded"
+                    @handle-hang-order:show="handleHangOrder"
+                    @handle-select-customer="handleSelectCustomer"
+                    @refresh-calculation-badge-count="
+                      refreshCalculationBadgeCount
+                    "
                   />
                 </div>
-              </div>
-              <div
-                class="scan-order-action bg-card flex flex-shrink-0 items-center gap-6"
-              >
-                <div class="flex items-center justify-between gap-2">
-                  <!-- 挂单 -->
-                  <ElButton
-                    class="w-25 h-[50px]"
-                    @click="handleHangOrder"
-                    type="primary"
-                    plain
-                  >
-                    <span class="scan-order-action-primary text-blue-primary">{{
-                      t('scan.hold')
-                    }}</span>
-                  </ElButton>
-                  <!-- 取单 -->
-                  <ElBadge :value="badgeCount" :hidden="badgeCount === 0">
-                    <ElButton
-                      class="w-25 scan-order-action-primary text-blue-primary h-[50px]"
-                      type="primary"
-                      plain
-                      @click="handlePickOrderNew()"
-                    >
-                      <span
-                        class="scan-order-action-primary text-blue-primary"
-                        >{{ t('scan.take') }}</span>
-                    </ElButton>
-                  </ElBadge>
-                  <!-- 清空 -->
-                  <ElButton
-                    class="w-25 scan-order-action-error text-coral h-[50px]"
-                    @click="handleSettleEmpty"
-                    type="danger"
-                    plain
-                  >
-                    {{ t('scan.empty') }}
-                  </ElButton>
+                <div class="bg-card" style="flex-grow: 1">
+                  <div>
+                    <!-- 扫描内容 -->
+                    <ScanTable
+                      ref="scanContentRef"
+                      :merge-goods-list="displayedMergeGoodsList"
+                      style="height: 100%; overflow-y: auto"
+                      @update-quantity="handleUpdateQuantity"
+                      @update-unit="handleUpdateUnit"
+                      @handle-select-row="handleSelectRow"
+                      @delete-goods="handleDeleteGoods"
+                    />
+                  </div>
                 </div>
-                <div class="scan-action-box-settle-info bg-card">
+              </section>
+            </div>
+
+            <div
+              class="relative flex-shrink-0"
+              :key="`fold-${isFold}`"
+              :class="isFold ? 'w-[303px]' : 'w-[14px]'"
+            >
+              <div
+                class="text-primary absolute left-0 top-[50%] flex h-[40px] w-[14px] cursor-pointer items-center justify-center bg-[#D9ECFF]"
+                @click="handCloseAndUnfold"
+              >
+                <ArrowRight v-if="isFold" />
+                <ArrowLeft v-else />
+              </div>
+
+              <div class="scan-action-box bg-card h-full p-2.5" v-show="isFold">
+                <!-- 客户 -->
+                <div class="flex-shrink-0 cursor-pointer bg-[#ECF5FF] p-2.5">
+                  <!-- <div
+                    class="text-error flex items-center justify-end"
+                    @click="clearCustomerInfo"
+                  >
+                    <span>{{ t('common.esc') }}</span>
+                  </div> -->
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray">{{ t('scan.total-amount') }}:</span>
+                    <ElButton
+                      color="#F8E3C5"
+                      class="h-[30px] w-full"
+                      @click="handleSelectCustomer"
+                    >
+                      <div class="flex gap-1 text-[#E6A23C]">
+                        <UserFollow2Line class="text-base" />
+                        <span>{{ t('scan.click-select-customer') }}</span>
+                      </div>
+                    </ElButton>
+                    <span class="customer-name text-gray-dark">{{
+                      customerInfo.name || ''
+                    }}</span>
+                  </div>
+                  <div
+                    class="flex flex-col gap-1"
+                    v-if="Object.keys(customerInfo).length > 0"
+                  >
+                    <div class="mt-3 flex items-center justify-between">
+                      <span class="text-gray-mid"
+                        >{{ t('scan.contact-telephone') }}:</span
+                      >
+                      <span class="customer-name text-gray-dark">{{
+                        customerInfo.phone_number || '-'
+                      }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <p class="customer-title text-gray-mid">
+                        {{ t('scan.points') }}:
+                      </p>
+                      <p class="customer-name text-gray-dark">
+                        {{ customerInfo.points || '-' }}
+                      </p>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <p class="customer-title text-gray-mid">
+                        {{ t('scan.balance') }}:
+                      </p>
+                      <p class="customer-name text-gray-dark">
+                        {{ customerInfo.balance || '0' }}
+                      </p>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <p class="customer-title text-gray-mid">
+                        {{ t('scan.salesman') }}:
+                      </p>
+                      <span class="customer-name text-gray-dark">{{
+                        customerInfo.salesman_name || '0'
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- 导购员 -->
+                <div class="bg-[#ECF5FF] p-2.5" v-show="isFold">
+                  <div class="">
+                    <ElButton
+                      class="h-[30px] w-full"
+                      color="#D1EDC4"
+                      @click="handleSelectGuider"
+                    >
+                      <div
+                        class="flex items-center justify-center gap-1 text-[#529B2E]"
+                      >
+                        <Person class="text-base" />
+                        <span>{{
+                          Object.keys(guiderInfo).length > 0
+                            ? guiderInfo.name || '-'
+                            : t('scan.click-select-guider')
+                        }}</span>
+                      </div>
+                    </ElButton>
+                    <div
+                      v-if="Object.keys(guiderInfo).length > 0"
+                      class="mt-2.5 flex w-full justify-between"
+                    >
+                      <span>{{ t('scan.account') }}</span>
+                      <span>{{ guiderInfo.user_id || '-' }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- 操作区 -->
+        <section class="flex-shrink-0">
+          <div
+            class="scan-order-action bg-card flex flex-shrink-0 items-center justify-between gap-6"
+          >
+            <div class="flex items-center justify-between gap-2">
+              <!-- 挂单 -->
+              <ElButton
+                class="h-[50px] w-[100px]"
+                @click="handleHangOrder"
+                type="primary"
+                plain
+              >
+                <span class="scan-order-action-primary text-blue-primary">{{
+                  t('scan.hold')
+                }}</span>
+              </ElButton>
+              <!-- 取单 -->
+              <ElBadge :value="badgeCount" :hidden="badgeCount === 0">
+                <ElButton
+                  class="scan-order-action-primary text-blue-primary h-[50px] w-[100px]"
+                  type="primary"
+                  plain
+                  @click="handlePickOrderNew()"
+                >
+                  <span class="scan-order-action-primary text-blue-primary">{{
+                    t('scan.take')
+                  }}</span>
+                </ElButton>
+              </ElBadge>
+              <!-- 清空 -->
+              <ElButton
+                class="scan-order-action-error text-coral h-[50px] w-[100px]"
+                @click="handleSettleEmpty"
+                type="danger"
+                plain
+              >
+                {{ t('scan.empty') }}
+              </ElButton>
+            </div>
+            <div class="flex items-center justify-between gap-5">
+              <div class="flex items-center justify-between gap-2">
+                <div class="scan-action-box-settle-info bg-card">
+                  <div class="mb-1 flex items-center justify-between">
+                    <span class="settle-info-lable text-light-gray"
+                      >{{ t('scan.total-amount') }}:</span
+                    >
                     <span class="settle-info-val text-gray-dark">
                       {{ currentSymbol }}
                       {{
@@ -868,24 +989,31 @@ onMounted(async () => {
                               calculateOrderList.subtotal_amount,
                             )
                           : '--'
-                      }}</span>
+                      }}</span
+                    >
                   </div>
-                  <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray">{{ t('scan.tax') }}:</span>
+                  <div class="mb-1 flex items-center justify-between">
+                    <span class="settle-info-lable text-light-gray"
+                      >{{ t('scan.tax') }}:</span
+                    >
                     <span class="settle-info-val text-gray-dark">
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.vat_amount >= 0
                           ? thousandSeparator(calculateOrderList.vat_amount)
                           : '--'
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray">{{ t('scan.discount') }}:</span>
+                    <span class="settle-info-lable text-light-gray"
+                      >{{ t('scan.discount') }}:</span
+                    >
                     <span class="settle-info-val text-gray-dark">
                       <span
                         v-if="calculateOrderList.promotion_discount_amount >= 0"
-                        >-</span>
+                        >-</span
+                      >
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.promotion_discount_amount >= 0
@@ -893,112 +1021,45 @@ onMounted(async () => {
                               calculateOrderList.promotion_discount_amount,
                             )
                           : '--'
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                 </div>
                 <div class="scan-action-box-settle-payment">
                   <div class="flex items-center justify-between gap-5">
-                    <span class="total-title text-orange-medium">
-                      {{ t('scan.actual-amount') }}:</span>
-                    <span class="total-price text-red-primary">
+                    <p class="total-title text-[#E6A23C]">
+                      {{ t('scan.actual-amount') }}:
+                    </p>
+                    <p class="total-price text-[#F56C6C]">
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.total_amount >= 0
                           ? thousandSeparator(calculateOrderList.total_amount)
                           : '--'
-                      }}</span>
+                      }}
+                    </p>
                   </div>
                 </div>
               </div>
-            </section>
-          </ElCol>
-          <ElCol :span="6">
-            <!-- 操作区 -->
-            <div class="scan-action-box h-full">
+
+              <!-- 结算按钮 -->
               <div
-                class="scan-action-box-customer bg-card flex-shrink-0 cursor-pointer"
+                class="scan-action-box-settle bg-card flex items-center justify-center"
               >
-                <div
-                  class="text-error flex items-center justify-end"
-                  @click="clearCustomerInfo"
+                <ElButton
+                  class="settle-button h-[44px] w-[270px]"
+                  type="danger"
+                  size="default"
+                  @click="handleSettlePay"
                 >
-                  <span>{{ t('common.esc') }}</span>
-                </div>
-                <div class="flex items-center justify-between">
-                  <ElButton
-                    color="#F8E3C5"
-                    class="w-25"
-                    @click="handleSelectCustomer"
-                  >
-                    <span class="text-goldenrod">{{ t('scan.customer') }}</span>
-                  </ElButton>
-                  <span class="customer-name text-gray-dark">{{
-                    customerInfo.name || ''
-                  }}</span>
-                </div>
-                <div v-if="Object.keys(customerInfo).length > 0">
-                  <div class="mt-3 flex items-center justify-between">
-                    <span class="text-gray-mid">{{ t('scan.contact-telephone') }}:</span>
-                    <span class="customer-name text-gray-dark">{{
-                      customerInfo.phone_number || '-'
-                    }}</span>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid">{{ t('scan.points') }}:</span>
-                    <span class="customer-name text-gray-dark">{{
-                      customerInfo.points || '-'
-                    }}</span>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid">{{ t('scan.balance') }}:</span>
-                    <span class="customer-name text-gray-dark">{{
-                      customerInfo.balance || '0'
-                    }}</span>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <span class="customer-title text-gray-mid">{{ t('scan.salesman') }}:</span>
-                    <span class="customer-name text-gray-dark">{{
-                      customerInfo.salesman_name || '0'
-                    }}</span>
-                  </div>
-                </div>
+                  <span>
+                    {{ t('scan.settlement') }}
+                  </span>
+                </ElButton>
               </div>
-              <section class="scan-action-box-guider-settle flex-grow">
-                <div
-                  class="scan-action-box-guider bg-card flex flex-grow justify-between"
-                >
-                  <ElButton
-                    class="w-25"
-                    color="#D1EDC4"
-                    @click="handleSelectGuider"
-                  >
-                    <span class="text-[#529B2E]">{{ t('scan.guider') }}</span>
-                  </ElButton>
-                  <div
-                    v-if="Object.keys(guiderInfo).length > 0"
-                    class="guider-val text-gray-dark flex gap-1"
-                  >
-                    <!-- <span>{{ guiderInfo.login_id || '-' }}</span> -->
-                    <span>{{ guiderInfo.name || '-' }}</span>
-                  </div>
-                </div>
-                <div
-                  class="scan-action-box-settle bg-card flex items-center justify-center"
-                >
-                  <ElButton
-                    class="h-15 settle-button w-full"
-                    type="danger"
-                    @click="handleSettlePay"
-                  >
-                    <span>
-                      {{ t('scan.settlement') }}
-                    </span>
-                  </ElButton>
-                </div>
-              </section>
             </div>
-          </ElCol>
-        </ElRow>
+          </div>
+        </section>
       </div>
       <!-- 弹窗部分 -->
       <SelectCustomer

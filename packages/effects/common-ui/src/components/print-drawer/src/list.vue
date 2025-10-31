@@ -11,7 +11,7 @@ import { ElButton, ElCol, ElRow } from 'element-plus';
 import ColumnsSetting from '../../columns-setting/index.vue';
 import { HideOnPrint, PrintDrawerType } from '../type';
 
-import stys from '../index.module.scss';
+// import stys from '../index.module.scss';
 
 const props = withDefaults(defineProps<WithPrintType<ListType>>(), {
   hideOnPrint: HideOnPrint.show,

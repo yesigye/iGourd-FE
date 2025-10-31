@@ -48,3 +48,5 @@ export const ShoppingBagHandBag2ShoppingBagPurseGoodsItemProducts =
   );
 export const Lists = createIconifyIcon('material-symbols-light:lists');
 export const WarningFilled = createIconifyIcon('ep:warning-filled');
+export const UserFollow2Line = createIconifyIcon('mingcute:user-follow-2-line');
+export const Person = createIconifyIcon('material-symbols:person');

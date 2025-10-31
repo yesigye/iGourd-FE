@@ -17,7 +17,7 @@ import PrintList from './list.vue';
 import PrintTable from './table.vue';
 import PrintTitle from './title.vue';
 
-import stys from './index.module.scss';
+// import stys from './index.module.scss';
 
 const compMap = {
   [PrintComponentType.PrintTitle]: unref(PrintTitle),
