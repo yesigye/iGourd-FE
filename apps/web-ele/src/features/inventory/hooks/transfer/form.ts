@@ -61,7 +61,6 @@ export function useTransferForm() {
         type: 'void',
         'x-component': 'FormLayout',
         'x-component-props': {
-          labelCol: 6,
           layout: 'vertical',
           'hide-required-asterisk': true,
         },

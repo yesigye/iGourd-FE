@@ -35,7 +35,6 @@ export function useSpoilageForm() {
         type: 'void',
         'x-component': 'FormLayout',
         'x-component-props': {
-          labelCol: 6,
           layout: 'vertical',
         },
         properties: {

@@ -79,7 +79,7 @@ export function useInventoryTransferList() {
       title: t('inventory.status'),
       minWidth: 135,
       fixed: 'right',
-      slots: { default: 'status' },
+      // slots: { default: 'status' },
     },
     {
       field: 'review_status',

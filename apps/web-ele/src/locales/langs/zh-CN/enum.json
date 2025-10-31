@@ -66,5 +66,19 @@
     "ACCOUNTING_NOTE": "记账笔记",
     "RECEIPT_ORDER": "收款单",
     "PAYMENT_ORDER": "付款单"
+  },
+  "consumption-reason-enum": {
+    "expired-products": "过期商品",
+    "damaged-products": "损坏商品",
+    "personal-use": "个人用途",
+    "raw_materials": "原材料",
+    "others": "其他"
+  },
+  "transfer-status": {
+    "created": "已创建",
+    "transfer-in": "调拨入库",
+    "transfer-out": "调拨出库",
+    "reject-in": "拒绝入库",
+    "reject-out": "拒绝出库"
   }
 }

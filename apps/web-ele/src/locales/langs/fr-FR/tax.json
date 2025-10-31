@@ -1,0 +1,11 @@
+{
+  "tax-name": "Nom de la taxe",
+  "tax-type": "Type de taxe",
+  "calculation-type": "Type de calcul",
+  "percentage": "Pourcentage",
+  "add-tax": "Ajouter une taxe",
+  "taxation-office-tax-type": "Type de taux de TVA",
+  "tax-amount": "Tax Amount",
+  "creator-name": "Creator",
+  "create-time": "Creation Time"
+}

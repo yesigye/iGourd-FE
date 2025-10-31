@@ -18,7 +18,7 @@ export function useTax() {
   const calculationType = ref([]);
   const loadTaxType = async (field: { props: { name: string } }) => {
     const enumData = await useLanguage('basics.accounting.tax-type-enum');
-    taxType.value = enumData
+    taxType.value = enumData;
   };
   const loadTaxationType = async (field: { props: { name: string } }) => {
     const enumData = await useLanguage(
@@ -32,8 +32,8 @@ export function useTax() {
     );
     calculationType.value = enumData;
   };
-loadTaxType();
-loadCalculationType();
+  loadTaxType();
+  loadCalculationType();
   // 基础列定义
   const baseColumns: VxeGridPropTypes.Column<TaxPageModel>[] = [
     {
@@ -46,41 +46,41 @@ loadCalculationType();
       minWidth: 200,
       align: 'left',
       fixed: 'left',
-      title: t('account.tax-name'),
+      title: t('tax.tax-name'),
       sortable: true,
     },
     {
       field: 'tax_type',
       minWidth: 160,
       align: 'left',
-      title: t('account.tax-type'),
+      title: t('tax.tax-type'),
       sortable: true,
       formatter({ cellValue }) {
-        return getEnumLabel(taxType.value,cellValue);
+        return getEnumLabel(taxType.value, cellValue);
       },
     },
     {
       field: 'calculation_type',
       minWidth: 160,
       align: 'left',
-      title: t('account.calculation-type'),
+      title: t('tax.calculation-type'),
       sortable: true,
       formatter({ cellValue }) {
-       return getEnumLabel(calculationType.value,cellValue);
+        return getEnumLabel(calculationType.value, cellValue);
       },
     },
     {
       field: 'percentage',
       minWidth: 160,
       align: 'left',
-      title: t('account.percentage'),
+      title: t('tax.percentage'),
       sortable: true,
     },
     {
       field: 'tax_amount',
       minWidth: 160,
       align: 'left',
-      title: t('account.tax-amount'),
+      title: t('tax.tax-amount'),
       sortable: true,
       formatter: 'formatMoney',
     },
@@ -88,21 +88,21 @@ loadCalculationType();
       field: 'creator_name',
       minWidth: 200,
       align: 'left',
-      title: t('account.creator-name'),
+      title: t('tax.creator-name'),
       sortable: true,
     },
     {
       field: 'create_time',
       minWidth: 180,
       align: 'left',
-      title: t('account.create-time'),
+      title: t('tax.create-time'),
       sortable: true,
     },
     {
       field: 'operation',
-      title: t('account.operation'),
+      title: t('common.operation'),
       sortable: true,
-      width: 100,
+      minWidth: 160,
       fixed: 'right',
       slots: { default: 'operation' },
     },
