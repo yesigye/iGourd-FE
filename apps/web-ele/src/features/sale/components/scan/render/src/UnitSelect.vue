@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 
-import {
-  ElDropdown,
-  ElDropdownItem,
-  ElDropdownMenu,
-  ElIcon,
-} from '@igourd/common-ui';
-import { ArrowDown } from '@igourd/icons';
+import { ElDropdown, ElDropdownItem, ElDropdownMenu } from '@igourd/common-ui';
+import { ArrayDown } from '@igourd/icons';
 
 const props = defineProps({
   detailInfo: {
@@ -61,9 +56,7 @@ onMounted(() => {
     <ElDropdown trigger="click" popper-class="unit-dropdown">
       <span class="el-dropdown-link">
         {{ defaultUnit }}
-        <ElIcon class="el-icon--right">
-          <ArrowDown />
-        </ElIcon>
+        <ArrayDown />
       </span>
 
       <template #dropdown>
@@ -75,7 +68,9 @@ onMounted(() => {
           >
             <div class="unit-item">
               <span>{{ item.product_unit_name }}</span>
-              <span v-if="item.basic_unit_radio">1:{{ item.basic_unit_radio }}</span>
+              <span v-if="item.basic_unit_radio"
+                >1:{{ item.basic_unit_radio }}</span
+              >
             </div>
           </ElDropdownItem>
         </ElDropdownMenu>

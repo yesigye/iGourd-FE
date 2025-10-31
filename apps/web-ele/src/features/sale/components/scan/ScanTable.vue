@@ -286,11 +286,11 @@ defineExpose({
         <template #default="scope">
           <ElButton
             link
-            type="primary"
+            type="danger"
             size="small"
             @click="handleDelete(scope.row.id)"
           >
-            <i class="iconfont icon-shanchu2 shanchu"></i>
+            {{ t('common.delete') }}
           </ElButton>
         </template>
       </ElTableColumn>

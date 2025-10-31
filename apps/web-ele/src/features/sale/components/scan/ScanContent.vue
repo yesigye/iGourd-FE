@@ -183,7 +183,7 @@ defineExpose({
             size="small"
             @click="handleDelete(scope.row.id)"
           >
-            <i class="iconfont icon-shanchu2 shanchu"></i>
+            {{ t('common.delete') }}
           </el-button>
         </template>
       </el-table-column>
