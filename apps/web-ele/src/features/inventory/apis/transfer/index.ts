@@ -62,6 +62,7 @@ export function modifyTransfer(data: any) {
   );
 }
 
+
 /**
  * 更新调拨状态
  */
@@ -72,7 +73,7 @@ export function updateTransferStatus(params: {
   merchant_id: number;
   status?: string;
 }) {
-  return request.post('/inventory/transfer/update-status', params);
+  return request.post('/v1/merchant/basics/inventory/stock-transfer/status/modify', params);
 }
 
 /**
@@ -109,3 +110,20 @@ export function getSameMerchantApi(params: { id: number }) {
     params,
   );
 }
+
+//  调拨单详情入库数量更新接口
+export function stockTransferStorageModify(params: {
+  id: number;
+  transfer_in_quantity: number;
+}[]) {
+  return request.post('/v1/merchant/basics/inventory/stock-transfer/storage/modify', params);
+}
+//  调拨单详情出库数量更新接口
+export function stockTransferOutboundModify(params: {
+  id: number;
+  transfer_out_quantity: number;
+}[]) {
+  return request.post('/v1/merchant/basics/inventory/stock-transfer/outbound/modify', params);
+}
+
+

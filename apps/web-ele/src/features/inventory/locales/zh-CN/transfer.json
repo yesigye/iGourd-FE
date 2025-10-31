@@ -2,7 +2,10 @@
   "source-warehouse-name": "源仓库",
   "destination-warehouse-name": "目标仓库",
   "add-transfer": "添加调拨单",
+  "edit-transfer": "编辑调拨单",
   "transfer-type": "调拨类型",
   "total-transfer-quantity": "商品总数",
-  "total-transfer-product-price": "调拨商品总价格"
+  "total-transfer-product-price": "调拨商品总价格",
+  "title-out-bound":"出库状态",
+  "title-in-bound":"入库状态"
 }

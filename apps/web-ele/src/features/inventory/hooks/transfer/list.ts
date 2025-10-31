@@ -75,13 +75,6 @@ export function useInventoryTransferList() {
       slots: { default: 'status' },
     },
     {
-      field: 'status',
-      title: t('inventory.status'),
-      minWidth: 135,
-      fixed: 'right',
-      // slots: { default: 'status' },
-    },
-    {
       field: 'review_status',
       title: t('inventory.review'),
       minWidth: 120,
@@ -136,6 +129,7 @@ export function useInventoryTransferList() {
     handleCreate,
     canBatchOperate,
     Drawer,
+    drawerApi,
     handleEdit,
     handleBatchDelete,
     handleDelete,
@@ -152,6 +146,7 @@ export function useInventoryTransferList() {
   return {
     Grid,
     Drawer,
+    drawerApi,
     handleEdit,
     handleBatchDelete,
     canBatchOperate,

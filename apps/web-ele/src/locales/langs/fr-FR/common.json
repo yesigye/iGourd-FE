@@ -200,7 +200,9 @@
     "inventory-count": "Quantité d'inventaire",
     "breakage-quantity": "Quantité de casse",
     "transfer-quantity": "Quantité transférée",
-    "base-quantity": "Quantité de base"
+    "base-quantity": "Quantité de base",
+    "transfer-out-quantity": "Quantité sortante",
+    "transfer-in-quantity": "Quantité entrante"
   },
 
   "drop-fil-here": "Glissez les fichiers ici ou",

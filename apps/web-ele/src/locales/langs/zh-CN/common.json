@@ -199,7 +199,11 @@
     "inventory-count": "盘点数量",
     "breakage-quantity": "报损数量",
     "transfer-quantity": "调拨数量",
-    "base-quantity": "基础数量"
+    "base-quantity": "基础数量",
+    "transfer-in-quantity": "入库数量",
+    "transfer-out-quantity": "出库数量"
+
+
   },
 
   "drop-fil-here": "拖拽文件到此区域或",
