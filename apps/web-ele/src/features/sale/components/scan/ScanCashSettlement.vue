@@ -932,12 +932,12 @@ defineExpose({
       <div
         class="mb-1 flex items-center justify-between gap-2.5 gap-5 bg-white pb-2.5 pl-5 pr-5 pt-2.5 text-base font-semibold"
       >
-        <p class="text-status-partial flex-1">{{ t('scan.change') }}:</p>
+        <p class="flex-1 text-[#FF9800]">{{ t('scan.change') }}:</p>
         <p
           class="h-full flex-shrink-0 border border-solid border-[#DCDFE6]"
           style="height: -webkit-fill-available"
         ></p>
-        <p class="text-status-terminated flex-1">
+        <p class="flex-1 text-[#D32F2F]">
           {{ changeAmount }} {{ currentSymbol }}
         </p>
       </div>

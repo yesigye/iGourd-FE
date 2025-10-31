@@ -2,18 +2,36 @@ import type { SaleOrderDTO, SaleOrderRow } from '@@/sale/types';
 
 import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
+import { ref } from 'vue';
+
 import { useI18n } from '@igourd/locales';
+// import { SaleOrderDrawer } from '@@/sale/components';
 
 import {
   createSaleOrderApi,
+  customerPageListApi,
   deleteSaleOrderApi,
   getSaleOrderListApi,
   updateSaleOrderApi,
 } from '@@/sale/apis';
-// import { SaleOrderDrawer } from '@@/sale/components';
 
 import { useCrud } from '#/hooks';
 
+function remoteMethod(keywords: string) {
+  return customerPageListApi({
+    page_num: 1,
+    page_size: 15,
+    keywords,
+  }).then((res) => {
+    return res.list.map((item: any) => {
+      return {
+        ...item,
+        label: item.name,
+        value: item.id,
+      };
+    });
+  });
+}
 export function useSaleOrder(defaultQueryParams?: Record<string, any>) {
   const { t } = useI18n();
   const columns: VxeGridPropTypes.Column<SaleOrderRow>[] = [
@@ -127,17 +145,11 @@ export function useSaleOrder(defaultQueryParams?: Record<string, any>) {
       slots: { default: 'operation' },
     },
   ];
-
+  const defaultTime = ref<[Date, Date]>([
+    new Date(2000, 1, 1, 0, 0, 0),
+    new Date(2000, 2, 1, 23, 59, 59),
+  ]);
   const searchFormSchema = {
-    keywords: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('order.order-no')}}",
-        clearable: true,
-      },
-    },
     date_range: {
       type: 'string',
       'x-decorator': 'FormItem',
@@ -149,6 +161,29 @@ export function useSaleOrder(defaultQueryParams?: Record<string, any>) {
         endPlaceholder: '结束日期',
         format: 'YYYY-MM-DD',
         valueFormat: 'YYYY-MM-DD',
+        defaultTime: defaultTime.value,
+      },
+    },
+    customer_id: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'RemoteSelect',
+      'x-component-props': {
+        placeholder: "{{t('order.customer')}}",
+        clearable: true,
+        style: {
+          width: '160px',
+        },
+        remoteMethod,
+      },
+    },
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
+      'x-component-props': {
+        placeholder: "{{t('order.placeholder-order')}}",
+        clearable: true,
       },
     },
   };
@@ -164,13 +199,12 @@ export function useSaleOrder(defaultQueryParams?: Record<string, any>) {
     id: 'sale_order_export',
     searchFormSchema,
     tabs: [
-      { value: 'ALL', label: '全部' },
-      { value: 'CREDIT', label: '收入' },
-      { value: 'DEBIT', label: '支出' },
+      { value: 'ORDINARY_ORDER', label: t('order.ordinary-order') },
+      { value: 'CREDIT_SALES', label: t('order.credit-sales') },
     ],
     tabsOption: {
-      defaultActiveValue: 'ALL',
-      formKey: 'sale_order_export',
+      defaultActiveValue: 'ORDINARY_ORDER',
+      formKey: 'type',
     },
 
     toolbarConfig: {

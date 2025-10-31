@@ -11,5 +11,11 @@
   "tendered": "Effacer le zéro",
   "give-change": "Trouver le zéro",
   "status": "Trouver le zéro",
-  "actuaily-paid": "Montant réellement payé"
+  "actuaily-paid": "Montant réellement payé",
+  "basic-information": "Information de base",
+  "repayment-history": "Historique de paiement",
+  "ordinary-order": "Commande normale",
+  "credit-sales": "Vente en retard",
+  "placeholder-order": "Entrez le numéro de commande, le nom du produit ou le code de produit..",
+  "scan-code-retail": "Scannez le code de produit pour vendre"
 }
