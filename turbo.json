@@ -36,7 +36,7 @@
       "outputs": ["dist/**"]
     },
     "build:dev": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "^build:dev"],
       "outputs": ["dist/**"]
     },
     "@igourd/backend-mock#build": {
