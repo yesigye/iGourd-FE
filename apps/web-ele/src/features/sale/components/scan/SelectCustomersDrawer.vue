@@ -14,6 +14,7 @@ import { debounce } from '@igourd/utils';
 
 import { storeToRefs } from 'pinia';
 
+import defaultUser from '#/assets/img/productDefault.png';
 import { useCustomerStore } from '#/store/sale/customer';
 
 defineOptions({
@@ -102,11 +103,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
                   >
                     <!-- 当图片加载失败时，显示默认图片 -->
                     <template #error>
-                      <img
-                        src="#/assets/img/personDefault.png"
-                        alt=""
-                        class="product-pic"
-                      />
+                      <img :src="defaultUser" alt="" class="product-pic" />
                     </template>
                   </ElImage>
                 </div>

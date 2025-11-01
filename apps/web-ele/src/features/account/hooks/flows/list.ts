@@ -168,7 +168,33 @@ export function useFlows() {
         print: true,
         export: true,
       },
-      printConfig: {},
+      printConfig: {
+        // params: {
+        //   templateConfig: [
+        //     {
+        //       title: 'account.financialFlows',
+        //       compType: PrintComponentType.PrintTitle,
+        //     },
+        //     {
+        //       compType: PrintComponentType.PrintList,
+        //       columns: [
+        //         {
+        //           label: 'common.date',
+        //           prop: 'date',
+        //           valueRender: () => dayjs().format('MM/DD/YYYY'),
+        //         },
+        //       ],
+        //       data: {
+        //         date: '',
+        //       },
+        //     },
+        //     {
+        //       compType: PrintComponentType.PrintTitle,
+        //       title: 'account.flows',
+        //     },
+        //   ],
+        // },
+      },
       searchFormSchema: {
         '[start_create_time,end_create_time]': {
           type: 'string',
