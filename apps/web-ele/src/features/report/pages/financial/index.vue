@@ -37,13 +37,25 @@ const getStaticsData = async () => {
         class="flex w-full items-center justify-between border-t border-solid border-[#DCDFE6] pt-2.5"
       >
         <div class="flex flex-wrap gap-2.5">
-          <p class="flex flex-wrap gap-2.5">
+          <p class="flex flex-wrap gap-1">
             <span>{{ t('financial.revenue') }}:</span>
-            <span class="text-success">+{{ staticsData.revenue_amount || 0 }}</span>
+            <span v-if="staticsData.revenue_amount > 0" class="text-success"
+              >+</span
+            >
+            <span class="text-success">{{
+              staticsData.revenue_amount || 0
+            }}</span>
           </p>
-          <p class="flex flex-wrap gap-2.5">
+          <p class="flex flex-wrap gap-1">
             <span>{{ t('financial.expenditure') }}:</span>
-            <span class="text-[#F56C6C]">-{{ staticsData.advances_received_amount || 0 }}</span>
+            <span
+              v-if="staticsData.expendityre_amount > 0"
+              class="text-[#F56C6C]"
+              >-</span
+            >
+            <span class="text-[#F56C6C]">{{
+              staticsData.expendityre_amount || 0
+            }}</span>
           </p>
           <p class="flex flex-wrap gap-2.5">
             <span>{{ t('financial.cash-balance') }}:</span>
