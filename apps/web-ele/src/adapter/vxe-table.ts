@@ -73,7 +73,6 @@ setupIgourdVxeTable({
         printConfig: {
           slots: {
             footer: 'printFooter',
-            default: 'printDefault',
           },
         },
         proxyConfig: {

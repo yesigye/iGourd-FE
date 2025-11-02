@@ -1,0 +1,87 @@
+.print {
+  --title-font-size: 16px;
+  --base-font-size: 14px;
+  height: 100%;
+  background: #fff;
+  padding: 11px 24px;
+  margin: 0 auto;
+  width: 790px;
+
+  &.receipt {
+    padding: 0;
+    width: 270px;
+  }
+}
+/** 打印表格 */
+.print-table {
+  margin-top: 5px;
+
+  // FIXME 忘了为什么要去padding 了，这里暂时注释掉
+  // > :global(.igourd-el-table),
+  // :global(.cell) {
+  //   // padding: 0;
+  // }
+
+  .default-font-size {
+    &,
+    * {
+      font-size: var(--base-font-size);
+    }
+  }
+}
+
+/** 打印列表 */
+.print-list {
+  margin-top: 12px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #666666;
+  position: relative;
+
+  &.receipt {
+    /** 小票打印时实际右侧必须留出一些空白，那里打印机打不出内容 */
+    padding-right: 3px;
+    .key {
+      text-align: left;
+    }
+    .value {
+      text-align: right;
+    }
+
+    .list-wrapper {
+      padding: 0 10px;
+    }
+  }
+}
+.key {
+  text-align: right;
+}
+
+.font-base {
+  font-size: var(--base-font-size);
+}
+/** title barcode 组件 */
+header {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  margin-top: 5px;
+
+  &.receipt {
+    flex-flow: column;
+    align-items: center;
+  }
+  .print-barcode {
+    height: 80px;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: var(--title-font-size);
+    line-height: 100%;
+  }
+  .bar-code.receipt {
+    margin-top: 5px;
+  }
+}

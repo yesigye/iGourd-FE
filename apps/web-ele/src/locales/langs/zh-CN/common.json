@@ -202,8 +202,6 @@
     "base-quantity": "基础数量",
     "transfer-in-quantity": "入库数量",
     "transfer-out-quantity": "出库数量"
-
-
   },
 
   "drop-fil-here": "拖拽文件到此区域或",
@@ -360,7 +358,8 @@
     "base-font-size": "内容大小",
     "receipt": "小票",
     "A4": "A4",
-    "pager": "打印模板"
+    "pager": "打印模板",
+    "set-field": "设置字段"
   },
   "upload-img": "上传图片"
 }

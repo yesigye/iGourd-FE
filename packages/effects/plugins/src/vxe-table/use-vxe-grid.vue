@@ -34,6 +34,7 @@ import {
   ElRadioGroup,
   ElText,
   FormButtonGroup,
+  PrintDrawer,
   Submit,
   useTableSearchForm,
 } from '@igourd/common-ui';
@@ -345,21 +346,6 @@ const showDefaultEmpty = computed(() => {
   return !hasEmptyText && !hasEmptyRender;
 });
 const printRef = ref();
-// const [Drawer, drawerApi] = useIgourdDrawer({
-//   title: $t('common.print'),
-//   class: 'w-3/4',
-//   appendToMain: true,
-//   contentClass: 'bg-muted',
-//   header: false,
-//   confirmText: $t('common.print'),
-//   onOpened: () => {
-//     printRef.value.setData(gridRef.value?.getData());
-//   },
-//   onConfirm() {
-//     printRef.value.print();
-//   },
-//   // isOpen: true,
-// });
 
 async function init() {
   await nextTick();
@@ -409,7 +395,7 @@ const { params } = inject(Symbol.for('PageGrid'), {
 });
 async function handleCommand(command: string) {
   if (command === 'print') {
-    printRef.value.open(gridRef.value?.getData());
+    printRef.value.open(options.value.printConfig);
   }
   if (command === 'export') {
     // @ts-ignore
@@ -430,6 +416,7 @@ async function handleCommand(command: string) {
   await gridRef.value?.commitProxy(command);
 }
 const footerHeight = inject(Symbol.for('Page.FooterHeight'), ref(0));
+
 onMounted(() => {
   props.api?.mount?.(gridRef.value, formApi);
   init();
@@ -448,6 +435,15 @@ const openMoreActions = computed(() => {
       options.value.toolbarConfig?.tools.length > 0)
   );
 });
+
+const confirmPrintConfig = async (cfg) => {
+  props.api.setGridOptions({
+    printConfig: { ...cfg },
+  });
+  const { html } = await props.api.grid.getPrintHtml();
+  console.log(html);
+  props.api.grid.closePrint();
+};
 </script>
 
 <template>
@@ -455,7 +451,11 @@ const openMoreActions = computed(() => {
     :class="cn('bg-card rounded-md', className)"
     :style="{ height: `calc(100% - ${footerHeight}px - 0.25rem)` }"
   >
-    <!-- <PrintDrawer ref="printRef" v-bind="options" /> -->
+    <PrintDrawer
+      v-if="options.printConfig"
+      ref="printRef"
+      :print-config="options.printConfig"
+    />
     <VxeGrid
       ref="gridRef"
       :class="
@@ -471,7 +471,11 @@ const openMoreActions = computed(() => {
       v-on="events"
     >
       <!-- <template #printDefault> -->
-
+      <template #printFooter="{ options: printCfg }">
+        <ElButton type="primary" @click="confirmPrintConfig(printCfg)">
+          {{ $t('common.confirm') }}
+        </ElButton>
+      </template>
       <!-- </template> -->
       <!-- 左侧操作区域或者title -->
       <template v-if="showToolbar" #toolbar-actions="slotProps">

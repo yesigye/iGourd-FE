@@ -4,48 +4,14 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 
 import { ref } from 'vue';
 
+import { PrintComponentType } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+import { dayjs } from '@igourd/utils';
 
 import { getFinanceFlowPageListApi } from '@@/account/apis';
 import { FlowsDrawer } from '@@/account/components';
 
 import { useCrud } from '#/hooks';
-
-const sourceTypeMap = {
-  ACCOUNTING_NOTE_CREATE: {
-    label: 'account.source-type.accounting-note-create',
-  },
-  ACCOUNTING_NOTE_MODIFY: {
-    label: 'account.source-type.accounting-note-modify',
-  },
-  CUSTOMER_RECHARGE_WITHOUT_VIP: {
-    label: 'account.source-type.customer-recharge-without-vip',
-  },
-  CUSTOMER_RECHARGE_WITH_VIP: {
-    label: 'account.source-type.customer-recharge-with-vip',
-  },
-  MANUALLY_CREATE: {
-    label: 'account.source-type.manually-create',
-  },
-  PURCHASE_BILL_GOODS_PAYMENT: {
-    label: 'account.source-type.purchase-bill-goods-payment',
-  },
-  PURCHASE_ORDER_PAYMENT: {
-    label: 'account.source-type.purchase-order-payment',
-  },
-  PURCHASE_ORDER_RETURNED: {
-    label: 'account.source-type.purchase-order-returned',
-  },
-  SALES_OFFLINE_ORDER_SYNC: {
-    label: 'account.source-type.sales-offline-order-sync',
-  },
-  SALES_ORDER_PAYMENT: {
-    label: 'account.source-type.sales-order-payment',
-  },
-  SALES_ORDER_REFUND: {
-    label: 'account.source-type.sales-order-refund',
-  },
-};
 
 export function useFlows() {
   const { t } = useI18n();
@@ -150,80 +116,91 @@ export function useFlows() {
     new Date(2000, 2, 1, 23, 59, 59),
   ]);
   // 使用 CRUD Hook
-  const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete } =
-    useCrud({
-      service,
-      columns: baseColumns,
-      id: 'finance_flow_plus_export',
-      tabs: [
-        { value: 'ALL', label: t('common.all') },
-        { value: 'CREDIT', label: t('account.revenue') },
-        { value: 'DEBIT', label: t('account.expenditure') },
-      ],
-      tabsOption: {
-        defaultActiveValue: 'ALL',
-        formKey: 'balance_direction',
-      },
-      toolbarConfig: {
-        print: true,
-        export: true,
-      },
-      printConfig: {
-        // params: {
-        //   templateConfig: [
-        //     {
-        //       title: 'account.financialFlows',
-        //       compType: PrintComponentType.PrintTitle,
-        //     },
-        //     {
-        //       compType: PrintComponentType.PrintList,
-        //       columns: [
-        //         {
-        //           label: 'common.date',
-        //           prop: 'date',
-        //           valueRender: () => dayjs().format('MM/DD/YYYY'),
-        //         },
-        //       ],
-        //       data: {
-        //         date: '',
-        //       },
-        //     },
-        //     {
-        //       compType: PrintComponentType.PrintTitle,
-        //       title: 'account.flows',
-        //     },
-        //   ],
-        // },
-      },
-      searchFormSchema: {
-        '[start_create_time,end_create_time]': {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'DatePicker',
-          'x-component-props': {
-            type: 'daterange',
-            placeholder: t('common.keywords'),
-            format: 'YYYY-MM-DD',
-            valueFormat: 'YYYY-MM-DD HH:mm:ss',
-            rangeSeparator: t('common.range-separator'),
-            startPlaceholder: t('common.start-date'),
-            endPlaceholder: t('common.end-date'),
-            defaultTime: defaultTime.value,
+  const {
+    Grid,
+    gridApi,
+    Drawer,
+    handleEdit,
+    canBatchOperate,
+    handleBatchDelete,
+  } = useCrud({
+    service,
+    columns: baseColumns,
+    id: 'finance_flow_plus_export',
+    tabs: [
+      { value: 'ALL', label: t('common.all') },
+      { value: 'CREDIT', label: t('account.revenue') },
+      { value: 'DEBIT', label: t('account.expenditure') },
+    ],
+    tabsOption: {
+      defaultActiveValue: 'ALL',
+      formKey: 'balance_direction',
+    },
+    toolbarConfig: {
+      print: true,
+      export: true,
+    },
+    printConfig: {
+      params: {
+        type: 'A4',
+        printDatas: [
+          {
+            title: 'account.financial-flow',
+            compType: PrintComponentType.PrintTitle,
           },
-        },
-        keywords: {
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Input',
-          'x-component-props': {
-            placeholder: "{{t('common.keywords')}}",
-            clearable: true,
+          {
+            compType: PrintComponentType.PrintList,
+            columns: [
+              {
+                label: 'common.date',
+                prop: 'date',
+                valueRender: () => dayjs().format('MM/DD/YYYY'),
+              },
+            ],
+            data: {
+              date: '',
+            },
           },
+          {
+            compType: PrintComponentType.PrintTitle,
+            title: 'account.flows',
+          },
+          {
+            compType: PrintComponentType.PrintTable,
+            gridApi: () => gridApi,
+          },
+        ],
+      },
+    },
+    searchFormSchema: {
+      '[start_create_time,end_create_time]': {
+        type: 'string',
+        'x-decorator': 'FormItem',
+        'x-component': 'DatePicker',
+        'x-component-props': {
+          type: 'daterange',
+          placeholder: t('common.keywords'),
+          format: 'YYYY-MM-DD',
+          valueFormat: 'YYYY-MM-DD HH:mm:ss',
+          rangeSeparator: t('common.range-separator'),
+          startPlaceholder: t('common.start-date'),
+          endPlaceholder: t('common.end-date'),
+          defaultTime: defaultTime.value,
         },
       },
-      batchOperate: false,
-      connectedComponent: FlowsDrawer,
-    });
+      keywords: {
+        type: 'string',
+        'x-decorator': 'FormItem',
+        'x-component': 'Input',
+        'x-component-props': {
+          placeholder: "{{t('common.keywords')}}",
+          clearable: true,
+        },
+      },
+    },
+    batchOperate: false,
+    connectedComponent: FlowsDrawer,
+  });
 
   return {
     // 组件

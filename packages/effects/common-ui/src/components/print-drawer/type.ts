@@ -1,6 +1,9 @@
 import type { Column } from 'element-plus';
 
+import type { VxeTableGridOptions } from '@igourd/plugins/vxe-table';
+
 export type PrintDrawerProps = {
+  printConfig?: VxeTableGridOptions['printConfig'];
   printDatas: PrintData[];
   type: PrintDrawerType;
 };
