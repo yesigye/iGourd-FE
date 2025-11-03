@@ -15,3 +15,8 @@ useElementPlusDesignTokens();
     <RouterView />
   </ElConfigProvider>
 </template>
+<style>
+body{
+  backdrop-filter: blur(10px);
+}
+</style>

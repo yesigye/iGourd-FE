@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { action, ElButton } from '@igourd/common-ui';
-import { useListForm } from '@@/purchase/hooks';
-import { getDynamicColumnList } from '@@/inventory/apis';
-import { generateSchema } from '#/utils';
-import { getCountryListApi } from '@@/setting/apis';
 import { h, ref } from 'vue';
+
+import { ElButton } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
+
+import { getDynamicColumnList } from '@@/inventory/apis';
+import { useListForm } from '@@/purchase/hooks';
+import { getCountryListApi } from '@@/setting/apis';
+
+import { generateSchema } from '#/utils';
+
 const { t } = useI18n();
 const UploadButton = () => {
   return h(ElButton, {}, { default: () => t('common.upload-img') });
@@ -95,9 +99,7 @@ const createSchema = (dynamicJson) => {
                     'x-component-props': {
                       placeholder: "{{t('list.vendor-name')}}",
                     },
-                    'x-validator':[
-                      {required: true}
-                    ]
+                    'x-validator': [{ required: true }],
                   },
                   profile_photo: {
                     type: 'string',
@@ -115,11 +117,10 @@ const createSchema = (dynamicJson) => {
                 type: 'void',
                 'x-component': 'FormLayout',
                 properties: {
-
                   effective_time: {
                     type: 'string',
                     title: "{{t('list.effective-time')}}",
-                    required: true,
+                    required: false,
                     'x-decorator': 'FormItem',
                     'x-component': 'DatePicker',
                     'x-component-props': {
@@ -181,9 +182,7 @@ const createSchema = (dynamicJson) => {
                     'x-component-props': {
                       placeholder: "{{t('list.contact-name')}}",
                     },
-                    'x-validator':[
-                      {required: true}
-                    ]
+                    'x-validator': [{ required: true }],
                   },
                   currency_code: {
                     type: 'string',
@@ -219,7 +218,7 @@ const createSchema = (dynamicJson) => {
                     title: "{{t('list.contact-telephone')}}",
                     'x-decorator': 'FormItem',
                     'x-decorator-props': {
-                      asterisk: true,
+                      asterisk: false,
                       feedbackLayout: 'none',
                     },
                     'x-component': 'Space',
@@ -237,21 +236,22 @@ const createSchema = (dynamicJson) => {
                           style: {
                             width: '120px',
                           },
+                          filterable: true,
                         },
-                        required: true,
+                        //required: true,
                         'x-reactions': ['{{useAsyncDataSource(loadData)}}', {}],
                       },
                       contact_telephone: {
                         type: 'string',
                         'x-decorator': 'FormItem',
                         'x-component': 'Input',
-                        //required: true,
+                        // required: true,
                         'x-decorator-props': {
                           class: 'w-full',
                         },
                         'x-validator': [
                           {
-                            required: true,
+                            // required: true,
                           },
                           {
                             format: 'phone',
@@ -263,7 +263,7 @@ const createSchema = (dynamicJson) => {
                   },
                   email: {
                     type: 'string',
-                    //required: true,
+                    // required: true,
                     title: "{{t('list.email')}}",
                     'x-decorator': 'FormItem',
                     'x-component': 'Input',
@@ -272,7 +272,7 @@ const createSchema = (dynamicJson) => {
                     },
                     'x-validator': [
                       {
-                        required: true,
+                        required: false,
                       },
                       {
                         format: 'email',
