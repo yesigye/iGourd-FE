@@ -2,6 +2,7 @@
 import { inject, onMounted, ref, watch } from 'vue';
 
 import {
+  Card,
   ElButton,
   ElCol,
   ElInput,
@@ -26,13 +27,17 @@ import {
   orderSuspendListApi,
 } from '@@/sale/apis';
 import { codeConfig } from '@@/sale/components/scan/const/codeConfig';
-import { useSelectCustomer } from '@@/sale/hooks';
+import {
+  useSelectCustomer,
+  useSelectGuider,
+  useSelectProduct,
+} from '@@/sale/hooks';
 
+import floatingLayerArrowIcon from '#/assets/sale/floating-layer-arrow.svg';
 import { ReceiptTemplate } from '#/components/receipt-template'; // 生成小票模板
+// 生成小票模板
 
 import HoldOrderTakeCard from './HoldOrderTakeCard.vue';
-import SelectGuiderDrawer from './SelectGuiderDrawer.vue';
-import SelectProducts from './SelectProducts.vue';
 
 const props = defineProps({
   drawerReturnShow: {
@@ -55,6 +60,10 @@ const emit = defineEmits([
 ]);
 const { Drawer: SelectCustomersDrawer, drawerApi: drawerApiCustomer } =
   useSelectCustomer();
+const { Drawer: SelectGuiderDrawer, drawerApi: drawerApiGuider } =
+  useSelectGuider();
+const { Drawer: SelectProducts, drawerApi: drawerApiProduct } =
+  useSelectProduct();
 const [Drawer, drawerApi] = useIgourdDrawer({
   onOpenChange: (val) => {
     if (val) {}
@@ -146,7 +155,8 @@ const suspendList = ref([]);
 const isSuspend = inject<any>('isSuspend');
 // 打开挂单添加商品弹窗
 const handleSelectProducts = () => {
-  isSelectProductDialog.value = true;
+  // isSelectProductDialog.value = true;
+  drawerApiProduct.open();
 };
 const customerName = ref('');
 
@@ -286,10 +296,7 @@ const handleReplaceCustomer = () => {
   drawerApiCustomer.open();
 };
 const handleEditGuider = () => {
-  drawerDetailsGuider.value = {
-    title: t('scan.select-guider'),
-    visible: true,
-  };
+  drawerApiGuider.open();
 };
 const handleSelectCustomerRow = (row) => {
   currentInfo.value.customer_id = row.id;
@@ -387,7 +394,6 @@ const handlePrintTake = async (index) => {
   const res = await getCustomTemplateListApi(params);
   printTemplate.value = res.find((item) => item.is_default) || {};
 
-  // advanceStatement.value = data.find(item => item.is_default) || {}
   const order_item_model_list = [];
   if (Object.keys(printTemplate.value).length > 0) {
     currentInfo.value.order_holding[index].order_holding_item_list.forEach(
@@ -450,322 +456,262 @@ defineExpose({
 </script>
 
 <template>
-  <div class="coupon-send">
-    <Drawer>
-      <!-- 列表关闭栏 -->
-      <div class="drawer-container">
-        <div class="drawer-content">
-          <div class="drawer-content-box">
-            <ElRow :gutter="5" class="h-full">
-              <ElCol :span="6" class="h-full">
-                <ElScrollbar class="h-full">
-                  <div class="select-products-search-box flex p-2">
-                    <div class="select-products-search flex w-full">
-                      <ElInput
-                        v-model="customerName"
-                        :clearable="true"
-                        class="h-13"
-                        :placeholder="$t('scan.please-enter-the-customer-name')"
-                      />
-                      <ElButton
-                        class="w-25 h-full"
-                        type="primary"
-                        @click="handleSearchClick"
-                      >
-                        {{ t('scan.search') }}
-                      </ElButton>
-                    </div>
-                  </div>
-                  <div class="drawer-content-left bg-white">
-                    <!-- 挂单选择 -->
-                    <ElRadioGroup
-                      v-model="currentId"
-                      style="width: 100%"
-                      @change="handChangeOfline"
-                    >
-                      <ElRadio
-                        v-for="item in suspendList"
-                        :key="item.id"
-                        class="take-left-radio"
-                        :class="
-                          currentId == item.id ? 'take-left-radio-active' : ''
-                        "
-                        :value="item.id"
-                        :label="item.id"
-                      >
-                        <HoldOrderTakeCard :item-info="item" />
-                      </ElRadio>
-                    </ElRadioGroup>
-                  </div>
-                </ElScrollbar>
-              </ElCol>
-              <ElCol :span="18" class="h-full">
-                <div
-                  v-if="Object.keys(currentInfo).length > 0"
-                  class="drawer-content-right h-full"
+  <Drawer>
+    <!-- 列表关闭栏 -->
+    <div class="relative h-full w-full overflow-hidden">
+      <ElRow :gutter="5" class="h-full">
+        <ElCol :span="6" class="h-full">
+          <ElScrollbar class="h-full">
+            <div class="select-products-search-box flex p-2">
+              <div class="select-products-search flex w-full">
+                <ElInput
+                  v-model="customerName"
+                  :clearable="true"
+                  class="h-13"
+                  :placeholder="$t('scan.please-enter-the-customer-name')"
+                />
+                <ElButton
+                  class="w-25 h-full"
+                  type="primary"
+                  @click="handleSearchClick"
                 >
-                  <div class="basic-details bg-white">
-                    <div class="basic-details-title">
-                      {{ t('scan.basic-details') }}
-                    </div>
-                    <div
-                      class="basic-details-info mt-2.5 flex items-center gap-1"
-                    >
-                      <span>{{ t('scan.customer') }}:</span>
-                      <p>
-                        {{ currentInfo?.customer_name || '-' }}/{{
-                          currentInfo?.phone_number || '-'
-                        }}
-                      </p>
-                      <ElButton
-                        color="#C6E2FF"
-                        class="ml-2"
-                        @click="handleReplaceCustomer"
-                      >
-                        <span class="text-blue-primary">{{
-                          currentInfo.customer_id &&
-                          currentInfo.customer_id != '0'
-                            ? t('scan.replace')
-                            : t('scan.select')
-                        }}</span>
-                      </ElButton>
-                    </div>
-                    <div
-                      v-if="currentInfo.remark"
-                      class="basic-details-info mt-2.5 flex items-center gap-1"
-                    >
-                      <span>{{ t('scan.remarks') }}:</span>
-                      <p>
-                        {{ currentInfo?.remark || '' }}
-                      </p>
-                    </div>
-                  </div>
-                  <div class="basic-details mt-[5px] bg-white">
-                    <div class="basic-details-title">
-                      {{ t('scan.product-details') }}
-                    </div>
-                    <ElScrollbar class="scrollbar-box">
-                      <div
-                        v-for="(item, holdIndex) in currentInfo.order_holding"
-                        :key="item.id"
-                      >
-                        <div
-                          class="order-table-header-info bg-cloud-white mt-2.5"
-                        >
-                          <div class="order-table-header-info-left">
-                            <span class="order-table-header-info-time">{{
-                              item?.create_time || '-'
-                            }}</span>
-                            <span class="text-light-gray">
-                              <!-- {{ currentInfo?.guider_login_id || '-' }} -->
-                              {{ currentInfo?.guider_name || '-' }}
-                              <ElButton
-                                link
-                                type="primary"
-                                @click="handleEditGuider(index)"
-                              >
-                                <i
-                                  class="icon iconfont icon-icon_Edit ml-[10px]"
-                                ></i></ElButton></span>
-                          </div>
-                          <div class="order-take-print-btn-group">
-                            <ElButton
-                              v-if="holdIndex == 0"
-                              class="order-take-print-btn"
-                              color="#C6E2FF"
-                              @click="handlePrintTakeAll"
-                            >
-                              <span class="text-blue-primary">
-                                {{ $t('scan.hold-take.print-take-all') }}</span>
-                            </ElButton>
-
-                            <ElButton
-                              class="order-take-print-btn"
-                              color="#C6E2FF"
-                              @click="handlePrintTake(holdIndex)"
-                            >
-                              <span class="text-blue-primary">
-                                {{ $t('scan.hold-take.print-take') }}
-                              </span>
-                            </ElButton>
-                          </div>
-                        </div>
-                        <div class="order-table-box">
-                          <ElTable
-                            :data="item?.order_holding_item_list"
-                            header-row-class-name="take-table-header"
-                          >
-                            <ElTableColumn
-                              v-for="(schema, index) in codeConfig"
-                              :key="index"
-                              :align="schema.align || 'left'"
-                              :label="t(schema.label)"
-                              :prop="schema.field"
-                            />
-                            <ElTableColumn :label="t('common.action')">
-                              <template #default="scope">
-                                <ElButton
-                                  v-auth="['sale_hold_detele']"
-                                  type="danger"
-                                  link
-                                  @click="handleDelete(scope.row, holdIndex)"
-                                >
-                                  <ElText type="danger" tag="ins">
-                                    {{ t('common.delete') }}
-                                  </ElText>
-                                </ElButton>
-                              </template>
-                            </ElTableColumn>
-                          </ElTable>
-                        </div>
-                      </div>
-                    </ElScrollbar>
-                  </div>
-                  <div
-                    class="bg-linen text-dark-gray mt-2 flex h-11 items-center justify-end gap-2 pl-2 pr-2 text-[12px]"
+                  {{ t('scan.search') }}
+                </ElButton>
+              </div>
+            </div>
+            <div class="px-5 py-2">
+              <!-- 挂单选择 -->
+              <ElRadioGroup
+                v-model="currentId"
+                style="width: 100%"
+                @change="handChangeOfline"
+              >
+                <ElRadio
+                  v-for="item in suspendList"
+                  :key="item.id"
+                  class="take-left-radio relative"
+                  :class="currentId === item.id ? 'take-left-radio-active' : ''"
+                  :value="item.id"
+                  :label="item.id"
+                >
+                  <HoldOrderTakeCard
+                    :active="currentId === item.id"
+                    :item-info="item"
+                  />
+                  <img
+                    :src="floatingLayerArrowIcon"
+                    class="absolute right-[-15px] top-1/2 h-3 w-6 -translate-y-1/2"
+                    v-if="currentId === item.id"
+                  />
+                </ElRadio>
+              </ElRadioGroup>
+            </div>
+          </ElScrollbar>
+        </ElCol>
+        <ElCol :span="18" class="h-full">
+          <!-- 调整为垂直flex布局，商品明细占剩余高度，间距固定10px -->
+          <div class="flex h-full flex-col gap-2.5">
+            <Card
+              v-if="Object.keys(currentInfo).length > 0"
+              :header="t('scan.basic-details')"
+              class="flex-shrink-0 border-0"
+            >
+              <div>
+                <div class="basic-details-info flex items-center gap-1">
+                  <span>{{ t('scan.customer') }}:</span>
+                  <p>
+                    {{ currentInfo?.customer_name || '-' }}/{{
+                      currentInfo?.phone_number || '-'
+                    }}
+                  </p>
+                  <ElButton
+                    color="#C6E2FF"
+                    class="ml-2"
+                    @click="handleReplaceCustomer"
                   >
-                    <span>{{ t('scan.columns.QTY') }}:
-                      <span class="text-orange-medium">{{
-                        currentInfo?.quantity || 0
-                      }}</span>
+                    <span class="text-blue-primary">
+                      {{
+                        currentInfo.customer_id &&
+                        currentInfo.customer_id != '0'
+                          ? t('scan.replace')
+                          : t('scan.select')
+                      }}
                     </span>
-                    <span>{{ t('common.total-amount') }}:
-                      <span class="text-coral-light">
-                        {{ currentInfo?.total_amount || '' }}
-                      </span>
-                    </span>
-                  </div>
-                  <div class="takeOrderAtion bg-white">
-                    <div class="order-take-action">
-                      <!-- v-auth="['sale_hold_detele']" -->
-                      <div class="order-take-action-delete">
-                        <ElButton
-                          v-auth="['sale_hold_detele']"
-                          class="mr-[10px] h-11"
-                          type="danger"
-                          @click.stop="removeHandler"
-                        >
-                          {{ t('scan.hold-take.delete') }}
-                        </ElButton>
+                  </ElButton>
+                </div>
+                <div
+                  v-if="currentInfo.remark"
+                  class="basic-details-info mt-2.5 flex items-center gap-1"
+                >
+                  <span>{{ t('scan.remarks') }}:</span>
+                  <p>{{ currentInfo?.remark || '' }}</p>
+                </div>
+              </div>
+            </Card>
+            <Card
+              v-if="Object.keys(currentInfo).length > 0"
+              :header="t('scan.product-details')"
+              class="flex min-h-0 flex-1 flex-col border-0"
+            >
+              <div class="min-h-0 flex-1">
+                <ElScrollbar class="h-full">
+                  <div
+                    v-for="(item, holdIndex) in currentInfo.order_holding"
+                    :key="item.id"
+                  >
+                    <div class="order-table-header-info bg-cloud-white">
+                      <div class="flex flex-wrap items-center gap-2">
+                        <span class="order-table-header-info-time">{{
+                          item?.create_time || '-'
+                        }}</span>
+                        <p class="text-light-gray">
+                          {{ currentInfo?.guider_name || '-' }}
+                          <ElButton
+                            link
+                            type="primary"
+                            @click="handleEditGuider(index)"
+                          >
+                            <i
+                              class="icon iconfont icon-icon_Edit ml-[10px] text-base"
+                            ></i>
+                          </ElButton>
+                        </p>
                       </div>
-
-                      <div class="take-right-bottom">
+                      <div class="order-take-print-btn-group mt-2.5">
                         <ElButton
-                          color="#D1EDC4"
-                          class="mr-[10px] h-11"
-                          @click="handleSelectProducts"
+                          v-if="holdIndex == 0"
+                          class="order-take-print-btn"
+                          color="#C6E2FF"
+                          @click="handlePrintTakeAll"
                         >
-                          <span class="text-grass-green">{{
-                            t('scan.hold-take.add')
+                          <span class="text-blue-primary">{{
+                            $t('scan.hold-take.print-take-all')
                           }}</span>
                         </ElButton>
                         <ElButton
-                          class="h-11"
-                          type="primary"
-                          @click="handleCellClick"
+                          class="order-take-print-btn"
+                          color="#C6E2FF"
+                          @click="handlePrintTake(holdIndex)"
                         >
-                          <span> {{ t('scan.hold-take.take') }}</span>
+                          <span class="text-blue-primary">{{
+                            $t('scan.hold-take.print-take')
+                          }}</span>
                         </ElButton>
                       </div>
                     </div>
+                    <div class="order-table-box">
+                      <ElTable
+                        :data="item?.order_holding_item_list"
+                        header-row-class-name="take-table-header"
+                      >
+                        <ElTableColumn
+                          v-for="(schema, index) in codeConfig"
+                          :key="index"
+                          :align="schema.align || 'left'"
+                          :label="t(schema.label)"
+                          :prop="schema.field"
+                        />
+                        <ElTableColumn :label="t('common.action')">
+                          <template #default="scope">
+                            <ElButton
+                              v-auth="['sale_hold_detele']"
+                              type="danger"
+                              link
+                              @click="handleDelete(scope.row, holdIndex)"
+                            >
+                              <ElText type="danger" tag="ins">
+                                {{ t('common.delete') }}
+                              </ElText>
+                            </ElButton>
+                          </template>
+                        </ElTableColumn>
+                      </ElTable>
+                    </div>
                   </div>
+                </ElScrollbar>
+              </div>
+              <div
+                class="bg-linen text-dark-gray mt-2.5 flex h-11 items-center justify-end gap-2 pl-2 pr-2 text-[12px]"
+              >
+                <span>
+                  {{ t('scan.columns.QTY') }}:
+                  <span class="text-orange-medium">{{
+                    currentInfo?.quantity || 0
+                  }}</span>
+                </span>
+                <span>
+                  {{ t('common.total-amount') }}:
+                  <span class="text-coral-light">{{
+                    currentInfo?.total_amount || ''
+                  }}</span>
+                </span>
+              </div>
+            </Card>
+            <div
+              class="w-full flex-shrink-0 px-5"
+              v-if="Object.keys(currentInfo).length > 0"
+            >
+              <div class="flex w-full items-center justify-between">
+                <div class="order-take-action-delete">
+                  <ElButton
+                    v-auth="['sale_hold_detele']"
+                    class="mr-[10px] h-11"
+                    type="danger"
+                    @click.stop="removeHandler"
+                  >
+                    {{ t('scan.hold-take.delete') }}
+                  </ElButton>
                 </div>
-              </ElCol>
-            </ElRow>
+                <div class="take-right-bottom">
+                  <ElButton
+                    color="#D1EDC4"
+                    class="mr-[10px] h-11"
+                    @click="handleSelectProducts"
+                  >
+                    <span class="text-grass-green">{{
+                      t('scan.hold-take.add')
+                    }}</span>
+                  </ElButton>
+                  <ElButton
+                    class="h-11"
+                    type="primary"
+                    @click="handleCellClick"
+                  >
+                    <span>{{ t('scan.hold-take.take') }}</span>
+                  </ElButton>
+                </div>
+              </div>
+            </div>
           </div>
-          <!-- @calculation-badge-count="handleCalculationBadgeCount" -->
-          <SelectProducts
-            key="selectProductsRefs"
-            ref="selectProductsRef"
-            :drawer-return-show="isSelectProductDialog"
-            :drawer-return-title="takeTitle"
-            @close-tkr="handleCloseSelectProducts"
-            @handle-take-order-info="handleTakeOrder"
-            @confirm="confirmHandler"
-          />
-          <!-- 选择顾客 -->
-          <SelectCustomersDrawer
-            key="takeCustomersDrawer"
-            :title="drawerDetailsCustomers.title"
-            :show-dialog="drawerDetailsCustomers.visible"
-            @close-tkr="confirmClose"
-            @select-customer-row:row="handleSelectCustomerRow"
-          />
-          <!-- 选择导购员 -->
-          <SelectGuiderDrawer
-            key="takeGuiderDrawer"
-            :title="drawerDetailsGuider.title"
-            :show-dialog="drawerDetailsGuider.visible"
-            @close-tkr="confirmGuiderClose"
-            @select-customer-row:row="handleSelectGuiderRow"
-          />
-
-          <!-- <el-table
-            ref="tableRef"
-            :data="suspendList || []"
-            :header-cell-style="{
-              background: '#F6F8FC',
-              color: '#323232',
-              height: '30px'
-            }"
-            style="width: 100%"
-            stripe
-            border
-            class="down-table-list"
-            single-selection
-            @select="handleSelectionChange"
-            @cell-click="handleCellClick"
-          >
-            <template v-for="(item, index) in columnsVisible">
-              <el-table-column
-                v-if="item.prop === 'id'"
-                :key="index"
-                :prop="item.prop"
-                :label="item.label"
-                :width="item.width"
-                :align="item.align"
-                :fixed="item.fixed"
-              >
-              </el-table-column>
-              <el-table-column
-                v-if="item.prop === 'totalQuantity'"
-                :key="index"
-                :prop="item.prop"
-                :label="item.label"
-                :width="item.width"
-                :align="item.align"
-              >
-              </el-table-column>
-              <el-table-column
-                v-else-if="item.prop === 'product_code'"
-                :key="item.prop"
-                :prop="item.prop"
-                :label="item.label"
-                :min-width="item.width"
-                :align="item.align"
-              >
-              </el-table-column>
-              <el-table-column
-                v-else-if="['customer_name', 'create_time', 'origin_quantity'].includes(item.prop)"
-                :key="item.align"
-                :prop="item.prop"
-                :label="item.label"
-                :width="item.width"
-                :align="item.align"
-              >
-              </el-table-column>
-            </template>
-            <el-table-column :label="t('scan.action')" width="100" align="center" fixed="right">
-              <template #default="scope">
-                <el-button link type="primary" size="small" @click.stop="handleDelete(scope.row.id)">
-                  <i class="iconfont icon-shanchu2 shanchu"></i>
-                </el-button>
-              </template>
-            </el-table-column>
-          </el-table> -->
-        </div>
-      </div>
-      <div class="AdvanceStatement absolute z-0">
+        </ElCol>
+      </ElRow>
+      <!-- @calculation-badge-count="handleCalculationBadgeCount" -->
+      <SelectProducts
+        key="selectProductsRefs"
+        ref="selectProductsRef"
+        :drawer-return-show="isSelectProductDialog"
+        :drawer-return-title="takeTitle"
+        @close-tkr="handleCloseSelectProducts"
+        @handle-take-order-info="handleTakeOrder"
+        @confirm="confirmHandler"
+      />
+      <!-- 选择顾客 -->
+      <SelectCustomersDrawer
+        key="takeCustomersDrawer"
+        :title="drawerDetailsCustomers.title"
+        :show-dialog="drawerDetailsCustomers.visible"
+        @close-tkr="confirmClose"
+        @select-customer-row:row="handleSelectCustomerRow"
+      />
+      <!-- 选择导购员 -->
+      <SelectGuiderDrawer
+        key="takeGuiderDrawer"
+        :title="drawerDetailsGuider.title"
+        :show-dialog="drawerDetailsGuider.visible"
+        @close-tkr="confirmGuiderClose"
+        @select-customer-row:row="handleSelectGuiderRow"
+      />
+      <div class="absolute z-0">
         <ReceiptTemplate
           :print-id="printParams.ids"
           :option-content="printTemplate.option_content"
@@ -777,161 +723,17 @@ defineExpose({
         />
         <div class="btn-box">
           <ElButton id="printBtn" v-print="printParams" class="save-btn">
-            {{ t('common.print') }}
+            {{ t('common.print') }}1`11111`
           </ElButton>
         </div>
       </div>
-    </Drawer>
-  </div>
+    </div>
+  </Drawer>
 </template>
 
 <style lang="scss" scoped>
 .close86 {
   z-index: 2399;
-}
-//新样式
-.drawer-content-box {
-  width: calc(100% - 10px);
-  height: calc(100vh - 90px);
-
-  .drawer-content-left {
-    height: calc(100vh - 164px);
-    padding: 10px 20px;
-  }
-
-  .drawer-content-left {
-    height: calc(100vh - 164px);
-  }
-
-  .basic-details {
-    width: 100%;
-    padding: 10px 20px;
-    border-radius: 4px;
-
-    .basic-details-title {
-      display: flex;
-      gap: 5px;
-      align-items: center;
-      padding-bottom: 2px;
-      border-bottom: 1px solid #eee;
-
-      &::before {
-        clear: both;
-        display: block;
-        width: 4px;
-        height: 10px;
-        content: '';
-        background: #0d99ff;
-        border-radius: 4px;
-      }
-    }
-
-    .basic-details-info {
-      font-size: 14px;
-
-      span {
-        font-weight: 700;
-      }
-    }
-
-    .order-table-header-info {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 10px;
-
-      .order-table-header-info-left {
-        display: flex;
-        gap: 10px;
-
-        .icon {
-          font-size: 12px;
-        }
-      }
-
-      .order-table-header-info-time {
-        font-weight: 700;
-      }
-
-      :last-child {
-      }
-    }
-
-    .take-order-info {
-    }
-  }
-
-  .takeOrderAtion {
-    // height: 66px;
-    padding: 11px 10px;
-  }
-
-  .order-take-action {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    &-delete {
-      // padding-top: 15px;
-    }
-  }
-}
-
-.drawer-title {
-  height: 112px;
-  padding-top: 37px;
-  padding-left: 50px;
-  text-align: left;
-  background: #fff;
-  border-bottom: 1px solid #eee;
-
-  .title {
-    font-size: 24px;
-
-    .icon-bangzhu {
-      color: #7d90b2;
-    }
-  }
-}
-
-.drawer-content {
-  margin-top: 5px;
-
-  .down-table-list {
-    //width: 1123px;
-    height: 511px;
-  }
-
-  :deep(.el-table .el-table__header) {
-    width: 100% !important;
-  }
-
-  :deep(.el-table .el-table__body) {
-    width: 100% !important;
-  }
-}
-
-.demo-tabs > .el-tabs__content {
-  padding: 32px;
-  font-size: 32px;
-  font-weight: 600;
-  color: #6b778c;
-}
-
-.drawer-title {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.drawer-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.drawer-content {
-  flex: 1;
-  overflow-y: auto;
 }
 
 .scan-dialog-btn {
@@ -982,10 +784,15 @@ defineExpose({
 }
 
 .scrollbar-box {
-  height: calc(100vh - 400px);
+  height: calc(100vh - 800px);
 }
 
 .take-left-radio-active {
   background-color: var(--primary);
+  border: 2px solid var(--el-color-primary) !important;
+}
+
+.take-table-header {
+  background-color: red !important;
 }
 </style>
