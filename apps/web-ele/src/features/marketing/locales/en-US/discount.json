@@ -1,6 +1,7 @@
 {
   "form": {
     "edit": "Edit Promotion",
+    "enabled": "Enabled",
     "create": "Create Promotion",
     "basic-info": "Basic Information",
     "type": "Promotion Type",
@@ -23,6 +24,11 @@
     "active-hours": "Valid Hours",
     "exclude-dates": "Suspended Dates",
     "remark": "Remarks"
+  },
+  "message": {
+    "enabled": "Discount enabled",
+    "disabled": "Discount disabled",
+    "update-failed": "Failed to update status"
   },
   "more-time-setting": "More Time and Date Settings >>",
   "placeholder": {

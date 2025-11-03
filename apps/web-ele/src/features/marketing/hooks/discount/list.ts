@@ -93,6 +93,17 @@ export function useDiscount() {
       sortable: true,
       align: 'center',
     },
+    // Added a column for the 'enabled' status with custom rendering
+    {
+      field: 'anabled',
+      // added the anabled field with translation to chinese and french
+      title: t('marketing.enabled'),
+      width: 100,
+      sortable: true,
+      align: 'center',
+      // added this slot property to use custom rendering for the 'enabled' field using a switch component
+      slots: { default: 'enabled' },
+    },
     {
       field: 'operation',
       title: t('common.operations'),

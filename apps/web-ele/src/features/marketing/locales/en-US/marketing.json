@@ -3,6 +3,7 @@
   "promotiontype": "Type",
   "scopeofapplication": "Applicable Scope",
   "promotionalname": "Name",
+  "enabled": "Enabled",
   "effective-time": "Effective Date",
   "sumofconsumption": "Spending Amount",
   "fulldeduction": "Discount Amount",

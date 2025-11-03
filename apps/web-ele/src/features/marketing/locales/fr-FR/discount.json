@@ -2,6 +2,7 @@
   "discountName": "Nom de la Remise",
   "discountCode": "Code de la Remise",
   "discountType": "Type de Remise",
+  "enabled": "Activé",
   "discountValue": "Valeur de la Remise",
   "minAmount": "Montant Minimum",
   "maxAmount": "Montant Maximum",
