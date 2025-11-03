@@ -22,6 +22,7 @@ const getStaticsData = async () => {
 </script>
 
 <template>
+
   <Page auto-content-height>
     <Grid>
       <template #revenue_amount="{ row }">
