@@ -18,15 +18,22 @@ const { t } = useI18n();
 
 const { Grid, handleEdit, handleBatchDelete, categories, typeRef, Drawer } =
   useChartOfAccounts();
+const loading = ref(false);
 const [model, modelApi] = useIgourdModal({
   title: t('chart-of-accounts.trial-balancing'),
   class: 'w-2/3',
   footer: false,
+  async onOpenChange(isOpen) {
+    if (isOpen) {
+      loading.value = true;
+      const result = await trialBalanceCheck({});
+      trialBalancingData.value = result;
+      loading.value = false;
+    }
+  },
 });
 const trialBalancingData = ref({});
 const handleTrialBalancing = async () => {
-  const result = await trialBalanceCheck({});
-  trialBalancingData.value = result;
   modelApi.open();
 };
 </script>
@@ -70,15 +77,18 @@ const handleTrialBalancing = async () => {
     </Grid>
     <Drawer :type="typeRef" />
     <model>
-      <section class="flex h-full items-center justify-between">
+      <section
+        class="flex h-full min-h-[200px] items-center justify-between"
+        v-loading="loading"
+      >
         <BalanceItem :data="trialBalancingData?.opening_balance" />
         <div
-          class="border border-dashed border-[#606266]"
+          class="border-l border-dashed border-[#606266]"
           style="height: -webkit-fill-available"
         ></div>
         <BalanceItem :data="trialBalancingData?.cumulative_occurrence" />
         <div
-          class="border border-dashed border-[#606266]"
+          class="border-l border-dashed border-[#606266]"
           style="height: -webkit-fill-available"
         ></div>
 

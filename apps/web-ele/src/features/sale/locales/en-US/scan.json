@@ -86,5 +86,7 @@
   "successfully-paid": "Successful transaction",
   "click-select-customer": "Click Select Customer",
   "click-select-guider": "Click Select Guide",
-  "account": "Account"
+  "account": "Account",
+  "vip-code": "VIP Code",
+  "tel": "Tel"
 }

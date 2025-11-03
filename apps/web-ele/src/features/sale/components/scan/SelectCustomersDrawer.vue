@@ -1,27 +1,90 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
-import {
-  ElButton,
-  ElImage,
-  ElInput,
-  ElPagination,
-  ElTable,
-  ElTableColumn,
-  useIgourdDrawer,
-} from '@igourd/common-ui';
+import { ElButton, ElInput, useIgourdDrawer } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
 import { debounce } from '@igourd/utils';
 
+import { getCustomerPageListApi } from '@@/customer/apis';
 import { storeToRefs } from 'pinia';
 
-import defaultUser from '#/assets/img/productDefault.png';
+import { useIgourdVxeGrid } from '#/adapter/vxe-table';
 import { useCustomerStore } from '#/store/sale/customer';
 
 defineOptions({
   name: 'SelectCustomersDrawer',
 });
 const emit = defineEmits(['close-tkr', 'select-customer-row:row']);
+const { t } = useI18n();
+// 商品表格配置
+const customerColumns = computed(() => {
+  return [
+    {
+      type: 'radio',
+      minWidth: 50,
+      fixed: 'left',
+      slots: { default: 'radio' },
+    },
+    {
+      field: 'name',
+      title: t('scan.customer'),
+      minWidth: 170,
+      align: 'center',
+    },
+    {
+      field: 'phone_number',
+      title: t('scan.tel'),
+      minWidth: 170,
+      align: 'center',
+    },
+    {
+      field: 'balance',
+      title: t('scan.balance'),
+      minWidth: 170,
+      align: 'center',
+    },
+
+    {
+      field: 'points',
+      title: t('scan.points'),
+      minWidth: 170,
+      align: 'center',
+    },
+    {
+      field: 'vip_code',
+      title: t('scan.vip-code'),
+      minWidth: 170,
+      align: 'center',
+    },
+    {
+      field: 'cost_price',
+      title: t('common.action'),
+      minWidth: 170,
+      align: 'center',
+      slots: { default: 'action' },
+    },
+  ];
+});
 const keywords = ref('');
+const customerGridOptions = {
+  columns: customerColumns.value,
+  mergeCells: [],
+  class: 'w-full p-0',
+  keepSource: true,
+  proxyConfig: {
+    ajax: {
+      query: async () => {
+        return await getCustomerPageListApi({
+          keywords: keywords.value,
+        });
+      },
+    },
+  },
+};
+// 客户表格
+const [customerGrid, customerGridApi] = useIgourdVxeGrid({
+  gridOptions: customerGridOptions,
+});
 const customerStore = useCustomerStore();
 const { customerList, total } = storeToRefs(customerStore);
 
@@ -36,11 +99,21 @@ const handleRowClick = (row) => {
   drawerApi.close();
   emit('close-tkr');
 };
-
+const handleSearch = () => {
+  customerGridApi.reload();
+};
+const handleConfirm = () => {
+  const selectedRows = customerGridApi.grid.getRadioRecord();
+  if (Object.keys(selectedRows).length === 0) {
+    ElMessage.warning(t('scan.please-select-customer'));
+    return;
+  }
+  handleRowClick(selectedRows);
+};
 const [Drawer, drawerApi] = useIgourdDrawer({
   onOpenChange: (val) => {
     if (val) {
-      fetchGoodsList();
+      customerGridApi.reload();
     }
   },
 });
@@ -48,20 +121,21 @@ const [Drawer, drawerApi] = useIgourdDrawer({
 
 <template>
   <Drawer>
-    <section class="h-full">
-      <div class="flex h-full flex-col gap-2.5">
-        <div class="flex flex-shrink-0 gap-1">
+    <section class="h-full w-full p-5">
+      <div class="flex h-full w-full flex-col gap-2.5">
+        <div class="flex w-full flex-shrink-0 gap-1">
           <ElInput
             v-model="keywords"
             style="height: 36px"
             :placeholder="$t('scan.search-placeholder')"
             clearable
-            @clear="fetchGoodsList"
+            @clear="handleSearch"
+            class="flex-1"
           />
           <ElButton
-            class="outer-btn right-box search-btn blue-btn h-9"
+            class="outer-btn right-box search-btn blue-btn mr-0 h-9 shrink-0"
             type="primary"
-            @click="fetchGoodsList"
+            @click="handleSearch"
           >
             <div class="outer">
               <div class="inner-left">
@@ -73,11 +147,9 @@ const [Drawer, drawerApi] = useIgourdDrawer({
             </div>
           </ElButton>
         </div>
-        <div class="bg-card flex-grow">
-          <ElTable
+        <!-- <ElTable
             :data="customerList || []"
             class="down-table-list"
-            :show-header="false"
             :lazy="true"
             row-class-name="cursor-pointer"
             border
@@ -101,7 +173,6 @@ const [Drawer, drawerApi] = useIgourdDrawer({
                     :initial-index="0"
                     :preview-teleported="true"
                   >
-                    <!-- 当图片加载失败时，显示默认图片 -->
                     <template #error>
                       <img :src="defaultUser" alt="" class="product-pic" />
                     </template>
@@ -135,93 +206,43 @@ const [Drawer, drawerApi] = useIgourdDrawer({
                 >
               </template>
             </ElTableColumn>
-          </ElTable>
-        </div>
-        <div class="flex-shrink-0">
-          <ElPagination
-            :small="true"
-            v-model:current-page="currentPage"
-            :page-sizes="[10, 20, 50, 100]"
-            v-model:page-size="pageSize"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="total"
-          />
-        </div>
+          </ElTable> -->
+        <section class="bg-card flex-grow">
+          <customerGrid>
+            <template #action="{ row }">
+              <section class="flex items-center justify-center">
+                <div>
+                  <ElButton type="primary" link @click="handleRowClick(row)">
+                    {{ t('common.details') }}
+                  </ElButton>
+                </div>
+                <div>
+                  <ElButton type="danger" link @click="handleRowClick(row)">
+                    {{ t('common.cancel') }}
+                  </ElButton>
+                </div>
+              </section>
+            </template>
+          </customerGrid>
+        </section>
       </div>
     </section>
+    <template #footer>
+      <section class="flex w-full justify-between">
+        <div>
+          <ElButton class="h-[44px]" type="primary" plain>
+            {{ t('common.add') }}
+          </ElButton>
+        </div>
+        <div>
+          <ElButton class="h-[44px]" type="danger" plain>
+            {{ t('common.cancel') }}
+          </ElButton>
+          <ElButton class="h-[44px]" type="primary" @click="handleConfirm">
+            {{ t('common.confirm') }}
+          </ElButton>
+        </div>
+      </section>
+    </template>
   </Drawer>
 </template>
-
-<style lang="scss" scoped>
-.drawer-title {
-  height: 112px;
-  padding-top: 37px;
-  padding-left: 50px;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-
-  .title {
-    font-size: 24px;
-
-    .icon-bangzhu {
-      color: #7d90b2;
-    }
-  }
-}
-
-.drawer-content {
-  margin: 30px 38px 0;
-
-  .top {
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
-  }
-
-  .down-table-list {
-    //width: 1123px;
-    height: 511px;
-  }
-}
-
-.person {
-  margin-top: 34px;
-}
-
-.demo-tabs > .el-tabs__content {
-  padding: 32px;
-  font-size: 32px;
-  font-weight: 600;
-  color: #6b778c;
-}
-
-.drawer-title {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.profile-photo-box {
-  img {
-    width: 100%;
-    height: 100%;
-  }
-}
-
-.name-box {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-
-  .name {
-    font-size: 16px;
-    font-weight: bold;
-    color: #323232;
-  }
-
-  .phone {
-    font-size: 14px;
-    color: #323232;
-  }
-}
-</style>

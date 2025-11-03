@@ -18,5 +18,17 @@
   "statusOptions": {
     "active": "Actif",
     "inactive": "Inactif"
+  },
+  "validate": {
+    "effective-time": {
+      "required": "Veuillez sélectionner la date d'effet",
+      "gte-today": "La date d'effet ne peut pas être antérieure à aujourd'hui",
+      "gte-expiration": "La date d'effet ne doit pas être postérieure à la date d'expiration"
+    },
+    "expiration-time": {
+      "required": "Veuillez sélectionner la date d'effet",
+      "gte-effective": "La date d'expiration ne doit pas être antérieure à la date d'effet",
+      "gte-today": "La date d'effet ne peut pas être antérieure à aujourd'hui"
+    }
   }
 }

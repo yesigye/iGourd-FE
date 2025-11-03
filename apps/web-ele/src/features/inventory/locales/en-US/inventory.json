@@ -263,5 +263,6 @@
   "please-enter-keywords": "Please enter receipt number, product name, product code",
   "unit-conversion": "Main Unit",
   "sku-list": "SKU List",
-  "monthly-sales": "Monthly Sales"
+  "monthly-sales": "Monthly Sales",
+  "initial-stock": "Initial Stock"
 }
