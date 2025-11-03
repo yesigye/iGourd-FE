@@ -73,10 +73,15 @@
     },
     "rounding-off": { "required": "Please select rounding method" },
     "rounding-amount": { "required": "Please select rounding value" },
-    "effective-time": { "required": "Please select effective date" },
+    "effective-time": {
+      "required": "Please select effective date",
+      "gte-today": "Effective date cannot be earlier than today",
+      "gte-expiration": "Effective date must not be later than expiration date"
+    },
     "expiration-time": {
       "required": "Please select expiration date",
-      "gte-effective": "Expiration date must not be earlier than effective date"
+      "gte-effective": "Expiration date must not be earlier than effective date",
+      "gte-today": "Expiration date cannot be earlier than today"
     },
     "number": { "non-negative": "Must be a non-negative number" }
   }

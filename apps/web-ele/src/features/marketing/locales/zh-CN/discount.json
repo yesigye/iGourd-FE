@@ -70,10 +70,15 @@
     },
     "rounding-off": { "required": "请选择取整方式" },
     "rounding-amount": { "required": "请选择取整数值" },
-    "effective-time": { "required": "请选择生效日期" },
+    "effective-time": {
+      "required": "请选择生效日期",
+      "gte-today": "生效日期不能早于今天",
+      "gte-expiration": "生效日期必须不晚于失效日期"
+    },
     "expiration-time": {
       "required": "请选择失效日期",
-      "gte-effective": "失效日期必须不早于生效日期"
+      "gte-effective": "失效日期必须不早于生效日期",
+      "gte-today": "失效日期不能早于今天"
     },
     "number": { "non-negative": "必须为非负数" }
   }

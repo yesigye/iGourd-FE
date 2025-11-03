@@ -4,8 +4,10 @@ import type { ISchema } from '@igourd/common-ui';
 import { productGroupSelect } from '#/components/product-group';
 import { productLabelSelect } from '#/components/product-label';
 import { productSelect } from '#/components/product-select';
+import { useI18n } from '@igourd/locales';
 
 export function useDiscountSchema(toggleShowMore: () => void) {
+  const { t } = useI18n();
   const schema: ISchema = {
     type: 'object',
     properties: {
@@ -322,6 +324,28 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                     message:
                       "{{t('discount.validate.effective-time.required')}}",
                   },
+                  {
+                    validator: (value: string, _rule: never, field: {form: {getValuesIn: (arg0: string) => any}}) => {
+                      if (!value) {
+                        return '';
+                      }
+                      // effective time cannot be earlier than current date
+                      const effectiveTime = new Date(value);
+                      const now = new Date();
+                      now.setHours(0, 0, 0, 0);
+                      if (effectiveTime < now) {
+                        return t('discount.validate.effective-time.gte-today');
+                      }
+                      // effective time cannot be later than expiration time
+                      const expirationTimeValue = field.form.getValuesIn('expiration_time');
+                      if (expirationTimeValue) {
+                        const expirationTime = new Date(expirationTimeValue);
+                        if (effectiveTime > expirationTime) {
+                          return t('discount.validate.effective-time.gte-expiration');
+                        }
+                      }
+                    },
+                  },
                 ],
               },
 
@@ -344,10 +368,28 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                     message:
                       "{{t('discount.validate.expiration-time.required')}}",
                   },
-                  // {
-                  //   validator:
-                  //     "{{$self.value && $form.values.effective_time && new Date($self.value) < new Date($form.values.effective_time) ? t('discount.validate.expiration-time.gte-effective') : ''}}",
-                  // },
+                  {
+                    validator: (value: string, _rule: never, field: {form: {getValuesIn: (arg0: string) => any}}) => {
+                      if (!value) {
+                        return '';
+                      }
+                      // expiration time cannot be earlier than effective time
+                      const expirationTime = new Date(value);
+                      const effectiveTimeValue = field.form.getValuesIn('effective_time');
+                      if (effectiveTimeValue) {
+                        const effectiveTime = new Date(effectiveTimeValue);
+                        if (expirationTime < effectiveTime) {
+                          return t('discount.validate.expiration-time.gte-effective');
+                        }
+                      }
+                      // expiration time cannot be earlier than current date
+                      const now = new Date();
+                      now.setHours(0, 0, 0, 0);
+                      if (expirationTime < now) {
+                        return t('discount.validate.expiration-time.gte-today');
+                      }
+                    }
+                  },
                 ],
               },
               schedule_panel: {
