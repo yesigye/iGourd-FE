@@ -3,6 +3,7 @@
   "promotiontype": "Type",
   "scopeofapplication": "Champ d'application",
   "promotionalname": "Nom",
+  "enabled": "Activé",
   "effective-time": "Date d'effet",
   "sumofconsumption": "Montant de dépense",
   "fulldeduction": "Montant de réduction",

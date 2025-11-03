@@ -1,6 +1,7 @@
 {
   "form": {
     "edit": "Edit Promotion",
+    "status": "Status",
     "create": "Create Promotion",
     "basic-info": "Basic Information",
     "type": "Promotion Type",
@@ -60,7 +61,10 @@
     }
   },
   "validate": {
-    "name": { "required": "Please enter name", "no-special": "Cannot contain special characters" },
+    "name": {
+      "required": "Please enter name",
+      "no-special": "Cannot contain special characters"
+    },
     "minimum-amount": { "required": "Please enter spending threshold" },
     "reduce-amount": { "required": "Please enter instant discount amount" },
     "discount-percentage": {
@@ -77,4 +81,3 @@
     "number": { "non-negative": "Must be a non-negative number" }
   }
 }
-

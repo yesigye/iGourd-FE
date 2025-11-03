@@ -27,6 +27,22 @@ export function useDiscountSchema(toggleShowMore: () => void) {
               header: '{{t("discount.form.basic-info")}}',
             },
             properties: {
+              // added status form element
+              status: {
+                type: 'string',
+                title: "{{t('discount.form.status')}}",
+                default: 1,
+                'x-decorator': 'FormItem',
+                'x-decorator-props': {
+                  wrapperWidth: 300,
+                },
+                'x-component': 'Switch',
+                'x-component-props': {
+                  'active-value': 'active',
+                  'inactive-value': 'inactive',
+                },
+              },
+
               type: {
                 type: 'string',
                 title: "{{t('discount.form.type')}}",
