@@ -9,8 +9,14 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete,handleView } =
-  usePurchaseList();
+const {
+  Grid,
+  Drawer,
+  handleEdit,
+  canBatchOperate,
+  handleBatchDelete,
+  handleView,
+} = usePurchaseList();
 </script>
 
 <template>
