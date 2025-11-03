@@ -33,6 +33,7 @@ const [Drawer, drawerApi] = useIgourdDrawer({
     if (val) {
       const { order_no: no } = drawerApi.getData();
       order_no.value = no;
+
       initMounted();
     }
   },
@@ -100,6 +101,8 @@ async function fetchOrderDetail() {
       order_returned_no: order_no.value,
     });
     orderDetail.value = res;
+    orderDetail.value.order_item_model_list =
+      orderDetail.value.order_returned_item_model_list;
     setOrderDetail({
       ...orderDetail.value,
       total_amount: orderDetail.value.total_amount,

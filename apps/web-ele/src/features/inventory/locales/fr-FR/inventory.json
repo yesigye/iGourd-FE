@@ -263,5 +263,6 @@
   "please-enter-keywords": "Veuillez saisir numéro reçu, nom produit, code produit",
   "unit-conversion": "Unité Principale",
   "sku-list": "Liste SKU",
-  "monthly-sales": "Ventes Mensuelles"
+  "monthly-sales": "Ventes Mensuelles",
+  "initial-stock": "Stock Initial"
 }

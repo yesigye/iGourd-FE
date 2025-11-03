@@ -4,12 +4,10 @@ import { computed, onMounted, ref, useTemplateRef, watch } from 'vue';
 import {
   ElButton,
   ElCol,
-  ElIcon,
   ElInput,
   ElMessageBox,
   ElPagination,
   ElRow,
-  ElScrollbar,
   useIgourdDrawer,
 } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
@@ -21,8 +19,6 @@ import {
 } from '@@/sale/apis';
 import SelectProductsable from '@@/sale/components/scan/SelectProductsable.vue';
 import { useInfiniteScroll } from '@vueuse/core';
-
-import longcodeSIcon from '#/assets/sale/longcode-s.png';
 
 const props = defineProps({
   drawerReturnShow: {
@@ -332,538 +328,125 @@ onMounted(() => {});
 </script>
 <template>
   <Drawer>
-    <div class="drawer-container">
-      <div class="drawer-content mt-1">
-        <div class="drawer-content-box">
-          <ElRow :gutter="5" class="h-full">
-            <ElCol :span="8" class="h-full">
-              <ElScrollbar class="h-full">
-                <div class="drawer-content-left bg-white">
-                  <!-- 挂单选择 -->
-                  <div class="select-products-search-box">
-                    <div class="select-products-search gap-2">
-                      <ElInput
-                        ref="searchRef"
-                        v-model="searchValue"
-                        :clearable="true"
-                        class="h-13"
-                        :placeholder="
-                          $t('scan.barcode-product-code-product-name')
-                        "
-                      >
-                        <template #prefix>
-                          <img
-                            :src="longcodeSIcon"
-                            class="iconfont longcode"
-                            :width="47"
-                            :height="80"
-                          />
-                        </template>
-                      </ElInput>
-                      <ElButton
-                        type="primary"
-                        class="w-25 text-white"
-                        @click="handleSearchClick"
-                      >
-                        {{ t('scan.search') }}
-                      </ElButton>
-                    </div>
-                    <!-- 商品分类 -->
-                    <div class="select-products-group">
-                      <div class="select-products-group-list">
-                        <div
-                          v-for="(item, index) in productGroupFirstList"
-                          :key="item.id"
-                          class="select-products-group-item border-skyblue-light cursor-pointer border border-solid"
-                          :class="
-                            productGroupFirstId == item.id
-                              ? 'select-products-group-item-active bg-azure text-white'
-                              : 'bg-frost-white text-azure'
-                          "
-                          @click.stop="
-                            getProductGroupList(item.id, $event, index)
-                          "
-                        >
-                          {{ item.major_name }}
-                        </div>
-                      </div>
-                      <!-- downLeft downTop -->
-                      <div
-                        v-if="downShow && productGroupList.length > 0"
-                        class="triangle-up absolute"
-                        :style="{
-                          position: 'absolute',
-                          left: `${IndicatorLeft - 6}px`,
-                          top: `${downTop - 12}px`,
-                        }"
-                      ></div>
-                      <div
-                        v-show="downShow && productGroupList.length > 0"
-                        ref="downRef"
-                        class="select-products-group-down border-silver-mist border border-solid bg-white"
-                        :style="{
-                          left: `${downLeft}px`,
-                          top: `${downTop}px`,
-                        }"
-                      >
-                        <!-- IndicatorLeft -->
-                        <div
-                          v-for="item in productGroupList"
-                          :key="item.id"
-                          class="select-products-group-down-item text-dark-gray"
-                          @click="handleProductGroupClick(item)"
-                        >
-                          {{ item.major_name }}
-                        </div>
-                      </div>
-                      <div class="select-products-group-page-box">
-                        <div
-                          class="select-products-group-page"
-                          :class="
-                            pageNumFirst == 1
-                              ? 'bg-light-silver text-steel-gray'
-                              : 'bg-mint-frost text-apple-green'
-                          "
-                          @click="handlePageFirstClick('up')"
-                        >
-                          <!-- ArrowUpBoldIconColor, ArrowUpBoldIconColorActive -->
-                          <ElIcon
-                            :color="pageNumFirst == 1 ? '#909399' : '#95D475'"
-                          >
-                            <ArrowUpBold />
-                          </ElIcon>
-                        </div>
-                        <!-- pageSumFirst.value == pageNumFirst.value -->
-                        <div
-                          class="select-products-group-page"
-                          :class="
-                            pageSumFirst == pageNumFirst
-                              ? 'bg-light-silver text-steel-gray'
-                              : 'bg-mint-frost text-apple-green'
-                          "
-                          @click="handlePageFirstClick('down')"
-                        >
-                          <ElIcon
-                            :color="
-                              pageSumFirst == pageNumFirst
-                                ? '#909399'
-                                : '#95D475'
-                            "
-                          >
-                            <ArrowDownBold />
-                          </ElIcon>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- 商品列表 -->
-                    <div
-                      v-if="productList.length > 0"
-                      class="select-products-list"
-                    >
-                      <div
-                        v-for="productItem in productList"
-                        :key="productItem.id"
-                        class="select-products-item cursor-pointer"
-                        @click="handleProductClick(productItem)"
-                      >
-                        <div class="select-products-item-img-box">
-                          <img
-                            v-if="productItem.profile_photo"
-                            :src="productItem.profile_photo"
-                            class="select-products-item-img"
-                            alt=""
-                          />
-                        </div>
-                        <div class="select-products-item-box">
-                          <p class="select-products-item-name">
-                            {{ productItem.major_name || ''
-                            }}{{
-                              productItem.product_spec_kvmessage
-                                ? `-${productItem.product_spec_kvmessage}`
-                                : ''
-                            }}
-                          </p>
-                          <p class="select-products-item-code">
-                            {{ productItem.product_code || '' }}
-                          </p>
-                        </div>
-                        <p class="select-products-item-price text-coral-bright">
-                          ${{ productItem.selling_price }}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item-center flex justify-end">
-                    <ElPagination
-                      size="small"
-                      background
-                      layout="prev, pager, next"
-                      :total="productListTotal"
-                      :default-page-size="12"
-                      class="mt-4"
-                      @current-change="handleCurrentChange"
-                    />
-                  </div>
-                </div>
-              </ElScrollbar>
-            </ElCol>
-            <ElCol :span="16" class="h-full">
-              <div class="basic-details bg-white">
-                <div
-                  class="basic-details-title border-b-solid border-b-gray-lightest border-b"
+    <ElRow :gutter="10" class="h-full">
+      <ElCol :span="16" class="bg-primary h-full">
+        <div class="basic-details bg-white">
+          <div class="take-table-box">
+            <SelectProductsable
+              ref="scanContentRef"
+              :merge-goods-list="selectGoodList"
+              style="height: 100%; overflow-y: auto"
+              @update-quantity="handleUpdateQuantity"
+              @update-unit="handleUpdateUnit"
+              @handle-select-row="handleSelectRow"
+              @delete-goods="handleDeleteGoods"
+            />
+          </div>
+          <div class="flex items-center justify-between pl-2 pr-2">
+            <span class="text-ocean-blue"
+              >Selected: {{ total - quantity || 0 }}</span
+            >
+            <div class="mt-1 flex items-center gap-2.5">
+              <ElButton
+                v-auth="['sale_hold_product_delete']"
+                class="Sale-button text-watermelon"
+                color="#FEF0F0"
+                :name="t('common.Empty')"
+              >
+                {{ t('common.empty') }}
+              </ElButton>
+              <ElButton
+                color="#0D99FF"
+                class="Sale-button text-white"
+                @click="handleProductConfirm"
+              >
+                {{ t('common.save-text') }}
+              </ElButton>
+            </div>
+          </div>
+        </div>
+      </ElCol>
+      <ElCol :span="8" class="h-full">
+        <section class="flex h-full w-full gap-2.5 p-2.5">
+          <div class="flex h-full flex-1 flex-col">
+            <!-- 挂单选择 -->
+            <div class="flex-shrink-0">
+              <div class="flex items-center gap-2">
+                <ElInput
+                  ref="searchRef"
+                  v-model="searchValue"
+                  :clearable="true"
+                  class="h-13 flex-1"
+                  :placeholder="$t('scan.barcode-product-code-product-name')"
+                />
+                <ElButton
+                  type="primary"
+                  class="w-25 text-white"
+                  @click="handleSearchClick"
                 >
-                  {{ t('scan.product-details') }}
-                </div>
-                <div class="take-table-box">
-                  <!-- <el-table
-                      header-row-class-name="take-table-header"
-                      :header-row-style="{
-                        backgroundColor: '#FAFCFF'
-                      }"
-                      :data="selectGoodList"
-                    >
-                      <template #empty>
-                        <div class="flex items-center justify-center">
-                          <div class="text-center">
-                            <img src="../../../assets/img/table-empty.svg" alt="" />
-                            <p>No data available</p>
-                          </div>
-                        </div>
-                      </template>
-                      <el-table-column :label="t('sale.columns.product')" prop="major_name">
-                        <template #default="scope">
-                          {{ scope.row.major_name || ''
-                          }}{{ scope.row.product_spec_kvmessage ? '-' + scope.row.product_spec_kvmessage : '' }}
-                        </template>
-                      </el-table-column>
-                      <el-table-column :label="t('sale.columns.unit')" prop="product_unit_name">
-                        <template #default="scope">
-                          <div>
-                            <span
-                              >{{ scope.row.product_unit_name }}
-                              <el-icon class="el-icon--right">
-                                <arrow-down />
-                              </el-icon>
-                            </span>
-                          </div>
-                        </template>
-                      </el-table-column>
-                      <el-table-column :label="t('sale.columns.code')" prop="product_code"></el-table-column>
-                      <el-table-column label="Qty" prop="sale_warehouse_product_stock_quantity" width="180">
-                      </el-table-column>
-                      <el-table-column :label="t('sale.columns.price')" prop="custom_price">
-                        <template #default="scope">
-                          <el-input v-model="scope.row.custom_price" type="number" :readonly="true">
-                            <template #suffix>
-                              <span>￥</span>
-                            </template>
-                          </el-input>
-                        </template>
-                      </el-table-column>
-                      <el-table-column :label="t('sale.columns.warehouse')" width="150">
-                        <template #default="scope">
-                          <WareHouse :detail-info="scope.row"></WareHouse>
-                        </template>
-                      </el-table-column>
-                    </el-table> -->
-                  <SelectProductsable
-                    ref="scanContentRef"
-                    :merge-goods-list="selectGoodList"
-                    style="height: 100%; overflow-y: auto"
-                    @update-quantity="handleUpdateQuantity"
-                    @update-unit="handleUpdateUnit"
-                    @handle-select-row="handleSelectRow"
-                    @delete-goods="handleDeleteGoods"
+                  {{ t('scan.search') }}
+                </ElButton>
+              </div>
+            </div>
+
+            <!-- 商品列表 -->
+            <div class="select-products-list flex-1 overflow-y-auto">
+              <div
+                v-for="productItem in productList"
+                :key="productItem.id"
+                class="select-products-item cursor-pointer"
+                @click="handleProductClick(productItem)"
+              >
+                <div class="select-products-item-img-box">
+                  <img
+                    v-if="productItem.profile_photo"
+                    :src="productItem.profile_photo"
+                    class="select-products-item-img"
+                    alt=""
                   />
                 </div>
-                <div class="flex items-center justify-between pl-2 pr-2">
-                  <span class="text-ocean-blue"
-                    >Selected: {{ total - quantity || 0 }}</span
-                  >
-                  <div class="mt-1 flex items-center gap-2.5">
-                    <ElButton
-                      v-auth="['sale_hold_product_delete']"
-                      class="Sale-button text-watermelon"
-                      color="#FEF0F0"
-                      :name="t('common.Empty')"
-                    >
-                      {{ t('common.empty') }}
-                    </ElButton>
-                    <ElButton
-                      color="#0D99FF"
-                      class="Sale-button text-white"
-                      @click="handleProductConfirm"
-                    >
-                      {{ t('common.save-text') }}
-                    </ElButton>
-                  </div>
+                <div class="select-products-item-box">
+                  <p class="select-products-item-name">
+                    {{ productItem.major_name || ''
+                    }}{{
+                      productItem.product_spec_kvmessage
+                        ? `-${productItem.product_spec_kvmessage}`
+                        : ''
+                    }}
+                  </p>
+                  <p class="select-products-item-code">
+                    {{ productItem.product_code || '' }}
+                  </p>
                 </div>
+                <p class="select-products-item-price text-coral-bright">
+                  ${{ productItem.selling_price }}
+                </p>
               </div>
-            </ElCol>
-          </ElRow>
-        </div>
-      </div>
-    </div>
+            </div>
+            <div class="flex flex-shrink-0 justify-end">
+              <ElPagination
+                size="small"
+                background
+                layout="prev, pager, next"
+                :total="productListTotal"
+                :default-page-size="12"
+                class="mt-4"
+                @current-change="handleCurrentChange"
+              />
+            </div>
+          </div>
+          <!-- 商品分类 -->
+          <div
+            class="select-products-group border-primary w-[100px] flex-shrink-0 border-t border-solid"
+          >
+            <div
+              class="text-primary border-primary box-border flex h-[44px] w-[100px] cursor-pointer items-center justify-center border border-t-0 border-solid p-2.5 text-sm"
+            >
+              全部
+            </div>
+          </div>
+        </section>
+      </ElCol>
+    </ElRow>
   </Drawer>
 </template>
-<style scoped lang="scss">
-.longcode {
-  height: 30px;
-}
-
-.drawer-content-box {
-  width: 100%;
-  height: calc(100vh - 90px);
-
-  .drawer-content-left {
-    padding: 10px 20px;
-  }
-
-  .basic-details {
-    width: 100%;
-    padding: 10px 20px;
-    border-radius: 4px;
-
-    .basic-details-title {
-      display: flex;
-      gap: 5px;
-      align-items: center;
-      padding-bottom: 2px;
-      border-bottom: 1px solid #eee;
-
-      &::before {
-        clear: both;
-        display: block;
-        width: 4px;
-        height: 10px;
-        content: '';
-        background: #0d99ff;
-        border-radius: 4px;
-      }
-    }
-
-    .basic-details-info {
-      font-size: 14px;
-
-      span {
-        font-weight: 700;
-      }
-    }
-
-    .order-table-header-info {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 10px;
-      background-color: #f5f7fa;
-
-      .order-table-header-info-left {
-        display: flex;
-        gap: 10px;
-
-        .icon {
-          font-size: 12px;
-        }
-      }
-
-      .order-table-header-info-time {
-        font-weight: 700;
-      }
-
-      :last-child {
-      }
-    }
-
-    .take-order-info {
-    }
-  }
-
-  .select-products-search-box {
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px 4px;
-
-    .select-products-search {
-      display: flex;
-      align-items: center;
-      height: 52px;
-    }
-  }
-
-  .select-products-group {
-    position: relative;
-    display: flex;
-    margin-top: 11px;
-
-    .select-products-group-down {
-      position: absolute;
-      bottom: -44px; // 调整位置，使其显示在父级分类下方
-      left: 0;
-      z-index: 10;
-      display: flex;
-      flex-wrap: wrap;
-      width: 100%;
-      height: fit-content;
-      height: 68px;
-      padding: 6px;
-      overflow: auto;
-
-      > div:nth-child(5n + 1) {
-        padding-left: 0;
-
-        &::before {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 2px;
-          height: 12px;
-          content: '';
-          background-color: transparent !important;
-        }
-      }
-
-      .select-products-group-down-item {
-        position: relative;
-        width: 20%;
-        height: 27px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 12px;
-        line-height: 27px;
-        text-align: center;
-        white-space: nowrap;
-        cursor: pointer;
-        border-radius: 4px;
-
-        &::before {
-          position: absolute;
-          top: 7px;
-          left: 0;
-          width: 2px;
-          height: 12px;
-          content: ' ';
-          background-color: #dfdfdf;
-        }
-
-        &:hover {
-          color: #fff;
-          background-color: #0d99ff;
-        }
-      }
-    }
-  }
-
-  .select-products-group-list {
-    display: flex;
-    //align-items: center;
-    flex-wrap: wrap;
-    width: 80%;
-    // :nth-child(5n+1)
-
-    .select-products-group-item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 25%;
-      height: 44px;
-      padding: 1rem;
-      font-size: 12px;
-      font-weight: 400;
-      text-align: center;
-    }
-  }
-
-  .select-products-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 11px;
-    margin-top: 5px;
-
-    .select-products-item {
-      box-sizing: border-box;
-      display: flex;
-      gap: 5px;
-      width: calc(50% - 6px);
-      padding: 5px;
-      font-size: 12px;
-      box-shadow: 0 1px 6px 0 #d1e2ff;
-
-      img {
-        width: 48px;
-        height: 48px;
-      }
-    }
-  }
-
-  .select-products-group-page-box {
-    width: 20%;
-
-    .select-products-group-page {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 44px;
-    }
-  }
-
-  .select-products-item-img-box {
-    width: 48px;
-    height: 48px;
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  .select-products-item {
-    position: relative;
-
-    .select-products-item-price {
-      position: absolute;
-      right: 4.5px;
-      bottom: 4px;
-    }
-  }
-
-  .take-table-box {
-    height: calc(100vh - 175px);
-  }
-}
-
-.close86 {
-  z-index: 2399;
-}
-</style>
-<style lang="scss">
-.select-products {
-  .product-stock-wrapper {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    padding: 0 11px;
-    border-radius: 4px;
-    // background-color: #ffb9b9;
-    // color: #ff6060;
-  }
-  // .product-stock {
-  //   color: #ff6060;
-  //   background-color: #ffb9b9;
-  // }
-  :deep(.el-input) {
-    height: 100%;
-
-    .el-input__wrapper {
-      border-radius: 0;
-    }
-
-    .el-input-group__append {
-      background-color: #f0f9ff;
-
-      &:active {
-        background-color: #d9efff;
-      }
-    }
-  }
-}
-</style>

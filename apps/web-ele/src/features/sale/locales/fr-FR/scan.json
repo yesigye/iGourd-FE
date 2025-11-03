@@ -86,5 +86,7 @@
   "successfully-paid": "Paiement Réussi",
   "click-select-customer": "Cliquez Sélectionner Le Client",
   "click-select-guider": "Cliquez Sélectionner Le Guide",
-  "account": "Compte"
+  "account": "Compte",
+  "vip-code": "Code VIP",
+  "tel": "Téléphone"
 }

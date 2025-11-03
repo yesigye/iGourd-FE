@@ -86,5 +86,7 @@
   "successfully-paid": "支付成功",
   "click-select-customer": "点击选择客户",
   "click-select-guider": "点击选择导购员",
-  "account": "账号"
+  "account": "账号",
+  "vip-code": "会员码",
+  "tel": "联系电话"
 }
