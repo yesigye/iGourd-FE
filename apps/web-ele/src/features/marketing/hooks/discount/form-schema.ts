@@ -27,10 +27,10 @@ export function useDiscountSchema(toggleShowMore: () => void) {
               header: '{{t("discount.form.basic-info")}}',
             },
             properties: {
-              // added enabled form element
-              enabled: {
-                type: 'number',
-                title: "{{t('discount.form.enabled')}}",
+              // added status form element
+              status: {
+                type: 'string',
+                title: "{{t('discount.form.status')}}",
                 default: 1,
                 'x-decorator': 'FormItem',
                 'x-decorator-props': {
@@ -38,8 +38,8 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                 },
                 'x-component': 'Switch',
                 'x-component-props': {
-                  'active-value': 1,
-                  'inactive-value': 0,
+                  'active-value': 'active',
+                  'inactive-value': 'inactive',
                 },
               },
 

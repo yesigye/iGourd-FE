@@ -93,16 +93,16 @@ export function useDiscount() {
       sortable: true,
       align: 'center',
     },
-    // Added a column for the 'enabled' status with custom rendering
+    // Added a column for the 'status' with custom rendering
     {
-      field: 'anabled',
-      // added the anabled field with translation to chinese and french
-      title: t('marketing.enabled'),
+      field: 'status',
+      // added the status field with translation
+      title: t('discount.form.status'),
       width: 100,
       sortable: true,
       align: 'center',
-      // added this slot property to use custom rendering for the 'enabled' field using a switch component
-      slots: { default: 'enabled' },
+      // added this slot property to use custom rendering for the 'status' field using a switch component
+      slots: { default: 'status' },
     },
     {
       field: 'operation',
@@ -127,7 +127,7 @@ export function useDiscount() {
 
   return useCrud<DiscountRow, DiscountDTO>({
     columns,
-    id:"marketing-discount-list",
+    id: 'marketing-discount-list',
     searchFormSchema,
     batchOperate: true,
     connectedComponent: DiscountDrawer,

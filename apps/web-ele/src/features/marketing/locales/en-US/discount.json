@@ -1,7 +1,7 @@
 {
   "form": {
     "edit": "Edit Promotion",
-    "enabled": "Enabled",
+    "status": "Status",
     "create": "Create Promotion",
     "basic-info": "Basic Information",
     "type": "Promotion Type",
@@ -24,11 +24,6 @@
     "active-hours": "Valid Hours",
     "exclude-dates": "Suspended Dates",
     "remark": "Remarks"
-  },
-  "message": {
-    "enabled": "Discount enabled",
-    "disabled": "Discount disabled",
-    "update-failed": "Failed to update status"
   },
   "more-time-setting": "More Time and Date Settings >>",
   "placeholder": {
@@ -66,7 +61,10 @@
     }
   },
   "validate": {
-    "name": { "required": "Please enter name", "no-special": "Cannot contain special characters" },
+    "name": {
+      "required": "Please enter name",
+      "no-special": "Cannot contain special characters"
+    },
     "minimum-amount": { "required": "Please enter spending threshold" },
     "reduce-amount": { "required": "Please enter instant discount amount" },
     "discount-percentage": {
@@ -83,4 +81,3 @@
     "number": { "non-negative": "Must be a non-negative number" }
   }
 }
-
