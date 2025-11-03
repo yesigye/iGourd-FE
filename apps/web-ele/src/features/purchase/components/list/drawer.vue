@@ -119,7 +119,7 @@ const createSchema = (dynamicJson) => {
                   effective_time: {
                     type: 'string',
                     title: "{{t('list.effective-time')}}",
-                    required: true,
+                    required: false,
                     'x-decorator': 'FormItem',
                     'x-component': 'DatePicker',
                     'x-component-props': {
@@ -219,7 +219,7 @@ const createSchema = (dynamicJson) => {
                     title: "{{t('list.contact-telephone')}}",
                     'x-decorator': 'FormItem',
                     'x-decorator-props': {
-                      asterisk: true,
+                      asterisk: false,
                       feedbackLayout: 'none',
                     },
                     'x-component': 'Space',
@@ -238,7 +238,7 @@ const createSchema = (dynamicJson) => {
                             width: '120px',
                           },
                         },
-                        required: true,
+                        //required: true,
                         'x-reactions': ['{{useAsyncDataSource(loadData)}}', {}],
                       },
                       contact_telephone: {
@@ -251,7 +251,7 @@ const createSchema = (dynamicJson) => {
                         },
                         'x-validator': [
                           {
-                            required: true,
+                            // required: true,
                           },
                           {
                             format: 'phone',
@@ -272,7 +272,7 @@ const createSchema = (dynamicJson) => {
                     },
                     'x-validator': [
                       {
-                        required: true,
+                        required: false,
                       },
                       {
                         format: 'email',
