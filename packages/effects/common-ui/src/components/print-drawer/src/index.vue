@@ -17,7 +17,7 @@ import PrintList from './list.vue';
 import PrintTable from './table.vue';
 import PrintTitle from './title.vue';
 
-// import stys from './index.module.scss';
+import stys from './index.module.scss';
 
 const compMap = {
   [PrintComponentType.PrintTitle]: unref(PrintTitle),
@@ -26,11 +26,11 @@ const compMap = {
 };
 const printTypeOptions = (t: (s: string) => string) => [
   {
-    label: t(`common.${PrintDrawerType.receipt}`),
+    label: t(`common.print-config.${PrintDrawerType.receipt}`),
     value: PrintDrawerType.receipt,
   },
   {
-    label: t(`common.${PrintDrawerType.A4}`),
+    label: t(`common.print-config.${PrintDrawerType.A4}`),
     value: PrintDrawerType.A4,
   },
 ];
@@ -40,6 +40,7 @@ const { t } = useI18n();
 const printData = ref<PrintDrawerProps>({
   type: PrintDrawerType.A4,
   printDatas: [],
+  printConfig: {},
 });
 const hideOnPrint = ref(HideOnPrint.show);
 
@@ -60,34 +61,41 @@ const onFontSizeChange = (val: number, type: 'base' | 'title') => {
     }
   }
 };
-const [BasicDrawer] = useIgourdDrawer({
-  class: 'w-1/2',
+const [BasicDrawer, drawerApi] = useIgourdDrawer({
+  class: 'w-1/2 min-w-[790px]',
   destroyOnClose: true,
+  headerClass: 'w-full',
+});
+defineExpose({
+  open({ params }) {
+    drawerApi.open();
+    printData.value = params;
+  },
 });
 </script>
 <template>
   <BasicDrawer>
     <!-- just for hide title  -->
-    <template #title>
-      <div class="print-config flex-justify-around flex">
+    <template #header>
+      <div class="flex w-full justify-between">
         <SelectDropdown
           :options="printTypeOptions(t)"
           @change="onTemplateChange"
         >
-          {{ t('webPrintTemplate.printTemplate') }}
-          {{ t(`common.${printData.type}`) }}
+          {{ t('common.print-config.pager') }}
+          {{ t(`common.print-config.${printData.type}`) }}
         </SelectDropdown>
         <FontSizeSelect
           :font-size="16"
           @change="(val) => onFontSizeChange(val, 'title')"
         >
-          {{ t('webPrintTemplate.titleFontSize') }}
+          {{ t('common.print-config.title-font-size') }}
         </FontSizeSelect>
         <FontSizeSelect
           :font-size="14"
           @change="(val) => onFontSizeChange(val, 'base')"
         >
-          {{ t('webPrintTemplate.baseFontSize') }}
+          {{ t('common.print-config.base-font-size') }}
         </FontSizeSelect>
       </div>
     </template>
@@ -101,6 +109,7 @@ const [BasicDrawer] = useIgourdDrawer({
           type: printData.type,
           hideOnPrint,
         }"
+        :print-config="printData.printConfig"
         :is="compMap[item.compType]"
         v-for="(item, i) of printData?.printDatas"
         :key="i"

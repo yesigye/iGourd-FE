@@ -34,6 +34,7 @@ import { getEnumLabel } from '#/utils/global';
 const { currentLoginUserApp } = useUserStore();
 const {
   Grid,
+  gridApi,
   Drawer,
   drawerApi,
   handleEdit,
@@ -44,33 +45,102 @@ const {
 } = useInventoryTransferList();
 
 const currentRow = ref();
+const auditDialogRef = ref();
 const openModal = (row, item) => {
-  if (row.review_status === 'PENDING' && item.value === 'REJECTED') {
-    currentRow.value = row;
-    auditDialogRef.value.openModal();
-  } else if (row.review_status === 'PENDING' && item.value === 'APPROVED') {
-    const param = {
-      handler_type: 'DESTINATION_STATUS',
-      id: row.id,
-      merchant_id: currentLoginUserApp.owner_id,
-      status: 'APPROVED',
-    };
-    reviewTransferStatus(param).then(() => {
-      auditDialogRef.value.closeModal();
-      gridApi.reload();
-    });
+  switch (row.transfer_type) {
+    case 'TRANSFER_OUT_ONLY':
+      if (
+        row.review_status === 'PENDING' &&
+        item.value === 'REJECTED'
+      ) {
+        currentRow.value = row;
+        auditDialogRef.value.openModal();
+      } else if (
+        row.review_status === 'PENDING' &&
+        item.value === 'APPROVED'
+      ) {
+        const param = {
+          handler_type: 'SOURCE_REVIEW',
+          id: row.id,
+          merchant_id: currentLoginUserApp.owner_id,
+          review_status: 'APPROVED',
+        };
+        reviewTransferStatus(param).then(() => {
+          auditDialogRef.value.closeModal();
+          gridApi.reload();
+        });
+      }
+      break;
+    case 'TRANSFER_IN_ONLY':
+      if (
+        row.destination_review_status === 'PENDING' &&
+        item.value === 'REJECTED'
+      ) {
+        currentRow.value = row;
+        auditDialogRef.value.openModal();
+      } else if (
+        row.destination_review_status === 'PENDING' &&
+        item.value === 'APPROVED'
+      ) {
+        const param = {
+          handler_type: 'DESTINATION_REVIEW',
+          id: row.id,
+          merchant_id: currentLoginUserApp.owner_id,
+          destination_review_status: 'APPROVED',
+        };
+        reviewTransferStatus(param).then(() => {
+          auditDialogRef.value.closeModal();
+          gridApi.reload();
+        });
+      }
+      break;
+    case 'TRANSFER_SAME_STORE':
+
+      break;
+    case 'TRANSFER_DIFFERENT_STORE':
+      break;
   }
 };
 
-const handleconfirm = (data) => {
-  data.id = currentRow.value.id;
-  data.merchant_id = currentLoginUserApp.owner_id;
-  data.status = 'REJECTED';
-  data.handler_type = 'DESTINATION_STATUS';
-  if (!data.review_opinion) {
-    data.review_opinion = '';
+const handleconfirm = (data:any) => {
+  const row = currentRow.value;
+  let params = null
+  switch (row.transfer_type) {
+    case 'TRANSFER_OUT_ONLY':
+      params = {
+        review_status:"REJECTED",
+        id:row.id,
+        review_opinion:data.review_opinion,
+        handler_type:"SOURCE_REVIEW"
+      }
+      break;
+    case 'TRANSFER_IN_ONLY':
+      params = {
+        destination_review_status:"REJECTED",
+        id:row.id,
+        review_opinion:data.review_opinion,
+        handler_type:"DESTINATION_REVIEW"
+      }
+
+      break;
+    case 'TRANSFER_SAME_STORE':
+       params = {
+        destination_review_status:"REJECTED",
+        id:row.id,
+        review_opinion:data.review_opinion,
+        handler_type:"DESTINATION_REVIEW"
+      }
+      break;
+    case 'TRANSFER_DIFFERENT_STORE':
+      params = {
+        destination_review_status:"REJECTED",
+        id:row.id,
+        review_opinion:data.review_opinion,
+        handler_type:"DESTINATION_REVIEW"
+      }
+      break;
   }
-  reviewTransferStatus(data).then(() => {
+  reviewTransferStatus(params).then(() => {
     auditDialogRef.value.closeModal();
     gridApi.reload();
   });
@@ -82,7 +152,6 @@ const filterOpt = (keys) => {
 };
 const getLabel = (row) => {
   let currentStatus = '';
-
   //调拨类型
   switch (row.transfer_type) {
     case 'TRANSFER_OUT_ONLY':
@@ -101,6 +170,28 @@ const getLabel = (row) => {
   return getEnumLabel(transferStatus, currentStatus);
 };
 
+//获取操作状态
+const getOperateStatus = computed(() => (row) => {
+  let status = "";
+
+  switch (row.transfer_type) {
+    case 'TRANSFER_OUT_ONLY':
+      status = row['status'];
+      break;
+    case 'TRANSFER_IN_ONLY':
+       status = row['destination_status'];
+      break;
+    case 'TRANSFER_SAME_STORE':
+      status = row['destination_status'];
+
+      break;
+    case 'TRANSFER_DIFFERENT_STORE':
+      status = row['destination_status'];
+      break;
+  }
+  return status;
+});
+//获取状态选项
 const getStatusOptions = computed(() => (row) => {
   const baseOptions = [{ value: 'CREATED', label: 'Created', key: 'created' }];
 
@@ -120,7 +211,7 @@ const getStatusOptions = computed(() => (row) => {
     case 'TRANSFER_SAME_STORE':
       if (row.status == 'CREATED') {
         return filterOpt(['OUTBOUND']);
-      }else if(row.status == 'OUTBOUND'){
+      } else if (row.status == 'OUTBOUND') {
         return filterOpt(['INBOUND']);
       }
       break;
@@ -190,10 +281,93 @@ const getStatusOptions = computed(() => (row) => {
 });
 const handleStatusChange = async (row, value) => {
   const params = {
-      ...row,
-      ...value
-  }
+    ...row,
+    ...value,
+  };
   drawerApi.setData(params).open();
+};
+//获取审核状态
+const getReviewStatus = computed(() => (row) => {
+  if (row.transfer_type === 'TRANSFER_OUT_ONLY') {
+    return row['review_status'];
+  }
+  if (row.transfer_type === 'TRANSFER_IN_ONLY') {
+    return row['destination_review_status'];
+  }
+  if (row.transfer_type === 'TRANSFER_DIFFERENT_STORE') {
+    if (row.source_merchant_id === currentLoginUserApp.owner_id)
+      return row['review_status'];
+    if (row.destination_merchant_id === currentLoginUserApp.owner_id)
+      return row['destination_review_status'];
+  }
+  if (row.transfer_type === 'TRANSFER_SAME_STORE') {
+    if (row.status !== 'OUTBOUND') {
+      return row['review_status'];
+    }
+    return row['destination_review_status'];
+  }
+});
+
+const checkOperate = (row) => {
+  let flag = true;
+  //调拨类型
+  switch (row.transfer_type) {
+    case 'TRANSFER_OUT_ONLY':
+      if (row.status === 'OUTBOUND' ||  row.status==="REFUSED_OUTBOUND") {
+        flag = false;
+      }
+      break;
+    case 'TRANSFER_IN_ONLY':
+      if (row.destination_status === 'INBOUND' || row.destination_status==="REFUSED_INBOUND") {
+        flag = false;
+      }
+      break;
+    case 'TRANSFER_SAME_STORE':
+      if (row.destination_status === 'INBOUND') {
+        flag = false;
+      }
+
+      break;
+    case 'TRANSFER_DIFFERENT_STORE':
+      if (row.destination_status === 'INBOUND') {
+        flag = false;
+      }
+
+      break;
+  }
+  return flag;
+};
+// 判断审核操作
+const checkReviewOperate = (row:any) => {
+  if(row.id=="1984250235206053890"){
+    debugger
+  }
+  let flag = false;
+  //调拨类型
+  switch (row.transfer_type) {
+    case 'TRANSFER_OUT_ONLY':
+      if (row.status === 'OUTBOUND') {
+         flag = true;
+      }
+      break;
+    case 'TRANSFER_IN_ONLY':
+      if (row.destination_status === 'INBOUND' && row.destination_review_status ==='PENDING') {
+        flag = true;
+      }
+      break;
+    case 'TRANSFER_SAME_STORE':
+      if (row.destination_status === 'INBOUND') {
+        flag = true;
+      }
+
+      break;
+    case 'TRANSFER_DIFFERENT_STORE':
+      if (row.destination_status === 'INBOUND') {
+        flag = true;
+      }
+      break;
+  }
+  return flag;
 };
 </script>
 
@@ -222,17 +396,7 @@ const handleStatusChange = async (row, value) => {
         </ElButton>
       </template>
       <template #status="{ row }">
-        <!-- <ElSelect v-model="row.status"  @change="value => handleStatusChange(row, value)">
-          <ElOption
-            v-for="item in getStatusOptions(row)"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-            ></ElOption
-          >
-        </ElSelect> -->
-
-        <ElDropdown>
+        <ElDropdown v-if="checkOperate(row)">
           <span class="custom-dropdown">
             {{ getLabel(row) }}
             <ElIcon class="el-icon--right">
@@ -245,20 +409,20 @@ const handleStatusChange = async (row, value) => {
                 v-for="item in getStatusOptions(row)"
                 :key="item?.value"
               >
-                <ElDropdownItem
-                  @click="() => handleStatusChange(row, item)"
-                >
+                <ElDropdownItem @click="() => handleStatusChange(row, item)">
                   <div>{{ item.label }}</div>
                 </ElDropdownItem>
               </template>
             </ElDropdownMenu>
           </template>
         </ElDropdown>
+        <span v-if="getOperateStatus(row) ==='OUTBOUND' || getOperateStatus(row) === 'INBOUND'"  class="review-approved"> {{ getLabel(row) }}</span>
+        <span v-if="getOperateStatus(row) ==='REFUSED_OUTBOUND' || getOperateStatus(row) ==='REFUSED_INBOUND'" class="review-rejected"> {{ getLabel(row) }}</span>
       </template>
       <template #review_status="{ row }">
-        <ElDropdown v-if="row.review_status === 'PENDING'">
+        <ElDropdown v-if="checkReviewOperate(row)">
           <span class="custom-dropdown">
-            {{ getEnumLabel(operationOpt, row.review_status) }}
+            {{ getEnumLabel(operationOpt, getReviewStatus(row)) }}
             <ElIcon class="el-icon--right">
               <ArrayDown />
             </ElIcon>
@@ -266,26 +430,16 @@ const handleStatusChange = async (row, value) => {
           <template #dropdown>
             <ElDropdownMenu>
               <template v-for="item in operationOpt" :key="item?.value">
-                <ElDropdownItem
-                  v-if="item.value !== 'PENDING'"
-                  @click="() => openModal(row, item)"
-                >
+                <ElDropdownItem @click="() => openModal(row, item)">
                   <div>{{ item.label }}</div>
                 </ElDropdownItem>
               </template>
             </ElDropdownMenu>
           </template>
         </ElDropdown>
-        <span
-          v-if="row.review_status === 'APPROVED'"
-          style="color: var(--el-color-success)"
-          >{{ getEnumLabel(operationOpt, row.review_status) }}</span
-        >
-        <span
-          v-if="row.review_status === 'REJECTED'"
-          style="color: var(--el-color-danger)"
-          >{{ getEnumLabel(operationOpt, row.review_status) }}</span
-        >
+        <span v-if="getReviewStatus(row) ==='APPROVED'" class="review-approved" >{{ getEnumLabel(operationOpt, getReviewStatus(row)) }}</span>
+        <span v-if="getReviewStatus(row) ==='REJECTED'"  class="review-rejected" >{{ getEnumLabel(operationOpt, getReviewStatus(row)) }}</span>
+         <span v-if="getReviewStatus(row) ==='PENDING' && !checkReviewOperate(row)"   >{{ getEnumLabel(operationOpt, getReviewStatus(row)) }}</span>
       </template>
     </Grid>
 

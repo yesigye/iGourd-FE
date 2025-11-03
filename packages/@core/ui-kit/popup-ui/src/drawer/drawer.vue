@@ -218,40 +218,42 @@ const getForceMount = computed(() => {
           )
         "
       >
-        <div class="flex items-center">
-          <SheetClose
-            v-if="closable && closeIconPlacement === 'left'"
-            as-child
-            :disabled="submitting"
-            class="data-[state=open]:bg-secondary ml-[2px] cursor-pointer rounded-full opacity-80 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none"
-          >
-            <slot name="close-icon">
-              <IgourdIconButton>
-                <X class="size-4" />
-              </IgourdIconButton>
-            </slot>
-          </SheetClose>
-          <Separator
-            v-if="closable && closeIconPlacement === 'left'"
-            class="ml-1 mr-2 h-8"
-            decorative
-            orientation="vertical"
-          />
-          <SheetTitle v-if="title" class="text-left">
-            <slot name="title">
-              {{ title }}
+        <slot name="header">
+          <div class="flex items-center">
+            <SheetClose
+              v-if="closable && closeIconPlacement === 'left'"
+              as-child
+              :disabled="submitting"
+              class="data-[state=open]:bg-secondary ml-[2px] cursor-pointer rounded-full opacity-80 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none"
+            >
+              <slot name="close-icon">
+                <IgourdIconButton>
+                  <X class="size-4" />
+                </IgourdIconButton>
+              </slot>
+            </SheetClose>
+            <Separator
+              v-if="closable && closeIconPlacement === 'left'"
+              class="ml-1 mr-2 h-8"
+              decorative
+              orientation="vertical"
+            />
+            <SheetTitle v-if="title" class="text-left">
+              <slot name="title">
+                {{ title }}
 
-              <IgourdHelpTooltip v-if="titleTooltip" trigger-class="pb-1">
-                {{ titleTooltip }}
-              </IgourdHelpTooltip>
-            </slot>
-          </SheetTitle>
-          <SheetDescription v-if="description" class="mt-1 text-xs">
-            <slot name="description">
-              {{ description }}
-            </slot>
-          </SheetDescription>
-        </div>
+                <IgourdHelpTooltip v-if="titleTooltip" trigger-class="pb-1">
+                  {{ titleTooltip }}
+                </IgourdHelpTooltip>
+              </slot>
+            </SheetTitle>
+            <SheetDescription v-if="description" class="mt-1 text-xs">
+              <slot name="description">
+                {{ description }}
+              </slot>
+            </SheetDescription>
+          </div>
+        </slot>
 
         <VisuallyHidden v-if="!title || !description">
           <SheetTitle v-if="!title" />
@@ -283,7 +285,7 @@ const getForceMount = computed(() => {
       <div
         ref="wrapperRef"
         :class="
-          cn('relative flex-1 overflow-y-auto py-1 ', contentClass, {
+          cn('relative flex-1 overflow-y-auto py-1', contentClass, {
             'pointer-events-none': showLoading || submitting,
           })
         "

@@ -11,7 +11,7 @@ import { ElButton, ElCol, ElRow } from 'element-plus';
 import ColumnsSetting from '../../columns-setting/index.vue';
 import { HideOnPrint, PrintDrawerType } from '../type';
 
-// import stys from '../index.module.scss';
+import stys from './index.module.scss';
 
 const props = withDefaults(defineProps<WithPrintType<ListType>>(), {
   hideOnPrint: HideOnPrint.show,
@@ -19,6 +19,7 @@ const props = withDefaults(defineProps<WithPrintType<ListType>>(), {
   data: () => ({}),
   type: PrintDrawerType.A4,
 });
+console.log(props);
 const { t } = useI18n();
 const columnsSettingRef = ref();
 
@@ -39,7 +40,6 @@ watch(
     :class="cls(stys[props.type], stys['print-list'])"
   >
     <ColumnsSetting
-      v-if="props.hideOnPrint === HideOnPrint.show"
       ref="columnsSettingRef"
       :columns="
         usedColumns?.map((item) => ({ ...item, label: t(item.label ?? '') }))
@@ -48,13 +48,8 @@ watch(
       @update-columns="(col: any) => (usedColumns = col)"
     >
       <div class="text-right">
-        <ElButton
-          :button-props="{
-            onClick: async () => columnsSettingRef?.showPop?.(),
-            type: 'primary',
-          }"
-        >
-          {{ t('webPrintTemplate.setField') }}
+        <ElButton @click="columnsSettingRef?.showPop()" type="primary">
+          {{ t('common.print-config.set-field') }}
         </ElButton>
       </div>
     </ColumnsSetting>
