@@ -80,5 +80,12 @@
     "transfer-out": "调拨出库",
     "reject-in": "拒绝入库",
     "reject-out": "拒绝出库"
+  },
+  "setting-payment-scene": {
+    "PURCHASE": "采购",
+    "RECHARGE": "充值",
+    "RESTAURANT_SALES": "销售",
+    "RETAIL_SALES": "零售",
+    "WHOLESALE_SALES": "批发"
   }
 }

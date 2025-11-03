@@ -1,0 +1,12 @@
+{
+  "receipt-type": "Type de document",
+  "coding-rules": "Règles de codage",
+  "paragraph-break": "Séparation de paragraphe",
+  "code-section": "Séparation de code",
+  "status": "Statut",
+  "operation": "Action",
+  "category-tree": "Arbre de catégorie",
+  "purchase": "Achat",
+  "stock": "Stock",
+  "finance": "Finance"
+}
