@@ -14,16 +14,27 @@ const { t } = useI18n();
 const UploadButton = () => {
   return h(ElButton, {}, { default: () => t('common.upload-img') });
 };
-function remoteMethod(keywords: string) {
-  return getCountryListApi({}).then((res) => {
-    return res?.map((item: any) => {
-      return {
-        ...item,
-        label: item.name,
-        value: item.country_id,
-      };
-    });
-  });
+let allCountriesCache: any[] = [];
+async function remoteMethod(keywords: string) {
+  // Fetch once and cache
+  if (allCountriesCache.length === 0) {
+    const res = await getCountryListApi();
+    allCountriesCache = res?.map((item: any) => ({
+      ...item,
+      label: item.name,
+      value: item.country_id,
+    })) ?? [];
+  }
+
+  // If user types something, filter results
+  if (keywords) {
+    return allCountriesCache.filter(item =>
+      item.label.toLowerCase().includes(keywords.toLowerCase())
+    );
+  }
+
+  // Default: show all countries
+  return allCountriesCache;
 }
 
 const createSchema = (dynamicJson) => {
