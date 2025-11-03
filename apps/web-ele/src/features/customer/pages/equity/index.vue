@@ -1,40 +1,41 @@
-<template>
-  <Page auto-content-height>
-    <Form></Form>
-    <div class="mt-4 text-center">
-      <ElButton type="danger" plain @click="handleReset">{{
-        t('common.reset')
-      }}</ElButton>
-      <ElButton type="primary" @click="handleSave">{{
-        t('common.save')
-      }}</ElButton>
-    </div>
-  </Page>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
 import type { ISchema } from '@igourd/common-ui';
-import { useI18n } from '@igourd/locales';
-const { t } = useI18n();
-import { useIgourdForm } from '@igourd/common-ui';
+
+import { onMounted, ref } from 'vue';
+
 import {
-  Page,
   ElButton,
   ElMessage,
-  onFieldValueChange,
   observable,
+  onFieldValueChange,
+  Page,
+  useIgourdForm,
 } from '@igourd/common-ui';
+import { useI18n } from '@igourd/locales';
+
 import {
   getCustomerEquityDetailApi,
   saveCustomerEquityApi,
 } from '@@/customer/apis';
+
+defineOptions({
+  name: 'ICustomerIntegral',
+});
+
+const { t } = useI18n();
+
 interface ListItem {
   value: any;
   label: string;
+  disabled?: boolean;
 }
 // vip 等级数据
 const vipList = observable<{ value: ListItem[] }>({ value: [] });
+const upgradeModeVipList = observable<{ value: ListItem[] }>({ value: [] });
+const preferentialModeVipList = observable<{ value: ListItem[] }>({
+  value: [],
+});
+const otherVipList = observable<{ value: ListItem[] }>({ value: [] });
 // 取整类型
 const roundingOffList = [
   {
@@ -78,11 +79,7 @@ const validityPeriods = [
 const id = ref();
 const validatorDefaultVIP = (val, msg) => {
   const max = formAPI.values.maximum_vip_level;
-  if (max && val > max) {
-    return t('equity.defaultviplevel-validator-msg');
-  } else {
-    return true;
-  }
+  return max && val > max ? t('equity.defaultviplevel-validator-msg') : true;
 };
 const formSchema: ISchema = {
   type: 'object',
@@ -121,6 +118,7 @@ const formSchema: ISchema = {
                     placeholder:
                       "{{t('equity.default-vip-level-placeholder')}}",
                     clearable: true,
+                    min: 0,
                   },
                   'x-validator': [
                     {
@@ -146,16 +144,21 @@ const formSchema: ISchema = {
                     placeholder:
                       "{{t('equity.max-mummember-level-placeholder')}}",
                     clearable: true,
+                    min: 0,
                   },
                   'x-validator': [
                     {
                       required: true,
-                      message: "{{t('equity.please-enter-maximummembershiplevel')}}",
+                      message:
+                        "{{t('equity.please-enter-maximummembershiplevel')}}",
                       triggerType: 'onBlur',
-                    }
+                    },
+                    {
+                      validator: (value) => value >= 0,
+                      triggerType: 'onBlur',
+                    },
                   ],
                 },
-
                 vip_code_type: {
                   type: 'string',
                   title: "{{t('customer.vip-code')}}",
@@ -289,7 +292,7 @@ const formSchema: ISchema = {
               },
             },
             // 升级模式设置
-             card_2: {
+            card_2: {
               type: 'void',
               'x-component': 'Card',
               'x-component-props': {
@@ -351,7 +354,7 @@ const formSchema: ISchema = {
                             'x-reactions': {
                               fulfill: {
                                 state: {
-                                  dataSource: '{{ vipList.value }}',
+                                  dataSource: '{{ upgradeModeVipList.value }}',
                                 },
                               },
                             },
@@ -447,10 +450,9 @@ const formSchema: ISchema = {
                     },
                   },
                 },
-
               },
             },
-            //优惠模式设置
+            // 优惠模式设置
             card_1: {
               type: 'void',
               'x-component': 'Card',
@@ -513,7 +515,8 @@ const formSchema: ISchema = {
                             'x-reactions': {
                               fulfill: {
                                 state: {
-                                  dataSource: '{{ vipList.value }}',
+                                  dataSource:
+                                    '{{ preferentialModeVipList.value }}',
                                 },
                               },
                             },
@@ -708,7 +711,7 @@ const formSchema: ISchema = {
                             'x-reactions': {
                               fulfill: {
                                 state: {
-                                  dataSource: '{{ vipList.value }}',
+                                  dataSource: '{{ otherVipList.value }}',
                                 },
                               },
                             },
@@ -788,7 +791,6 @@ const formSchema: ISchema = {
                     feedbackLayout: 'none',
                   },
                 },
-
                 validity_month: {
                   type: 'boolean',
                   title: "{{t('customer.enjoytheoffervaliddate')}}",
@@ -825,9 +827,9 @@ const { Form, formAPI } = useIgourdForm({
     upgrade_type: 'RECHARGE',
     is_points_multiple: false,
     is_setting_validity_period: false,
-    //优惠模式设置
+    // 优惠模式设置
     setting_level_list_rights_type: [{}],
-    //升级模式设置
+    // 升级模式设置
     setting_level_list_upgrade_type: [{}],
     setting_level_list_points: [{}],
   },
@@ -835,38 +837,99 @@ const { Form, formAPI } = useIgourdForm({
     // 动态设置等级数据
     onFieldValueChange('maximum_vip_level', (field, form: Form) => {
       vipList.value = [];
+      otherVipList.value = [];
+      upgradeModeVipList.value = [];
+      preferentialModeVipList.value = [];
+
       let value = field.value;
-      if (value && !/[0-9]/.test(value)) {
-        value = value.replace(/[^0-9]/g, '');
+      if (value && !/\d/.test(value)) {
+        value = value.replaceAll(/\D/g, '');
       }
-      const max = value > 10 ? 10 : value;
+      const max = Math.min(value, 10);
       formAPI.setValuesIn('maximum_vip_level', max);
-      console.log(max);
+      // console.log(max);
       for (let i = 1; i <= max; i++) {
-        vipList.value.push({
-          value: i,
-          label: i,
-        });
+        vipList.value.push({ value: i, label: i });
+        otherVipList.value.push({ value: i, label: i });
+        upgradeModeVipList.value.push({ value: i, label: i });
+        preferentialModeVipList.value.push({ value: i, label: i });
       }
     });
+
     onFieldValueChange('default_vip_level', (field, form: Form) => {
       let value = field.value;
-      if (value && !/[0-9]/.test(value)) {
-        value = value.replace(/[^0-9]/g, '');
+      if (value && !/\d/.test(value)) {
+        value = value.replaceAll(/\D/g, '');
       }
       formAPI.setValuesIn('default_vip_level', value);
     });
-    // 会员升级模式设置录入数据项目
-    onFieldValueChange('upgrade_type', (field, form: Form) => {
-      console.log(field.value);
-    });
-    // 优惠模式设置 设置录入数据项目
-    onFieldValueChange('rights_type', (field, form: Form) => {
-      console.log(field.value);
-    });
+
+    onFieldValueChange(
+      'setting_merchant_customer_rights_level_list.*.vip_level',
+      (field, form) => {
+        const levelList =
+          formAPI.values.setting_merchant_customer_rights_level_list || [];
+
+        const selectedLevels =
+          levelList?.map((row) => row?.vip_level).filter(Boolean) || [];
+
+        vipList.value = vipList.value.map((item) => ({
+          ...item,
+          disabled: selectedLevels.includes(item.value),
+        }));
+        console.log(formAPI.values);
+      },
+    );
+    onFieldValueChange(
+      'setting_level_list_upgrade_type.*.vip_level',
+      (field, form) => {
+        const levelList = formAPI.values.setting_level_list_upgrade_type || [];
+
+        const selectedLevels =
+          levelList?.map((row) => row?.vip_level).filter(Boolean) || [];
+
+        upgradeModeVipList.value = upgradeModeVipList.value.map((item) => ({
+          ...item,
+          disabled: selectedLevels.includes(item.value),
+        }));
+      },
+    );
+    onFieldValueChange(
+      'setting_level_list_rights_type.*.vip_level',
+      (field, form) => {
+        const levelList = formAPI.values.setting_level_list_rights_type || [];
+
+        const selectedLevels =
+          levelList?.map((row) => row?.vip_level).filter(Boolean) || [];
+
+        preferentialModeVipList.value = preferentialModeVipList.value.map(
+          (item) => ({
+            ...item,
+            disabled: selectedLevels.includes(item.value),
+          }),
+        );
+      },
+    );
+    onFieldValueChange(
+      'setting_level_list_points.*.vip_level',
+      (field, form) => {
+        const levelList = formAPI.values.setting_level_list_points || [];
+
+        const selectedLevels =
+          levelList?.map((row) => row?.vip_level).filter(Boolean) || [];
+
+        otherVipList.value = otherVipList.value.map((item) => ({
+          ...item,
+          disabled: selectedLevels.includes(item.value),
+        }));
+      },
+    );
   },
   scope: {
     vipList,
+    otherVipList,
+    upgradeModeVipList,
+    preferentialModeVipList,
     validatorDefaultVIP,
   },
 });
@@ -880,14 +943,14 @@ const handleSave = async () => {
   const list = formAPI.values.setting_merchant_customer_rights_level_list.map(
     (element) => {
       // 惠模式设置
-      let hasItemRights = formAPI.values.setting_level_list_rights_type.find(
+      const hasItemRights = formAPI.values.setting_level_list_rights_type.find(
         (item) => item.vip_level == element.vip_level,
       );
-      //会员升级模式
-      let hasItemUp = formAPI.values.setting_level_list_upgrade_type.find(
+      // 会员升级模式
+      const hasItemUp = formAPI.values.setting_level_list_upgrade_type.find(
         (item) => item.vip_level == element.vip_level,
       );
-      let hasPoints = formAPI.values.setting_level_list_points.find(
+      const hasPoints = formAPI.values.setting_level_list_points.find(
         (item) => item.vip_level == element.vip_level,
       );
       return {
@@ -899,23 +962,23 @@ const handleSave = async () => {
     },
   );
   formAPI.values.setting_merchant_customer_rights_level_list = list;
-  //合并
-  formAPI.values.id = id.value
+  // 合并
+  formAPI.values.id = id.value;
   saveCustomerEquityApi(formAPI.values).then((res) => {
     id.value = res;
     ElMessage.success(t('customer.save-success'));
   });
 };
 const getData = () => {
-  let setting_merchant_customer_rights_level_list = [];
+  const setting_merchant_customer_rights_level_list = [];
   // 优惠模式设置
-  let setting_level_list_rights_type:any = [];
-  //升级模式设置
-  let setting_level_list_upgrade_type:any = [];
-  let setting_level_list_points:any = [];
+  const setting_level_list_rights_type: any = [];
+  // 升级模式设置
+  const setting_level_list_upgrade_type: any = [];
+  const setting_level_list_points: any = [];
   getCustomerEquityDetailApi().then((res) => {
     // hideField(res.point_exchange_type, formAPI);
-    const list = res.setting_merchant_customer_rights_level_model_list.forEach(
+    const list = res?.setting_merchant_customer_rights_level_model_list.forEach(
       (element) => {
         setting_merchant_customer_rights_level_list.push({
           vip_level: element.vip_level,
@@ -941,18 +1004,32 @@ const getData = () => {
         });
       },
     );
-    res.setting_merchant_customer_rights_level_list = setting_merchant_customer_rights_level_list;
-    res.setting_level_list_rights_type = setting_level_list_rights_type;
-    res.setting_level_list_upgrade_type = setting_level_list_upgrade_type;
-    res.setting_level_list_points = setting_level_list_points;
-    id.value = res.id;
-    formAPI.setValues(res);
+    if (res) {
+      res.setting_merchant_customer_rights_level_list =
+        setting_merchant_customer_rights_level_list;
+      res.setting_level_list_rights_type = setting_level_list_rights_type;
+      res.setting_level_list_upgrade_type = setting_level_list_upgrade_type;
+      res.setting_level_list_points = setting_level_list_points;
+      id.value = res.id;
+      formAPI.setValues(res);
+    }
   });
 };
-defineOptions({
-  name: 'ICustomerIntegral',
-});
 onMounted(() => {
   getData();
 });
 </script>
+
+<template>
+  <Page auto-content-height>
+    <Form />
+    <div class="mt-4 text-center">
+      <ElButton type="danger" plain @click="handleReset">
+        {{ t('common.reset') }}
+      </ElButton>
+      <ElButton type="primary" @click="handleSave">
+        {{ t('common.save') }}
+      </ElButton>
+    </div>
+  </Page>
+</template>
