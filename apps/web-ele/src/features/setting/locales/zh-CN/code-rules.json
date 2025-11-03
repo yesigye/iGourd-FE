@@ -8,5 +8,13 @@
   "category-tree": "分类",
   "purchase": "采购",
   "stock": "库存",
-  "finance": "财务"
+  "finance": "财务",
+  "use-rules": "使用规则",
+  "allow-user-edit": "允许用户编辑单据号",
+  "disallow-user-edit": "不允许用户编辑单据号",
+  "code-part": "编码部分",
+  "set-value": "设置值",
+  "date-format": "日期格式",
+  "length": "长度",
+  "initial-value": "初始值"
 }

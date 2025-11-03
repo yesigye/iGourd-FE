@@ -6,11 +6,13 @@ const { Drawer, Form, codeRulesInfo } = useSettingCodeRulesForm();
 
 <template>
   <Drawer>
-    <section class="mb-2.5 text-center">
+    <section class="mt-5 text-center">
       <h2 class="text-sm font-bold">{{ codeRulesInfo?.preview }}</h2>
-      <h2 class="font-400 text-xs">{{ codeRulesInfo?.rules }}</h2>
+      <h2 class="font-400 mt-2.5 text-xs">{{ codeRulesInfo?.rules }}</h2>
     </section>
-    <Form />
+    <section class="p-2.5">
+      <Form />
+    </section>
   </Drawer>
 </template>
 <style lang="scss">

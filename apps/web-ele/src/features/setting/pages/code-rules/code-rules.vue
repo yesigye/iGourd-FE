@@ -64,6 +64,9 @@ onMounted(() => {
           {{ t('common.edit') }}
         </ElButton>
       </template>
+      <template #category-type="{ row }">
+        {{ t(`enum.setting-coding-rule-part.${row.category_type}`) }}
+      </template>
     </Grid>
   </ColPage>
   <Drawer />

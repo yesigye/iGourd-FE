@@ -114,12 +114,13 @@ export function useSettingCodeRulesForm() {
       if (isOpen) {
         const row = drawerApi.getData();
         const result = await codingCategoryDetail({
-          merchant_id: currentLoginUserApp.user_id,
           id: row.id,
         });
         const formdata = result;
         codingRuleListData.value = result;
-        formdata.category_type = t(`code-rules.${formdata?.category_type}`);
+        formdata.category_type = t(
+          `enum.setting-coding-rule-part.${formdata?.category_type}`,
+        );
         const { option_map, ...other } = formdata;
         formAPI.setValues({
           ...other,
@@ -161,7 +162,7 @@ export function useSettingCodeRulesForm() {
         properties: {
           category_type: {
             type: 'string',
-            title: 'order type',
+            title: '{{t("code-rules.receipt-type")}}',
             'x-decorator': 'FormItem',
             'x-component': 'input',
             'x-component-props': {
@@ -173,7 +174,7 @@ export function useSettingCodeRulesForm() {
           },
           paragraph_break: {
             type: 'string',
-            title: 'paragraph break',
+            title: '{{t("code-rules.paragraph-break")}}',
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Select',
@@ -185,7 +186,7 @@ export function useSettingCodeRulesForm() {
           },
           code_section: {
             type: 'object',
-            title: 'Code Section',
+            title: '{{t("code-rules.code-section")}}',
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Select',
@@ -206,17 +207,17 @@ export function useSettingCodeRulesForm() {
           },
           use_rule: {
             type: 'object',
-            title: 'use rules',
+            title: '{{t("code-rules.use-rules")}}',
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Select',
             enum: [
               {
-                label: '允许用户编辑单据号',
+                label: '{{t("code-rules.allow-user-edit")}}',
                 value: 1,
               },
               {
-                label: '不允许',
+                label: '{{t("code-rules.disallow-user-edit")}}',
                 value: 0,
               },
             ],
@@ -234,7 +235,7 @@ export function useSettingCodeRulesForm() {
           },
           status: {
             type: 'boolean',
-            title: 'status',
+            title: '{{t("code-rules.status")}}',
             required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Switch',
@@ -285,35 +286,21 @@ export function useSettingCodeRulesForm() {
               properties: {
                 part_name: {
                   type: 'string',
-                  title: `Code Part`,
-                  'x-reactions': [
-                    '{{useAsyncDataSource(loadData)}}',
-                    // {
-                    //   dependencies: [
-                    //     'setting_coding_rule_part_list',
-                    //     '.part_name',
-                    //   ],
-                    //   when: '{{$deps[0].some(item => item.part_name === $deps[1])}}',
-                    //   fulfill: {
-                    //     state: {
-                    //       dataSource: `{{(field) => {
-                    //         const options = field.dataSource || [];
-                    //         console.log('options', options);
-                    //         return options.map(option => ({
-                    //           ...option,
-                    //           disabled: $deps[0].some(item => item.part_name === option.value && item.part_name === $deps[1])
-                    //         }));
-                    //       }}}`,
-                    //     },
-                    //   },
-                    // },
-                  ],
+                  title: '{{t("code-rules.code-part")}}',
                   'x-decorator': 'FormItem',
                   'x-component': 'Select',
+                  'x-reactions': [
+                    // 先加载远程选项
+                    '{{useAsyncDataSource(loadData)}}',
+                    // 再基于已加载的选项做禁用联动（空数组则跳过，不覆盖）
+                  ],
+                  'x-component-props': {
+                    filterable: true,
+                  },
                 },
                 value: {
                   type: 'string',
-                  title: 'set value',
+                  title: '{{t("code-rules.set-value")}}',
                   'x-decorator': 'FormItem',
                   'x-component': 'Input',
                   'x-reactions': [
@@ -335,7 +322,7 @@ export function useSettingCodeRulesForm() {
                 },
                 receipt_time: {
                   type: 'string',
-                  title: 'Date format',
+                  title: '{{t("code-rules.date-format")}}',
                   'x-decorator': 'FormItem',
                   'x-component': 'Select',
                   'x-reactions': [
@@ -358,7 +345,7 @@ export function useSettingCodeRulesForm() {
                 },
                 part_value_length: {
                   type: 'string',
-                  title: 'length',
+                  title: '{{t("code-rules.length")}}',
                   'x-decorator': 'FormItem',
                   'x-component': 'Select',
                   'x-reactions': [
@@ -381,7 +368,7 @@ export function useSettingCodeRulesForm() {
                 },
                 initialValue: {
                   type: 'string',
-                  title: 'Initial value',
+                  title: '{{t("code-rules.initial-value")}}',
                   'x-decorator': 'FormItem',
                   'x-component': 'Input',
                   'x-reactions': [
@@ -435,7 +422,9 @@ export function useSettingCodeRulesForm() {
       if (key === 'PART_NAME') {
         optionAll[key.toLocaleLowerCase()] = optionResult.option_map[key].map(
           (item: { label: string; value: string }) => ({
-            label: item.default_value,
+            label: t(
+              `enum.setting-coding-rule-part-name.${item.default_value}`,
+            ),
             value: item.default_value,
             disabled: item.disabled,
           }),
@@ -476,7 +465,6 @@ export function useSettingCodeRulesForm() {
       // 使用 Formily 的 effects 监听表单值变化
       onFormValuesChange((form) => {
         const { values } = form;
-
         // 预览信息
         const preview = [] as string[];
         const rules = [] as string[];
@@ -515,8 +503,12 @@ export function useSettingCodeRulesForm() {
           },
         );
         codeRulesInfo.value = {
-          preview: preview.join(values.code_section),
-          rules: rules.join(values.code_section),
+          preview:
+            preview.length > 0
+              ? preview.join(values.code_section)
+              : 'xxxx-xxx-xx',
+          rules:
+            rules.length > 0 ? rules.join(values.code_section) : 'xxxx-xxx-xx',
         };
       });
       onFieldValueChange(['setting_coding_rule_part_list'], (field, form) => {

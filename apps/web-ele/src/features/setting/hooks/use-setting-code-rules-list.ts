@@ -38,6 +38,7 @@ export function useSettingCodeRulesList(type: Ref<string>) {
       minWidth: 170,
       sortable: true,
       align: 'left',
+      slots: { default: 'category-type' },
     },
     {
       field: 'name',
