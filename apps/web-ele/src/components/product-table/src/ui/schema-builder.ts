@@ -3,6 +3,8 @@ import type { ISchema, observable } from '@igourd/common-ui';
 
 import type { ColumnDescriptor, Ctx } from '../types';
 
+import { omit } from '@igourd/utils';
+
 /** 可选项：表格 props / 索引列 / 操作列 / 新增按钮 / 行合并 */
 export type BuildSchemaOptions = {
   addition?: {
@@ -32,13 +34,13 @@ function toSchemaColumn(desc: ColumnDescriptor): ISchema {
       // 表头必填星标
       asterisk: desc['x-decorator-props']?.required,
     },
-    'x-reactions':desc['x-col-reactions'],
+    'x-reactions': desc['x-col-reactions'],
     properties: {
       // 直接展开字段定义，保持所有原有属性
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       [fieldName]: {
-        ...desc, // 展开所有原始属性
+        ...omit(desc, ['x-col-reactions']), // 展开所有原始属性
         name: fieldName,
         title: undefined,
       },

@@ -1,11 +1,9 @@
-import { disabledTimeListsProps } from 'element-plus/es/components/time-picker/src/props/shared.mjs';
 import type { ModePlugin } from '../types';
 
 export const TransferMode: ModePlugin = {
   id: 'transfer',
   columns(_ctx) {
     return [
-      
       {
         name: 'major_name',
         type: 'string',
@@ -40,7 +38,7 @@ export const TransferMode: ModePlugin = {
         'x-decorator': 'FormItem',
         'x-component-props': {
           style: { width: 200 },
-          disabled:true
+          disabled: true,
         },
       },
       {
@@ -57,7 +55,7 @@ export const TransferMode: ModePlugin = {
           dependencies: ['form_type'],
           fulfill: {
             state: {
-              'hidden': "{{ $deps[0] == 'OUTBOUND'}}",
+              hidden: "{{ $deps[0] == 'OUTBOUND'}}",
             },
           },
         },
@@ -82,7 +80,7 @@ export const TransferMode: ModePlugin = {
           dependencies: ['form_type'],
           fulfill: {
             state: {
-              'hidden': "{{ $deps[0] == 'INBOUND'}}",
+              hidden: "{{ $deps[0] == 'INBOUND'}}",
             },
           },
         },
