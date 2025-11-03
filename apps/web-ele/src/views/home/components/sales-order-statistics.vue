@@ -37,7 +37,7 @@ const { t } = useI18n();
               }} 
             </div>
           </div>
-          <!-- Selling product values -->
+          <!-- Selling product values --> 
           <div class="flex flex-col space-y-4 ">
             <div><h3 class="text-gray-400 capitalize">{{t('home.products-value-selling', { currency: props?.currencySymbol })}}</h3></div>
             <div class="text-gray-700 font-semibold text-xl">
