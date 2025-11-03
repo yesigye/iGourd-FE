@@ -62,21 +62,31 @@ export function useEnum() {
       label: t('enum.transfer-status.created'),
     },
     {
-      value: 'INBOUND',
-     label: t('enum.transfer-status.transfer-in'),
-    },
-    {
-      value: 'REFUSED_INBOUND',
-      label: t('enum.transfer-status.reject-in'),
-    },
-    {
       value: 'OUTBOUND',
       label: t('enum.transfer-status.transfer-out'),
+    },
+     {
+     value: 'APPROVED_OUTBOUND',
+     label: '审核通过',
     },
     {
       value: 'REFUSED_OUTBOUND',
       label: t('enum.transfer-status.reject-out'),
     },
+    {
+      value: 'INBOUND',
+     label: t('enum.transfer-status.transfer-in'),
+    },
+    {
+     value: 'APPROVED_INBOUND',
+     label: '审核通过2',
+    },    
+    {
+      value: 'REFUSED_INBOUND',
+      label: t('enum.transfer-status.reject-in'),
+    },
+   
+  
   ]
 
   return {

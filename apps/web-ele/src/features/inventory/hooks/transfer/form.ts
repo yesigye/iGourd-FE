@@ -146,6 +146,7 @@ export function useTransferForm() {
                       clearable: true,
                     },
                     enum: transferTypeList,
+                    
                   },
                   row_0: {
                     type: 'void', // 表示空字段
@@ -497,7 +498,7 @@ export function useTransferForm() {
     const data = drawerApi.getData();
 
     if (data.value === 'INBOUND') {
-      const paramsList:any = [];
+      const paramsList: any = [];
       formData.stock_transfer_item_list.forEach((item) => {
         paramsList.push({
           id: item.id,
@@ -513,7 +514,7 @@ export function useTransferForm() {
         handleUpdateTransferStatus(statusParams);
       });
     } else if (data.value === 'OUTBOUND') {
-      const paramsList:any = [];
+      const paramsList: any = [];
       formData.stock_transfer_item_list.forEach((item) => {
         paramsList.push({
           id: item.id,
@@ -624,19 +625,25 @@ export function useTransferForm() {
         if (isOpen) {
           formAPI.reset();
           const data = drawerApi.getData();
+          debugger
           // 编辑
           if (data.id) {
             const detail = await getTransferDetail({
               stock_transfer_id: data.id,
             });
+            debugger
             detail.stock_transfer_item_list =
               detail.stock_transfer_item_model_list;
+              detail.stock_transfer_item_list.forEach(item=>{
+                item.form_type = "OUTBOUND"
+              })
+             
             formAPI.setValues(detail);
           } else {
             const orderNo = await generateNo();
             formAPI.setValues({
               stock_transfer_no: orderNo,
-              stock_transfer_item_list: [{}],
+              stock_transfer_item_list: [{form_type:"OUTBOUND"}],
             });
             // formAPI.setFieldState('stock_transfer_item_list.*.transfer_out_quantity', (f) => {
 
