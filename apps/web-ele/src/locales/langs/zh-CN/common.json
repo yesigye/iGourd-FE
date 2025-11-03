@@ -201,7 +201,10 @@
     "transfer-quantity": "调拨数量",
     "base-quantity": "基础数量",
     "transfer-in-quantity": "入库数量",
-    "transfer-out-quantity": "出库数量"
+    "transfer-out-quantity": "出库数量",
+    "transfer-by-quantity": "按照入库数量",
+    "transfer-by-out-quantity": "按照出库数量",
+    "difference-qty-new": "差值处理"
   },
 
   "drop-fil-here": "拖拽文件到此区域或",

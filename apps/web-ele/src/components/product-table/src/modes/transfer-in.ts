@@ -56,17 +56,15 @@ export const TransferInMode: ModePlugin = {
           required: true,
         },
       },
-
-
       {
         name: 'transfer_quantity',
         type: 'number',
         title: "{{t('common.purchase.transfer-quantity')}}",
-        'x-component': 'ReadonlyNumber',
+        'x-component': 'Input',
         'x-decorator': 'FormItem',
         'x-component-props': {
           style: { width: 140 },
-          precision: 8,
+          disabled:true
         },
         'x-decorator-props': {
           required: true,

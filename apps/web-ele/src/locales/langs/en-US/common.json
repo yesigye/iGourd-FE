@@ -202,7 +202,10 @@
     "transfer-quantity": "Transfer Quantity",
     "base-quantity": "Base Quantity",
     "transfer-out-quantity": "Transfer Out Qty",
-    "transfer-in-quantity": "Transfer In Qty"
+    "transfer-in-quantity": "Transfer In Qty",
+    "transfer-by-quantity": "By transfer-in Qty",
+    "transfer-by-out-quantity": "By transfer-out Qty",
+    "difference-qty-new": "Difference/Processing"
   },
 
   "drop-fil-here": "Drag files here or",

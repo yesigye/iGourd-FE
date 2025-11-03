@@ -1,7 +1,8 @@
+import { disabledTimeListsProps } from 'element-plus/es/components/time-picker/src/props/shared.mjs';
 import type { ModePlugin } from '../types';
 
-export const TransferMode: ModePlugin = {
-  id: 'transfer',
+export const TransferOutMode: ModePlugin = {
+  id: 'transfer-out',
   columns(_ctx) {
     return [
       {
@@ -38,10 +39,10 @@ export const TransferMode: ModePlugin = {
         'x-decorator': 'FormItem',
         'x-component-props': {
           style: { width: 200 },
-          disabled: true,
+          disabled:true
         },
       },
-      {
+       {
         name: 'last_review_confirm',
         title: "{{t('common.purchase.difference-qty-new')}}",
         'x-component': 'Radio.Group',
@@ -49,76 +50,29 @@ export const TransferMode: ModePlugin = {
         enum: [
           {
             label: "{{t('common.purchase.transfer-by-quantity')}}",
-            value: 'IN',
+            value: "IN",
           },
           {
             label: "{{t('common.purchase.transfer-by-out-quantity')}}",
-            value: 'OUT',
+            value: "OUT",
           },
         ],
-        'x-col-reactions': {
-          dependencies: ['form_type'],
-          fulfill: {
-            state: {
-              hidden: "{{ ['OUTBOUND','INBOUND','ADD','EDIT'].indexOf($deps[0])>=0}}",
-            },
-          },
-        },
         'x-component-props': {
-          style: { width: 300 },
+          style: { width: 200 },
         },
       },
-      {
-        name: 'transfer_in_quantity',
-        type: 'number',
-        title: "{{t('common.purchase.transfer-in-quantity')}}",
-        'x-component': 'ProductTable.QuantityCell',
-        'x-decorator': 'FormItem',
-        'x-component-props': {
-          style: { width: 140 },
-        },
-        'x-col-reactions': {
-          dependencies: ['form_type'],
-          fulfill: {
-            state: {
-              hidden: "{{ ['OUTBOUND','ADD','EDIT','APPROVED'].indexOf($deps[0])>=0}}",
-            },
-          },
-        },
-        'x-decorator-props': {
-          // required: true,
-        },
-      },
-      {
-        name: 'transfer_out_quantity',
-        type: 'number',
-        title: "{{t('common.purchase.transfer-out-quantity')}}",
-        'x-component': 'ProductTable.QuantityCell',
-        'x-decorator': 'FormItem',
-        'x-component-props': {
-          style: { width: 140 },
-        },
-        'x-decorator-props': {
-          // required: true,
-        },
-        'x-col-reactions': {
-          dependencies: ['form_type'],
-          fulfill: {
-            state: { 
-              hidden: "{{ ['INBOUND','ADD','EDIT','APPROVED'].indexOf($deps[0])>=0}}",
-            },
-          },
-        },
-      },
+
+     
 
       {
         name: 'transfer_quantity',
         type: 'number',
         title: "{{t('common.purchase.transfer-quantity')}}",
-        'x-component': 'ProductTable.QuantityCell',
+        'x-component': 'ReadonlyNumber',
         'x-decorator': 'FormItem',
         'x-component-props': {
-          style: { width: 140 }
+          style: { width: 140 },
+          precision: 8,
         },
         'x-decorator-props': {
           required: true,
