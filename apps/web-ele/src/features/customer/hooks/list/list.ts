@@ -48,7 +48,7 @@ export function useCustomerList() {
     },
     {
       field: 'balance',
-      title: t('customer.balance'),
+      title: t('customer.customer-balance'),
       minWidth: 160,
       sortable: true,
       align: 'left',
@@ -64,7 +64,7 @@ export function useCustomerList() {
     },
     {
       field: 'debt_amount',
-      title: t('customer.debt'),
+      title: t('customer.balance'),
       minWidth: 200,
       sortable: true,
       align: 'left',

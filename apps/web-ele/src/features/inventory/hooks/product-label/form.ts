@@ -176,7 +176,11 @@ export function useProductLabelForm(func) {
       actions: {
         fetchProducts: inventoryProductProfilePageList,
         fetchSelectedProducts: (params) => {
+          if(!detailData.value.id){
+            return ;
+          }
           params.product_label_id = detailData.value.id;
+          
           return getProductlabelProductPage(params);
         },
         fetchProductsByIds: () => [],
