@@ -5,6 +5,7 @@ import type { VxeGridPropTypes } from '#/adapter/vxe-table';
 import { useI18n } from '@igourd/locales';
 
 import {
+  createCustomerLabelApi,
   deleteCustomerLabelApi,
   getCustomerLabelCustomerPageListApi,
 } from '@@/customer/apis';
@@ -72,6 +73,8 @@ export function useCustomerLabel(id) {
           })
         : [];
     },
+    // 创建客户标签
+    create: createCustomerLabelApi,
 
     // 删除客户标签
     remove: async (data: { label_id_list: number[] }) => {

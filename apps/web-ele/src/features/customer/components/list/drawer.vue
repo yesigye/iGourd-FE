@@ -58,12 +58,13 @@ const createSchema = (dynamicJson) => {
                   name: {
                     type: 'string',
                     title: t('list.customer-name'),
-                    required: true,
+
                     'x-decorator': 'FormItem',
                     'x-component': 'Input',
                     'x-component-props': {
                       placeholder: t('list.customer-name'),
                     },
+                    'x-validator': [{ required: true }],
                   },
                   profile_photo: {
                     type: 'string',
@@ -154,12 +155,13 @@ const createSchema = (dynamicJson) => {
                   contact_name: {
                     type: 'string',
                     title: t('list.contact-name'),
-                    required: true,
+
                     'x-decorator': 'FormItem',
                     'x-component': 'Input',
                     'x-component-props': {
                       placeholder: t('common.enter'),
                     },
+                    'x-validator': [{ required: true }],
                   },
                   currency_code: {
                     type: 'string',
@@ -198,7 +200,6 @@ const createSchema = (dynamicJson) => {
                     title: t('list.contact-telephone'),
                     'x-decorator': 'FormItem',
                     'x-decorator-props': {
-                      asterisk: true,
                       feedbackLayout: 'none',
                     },
                     'x-component': 'Space',
