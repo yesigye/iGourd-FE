@@ -80,5 +80,31 @@
     "transfer-out": "调拨出库",
     "reject-in": "拒绝入库",
     "reject-out": "拒绝出库"
+  },
+  "setting-payment-scene": {
+    "PURCHASE": "采购",
+    "RECHARGE": "充值",
+    "RESTAURANT_SALES": "销售",
+    "RETAIL_SALES": "零售",
+    "WHOLESALE_SALES": "批发"
+  },
+  "setting-coding-rule-part": {
+    "PURCHASE_ORDER": "采购订单",
+    "GOODS_RECEIPT_NOTE": "商品收据",
+    "PURCHASE_ORDER_REFUND": "采购订单退款",
+    "STOCK_TRANSFER": "库存调拨",
+    "PHYSICAL_STOCK_TAKE": "物理库存盘点",
+    "INVENTORY_WRITE_OFF": "库存写-off",
+    "PAYMENT_ORDER": "付款单",
+    "PAYMENT_RETURNED_ORDER": "付款单退款",
+    "RECEIPT_ORDER": "收款单",
+    "RECEIPT_RETURNED_ORDER": "收款单退款",
+    "PREPAYMENT": "预支付",
+    "ACCOUNTING_NOTE": "记账笔记"
+  },
+  "setting-coding-rule-part-name": {
+    "CONSTANT": "固定值",
+    "RECEIPT_TIME": "收款时间",
+    "SERIAL_NO": "流水号"
   }
 }

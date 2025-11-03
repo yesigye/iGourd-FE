@@ -14,7 +14,6 @@ import {
   Page,
   vuedraggable,
 } from '@igourd/common-ui';
-// import { CirclePlus } from '@element-plus/icons-vue';
 import { useI18n } from '@igourd/locales';
 
 import {
@@ -26,7 +25,7 @@ import {
   paymentMethodListUsingPOST,
 } from '@@/setting/apis';
 
-import paymentIcon from '../../../../assets/setting/payment.svg';
+import paymentIcon from '#/assets/setting/payment.svg';
 
 defineOptions({
   name: 'ISettingPayment',
@@ -54,7 +53,6 @@ const payMethodMarkListOption = computed(() => {
   const optionlist = payMethodMarkList.value.filter(
     (item) => !markList.has(item.mark),
   );
-  console.log(optionlist, 'optionlist');
 
   const option = [];
   optionlist.forEach((item) => {
@@ -96,8 +94,8 @@ const sceneDesc = (scene) => {
     if (item.is_enabled) {
       desc +=
         index >= scene.length - 1
-          ? item.payment_scene_type?.label
-          : `${item.payment_scene_type?.label}&`;
+          ? `${t(`enum.setting-payment-scene.${item.payment_scene_type}`)}`
+          : `${t(`enum.setting-payment-scene.${item.payment_scene_type}`)}&`;
     }
   });
   return desc;
@@ -107,7 +105,6 @@ const getPayMenthodMarkList = async () => {
   payMethodMarkList.value = result;
 };
 const handAddPaymentDialogVisible = () => {
-  console.log(payMethodMarkListOption.value, 'payMethodMarkListOption.value');
   if (payMethodMarkListOption.value.length === 0) {
     return false;
   } else {
@@ -156,7 +153,6 @@ const sceneList = ref([
 const selectPaymet = async (item) => {
   selectedPayMethod.value = item;
   payScene.value = [];
-
   // 可用的场景
   const availableScene = payMethodMarkList.value.find(
     (availableItem) =>
@@ -164,13 +160,13 @@ const selectPaymet = async (item) => {
   ).scenes;
   sceneList.value = availableScene.map((itemMap) => {
     return {
-      label: itemMap.label,
-      value: itemMap.value,
+      label: t(`enum.setting-payment-scene.${itemMap}`),
+      value: itemMap,
     };
   });
   item.scenes.forEach((item) => {
     if (item.is_enabled) {
-      payScene.value.push(item.payment_scene_type?.value);
+      payScene.value.push(item.payment_scene_type);
     }
   });
   addSceneDialogVisible.value = true;
@@ -193,14 +189,9 @@ const editPayMenthod = async () => {
     payment_method_operate: operate,
   });
 
-  // if (result) {
   getPayMenthodList();
   addSceneDialogVisible.value = false;
   await getPayMenthodList();
-
-  // } else {
-  //   ElMessage.error(result.message);
-  // }
 };
 const sortPayMethod = async (event) => {
   const result = await merchantPaymentMethodSort({

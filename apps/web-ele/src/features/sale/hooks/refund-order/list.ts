@@ -8,6 +8,7 @@ import { getSaleRefundOrderPageListApi } from '@@/sale/apis';
 import { SaleRefundOrderDrawer } from '@@/sale/components';
 
 import { useCrud } from '#/hooks';
+import { defaultTime } from '#/utils/time';
 
 export function useSaleRefundOrder() {
   const { t } = useI18n();
@@ -98,15 +99,6 @@ export function useSaleRefundOrder() {
     },
   ];
   const searchFormSchema = {
-    keywords: {
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: "{{t('order.order-no')}}",
-        clearable: true,
-      },
-    },
     date_range: {
       type: 'string',
       'x-decorator': 'FormItem',
@@ -118,6 +110,16 @@ export function useSaleRefundOrder() {
         endPlaceholder: '结束日期',
         format: 'YYYY-MM-DD',
         valueFormat: 'YYYY-MM-DD',
+        defaultTime,
+      },
+    },
+    keywords: {
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
+      'x-component-props': {
+        placeholder: "{{t('order.order-no')}}",
+        clearable: true,
       },
     },
   };

@@ -43,7 +43,11 @@ export const quickSwitchTime = (
   }
 };
 // 格式化日期  DD/MM/YYYY
-export const formatDate =(date:string)=>{
-   return date?dayjs(date).format('DD/MM/YYYY'):""
-}
-
+export const formatDate = (date: string) => {
+  return date ? dayjs(date).format('DD/MM/YYYY') : '';
+};
+// 时间选择框默认选择时间
+export const defaultTime = <[Date, Date]>[
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 2, 1, 23, 59, 59),
+];

@@ -30,20 +30,23 @@ function handleClick() {
       </div>
     </div>
     <div class="Ti-li Ti-li__time">
-      <div class="Ti-li-section">
-        <div class="Ti-li-time text-12">{{ itemInfo.customer_name }}</div>
-        <div class="Ti-li-time text-12">{{ itemInfo.create_time }}</div>
-      </div>
-
-      <div class="Ti-li-section">
-        <div class="Ti-li-section text-right">
-          <span class="Ti-li-price text-watermelon">{{
-            itemInfo.total_amount
-          }}</span>
-          <span class="Ti-li-unit">{{ currencySymbol }}</span>
+      <div class="Ti-li-section w-full">
+        <div class="Ti-li-time text-12 flex justify-between">
+          <span>{{ itemInfo.customer_name }}</span>
+          <div class="Ti-li-section text-right">
+            <span class="text-watermelon text-2xl">{{
+              itemInfo.total_amount
+            }}</span>
+            <span class="Ti-li-unit">{{ currencySymbol }}</span>
+          </div>
         </div>
-        <div class="Ti-li-qty text-light-gray text-14 text-right">
-          Qty-{{ itemInfo.quantity }}
+        <div
+          class="Ti-li-time text-12 flex w-full justify-between text-[#999999]"
+        >
+          <span>{{ itemInfo.create_time }}</span>
+          <div class="Ti-li-qty text-light-gray text-14 text-right">
+            Qty-{{ itemInfo.quantity }}
+          </div>
         </div>
       </div>
     </div>

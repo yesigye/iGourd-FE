@@ -1,16 +1,15 @@
 import { useIgourdDrawer } from '@igourd/common-ui';
 import { useI18n } from '@igourd/locales';
 
-import { TakeDetail } from '@@/sale/components/scan';
+import { SelectProductsDrawer } from '@@/sale/components/scan';
 
-export function useTakeDetail() {
+export function useSelectProduct() {
   const { t } = useI18n();
   const [Drawer, drawerApi] = useIgourdDrawer({
-    connectedComponent: TakeDetail,
-    destroyOnClose: true,
+    connectedComponent: SelectProductsDrawer,
     appendToMain: true,
-    class: 'w-full',
-    title: t('scan.take'),
+    class: 'w-2/3',
+    title: t('scan.select-product'),
     footer: false,
   });
   return {

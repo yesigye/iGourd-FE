@@ -1,0 +1,12 @@
+{
+  "receipt-type": "Receipt Type",
+  "coding-rules": "Coding Rules",
+  "paragraph-break": "Paragraph Break",
+  "code-section": "Code Section",
+  "status": "Status",
+  "operation": "Action",
+  "category-tree": "Gategory Tree",
+  "purchase": "Purchase",
+  "stock": "Stock",
+  "finance": "Finance"
+}
