@@ -31,7 +31,7 @@ export function useCustomerlabelForm() {
           name: {
             type: 'string',
             title: t('list.customer-label'),
-            required: true,
+            // required: true,
             'x-decorator': 'FormItem',
             'x-component': 'Input',
             'x-component-props': {
@@ -53,7 +53,7 @@ export function useCustomerlabelForm() {
           customer_id_list: {
             type: 'array',
             title: t('list.customer'),
-            required: true,
+            // required: true,
             'x-decorator': 'FormItem',
             'x-component': 'TransferTable',
             'x-component-props': {
