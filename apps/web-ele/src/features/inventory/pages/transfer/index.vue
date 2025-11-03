@@ -200,28 +200,24 @@ const filterOpt = (keys) => {
 const getLabel = (row) => {
   return getEnumLabel(transferStatus, row.overall_status);
 };
-
-//获取操作状态
-const getOperateStatus = computed(() => (row) => {
-  let status = '';
-
-  switch (row.transfer_type) {
-    case 'TRANSFER_OUT_ONLY':
-      status = row['status'];
-      break;
-    case 'TRANSFER_IN_ONLY':
-      status = row['destination_status'];
-      break;
-    case 'TRANSFER_SAME_STORE':
-      status = row['destination_status'];
-
-      break;
-    case 'TRANSFER_DIFFERENT_STORE':
-      status = row['destination_status'];
-      break;
+// 获取文字样式
+const getStyle = (row) => {
+  let cls = '';
+  if (
+    ['APPROVED_OUTBOUND', 'APPROVED_INBOUND',''].indexOf(row.overall_status) >= 0
+  ) {
+    cls = 'review-approved';
+  } else if (
+    ['REJECTED_OUTBOUND', 'REFUSED_INBOUND'].indexOf(row.overall_status) >= 0
+  ) {
+    cls = 'review-rejected';
+  } else {
+    cls = 'review-pending';
   }
-  return status;
-});
+
+  return cls;
+};
+
 //获取状态选项
 const getStatusOptions = computed(() => (row) => {
   // 创建成功	调拨出库	审核通过	审核拒绝	调拨入库	审核通过	审核拒绝
@@ -270,64 +266,9 @@ const handleStatusChange = async (row, value) => {
   };
   drawerApi.setData(params).open();
 };
-//获取审核状态
-const getReviewStatus = computed(() => (row) => {
-  if (row.transfer_type === 'TRANSFER_OUT_ONLY') {
-    return row['review_status'];
-  }
-  if (row.transfer_type === 'TRANSFER_IN_ONLY') {
-    return row['destination_review_status'];
-  }
-  if (row.transfer_type === 'TRANSFER_DIFFERENT_STORE') {
-    if (row.source_merchant_id === currentLoginUserApp.owner_id)
-      return row['review_status'];
-    if (row.destination_merchant_id === currentLoginUserApp.owner_id)
-      return row['destination_review_status'];
-  }
-  if (row.transfer_type === 'TRANSFER_SAME_STORE') {
-    if (row.status !== 'OUTBOUND') {
-      return row['review_status'];
-    }
-    return row['destination_review_status'];
-  }
-});
 
-const checkOperate = (row) => {
-  let flag = true;
-  //调拨类型
-  switch (row.transfer_type) {
-    case 'TRANSFER_OUT_ONLY':
-      if (row.status === 'OUTBOUND' || row.status === 'REFUSED_OUTBOUND') {
-        flag = false;
-      }
-      break;
-    case 'TRANSFER_IN_ONLY':
-      if (
-        row.destination_status === 'INBOUND' ||
-        row.destination_status === 'REFUSED_INBOUND'
-      ) {
-        flag = false;
-      }
-      break;
-    case 'TRANSFER_SAME_STORE':
-      if (row.destination_status === 'INBOUND') {
-        flag = false;
-      }
-
-      break;
-    case 'TRANSFER_DIFFERENT_STORE':
-      if (row.destination_status === 'INBOUND') {
-        flag = false;
-      }
-
-      break;
-  }
-  return flag;
-};
 // 判断审核操作
 const checkReviewOperate = (row: any) => {
-  if (row.id == '1985243151210721281') {
-  }
   let flag = false;
   //调拨类型
   switch (row.transfer_type) {
@@ -364,7 +305,6 @@ const checkReviewOperate = (row: any) => {
 };
 // 获取审核文字
 const getReviewLabel = (row: any) => {
-  console.log('getReviewLabel');
   if (
     row.overall_status == 'APPROVED_OUTBOUND' ||
     row.overall_status == 'APPROVED_INBOUND'
@@ -426,7 +366,7 @@ const getReviewLabel = (row: any) => {
             </ElDropdownMenu>
           </template>
         </ElDropdown>
-        <span v-else class="review-approved"> {{ getLabel(row) }}</span>
+        <span v-else :class="getStyle(row)"> {{ getLabel(row) }}</span>
       </template>
       <template #review_status="{ row }">
         <ElDropdown v-if="checkReviewOperate(row)">
@@ -439,14 +379,14 @@ const getReviewLabel = (row: any) => {
           <template #dropdown>
             <ElDropdownMenu>
               <template v-for="item in operationOpt" :key="item?.value">
-                <ElDropdownItem @click="() => openModal(row, item)">
+                <ElDropdownItem @click="() => openModal(row, item)" :disabled="item.value=='PENDING'">
                   <div>{{ item.label }}</div>
                 </ElDropdownItem>
               </template>
             </ElDropdownMenu>
           </template>
         </ElDropdown>
-        <span v-else> {{ getReviewLabel(row) }}</span>
+        <span v-else :class="getStyle(row)"> {{ getReviewLabel(row) }}</span>
       </template>
     </Grid>
 

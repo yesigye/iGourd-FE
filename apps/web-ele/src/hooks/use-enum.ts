@@ -67,7 +67,7 @@ export function useEnum() {
     },
      {
      value: 'APPROVED_OUTBOUND',
-     label: '审核通过',
+     label: t('common.review-status.APPROVED'),
     },
     {
       value: 'REFUSED_OUTBOUND',
@@ -79,7 +79,7 @@ export function useEnum() {
     },
     {
      value: 'APPROVED_INBOUND',
-     label: '审核通过2',
+     label: t('common.review-status.APPROVED'),
     },    
     {
       value: 'REFUSED_INBOUND',

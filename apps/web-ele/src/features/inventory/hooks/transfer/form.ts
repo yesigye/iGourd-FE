@@ -69,6 +69,13 @@ export function useTransferForm() {
           'hide-required-asterisk': true,
         },
         properties: {
+          form_type:{
+            name: 'form_type',
+            type: 'string',
+            title: 'form_type',
+            'x-component': 'Input',
+            'x-hidden': true,
+          },
           card0: {
             type: 'void',
             'x-component': 'Card',
@@ -496,6 +503,7 @@ export function useTransferForm() {
 
   const handleStockModify = (formData) => {
     const data = drawerApi.getData();
+    debugger
 
     if (data.value === 'INBOUND') {
       const paramsList: any = [];
@@ -625,25 +633,22 @@ export function useTransferForm() {
         if (isOpen) {
           formAPI.reset();
           const data = drawerApi.getData();
-          debugger
+          console.log(data.value);
           // 编辑
           if (data.id) {
             const detail = await getTransferDetail({
               stock_transfer_id: data.id,
             });
-            debugger
             detail.stock_transfer_item_list =
               detail.stock_transfer_item_model_list;
-              detail.stock_transfer_item_list.forEach(item=>{
-                item.form_type = "OUTBOUND"
-              })
-             
+            
+            detail.form_type = data.value
             formAPI.setValues(detail);
           } else {
             const orderNo = await generateNo();
             formAPI.setValues({
               stock_transfer_no: orderNo,
-              stock_transfer_item_list: [{form_type:"OUTBOUND"}],
+              stock_transfer_item_list: [],
             });
             // formAPI.setFieldState('stock_transfer_item_list.*.transfer_out_quantity', (f) => {
 

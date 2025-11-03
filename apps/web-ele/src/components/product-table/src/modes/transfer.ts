@@ -5,13 +5,7 @@ export const TransferMode: ModePlugin = {
   id: 'transfer',
   columns(_ctx) {
     return [
-      {
-        name: 'form_type',
-        type: 'string',
-        title: 'form_type',
-        'x-component': 'Input',
-        //'x-hidden': true,
-      },
+      
       {
         name: 'major_name',
         type: 'string',
@@ -59,14 +53,14 @@ export const TransferMode: ModePlugin = {
           style: { width: 140 },
           precision: 8,
         },
-        // 'x-col-reactions': {
-        //   dependencies: ['.form_type'],
-        //   fulfill: {
-        //     state: {
-        //       'hidden': "{{ $deps[0]=='INBOUND'}}",
-        //     },
-        //   },
-        // },
+        'x-col-reactions': {
+          dependencies: ['form_type'],
+          fulfill: {
+            state: {
+              'hidden': "{{ $deps[0] == 'OUTBOUND'}}",
+            },
+          },
+        },
         'x-decorator-props': {
           // required: true,
         },
@@ -85,11 +79,10 @@ export const TransferMode: ModePlugin = {
           // required: true,
         },
         'x-col-reactions': {
-          dependencies: ['.form_type'],
+          dependencies: ['form_type'],
           fulfill: {
             state: {
-              // value:"{{ $deps[0]}}",
-              // 'hidden':"{{ $deps[0] ==='OUTBOUND'}}",
+              'hidden': "{{ $deps[0] == 'INBOUND'}}",
             },
           },
         },
