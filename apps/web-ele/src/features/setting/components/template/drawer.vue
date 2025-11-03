@@ -41,6 +41,7 @@ import {
 import { getPrintTemplateOptionList } from '@@/setting/apis';
 
 import { PageTitle } from '#/components';
+import RichTextEditor from '#/components/RichTextEditor/RichTextEditor.vue';
 import {
   generateTableItemJson,
   getDividerJsonTemplate,
@@ -527,13 +528,7 @@ const fetchTemplateColumnList = async () => {
 };
 
 const handleCheckChange = (node: TreeNode) => {
-  console.log(node, 'node');
-  console.log(
-    !node.isPenultimate && !isAddNewTemplate.value,
-    '!node.isPenultimate && !isAddNewTemplate.value',
-  );
   if (!node.isPenultimate && !isAddNewTemplate.value) {
-    console.log(node, 'node');
     treeSelectChange(printData, node, tableDefault.value);
   }
 };
@@ -662,6 +657,40 @@ const handDelDivider = () => {
     style: {},
   };
 };
+const handRichText = () => {
+  printData.value = printData.value.filter(
+    (item) => item.id !== printForm.value.id,
+  );
+  printForm.value = {
+    option: {},
+    style: {},
+  };
+};
+const handleCheckOther = (node: TreeNode) => {
+  // if (node.component_type === 'PrintDivider') {
+  // 可以无限添加
+  if (node.id !== 'type-other') {
+    const nodeElement = printData.value.filter(
+      (item) => item.component_type === node.component_type,
+    );
+    if (nodeElement.length < node.limit_quantity) {
+      node.id = Date.now();
+      node.option = {
+        value: t('template.please-start-your-imagination'),
+      };
+      printData.value.push({ ...node, style: StyleInt('PrintDivider') });
+    } else {
+      ElMessage({
+        message: t('template.max-add-quantity', {
+          quantity: node.limit_quantity,
+        }),
+        type: 'warning',
+      });
+    }
+  }
+
+  // }
+};
 </script>
 
 <template>
@@ -709,7 +738,8 @@ const handDelDivider = () => {
               <template #default="{ node }">
                 <div class="custom-tree-node">
                   <span v-if="node.data.id === 'type-other'">
-                    {{ t(`template.${node.data.name}`) }}</span>
+                    {{ t(`template.${node.data.name}`) }}</span
+                  >
                   <span v-else>{{ node.data.name }}</span>
                 </div>
               </template>
@@ -754,7 +784,8 @@ const handDelDivider = () => {
                       </div>
                       <div v-else>
                         <span class="text-gray-neutral">
-                          {{ t('template.empty') }}</span>
+                          {{ t('template.empty') }}</span
+                        >
                       </div>
                     </div>
                   </template>
@@ -801,9 +832,7 @@ const handDelDivider = () => {
                           />
                         </div>
                         <div v-else>
-                          <span class="text-textColor-tertiary"
-                            >组件未定义</span
-                          >
+                          <span class="text-textColor-tertiary">组件未定义</span>
                         </div>
                       </div>
                     </template>
