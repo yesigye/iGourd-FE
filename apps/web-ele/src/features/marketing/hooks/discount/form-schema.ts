@@ -1,11 +1,14 @@
 import type { ISchema } from '@igourd/common-ui';
 
+import { useI18n } from '@igourd/locales';
+
 // form-schema.ts（不使用 FormGrid，仅 FormLayout）
 import { productGroupSelect } from '#/components/product-group';
 import { productLabelSelect } from '#/components/product-label';
 import { productSelect } from '#/components/product-select';
 
 export function useDiscountSchema(toggleShowMore: () => void) {
+  const { t } = useI18n();
   const schema: ISchema = {
     type: 'object',
     properties: {
@@ -27,6 +30,22 @@ export function useDiscountSchema(toggleShowMore: () => void) {
               header: '{{t("discount.form.basic-info")}}',
             },
             properties: {
+              // added status form element
+              status: {
+                type: 'string',
+                title: "{{t('discount.form.status')}}",
+                default: 1,
+                'x-decorator': 'FormItem',
+                'x-decorator-props': {
+                  wrapperWidth: 300,
+                },
+                'x-component': 'Switch',
+                'x-component-props': {
+                  'active-value': 'active',
+                  'inactive-value': 'inactive',
+                },
+              },
+
               type: {
                 type: 'string',
                 title: "{{t('discount.form.type')}}",
@@ -161,7 +180,8 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                 'x-validator': [
                   {
                     required: true,
-                    message: "{{t('discount.validate.reduce-amount.required')}}",
+                    message:
+                      "{{t('discount.validate.reduce-amount.required')}}",
                     triggerType: 'onBlur',
                   },
                   {
@@ -306,6 +326,35 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                     message:
                       "{{t('discount.validate.effective-time.required')}}",
                   },
+                  {
+                    validator: (
+                      value: string,
+                      _rule: never,
+                      field: { form: { getValuesIn: (arg0: string) => any } },
+                    ) => {
+                      if (!value) {
+                        return '';
+                      }
+                      // effective time cannot be earlier than current date
+                      const effectiveTime = new Date(value);
+                      const now = new Date();
+                      now.setHours(0, 0, 0, 0);
+                      if (effectiveTime < now) {
+                        return t('discount.validate.effective-time.gte-today');
+                      }
+                      // effective time cannot be later than expiration time
+                      const expirationTimeValue =
+                        field.form.getValuesIn('expiration_time');
+                      if (expirationTimeValue) {
+                        const expirationTime = new Date(expirationTimeValue);
+                        if (effectiveTime > expirationTime) {
+                          return t(
+                            'discount.validate.effective-time.gte-expiration',
+                          );
+                        }
+                      }
+                    },
+                  },
                 ],
               },
 
@@ -328,10 +377,35 @@ export function useDiscountSchema(toggleShowMore: () => void) {
                     message:
                       "{{t('discount.validate.expiration-time.required')}}",
                   },
-                  // {
-                  //   validator:
-                  //     "{{$self.value && $form.values.effective_time && new Date($self.value) < new Date($form.values.effective_time) ? t('discount.validate.expiration-time.gte-effective') : ''}}",
-                  // },
+                  {
+                    validator: (
+                      value: string,
+                      _rule: never,
+                      field: { form: { getValuesIn: (arg0: string) => any } },
+                    ) => {
+                      if (!value) {
+                        return '';
+                      }
+                      // expiration time cannot be earlier than effective time
+                      const expirationTime = new Date(value);
+                      const effectiveTimeValue =
+                        field.form.getValuesIn('effective_time');
+                      if (effectiveTimeValue) {
+                        const effectiveTime = new Date(effectiveTimeValue);
+                        if (expirationTime < effectiveTime) {
+                          return t(
+                            'discount.validate.expiration-time.gte-effective',
+                          );
+                        }
+                      }
+                      // expiration time cannot be earlier than current date
+                      const now = new Date();
+                      now.setHours(0, 0, 0, 0);
+                      if (expirationTime < now) {
+                        return t('discount.validate.expiration-time.gte-today');
+                      }
+                    },
+                  },
                 ],
               },
               schedule_panel: {

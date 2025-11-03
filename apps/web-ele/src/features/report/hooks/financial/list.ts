@@ -36,17 +36,7 @@ export function useFinancialReport() {
       align: 'center',
       slots: { default: 'expendityre_amount' },
     },
-    {
-      field: 'financial_category_name',
-      title: t('common.creator'),
-      align: 'center',
-      cellRender: {
-        name: 'ElText',
-        props: {
-          formatter: '{{row.profit ? `¥${row.profit.toFixed(2)}` : "-"}}',
-        },
-      },
-    },
+   
     {
       field: 'time_period',
       title: t('financial.time-period'),

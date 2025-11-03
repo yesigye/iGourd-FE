@@ -84,20 +84,21 @@ const formSchema: ISchema = {
               },
               properties: {
                 initial_points: {
-                  type: 'string',
+                  type: 'number',
                   title: '',
                   required: true,
                   'x-decorator': 'FormItem',
                   'x-component': 'InputNumber',
-                  'x-validator':[
+                  'x-validator': [
+                    { required: true },
+                    { type: 'number' },
+                    { minimum: 0 },
                   ],
                   'x-component-props': {
-                    placeholder:
-                      "{{t('integral.initialearnedintegral-placeholder')}}",
+                    placeholder: "{{t('integral.initialearnedintegral-placeholder')}}",
                     clearable: true,
-                    style: {
-                      width: '120px',
-                    },
+                    min: 0,
+                    style: { width: '120px' },
                   },
                 },
                 checkbox: {
@@ -119,11 +120,16 @@ const formSchema: ISchema = {
               },
               properties: {
                 exchange_rate: {
-                  type: 'string',
+                  type: 'number',
                   title: '',
                   required: true,
+                  'x-validator': [
+                    { required: true },
+                    { type: 'number' },
+                    { minimum: 0 },
+                  ],
                   'x-decorator': 'FormItem',
-                  'x-component': 'Input',
+                  'x-component': 'InputNumber',
                   'x-decorator-props': {
                     // addonAfter: '',
                     style: {
@@ -133,6 +139,8 @@ const formSchema: ISchema = {
                   'x-component-props': {
                     placeholder: "{{t('integral.amount-placeholder')}}",
                     clearable: true,
+                    min: 0,
+                    style: { width: '120px' },
                   },
                 },
                 checkbox: {
