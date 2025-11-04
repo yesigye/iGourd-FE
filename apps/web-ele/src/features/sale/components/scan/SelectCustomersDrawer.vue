@@ -147,66 +147,6 @@ const [Drawer, drawerApi] = useIgourdDrawer({
             </div>
           </ElButton>
         </div>
-        <!-- <ElTable
-            :data="customerList || []"
-            class="down-table-list"
-            :lazy="true"
-            row-class-name="cursor-pointer"
-            border
-            stripe
-            highlight-current-row
-            @row-click="handleRowClick"
-          >
-            <ElTableColumn
-              prop="profilePhoto"
-              width="80"
-              fixed="left"
-              align="center"
-            >
-              <template #default="scope">
-                <div class="profile-photo-box">
-                  <ElImage
-                    :src="scope.row.profile_photo"
-                    alt=""
-                    class="product-pic"
-                    :preview-src-list="[scope.row.profile_photo]"
-                    :initial-index="0"
-                    :preview-teleported="true"
-                  >
-                    <template #error>
-                      <img :src="defaultUser" alt="" class="product-pic" />
-                    </template>
-                  </ElImage>
-                </div>
-              </template>
-            </ElTableColumn>
-            <ElTableColumn prop="name">
-              <template #default="{ row }">
-                <div class="name-box">
-                  <span class="name">{{ row.name ? row.name : '-' }}</span>
-                  <span class="phone">{{
-                    row.phone_number ? row.phone_number : '-'
-                  }}</span>
-                </div>
-              </template>
-            </ElTableColumn>
-            <ElTableColumn
-              prop="balance"
-              fixed="right"
-              width="150"
-              align="center"
-            >
-              <template #default="{ row }">
-                <span
-                  ><i
-                    class="iconfont icon-31jifen"
-                    style="margin-right: 5px"
-                  ></i
-                  >{{ row.balance }}</span
-                >
-              </template>
-            </ElTableColumn>
-          </ElTable> -->
         <section class="bg-card flex-grow">
           <customerGrid>
             <template #action="{ row }">

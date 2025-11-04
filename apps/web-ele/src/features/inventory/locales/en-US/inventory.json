@@ -264,5 +264,7 @@
   "unit-conversion": "Main Unit",
   "sku-list": "SKU List",
   "monthly-sales": "Monthly Sales",
-  "initial-stock": "Initial Stock"
+  "initial-stock": "Initial Stock",
+  "open-units-prompt": "Enable multi units to add multiple units for different purchase and sales scenarios.",
+  "open-spec-prompt": "Enable multi specifications to add multiple specifications for different purchase and sales scenarios."
 }

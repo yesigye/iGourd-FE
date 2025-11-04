@@ -1129,7 +1129,7 @@ defineExpose({
         <ElTooltip
           class="box-item"
           effect="customized"
-          :content="$t(`inventory.openUnitsPrompt`)"
+          :content="$t(`inventory.open-units-prompt`)"
           placement="top"
           :show-after="600"
           :enterable="false"

@@ -264,5 +264,7 @@
   "unit-conversion": "Unité Principale",
   "sku-list": "Liste SKU",
   "monthly-sales": "Ventes Mensuelles",
-  "initial-stock": "Stock Initial"
+  "initial-stock": "Stock Initial",
+  "open-units-prompt": "Activer multi unités permet d'ajouter plusieurs unités pour différents scénarios achat et vente.",
+  "open-spec-prompt": "Activer multi spécifications permet d'ajouter plusieurs spécifications pour différents scénarios achat et vente."
 }

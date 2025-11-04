@@ -10,8 +10,8 @@ import { useI18n } from '@igourd/locales';
 
 import {
   createProductLabel,
-  productUnbindApi,
   getProductlabelProductPage,
+  productUnbindApi,
   updateProductLabel,
 } from '@@/inventory/apis';
 
@@ -94,7 +94,7 @@ export function useInventoryProductLabelList() {
 
   const uCrud = useCrud<ProductLabelItem, ProductLabelParams>({
     columns,
-    id:"inventory-product-group-list2",
+    id: 'inventory-product-group-list2',
     searchFormSchema,
     searchFormAppendTo: '#product-label-search',
     batchOperate: true,
@@ -118,9 +118,9 @@ export function useInventoryProductLabelList() {
         productUnbindApi({
           product_label_id: queryParam,
           product_profile_ids: params,
-        }).then(()=>{
+        }).then(() => {
           uCrud.gridApi.reload();
-        })
+        });
       },
       create: createProductLabel,
       update: updateProductLabel,

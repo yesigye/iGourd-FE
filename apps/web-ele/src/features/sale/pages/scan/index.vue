@@ -875,7 +875,9 @@ const handCloseAndUnfold = () => {
                     v-if="Object.keys(customerInfo).length > 0"
                   >
                     <div class="flex items-center justify-between">
-                      <span class="text-gray-mid">{{ t('scan.contact-telephone') }}:</span>
+                      <span class="text-gray-mid"
+                        >{{ t('scan.contact-telephone') }}:</span
+                      >
                       <span class="customer-name text-gray-dark">{{
                         customerInfo.phone_number || '-'
                       }}</span>
@@ -982,7 +984,9 @@ const handCloseAndUnfold = () => {
               <div class="flex items-center justify-between gap-2">
                 <div class="scan-action-box-settle-info bg-card">
                   <div class="mb-1 flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray">{{ t('scan.total-amount') }}:</span>
+                    <span class="settle-info-lable text-light-gray"
+                      >{{ t('scan.total-amount') }}:</span
+                    >
                     <span class="settle-info-val text-gray-dark">
                       {{ currentSymbol }}
                       {{
@@ -991,24 +995,31 @@ const handCloseAndUnfold = () => {
                               calculateOrderList.subtotal_amount,
                             )
                           : '--'
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                   <div class="mb-1 flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray">{{ t('scan.tax') }}:</span>
+                    <span class="settle-info-lable text-light-gray"
+                      >{{ t('scan.tax') }}:</span
+                    >
                     <span class="settle-info-val text-gray-dark">
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.vat_amount >= 0
                           ? thousandSeparator(calculateOrderList.vat_amount)
                           : '--'
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="settle-info-lable text-light-gray">{{ t('scan.discount') }}:</span>
+                    <span class="settle-info-lable text-light-gray"
+                      >{{ t('scan.discount') }}:</span
+                    >
                     <p class="settle-info-val text-gray-dark">
                       <span
                         v-if="calculateOrderList.promotion_discount_amount >= 0"
-                        >-</span>
+                        >-</span
+                      >
                       {{ currentSymbol
                       }}{{
                         calculateOrderList.promotion_discount_amount >= 0
@@ -1058,6 +1069,7 @@ const handCloseAndUnfold = () => {
       </div>
       <!-- 弹窗部分 -->
       <SelectCustomer
+        key="sale-select-customer"
         @close-tkr="confirmClose"
         @select-customer-row:row="handleSelectCustomerRow"
       />

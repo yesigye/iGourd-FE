@@ -264,5 +264,7 @@
   "unit-conversion": "主单位",
   "sku-list": "SKU列表",
   "monthly-sales": "月销售量",
-  "initial-stock": "初始库存"
+  "initial-stock": "初始库存",
+  "open-units-prompt": "开启多单位后，可在单位配置中添加多个单位，用于不同的采购和销售场景。",
+  "open-spec-prompt": "开启多规格后，可在规格配置中添加多个规格，用于不同的采购和销售场景。"
 }

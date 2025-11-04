@@ -2262,7 +2262,7 @@ defineExpose({
         <ElTooltip
           class="box-item"
           effect="customized"
-          :content="$t(`inventory.openSpecPrompt`)"
+          :content="$t(`inventory.open-spec-prompt`)"
           placement="top"
           :show-after="600"
           :enterable="false"
@@ -2366,7 +2366,7 @@ defineExpose({
               >
                 {{
                   bundleGenerated
-                    ? $t('inventory.regenerate_bundle')
+                    ? $t('inventory.regenerate-bundle')
                     : $t('inventory.generate-bundle')
                 }}
               </ElButton>
