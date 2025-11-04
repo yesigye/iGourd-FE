@@ -23,8 +23,8 @@ import { ReturnMode } from '../modes/return';
 import { SpoilageMode } from '../modes/spoilage';
 // import { StockMode } from '../modes/stock';
 import { TransferMode } from '../modes/transfer';
-import { TransferInMode } from '../modes/transfer-in';
-import { TransferOutMode } from '../modes/transfer-out';
+
+import { TransferDisabledMode } from '../modes/transfer-disabled';
 import { ProductCell, QuantityCell, UnitCell } from './components';
 import SkuSelect from './components/sku-select.vue';
 import { buildSchema } from './schema-builder';
@@ -36,8 +36,8 @@ registerMode(PhysicalMode);
 registerMode(SpoilageMode);
 registerMode(ReturnMode);
 registerMode(InventoryMode);
-registerMode(TransferInMode);
-registerMode(TransferOutMode);
+registerMode(TransferDisabledMode);
+
 
 export const InnerProductTable = defineComponent({
   name: 'ProductTable',
