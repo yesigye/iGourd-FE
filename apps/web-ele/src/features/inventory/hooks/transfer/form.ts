@@ -13,6 +13,7 @@ import {
   stockTransferOutboundModify,
   stockTransferStorageModify,
   updateTransferStatus,
+  reviewTransferStatus,
 } from '@@/inventory/apis';
 
 import { orderNoGenerate } from '#/api/common';
@@ -69,6 +70,13 @@ export function useTransferForm() {
           'hide-required-asterisk': true,
         },
         properties: {
+          form_type: {
+            name: 'form_type',
+            type: 'string',
+            title: 'form_type',
+            'x-component': 'Input',
+            'x-hidden': true,
+          },
           card0: {
             type: 'void',
             'x-component': 'Card',
@@ -146,7 +154,6 @@ export function useTransferForm() {
                       clearable: true,
                     },
                     enum: transferTypeList,
-                    
                   },
                   row_0: {
                     type: 'void', // 表示空字段
@@ -263,6 +270,52 @@ export function useTransferForm() {
                     'x-component': 'ProductTable',
                     'x-component-props': {
                       mode: 'transfer',
+                      capabilities: [
+                        'barcode',
+                        'unit',
+                        'vat',
+                        'discount',
+                        'stock',
+                        'image',
+                        'remark',
+                      ],
+                      vatMode: 'VAT_EXCLUSIVE',
+                      // 业务标记（用于单位禁用逻辑兼容旧条件）
+                      isReceiptMode: false,
+                      purchaseOrderSelected: false,
+                      // 可选：展示/校验库存
+                      searchProducts: (keywords: string) => {
+                        return wareHouseProductSearch({
+                          keywords,
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          // @ts-ignore
+                          warehouse_id: '',
+                          // business_type: 'purchase',
+                          page_num: 1,
+                          page_size: 20,
+                        }).then(({ list }) => {
+                          return list.map((item: any) => {
+                            return {
+                              ...item,
+                              value: item.id,
+                              label: [
+                                item.major_name,
+                                item.product_spec_kvmessage,
+                              ]
+                                .filter(Boolean)
+                                .join('-'),
+                            };
+                          });
+                        });
+                      },
+                    },
+                  },
+                  stock_transfer_item_list_disabled: {
+                    type: 'array',
+                    'x-component': 'ProductTable',
+                    'x-component-props': {
+                      mode: 'transfer',
+                      canOperate: false,
                       capabilities: [
                         'barcode',
                         'unit',
@@ -494,9 +547,8 @@ export function useTransferForm() {
     updateTransferStatus(params);
   };
 
-  const handleStockModify = (formData) => {
+  const handleStockModify = async (formData: any) => {
     const data = drawerApi.getData();
-
     if (data.value === 'INBOUND') {
       const paramsList: any = [];
       formData.stock_transfer_item_list.forEach((item) => {
@@ -505,13 +557,14 @@ export function useTransferForm() {
           transfer_in_quantity: item.transfer_in_quantity,
         });
       });
-      stockTransferStorageModify(paramsList).then(() => {
+      stockTransferStorageModify(paramsList).then(async () => {
         const statusParams = {
           id: formData.id,
           destination_status: 'INBOUND',
           handler_type: 'DESTINATION_STATUS',
         };
-        handleUpdateTransferStatus(statusParams);
+        await handleUpdateTransferStatus(statusParams);
+        gridApi.reload();
       });
     } else if (data.value === 'OUTBOUND') {
       const paramsList: any = [];
@@ -521,14 +574,34 @@ export function useTransferForm() {
           transfer_out_quantity: item.transfer_out_quantity,
         });
       });
-      stockTransferOutboundModify(paramsList).then(() => {
+      stockTransferOutboundModify(paramsList).then(async () => {
         const statusParams = {
           id: formData.id,
           status: 'OUTBOUND',
           handler_type: 'SOURCE_STATUS',
         };
-        handleUpdateTransferStatus(statusParams);
+        await handleUpdateTransferStatus(statusParams);
+        gridApi.reload();
       });
+    } else if (data.value === 'APPROVED') {
+      const param = {
+        handler_type: 'DESTINATION_REVIEW',
+        id: formData.id,
+        merchant_id: currentLoginUserApp.owner_id,
+        destination_review_status: 'APPROVED',
+        review_opinion: '',
+        stock_transfer_review_item: [], //last_review_confirm
+      };
+      param.stock_transfer_review_item = formData.stock_transfer_item_list.map(
+        (item: any) => {
+          return {
+            id: item.id,
+            last_review_confirm: item.last_review_confirm,
+          };
+        },
+      );
+      await reviewTransferStatus(param);
+      gridApi.reload();
     }
   };
   // 表单提交处理
@@ -536,7 +609,9 @@ export function useTransferForm() {
     try {
       let response = null;
       const drawerParams = drawerApi.getData();
-      if (drawerParams.value) {
+      if (
+        ['OUTBOUND', 'INBOUND', 'APPROVED'].indexOf(drawerParams.value) >= 0
+      ) {
         handleStockModify(formData);
         return;
       }
@@ -614,44 +689,94 @@ export function useTransferForm() {
       return t('transfer.add-transfer');
     }
   });
+  // 设置只读表单
+  const setRead = () => {
+    formAPI.setFieldState('transfer_type', (f) => {
+      f.disabled = true;
+    });
+
+    formAPI.setFieldState('source_merchant_id', (f) => {
+      f.disabled = true;
+    });
+    formAPI.setFieldState('source_warehouse_id', (f) => {
+      f.disabled = true;
+    });
+
+    formAPI.setFieldState('destination_merchant_id', (f) => {
+      f.disabled = true;
+    });
+    formAPI.setFieldState('destination_warehouse_id', (f) => {
+      f.disabled = true;
+    });
+    formAPI.setFieldState('remark', (f) => {
+      f.disabled = true;
+    });
+    formAPI.setFieldState('attachment_url', (f) => {
+      f.disabled = true;
+    });
+  };
 
   const { Form, formAPI, Drawer, drawerApi } = useDrawerForm({
     drawerOptions: {
       title: title,
       appendToMain: true,
-      class: 'w-2/3',
+      class: 'w-4/5',
       contentClass: 'bg-muted',
       async onOpenChange(isOpen) {
         if (isOpen) {
           formAPI.reset();
           const data = drawerApi.getData();
-          debugger
+          console.log(data.value);
           // 编辑
           if (data.id) {
             const detail = await getTransferDetail({
               stock_transfer_id: data.id,
             });
-            debugger
-            detail.stock_transfer_item_list =
-              detail.stock_transfer_item_model_list;
-              detail.stock_transfer_item_list.forEach(item=>{
-                item.form_type = "OUTBOUND"
-              })
-             
+
+            if (['OUTBOUND', 'INBOUND', 'APPROVED'].indexOf(data.value >= 0)) {
+              detail.stock_transfer_item_list_disabled =
+                detail.stock_transfer_item_model_list;
+              formAPI.setFieldState('stock_transfer_item_list', (f) => {
+                f.hidden = true;
+              });
+              setRead();
+              if (data.value === 'APPROVED') {
+                detail.stock_transfer_item_list_disabled.forEach(
+                  (item: any) => {
+                    item.last_review_confirm = 'IN';
+                    // 计算差值   数量差值列 实际出库数量-实际入库数量的绝对值
+                    item.difference_qty =
+                      Math.abs(
+                        stayFloatSub(
+                          item.transfer_out_quantity,
+                          item.transfer_in_quantity,
+                        ),
+                      ) + '';
+                  },
+                );
+              }
+            } else {
+              detail.stock_transfer_item_list =
+                detail.stock_transfer_item_model_list;
+              formAPI.setFieldState(
+                'stock_transfer_item_list_disabled',
+                (f) => {
+                  f.hidden = true;
+                },
+              );
+            }
+            detail.form_type = data.value || 'EDIT';
             formAPI.setValues(detail);
           } else {
             const orderNo = await generateNo();
-            formAPI.setValues({
-              stock_transfer_no: orderNo,
-              stock_transfer_item_list: [{form_type:"OUTBOUND"}],
+            formAPI.setFieldState('stock_transfer_item_list_disabled', (f) => {
+              f.hidden = true;
             });
-            // formAPI.setFieldState('stock_transfer_item_list.*.transfer_out_quantity', (f) => {
-
-            //   f.visible = false;
-            // });
-            //  formAPI.setFieldState('stock_transfer_item_list.*.transfer_in_quantity', (f) => {
-            //   f.visible = false;
-            // });
+            formAPI.setValues({
+              form_type: 'ADD',
+              stock_transfer_no: orderNo,
+              stock_transfer_item_list: [{}],
+            });
           }
         } else {
           // 关闭抽屉时，重置表单
@@ -688,8 +813,13 @@ export function useTransferForm() {
       },
       effects() {
         onFieldValueChange('transfer_type', (field, form: Form) => {
-          initForm(form);
+          const data = drawerApi.getData();
+          // 审核时 不能编辑
+          if (['OUTBOUND', 'INBOUND', 'APPROVED'].indexOf(data.value) >= 0) {
+            return;
+          }
 
+          initForm(form);
           switch (field.value) {
             case 'TRANSFER_DIFFERENT_STORE': {
               form.setFieldState('source_merchant_id', (f) => {
@@ -781,6 +911,11 @@ export function useTransferForm() {
         });
         // 目标商家 仓库
         onFieldValueChange('destination_merchant_id', (field, form: Form) => {
+          const data = drawerApi.getData();
+          // 审核时 不能编辑
+          if (['OUTBOUND', 'INBOUND', 'APPROVED'].indexOf(data.value) >= 0) {
+            return;
+          }
           destinationWarehouse.value = useWarehouseSelect({
             destination_mearchant_id: field.value,
           });

@@ -3,6 +3,8 @@
   "goods-receipt-not-posted": "Goods Receipt Not Posted",
   "go-handle": "Go Handle",
   "products-value-cost": "Products value({currency})(cost)",
+  "products-value-selling": "Products value({currency})(selling)",
+  "products-value-cost-no-cost": "Products value",
   "sales-received-amount": "Sales Received Amount ({currency})",
   "actual-transaction-order": "Actual Transaction Order",
   "sales-product-qty": "Sales Product Qty",

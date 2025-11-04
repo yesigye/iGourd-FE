@@ -3,6 +3,9 @@
   "goods-receipt-not-posted": "货物收据未过账",
   "go-handle": "去处理",
   "products-value-cost": "产品价值({currency})(成本)",
+  "products-value-cost-no-cost": "产品价值",
+  "products-value-selling": "Products value({currency})(卖)",
+
   "sales-received-amount": "销售收款金额({currency})",
   "actual-transaction-order": "实际交易订单",
   "sales-product-qty": "销售产品数量",

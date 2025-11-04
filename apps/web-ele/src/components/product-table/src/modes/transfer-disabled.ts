@@ -1,7 +1,7 @@
 import type { ModePlugin } from '../types';
 
-export const TransferMode: ModePlugin = {
-  id: 'transfer',
+export const TransferDisabledMode: ModePlugin = {
+  id: 'transfer-disabled',
   columns(_ctx) {
     return [
       {

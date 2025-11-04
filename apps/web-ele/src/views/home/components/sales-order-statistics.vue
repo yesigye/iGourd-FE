@@ -26,28 +26,25 @@ const { t } = useI18n();
   <ElRow :gutter="10">
     <ElCol :lg="4" :xs="24" class="mb-2.5">
       <div
-        class="bg-card mb-2.5 flex h-full items-center justify-center px-4 py-6"
-      >
-        <div class="w-full">
-          <div class="flex items-center gap-1">
-            <span>{{
-              t('home.products-value-cost', { currency: props?.currencySymbol })
-            }}</span>
-            <ArrayDown />
-          </div>
-          <div class="flex justify-end">
-            <div
-              class="flex h-[44px] w-[44px] items-center justify-center rounded-md bg-[#D9ECFF]"
-            >
-              <img :src="walletIcon" alt="" />
+        class="bg-card mb-2.5 flex h-full   px-4 py-6"
+      > 
+        <div class="w-full flex flex-col space-y-14 ">
+          <div class="flex flex-col space-y-4">
+            <div><h3 class="text-gray-400 capitalize">{{t('home.products-value-cost', { currency: props?.currencySymbol })}}</h3></div>
+            <div class="text-gray-700 font-semibold text-xl">
+              {{
+                thousandSeparator(props?.data?.total_value_of_cost_product_amount ?? 0,)
+              }} 
             </div>
           </div>
-          <div>
-            {{
-              thousandSeparator(
-                props?.data?.total_value_of_cost_product_amount ?? 0,
-              )
-            }}
+          <!-- Selling product values --> 
+          <div class="flex flex-col space-y-4 ">
+            <div><h3 class="text-gray-400 capitalize">{{t('home.products-value-selling', { currency: props?.currencySymbol })}}</h3></div>
+            <div class="text-gray-700 font-semibold text-xl">
+              {{
+                thousandSeparator(props?.data?.total_value_of_selling_product_amount ?? 0,)
+              }} 
+            </div>
           </div>
         </div>
       </div>

@@ -9,8 +9,14 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete,handleView } =
-  usePurchaseList();
+const {
+  Grid,
+  Drawer,
+  handleEdit,
+  canBatchOperate,
+  handleBatchDelete,
+  handleView,
+} = usePurchaseList();
 </script>
 
 <template>
@@ -18,7 +24,7 @@ const { Grid, Drawer, handleEdit, canBatchOperate, handleBatchDelete,handleView 
     <Grid>
       <template #table-actions>
         <ElButton type="primary" @click="handleEdit()">
-          {{ t('purchase.add-purchase') }}
+          {{ t('common.add') }}
         </ElButton>
         <ElButton
           type="danger"

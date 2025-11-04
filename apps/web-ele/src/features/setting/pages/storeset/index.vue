@@ -331,7 +331,7 @@ onMounted(() => {
         <div
           class="flex h-auto w-full items-center justify-between border-b border-solid border-[#E4E7ED] pb-2 pt-2"
         >
-          <div class="w-[230px] font-bold">{{ t('storeset.store-logo') }}</div>
+          <div class="w-[200px] font-bold">{{ t('storeset.store-logo') }}</div>
           <div class="flex gap-10">
             <!-- 插槽label -->
 

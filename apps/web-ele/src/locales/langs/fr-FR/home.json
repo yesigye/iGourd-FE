@@ -3,6 +3,9 @@
   "goods-receipt-not-posted": "Réception de marchandises non comptabilisée",
   "go-handle": "Traiter",
   "products-value-cost": "Valeur des produits ({currency}) (Coût)",
+  "products-value-cost-no-cost": "Valeur des produits",
+  "products-value-selling": "Valeur des produits ({currency}) (Vente)",
+
   "sales-received-amount": "Montant perçu des ventes ({currency})",
   "actual-transaction-order": "Commande de transaction réelle",
   "sales-product-qty": "Quantité de produits vendus",

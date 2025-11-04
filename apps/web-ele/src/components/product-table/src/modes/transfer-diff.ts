@@ -1,8 +1,8 @@
 import { disabledTimeListsProps } from 'element-plus/es/components/time-picker/src/props/shared.mjs';
 import type { ModePlugin } from '../types';
 
-export const TransferInMode: ModePlugin = {
-  id: 'transfer-in',
+export const TransferOutMode: ModePlugin = {
+  id: 'transfer-out',
   columns(_ctx) {
     return [
       {
@@ -42,29 +42,37 @@ export const TransferInMode: ModePlugin = {
           disabled:true
         },
       },
-      {
-        name: 'transfer_in_quantity',
-        type: 'number',
-        title: "{{t('common.purchase.transfer-in-quantity')}}",
-        'x-component': 'ProductTable.QuantityCell',
+       {
+        name: 'last_review_confirm',
+        title: "{{t('common.purchase.difference-qty-new')}}",
+        'x-component': 'Radio.Group',
         'x-decorator': 'FormItem',
+        enum: [
+          {
+            label: "{{t('common.purchase.transfer-by-quantity')}}",
+            value: "IN",
+          },
+          {
+            label: "{{t('common.purchase.transfer-by-out-quantity')}}",
+            value: "OUT",
+          },
+        ],
         'x-component-props': {
-          style: { width: 140 },
-          precision: 8,
-        },
-        'x-decorator-props': {
-          required: true,
+          style: { width: 200 },
         },
       },
+
+     
+
       {
         name: 'transfer_quantity',
         type: 'number',
         title: "{{t('common.purchase.transfer-quantity')}}",
-        'x-component': 'Input',
+        'x-component': 'ReadonlyNumber',
         'x-decorator': 'FormItem',
         'x-component-props': {
           style: { width: 140 },
-          disabled:true
+          precision: 8,
         },
         'x-decorator-props': {
           required: true,
