@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import type { CascaderProps } from 'element-plus';
+
 import { computed, onMounted, ref, useTemplateRef, watch } from 'vue';
 
 import {
   ElButton,
+  ElCascader,
   ElCol,
   ElInput,
   ElMessageBox,
@@ -56,6 +59,22 @@ const searchNum = ref(1);
 const productList = ref([]);
 const selectGoodList = ref([]);
 const productListTotal = ref(0);
+let id = 0;
+const cascaderProps: CascaderProps = {
+  lazy: true,
+  lazyLoad(node, resolve) {
+    const { level } = node;
+    setTimeout(() => {
+      const nodes = Array.from({ length: level + 1 }).map((item) => ({
+        value: ++id,
+        label: `Option - ${id}`,
+        leaf: level >= 2,
+      }));
+      // Invoke `resolve` callback to return the child nodes data and indicate the loading is finished.
+      resolve(nodes);
+    }, 1000);
+  },
+};
 // 使用计算属性 计算总数量
 const totalQuantity = computed(() => {
   return selectGoodList.value.reduce((pre, cur) => {
@@ -372,6 +391,7 @@ onMounted(() => {});
             <!-- 挂单选择 -->
             <div class="flex-shrink-0">
               <div class="flex items-center gap-2">
+                <ElCascader :props="cascaderProps" />
                 <ElInput
                   ref="searchRef"
                   v-model="searchValue"
@@ -433,16 +453,6 @@ onMounted(() => {});
                 class="mt-4"
                 @current-change="handleCurrentChange"
               />
-            </div>
-          </div>
-          <!-- 商品分类 -->
-          <div
-            class="select-products-group border-primary w-[100px] flex-shrink-0 border-t border-solid"
-          >
-            <div
-              class="text-primary border-primary box-border flex h-[44px] w-[100px] cursor-pointer items-center justify-center border border-t-0 border-solid p-2.5 text-sm"
-            >
-              全部
             </div>
           </div>
         </section>

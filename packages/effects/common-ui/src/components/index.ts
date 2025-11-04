@@ -89,6 +89,7 @@ export {
   ElButton,
   ElButtonGroup,
   ElCalendar,
+  ElCascader,
   ElCheckbox,
   ElCheckboxGroup,
   ElCol,

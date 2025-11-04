@@ -8,7 +8,7 @@ export function useSelectProduct() {
   const [Drawer, drawerApi] = useIgourdDrawer({
     connectedComponent: SelectProductsDrawer,
     appendToMain: true,
-    class: 'w-2/3',
+    class: 'w-3/4',
     title: t('scan.select-product'),
     footer: false,
   });
