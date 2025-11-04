@@ -48,6 +48,27 @@ export function useCustomerLabel(id) {
       sortable: true,
     },
     {
+      field: 'balance',
+      minWidth: 150,
+      align: 'center',
+      title: t('label.balance'),
+      sortable: true,
+    },
+    {
+      field: 'customer-balance',
+      minWidth: 150,
+      align: 'center',
+      title: t('label.customer-balance'),
+      sortable: true,
+    },
+    {
+      field: 'points',
+      minWidth: 150,
+      align: 'center',
+      title: t('label.points'),
+      sortable: true,
+    },
+    {
       field: 'operation',
       title: t('common.operations'),
       sortable: true,
