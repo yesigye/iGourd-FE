@@ -31,7 +31,6 @@ const STATUS_CONFIG = [
     value: 'true',
     iconColor: '#4caf51',
   },
-
 ];
 </script>
 
@@ -40,7 +39,7 @@ const STATUS_CONFIG = [
     <Grid>
       <template #table-actions>
         <ElButton type="primary" @click="handleEdit()">
-          {{ t('inventory.add-warehouse') }}
+          {{ t('common.add') }}
         </ElButton>
         <ElButton
           type="danger"
@@ -52,7 +51,7 @@ const STATUS_CONFIG = [
       </template>
       <template #status="{ row }">
         <StatusTemplate
-          :value="row.is_sale?'true':'false'"
+          :value="row.is_sale ? 'true' : 'false'"
           :status-list="STATUS_CONFIG"
         />
       </template>
