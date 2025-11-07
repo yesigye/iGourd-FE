@@ -35,7 +35,7 @@
   "devDependencies": {
     "@igourd-core/shared": "workspace:^",
     "@igourd-core/typings": "workspace:^",
-    "a-calc": "^2.2.10",
+    "a-calc": "^2.2.15",
     "decimal.js": "^10.6.0",
     "vue-router": "catalog:"
   }
