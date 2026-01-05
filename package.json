@@ -82,7 +82,7 @@
     "vite": "catalog:",
     "vitest": "catalog:",
     "vue": "catalog:",
-    "vue-sfc-transformer": "^0.1.16",
+    "vue-sfc-transformer": "^0.1.17",
     "vue-tsc": "catalog:"
   },
   "engines": {
