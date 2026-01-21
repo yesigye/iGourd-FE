@@ -60,7 +60,7 @@
     "@micro-zoe/micro-app": "1.0.0-rc.27",
     "classnames": "^2.5.1",
     "clipboard": "^2.0.11",
-    "jsbarcode": "^3.12.1",
+    "jsbarcode": "^3.12.3",
     "pinia-plugin-persistedstate": "catalog:",
     "resize-observer-polyfill": "catalog:",
     "unplugin-element-plus": "catalog:",
