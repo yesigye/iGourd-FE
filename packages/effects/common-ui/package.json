@@ -86,7 +86,7 @@
     "classnames": "^2.5.1",
     "dayjs": "catalog:",
     "element-plus": "catalog:",
-    "jsbarcode": "^3.12.1",
+    "jsbarcode": "^3.12.3",
     "json-bigint": "catalog:",
     "qrcode": "catalog:",
     "radix-vue": "catalog:",
